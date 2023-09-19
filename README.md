@@ -1,5 +1,5 @@
 
-## DKT-PROJECT
+## GSG-PROJECT
 
 Langkah-Langkah Menjalankan Aplikasinya:
 
