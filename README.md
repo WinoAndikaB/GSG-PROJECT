@@ -4,7 +4,7 @@
 Langkah-Langkah Menjalankan Aplikasinya:
 
 - Cari Folder tempat simpan projek, lalu, *Git Bash*.
-- Setelah itu, jalankan *GIT CLONE https://github.com/WinoAndikaB/DKT-PROJECT.git*.
+- Setelah itu, jalankan *GIT CLONE https://github.com/WinoAndikaB/GSG-PROJECT.git*.
 - Terus buka VSCode, kemudian buka *Terminal*.
 - Ketik *Composer Update*.
 - Setelah itu, buat file baru *.env* dan pindahkan isi dari *.env.example* ke *.env*.
