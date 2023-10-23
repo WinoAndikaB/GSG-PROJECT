@@ -18,8 +18,8 @@ class PenggunaController extends Controller
         return view('main.index', compact('dt1'));
     }
 
-    function HomeSetelahLogin(Request $request,){
-        $dt1=artikels::paginate(6);
+    function HomeSetelahLogin(Request $request){
+        $dt1=artikels::all();
 
         $search = $request->input('search');
 

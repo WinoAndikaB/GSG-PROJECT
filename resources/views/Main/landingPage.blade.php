@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<style>
+  /* Add this CSS to your stylesheet */
+.dark-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust the opacity (0.5) as needed */
+    z-index: 1; /* Make sure it's above the background image */
+}
+
+  </style>
+
   <head>
 
     <meta charset="utf-8">
@@ -113,6 +127,7 @@ https://templatemo.com/tm-574-mexant
           </div>
         </div>
       </div>
+
       <div class="swiper-slide">
         <div class="slide-inner" style="background-image:url(assets/images/slide-03.jpg)">
           <div class="container">
@@ -142,6 +157,54 @@ https://templatemo.com/tm-574-mexant
   </div>
   <!-- ***** Main Banner Area End ***** -->
 
+  <br>
+  <br>
+
+ <section class="swiper-section">
+    <div class="swiper-container" id="top">
+        <div class="swiper-wrapper">
+            @foreach ($dt1 as $artikel)
+                <div class="swiper-slide">
+                    <div class="slide-inner" style="background-image: url({{ asset('gambarArtikel/' . $artikel->gambar) }})">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="header-text">
+                                        <h2>
+                                            <em>Artikel Rekomendasi:</em><br>
+                                            {{ $artikel->judulArtikel }}
+                                        </h2>
+                                        <div class="div-dec"></div>
+                                        <p>{{ \Illuminate\Support\Str::limit($artikel->deskripsi, 1000) }}</p>
+                                        <div class="buttons">
+                                            <div class="orange-button">
+                                                <a href="/login">Selengkapnya</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+        <div class="swiper-button-next swiper-button-white"></div>
+        <div class="swiper-button-prev swiper-button-white"></div>
+    </div>
+</section>
+
+  
+  <script>
+    var swiper = new Swiper('.swiper-container', {
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    });
+  </script>
+  
+
   <section class="about-us" id="about">
     <div class="container">
       <div class="row">
@@ -149,9 +212,19 @@ https://templatemo.com/tm-574-mexant
           <div class="section-heading">
             <h6>Artikel</h6>
             <h4>Daftar Artikel</h4>
+            <div class="text-right">
+              <div class="form-outline">
+                  <form action="{{ route('landingPage') }}" method="GET" class="input-group">
+                      <input type="text" name="search" class="form-control" placeholder="Cari Artikel..." aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ request('search') }}">
+                      <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
+                  </form>
+              </div>
+          </div>  
           </div>
         </div>
         <div>
+
+          
           {{--  Script Post --}}
           @foreach ($dt1 as $item)
               <div class="row" style="text-align: justify">
@@ -165,7 +238,7 @@ https://templatemo.com/tm-574-mexant
                       <span class="d-flex"><b>{{ $item->penulis }}</b></span>
                       <p>{!! substr(strip_tags($item->deskripsi), 0, 400) . (strlen(strip_tags($item->content)) > 400 ? '...' : '') !!}</p>
                   </div>
-                  <span style="text-align: right; color: rgba(165, 165, 165, 1);"><p> {{$item['created_at']}} | 
+                  <span style="text-align: right; color: rgba(165, 165, 165, 1);"><p> {{ \Carbon\Carbon::parse($item['created_at'])->format('l, d M Y H.i') }}                   | 
                       <a href="/login" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a></p></span>
               </div>
               <hr>
@@ -200,6 +273,8 @@ https://templatemo.com/tm-574-mexant
       </div>
     </div>
   </section>
+
+  
 
   <section class="partners">
     <div class="container">

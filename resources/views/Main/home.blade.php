@@ -82,6 +82,38 @@ https://templatemo.com/tm-574-mexant
     </div>
   </div>
   <!-- ***** Main Banner Area End ***** -->
+  <hr>
+    <div class="swiper-container" id="top">
+        <div class="swiper-wrapper">
+            @foreach ($dt1 as $artikel)
+                <div class="swiper-slide">
+                    <div class="slide-inner" style="background-image: url({{ asset('gambarArtikel/' . $artikel->gambar) }})">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="header-text">
+                                        <h2>
+                                            <em>Artikel Rekomendasi:</em><br>
+                                            {{ $artikel->judulArtikel }}
+                                        </h2>
+                                        <div class="div-dec"></div>
+                                        <p>{{ \Illuminate\Support\Str::limit($artikel->deskripsi, 1000) }}</p>
+                                        <div class="buttons">
+                                            <div class="orange-button">
+                                                <a href="{{ route('detail.artikel', ['id' => $artikel->id]) }}">Selengkapnya</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+        <div class="swiper-button-next swiper-button-white"></div>
+        <div class="swiper-button-prev swiper-button-white"></div>
+      </div>
   
 
   <section class="about-us" id="about">
@@ -122,43 +154,6 @@ https://templatemo.com/tm-574-mexant
               <hr>
               @endforeach
             </div>
-
-            <div class="d-flex justify-content-center">
-              <ul class="pagination">
-                  @if ($dt1->onFirstPage())
-                      <li class="page-item disabled">
-                          <span class="page-link" aria-label="Previous">
-                              <span aria-hidden="true">&lsaquo;</span>
-                          </span>
-                      </li>
-                  @else
-                      <li class="page-item">
-                          <a class="page-link" href="{{ $dt1->previousPageUrl() }}" rel="prev" aria-label="Previous">
-                              <span aria-hidden="true">&lsaquo;</span>
-                          </a>
-                      </li>
-                  @endif
-
-                <!-- Menampilkan halaman berapa -->
-                <div class="text-center">
-                    {{ $dt1->currentPage() }} dari {{ $dt1->lastPage() }}
-                </div>
-          
-                  @if ($dt1->hasMorePages())
-                      <li class="page-item">
-                          <a class="page-link" href="{{ $dt1->nextPageUrl() }}" rel="next" aria-label="Next">
-                              <span aria-hidden="true">&rsaquo;</span>
-                          </a>
-                      </li>
-                  @else
-                      <li class="page-item disabled">
-                          <span class="page-link" aria-label="Next">
-                              <span aria-hidden="true">&rsaquo;</span>
-                          </span>
-                      </li>
-                  @endif
-              </ul>
-          </div>
         </div>
     </section>
 

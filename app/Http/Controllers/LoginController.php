@@ -21,10 +21,20 @@ class LoginController extends Controller
         return view('login.signup');
     }
 
-    public function landingPage()
+    public function landingPage(Request $request)
     {
         
-        $dt1 = artikels::paginate(5);
+        $dt1 = artikels::all();
+
+        $search = $request->input('search');
+
+        if (!empty($search)) {
+            $dt1 = artikels::where(function($query) use ($search) {
+                $query->where('judulArtikel', 'LIKE', '%' . $search . '%')
+                      ->orWhere('penulis', 'LIKE', '%' . $search . '%')
+                      ->orWhere('deskripsi', 'LIKE', '%' . $search . '%');
+            })->get();
+        }
 
         return view('main.landingPage', compact('dt1'));
     }
