@@ -18,24 +18,32 @@ class PenggunaController extends Controller
         return view('main.index', compact('dt1'));
     }
 
-    public function showArtikel($id)
-    {
-        $tips = artikels::find($id);
-        $title = "Artikel";
-        return view('main.detailArtikel', compact('tips', 'title'));
-    }
+    function HomeSetelahLogin(Request $request,){
+        $dt1=artikels::paginate(6);
 
-    function allog(){
-        $dt1=artikels::all();
+        $search = $request->input('search');
+
+        if (!empty($search)) {
+            $dt1 = artikels::where(function($query) use ($search) {
+                $query->where('judulArtikel', 'LIKE', '%' . $search . '%')
+                      ->orWhere('penulis', 'LIKE', '%' . $search . '%')
+                      ->orWhere('deskripsi', 'LIKE', '%' . $search . '%');
+            })->get();
+        }
+        
         return view('main.home', compact('dt1'));
     }
 
+    public function showDetailArtikel($id)
+    {
+        $article = artikels::findOrFail($id);
+    
+        return view('main.detailArt', compact('article'));
+    }
+    
+    
     function about(){
         return view('main.about');
-    }
-
-    function about1(){
-        return view('main.about1');
     }
 
     function ulasan(){

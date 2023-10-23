@@ -59,11 +59,9 @@
                     @if ($errors->any())
                     <div class="alert alert-danger">
                       <ul>
-                        <b>Danger</b>
-                        <button type="button" aria-hidden="true" class="close">
-                        </button>
+                        <b style="color: white;">Danger</b>
                         @foreach ($errors->all() as $item)
-                          <li><span> {{ $item }}</span></li>
+                          <li><span style="color: white;"> {{ $item }}</span></li>
                         @endforeach
                       </ul>
                     </div>

@@ -22,10 +22,10 @@ class AdminController extends Controller
 }
 
 //Menampilkan Data Artikel pada Tabel Admin
-    function dataArtikel(){
-        $data=artikels::all();
-        return view('admin.tables', compact('data'));
-    }
+function dataArtikel(){
+    $data = artikels::paginate(5);
+    return view('admin.tables', compact('data'));
+}
 
     function deleteArtikel($id){
         $data=artikels::find($id);

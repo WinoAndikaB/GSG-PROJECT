@@ -33,6 +33,7 @@
   <link href="../assets2/css/nucleo-svg.css" rel="stylesheet" />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
+
     // Function to auto-adjust textarea height
     function autoResizeTextarea() {
         const textarea = document.getElementById("auto-resize-textarea");
@@ -173,7 +174,7 @@
                     </div>
                     <div class="form-group">
                       <label for="" class="form-control-label">Deskirpsi</label>
-                      <textarea class="form-control" type="textarea" name="deskripsi" id="auto-resize-textarea"></textarea>
+                      <textarea class="form-control" type="textarea" name="deskripsi" id="editor"></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary mt-3">Tambah</button>
                     <a href="/artikelAdmin" class="btn btn-info mt-3">Kembali</i></a>
@@ -289,206 +290,22 @@
   <script src="../assets2/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/chartjs.min.js"></script>
-  <script>
-    var ctx1 = document.getElementById("chart-line").getContext("2d");
-
-    var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
-
-    gradientStroke1.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
-    gradientStroke1.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
-    gradientStroke1.addColorStop(0, 'rgba(94, 114, 228, 0)');
-    new Chart(ctx1, {
-      type: "line",
-      data: {
-        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        datasets: [{
-          label: "Mobile apps",
-          tension: 0.4,
-          borderWidth: 0,
-          pointRadius: 0,
-          borderColor: "#5e72e4",
-          backgroundColor: gradientStroke1,
-          borderWidth: 3,
-          fill: true,
-          data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-          maxBarThickness: 6
-
-        }],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false,
-          }
-        },
-        interaction: {
-          intersect: false,
-          mode: 'index',
-        },
-        scales: {
-          y: {
-            grid: {
-              drawBorder: false,
-              display: true,
-              drawOnChartArea: true,
-              drawTicks: false,
-              borderDash: [5, 5]
-            },
-            ticks: {
-              display: true,
-              padding: 10,
-              color: '#fbfbfb',
-              font: {
-                size: 11,
-                family: "Open Sans",
-                style: 'normal',
-                lineHeight: 2
-              },
-            }
-          },
-          x: {
-            grid: {
-              drawBorder: false,
-              display: false,
-              drawOnChartArea: false,
-              drawTicks: false,
-              borderDash: [5, 5]
-            },
-            ticks: {
-              display: true,
-              color: '#ccc',
-              padding: 20,
-              font: {
-                size: 11,
-                family: "Open Sans",
-                style: 'normal',
-                lineHeight: 2
-              },
-            }
-          },
-        },
-      },
-    });
-  </script>
-  <script>
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-      var options = {
-        damping: '0.5'
-      }
-      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-    }
-  </script>
-
+ 
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
 
+  <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
+
   <script>
-        var map;
-        var markers = [];
-        var routePolyline;
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
 
-        var maxClicks = 2; // Jumlah maksimum klik yang diinginkan
-        var clickCount = 0; // Jumlah klik saat ini
 
-        function initMap() {
-            // Initialize map
-            map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: -6.2088, lng: 106.8456 },
-                zoom: 12
-            });
-
-            // Add click event listener to the map
-            map.addListener('click', function(event) {
-                if (clickCount < maxClicks) {
-                    addMarker(event.latLng);
-                    clickCount++;
-                    if (clickCount === maxClicks) {
-                        // Terakhir kali klik, buat garis rute berdasarkan urutan titik yang diklik
-                        updateRoutePolyline();
-                    }
-                } else {
-                    // Jika melebihi jumlah maksimum klik, hapus titik terakhir dan buat garis rute baru
-                    markers.pop();
-                    removeRoutePolyline();
-                    updateRoutePolyline();
-                    clickCount--;
-                }
-            });
-            // Add click event listener to the reset button
-            var resetButton = document.getElementById('resetButton');
-            resetButton.addEventListener('click', function() {
-                resetMap();
-            });
-        }
-
-        function addMarker(latLng) {
-            var marker = new google.maps.Marker({
-                position: latLng,
-                map: map
-            });
-
-            markers.push(marker);
-        }
-
-        function updateRoutePolyline() {
-            if (routePolyline) {
-                routePolyline.setMap(null);
-            }
-
-            var routeCoordinates = [];
-            var bounds = new google.maps.LatLngBounds();
-
-            for (var i = 0; i < markers.length; i++) {
-                var position = markers[i].getPosition();
-                routeCoordinates.push(position);
-                bounds.extend(position);
-            }
-
-            if (clickCount === maxClicks) {
-                // Jika jumlah klik sama dengan jumlah maksimum, tambahkan garis dari titik keempat ke titik pertama
-                routeCoordinates.push(markers[0].getPosition());
-            }
-
-            routePolyline = new google.maps.Polyline({
-                path: routeCoordinates,
-                strokeColor: '#FF0000',
-                strokeOpacity: 1.0,
-                strokeWeight: 2,
-                map: map
-            });
-
-            map.fitBounds(bounds);
-        }
-
-        function removeRoutePolyline() {
-            if (routePolyline) {
-                routePolyline.setMap(null);
-            }
-        }
-
-      
-        // Mengambil nilai maxClicks dari input
-        // var maxClicksInput = document.getElementById('luas');
-        // maxClicksInput.addEventListener('input', function() {
-        //     maxClicks = parseInt(maxClicksInput.value);
-        //     resetMap();
-        // });
-
-        function resetMap() {
-            clickCount = 0;
-            removeRoutePolyline();
-            for (var i = 0; i < markers.length; i++) {
-                markers[i].setMap(null);
-            }
-            markers = [];
-        }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBau8YkGc472asE5eahYg0q-yNG9iYHAZs&callback=initMap" async defer></script>
-</body>
-
+    </body>
 </html>

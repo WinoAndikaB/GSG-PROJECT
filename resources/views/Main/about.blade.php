@@ -51,6 +51,7 @@ https://templatemo.com/tm-574-mexant
                       <li class="scroll-to-section"><a href="/home" >Home</a></li>
                       <li class="scroll-to-section"><a href="/home">Artikel</a></li>
                       <li class="scroll-to-section"><a href="/home">Orang</a></li>
+                      <li class="scroll-to-section"><a href="/about">Tentang</a></li>
                         <a href="#" class="nav-link text-white font-weight-bold px-0">
                           <i class="fa fa-user me-sm-1"></i>
                           <span class="d-sm-inline d-none">{{Auth::user()->name}}</span>
@@ -145,7 +146,7 @@ https://templatemo.com/tm-574-mexant
     <div class="container">
       <div class="row">
         <div class="col-lg-5">
-          <h4>Upload <em>Articles</em> and <strong>Valid</strong> Information</h4>
+          <h4>Upload <em>Articles</em> with <strong>Valid</strong> Information</h4>
         </div>
         <div class="col-lg-7">
           <div class="buttons">
@@ -166,7 +167,7 @@ https://templatemo.com/tm-574-mexant
       <div class="row">
         <div class="col-lg-12">
           <div id="map">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2791.78997548554!2d144.9805125252687!3d-37.84132841005892!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad6681f3e9cb7e1%3A0x9d52778f56cab5a8!2sFawkner%20Park!5e1!3m2!1sen!2sth!4v1648201596364!5m2!1sen!2sth" width="100%" height="450px" frameborder="0" style="border:0; border-radius: 5px; position: relative; z-index: 2;" allowfullscreen=""></iframe>
+            <iframe src="https://www.google.com/maps/d/embed?mid=1ipscTh3Sci7oB74qAg6hPkEjACg&hl=en&ehbc=2E312F" width="100%" height="450px" frameborder="0" style="border:0; border-radius: 5px; position: relative; z-index: 2;" allowfullscreen=""></iframe>
           </div>
         </div>
         <div class="col-lg-10 offset-lg-1">
@@ -175,7 +176,7 @@ https://templatemo.com/tm-574-mexant
               <div class="info-item">
                 <i class="fa fa-envelope"></i>
                 <h4>Email Address</h4>
-                <a href="#">info@company.com</a>
+                <a href="#">gsgproject@gmail.com</a>
               </div>
             </div>
             <div class="col-lg-4">
@@ -189,7 +190,7 @@ https://templatemo.com/tm-574-mexant
               <div class="info-item">
                 <i class="fa fa-map-marked-alt"></i>
                 <h4>Address</h4>
-                <a href="#">Victoria, Australia</a>
+                <a href="#">Yogyakarta, Indonesia</a>
               </div>
             </div>
           </div>

@@ -51,6 +51,7 @@ https://templatemo.com/tm-574-mexant
                           <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
                           <li class="scroll-to-section"><a href="#about">Artikel</a></li>
                           <li class="scroll-to-section"><a href="#testimonials">Orang</a></li>
+                          <li class="scroll-to-section"><a href="/about">Tentang</a></li>
                           <a href="#" class="nav-link text-white font-weight-bold px-0">
                             <i class="fa fa-user me-sm-1"></i>
                             <span class="d-sm-inline d-none">{{Auth::user()->name}}</span>
@@ -58,9 +59,6 @@ https://templatemo.com/tm-574-mexant
                           <li>
                             <a href="/logout">Logout</a></li> 
                       </ul>        
-                      <a class='menu-trigger'>
-                          <span>Menu</span>
-                      </a>
                       <!-- ***** Menu End ***** -->
                   </nav>
               </div>
@@ -68,96 +66,44 @@ https://templatemo.com/tm-574-mexant
       </div>
   </header>
   <!-- ***** Header Area End ***** -->
+  
 
   <!-- ***** Main Banner Area Start ***** -->
-  <div class="swiper-container" id="top">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide">
-        <div class="slide-inner" style="background-image:url(assets/images/slide-01.jpg)">
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-8">
-                <div class="header-text">
-                  <h2>GSG <em>PROJECT</em></h2>
-                  <div class="div-dec"></div>
-                  <p>GSG PROJECT is a website provide a qualified infomation in the form of articles</p>
-                  <div class="buttons">
-                    <div class="green-button">
-                      <a href="/ulasan">Berikan Ulasan Anda</a>
-                    </div>
-                    <div class="orange-button">
-                      <a href="/about">Tentang Kami</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="swiper-slide">
-        <div class="slide-inner" style="background-image:url(assets/images/slide-02.jpg)">
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-8">
-                <div class="header-text">
-                  <h2><em>Article</em> for you <br> already <em>valid</em></h2>
-                  <div class="div-dec"></div>
-                  <p>You will see a bunch of variated articles in different kind of genre that already validated by author.</p>
-                  <div class="buttons">
-                    <div class="green-button">
-                      <a href="#">Discover More</a>
-                    </div>
-                    <div class="orange-button">
-                      <a href="#">Contact Us</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="swiper-slide">
-        <div class="slide-inner" style="background-image:url(assets/images/slide-03.jpg)">
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-8">
-                <div class="header-text">
-                  <h2>Articles<br> given is <em>Informative</em></h2>
-                  <div class="div-dec"></div>
-                  <p>When you browse through different articles, each of them has a informative information that motivate people to read it over and over.</p>
-                  <div class="buttons">
-                    <div class="green-button">
-                      <a href="#">Discover More</a>
-                    </div>
-                    <div class="orange-button">
-                      <a href="#">Contact Us</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+  <div class="page-heading">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="header-text">
+            <h2>Home</h2>
+            <div class="div-dec"></div>
           </div>
         </div>
       </div>
     </div>
-    <div class="swiper-button-next swiper-button-white"></div>
-    <div class="swiper-button-prev swiper-button-white"></div>
   </div>
   <!-- ***** Main Banner Area End ***** -->
+  
 
   <section class="about-us" id="about">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-6 offset-lg-3">
-          <div class="section-heading">
-            <h6>Artikel</h6>
-            <h4>Daftar Artikel</h4>
-          </div>
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="section-heading">
+                    <h6>Artikel</h6>
+                    <h4>Daftar Artikel</h4>
+                    <br>
+                    <div class="text-right">
+                      <div class="form-outline">
+                          <form action="{{ route('HomeSetelahLogin') }}" method="GET" class="input-group">
+                              <input type="text" name="search" class="form-control" placeholder="Cari Artikel..." aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ request('search') }}">
+                              <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
+                          </form>
+                      </div>
+                  </div>                  
+                </div>
+            </div>
         </div>
         <div>
-          {{--  Script Post --}}
           @foreach ($dt1 as $item)
               <div class="row" style="text-align: justify">
                   <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
@@ -170,15 +116,51 @@ https://templatemo.com/tm-574-mexant
                       <span class="d-flex"><b>{{ $item->penulis }}</b></span>
                       <p>{!! substr(strip_tags($item->deskripsi), 0, 400) . (strlen(strip_tags($item->content)) > 400 ? '...' : '') !!}</p>
                   </div>
-                  <span style="text-align: right; color: rgba(165, 165, 165, 1);"><p> {{$item['created_at']}} | 
-                      <a href="detaiArtikel" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a></p></span>
+                  <span style="text-align: right; color: rgba(165, 165, 165, 1);"><p> {{ \Carbon\Carbon::parse($item['created_at'])->format('l, d M Y H.i') }}                    | 
+                    <a href="{{ route('detail.artikel', ['id' => $item->id]) }}" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a>
               </div>
               <hr>
               @endforeach
+            </div>
+
+            <div class="d-flex justify-content-center">
+              <ul class="pagination">
+                  @if ($dt1->onFirstPage())
+                      <li class="page-item disabled">
+                          <span class="page-link" aria-label="Previous">
+                              <span aria-hidden="true">&lsaquo;</span>
+                          </span>
+                      </li>
+                  @else
+                      <li class="page-item">
+                          <a class="page-link" href="{{ $dt1->previousPageUrl() }}" rel="prev" aria-label="Previous">
+                              <span aria-hidden="true">&lsaquo;</span>
+                          </a>
+                      </li>
+                  @endif
+
+                <!-- Menampilkan halaman berapa -->
+                <div class="text-center">
+                    {{ $dt1->currentPage() }} dari {{ $dt1->lastPage() }}
+                </div>
+          
+                  @if ($dt1->hasMorePages())
+                      <li class="page-item">
+                          <a class="page-link" href="{{ $dt1->nextPageUrl() }}" rel="next" aria-label="Next">
+                              <span aria-hidden="true">&rsaquo;</span>
+                          </a>
+                      </li>
+                  @else
+                      <li class="page-item disabled">
+                          <span class="page-link" aria-label="Next">
+                              <span aria-hidden="true">&rsaquo;</span>
+                          </span>
+                      </li>
+                  @endif
+              </ul>
           </div>
-      </div>
-    </div>
-  </section>
+        </div>
+    </section>
 
   <section class="testimonials" id="testimonials">
     <div class="container">
@@ -196,15 +178,6 @@ https://templatemo.com/tm-574-mexant
               <p>“Beperan dalam mengembangkan website dengan menyediakan fitur CRUD pada Admin yang dimana fitur tersebut dapat mengupload informasi artikel.”</p>
               <h4>Wino Andika Batara</h4>
               <span>Back End & Front End Developer</span>
-              <div class="right-image">
-                <img src="gambarArtikel/per1.jpg" alt="">
-              </div>
-            </div>
-            <div class="item">
-              <i class="fa fa-quote-left"></i>
-              <p>“Berperan dalam menyediakan informasi berupa artikel.”</p>
-              <h4>Gesang Pangestuningdiyu</h4>
-              <span>Information Provider</span>
               <div class="right-image">
                 <img src="gambarArtikel/per1.jpg" alt="">
               </div>

@@ -21,8 +21,16 @@ class LoginController extends Controller
         return view('login.signup');
     }
 
-    function landingPage(){
-        return view('main.index');
+    public function landingPage()
+    {
+        
+        $dt1 = artikels::paginate(5);
+
+        return view('main.landingPage', compact('dt1'));
+    }
+
+    function aboutLandingPage(){
+        return view('main.aboutLandingPage');
     }
     
     function registerUser(Request $req){

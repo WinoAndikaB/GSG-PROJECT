@@ -23,20 +23,15 @@ Route::post('/login',[LoginController::class,'login'])->name('login');
 Route::get('/register',[LoginController::class,'register']);
 Route::post('/registerUser',[LoginController::class,'registerUser']);
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-Route::get('/', [PenggunaController::class, 'dataArtikelHome1'])->name('dataArtikelHome1');
-Route::get('/about1', [PenggunaController::class, 'about1'])->name('about1');
+Route::get('/', [LoginController::class, 'landingPage'])->name('landingPage');
+Route::get('/abouts', [LoginController::class, 'aboutLandingPage'])->name('aboutLandingPage');
 
 //---- HOME ----
 //Memberikan Hak Akses User
 Route::middleware(['user'])->group(function () {
-//Menampilkan Halaman Data Artikel Pada Halamn Home Setelah Login
-Route::get('/home',[PenggunaController::class,'allog']);
-//Menampilkan Halaman Data Artikel Pada Halamn Home Sebelum Login
+Route::get('/home',[PenggunaController::class,'HomeSetelahLogin'])->name('HomeSetelahLogin');
 Route::get('/artikel', [PenggunaController::class, 'dataArtikelHome'])->name('dataArtikelHome');
-//Menampilkan Halaman Data Artikel Pada Halamn Home Setelah Login
-Route::get('artikel/{id}', [PenggunaController::class, 'showArtikel'])->name('dtArtikel.showArtikel');
-Route::get('/detaiArtikel', [PenggunaController::class, 'detailArtikel']);
-
+Route::get('/detailArtikel/{id}', [PenggunaController::class, 'showDetailArtikel'])->name('detail.artikel');
 Route::get('/ulasan', [PenggunaController::class, 'ulasan'])->name('ulasan');
 Route::post('/storeUlasan',[PenggunaController::class,'storeUlasan']);
 Route::get('/about', [PenggunaController::class, 'about'])->name('about');

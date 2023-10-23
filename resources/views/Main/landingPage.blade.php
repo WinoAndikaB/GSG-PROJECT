@@ -81,7 +81,7 @@ https://templatemo.com/tm-574-mexant
                       <a href="/login">Berikan Ulasan Anda</a>
                     </div>
                     <div class="orange-button">
-                      <a href="/about1">Tentang Kami</a>
+                      <a href="/abouts">Tentang Kami</a>
                     </div>
                   </div>
                 </div>
@@ -104,7 +104,7 @@ https://templatemo.com/tm-574-mexant
                       <a href="/login">Berikan Ulasan Anda</a>
                     </div>
                     <div class="orange-button">
-                      <a href="/about1">Tentang Kami</a>
+                      <a href="/abouts">Tentang Kami</a>
                     </div>
                   </div>
                 </div>
@@ -127,7 +127,7 @@ https://templatemo.com/tm-574-mexant
                       <a href="/login">Berikan Ulasan Anda</a>
                     </div>
                     <div class="orange-button">
-                      <a href="/about1">Tentang Kami</a>
+                      <a href="/abouts">Tentang Kami</a>
                     </div>
                   </div>
                 </div>
@@ -191,15 +191,6 @@ https://templatemo.com/tm-574-mexant
               <p>“Beperan dalam mengembangkan website dengan menyediakan fitur CRUD pada Admin yang dimana fitur tersebut dapat mengupload informasi artikel.”</p>
               <h4>Wino Andika Batara</h4>
               <span>Back End & Front End Developer</span>
-              <div class="right-image">
-                <img src="gambarArtikel/per1.jpg" alt="">
-              </div>
-            </div>
-            <div class="item">
-              <i class="fa fa-quote-left"></i>
-              <p>“Berperan dalam menyediakan informasi berupa artikel.”</p>
-              <h4>Gesang Pangestuningdiyu</h4>
-              <span>Information Provider</span>
               <div class="right-image">
                 <img src="gambarArtikel/per1.jpg" alt="">
               </div>
