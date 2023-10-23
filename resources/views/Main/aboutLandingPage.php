@@ -51,8 +51,8 @@ https://templatemo.com/tm-574-mexant
                       <li class="scroll-to-section"><a href="/home" >Home</a></li>
                       <li class="scroll-to-section"><a href="/home">Artikel</a></li>
                       <li class="scroll-to-section"><a href="/home">Orang</a></li>
-                        <li>
-                          <a href="/login">Login</a></li> 
+                      <li class="scroll-to-section"><a href="/abouts">Tentang</a></li>
+                      <li class="scroll-to-section"><a href="/login">Login</a></li>
                     </ul>       
                     <a class='menu-trigger'>
                         <span>Menu</span>
@@ -92,43 +92,27 @@ https://templatemo.com/tm-574-mexant
           <div class="accordions is-first-expanded">
             <article class="accordion">
               <div class="accordion-head">
-                  <span>Mexant Financial Planning</span>
+                  <span>Tujuan</span>
                   <span class="icon">
                       <i class="icon fa fa-chevron-right"></i>
                   </span>
               </div>
               <div class="accordion-body">
                   <div class="content">
-                      <p>You will see a bunch of free CSS templates when you search on Google. TemplateMo website is probably the best one because it is 100% free. 
-                      <br><br>We do not ask you anything in return. You are free to use our templates for any purpose.</p>
+                      <p>Tujuan terbentuknya website ini adalah memberikan artikel yang dapat dibaca oleh banyak orang.</p>
                   </div>
               </div>
           </article>
           <article class="accordion">
             <div class="accordion-head">
-                <span>Mexant Crypto Investing</span>
+                <span>Kenapa Namanya GSG Project?</span>
                 <span class="icon">
                     <i class="icon fa fa-chevron-right"></i>
                 </span>
             </div>
             <div class="accordion-body">
                 <div class="content">
-                    <p>Mexant HTML5 Template is available to download 100% free of charge. This CSS layout is based on Boostrap 5 framework. 
-                    <br><br>Anyone can edit and use this layout for all professional websites. Thank you for visiting TemplateMo website.</p>
-                </div>
-            </div>
-          </article>
-          <article class="accordion">
-            <div class="accordion-head">
-                <span>Cryptocurrency Investments</span>
-                <span class="icon">
-                    <i class="icon fa fa-chevron-right"></i>
-                </span>
-            </div>
-            <div class="accordion-body">
-                <div class="content">
-                    <p>Ut dictum vehicula massa, ac pharetra leo tincidunt eu. Phasellus in tristique magna, ac gravida leo.<br><br>
-                    Integer sed lorem sapien. Ut viverra mauris sed lobortis commodo. Mauris scelerisque venenatis justo, sed interdum sem.</p>
+                    <p>Emang cuma kepikiran aja nama itu, gaada alasan tersendiri.</p>
                 </div>
             </div>
           </article>
@@ -149,7 +133,7 @@ https://templatemo.com/tm-574-mexant
               <a href="/home">Kembali</a>
             </div>
             <div class="orange-button">
-              <a href="/login">Ulasan</a>
+              <a href="/ulasan">Ulasan</a>
             </div>
           </div>
         </div>
@@ -162,7 +146,7 @@ https://templatemo.com/tm-574-mexant
       <div class="row">
         <div class="col-lg-12">
           <div id="map">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2791.78997548554!2d144.9805125252687!3d-37.84132841005892!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad6681f3e9cb7e1%3A0x9d52778f56cab5a8!2sFawkner%20Park!5e1!3m2!1sen!2sth!4v1648201596364!5m2!1sen!2sth" width="100%" height="450px" frameborder="0" style="border:0; border-radius: 5px; position: relative; z-index: 2;" allowfullscreen=""></iframe>
+            <iframe src="https://www.google.com/maps/d/embed?mid=1ipscTh3Sci7oB74qAg6hPkEjACg&hl=en&ehbc=2E312F" width="100%" height="450px" frameborder="0" style="border:0; border-radius: 5px; position: relative; z-index: 2;" allowfullscreen=""></iframe>
           </div>
         </div>
         <div class="col-lg-10 offset-lg-1">
@@ -171,7 +155,7 @@ https://templatemo.com/tm-574-mexant
               <div class="info-item">
                 <i class="fa fa-envelope"></i>
                 <h4>Email Address</h4>
-                <a href="#">info@company.com</a>
+                <a href="#">gsgproject@gmail.com</a>
               </div>
             </div>
             <div class="col-lg-4">
@@ -185,7 +169,7 @@ https://templatemo.com/tm-574-mexant
               <div class="info-item">
                 <i class="fa fa-map-marked-alt"></i>
                 <h4>Address</h4>
-                <a href="#">Victoria, Australia</a>
+                <a href="#">Yogyakarta, Indonesia</a>
               </div>
             </div>
           </div>

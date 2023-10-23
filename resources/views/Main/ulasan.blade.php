@@ -157,7 +157,7 @@ https://templatemo.com/tm-574-mexant
               <p class="font-size: 100px;">“{{ $item->rating }}”</p>
               <p>“{{ $item->pesan }}”</p>
               <h4>{{ $item->nama }}</h4>
-              <span>{{ $item->created_at }}</span>
+              <span>{{ \Carbon\Carbon::parse($item['created_at'])->format('l, d M Y H.i') }}</span>
               <div class="right-image">
                 <img src="gambarArtikel/per1.jpg" alt="">
               </div>

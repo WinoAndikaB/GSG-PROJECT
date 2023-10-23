@@ -65,6 +65,7 @@ https://templatemo.com/tm-574-mexant
                           <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
                           <li class="scroll-to-section"><a href="#about">Artikel</a></li>
                           <li class="scroll-to-section"><a href="#testimonials">Orang</a></li>
+                          <li class="scroll-to-section"><a href="/abouts">Tentang</a></li>
                           <li><a href="/login">Login</a></li> 
                       </ul>        
                       <a class='menu-trigger'>
