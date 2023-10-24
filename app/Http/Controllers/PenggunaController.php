@@ -8,16 +8,6 @@ use Illuminate\Http\Request;
 
 class PenggunaController extends Controller
 {
-    function dataArtikelHome(){
-        $dt=artikels::all();
-        return view('main.articles', compact('dt'));
-    }
-
-    function dataArtikelHome1(){
-        $dt1=artikels::all();
-        return view('main.index', compact('dt1'));
-    }
-
     function HomeSetelahLogin(Request $request){
         $search = $request->input('search');
 
@@ -57,24 +47,24 @@ class PenggunaController extends Controller
         $semua = artikels::all();
         $todayDate = date('l, d M Y H.i');
     
-        return view('main.home', compact('trending', 'latest','whatsnew','semua', 'box', 'todayDate'));
+        return view('main.setelahLogin.home', compact('trending', 'latest','whatsnew','semua', 'box', 'todayDate'));
     }
 
     public function showDetailArtikel($id)
     {
         $article = artikels::findOrFail($id);
     
-        return view('main.detailArt', compact('article'));
+        return view('main.setelahLogin.detailArt', compact('article'));
     }
     
     
     function about(){
-        return view('main.about');
+        return view('main.setelahLogin.about');
     }
 
     function ulasan(){
         $data1=ulasans::all();
-        return view('main.ulasan', compact('data1'));
+        return view('main.setelahLogin.ulasan', compact('data1'));
     }
 
     function storeUlasan(Request $req){

@@ -61,14 +61,14 @@ class LoginController extends Controller
     $semua = artikels::all();
     $todayDate = date('l, d M Y H.i');
 
-    return view('main.landingPage', compact('trending', 'latest','whatsnew','semua', 'box', 'todayDate'));
+    return view('main.sebelumLogin.landingPage', compact('trending', 'latest','whatsnew','semua', 'box', 'todayDate'));
 }
 
 
     
 
     function aboutLandingPage(){
-        return view('main.aboutLandingPage');
+        return view('main.sebelumLogin.aboutLandingPage');
     }
     
     function registerUser(Request $req){
