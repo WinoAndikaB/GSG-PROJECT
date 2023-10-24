@@ -54,7 +54,7 @@ https://templatemo.com/tm-574-mexant
                       <li class="scroll-to-section"><a href="/about">Tentang</a></li>
                         <a href="#" class="nav-link text-white font-weight-bold px-0">
                           <i class="fa fa-user me-sm-1"></i>
-                          <span class="d-sm-inline d-none">{{Auth::user()->name}}</span>
+                          <span class="d-sm-inline d-none">Welcome, {{Auth::user()->name}}</span>
                         </a>
                         <li>
                           <a href="/logout">Logout</a></li> 

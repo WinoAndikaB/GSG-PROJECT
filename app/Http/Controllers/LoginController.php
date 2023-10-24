@@ -22,22 +22,50 @@ class LoginController extends Controller
     }
 
     public function landingPage(Request $request)
-    {
-        
-        $dt1 = artikels::all();
+{
+    $search = $request->input('search');
 
-        $search = $request->input('search');
+    $query1 = artikels::query();
+    $query2 = artikels::query(); 
+    $query3 = artikels::query(); 
+    $query4 = artikels::query(); 
 
-        if (!empty($search)) {
-            $dt1 = artikels::where(function($query) use ($search) {
-                $query->where('judulArtikel', 'LIKE', '%' . $search . '%')
-                      ->orWhere('penulis', 'LIKE', '%' . $search . '%')
-                      ->orWhere('deskripsi', 'LIKE', '%' . $search . '%');
-            })->get();
-        }
+    if (!empty($search)) {
+        $query1->where(function($query) use ($search) {
+            $query->where('judulArtikel', 'LIKE', '%' . $search . '%')
+                  ->orWhere('penulis', 'LIKE', '%' . $search . '%')
+                  ->orWhere('deskripsi', 'LIKE', '%' . $search . '%');
+        });
 
-        return view('main.landingPage', compact('dt1'));
+        $query2->where(function($query) use ($search) {
+            $query->where('judulArtikel', 'LIKE', '%' . $search . '%')
+                  ->orWhere('penulis', 'LIKE', '%' . $search . '%')
+                  ->orWhere('deskripsi', 'LIKE', '%' . $search . '%');
+        });
+        $query3->where(function($query) use ($search) {
+            $query->where('judulArtikel', 'LIKE', '%' . $search . '%')
+                  ->orWhere('penulis', 'LIKE', '%' . $search . '%')
+                  ->orWhere('deskripsi', 'LIKE', '%' . $search . '%');
+        });
+        $query4->where(function($query) use ($search) {
+            $query->where('judulArtikel', 'LIKE', '%' . $search . '%')
+                  ->orWhere('penulis', 'LIKE', '%' . $search . '%')
+                  ->orWhere('deskripsi', 'LIKE', '%' . $search . '%');
+        });
     }
+
+    $trending = $query1->paginate(2);
+    $latest = $query2->paginate(7);
+    $whatsnew = $query3->paginate();
+    $box = $query4->paginate(8);
+    $semua = artikels::all();
+    $todayDate = date('l, d M Y H.i');
+
+    return view('main.landingPage', compact('trending', 'latest','whatsnew','semua', 'box', 'todayDate'));
+}
+
+
+    
 
     function aboutLandingPage(){
         return view('main.aboutLandingPage');

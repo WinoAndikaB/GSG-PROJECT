@@ -19,19 +19,45 @@ class PenggunaController extends Controller
     }
 
     function HomeSetelahLogin(Request $request){
-        $dt1=artikels::all();
-
         $search = $request->input('search');
 
+        $query1 = artikels::query();
+        $query2 = artikels::query(); 
+        $query3 = artikels::query(); 
+        $query4 = artikels::query(); 
+    
         if (!empty($search)) {
-            $dt1 = artikels::where(function($query) use ($search) {
+            $query1->where(function($query) use ($search) {
                 $query->where('judulArtikel', 'LIKE', '%' . $search . '%')
                       ->orWhere('penulis', 'LIKE', '%' . $search . '%')
                       ->orWhere('deskripsi', 'LIKE', '%' . $search . '%');
-            })->get();
+            });
+    
+            $query2->where(function($query) use ($search) {
+                $query->where('judulArtikel', 'LIKE', '%' . $search . '%')
+                      ->orWhere('penulis', 'LIKE', '%' . $search . '%')
+                      ->orWhere('deskripsi', 'LIKE', '%' . $search . '%');
+            });
+            $query3->where(function($query) use ($search) {
+                $query->where('judulArtikel', 'LIKE', '%' . $search . '%')
+                      ->orWhere('penulis', 'LIKE', '%' . $search . '%')
+                      ->orWhere('deskripsi', 'LIKE', '%' . $search . '%');
+            });
+            $query4->where(function($query) use ($search) {
+                $query->where('judulArtikel', 'LIKE', '%' . $search . '%')
+                      ->orWhere('penulis', 'LIKE', '%' . $search . '%')
+                      ->orWhere('deskripsi', 'LIKE', '%' . $search . '%');
+            });
         }
-        
-        return view('main.home', compact('dt1'));
+    
+        $trending = $query1->paginate(2);
+        $latest = $query2->paginate(7);
+        $whatsnew = $query3->paginate();
+        $box = $query4->paginate(8);
+        $semua = artikels::all();
+        $todayDate = date('l, d M Y H.i');
+    
+        return view('main.home', compact('trending', 'latest','whatsnew','semua', 'box', 'todayDate'));
     }
 
     public function showDetailArtikel($id)
