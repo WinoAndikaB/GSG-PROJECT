@@ -13,5 +13,8 @@ Langkah-Langkah Menjalankan Aplikasinya:
 - Buka lagi Teriminal, *php artisan migrate --seed*.
 - Kemudian, jalankan *php artisan serve*.
 
+*Catatan:*
+- Untuk akun buat login, bisa lihat di bagian seeder
+
 Jika data pada database tidak masuk setelah di migrate, input manual saja dengan import file dari GDrive
 https://drive.google.com/drive/u/3/folders/1iuafUJMoKbrXr-JBOOYPNB85bBdmWuzu

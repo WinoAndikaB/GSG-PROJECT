@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\artikels;
 use App\Models\ulasans;
+use App\Models\user;
 use Illuminate\Http\Request;
 
 class PenggunaController extends Controller
@@ -84,5 +85,26 @@ class PenggunaController extends Controller
         ]);
              return redirect('ulasan');
      }
+
+      //Profile User
+      public function profileUser()
+      {
+          return view('main.setelahLogin.profile');
+      }  
+    
+
+    public function updateUser(Request $request, $id){
+
+    $user = user::findOrFail($id);
+    $user->update([
+        'name' => $request->input('name'),
+        'alamat' => $request->input('alamat'),
+        'instagram' => $request->input('instagram'),
+        'facebook' => $request->input('facebook'),
+        'aboutme' => $request->input('aboutme'),
+    ]);
+
+    return redirect('/profileUser');
+    }
 
 }

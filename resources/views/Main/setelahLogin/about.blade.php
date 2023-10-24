@@ -50,7 +50,6 @@ https://templatemo.com/tm-574-mexant
                     <ul class="nav">
                       <li class="scroll-to-section"><a href="/home" >Home</a></li>
                       <li class="scroll-to-section"><a href="/home">Artikel</a></li>
-                      <li class="scroll-to-section"><a href="/home">Orang</a></li>
                       <li class="scroll-to-section"><a href="/about">Tentang</a></li>
                         <a href="#" class="nav-link text-white font-weight-bold px-0">
                           <i class="fa fa-user me-sm-1"></i>

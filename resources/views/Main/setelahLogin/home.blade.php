@@ -20,12 +20,7 @@
                               <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
                           </form>
                           </li>
-                          <li>
-                          <a href="#" class="nav-link text-white font-weight-bold px-0">
-                            <i class="fa fa-user me-sm-1"></i>
-                            <span class="d-sm-inline d-none">Welcome, {{Auth::user()->name}}</span>
-                          </a>
-                          </li>
+                          <li class="scroll-to-section"><a href="/profileUser">{{ Auth::user()->name}}</a></li>
                           <li>
                             <a href="/logout">Logout</a>
                         </li> 

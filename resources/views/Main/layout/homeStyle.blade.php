@@ -30,6 +30,23 @@
       <link rel="stylesheet" href="assetS/css/style.css">
       <link rel="stylesheet" href="assetS/css/responsive.css">
 
+      <!-- Profile CSS -->
+      <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+      <link rel="icon" type="image/png" href="../assets/img/5.png">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+      <title>
+        Profile - DOKITA
+      </title>
+      <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+      <!--     Fonts and icons     -->
+      <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+      <!-- CSS Files -->
+      <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+      <link href="../assets/css/now-ui-kit.css?v=1.3.0" rel="stylesheet" />
+      <!-- CSS Just for demo purpose, don't include it in your project -->
+      <link href="../assets/demo/demo.css" rel="stylesheet" />
+    
       <section>
         @yield('style')
     </section>
@@ -44,7 +61,7 @@
               <div class="widget">
                   <h5 class="widget-title text-white">ABOUT US</h5>
                   <div class="widget_about">
-                      <p class="text-white">Provide you a qualified articles and informative articles from a lot sources.</p>
+                      <p class="text-white">Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.</p>
                       <ul class="social-area social-area-2 mt-4">
                           <li><a class="facebook-icon" href="#"><i class="fa fa-facebook"></i></a></li>
                           <li><a class="twitter-icon" href="#"><i class="fa fa-twitter"></i></a></li>
@@ -77,9 +94,9 @@
             <div class="widget">
                 <h5 class="widget-title" style="color: white;">CONTACTS</h5>
                 <ul class="contact_info_list">
-                    <li style="color: white;"><i class="fa fa-map-marker" style="color: white;"></i> Yogyakarta, Indonesia</li>
-                    <li style="color: white;"><i class="fa fa-phone" style="color: white;"></i> +62 0812121240</li>
-                    <li style="color: white;"><i class="fa fa-envelope-o" style="color: white;"></i> gsgproject.com <br> gsgproject@mail.com</li>
+                    <li style="color: white;"><i class="fa fa-map-marker" style="color: white;"></i> 829 Cabell Avenue Arlington, VA 22202</li>
+                    <li style="color: white;"><i class="fa fa-phone" style="color: white;"></i> +088 012121240</li>
+                    <li style="color: white;"><i class="fa fa-envelope-o" style="color: white;"></i> Info@website.com <br> Support@mail.com</li>
                 </ul>
             </div>
         </div>            
@@ -107,10 +124,12 @@
     <script src="assets/js/swiper.js"></script>
     <script src="assets/js/custom.js"></script>
 
-    
     <!-- all plugins here -->
     <script src="assetsS/js/vendor.js"></script>
     <!-- main js  -->
     <script src="assetsS/js/main.js"></script>
+
+      <!-- Profile Script -->
+
   </body>
 </html>

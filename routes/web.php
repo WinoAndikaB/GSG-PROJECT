@@ -30,6 +30,8 @@ Route::get('/abouts', [LoginController::class, 'aboutLandingPage'])->name('about
 //Memberikan Hak Akses User
 Route::middleware(['user'])->group(function () {
 Route::get('/home',[PenggunaController::class,'HomeSetelahLogin'])->name('HomeSetelahLogin');
+Route::get('/profileUser', [PenggunaController::class, 'profileUser'])->name('profileUser');
+Route::put('/profileUser/updateUser/{id}',[PenggunaController::class,'updateUser'])->name('updateUser');
 Route::get('/artikel', [PenggunaController::class, 'dataArtikelHome'])->name('dataArtikelHome');
 Route::get('/detailArtikel/{id}', [PenggunaController::class, 'showDetailArtikel'])->name('detail.artikel');
 Route::get('/ulasan', [PenggunaController::class, 'ulasan'])->name('ulasan');
