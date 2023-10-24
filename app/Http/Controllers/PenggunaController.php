@@ -40,12 +40,20 @@ class PenggunaController extends Controller
             });
         }
     
-        $trending = $query1->paginate(2);
-        $latest = $query2->paginate(7);
-        $whatsnew = $query3->paginate();
-        $box = $query4->paginate(8);
-        $semua = artikels::all();
-        $todayDate = date('l, d M Y H.i');
+            // Get trending articles randomly
+            $trending = artikels::inRandomOrder()->take(3)->get();
+
+            // Get the latest articles
+            $latest = artikels::orderBy('created_at', 'desc')->take(8)->get();
+
+            // Get what's new articles randomly
+            $whatsnew = artikels::inRandomOrder()->take(5)->get();
+
+            // Get a box of articles randomly
+            $box = artikels::inRandomOrder()->take(8)->get();
+
+            $semua = artikels::all();
+            $todayDate = date('l, d M Y H.i');
     
         return view('main.setelahLogin.home', compact('trending', 'latest','whatsnew','semua', 'box', 'todayDate'));
     }

@@ -1,5 +1,7 @@
 @extends('Main.layout.homeStyle')
 
+<title>Landing Page - GSG Project</title>
+
 <body>
   <!-- ***** Header Area Start ***** -->
   <header class="header-area header-sticky">
