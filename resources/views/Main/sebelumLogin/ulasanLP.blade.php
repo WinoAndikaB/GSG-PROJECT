@@ -23,13 +23,69 @@
     <link rel="stylesheet" href="assets/css/owl.css">
     <link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css">
-<!--
+    <style>
+      .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    }
 
-TemplateMo 574 Mexant
+    .card {
+      flex: 0 0 100%; /* Set card width to 100% to stack vertically */
+      margin: 10px 0;
+      padding: 20px;
+      border: 1px solid #e6e6e6;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      position: relative; /* Added this line to make inner elements absolute positioned */
+    }
 
-https://templatemo.com/tm-574-mexant
+      .profile-pic {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #fff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        margin: 0 auto 10px;
+      }
 
--->
+      .star-rating i {
+        color: #FFD700;
+      }
+
+      .review-actions {
+      display: flex;
+      justify-content: flex-end; /* Align right */
+      align-items: center;
+    }
+
+    .actions i {
+      margin: 0 5px;
+      cursor: pointer;
+    }
+
+      .card-header {
+        background-color: #f8f9fa; /* Header background color */
+        border-bottom: 1px solid #e6e6e6;
+        padding: 10px 20px;
+      }
+
+      .fade-in {
+        animation: fadeIn 1s ease-in-out;
+      }
+
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
   </head>
 
 <body>
@@ -76,57 +132,64 @@ https://templatemo.com/tm-574-mexant
     </div>
   </div>
 
-  <!-- ***** Main Banner Area End ***** -->
-
   <section class="testimonials" id="testimonials">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-6 offset-lg-3">
-          <div class="section-heading">
-            <h6>Ulasan</h6>
-            <h4>Daftar Ulasan</h4>
-          </div>
-        </div>
-        
-        @foreach ($data1 as $item)
-        <div class="col-lg-10 offset-lg-1">
-          <div class="owl-testimonials owl-carousel" style="position: relative; z-index: 5;">
-            <div class="item">
-              <i class="fa fa-quote-left"></i>
-              <p class="font-size: 100px;">“{{ $item->rating }}”</p>
-              <p>“{{ $item->pesan }}”</p>
-              <h4>{{ $item->nama }}</h4>
-              <span>{{ \Carbon\Carbon::parse($item['created_at'])->format('l, d M Y H.i') }}</span>
-              <div class="right-image">
-                <img src="gambarArtikel/per1.jpg" alt="">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="section-heading">
+                    <h6>Ulasan</h6>
+                    <h4>Daftar Ulasan</h4>
+                </div>
+            </div>
+
+            @foreach ($data1 as $item)
+                       <div class="col-lg-10 offset-lg-1">
+                           <div class="owl-testimonials owl-carousel" style="position: relative; z-index: 5;">
+                               <div class="item">
+                                   <i class="fa fa-quote-left"></i>
+                                   <div class="profile-picture-container">
+                                       <a href="/profileUser" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center">
+                                           <div class="profile-picture" style="width: 50px; height: 50px; overflow: hidden; margin-right: 10px;">
+                                               <img src="{{ asset('fotoProfil/' . $item->fotoProfil) }}" alt="User's Profile Picture" style="width: 25%; height: 70%; object-fit: cover; border-radius: 50%;">
+                                           </div>
+                                       </a>
+                                   </div>
+                                   <p class="font-size: 100px;">“{{ $item->rating }}”</p>
+                                   <p>“{{ $item->pesan }}”</p>
+                                   <h4>{{ $item->nama }}</h4>
+                                   <span>{{ \Carbon\Carbon::parse($item['created_at'])->format('l, d M Y H.i') }}</span>
+                                   <div class="right-image">
+                                       <img src="gambarArtikel/per1.jpg" alt="">
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                       @endforeach
+                  </div>
               </div>
-            </div>
-          </div>
-        </div>
-        @endforeach
-      </div>
-    </div>
-  </section>
+          </section>
 
-  <section class="simple-cta">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-5">
-          <h4>Upload <em>Articles</em> and <strong>Valid</strong> Information</h4>
-        </div>
-        <div class="col-lg-7">
-          <div class="buttons">
-            <div class="green-button">
-              <a href="/home">Kembali</a>
-            </div>
-            <div class="orange-button">
-              <a href="/ulasan">Ulasan</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
+  <div class="text-center">
+    <div class="buttons" style="display: flex; justify-content: center; gap: 10px;">
+        <div class="green-button">
+            <a href="/">Kembali</a>
+        </div>
+        <div class="orange-button">
+            <a href="/ulasanLandingPage">Ulasan</a>
+        </div>
+    </div>
+</div>
+
+<script>
+  // Optional: Menambahkan animasi scroll horizontal
+  const container = document.querySelector('.container');
+  container.addEventListener('wheel', (e) => {
+      if (e.deltaY !== 0) {
+          e.preventDefault();
+          container.scrollLeft += e.deltaY;
+      }
+  });
+</script>
   </body>
 </html>

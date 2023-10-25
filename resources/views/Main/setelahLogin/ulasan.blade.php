@@ -94,40 +94,54 @@ https://templatemo.com/tm-574-mexant
         <div class="col-lg-10 offset-lg-1">
           <form id="contact" action="storeUlasan" method="post">
             @csrf
-
+        
             <hr>
-
+        
             <p> Salin <b>Bintang</b> Untuk Memberikan <b> Rating </b> : ★★★★★</p>
             <br>
-
+        
             <div class="row">
-              <div class="col-lg-6">
+              <div class="col-lg-6 align-left">
                 <fieldset>
-                </label>Rating</label>
+                  <label for="rating">Rating</label>
                   <input type="text" name="rating" id="rating" required>
                 </fieldset>
               </div>
-              <br>
-              <div class="col-lg-6">
+
+              <div class="user-profile-info">
+                <a href="/profileUser" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center">
+                    <div class="profile-picture" style="width: 220px; height: 200px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
+                        <img src="{{ asset('fotoProfil/' . Auth::user()->fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
+                </a>
+            </div>
+            
+        
+              <div class="col-lg-6 align-left">
                 <fieldset>
-                </label>Nama</label>
+                  <label for="nama">Nama</label>
                   <input type="name" name="nama" id="nama" placeholder="Name..." autocomplete="on" value="{{Auth::user()->name}}" readonly required>
                 </fieldset>
               </div>
-              <div class="col-lg-6">
+        
+              <div class="col-lg-6 align-right">
                 <fieldset>
-                </label>Email</label>
-                  <input type="text" name="email" id="email" pattern="[^ @]*@[^ @]*" placeholder="E-mail..."  value="{{Auth::user()->email}}" readonly required="">
+                  <label for="email">Email</label>
+                  <input type="text" name="email" id="email" pattern="[^ @]*@[^ @]*" placeholder="E-mail..." value="{{Auth::user()->email}}" readonly required>
                 </fieldset>
               </div>
-              <div class="col-lg-12">
+        
+              <div class="col-lg-12 align-left">
                 <fieldset>
+                  <label for="pesan">Pesan</label>
                   <textarea name="pesan" id="pesan" placeholder="Pesan..."></textarea>
                 </fieldset>
               </div>
-              <div class="col-lg-12">
+        
+              <div class="col-lg-12 align-left">
                 <fieldset>
-                  <button type="submit" id="form-submit" class="orange-button">Send Message</button>
+                  <button type="submit" id="form-submit" class="orange-button">Kirim Ulasan</button>
                 </fieldset>
               </div>
             </div>
@@ -138,55 +152,41 @@ https://templatemo.com/tm-574-mexant
   </section>
   <br>
   <hr>
-  <section class="testimonials" id="testimonials">
+<section class="testimonials" id="testimonials">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-6 offset-lg-3">
-          <div class="section-heading">
-            <h6>Ulasan</h6>
-            <h4>Daftar Ulasan</h4>
-          </div>
-        </div>
-        
-        @foreach ($data1 as $item)
-        <div class="col-lg-10 offset-lg-1">
-          <div class="owl-testimonials owl-carousel" style="position: relative; z-index: 5;">
-            <div class="item">
-              <i class="fa fa-quote-left"></i>
-              <p class="font-size: 100px;">“{{ $item->rating }}”</p>
-              <p>“{{ $item->pesan }}”</p>
-              <h4>{{ $item->nama }}</h4>
-              <span>{{ \Carbon\Carbon::parse($item['created_at'])->format('l, d M Y H.i') }}</span>
-              <div class="right-image">
-                <img src="gambarArtikel/per1.jpg" alt="">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="section-heading">
+                    <h6>Ulasan</h6>
+                    <h4>Daftar Ulasan</h4>
+                </div>
+            </div>
+
+            @foreach ($data1 as $item)
+                       <div class="col-lg-10 offset-lg-1">
+                           <div class="owl-testimonials owl-carousel" style="position: relative; z-index: 5;">
+                               <div class="item">
+                                   <i class="fa fa-quote-left"></i>
+                                   <div class="profile-picture-container">
+                                       <a href="/profileUser" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center">
+                                           <div class="profile-picture" style="width: 50px; height: 50px; overflow: hidden; margin-right: 10px;">
+                                               <img src="{{ asset('fotoProfil/' . $item->fotoProfil) }}" alt="User's Profile Picture" style="width: 25%; height: 70%; object-fit: cover; border-radius: 50%;">
+                                           </div>
+                                       </a>
+                                   </div>
+                                   <p class="font-size: 100px;">“{{ $item->rating }}”</p>
+                                   <p>“{{ $item->pesan }}”</p>
+                                   <h4>{{ $item->nama }}</h4>
+                                   <span>{{ \Carbon\Carbon::parse($item['created_at'])->format('l, d M Y H.i') }}</span>
+                                   <div class="right-image">
+                                       <img src="gambarArtikel/per1.jpg" alt="">
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                       @endforeach
+                  </div>
               </div>
-            </div>
-          </div>
-        </div>
-        @endforeach
-      </div>
-    </div>
-  </section>
-
-  <section class="simple-cta">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-5">
-          <h4>Upload <em>Articles</em> and <strong>Valid</strong> Information</h4>
-        </div>
-        <div class="col-lg-7">
-          <div class="buttons">
-            <div class="green-button">
-              <a href="/home">Kembali</a>
-            </div>
-            <div class="orange-button">
-              <a href="/ulasan">Ulasan</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  </body>
-</html>
+          </section>
+        </body>
+      </html>

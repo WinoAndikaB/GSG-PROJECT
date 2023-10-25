@@ -56,14 +56,32 @@
                 <div class="card-body">
                   <form class="form" method="post" action="registerUser">
                     @csrf
+                  <div class="mb-3">
+                    <input type="file" class="form-control" name="fotoProfil">
+                  </div>
                     <div class="mb-3">
                       <input type="text" name="name" class="form-control" placeholder="Name...">
+                    </div>
+                    <div class="mb-3">
+                      <input type="text" name="username" class="form-control" placeholder="Username...">
                     </div>
                     <div class="mb-3">
                       <input type="email" name="email" value="" class="form-control" placeholder="Email...">
                     </div>
                     <div class="mb-3">
                       <input type="password" name="password" placeholder="Password..." class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                      <input type="text" name="alamat" class="form-control" placeholder="Alamat...">
+                    </div>
+                    <div class="mb-3">
+                      <input type="text" name="instagram" class="form-control" placeholder="Instagram...">
+                    </div>
+                    <div class="mb-3">
+                      <input type="text" name="facebook" class="form-control" placeholder="Facebook...">
+                    </div>
+                    <div class="mb-3">
+                      <input type="textarea" name="aboutme" class="form-control" placeholder="About Me...">
                     </div>
                     <p class="mb-4 text-sm mx-auto">
                       Sudah Punya Akun?

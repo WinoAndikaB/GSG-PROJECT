@@ -9,5 +9,5 @@ class ulasans extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id','email','nama','pesan','rating'];
+        'id','email','nama','pesan','rating','fotoProfil'];
 }

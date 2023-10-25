@@ -6,6 +6,7 @@ use App\Models\artikels;
 use App\Models\ulasans;
 use App\Models\user;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PenggunaController extends Controller
 {
@@ -77,16 +78,21 @@ class PenggunaController extends Controller
         $data1=ulasans::all();
         return view('main.setelahLogin.ulasan', compact('data1'));
     }
-
-    function storeUlasan(Request $req){
-        ulasans::create([
-            'rating' => $req->rating,
-             'email' => $req->email,
-             'nama' => $req->nama,
-             'pesan' => $req->pesan,
-        ]);
-             return redirect('ulasan');
-     }
+    function storeUlasan(Request $request){
+        $ulasan = new ulasans;
+        $ulasan->rating = $request->rating;
+        $ulasan->email = $request->email;
+        $ulasan->nama = $request->nama;
+        $ulasan->pesan = $request->pesan;
+    
+        // Get the user's profile picture
+        $ulasan->fotoProfil = Auth::user()->fotoProfil;
+    
+        $ulasan->save();
+    
+        return redirect('ulasan');
+    }
+        
 
       //Profile User
       public function profileUser()

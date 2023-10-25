@@ -130,10 +130,10 @@ https://templatemo.com/tm-574-mexant
         <div class="col-lg-7">
           <div class="buttons">
             <div class="green-button">
-              <a href="/home">Kembali</a>
+              <a href="/">Kembali</a>
             </div>
             <div class="orange-button">
-              <a href="/ulasan">Ulasan</a>
+              <a href="/ulasanLandingPage">Ulasan</a>
             </div>
           </div>
         </div>
