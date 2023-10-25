@@ -3,7 +3,7 @@
 <title>Landing Page - GSG Project</title>
 
 <body>
-  <!-- ***** Header Area Start ***** -->
+<div class="page-heading">
   <header class="header-area header-sticky">
       <div class="container">
           <div class="row">
@@ -13,6 +13,7 @@
                           <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
                           <li class="scroll-to-section"><a href="#trends">Trending</a></li>
                           <li class="scroll-to-section"><a href="#about">Artikel</a></li>
+                          <li class="scroll-to-section"><a href="/ulasanLandingPage" class="text-center">Ulasan</a></li>
                           <li class="scroll-to-section"><a href="/abouts">Tentang</a></li>
                           <li>
                             <form action="{{ route('landingPage') }}" method="GET" class="input-group">
@@ -25,19 +26,12 @@
                       <a class='menu-trigger'>
                           <span>Menu</span>
                       </a>
-                      <!-- ***** Menu End ***** -->
                   </nav>
               </div>
           </div>
       </div>
   </header>
-  <!-- ***** Header Area End ***** -->
-
-
-
-  <br>
-  <br>
-
+</div>
   <div class="banner-area banner-inner-1 bg-black" id="banner">
     <div class="banner-inner pt-5">
         <div class="container">

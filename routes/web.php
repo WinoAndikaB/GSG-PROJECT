@@ -25,6 +25,7 @@ Route::post('/registerUser',[LoginController::class,'registerUser']);
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/', [LoginController::class, 'landingPage'])->name('landingPage');
 Route::get('/abouts', [LoginController::class, 'aboutLandingPage'])->name('aboutLandingPage');
+Route::get('/ulasanLandingPage', [LoginController::class, 'ulasanLandingPage'])->name('ulasanLandingPage');
 
 Route::get('/test-image', function () {
     return response()->file(storage_path('app/public/fotoProfil/MfZHRTSjrflHqK4X2SKyoWC1zblRxGIJ3alHgs57.jpg'));

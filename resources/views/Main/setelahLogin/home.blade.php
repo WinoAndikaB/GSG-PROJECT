@@ -3,7 +3,7 @@
 <title>Home - GSG Project</title>
 
 <body>
-  <!-- ***** Header Area Start ***** -->
+<div class="page-heading">
 <header class="header-area header-sticky" style="text-align: center;">
     <div class="container">
         <div class="row align-items-center">
@@ -13,6 +13,7 @@
                         <li class="scroll-to-section"><a href="#top" class="text-center">Home</a></li>
                         <li class="scroll-to-section"><a href="#trends" class="text-center">Trending</a></li>
                         <li class="scroll-to-section"><a href="#about" class="text-center">Artikel</a></li>
+                        <li class="scroll-to-section"><a href="/ulasan" class="text-center">Ulasan</a></li>
                         <li class="scroll-to-section"><a href="/about" class="text-center">Tentang</a></li>
                     </ul>
                     <ul class="nav">
@@ -24,10 +25,10 @@
                         </li>
                         <li class="scroll-to-section">
                             <a href="/profileUser" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center">
-                                <div class="profile-picture">
-                                    <img src="{{ asset('fotoProfil/' . Auth::user()->fotoProfil) }}" alt="Gambar Profil" />
+                                <div class="profile-picture" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
+                                    <img src="{{ asset('fotoProfil/' . Auth::user()->fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
                                 </div>
-                                <span class="d-sm-inline d-none">{{Auth::user()->name}}</span>
+                                <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
                             </a>
                         </li>
                         <li class="scroll-to-section">
@@ -39,10 +40,7 @@
         </div>
     </div>
 </header>
-
-
-  <br>
-  <br>
+</div>
 
   <div class="banner-area banner-inner-1 bg-black" id="banner">
     <div class="banner-inner pt-5">

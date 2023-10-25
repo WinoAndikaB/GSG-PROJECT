@@ -41,25 +41,26 @@
         <div class="row align-items-center">
             <div class="col-12">
                 <nav class="main-nav d-flex align-items-center justify-content-between">
+                  <ul class="nav">
+                    <li class="scroll-to-section"><a href="/home" class="text-center">Home</a></li>
+                    <li class="scroll-to-section"><a href="/home" class="text-center">Trending</a></li>
+                    <li class="scroll-to-section"><a href="/home" class="text-center">Artikel</a></li>
+                    <li class="scroll-to-section"><a href="/ulasan" class="text-center">Ulasan</a></li>
+                    <li class="scroll-to-section"><a href="/about" class="text-center">Tentang</a></li>
+                </ul>
                     <ul class="nav">
-                        <li class="scroll-to-section"><a href="/home" class="text-center">Home</a></li>
-                        <li class="scroll-to-section"><a href="/home" class="text-center">Trending</a></li>
-                        <li class="scroll-to-section"><a href="/home" class="text-center">Artikel</a></li>
-                        <li class="scroll-to-section"><a href="/about" class="text-center">Tentang</a></li>
-                    </ul>
-                    <ul class="nav">
-                        <li class="scroll-to-section">
-                            <a href="/profileUser" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center">
-                                <div class="profile-picture">
-                                    <img src="{{ asset('fotoProfil/' . Auth::user()->fotoProfil) }}" alt="Gambar Profil" />
-                                </div>
-                                <span class="d-sm-inline d-none">{{Auth::user()->name}}</span>
-                            </a>
-                        </li>
-                        <li class="scroll-to-section">
-                            <a href="/logout" class="text-right">Logout</a>
-                        </li>
-                    </ul>
+                      <li class="nav-item">
+                          <a href="/profileUser" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center">
+                              <div class="profile-picture" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
+                                  <img src="{{ asset('fotoProfil/' . Auth::user()->fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                              </div>
+                              <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
+                          </a>
+                      </li>
+                      <li class="nav-item">
+                          <a href="/logout" class="text-right">Logout</a>
+                      </li>
+                  </ul>                  
                 </nav>
             </div>
         </div>

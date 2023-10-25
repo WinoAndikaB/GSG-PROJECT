@@ -42,17 +42,15 @@ https://templatemo.com/tm-574-mexant
         <div class="row">
             <div class="col-12">
                 <nav class="main-nav">
-                    <!-- ***** Logo Start ***** -->
                     <a href="/" class="logo">
                         <img src="" alt="">
                     </a>
                     GSG<span>PROJECT</span>
-                    <!-- ***** Logo End ***** -->
-                    <!-- ***** Menu Start ***** -->
                     <ul class="nav">
                       <li class="scroll-to-section"><a href="/home" >Home</a></li>
                       <li class="scroll-to-section"><a href="/home">Artikel</a></li>
                       <li class="scroll-to-section"><a href="/home">Orang</a></li>
+                      <li class="scroll-to-section"><a href="/ulasanLandingPage" class="text-center">Ulasan</a></li>
                       <li class="scroll-to-section"><a href="/abouts">Tentang</a></li>
                       <li class="scroll-to-section"><a href="/login">Login</a></li>
                     </ul>       

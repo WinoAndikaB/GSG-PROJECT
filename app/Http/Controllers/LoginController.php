@@ -6,6 +6,7 @@ use App\Models\artikels;
 use App\Models\donasibarangs;
 use App\Models\donasiuangs;
 use App\Models\tambahdonases;
+use App\Models\ulasans;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -89,6 +90,12 @@ class LoginController extends Controller
        ]);
             return redirect('/login');
     }
+
+    function ulasanLandingPage(){
+        $data1=ulasans::all();
+        return view('main.sebelumLogin.ulasanLP', compact('data1'));
+    }
+
 
     public function login(Request $request){
         //dd($request);
