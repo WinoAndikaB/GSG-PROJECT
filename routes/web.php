@@ -57,8 +57,10 @@ Route::put('/profileAdmin/updateAdmin/{id}',[AdminController::class,'updateAdmin
 
 //Route Tab Artikel
 Route::get('/artikelAdmin', [AdminController::class, 'dataArtikel'])->name('dataArtikel');
-Route::get('/formTambahArtikel', [AdminController::class, 'formTambahArtikel'])->name('formTambahArtikel');
-Route::post('/formTambahArtikel/storeArtikel',[AdminController::class,'storeTbhArtikel']);
+
+Route::get('/artikel/create',  [AdminController::class, 'create'])->name('artikel.create');
+Route::post('/artikel/store',  [AdminController::class, 'store'])->name('artikel.store');
+
 Route::get('/deleteA/{id}',[AdminController::class,'deleteArtikel']);
 
 Route::get('/tampilDataEditArtikel/{id}',[AdminController::class,'tampilDataEditArtikel']);

@@ -130,32 +130,26 @@
           <div class="card mb-4">
             <div class="card-header pb-0">
               <h6>Tambah Artikel</h6>
-              <form action="/formTambahArtikel/storeArtikel" method="POST" enctype="multipart/form-data">
-              @csrf
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <div class="form-group">
-                        <label for="" class="form-control-label">Gambar</label>
-                        <input class="form-control" type="file" id="uploadGambar" name="gambarArtikel">
-                      </div>
-                      <label for="" class="form-control-label">Judul Artikel</label>
-                      <textarea class="form-control" type="textarea" name="judulArtikel"></textarea>
-                    </div>
-                    <div class="form-group">
-                      <label for="" class="form-control-label">Penulis</label>
-                      <input class="form-control" type="text" name="penulis" value="{{Auth::user()->name}}" readonly>
-                    </div>
-                    <div class="form-group">
-                      <label for="" class="form-control-label">Deskirpsi</label>
-                      <textarea class="form-control" type="text" name="deskripsi" id="editor"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary mt-3">Tambah</button>
-                    <a href="/artikelAdmin" class="btn btn-info mt-3">Kembali</i></a>
-                  </div>
+              <form action="{{ route('artikel.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="form-group">
+                  <label for="gambarArtikel">Gambar</label>
+                  <input type="file" class="form-control" id="gambarArtikel" name="gambarArtikel">
+              </div>              
+                <div class="form-group">
+                    <label for="judulArtikel">Judul Artikel</label>
+                    <input type="text" class="form-control" id="judulArtikel" name="judulArtikel" required>
                 </div>
-              </form>
-
+                <div class="form-group">
+                    <label for="penulis">Penulis</label>
+                    <input type="text" class="form-control" id="penulis" name="penulis" value="{{ Auth::user()->name }}" readonly>
+                </div>
+                <div class="form-group">
+                  <label for="" class="form-control-label">Deskirpsi</label>
+                  <textarea class="form-control" type="text" name="deskripsi" id="editor"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Tambah</button>
+            </form>            
             <div class="card-body px-0 pt-12 pb-2">
               <div class="table-responsive p-0">
                 <div class="panel-header panel-header-sm">

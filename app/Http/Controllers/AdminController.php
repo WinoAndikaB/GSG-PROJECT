@@ -33,39 +33,33 @@ function dataArtikel(){
         return redirect('/artikelAdmin');
     }
 
-    function formTambahArtikel(){
+    public function create()
+    {
         return view('admin.formTambahArtikel');
     }
 
-    public function storeTbhArtikel(Request $request)
+    public function store(Request $request)
     {
-        $request->validate([
-            'gambarArtikel' => 'required|image|mimes:jpeg,png,jpg,gif',
-            'judulArtikel' => 'required',
-            'penulis' => 'required',
-            'deskripsi' => 'required',
-        ]);
-
+        $article = new artikels;
+        $article->judulArtikel = $request->input('judulArtikel');
+        $article->penulis = $request->input('penulis');
+        $article->deskripsi = $request->input('deskripsi');
+    
+        // Handle file upload
         if ($request->hasFile('gambarArtikel')) {
-            $image = $request->file('gambarArtikel');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('gambarArtikel', $imageName);
-
-            $artikelData = [
-                'gambarArtikel' => $imageName,
-                'judulArtikel' => $request->input('judulArtikel'),
-                'penulis' => $request->input('penulis'),
-                'deskripsi' => $request->input('deskripsi'),
-            ];
-
-            artikels::create($artikelData);
-
-            return redirect('/artikelAdmin')->with('success', 'Data Berhasil Ditambahkan');
+            $file = $request->file('gambarArtikel');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->storeAs('your_upload_folder', $fileName, 'public'); // Adjust the storage path
+    
+            // Save the file name to the database
+            $article->gambarArtikel = $fileName;
         }
-
-        return redirect('/artikelAdmin')->with('error', 'Gambar Artikel is required');
+    
+        $article->save();
+    
+        return redirect('/artikelAdmin')->with('success', 'Article added successfully.');
     }
-
+    
 
     //Edit Data Tabel
     function tampilDataEditArtikel($id){
