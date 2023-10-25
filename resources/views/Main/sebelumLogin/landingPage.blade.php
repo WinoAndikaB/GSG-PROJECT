@@ -73,11 +73,29 @@
                           <div class="trending-post">
                               <div class="single-post-wrap style-overlay">
                                   <div class="thumb">
-                                      <img src="{{ asset('gambarArtikel/'.$item->gambar) }}" alt="img">
+                                      <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" alt="img">
                                   </div>
                                   <div class="details">
                                       <div class="post-meta-single">
-                                          <p><i class="fa fa-clock-o"></i>{{ \Carbon\Carbon::parse($item['created_at'])->format('l, d M Y H.i') }}</p>
+                                          <p><i class="fa fa-clock-o"></i>
+                                            @php
+                                            $ulasanCreatedAt = \Carbon\Carbon::parse($item['created_at']);
+                                            $sekarang = \Carbon\Carbon::now();
+                                            $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
+                          
+                                            if ($selisihWaktu < 60) {
+                                              echo $selisihWaktu . ' Menit Lalu';
+                                            } elseif ($selisihWaktu < 1440) {
+                                              echo floor($selisihWaktu / 60) . ' Jam Lalu';
+                                            } elseif ($selisihWaktu < 10080) {
+                                              echo floor($selisihWaktu / 1440) . ' Hari Lalu';
+                                            } elseif ($selisihWaktu < 43200) {
+                                              echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
+                                            } else {
+                                              echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
+                                            }
+                                          @endphp
+                                        </p>
                                       </div>
                                       <h6 class="title"><a href="#">{{$item->judulArtikel}}</a></h6>
                                   </div>
@@ -98,13 +116,31 @@
                           <div class="single-post-list-wrap">
                               <div class="media">
                                   <div class="media-left">
-                                      <img src="{{ asset('gambarArtikel/'.$item->gambar) }}" alt="img" width="35" height="35">
+                                      <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" alt="img" width="35" height="35">
                                   </div>
                                   <div class="media-body">
                                       <div class="details">
                                           <div class="post-meta-single">
                                               <ul>
-                                                  <li><i class="fa fa-clock-o"></i>{{ \Carbon\Carbon::parse($item['created_at'])->format('l, d M Y H.i') }}</li>
+                                                  <li><i class="fa fa-clock-o"></i>
+                                                    @php
+                                                    $ulasanCreatedAt = \Carbon\Carbon::parse($item['created_at']);
+                                                    $sekarang = \Carbon\Carbon::now();
+                                                    $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
+                                  
+                                                    if ($selisihWaktu < 60) {
+                                                      echo $selisihWaktu . ' Menit Lalu';
+                                                    } elseif ($selisihWaktu < 1440) {
+                                                      echo floor($selisihWaktu / 60) . ' Jam Lalu';
+                                                    } elseif ($selisihWaktu < 10080) {
+                                                      echo floor($selisihWaktu / 1440) . ' Hari Lalu';
+                                                    } elseif ($selisihWaktu < 43200) {
+                                                      echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
+                                                    } else {
+                                                      echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
+                                                    }
+                                                  @endphp
+                                                </li>
                                               </ul>
                                           </div>
                                           <h6 class="title"><a href="#">{{$item->judulArtikel}}</a></h6>
@@ -126,13 +162,31 @@
                     <div class="item">
                         <div class="single-post-wrap">
                             <div class="thumb">
-                                <img src="{{ asset('gambarArtikel/'.$item->gambar) }}" alt="img">
+                                <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" alt="img">
                             </div>
                             <div class="details">
                                 <div class="post-meta-single mb-4 pt-1">
                                     <ul>
                                         <li><a class="tag-base tag-blue" href="#">{{$item->penulis}}</a></li>
-                                        <li><i class="fa fa-clock-o"></i>{{ \Carbon\Carbon::parse($item['created_at'])->format('l, d M Y H.i') }}</li>
+                                        <li><i class="fa fa-clock-o"></i>
+                                            @php
+                                            $ulasanCreatedAt = \Carbon\Carbon::parse($item['created_at']);
+                                            $sekarang = \Carbon\Carbon::now();
+                                            $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
+                          
+                                            if ($selisihWaktu < 60) {
+                                              echo $selisihWaktu . ' Menit Lalu';
+                                            } elseif ($selisihWaktu < 1440) {
+                                              echo floor($selisihWaktu / 60) . ' Jam Lalu';
+                                            } elseif ($selisihWaktu < 10080) {
+                                              echo floor($selisihWaktu / 1440) . ' Hari Lalu';
+                                            } elseif ($selisihWaktu < 43200) {
+                                              echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
+                                            } else {
+                                              echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
+                                            }
+                                          @endphp
+                                        </li>
                                     </ul>
                                 </div>
                                 <h6 class="title"><a href="#">{{$item->judulArtikel}}</a></h6>
@@ -180,7 +234,7 @@
               <div class="row" style="text-align: justify">
                   <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
                       <div class="d-flex justify-content-center">
-                          <img src="{{ asset('gambarArtikel/'.$item->gambar) }}" style="max-width: 100%; height: auto; border-radius: 14px">
+                          <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" style="max-width: 100%; height: auto; border-radius: 14px">
                       </div>
                   </div>
                   <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
@@ -188,7 +242,25 @@
                       <span class="d-flex"><b>{{ $item->penulis }}</b></span>
                       <p>{!! substr(strip_tags($item->deskripsi), 0, 400) . (strlen(strip_tags($item->content)) > 400 ? '...' : '') !!}</p>
                   </div>
-                  <span style="text-align: right; color: rgba(165, 165, 165, 1);"><p> {{ \Carbon\Carbon::parse($item['created_at'])->format('l, d M Y H.i') }}                   | 
+                  <span style="text-align: right; color: rgba(165, 165, 165, 1);"><p>
+                    @php
+                    $ulasanCreatedAt = \Carbon\Carbon::parse($item['created_at']);
+                    $sekarang = \Carbon\Carbon::now();
+                    $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
+  
+                    if ($selisihWaktu < 60) {
+                      echo $selisihWaktu . ' Menit Lalu';
+                    } elseif ($selisihWaktu < 1440) {
+                      echo floor($selisihWaktu / 60) . ' Jam Lalu';
+                    } elseif ($selisihWaktu < 10080) {
+                      echo floor($selisihWaktu / 1440) . ' Hari Lalu';
+                    } elseif ($selisihWaktu < 43200) {
+                      echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
+                    } else {
+                      echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
+                    }
+                  @endphp
+                  | 
                       <a href="/login" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a></p></span>
               </div>
               <hr>
@@ -211,12 +283,30 @@
             <div class="col-lg-3 col-sm-6">
                 <div class="single-post-wrap style-overlay">
                     <div class="thumb">
-                        <img src="{{ asset('gambarArtikel/'.$item->gambar) }}" alt="img" width="500" height="250">
+                        <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" alt="img" width="500" height="250">
                         <a class="tag-base tag-purple" href="#">{{ $item->penulis }}</a>
                     </div>
                     <div class="details">
                         <div class="post-meta-single">
-                            <p><i class="fa fa-clock-o"></i>{{ \Carbon\Carbon::parse($item['created_at'])->format('l, d M Y H.i') }} </p>
+                            <p><i class="fa fa-clock-o"></i>
+                                @php
+                                $ulasanCreatedAt = \Carbon\Carbon::parse($item['created_at']);
+                                $sekarang = \Carbon\Carbon::now();
+                                $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
+              
+                                if ($selisihWaktu < 60) {
+                                  echo $selisihWaktu . ' Menit Lalu';
+                                } elseif ($selisihWaktu < 1440) {
+                                  echo floor($selisihWaktu / 60) . ' Jam Lalu';
+                                } elseif ($selisihWaktu < 10080) {
+                                  echo floor($selisihWaktu / 1440) . ' Hari Lalu';
+                                } elseif ($selisihWaktu < 43200) {
+                                  echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
+                                } else {
+                                  echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
+                                }
+                              @endphp
+                            </p>
                         </div>
                         <h6 class="title"><a href="#">{{ $item->judulArtikel }}</a></h6>
                     </div>

@@ -16,7 +16,7 @@
               </ul>
                   <ul class="nav">
                     <li class="nav-item">
-                        <a href="/profileAdmin" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center">
+                        <a href="/profileUser" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center">
                             <div class="profile-picture" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
                                 <img src="{{ asset('fotoProfil/' . Auth::user()->fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
                             </div>
@@ -119,7 +119,7 @@
                     <div class="card card-user">
                       <div class="card-body text-center">
                         <div class="author">
-                          <a href="#">
+                          <a href="/profileUser">
                             <img src="{{ asset('fotoProfil/' . Auth::user()->fotoProfil) }}" alt="User's Profile Picture">
                             <br>
                             <br>

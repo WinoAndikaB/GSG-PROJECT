@@ -113,7 +113,7 @@
 
           <br>
           
-          <img src="{{ asset('gambarArtikel/' . $article->gambar) }}" class="main-image" style="max-width: 100%; height: auto; margin-bottom: 20px;">
+          <img src="{{ asset('gambarArtikel/' . $article->gambarArtikel) }}" class="main-image" style="max-width: 100%; height: auto; margin-bottom: 20px;">
 
           <div style="font-size: 18px; text-align: justify; margin-top: 20px;">
             <div style="font-size: 18px; line-height: 2;">
@@ -148,7 +148,7 @@
             <div class="row pb-3">
                 @foreach($box as $item)
                 <div class="col-5 align-self-center mb-3">
-                    <img src="{{ asset('gambarArtikel/' . $item->gambar) }}" alt="img" class="fh5co_most_trading"/>
+                    <img src="{{ asset('gambarArtikel/' . $item->gambarArtikel) }}" alt="img" class="fh5co_most_trading"/>
                 </div>
                 <div class="col-7 padding">
                     <div class="most_fh5co_trending_font"><a href="{{ route('detail.artikel', ['id' => $item->id]) }}">{{ $item->judulArtikel }}</a></div>

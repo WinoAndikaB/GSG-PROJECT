@@ -37,43 +37,52 @@ function dataArtikel(){
         return view('admin.formTambahArtikel');
     }
 
-    function storeTbhArtikel(Request $request)
+    public function storeTbhArtikel(Request $request)
     {
-        $tbhArtikel = artikels::create($request->all());
-        if($request->hasFile('gambar')){
-            $request->file('gambar')->move('gambarArtikel/', $request->file('gambar')->getClientOriginalName());
-            $tbhArtikel->gambar = $request->file('gambar')->getClientOriginalName();
-            $tbhArtikel->save();
-            return redirect('/artikelAdmin')->with('success', 'Data Berhasil Ditambahkan');
-        }
-        
-        $validated = $request->validate([
-            'gambar'=>'required',
-            'judulArtikel'=>'required', 
-            'penulis'=>'required', 
-            'deskripsi'=>'required'
+        $request->validate([
+            'gambarArtikel' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'judulArtikel' => 'required',
+            'penulis' => 'required',
+            'deskripsi' => 'required',
         ]);
 
-        artikels::create($validated);
-        return redirect('/artikelAdmin');
+        if ($request->hasFile('gambarArtikel')) {
+            $image = $request->file('gambarArtikel');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->storeAs('gambarArtikel', $imageName);
+
+            $artikelData = [
+                'gambarArtikel' => $imageName,
+                'judulArtikel' => $request->input('judulArtikel'),
+                'penulis' => $request->input('penulis'),
+                'deskripsi' => $request->input('deskripsi'),
+            ];
+
+            artikels::create($artikelData);
+
+            return redirect('/artikelAdmin')->with('success', 'Data Berhasil Ditambahkan');
+        }
+
+        return redirect('/artikelAdmin')->with('error', 'Gambar Artikel is required');
     }
+
 
     //Edit Data Tabel
     function tampilDataEditArtikel($id){
         $data = artikels::find($id);
-        //dd($data);
         return view('admin.formEditArtikel', compact('data'));
     }
+
     function updateDataIdArtikel(Request $request, $id){
         $data = artikels::find($id);
         $data->update($request->all());
     
-        if ($request->hasFile('gambar')) {
-            $image = $request->file('gambar');
+        if ($request->hasFile('gambarArtikel')) {
+            $image = $request->file('gambarArtikel');
     
             $filename = $image->getClientOriginalName();
         
-            $image->move(public_path('gambar'), $filename);
+            $image->move(public_path('gambarArtikel'), $filename);
         
             $data->gambarArtikel = $filename;
             $data->save();

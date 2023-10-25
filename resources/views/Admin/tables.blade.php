@@ -154,7 +154,7 @@
                       <td>
                         <div class="px-2 py-1">
                           <div>
-                            <img src="{{asset('gambarArtikel/'.$tbhartikel->gambar)}}" alt="" style="width: 100px;">
+                            <img src="{{asset('gambarArtikel/'.$tbhartikel->gambarArtikel)}}" alt="" style="width: 100px;">
                           </div>
                         </div>
                       </td>

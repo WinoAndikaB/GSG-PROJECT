@@ -23,69 +23,37 @@
     <link rel="stylesheet" href="assets/css/owl.css">
     <link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+
     <style>
-      .card-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    }
-
-    .card {
-      flex: 0 0 100%; /* Set card width to 100% to stack vertically */
-      margin: 10px 0;
-      padding: 20px;
-      border: 1px solid #e6e6e6;
-      background-color: #fff;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-      position: relative; /* Added this line to make inner elements absolute positioned */
-    }
-
-      .profile-pic {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 3px solid #fff;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        margin: 0 auto 10px;
+      /* CSS for the curved card */
+      .curved-card {
+          background: #fff; /* Background color for the card */
+          border-radius: 20px; /* Adjust the border radius as needed for the desired curve */
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a box shadow for depth */
+          padding: 20px; /* Add padding inside the card */
+          margin: 10px; /* Add margin to create spacing between cards */
+          border: 2px solid #000; /* Add a border with the desired color and width */
       }
 
-      .star-rating i {
-        color: #FFD700;
-      }
-
-      .review-actions {
-      display: flex;
-      justify-content: flex-end; /* Align right */
-      align-items: center;
-    }
-
-    .actions i {
-      margin: 0 5px;
-      cursor: pointer;
-    }
-
-      .card-header {
-        background-color: #f8f9fa; /* Header background color */
-        border-bottom: 1px solid #e6e6e6;
-        padding: 10px 20px;
-      }
-
-      .fade-in {
-        animation: fadeIn 1s ease-in-out;
-      }
-
-      @keyframes fadeIn {
-        0% {
-          opacity: 0;
-          transform: translateY(20px);
+      .interaction-icons i {
+          font-size: 20px;
+          margin: 5px;
+          cursor: pointer;
+          transition: color 0.3s, transform 0.3s;
         }
-        100% {
-          opacity: 1;
-          transform: translateY(0);
+
+        .interaction-icons i:hover {
+          color: #007bff; /* Warna ikon berubah saat dihover */
+          transform: scale(1.2); /* Ikona diperbesar saat dihover */
         }
-      }
-    </style>
+        .interaction-icons {
+          text-align: right;
+        }
+
+  </style>
+
   </head>
 
 <body>
@@ -141,34 +109,65 @@
                     <h4>Daftar Ulasan</h4>
                 </div>
             </div>
+          </div>
+        </div>
+    </section>
 
-            @foreach ($data1 as $item)
-                       <div class="col-lg-10 offset-lg-1">
-                           <div class="owl-testimonials owl-carousel" style="position: relative; z-index: 5;">
-                               <div class="item">
-                                   <i class="fa fa-quote-left"></i>
-                                   <div class="profile-picture-container">
-                                       <a href="/profileUser" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center">
-                                           <div class="profile-picture" style="width: 50px; height: 50px; overflow: hidden; margin-right: 10px;">
-                                               <img src="{{ asset('fotoProfil/' . $item->fotoProfil) }}" alt="User's Profile Picture" style="width: 25%; height: 70%; object-fit: cover; border-radius: 50%;">
-                                           </div>
-                                       </a>
-                                   </div>
-                                   <p class="font-size: 100px;">“{{ $item->rating }}”</p>
-                                   <p>“{{ $item->pesan }}”</p>
-                                   <h4>{{ $item->nama }}</h4>
-                                   <span>{{ \Carbon\Carbon::parse($item['created_at'])->format('l, d M Y H.i') }}</span>
-                                   <div class="right-image">
-                                       <img src="gambarArtikel/per1.jpg" alt="">
-                                   </div>
-                               </div>
-                           </div>
-                       </div>
-                       @endforeach
+
+    <div class="container">
+      @foreach ($data1 as $item)
+        <div class="row">
+          <div class="col-lg-10 offset-lg-1">
+            <div class="item curved-card">
+              <div class="row">
+                <div class="col-lg-9 col-md-6">
+                  <div class="profile-picture">
+                    <img src="{{ asset('fotoProfil/' . $item->fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
                   </div>
+                </div>
+                <div class="col-lg-9 col-md-6 offset-lg-1">
+                  <span>{{ $item->nama }}</span><br>
+                  <span>
+                    @php
+                      $ulasanCreatedAt = \Carbon\Carbon::parse($item['created_at']);
+                      $sekarang = \Carbon\Carbon::now();
+                      $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
+    
+                      if ($selisihWaktu < 60) {
+                        echo $selisihWaktu . ' Menit Lalu';
+                      } elseif ($selisihWaktu < 1440) {
+                        echo floor($selisihWaktu / 60) . ' Jam Lalu';
+                      } elseif ($selisihWaktu < 10080) {
+                        echo floor($selisihWaktu / 1440) . ' Hari Lalu';
+                      } elseif ($selisihWaktu < 43200) {
+                        echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
+                      } else {
+                        echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
+                      }
+                    @endphp
+                  </span><br>
+                  <span>{{ $item->rating }}</span>
+                  <p>“{{ $item->pesan }}”</p>
+    
+                  <!-- Ikon Like, Dislike, Share, Reply -->
+                  <div class="interaction-icons text-right">
+                    <i class="fas fa-thumbs-up like-icon" id="like_{{ $item->id }}"></i>
+                    <i class="fas fa-thumbs-down dislike-icon" id="dislike_{{ $item->id }}"></i>
+                    <i class="fas fa-reply reply-icon" id="reply_{{ $item->id }}"></i>
+                  </div>                                    
+                </div>
               </div>
-          </section>
-
+            </div>
+          </div>
+        </div>
+      @endforeach
+    </div>
+    
+    
+    
+    
+  
+          
 
   <div class="text-center">
     <div class="buttons" style="display: flex; justify-content: center; gap: 10px;">
@@ -191,5 +190,43 @@
       }
   });
 </script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  // Tambahkan event click untuk ikon Like
+  $(".like-icon").on("click", function() {
+    var id = $(this).attr("id").split("_")[1]; // Ambil ID ulasan yang sesuai
+    // Lakukan tindakan yang sesuai, misalnya, mengirimkan permintaan ke server
+    // untuk menambahkan suka untuk ulasan dengan ID tersebut.
+    // Anda dapat mengganti ini dengan tindakan yang sesuai dalam proyek Anda.
+    alert("Anda menyukai ulasan dengan ID " + id);
+  });
+
+  // Tambahkan event click untuk ikon Dislike
+  $(".dislike-icon").on("click", function() {
+    var id = $(this).attr("id").split("_")[1]; // Ambil ID ulasan yang sesuai
+    // Lakukan tindakan yang sesuai, misalnya, mengirimkan permintaan ke server
+    // untuk menambahkan tidak suka untuk ulasan dengan ID tersebut.
+    // Anda dapat mengganti ini dengan tindakan yang sesuai dalam proyek Anda.
+    alert("Anda tidak menyukai ulasan dengan ID " + id);
+  });
+
+  // Tambahkan event click untuk ikon Share
+  $(".share-icon").on("click", function() {
+    var id = $(this).attr("id").split("_")[1]; // Ambil ID ulasan yang sesuai
+    // Lakukan tindakan yang sesuai, misalnya, membagikan ulasan dengan ID tersebut.
+    // Anda dapat mengganti ini dengan tindakan yang sesuai dalam proyek Anda.
+    alert("Anda membagikan ulasan dengan ID " + id);
+  });
+
+  // Tambahkan event click untuk ikon Reply
+  $(".reply-icon").on("click", function() {
+    var id = $(this).attr("id").split("_")[1]; // Ambil ID ulasan yang sesuai
+    // Lakukan tindakan yang sesuai, misalnya, menampilkan formulir balasan untuk ulasan dengan ID tersebut.
+    // Anda dapat mengganti ini dengan tindakan yang sesuai dalam proyek Anda.
+    alert("Anda membalas ulasan dengan ID " + id);
+  });
+</script>
+
   </body>
 </html>

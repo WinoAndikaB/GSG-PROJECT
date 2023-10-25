@@ -99,6 +99,7 @@ class LoginController extends Controller
 
     function ulasanLandingPage(){
         $data1=ulasans::all();
+
         return view('main.sebelumLogin.ulasanLP', compact('data1'));
     }
 

@@ -1,17 +1,3 @@
-<!--
-=========================================================
-* Argon Dashboard 2 - v2.0.4
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://www.creative-tim.com/license)
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -169,9 +155,9 @@
                     <div class="form-group">
                       <div class="form-group">
                         <label for="" class="form-control-label">Gambar</label>
-                        <input class="form-control" type="file" id="uploadGambar" name="gambar" value="{{ $data->gambar }}">
+                        <input class="form-control" type="file" id="uploadGambar" name="gambarArtikel" value="{{ $data->gambarArtikel }}">
                         <br>
-                        <img src="{{asset('gambarArtikel/'.$data->gambar)}}" height="10%" width="50%" srcset="">
+                        <img src="{{asset('gambarArtikel/'.$data->gambarArtikel)}}" height="10%" width="50%" srcset="">
                       </div>
                       <label for="" class="form-control-label">Judul Artikel</label>
                       <textarea class="form-control" type="textarea" name="judulArtikel">{{ $data->judulArtikel }}</textarea>

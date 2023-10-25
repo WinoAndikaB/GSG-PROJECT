@@ -137,10 +137,10 @@
                     <div class="form-group">
                       <div class="form-group">
                         <label for="" class="form-control-label">Gambar</label>
-                        <input class="form-control" type="file" id="uploadFoto" name="gambar">
+                        <input class="form-control" type="file" id="uploadGambar" name="gambarArtikel">
                       </div>
                       <label for="" class="form-control-label">Judul Artikel</label>
-                      <textarea class="form-control" type="text" name="judulArtikel" value=""></textarea>
+                      <textarea class="form-control" type="textarea" name="judulArtikel"></textarea>
                     </div>
                     <div class="form-group">
                       <label for="" class="form-control-label">Penulis</label>
@@ -148,7 +148,7 @@
                     </div>
                     <div class="form-group">
                       <label for="" class="form-control-label">Deskirpsi</label>
-                      <textarea class="form-control" type="textarea" name="deskripsi" id="editor"></textarea>
+                      <textarea class="form-control" type="text" name="deskripsi" id="editor"></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary mt-3">Tambah</button>
                     <a href="/artikelAdmin" class="btn btn-info mt-3">Kembali</i></a>
@@ -271,6 +271,13 @@
   <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
 
   <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
+  <script>
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
 
     </body>
 </html>
