@@ -1,3 +1,5 @@
+@extends('Main.layout.homeStyle')
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,46 +23,49 @@
     <link rel="stylesheet" href="{{ asset('assets/css/owl.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}">
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css">
-    
 
+    <link href="{{ asset('aset1/css/media_query.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('aset1/css/bootstrap.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('aset1/css/owl.carousel.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('aset1/css/owl.theme.default.css')}}" rel="stylesheet" type="text/css"/>
+    <!-- Bootstrap CSS -->
+    <link href="{{ asset('aset1/css/style_1.css')}}" rel="stylesheet" type="text/css"/>
+    <!-- Modernizr JS -->
+    <script src="{{ asset('aset1/js/modernizr-3.5.0.min.js')}}"></script>
+  
   </head>
 <body>
 
-
-  <!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky">
+  <header class="header-area header-sticky" style="text-align: center;">
     <div class="container">
-        <div class="row">
+        <div class="row align-items-center">
             <div class="col-12">
-                <nav class="main-nav">
-                    <!-- ***** Logo Start ***** -->
-                    <a href="/" class="logo">
-                        <img src="" alt="">
-                    </a>
-                    GSG<span>PROJECT</span>
-                    <!-- ***** Logo End ***** -->
-                    <!-- ***** Menu Start ***** -->
+                <nav class="main-nav d-flex align-items-center justify-content-between">
                     <ul class="nav">
-                      <li class="scroll-to-section"><a href="/home" >Home</a></li>
-                      <li class="scroll-to-section"><a href="/home">Artikel</a></li>
-                      <li class="scroll-to-section"><a href="/home">Orang</a></li>
-                        <a href="#" class="nav-link text-white font-weight-bold px-0">
-                          <i class="fa fa-user me-sm-1"></i>
-                          <span class="d-sm-inline d-none">{{Auth::user()->name}}</span>
-                        </a>
-                        <li>
-                          <a href="/logout">Logout</a></li> 
-                    </ul>       
-                    <a class='menu-trigger'>
-                        <span>Menu</span>
-                    </a>
-                    <!-- ***** Menu End ***** -->
+                        <li class="scroll-to-section"><a href="/home" class="text-center">Home</a></li>
+                        <li class="scroll-to-section"><a href="/home" class="text-center">Trending</a></li>
+                        <li class="scroll-to-section"><a href="/home" class="text-center">Artikel</a></li>
+                        <li class="scroll-to-section"><a href="/about" class="text-center">Tentang</a></li>
+                    </ul>
+                    <ul class="nav">
+                        <li class="scroll-to-section">
+                            <a href="/profileUser" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center">
+                                <div class="profile-picture">
+                                    <img src="{{ asset('fotoProfil/' . Auth::user()->fotoProfil) }}" alt="Gambar Profil" />
+                                </div>
+                                <span class="d-sm-inline d-none">{{Auth::user()->name}}</span>
+                            </a>
+                        </li>
+                        <li class="scroll-to-section">
+                            <a href="/logout" class="text-right">Logout</a>
+                        </li>
+                    </ul>
                 </nav>
             </div>
         </div>
     </div>
 </header>
-  <!-- ***** Header Area End ***** -->
+
 
   <div class="page-heading">
     <div class="container">
@@ -75,13 +80,11 @@
     </div>
   </div>
 
-  <!-- ***** Main Banner Area End ***** --> 
-
   <section class="what-we-do">
     <div class="container">
       <div class="row">
       
-    
+        <div class="col-md-8 animate-box" data-animate-effect="fadeInRight">
           <section>
               <h1 style="color: rgba(47, 72, 88, 1);">{{ $article->judulArtikel }}</h1><br>
               <p style="color: rgba(242, 100, 25, 1);">{{ $article->penulis}} <br>
@@ -108,8 +111,7 @@
           </span>
 
           <br>
-          <br>
-  
+          
           <img src="{{ asset('gambarArtikel/' . $article->gambar) }}" class="main-image" style="max-width: 100%; height: auto; margin-bottom: 20px;">
 
           <div style="font-size: 18px; text-align: justify; margin-top: 20px;">
@@ -117,6 +119,46 @@
               {!! str_replace('<img', '<img style="max-width: 1152px; width: 100%; height: auto; display: block; margin: 0 auto;"', $article->deskripsi) !!}
             </div>
           </div>
+        </div>
+
+
+          <div class="col-md-4 animate-box" data-animate-effect="fadeInRight">
+            <div>
+                <div class="fh5co_heading fh5co_heading_border_bottom py-2 mb-4">Tags</div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="fh5co_tags_all">
+                <a href="#" class="fh5co_tagg">Business</a>
+                <a href="#" class="fh5co_tagg">Technology</a>
+                <a href="#" class="fh5co_tagg">Sport</a>
+                <a href="#" class="fh5co_tagg">Art</a>
+                <a href="#" class="fh5co_tagg">Lifestyle</a>
+                <a href="#" class="fh5co_tagg">Three</a>
+                <a href="#" class="fh5co_tagg">Photography</a>
+                <a href="#" class="fh5co_tagg">Lifestyle</a>
+                <a href="#" class="fh5co_tagg">Art</a>
+                <a href="#" class="fh5co_tagg">Education</a>
+                <a href="#" class="fh5co_tagg">Social</a>
+                <a href="#" class="fh5co_tagg">Three</a>
+            </div>
+
+              
+            <div class="fh5co_heading fh5co_heading_border_bottom pt-3 py-2 mb-4">Most Popular</div>
+            <div class="row pb-3">
+                @foreach($box as $item)
+                <div class="col-5 align-self-center mb-3">
+                    <img src="{{ asset('gambarArtikel/' . $item->gambar) }}" alt="img" class="fh5co_most_trading"/>
+                </div>
+                <div class="col-7 padding">
+                    <div class="most_fh5co_trending_font"><a href="{{ route('detail.artikel', ['id' => $item->id]) }}">{{ $item->judulArtikel }}</a></div>
+                    <div class="most_fh5co_trending_font_123">{{ \Carbon\Carbon::parse($item['created_at'])->format('l, d M Y H.i') }}</div>
+                </div>
+                @endforeach
+            </div>            
+        </div>
+    </div>
+</div>
+</div>
 
           <br>
 
@@ -130,36 +172,9 @@
                 </div>
             </div>
         </div>
-        
-        
-        
-        
-        
-       
-
       </div>
     </div>
   </section>
-
-  <section class="partners">
-    <div class="container">
-      <div class="row">
-        
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <p>Copyright © 2022 Mexant Co., Ltd. All Rights Reserved. 
-          
-            <br>Designed by <a title="CSS Templates" rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a> Edited By <a title="CSS Templates" rel="sponsored" href="#" target="_blank">GSG Team</a></p>
-        </div>
-      </div>
-    </div>
-  </footer>
 
   <!-- Scripts -->
   <!-- Bootstrap core JavaScript -->
@@ -173,6 +188,23 @@
     <script src="{{ asset('assets/js/swiper.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
 
+    <div class="gototop js-top">
+      <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
+    </div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+    <!--<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+          integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+          crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+          integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+          crossorigin="anonymous"></script>
 
+    <!-- Parallax -->
+    <script src="{{ asset('aset1/js/jquery.stellar.min.js') }}"></script>
+    <!-- Main -->
+    <script src="{{ asset('aset1/js/main.js') }}"></script>
   </body>
 </html>

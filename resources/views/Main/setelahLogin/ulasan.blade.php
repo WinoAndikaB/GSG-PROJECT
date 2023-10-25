@@ -1,3 +1,5 @@
+@extends('Main.layout.homeStyle')
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,40 +35,36 @@ https://templatemo.com/tm-574-mexant
 <body>
 
 
-  <!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky">
+
+  <header class="header-area header-sticky" style="text-align: center;">
     <div class="container">
-        <div class="row">
+        <div class="row align-items-center">
             <div class="col-12">
-                <nav class="main-nav">
-                    <!-- ***** Logo Start ***** -->
-                    <a href="/" class="logo">
-                        <img src="" alt="">
-                    </a>
-                    GSG<span>PROJECT</span>
-                    <!-- ***** Logo End ***** -->
-                    <!-- ***** Menu Start ***** -->
+                <nav class="main-nav d-flex align-items-center justify-content-between">
                     <ul class="nav">
-                      <li class="scroll-to-section"><a href="/home" >Home</a></li>
-                      <li class="scroll-to-section"><a href="/home">Artikel</a></li>
-                      <li class="scroll-to-section"><a href="/home">Orang</a></li>
-                        <a href="#" class="nav-link text-white font-weight-bold px-0">
-                          <i class="fa fa-user me-sm-1"></i>
-                          <span class="d-sm-inline d-none">{{Auth::user()->name}}</span>
-                        </a>
-                        <li>
-                          <a href="/logout">Logout</a></li> 
-                    </ul>        
-                    <a class='menu-trigger'>
-                        <span>Menu</span>
-                    </a>
-                    <!-- ***** Menu End ***** -->
+                        <li class="scroll-to-section"><a href="/home" class="text-center">Home</a></li>
+                        <li class="scroll-to-section"><a href="/home" class="text-center">Trending</a></li>
+                        <li class="scroll-to-section"><a href="/home" class="text-center">Artikel</a></li>
+                        <li class="scroll-to-section"><a href="/about" class="text-center">Tentang</a></li>
+                    </ul>
+                    <ul class="nav">
+                        <li class="scroll-to-section">
+                            <a href="/profileUser" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center">
+                                <div class="profile-picture">
+                                    <img src="{{ asset('fotoProfil/' . Auth::user()->fotoProfil) }}" alt="Gambar Profil" />
+                                </div>
+                                <span class="d-sm-inline d-none">{{Auth::user()->name}}</span>
+                            </a>
+                        </li>
+                        <li class="scroll-to-section">
+                            <a href="/logout" class="text-right">Logout</a>
+                        </li>
+                    </ul>
                 </nav>
             </div>
         </div>
     </div>
 </header>
-  <!-- ***** Header Area End ***** -->
 
   <div class="page-heading">
     <div class="container">
@@ -188,76 +186,6 @@ https://templatemo.com/tm-574-mexant
       </div>
     </div>
   </section>
-
-  <footer>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <p>Copyright © 2022 Mexant Co., Ltd. All Rights Reserved. 
-          
-            <br>Designed by <a title="CSS Templates" rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a> Edited By <a title="CSS Templates" rel="sponsored" href="#" target="_blank">GSG Team</a></p>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Scripts -->
-  <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <script src="assets/js/isotope.min.js"></script>
-    <script src="assets/js/owl-carousel.js"></script>
-
-    <script src="assets/js/tabs.js"></script>
-    <script src="assets/js/swiper.js"></script>
-    <script src="assets/js/custom.js"></script>
-    <script>
-
-      
-      var interleaveOffset = 0.5;
-
-      var swiperOptions = {
-        loop: true,
-        speed: 1000,
-        grabCursor: true,
-        watchSlidesProgress: true,
-        mousewheelControl: true,
-        keyboardControl: true,
-        navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev"
-        },
-        on: {
-          progress: function() {
-            var swiper = this;
-            for (var i = 0; i < swiper.slides.length; i++) {
-              var slideProgress = swiper.slides[i].progress;
-              var innerOffset = swiper.width * interleaveOffset;
-              var innerTranslate = slideProgress * innerOffset;
-              swiper.slides[i].querySelector(".slide-inner").style.transform =
-                "translate3d(" + innerTranslate + "px, 0, 0)";
-            }      
-          },
-          touchStart: function() {
-            var swiper = this;
-            for (var i = 0; i < swiper.slides.length; i++) {
-              swiper.slides[i].style.transition = "";
-            }
-          },
-          setTransition: function(speed) {
-            var swiper = this;
-            for (var i = 0; i < swiper.slides.length; i++) {
-              swiper.slides[i].style.transition = speed + "ms";
-              swiper.slides[i].querySelector(".slide-inner").style.transition =
-                speed + "ms";
-            }
-          }
-        }
-      };
-
-      var swiper = new Swiper(".swiper-container", swiperOptions);
-    </script>
 
   </body>
 </html>

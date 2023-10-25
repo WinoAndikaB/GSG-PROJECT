@@ -26,6 +26,11 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/', [LoginController::class, 'landingPage'])->name('landingPage');
 Route::get('/abouts', [LoginController::class, 'aboutLandingPage'])->name('aboutLandingPage');
 
+Route::get('/test-image', function () {
+    return response()->file(storage_path('app/public/fotoProfil/MfZHRTSjrflHqK4X2SKyoWC1zblRxGIJ3alHgs57.jpg'));
+});
+
+
 //---- HOME ----
 //Memberikan Hak Akses User
 Route::middleware(['user'])->group(function () {
@@ -44,6 +49,10 @@ Route::get('/about', [PenggunaController::class, 'about'])->name('about');
 Route::middleware(['admin'])->group(function () {
 //Route Tab Dashboard
 Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+
+//Profile
+Route::get('/profileAdmin', [AdminController::class, 'profileAdmin'])->name('profileAdmin');
+Route::put('/profileAdmin/updateAdmin/{id}',[AdminController::class,'updateAdmin'])->name('updateAdmin');
 
 //Route Tab Artikel
 Route::get('/artikelAdmin', [AdminController::class, 'dataArtikel'])->name('dataArtikel');

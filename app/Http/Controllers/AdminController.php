@@ -64,12 +64,23 @@ function dataArtikel(){
         //dd($data);
         return view('admin.formEditArtikel', compact('data'));
     }
-
     function updateDataIdArtikel(Request $request, $id){
         $data = artikels::find($id);
         $data->update($request->all());
+    
+        if ($request->hasFile('gambar')) {
+            $image = $request->file('gambar');
+    
+            $filename = $image->getClientOriginalName();
+        
+            $image->move(public_path('gambar'), $filename);
+        
+            $data->gambarArtikel = $filename;
+            $data->save();
+        }
+    
         return redirect()->route('dataArtikel')->with('success','Data Berhasil di Update');
-    }
+    }    
 
     //Menampilkan Data User yang sudah register pada tabel Admin
     function listUserTerdaftar(){
@@ -117,5 +128,41 @@ function dataArtikel(){
         $data1=ulasans::find($id);
         $data1->delete();
         return redirect('ulasans');
+    }
+
+    //Profile
+    public function profileAdmin()
+    {
+        return view('Admin.profileA');
+    }  
+  
+
+    public function updateAdmin(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->update([
+            'name' => $request->input('name'),
+            'alamat' => $request->input('alamat'),
+            'instagram' => $request->input('instagram'),
+            'facebook' => $request->input('facebook'),
+            'aboutme' => $request->input('aboutme'),
+        ]);
+    
+        // Handle profile picture upload
+        if ($request->hasFile('fotoProfil')) {
+            $image = $request->file('fotoProfil');
+    
+            // Create a filename that includes spaces and user information
+            $filename = 'fotoProfil.' . $user->name . ' ' . $user->username . '.' . $image->getClientOriginalExtension();
+    
+            // Save the image in the public directory
+            $image->move(public_path('fotoProfil'), $filename);
+    
+            // Update the user's fotoProfil attribute with the filename
+            $user->fotoProfil = $filename;
+            $user->save();
+        }
+    
+        return redirect('/profileAdmin');
     }
 }

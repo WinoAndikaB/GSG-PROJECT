@@ -4,33 +4,41 @@
 
 <body>
   <!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky">
-      <div class="container">
-          <div class="row">
-              <div class="col-12">
-                  <nav class="main-nav">
-                      <ul class="nav">
-                          <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
-                          <li class="scroll-to-section"><a href="#trends">Trending</a></li>
-                          <li class="scroll-to-section"><a href="#about">Artikel</a></li>
-                          <li class="scroll-to-section"><a href="/about">Tentang</a></li>
-                          <li>
-                            <form action="{{ route('landingPage') }}" method="GET" class="input-group">
-                              <input type="text" name="search" class="form-control" placeholder="Cari Artikel..." aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ request('search') }}">
-                              <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
-                          </form>
-                          </li>
-                          <li class="scroll-to-section"><a href="/profileUser">{{ Auth::user()->name}}</a></li>
-                          <li>
-                            <a href="/logout">Logout</a>
-                        </li> 
-                  </nav>
-              </div>
-          </div>
-      </div>
-  </header>
-  <!-- ***** Header Area End ***** -->
-
+<header class="header-area header-sticky" style="text-align: center;">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-12">
+                <nav class="main-nav d-flex align-items-center justify-content-between">
+                    <ul class="nav">
+                        <li class="scroll-to-section"><a href="#top" class="text-center">Home</a></li>
+                        <li class="scroll-to-section"><a href="#trends" class="text-center">Trending</a></li>
+                        <li class="scroll-to-section"><a href="#about" class="text-center">Artikel</a></li>
+                        <li class="scroll-to-section"><a href="/about" class="text-center">Tentang</a></li>
+                    </ul>
+                    <ul class="nav">
+                        <li class="scroll-to-section">
+                            <form action="{{ route('landingPage') }}" method="GET" class="input-group ml-auto">
+                                <input type="text" name="search" class="form-control search-input" placeholder="Cari Artikel..." aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ request('search') }}">
+                                <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
+                            </form>
+                        </li>
+                        <li class="scroll-to-section">
+                            <a href="/profileUser" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center">
+                                <div class="profile-picture">
+                                    <img src="{{ asset('fotoProfil/' . Auth::user()->fotoProfil) }}" alt="Gambar Profil" />
+                                </div>
+                                <span class="d-sm-inline d-none">{{Auth::user()->name}}</span>
+                            </a>
+                        </li>
+                        <li class="scroll-to-section">
+                            <a href="/logout" class="text-right">Logout</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
 
 
   <br>
