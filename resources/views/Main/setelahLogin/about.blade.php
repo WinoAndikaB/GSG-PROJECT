@@ -222,5 +222,32 @@
       </div>
     </div>
   </section>
+
+  <section class="testimonials" id="testimonials">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+          <div class="section-heading">
+            <h6>Web Dev</h6>
+            <h4>What They Say</h4>
+          </div>
+        </div>
+        <div class="col-lg-10 offset-lg-1">
+          <div class="owl-testimonials owl-carousel" style="position: relative; z-index: 5;">
+            <div class="item">
+              <i class="fa fa-quote-left"></i>
+              <p>“Chill and enjoy the process.”</p>
+              <h4>Wino Andika Batara</h4>
+              <span>Frontend & Backend Developer</span>
+              <div class="right-image">
+                <img src="fotoProfil/fotoProfil.Random Person Random.jpg" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
   </body>
 </html>

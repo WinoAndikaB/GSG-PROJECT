@@ -98,9 +98,22 @@ class LoginController extends Controller
     }
 
     function ulasanLandingPage(){
-        $data1=ulasans::all();
+        // Mengambil data ulasan dengan mengurutkannya berdasarkan created_at
+        $data1 = ulasans::orderBy('created_at', 'desc')->get();
+    
+        //Rating
+        $ratings = $data1->pluck('rating')->map(function ($rating) {
+            return (int) $rating; // Mengonversi rating ke integer
+        });
+        
+        $totalRatings = $ratings->sum();
+        $averageRating = $ratings->count() > 0 ? $totalRatings / $ratings->count() : 0;
+    
+        //Hitung Ulasan
+        $totalUlasan = ulasans::count();
+        
 
-        return view('main.sebelumLogin.ulasanLP', compact('data1'));
+        return view('main.sebelumLogin.ulasanLP', compact('data1', 'averageRating', 'totalUlasan'));
     }
 
 

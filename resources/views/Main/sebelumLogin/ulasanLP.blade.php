@@ -27,7 +27,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
 
     <style>
-      /* CSS for the curved card */
       .curved-card {
           background: #fff; /* Background color for the card */
           border-radius: 20px; /* Adjust the border radius as needed for the desired curve */
@@ -52,6 +51,28 @@
           text-align: right;
         }
 
+        .rating {
+          font-size: 24px;
+        }
+
+        .star {
+          color: gray; /* Mengatur warna bintang awalnya menjadi gray */
+          cursor: pointer;
+        }
+
+        .star.selected {
+          color: gold; /* Mengatur warna bintang yang dipilih menjadi gold */
+        }
+
+        .rating-container {
+            font-size: 36px; /* Atur ukuran teks rata-rata rating */
+            margin: 20px; /* Atur margin untuk jarak dari teks sekitarnya */
+          }
+
+          .filled-star {
+            color: gold; /* Warna bintang yang diisi */
+          }
+
   </style>
 
   </head>
@@ -70,9 +91,9 @@
                     </a>
                     GSG<span>PROJECT</span>
                     <ul class="nav">
-                      <li class="scroll-to-section"><a href="/home" >Home</a></li>
-                      <li class="scroll-to-section"><a href="/home">Artikel</a></li>
-                      <li class="scroll-to-section"><a href="/home">Orang</a></li>
+                      <li class="scroll-to-section"><a href="/" >Home</a></li>
+                      <li class="scroll-to-section"><a href="/">Trending</a></li>
+                      <li class="scroll-to-section"><a href="/">Artikel</a></li>
                       <li class="scroll-to-section"><a href="/ulasanLandingPage" class="text-center">Ulasan</a></li>
                       <li class="scroll-to-section"><a href="/abouts">Tentang</a></li>
                       <li class="scroll-to-section"><a href="/login">Login</a></li>
@@ -113,60 +134,102 @@
         </div>
     </section>
 
+    <div class="text-center">
+      <div class="rating-container">
+        <p class="average-rating" style="font-size: 150px;">{{ number_format($averageRating, 1) }}</p>
+        <br>
+          <div class="stars">
+              @php
+                  $averageRating = round($averageRating); // Pembulatan rating
+              @endphp
+              @for ($i = 1; $i <= 5; $i++)
+                  @if ($i <= $averageRating)
+                      <i class="fas fa-star filled-star"></i>
+                  @else
+                      <i class="fas fa-star"></i>
+                  @endif
+              @endfor
+          </div>
+          <p>{{$totalUlasan}} Ulasan</p>
+      </div>
+    </div>
+
+  <br>
+  <br>
+  <br>
 
     <div class="container">
       @foreach ($data1 as $item)
-        <div class="row">
-          <div class="col-lg-10 offset-lg-1">
-            <div class="item curved-card">
-              <div class="row">
-                <div class="col-lg-9 col-md-6">
-                  <div class="profile-picture">
-                    <img src="{{ asset('fotoProfil/' . $item->fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
-                  </div>
-                </div>
-                <div class="col-lg-9 col-md-6 offset-lg-1">
-                  <span>{{ $item->nama }}</span><br>
-                  <span>
-                    @php
-                      $ulasanCreatedAt = \Carbon\Carbon::parse($item['created_at']);
-                      $sekarang = \Carbon\Carbon::now();
-                      $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
-    
-                      if ($selisihWaktu < 60) {
-                        echo $selisihWaktu . ' Menit Lalu';
-                      } elseif ($selisihWaktu < 1440) {
-                        echo floor($selisihWaktu / 60) . ' Jam Lalu';
-                      } elseif ($selisihWaktu < 10080) {
-                        echo floor($selisihWaktu / 1440) . ' Hari Lalu';
-                      } elseif ($selisihWaktu < 43200) {
-                        echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
-                      } else {
-                        echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
-                      }
-                    @endphp
-                  </span><br>
-                  <span>{{ $item->rating }}</span>
-                  <p>“{{ $item->pesan }}”</p>
-    
-                  <div class="interaction-icons text-right">
-                    <a href="/like" class="like-icon">
-                      <i class="fas fa-thumbs-up"></i>
-                    </a>
-                  
-                    <a href="/dislike" class="dislike-icon">
-                      <i class="fas fa-thumbs-down"></i>
-                    </a>
-                  
-                    <a href="/reply" class="reply-icon">
-                      <i class="fas fa-reply"></i>
-                    </a>
-                  </div>
-                                                    
-                </div>
-              </div>
+        <div class="row curved-card">
+          <div class="col-lg-5">
+            <!-- Kolom 1: Gambar Profil -->
+            <div class="profile-picture">
+              <img src="{{ asset('fotoProfil/' . $item->fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
             </div>
           </div>
+          <div class="col-lg-9 col-md-6">
+            <span>{{ $item->nama }}</span>
+            <br>
+            <span class="rating">
+              @for ($i = 1; $i <= 5; $i++)
+                @if ($i <= $item->rating)
+                  <span class="star selected">&#9733;</span>
+                @else
+                  <span class="star">&#9733;</span>
+                @endif
+              @endfor
+            </span>
+            <span>
+              @php
+                $ulasanCreatedAt = \Carbon\Carbon::parse($item['created_at']);
+                $sekarang = \Carbon\Carbon::now();
+                $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
+                
+                if ($selisihWaktu < 60) {
+                  echo $selisihWaktu . ' Menit yang lalu';
+                } elseif ($selisihWaktu < 1440) {
+                  echo floor($selisihWaktu / 60) . ' Jam yang lalu';
+                } elseif ($selisihWaktu < 10080) {
+                  echo floor($selisihWaktu / 1440) . ' Hari yang lalu';
+                } elseif ($selisihWaktu < 43200) {
+                  echo floor($selisihWaktu / 10080) . ' Minggu yang lalu';
+                } else {
+                  $yearsAgo = floor($selisihWaktu / 525600); // 525600 menit dalam setahun
+                  echo $yearsAgo . ' Tahun yang lalu';
+                }
+              @endphp
+            </span>
+            
+            <!-- ID "pesan-{{ $item->id }}" digunakan untuk menggantikan pesan di tempat -->
+            <p id="pesan-{{ $item->id }}">“{{ $item->pesan }}”</p>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <!-- Kolom 3: Ikon Edit dan Ikon Lainnya -->
+            <div class="d-flex flex-column">
+              <div class="interaction-icons text-center">
+                      <a href="/login" class="icon-button"><i class="fas fa-thumbs-up"></i></a>
+                      <a href="/login"><i class="fas fa-thumbs-down"></i></a>
+                      <a href="/login"><i class="fas fa-reply"></i></a>
+                      <a href="/login"><i class="fas fa-trash"></i></a>
+              </div>
+          </div>
+          
+          </div>
+          <div class="col-lg-4 col-md-10">
+            <!-- Kolom 4: Textarea untuk Edit Pesan -->
+            <span class="likes-count">{{ $item->likes->count() }} Likes</span>
+            <span class="dislikes-count">{{ $item->dislikes->count() }} Dislikes</span>
+
+            <div id="edit-pesan-{{ $item->id }}" style="display: none; width: 150%; text-align: right;">
+                <textarea id="edit-pesan-text-{{ $item->id }}" style="width: 155%;">{{ $item->pesan }}</textarea>
+                <button id="simpan-edit-{{ $item->id }}" style="background: none; border: none; cursor: pointer;">
+                    <i class="fas fa-save"></i>
+                </button>
+                <button id="tutup-edit-{{ $item->id }}" style="background: none; border: none; cursor: pointer;">
+                    <i class="fas fa-times"></i> <!-- Ikon close (X) -->
+                </button>
+            </div>    
+        </div>        
         </div>
       @endforeach
     </div>

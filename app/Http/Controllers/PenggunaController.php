@@ -77,8 +77,9 @@ class PenggunaController extends Controller
     }
 
     function ulasan(){
-        $data1=ulasans::all();
-
+        // Mengambil data ulasan dengan mengurutkannya berdasarkan created_at
+        $data1 = ulasans::orderBy('created_at', 'desc')->get();
+    
         //Rating
         $ratings = $data1->pluck('rating')->map(function ($rating) {
             return (int) $rating; // Mengonversi rating ke integer
@@ -86,11 +87,11 @@ class PenggunaController extends Controller
         
         $totalRatings = $ratings->sum();
         $averageRating = $ratings->count() > 0 ? $totalRatings / $ratings->count() : 0;
-
+    
         //Hitung Ulasan
         $totalUlasan = ulasans::count();
         
-    return view('main.setelahLogin.ulasan', compact('data1', 'averageRating', 'totalUlasan'));
+        return view('main.setelahLogin.ulasan', compact('data1', 'averageRating', 'totalUlasan'));
     }
 
     function storeUlasan(Request $request){

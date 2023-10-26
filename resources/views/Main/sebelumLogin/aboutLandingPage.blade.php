@@ -47,9 +47,9 @@ https://templatemo.com/tm-574-mexant
                     </a>
                     GSG<span>PROJECT</span>
                     <ul class="nav">
-                      <li class="scroll-to-section"><a href="/home" >Home</a></li>
-                      <li class="scroll-to-section"><a href="/home">Artikel</a></li>
-                      <li class="scroll-to-section"><a href="/home">Orang</a></li>
+                      <li class="scroll-to-section"><a href="/" >Home</a></li>
+                      <li class="scroll-to-section"><a href="/">Trending</a></li>
+                      <li class="scroll-to-section"><a href="/">Artikel</a></li>
                       <li class="scroll-to-section"><a href="/ulasanLandingPage" class="text-center">Ulasan</a></li>
                       <li class="scroll-to-section"><a href="/abouts">Tentang</a></li>
                       <li class="scroll-to-section"><a href="/login">Login</a></li>
@@ -227,5 +227,32 @@ https://templatemo.com/tm-574-mexant
       </div>
     </div>
   </section>
+
+  <section class="testimonials" id="testimonials">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+          <div class="section-heading">
+            <h6>Web Dev</h6>
+            <h4>What They Say</h4>
+          </div>
+        </div>
+        <div class="col-lg-10 offset-lg-1">
+          <div class="owl-testimonials owl-carousel" style="position: relative; z-index: 5;">
+            <div class="item">
+              <i class="fa fa-quote-left"></i>
+              <p>“Chill and enjoy the process.”</p>
+              <h4>Wino Andika Batara</h4>
+              <span>Frontend & Backend Developer</span>
+              <div class="right-image">
+                <img src="fotoProfil/fotoProfil.Random Person Random.jpg" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
   </body>
 </html>

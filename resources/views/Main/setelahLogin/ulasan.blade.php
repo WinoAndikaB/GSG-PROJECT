@@ -303,8 +303,6 @@
                     <a href="{{ route('dislikeUlasan', ['id' => $item->id]) }}"><i class="fas fa-thumbs-down"></i></a>
                 @endif
             
-                <a href="/ulasan"><i class="fas fa-reply"></i></a>
-
                 <a href="{{ route('deleteUlasan', ['id' => $item->id]) }}"><i class="fas fa-trash"></i></a>
             </div>            
             </div>

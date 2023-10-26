@@ -97,7 +97,7 @@
                                           @endphp
                                         </p>
                                       </div>
-                                      <h6 class="title"><a href="#">{{$item->judulArtikel}}</a></h6>
+                                      <h6 class="title"><a href="/login">{{$item->judulArtikel}}</a></h6>
                                   </div>
                               </div>
                           </div>
@@ -143,7 +143,7 @@
                                                 </li>
                                               </ul>
                                           </div>
-                                          <h6 class="title"><a href="#">{{$item->judulArtikel}}</a></h6>
+                                          <h6 class="title"><a href="/login">{{$item->judulArtikel}}</a></h6>
                                       </div>
                                   </div>
                               </div>
@@ -167,7 +167,7 @@
                             <div class="details">
                                 <div class="post-meta-single mb-4 pt-1">
                                     <ul>
-                                        <li><a class="tag-base tag-blue" href="#">{{$item->penulis}}</a></li>
+                                        <li><a class="tag-base tag-blue" href="/login">{{$item->penulis}}</a></li>
                                         <li><i class="fa fa-clock-o"></i>
                                             @php
                                             $ulasanCreatedAt = \Carbon\Carbon::parse($item['created_at']);
@@ -189,7 +189,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <h6 class="title"><a href="#">{{$item->judulArtikel}}</a></h6>
+                                <h6 class="title"><a href="/login">{{$item->judulArtikel}}</a></h6>
                                 <p>{{ \Illuminate\Support\Str::limit($item->deskripsi, 350) }}</p>
                             </div>
                         </div>
@@ -204,11 +204,11 @@
                 </div>
                 <div class="social-area-list mb-4">
                     <ul>
-                        <li><a class="facebook" href="#"><i class="fa fa-facebook social-icon"></i><span>12,300</span><span>Like</span> <i class="fa fa-plus"></i></a></li>
-                        <li><a class="twitter" href="#"><i class="fa fa-twitter social-icon"></i><span>12,600</span><span>Followers</span> <i class="fa fa-plus"></i></a></li>
-                        <li><a class="youtube" href="#"><i class="fa fa-youtube-play social-icon"></i><span>1,300</span><span>Subscribers</span> <i class="fa fa-plus"></i></a></li>
-                        <li><a class="instagram" href="#"><i class="fa fa-instagram social-icon"></i><span>52,400</span><span>Followers</span> <i class="fa fa-plus"></i></a></li>
-                        <li><a class="google-plus" href="#"><i class="fa fa-google social-icon"></i><span>19,101</span><span>Subscribers</span> <i class="fa fa-plus"></i></a></li>
+                        <li><a class="facebook" href="/login"><i class="fa fa-facebook social-icon"></i><span>12,300</span><span>Like</span> <i class="fa fa-plus"></i></a></li>
+                        <li><a class="twitter" href="/login"><i class="fa fa-twitter social-icon"></i><span>12,600</span><span>Followers</span> <i class="fa fa-plus"></i></a></li>
+                        <li><a class="youtube" href="/login"><i class="fa fa-youtube-play social-icon"></i><span>1,300</span><span>Subscribers</span> <i class="fa fa-plus"></i></a></li>
+                        <li><a class="instagram" href="/login"><i class="fa fa-instagram social-icon"></i><span>52,400</span><span>Followers</span> <i class="fa fa-plus"></i></a></li>
+                        <li><a class="google-plus" href="/login"><i class="fa fa-google social-icon"></i><span>19,101</span><span>Subscribers</span> <i class="fa fa-plus"></i></a></li>
                     </ul>
                 </div>
                 <div class="add-area">
@@ -308,7 +308,7 @@
                               @endphp
                             </p>
                         </div>
-                        <h6 class="title"><a href="#">{{ $item->judulArtikel }}</a></h6>
+                        <h6 class="title"><a href="/login">{{ $item->judulArtikel }}</a></h6>
                     </div>
                 </div>
             </div>
