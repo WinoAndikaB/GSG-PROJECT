@@ -3,7 +3,6 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PenggunaController;
-use Database\Seeders\PenggunaSeeder;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,9 +39,13 @@ Route::get('/profileUser', [PenggunaController::class, 'profileUser'])->name('pr
 Route::put('/profileUser/updateUser/{id}',[PenggunaController::class,'updateUser'])->name('updateUser');
 Route::get('/artikel', [PenggunaController::class, 'dataArtikelHome'])->name('dataArtikelHome');
 Route::get('/detailArtikel/{id}', [PenggunaController::class, 'showDetailArtikel'])->name('detail.artikel');
+Route::get('/about', [PenggunaController::class, 'about'])->name('about');
+
+//ulasan
 Route::get('/ulasan', [PenggunaController::class, 'ulasan'])->name('ulasan');
 Route::post('/storeUlasan',[PenggunaController::class,'storeUlasan']);
-Route::get('/about', [PenggunaController::class, 'about'])->name('about');
+Route::get('/deleteUlasan/{id}', [PenggunaController::class, 'deleteUlasan'])->name('deleteUlasan');
+Route::post('/simpanEditUlasan/{id}', [PenggunaController::class, 'simpanEditUlasan'])->name('simpanEditUlasan');
 });
 
 //---- ADMIN ----

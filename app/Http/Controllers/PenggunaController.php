@@ -76,8 +76,21 @@ class PenggunaController extends Controller
 
     function ulasan(){
         $data1=ulasans::all();
-        return view('main.setelahLogin.ulasan', compact('data1'));
+
+        //Rating
+        $ratings = $data1->pluck('rating')->map(function ($rating) {
+            return (int) $rating; // Mengonversi rating ke integer
+        });
+        
+        $totalRatings = $ratings->sum();
+        $averageRating = $ratings->count() > 0 ? $totalRatings / $ratings->count() : 0;
+
+        //Hitung Ulasan
+        $totalUlasan = ulasans::count();
+        
+    return view('main.setelahLogin.ulasan', compact('data1', 'averageRating', 'totalUlasan'));
     }
+
     function storeUlasan(Request $request){
         $ulasan = new ulasans;
         $ulasan->rating = $request->rating;
@@ -92,7 +105,28 @@ class PenggunaController extends Controller
     
         return redirect('ulasan');
     }
+
+    public function simpanEditUlasan(Request $request, $id) {
+
+    
+        $ulasan = ulasans::find($id);
         
+        if ($ulasan) {
+            $ulasan->pesan = $request->input('pesan');
+            $ulasan->save();
+            return response()->json(['message' => 'Pesan ulasan berhasil diperbarui']);
+        } else {
+            return response()->json(['error' => 'Ulasan tidak ditemukan'], 404);
+        }
+    }
+    
+
+    public function deleteUlasan($id)
+    {
+        $data=ulasans::find($id);
+        $data->delete();
+        return redirect('/ulasan');
+    }
 
       //Profile User
       public function profileUser()

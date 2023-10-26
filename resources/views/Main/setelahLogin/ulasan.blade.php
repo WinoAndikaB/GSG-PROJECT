@@ -48,6 +48,28 @@
           text-align: right;
         }
 
+        .rating {
+          font-size: 24px;
+        }
+
+        .star {
+          color: gray; /* Mengatur warna bintang awalnya menjadi gray */
+          cursor: pointer;
+        }
+
+        .star.selected {
+          color: gold; /* Mengatur warna bintang yang dipilih menjadi gold */
+        }
+
+        .rating-container {
+            font-size: 36px; /* Atur ukuran teks rata-rata rating */
+            margin: 20px; /* Atur margin untuk jarak dari teks sekitarnya */
+          }
+
+          .filled-star {
+            color: gold; /* Warna bintang yang diisi */
+          }
+
   </style>
   </head>
 
@@ -116,17 +138,7 @@
         
             <hr>
         
-            <p> Salin <b>Bintang</b> Untuk Memberikan <b> Rating </b> : ★★★★★</p>
-            <br>
-        
-            <div class="row">
-              <div class="col-lg-6 align-left">
-                <fieldset>
-                  <label for="rating">Rating</label>
-                  <input type="text" name="rating" id="rating" required>
-                </fieldset>
-              </div>
-
+            <div class="row">             
               <div class="user-profile-info">
                 <a href="/profileUser" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center">
                     <div class="profile-picture" style="width: 220px; height: 200px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
@@ -135,8 +147,27 @@
                     <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
                 </a>
             </div>
-            
-        
+
+            <div class="col-lg-6 align-left">
+              <fieldset>
+                <p> Pilih <b>Bintang</b> Untuk Memberikan <b> Rating </b> :</p>
+                <label for="rating">Rating</label>
+                <div class="rating">
+                  <span class="star" data-rating="1">&#9733;</span>
+                  <span class="star" data-rating="2">&#9733;</span>
+                  <span class="star" data-rating="3">&#9733;</span>
+                  <span class="star" data-rating="4">&#9733;</span>
+                  <span class="star" data-rating="5">&#9733;</span>
+                </div>
+                <input type="hidden" name="rating" id="rating" value="0" required>
+              </fieldset>
+            </div> 
+            <div class="col-lg-6 align-left">
+              <fieldset>
+                <label for="nama">Username</label>
+                <input type="name" name="nama" id="nama" placeholder="Name..." autocomplete="on" value="{{Auth::user()->username}}" readonly required>
+              </fieldset>
+            </div>
               <div class="col-lg-6 align-left">
                 <fieldset>
                   <label for="nama">Nama</label>
@@ -154,7 +185,7 @@
               <div class="col-lg-12 align-left">
                 <fieldset>
                   <label for="pesan">Pesan</label>
-                  <textarea name="pesan" id="pesan" placeholder="Pesan..."></textarea>
+                  <textarea name="pesan" id="pesan" placeholder="Pesan..." required></textarea>
                 </fieldset>
               </div>
         
@@ -179,59 +210,175 @@
                     <h6>Ulasan</h6>
                     <h4>Daftar Ulasan</h4>
                 </div>
+                <br>
             </div>
           </div>
         </div>
     </section>
 
+    <div class="text-center">
+      <div class="rating-container">
+        <p class="average-rating" style="font-size: 150px;">{{ number_format($averageRating, 1) }}</p>
+        <br>
+          <div class="stars">
+              @php
+                  $averageRating = round($averageRating); // Pembulatan rating
+              @endphp
+              @for ($i = 1; $i <= 5; $i++)
+                  @if ($i <= $averageRating)
+                      <i class="fas fa-star filled-star"></i>
+                  @else
+                      <i class="fas fa-star"></i>
+                  @endif
+              @endfor
+          </div>
+          <p>{{$totalUlasan}} Ulasan</p>
+      </div>
+    </div>
+
+  <br>
+  <br>
+  <br>
+   
+
     <div class="container">
       @foreach ($data1 as $item)
-        <div class="row">
-          <div class="col-lg-10 offset-lg-1">
-            <div class="item curved-card">
-              <div class="row">
-                <div class="col-lg-9 col-md-6">
-                  <div class="profile-picture">
-                    <img src="{{ asset('fotoProfil/' . $item->fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
-                  </div>
-                </div>
-                <div class="col-lg-9 col-md-6 offset-lg-1">
-                  <span>{{ $item->nama }}</span><br>
-                  <span>
-                    @php
-                      $ulasanCreatedAt = \Carbon\Carbon::parse($item['created_at']);
-                      $sekarang = \Carbon\Carbon::now();
-                      $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
-    
-                      if ($selisihWaktu < 60) {
-                        echo $selisihWaktu . ' Menit Lalu';
-                      } elseif ($selisihWaktu < 1440) {
-                        echo floor($selisihWaktu / 60) . ' Jam Lalu';
-                      } elseif ($selisihWaktu < 10080) {
-                        echo floor($selisihWaktu / 1440) . ' Hari Lalu';
-                      } elseif ($selisihWaktu < 43200) {
-                        echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
-                      } else {
-                        echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
-                      }
-                    @endphp
-                  </span><br>
-                  <span>{{ $item->rating }}</span>
-                  <p>“{{ $item->pesan }}”</p>
-    
-                  <!-- Ikon Like, Dislike, Share, Reply -->
-                  <div class="interaction-icons text-right">
-                    <i class="fas fa-thumbs-up like-icon" id="like_{{ $item->id }}"></i>
-                    <i class="fas fa-thumbs-down dislike-icon" id="dislike_{{ $item->id }}"></i>
-                    <i class="fas fa-reply reply-icon" id="reply_{{ $item->id }}"></i>
-                  </div>                                    
-                </div>
+        <div class="row curved-card">
+          <div class="col-lg-5">
+            <!-- Kolom 1: Gambar Profil -->
+            <div class="profile-picture">
+              <img src="{{ asset('fotoProfil/' . $item->fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+            </div>
+          </div>
+          <div class="col-lg-9 col-md-6">
+            <span>{{ $item->nama }}</span>
+            <br>
+            <span class="rating">
+              @for ($i = 1; $i <= 5; $i++)
+                @if ($i <= $item->rating)
+                  <span class="star selected">&#9733;</span>
+                @else
+                  <span class="star">&#9733;</span>
+                @endif
+              @endfor
+            </span>
+            <span>
+              @php
+                $ulasanCreatedAt = \Carbon\Carbon::parse($item['created_at']);
+                $sekarang = \Carbon\Carbon::now();
+                $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
+                
+                if ($selisihWaktu < 60) {
+                  echo $selisihWaktu . ' Menit yang lalu';
+                } elseif ($selisihWaktu < 1440) {
+                  echo floor($selisihWaktu / 60) . ' Jam yang lalu';
+                } elseif ($selisihWaktu < 10080) {
+                  echo floor($selisihWaktu / 1440) . ' Hari yang lalu';
+                } elseif ($selisihWaktu < 43200) {
+                  echo floor($selisihWaktu / 10080) . ' Minggu yang lalu';
+                } else {
+                  $yearsAgo = floor($selisihWaktu / 525600); // 525600 menit dalam setahun
+                  echo $yearsAgo . ' Tahun yang lalu';
+                }
+              @endphp
+            </span>
+            
+            <!-- ID "pesan-{{ $item->id }}" digunakan untuk menggantikan pesan di tempat -->
+            <p id="pesan-{{ $item->id }}">“{{ $item->pesan }}”</p>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <!-- Kolom 3: Ikon Edit dan Ikon Lainnya -->
+            <div class="d-flex flex-column">
+              <a href="#" id="edit-{{ $item->id }}"><i class="fas fa-edit"></i></a>
+              <div class="interaction-icons text-center">
+                <a href="/ulasan"><i class="fas fa-thumbs-up"></i></a>
+                <a href="/ulasan"><i class="fas fa-thumbs-down"></i></a>
+                <a href="/ulasan"><i class="fas fa-reply"></i></a>
+                <a href="{{ route('deleteUlasan', ['id' => $item->id]) }}"><i class="fas fa-trash"></i></a>
               </div>
             </div>
           </div>
+          <div class="col-lg-4 col-md-10">
+            <!-- Kolom 4: Textarea untuk Edit Pesan -->
+            <div id="edit-pesan-{{ $item->id }}" style="display: none; width: 150%; text-align: right;">
+                <textarea id="edit-pesan-text-{{ $item->id }}" style="width: 155%;">{{ $item->pesan }}</textarea>
+                <button id="simpan-edit-{{ $item->id }}" style="background: none; border: none; cursor: pointer;">
+                    <i class="fas fa-save"></i>
+                </button>
+                <button id="tutup-edit-{{ $item->id }}" style="background: none; border: none; cursor: pointer;">
+                    <i class="fas fa-times"></i> <!-- Ikon close (X) -->
+                </button>
+            </div>    
+        </div>        
         </div>
       @endforeach
     </div>
     
-        </body>
-      </html>
+    
+  </div>
+    
+  <!-- Edit Ulansan -->
+  <script>
+    @foreach ($data1 as $item)
+      document.getElementById('edit-{{ $item->id }}').addEventListener('click', function (e) {
+        e.preventDefault();
+        // Tampilkan textarea untuk mengedit pesan
+        document.getElementById('edit-pesan-{{ $item->id }}').style.display = 'block';
+      });
+    
+      document.getElementById('simpan-edit-{{ $item->id }}').addEventListener('click', function (e) {
+        e.preventDefault();
+        const editedText = document.getElementById('edit-pesan-text-{{ $item->id }}').value;
+        
+        // Kirim data yang telah diedit ke server menggunakan AJAX
+        fetch("{{ route('simpanEditUlasan', ['id' => $item->id]) }}", {
+          method: "POST",
+          body: JSON.stringify({ pesan: editedText }),
+          headers: {
+            "X-CSRF-TOKEN": "{{ csrf_token() }}",
+            "Content-Type": "application/json"
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          // Gantilah pesan lama dengan pesan yang telah diperbarui
+          const pesanElement = document.getElementById('pesan-{{ $item->id }}');
+          pesanElement.innerText = '“' + editedText + '”';
+  
+          // Sembunyikan textarea dan tombol Simpan setelah berhasil
+          document.getElementById('edit-pesan-{{ $item->id }}').style.display = 'none';
+        })
+        .catch(error => {
+          // Tangani kesalahan jika ada
+          console.error(error);
+        });
+      });
+
+      // Event listener untuk tombol tutup
+      document.getElementById('tutup-edit-{{ $item->id }}').addEventListener('click', function (e) {
+        e.preventDefault();
+        // Sembunyikan textarea dan tombol Simpan
+        document.getElementById('edit-pesan-{{ $item->id }}').style.display = 'none';
+      });
+    @endforeach
+</script>
+
+<!-- Rating -->
+<script>
+  const stars = document.querySelectorAll('.star');
+  const ratingInput = document.getElementById('rating');
+
+  stars.forEach((star) => {
+    star.addEventListener('click', () => {
+      const ratingValue = parseInt(star.getAttribute('data-rating'));
+      ratingInput.value = ratingValue;
+      stars.forEach((s) => s.classList.remove('selected')); // Hapus kelas 'selected' dari semua bintang
+      for (let i = 0; i < ratingValue; i++) {
+        stars[i].classList.add('selected'); // Tambahkan kelas 'selected' pada bintang yang dipilih
+      }
+    });
+  });
+</script>
+    
+</body>
+</html>

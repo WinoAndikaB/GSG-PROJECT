@@ -149,12 +149,20 @@
                   <span>{{ $item->rating }}</span>
                   <p>“{{ $item->pesan }}”</p>
     
-                  <!-- Ikon Like, Dislike, Share, Reply -->
                   <div class="interaction-icons text-right">
-                    <i class="fas fa-thumbs-up like-icon" id="like_{{ $item->id }}"></i>
-                    <i class="fas fa-thumbs-down dislike-icon" id="dislike_{{ $item->id }}"></i>
-                    <i class="fas fa-reply reply-icon" id="reply_{{ $item->id }}"></i>
-                  </div>                                    
+                    <a href="/like" class="like-icon">
+                      <i class="fas fa-thumbs-up"></i>
+                    </a>
+                  
+                    <a href="/dislike" class="dislike-icon">
+                      <i class="fas fa-thumbs-down"></i>
+                    </a>
+                  
+                    <a href="/reply" class="reply-icon">
+                      <i class="fas fa-reply"></i>
+                    </a>
+                  </div>
+                                                    
                 </div>
               </div>
             </div>
@@ -188,43 +196,6 @@
           e.preventDefault();
           container.scrollLeft += e.deltaY;
       }
-  });
-</script>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-  // Tambahkan event click untuk ikon Like
-  $(".like-icon").on("click", function() {
-    var id = $(this).attr("id").split("_")[1]; // Ambil ID ulasan yang sesuai
-    // Lakukan tindakan yang sesuai, misalnya, mengirimkan permintaan ke server
-    // untuk menambahkan suka untuk ulasan dengan ID tersebut.
-    // Anda dapat mengganti ini dengan tindakan yang sesuai dalam proyek Anda.
-    alert("Anda menyukai ulasan dengan ID " + id);
-  });
-
-  // Tambahkan event click untuk ikon Dislike
-  $(".dislike-icon").on("click", function() {
-    var id = $(this).attr("id").split("_")[1]; // Ambil ID ulasan yang sesuai
-    // Lakukan tindakan yang sesuai, misalnya, mengirimkan permintaan ke server
-    // untuk menambahkan tidak suka untuk ulasan dengan ID tersebut.
-    // Anda dapat mengganti ini dengan tindakan yang sesuai dalam proyek Anda.
-    alert("Anda tidak menyukai ulasan dengan ID " + id);
-  });
-
-  // Tambahkan event click untuk ikon Share
-  $(".share-icon").on("click", function() {
-    var id = $(this).attr("id").split("_")[1]; // Ambil ID ulasan yang sesuai
-    // Lakukan tindakan yang sesuai, misalnya, membagikan ulasan dengan ID tersebut.
-    // Anda dapat mengganti ini dengan tindakan yang sesuai dalam proyek Anda.
-    alert("Anda membagikan ulasan dengan ID " + id);
-  });
-
-  // Tambahkan event click untuk ikon Reply
-  $(".reply-icon").on("click", function() {
-    var id = $(this).attr("id").split("_")[1]; // Ambil ID ulasan yang sesuai
-    // Lakukan tindakan yang sesuai, misalnya, menampilkan formulir balasan untuk ulasan dengan ID tersebut.
-    // Anda dapat mengganti ini dengan tindakan yang sesuai dalam proyek Anda.
-    alert("Anda membalas ulasan dengan ID " + id);
   });
 </script>
 
