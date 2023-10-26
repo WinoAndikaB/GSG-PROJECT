@@ -291,15 +291,29 @@
             <div class="d-flex flex-column">
               <a href="#" id="edit-{{ $item->id }}"><i class="fas fa-edit"></i></a>
               <div class="interaction-icons text-center">
-                <a href="/ulasan"><i class="fas fa-thumbs-up"></i></a>
-                <a href="/ulasan"><i class="fas fa-thumbs-down"></i></a>
+                @if ($item->likes->contains('user_id', Auth::id()))
+                    <span class="icon-button liked"><i class="fas fa-thumbs-up"></i></span>
+                @else
+                    <a href="{{ route('likeUlasan', ['id' => $item->id]) }}" class="icon-button"><i class="fas fa-thumbs-up"></i></a>
+                @endif
+            
+                @if ($item->dislikes->contains('user_id', Auth::id()))
+                    <span class="icon-button disliked"><i class="fas fa-thumbs-down"></i></span>
+                @else
+                    <a href="{{ route('dislikeUlasan', ['id' => $item->id]) }}"><i class="fas fa-thumbs-down"></i></a>
+                @endif
+            
                 <a href="/ulasan"><i class="fas fa-reply"></i></a>
+
                 <a href="{{ route('deleteUlasan', ['id' => $item->id]) }}"><i class="fas fa-trash"></i></a>
-              </div>
+            </div>            
             </div>
           </div>
           <div class="col-lg-4 col-md-10">
             <!-- Kolom 4: Textarea untuk Edit Pesan -->
+            <span class="likes-count">{{ $item->likes->count() }} Likes</span>
+            <span class="dislikes-count">{{ $item->dislikes->count() }} Dislikes</span>
+
             <div id="edit-pesan-{{ $item->id }}" style="display: none; width: 150%; text-align: right;">
                 <textarea id="edit-pesan-text-{{ $item->id }}" style="width: 155%;">{{ $item->pesan }}</textarea>
                 <button id="simpan-edit-{{ $item->id }}" style="background: none; border: none; cursor: pointer;">

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\artikels;
+use App\Models\Dislikes;
+use App\Models\Likes;
 use App\Models\ulasans;
 use App\Models\user;
 use Illuminate\Http\Request;
@@ -119,8 +121,57 @@ class PenggunaController extends Controller
             return response()->json(['error' => 'Ulasan tidak ditemukan'], 404);
         }
     }
-    
 
+    public function likeUlasan($id){
+        $userId = Auth::id();
+        
+        // Check if the user has already liked or disliked this ulasan
+        $existingLike = Likes::where('ulasan_id', $id)->where('user_id', $userId)->first();
+        $existingDislike = Dislikes::where('ulasan_id', $id)->where('user_id', $userId)->first();
+        
+        if (!$existingLike && !$existingDislike) {
+            // If the user hasn't liked or disliked, add a like
+            $like = new Likes();
+            $like->ulasan_id = $id;
+            $like->user_id = $userId;
+            $like->save();
+        } elseif ($existingDislike) {
+            // If the user has previously disliked, remove the dislike and add a like
+            $existingDislike->delete();
+            $like = new Likes();
+            $like->ulasan_id = $id;
+            $like->user_id = $userId;
+            $like->save();
+        }
+    
+        return redirect('ulasan');
+    }
+    
+    public function dislikeUlasan($id){
+        $userId = Auth::id();
+        
+        // Check if the user has already liked or disliked this ulasan
+        $existingLike = Likes::where('ulasan_id', $id)->where('user_id', $userId)->first();
+        $existingDislike = Dislikes::where('ulasan_id', $id)->where('user_id', $userId)->first();
+        
+        if (!$existingLike && !$existingDislike) {
+            // If the user hasn't liked or disliked, add a dislike
+            $dislike = new Dislikes();
+            $dislike->ulasan_id = $id;
+            $dislike->user_id = $userId;
+            $dislike->save();
+        } elseif ($existingLike) {
+            // If the user has previously liked, remove the like and add a dislike
+            $existingLike->delete();
+            $dislike = new Dislikes();
+            $dislike->ulasan_id = $id;
+            $dislike->user_id = $userId;
+            $dislike->save();
+        }
+    
+        return redirect('ulasan');
+    }
+    
     public function deleteUlasan($id)
     {
         $data=ulasans::find($id);

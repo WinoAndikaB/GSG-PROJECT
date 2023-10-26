@@ -45,6 +45,9 @@ Route::get('/about', [PenggunaController::class, 'about'])->name('about');
 Route::get('/ulasan', [PenggunaController::class, 'ulasan'])->name('ulasan');
 Route::post('/storeUlasan',[PenggunaController::class,'storeUlasan']);
 Route::get('/deleteUlasan/{id}', [PenggunaController::class, 'deleteUlasan'])->name('deleteUlasan');
+Route::get('/likeUlasan/{id}', [PenggunaController::class, 'likeUlasan'])->name('likeUlasan');
+Route::get('/dislikeUlasan/{id}', [PenggunaController::class, 'dislikeUlasan'])->name('dislikeUlasan');
+Route::post('/reply', [PenggunaController::class, 'postReply'])->name('postReply');
 Route::post('/simpanEditUlasan/{id}', [PenggunaController::class, 'simpanEditUlasan'])->name('simpanEditUlasan');
 });
 
