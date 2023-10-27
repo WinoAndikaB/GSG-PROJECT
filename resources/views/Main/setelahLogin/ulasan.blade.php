@@ -152,26 +152,24 @@
             <div class="row">             
               <div class="user-profile-info">
                 <a href="/profileUser" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center">
-                    <div class="profile-picture" style="width: 220px; height: 200px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
-                        <?php
-                        $fotoProfil = Auth::user()->fotoProfil;
-                        if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
-                            // If the user has a profile picture, display it
-                        ?>
-                        <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
-                        <?php
-                        } else {
-                            // If the user doesn't have a profile picture, display a default image
-                        ?>
-                        <img src="https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
-                        <?php
-                        }
-                        ?>
-                    </div>
-                    <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
-                </a>
+                  <div class="profile-picture" style="width: 220px; height: 200px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
+                      <?php
+                      $fotoProfil = Auth::user()->fotoProfil;
+                      if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
+                      ?>
+                      <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                      <?php
+                      } else {
+                      ?>
+                      <img src="https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                      <?php
+                      }
+                      ?>
+                  </div>
+                  <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
+              </a>
+              
             </div>
-            
 
             <div class="col-lg-6 align-left">
               <fieldset>

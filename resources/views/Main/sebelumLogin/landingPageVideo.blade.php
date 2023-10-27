@@ -10,15 +10,15 @@
               <div class="col-12">
                   <nav class="main-nav">
                       <ul class="nav">
-                          <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
+                          <li class="scroll-to-section"><a href="/">Home</a></li>
                           <li class="scroll-to-section"><a href="#trends">Trending</a></li>
                           <li class="scroll-to-section"><a href="#about">Artikel</a></li>
-                          <li class="scroll-to-section"><a href="/landingPageVideo" class="text-center">Video</a></li>
+                          <li class="scroll-to-section"><a href="/landingPageVideo" class="active">Video</a></li>
                           <li class="scroll-to-section"><a href="/ulasanLandingPage" class="text-center">Ulasan</a></li>
                           <li class="scroll-to-section"><a href="/abouts">Tentang</a></li>
                           <li>
-                            <form action="{{ route('landingPage') }}" method="GET" class="input-group">
-                              <input type="text" name="search" class="form-control" placeholder="Cari Artikel..." aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ request('search') }}">
+                            <form action="{{ route('landingPageVideo') }}" method="GET" class="input-group">
+                              <input type="text" name="search" class="form-control" placeholder="Cari Video..." aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ request('search') }}">
                               <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
                           </form>
                           </li>
@@ -66,16 +66,14 @@
         <div class="row">
             <div class="col-lg-3 col-md-6">
                 <div class="section-title">
-                    <h6 class="title">Trending News</h6>
+                    <h6 class="title">Trending Video</h6>
                 </div>
-                @foreach ($trending->take(5) as $item)
+                @foreach ($trendingVideo as $item)
                 <div class="post-slider owl-carousel">
                       <div class="item">
                           <div class="trending-post">
                               <div class="single-post-wrap style-overlay">
-                                  <div class="thumb">
-                                      <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" alt="img">
-                                  </div>
+                                <iframe width="560" height="200" src="{{$item->linkVideo}}" frameborder="0" allowfullscreen></iframe>
                                   <div class="details">
                                       <div class="post-meta-single">
                                           <p><i class="fa fa-clock-o"></i>
@@ -98,75 +96,29 @@
                                           @endphp
                                         </p>
                                       </div>
-                                      <h6 class="title"><a href="/login">{{$item->judulArtikel}}</a></h6>
+                                      <h6 class="title"><a href="/login">{{$item->judulVideo}}</a></h6>
                                   </div>
                               </div>
                           </div>
                       </div>
               </div>
-              @endforeach
-                           
+              @endforeach                        
             </div>
-            <div class="col-lg-3 col-md-6">
-              <div class="section-title">
-                  <h6 class="title">Latest News</h6>
-              </div>
-              @foreach ($latest as $item)
-              <div class="post-slider owl-carousel">
-                      <div class="item">
-                          <div class="single-post-list-wrap">
-                            <div class="media">
-                              <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" class="media-left" style="width: 70px; height: 50px;">
-                              <div class="media-body">
-                                  <div class="details">
-                                      <div class="post-meta-single">
-                                          <ul>
-                                              <li><i class="fa fa-clock-o"></i>
-                                                @php
-                                                $ulasanCreatedAt = \Carbon\Carbon::parse($item['created_at']);
-                                                $sekarang = \Carbon\Carbon::now();
-                                                $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
-                              
-                                                if ($selisihWaktu < 60) {
-                                                  echo $selisihWaktu . ' Menit Lalu';
-                                                } elseif ($selisihWaktu < 1440) {
-                                                  echo floor($selisihWaktu / 60) . ' Jam Lalu';
-                                                } elseif ($selisihWaktu < 10080) {
-                                                  echo floor($selisihWaktu / 1440) . ' Hari Lalu';
-                                                } elseif ($selisihWaktu < 43200) {
-                                                  echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
-                                                } else {
-                                                  echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
-                                                }
-                                              @endphp
-                                              </li>
-                                          </ul>
-                                      </div>
-                                      <h6 class="title"><a href="/login">{{$item->judulArtikel}}</a></h6>
-                                  </div>
-                              </div>
-                          </div>
-                          </div>
-                      </div>
-              </div>
-              @endforeach
-          </div>
+
           
           <div class="col-lg-3 col-md-6">
             <div class="section-title">
                 <h6 class="title">What’s new</h6>
             </div>
             <div class="post-slider owl-carousel">
-                @foreach ($whatsnew as $item)
+                @foreach ($whatsNewVideo as $item)
                     <div class="item">
                         <div class="single-post-wrap">
-                            <div class="thumb">
-                                <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" alt="img">
-                            </div>
+                          <iframe width="560" height="200" src="{{$item->linkVideo}}" frameborder="0" allowfullscreen></iframe>
                             <div class="details">
                                 <div class="post-meta-single mb-4 pt-1">
                                     <ul>
-                                        <li><a class="tag-base tag-blue" href="/login">{{$item->penulis}}</a></li>
+                                        <li><a class="tag-base tag-blue" href="/login">{{$item->uploader}}</a></li>
                                         <li><i class="fa fa-clock-o"></i>
                                             @php
                                             $ulasanCreatedAt = \Carbon\Carbon::parse($item['created_at']);
@@ -188,14 +140,56 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <h6 class="title"><a href="/login">{{$item->judulArtikel}}</a></h6>
-                                <p>{{ \Illuminate\Support\Str::limit($item->deskripsi, 350) }}</p>
+                                <h6 class="title"><a href="/login">{{$item->judulVideo}}</a></h6>
+                                <p>{{ \Illuminate\Support\Str::limit($item->deskripsiVideo, 600) }}</p>
                             </div>
                         </div>
                     </div>
                 @endforeach
             </div>
         </div>
+
+        <div class="col-lg-3 col-md-6">
+          <div class="section-title">
+              <h6 class="title">Terbaru</h6>
+          </div>
+          @foreach ($trendingVideo as $item)
+          <div class="post-slider owl-carousel">
+                <div class="item">
+                    <div class="trending-post">
+                        <div class="single-post-wrap style-overlay">
+                          <iframe width="560" height="200" src="{{$item->linkVideo}}" frameborder="0" allowfullscreen></iframe>
+                            <div class="details">
+                                <div class="post-meta-single">
+                                    <p><i class="fa fa-clock-o"></i>
+                                      @php
+                                      $ulasanCreatedAt = \Carbon\Carbon::parse($item['created_at']);
+                                      $sekarang = \Carbon\Carbon::now();
+                                      $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
+                    
+                                      if ($selisihWaktu < 60) {
+                                        echo $selisihWaktu . ' Menit Lalu';
+                                      } elseif ($selisihWaktu < 1440) {
+                                        echo floor($selisihWaktu / 60) . ' Jam Lalu';
+                                      } elseif ($selisihWaktu < 10080) {
+                                        echo floor($selisihWaktu / 1440) . ' Hari Lalu';
+                                      } elseif ($selisihWaktu < 43200) {
+                                        echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
+                                      } else {
+                                        echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
+                                      }
+                                    @endphp
+                                  </p>
+                                </div>
+                                <h6 class="title"><a href="/login">{{$item->judulArtikel}}</a></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        @endforeach                        
+      </div>
+
         
             <div class="col-lg-3 col-md-6">
                 <div class="section-title">
@@ -224,22 +218,20 @@
       <div class="row">
         <div class="col-lg-6 offset-lg-3">
           <div class="section-heading">
-            <h6>Artikel</h6>
-            <h4>Daftar Artikel</h4>
+            <h6>Video</h6>
+            <h4>Daftar Video</h4>
           </div>
         </div>
         <div>
-          @foreach ($semua as $item)
+          @foreach ($semuaVideo as $item)
               <div class="row" style="text-align: justify">
                   <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
-                      <div class="d-flex justify-content-center">
-                          <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" style="max-width: 100%; height: auto; border-radius: 14px">
-                      </div>
+                    <iframe width="560" height="200" src="{{$item->linkVideo}}" frameborder="0" allowfullscreen></iframe>
                   </div>
                   <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
-                      <h4 style="text-align: left" >{{ $item->judulArtikel }} </h4>
-                      <span class="d-flex"><b>{{ $item->penulis }}</b></span>
-                      <p>{!! substr(strip_tags($item->deskripsi), 0, 400) . (strlen(strip_tags($item->content)) > 400 ? '...' : '') !!}</p>
+                      <h4 style="text-align: left" >{{ $item->judulVideo }} </h4>
+                      <span class="d-flex"><b>{{ $item->uploader }}</b></span>
+                      <p>{!! substr(strip_tags($item->deskripsiVideo), 0, 400) . (strlen(strip_tags($item->content)) > 400 ? '...' : '') !!}</p>
                   </div>
                   <span style="text-align: right; color: rgba(165, 165, 165, 1);"><p>
                     @php
@@ -278,12 +270,11 @@
         </div>
       </div>
         <div class="row">
-            @foreach ($box as $item)
+            @foreach ($boxVideo as $item)
             <div class="col-lg-3 col-sm-6">
                 <div class="single-post-wrap style-overlay">
                     <div class="thumb">
-                        <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" alt="img" width="500" height="250">
-                        <a class="tag-base tag-purple" href="#">{{ $item->penulis }}</a>
+                      <iframe width="600" height="300" src="{{$item->linkVideo}}" frameborder="0" allowfullscreen></iframe>
                     </div>
                     <div class="details">
                         <div class="post-meta-single">
@@ -307,7 +298,7 @@
                               @endphp
                             </p>
                         </div>
-                        <h6 class="title"><a href="/login">{{ $item->judulArtikel }}</a></h6>
+                        <h6 class="title"><a href="/login">{{ $item->judulVideo }}</a></h6>
                     </div>
                 </div>
             </div>
