@@ -21,6 +21,18 @@
 
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets2/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+
+  <style>
+    .button-container {
+    display: flex;
+    justify-content: space-between;
+    }
+
+    .button-container a {
+        flex: 1;
+        margin: 0 5px;
+    }
+  </style>
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -97,13 +109,26 @@
           </div>
           <ul class="navbar-nav  justify-content-end">
             <li class="nav-item d-flex align-items-center">
-              <a href="#" class="nav-link text-white font-weight-bold px-0">
-                <i><img src="{{ asset('fotoProfil/' . Auth::user()->fotoProfil) }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;"></i>
-                <span class="d-sm-inline d-none">{{Auth::user()->name}}</span> |
-                <i class="ni ni-button-power"></i>
-                <a href="/logout" class="d-sm-inline d-none text-white text-bold"> Logout
+              <a href="/profileAdmin" class="nav-link text-white font-weight-bold px-0">
+                  <i>
+                      <?php
+                      $fotoProfil = Auth::user()->fotoProfil;
+                      if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
+                      ?>
+                      <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
+                      <?php
+                      } else {
+                      ?>
+                      <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
+                      <?php
+                      }
+                      ?>
+                  </i>
+                  <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span> |
+                  <i class="ni ni-button-power"></i>
+                  <a href="/logout" class="d-sm-inline d-none text-white text-bold"> Logout</a>
               </a>
-            </li>
+          </li>
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
                 <div class="sidenav-toggler-inner">
@@ -123,126 +148,165 @@
       </div>
     </nav>
     <!-- End Navbar -->
-    
-    <div class="container-fluid py-4">
-      <div class="row">
-        <div class="col-12">
-          <div class="card mb-4">
-            <div class="card-header pb-0">
-              
-              <div class="container">
-                <div class="row">
-                  <div class="col-md-8">
-                      <div class="card">
-                          <div class="card-header">
-                              <h5 class="title">Edit Profile</h5>
-                          </div>
-                          <div class="card-body">
-                            <form method="POST" action="{{ route('updateAdmin', ['id' => Auth::user()->id]) }}" enctype="multipart/form-data">
-                              @csrf
-                              @method('PUT')
-                                    <div class="form-group">
-                                        <label>Role</label>
-                                        <input type="text" class="form-control" disabled="" name="role" value="{{ Auth::user()->role }}">
-                                    </div>
-                
-                                    <div class="form-group">
-                                        <label>Username</label>
-                                        <input type="text" class="form-control" disabled="" name="username" value="{{ Auth::user()->username }}">
-                                    </div>
-                
-                                    <div class="form-group">
-                                        <label>Email</label>
-                                        <input type="text" class="form-control" disabled="" name="email" value="{{ Auth::user()->email }}">
-                                    </div>
-        
-                                    <div class="form-group">
-                                      <label>Foto Profil</label>
-                                      <input type="file" class="form-control" name="fotoProfil">
-                                  </div>
-                
-                                    <div class="form-group">
-                                        <label>Nama</label>
-                                        <input type="text" class="form-control" name="name" value="{{ Auth::user()->name }}">
-                                    </div>
-                
-                                    <div class="form-group">
-                                        <label>Alamat</label>
-                                        <input type="text" class="form-control" name="alamat" value="{{ Auth::user()->alamat }}">
-                                    </div>
-                
-                                    <div class="form-group">
-                                      <label>Instagram</label><br>
-                                      <label>Format Penulisan : https://www.instagram.com/goodgamestoreid/</label>
-                                      <input type="text" class="form-control" name="instagram" value="{{ Auth::user()->instagram }}" pattern="https?://(www\.)?instagram\.com/.+">
-                                  </div>
-                                  
-                                  <div class="form-group">
-                                      <label>Facebook</label><br>
-                                      <label>Format Penulisan : https://www.facebook.com/goodgamestoreid/</label>
-                                      <input type="text" class="form-control" name="facebook" value="{{ Auth::user()->facebook }}" pattern="https?://(www\.)?facebook\.com/.+">
-                                  </div>                  
-                
-                                    <div class="form-group">
-                                        <label>About Me</label>
-                                        <textarea rows="4" class="form-control" name="aboutme">{{ Auth::user()->aboutme}}</textarea>
-                                    </div>
-                
-                                      <button type="submit" class="btn btn-primary">Simpan</button>
-                                      <a href="/dashboard" class="btn btn-info">Kembali</a>
-                                      </form>
-                                  </div>
-                              </div>
-                          </div>
-                
-                          <div class="col-md-4">
-                            <div class="card card-user">
-                              <div class="card-body text-center">
-                                <div class="author">
-                                  <a href="#">
-                                    <img src="{{ asset('fotoProfil/' . Auth::user()->fotoProfil) }}" alt="User's Profile Picture" width="365" height="250">
-                                    <br>
-                                    <br>
-                                    <br>
-                                    <h5 class="title">{{Auth::user()->name}}</h5>
-                                    <span>{{Auth::user()->username}}</span>
-                                    <p>{{Auth::user()->email}}</p>
-                                  </a>
-                                </div>
-                                <p class="description">
-                                  {{Auth::user()->aboutme}}
-                                </p>
-                              </div>
-                              <hr>
-                              <div class="button-container text-center">
-                                <a href="{{Auth::user()->facebook}}" class="btn btn-neutral btn-icon btn-round btn-lg">
-                                  <i class="fab fa-facebook-f"></i> Facebook
-                                </a>
-                                <a href="{{Auth::user()->instagram}}" class="btn btn-neutral btn-icon btn-round btn-lg">
-                                  <i class="fab fa-instagram"></i> Instagram
-                                </a>
-                                <br>
-                                <br>
-                              </div>
-                            </div>
-                          </div>
-                          
-                          </div>
+
+          <div class="container-fluid py-4">
+            <div class="row">
+              <div class="col-md-8">
+                <div class="card">
+                  <div class="card-header pb-0">
+                    <div class="d-flex align-items-center">
+                      <p class="mb-0">Edit Profile</p>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <form method="POST" action="{{ route('updateAdmin', ['id' => Auth::user()->id]) }}" enctype="multipart/form-data">
+                      @csrf
+                      @method('PUT')
+                    <p class="text-uppercase text-sm">User Information</p>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Role</label>
+                          <input class="form-control" type="email" disabled="" value="{{ Auth::user()->role }}" name="role">
                         </div>
-
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Username</label>
+                          <input class="form-control" type="email" disabled="" value="{{ Auth::user()->username }}" name="username">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Email</label>
+                          <input class="form-control" type="email" disabled="" value="{{ Auth::user()->email }}" name="email">
+                        </div>
+                      </div>
+                    </div>
+                    <hr class="horizontal dark">
+                    <p class="text-uppercase text-sm">Contact Information</p>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                           <label for="fotoProfil" class="form-control-label">Foto Profil</label>
+                           <input class="form-control" type="file" name="fotoProfil">
+                        </div>
+                     </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Nama</label>
+                          <input class="form-control" type="text" value="{{ Auth::user()->name}}" name="name">
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Alamat</label>
+                          <input class="form-control" type="text" value="{{ Auth::user()->alamat }}" name="alamat">
+                        </div>
+                      </div>
+                    </div>
+                    <hr class="horizontal dark">
+                    <p class="text-uppercase text-sm">About me</p>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">About me</label>
+                          <input class="form-control" type="text" value="{{ Auth::user()->aboutme }}" name="aboutme">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Instagram</label>
+                          <input class="form-control" type="text" value="{{ Auth::user()->instagram }}" name="instagram">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Facebook</label>
+                          <input class="form-control" type="text" value="{{ Auth::user()->facebook }}" name="facebook">
+                        </div>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <a href="/profileAdmin" class="btn btn-info">Kembali</a
+                  </form>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card card-profile">
+                  <img src="https://images6.alphacoders.com/132/1320318.png" alt="Image placeholder" class="card-img-top">
+                  <div class="row justify-content-center">
+                    <div class="col-4 col-lg-4 order-lg-2">
+                      <div class="mt-n4 mt-lg-n6 mb-4 mb-lg-0">
+                        <a href="javascript:;">
+                            <div style="width: 230px; height: 220px; border: 2px solid white; border-radius: 50%; overflow: hidden;">
+                                <img src="<?php
+                                    $fotoProfil = Auth::user()->fotoProfil;
+                                    if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
+                                        echo asset('fotoProfil/' . $fotoProfil);
+                                    } else {
+                                        echo asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999');
+                                    }
+                                ?>" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                        </a>
+                    </div>                    
+                    </div>
+                  </div>
+                  <div class="card-header text-center border-0 pt-0 pt-lg-2 pb-4 pb-lg-3">
+                    <div class="d-flex justify-content-between">
+                      <a href="javascript:;" class="btn btn-sm btn-info mb-0 d-block d-lg-none"><i class="ni ni-collection"></i></a>
+                      <a href="javascript:;" class="btn btn-sm btn-dark float-right mb-0 d-block d-lg-none"><i class="ni ni-email-83"></i></a>
+                    </div>
+                  </div>
+                  <div class="card-body pt-0">
+                    <div class="text-center mt-4">
+                      <h5>
+                        {{ Auth::user()->name}}<span class="font-weight-light"></span>
+                      </h5>
+                      <div class="h6 font-weight-300">
+                        <i class="ni location_pin mr-2"></i>{{ Auth::user()->username }}
+                      </div>
+                      <div class="h6 mt-4">
+                        <i class="ni business_briefcase-24 mr-2"></i>{{ Auth::user()->alamat }}
+                      </div>
+                      <div>
+                        <i class="ni education_hat mr-2"></i>{{ Auth::user()->aboutme }}
+                      </div>
+                    </div>
+                    <br>
+                    <div class="button-container">
+                      <a href="{{ Auth::user()->instagram}};" class="btn btn-info mb-0 d-none d-lg-block">
+                          <i class="fab fa-instagram"></i> Instagram
+                      </a>
+                      <a href="{{ Auth::user()->facebook}}" class="btn btn-dark mb-0 d-none d-lg-block">
+                          <i class="fab fa-facebook"></i> Facebook
+                      </a>
+                  </div>                                                    
+                  </div>
+                </div>
+              </div>
+            </div>
+            <footer class="footer pt-3  ">
+              <div class="container-fluid">
+                <div class="row align-items-center justify-content-lg-between">
+                  <div class="col-lg-6 mb-lg-0 mb-4">
+                    <div class="copyright text-center text-sm text-muted text-lg-start">
+                      © <script>
+                        document.write(new Date().getFullYear())
+                      </script>,
+                      Template by <a title="CSS Templates" rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>,
+                      <a title="CSS Templates" rel="sponsored" href="https://themewagon.com/themes/free-bootstrap-4-html-5-blog-website-template-nextpage/" target="_blank">NextPage </a> and
+                      <a title="CSS Templates" rel="sponsored" href="https://www.creative-tim.com" target="_blank">Crative Tim </a> 
+                      Edited By <a title="CSS Templates" rel="sponsored" href="#" target="_blank">GSG Team</a></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </footer>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
-      <footer class="footer pt-3  ">
-        <div class="container-fluid">
-          <div class="row align-items-center justify-content-lg-between">
-
-          </div>
-        </div>
-      </footer>
     </div>
   </main>
   <div class="fixed-plugin">

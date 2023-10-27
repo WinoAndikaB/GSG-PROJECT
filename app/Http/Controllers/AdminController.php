@@ -3,25 +3,44 @@
 namespace App\Http\Controllers;
 
 use App\Models\artikels;
+use App\Models\Dislikes;
+use App\Models\Likes;
 use App\Models\ulasans;
 use App\Models\user;
+use Carbon\Carbon;
 use GuzzleHttp\Psr7\UploadedFile;
 use Illuminate\Foundation\Auth\User as AuthUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Console\Input\Input;
 
 class AdminController extends Controller
 {
 
 //Menampilkan Data Dashboard Admin
-    function dashboard(){
+function dashboard(){
     $totalArtikel = artikels::count();
     $totalUser = user::count();
     $totalUlasan = ulasans::count();
-    return view('admin.dashboard', compact('totalArtikel','totalUser','totalUlasan'));
+    $totalUlasan = ulasans::count();
+    $data1 = ulasans::all();
+
+    // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+    $dataAddedInLast24HoursUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
+    $dataAddedInLast24HoursUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
+    $dataAddedInLast24HoursArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+    //Rating
+    $ratings = $data1->pluck('rating')->map(function ($rating) {
+        return (int) $rating; // Mengonversi rating ke integer
+    });
+    
+    $totalRatings = $ratings->sum();
+    $averageRating = $ratings->count() > 0 ? $totalRatings / $ratings->count() : 0;
+
+    return view('admin.dashboard', compact('totalArtikel', 'totalUser', 'totalUlasan', 'averageRating', 'totalUlasan', 'dataAddedInLast24HoursUlasan','dataAddedInLast24HoursUser','dataAddedInLast24HoursArtikel'));
 }
 
-//Menampilkan Data Artikel pada Tabel Admin
 function dataArtikel(){
     $data = artikels::paginate(5);
     return view('admin.tables', compact('data'));
@@ -43,15 +62,15 @@ function dataArtikel(){
         $article = new artikels;
         $article->judulArtikel = $request->input('judulArtikel');
         $article->penulis = $request->input('penulis');
+        $article->email = $request->input('email');
         $article->deskripsi = $request->input('deskripsi');
     
         // Handle file upload
         if ($request->hasFile('gambarArtikel')) {
             $file = $request->file('gambarArtikel');
             $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->storeAs('your_upload_folder', $fileName, 'public'); // Adjust the storage path
+            $file->storeAs('your_upload_folder', $fileName, 'public'); 
     
-            // Save the file name to the database
             $article->gambarArtikel = $fileName;
         }
     
@@ -85,19 +104,28 @@ function dataArtikel(){
         return redirect()->route('dataArtikel')->with('success','Data Berhasil di Update');
     }    
 
-    //Menampilkan Data User yang sudah register pada tabel Admin
     function listUserTerdaftar(){
-        $role = request()->input('roles');
-        $data = user::query();
+        $users = User::paginate(10);
+        
+        $userId = Auth::user()->id;
+        
+        $totalLikes = Likes::where('user_id', $userId)->count();
+        $totalDislikes = Dislikes::where('user_id', $userId)->count();
     
-        if ($role) {
-            $data = $data->where('role', $role);
-        }
-    
-        $users = $data->get();
-    
-        return view('admin.pengguna', ['users' => $users]);
+        return view('admin.pengguna', compact('users', 'totalLikes', 'totalDislikes'));
     }
+    
+
+    public function likes()
+    {
+        return $this->hasMany(Likes::class, 'user_id', 'id');
+    }
+
+    public function dislikes()
+    {
+        return $this->hasMany(Dislikes::class, 'user_id', 'id');
+    }
+
 
     function formTambahUserAdm(){
         return view('admin.formTambahUserAdm');
@@ -105,6 +133,7 @@ function dataArtikel(){
 
     function registerAdmin(Request $req){
             user::create([
+                'username' => $req->username,
                  'name' => $req->name,
                  'email' => $req->email,
                  'password' => bcrypt($req->password),
@@ -122,8 +151,20 @@ function dataArtikel(){
 
     //Menampilkan Data Ulasan pada Tabel Admin
     function ulasanAdmin(){
-        $data1=ulasans::all();
-        return view('admin.ulasans', compact('data1'));
+        $data1=ulasans::paginate(9);
+
+        //Rating
+        $ratings = $data1->pluck('rating')->map(function ($rating) {
+            return (int) $rating; // Mengonversi rating ke integer
+        });
+        
+        $totalRatings = $ratings->sum();
+        $averageRating = $ratings->count() > 0 ? $totalRatings / $ratings->count() : 0;
+    
+        //Hitung Ulasan
+        $totalUlasan = ulasans::count();
+
+        return view('admin.ulasans', compact('data1', 'averageRating', 'totalUlasan'));
     }
 
     //Delete data ulasan pada Tabel Admin
@@ -136,6 +177,7 @@ function dataArtikel(){
     //Profile
     public function profileAdmin()
     {
+        
         return view('Admin.profileA');
     }  
   
@@ -155,17 +197,14 @@ function dataArtikel(){
         if ($request->hasFile('fotoProfil')) {
             $image = $request->file('fotoProfil');
     
-            // Create a filename that includes spaces and user information
             $filename = 'fotoProfil.' . $user->name . ' ' . $user->username . '.' . $image->getClientOriginalExtension();
-    
-            // Save the image in the public directory
+
             $image->move(public_path('fotoProfil'), $filename);
     
-            // Update the user's fotoProfil attribute with the filename
             $user->fotoProfil = $filename;
             $user->save();
         }
-    
+
         return redirect('/profileAdmin');
     }
 }

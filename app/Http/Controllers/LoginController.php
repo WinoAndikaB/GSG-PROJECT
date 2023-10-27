@@ -87,11 +87,6 @@ class LoginController extends Controller
             'username' => $req->username,
             'email' => $req->email,
             'password' => bcrypt($req->password),
-            'alamat'=> $req->alamat,
-            'instagram'=> $req->instagram,
-            'facebook'=> $req->facebook,
-            'aboutme'=> $req->aboutme,
-            'fotoProfil'=> $req->fotoProfil,
             'role' => 'user',
        ]);
             return redirect('/login');

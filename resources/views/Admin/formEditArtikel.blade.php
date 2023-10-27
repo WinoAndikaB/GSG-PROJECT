@@ -116,12 +116,25 @@
           <ul class="navbar-nav  justify-content-end">
             <li class="nav-item d-flex align-items-center">
               <a href="/profileAdmin" class="nav-link text-white font-weight-bold px-0">
-                <i><img src="{{ asset('fotoProfil/' . Auth::user()->fotoProfil) }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;"></i>
-                <span class="d-sm-inline d-none">{{Auth::user()->name}}</span> |
-                <i class="ni ni-button-power"></i>
-                <a href="/logout" class="d-sm-inline d-none text-white text-bold"> Logout
+                  <i>
+                      <?php
+                      $fotoProfil = Auth::user()->fotoProfil;
+                      if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
+                      ?>
+                      <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
+                      <?php
+                      } else {
+                      ?>
+                      <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
+                      <?php
+                      }
+                      ?>
+                  </i>
+                  <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span> |
+                  <i class="ni ni-button-power"></i>
+                  <a href="/logout" class="d-sm-inline d-none text-white text-bold"> Logout</a>
               </a>
-            </li>
+          </li>
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
                 <div class="sidenav-toggler-inner">

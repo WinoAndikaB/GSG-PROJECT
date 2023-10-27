@@ -15,13 +15,24 @@
                   <li class="scroll-to-section"><a href="/about" class="text-center">Tentang</a></li>
               </ul>
                   <ul class="nav">
-                    <li class="nav-item">
-                        <a href="/profileUser" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center">
-                            <div class="profile-picture" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
-                                <img src="{{ asset('fotoProfil/' . Auth::user()->fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
-                            </div>
-                            <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
-                        </a>
+                    <li class="scroll-to-section">
+                      <a href="/profileUser" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center">
+                        <div class="profile-picture" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
+                            <?php
+                            $fotoProfil = Auth::user()->fotoProfil;
+                            if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
+                            ?>
+                            <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                            <?php
+                            } else {
+                            ?>
+                            <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                            <?php
+                            }
+                            ?>
+                        </div>
+                        <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
+                    </a>                        
                     </li>
                     <li class="nav-item">
                         <a href="/logout" class="text-right">Logout</a>
@@ -49,7 +60,8 @@
 
 <body class="landing-page sidebar-collapse">
   <div class="wrapper">
-    <div class="section section-about-us">
+    <div class="section">
+      <br>
       <div class="container">
         <div class="row">
           <div class="col-md-8">
@@ -120,7 +132,16 @@
                       <div class="card-body text-center">
                         <div class="author">
                           <a href="/profileUser">
-                            <img src="{{ asset('fotoProfil/' . Auth::user()->fotoProfil) }}" alt="User's Profile Picture">
+                            <img src="
+                            <?php
+                                $fotoProfil = Auth::user()->fotoProfil;
+                                if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
+                                    echo asset('fotoProfil/' . $fotoProfil);
+                                } else {
+                                    echo asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999');
+                                }
+                            ?>" alt="User's Profile Picture">
+
                             <br>
                             <br>
                             <br>
@@ -146,8 +167,7 @@
                       </div>
                     </div>
                   </div>
-                  
-                  </div>
                 </div>
+              </div>
             </div>
             </body>

@@ -19,6 +19,7 @@
   <link href="../assets2/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets2/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+  
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -96,12 +97,25 @@
           <ul class="navbar-nav  justify-content-end">
             <li class="nav-item d-flex align-items-center">
               <a href="/profileAdmin" class="nav-link text-white font-weight-bold px-0">
-                <i><img src="{{ asset('fotoProfil/' . Auth::user()->fotoProfil) }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;"></i>
-                <span class="d-sm-inline d-none">{{Auth::user()->name}}</span> |
-                <i class="ni ni-button-power"></i>
-                <a href="/logout" class="d-sm-inline d-none text-white text-bold"> Logout
+                  <i>
+                      <?php
+                      $fotoProfil = Auth::user()->fotoProfil;
+                      if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
+                      ?>
+                      <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
+                      <?php
+                      } else {
+                      ?>
+                      <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
+                      <?php
+                      }
+                      ?>
+                  </i>
+                  <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span> |
+                  <i class="ni ni-button-power"></i>
+                  <a href="/logout" class="d-sm-inline d-none text-white text-bold"> Logout</a>
               </a>
-            </li>
+          </li>
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
                 <div class="sidenav-toggler-inner">
@@ -132,88 +146,136 @@
               <h6>List Artikel Tersedia</h6>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">
-                <table>
-                  <thead>
-                    <tr>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Gambar</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Judul Artikel</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Penulis</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Upload</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">-</th>
-                    </tr>
-                  </thead>
-                  @foreach ($data as $tbhartikel)
-                  <tbody>
-                    <tr>
-                      <td class="text-center text-xs font-weight-bold mb-0 px-2 py-1">
-                        {{$tbhartikel['id']}}
-                      </td>
-                      <td>
-                        <div class="px-2 py-1">
-                          <div>
-                            <img src="{{asset('gambarArtikel/'.$tbhartikel->gambarArtikel)}}" alt="" style="width: 100px;">
-                          </div>
-                        </div>
-                      </td>
-                      <td class="text-center text-xs font-weight-bold mb-0 px-2 py-1">
-                        {{$tbhartikel['judulArtikel']}}
-                      </td>
-                      <td class="text-center text-xs font-weight-bold mb-0 px-2 py-1">
-                        {{$tbhartikel['penulis']}}
-                      </td>
-                      <td class="text-center text-xs font-weight-bold mb-0 px-2 py-1">
-                       {{$tbhartikel['deskripsi']}}</p>
-                    </td>
-                      <td class="text-center text-xs font-weight-bold mb-0 px-2 py-1">
-                       {{$tbhartikel['created_at']}}</p>
-                      </td>
-                      <td class="px-2 py-1">
-                        <a href="/tampilDataEditArtikel/{{ $tbhartikel->id}}" class="btn btn-edit">Edit</a>
-                        <a href="{{"deleteA/".$tbhartikel['id']}}" class="btn btn-danger" onclick="return showConfirmation()">Hapus</a>
-                      </td>
-                    </tr>            
-                  </tbody>
-                  @endforeach
-                </table>
-                
-                <div class="d-flex justify-content-center">
-                  <ul class="pagination">
-                      @if ($data->onFirstPage())
-                          <li class="page-item disabled">
-                              <span class="page-link" aria-label="Previous">
-                                  <span aria-hidden="true">&lsaquo;</span>
-                              </span>
-                          </li>
-                      @else
-                          <li class="page-item">
-                              <a class="page-link" href="{{ $data->previousPageUrl() }}" rel="prev" aria-label="Previous">
-                                  <span aria-hidden="true">&lsaquo;</span>
-                              </a>
-                          </li>
-                      @endif
+              <div class="table-responsive p-0">          
 
-                    <!-- Menampilkan halaman berapa -->
-                    <div class="text-center">
-                        {{ $data->currentPage() }} dari {{ $data->lastPage() }}
+              <div class="container-fluid py-4">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="card mb-4">
+                      <div class="card-header pb-0">
+                      </div>
+                      <div class="card-body px-0 pt-0 pb-2">
+                        <div class="table-responsive p-0">
+                          <table class="table align-items-center mb-0">
+                            <thead>
+                              <tr>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Penulis</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Judul Artikel</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Upload</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                                <th class="text-secondary opacity-7"></th>
+                              </tr>
+                            </thead>
+                            @foreach ($data as $tbhartikel)
+                            <tbody>
+                              <tr>
+                                <td class="align-middle text-center">
+                                  <p class="text-xs font-weight-bold mb-0">{{$tbhartikel['id']}}</p>
+                                </td>
+                                <td>
+                                  <div class="d-flex px-2 py-1">
+                                    <div>
+                                      <img src="{{asset('gambarArtikel/'.$tbhartikel->gambarArtikel)}}" class="avatar avatar-sm me-3" alt="user1">
+                                    </div>
+                                    <div class="d-flex flex-column justify-content-center">
+                                      <h6 class="mb-0 text-sm">{{$tbhartikel['penulis']}}</h6>
+                                      <p class="text-xs text-secondary mb-0">{{$tbhartikel['email']}}</p>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td>
+                                  <p class="text-xs font-weight-bold mb-0">{{$tbhartikel['judulArtikel']}}</p>
+                                </td>
+                                <td>
+                                  <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
+                                    <?php
+                                    $deskripsi = strip_tags($tbhartikel['deskripsi']);
+                                    $words = str_word_count($deskripsi, 2);
+                                    $first_100_words = implode(' ', array_slice($words, 0, 150));
+                                    echo $first_100_words;
+                                    if (str_word_count($deskripsi) > 100) {
+                                      echo '...';
+                                    }
+                                    ?>
+                                  </p>
+                                </td>
+                                <td class="align-middle text-center">
+                                  <span class="text-secondary text-xs font-weight-bold">{{$tbhartikel['created_at']->format('l, d F Y H:i:s') }}</span>
+                                </td>
+                                <td class="align-middle text-center">
+                                  <span class="badge badge-sm bg-gradient-success">Pending</span>
+                                </td>
+                                <td class="align-middle">
+                                  <a href="/tampilDataEditArtikel/{{ $tbhartikel->id}}" class="btn btn-edit">Edit</a>
+                                  <a href="{{"deleteA/".$tbhartikel['id']}}" class="btn btn-danger" onclick="return showConfirmation()">Hapus</a>
+                                </td>
+                              </tr>
+                            </tbody>
+                            @endforeach
+
+                            <div class="d-flex justify-content-center">
+                              <ul class="pagination">
+                                  @if ($data->onFirstPage())
+                                      <li class="page-item disabled">
+                                          <span class="page-link" aria-label="Previous">
+                                              <span aria-hidden="true">&lsaquo;</span>
+                                          </span>
+                                      </li>
+                                  @else
+                                      <li class="page-item">
+                                          <a class="page-link" href="{{ $data->previousPageUrl() }}" rel="prev" aria-label="Previous">
+                                              <span aria-hidden="true">&lsaquo;</span>
+                                          </a>
+                                      </li>
+                                  @endif
+            
+                                <!-- Menampilkan halaman berapa -->
+                                <div class="text-center">
+                                    {{ $data->currentPage() }} dari {{ $data->lastPage() }}
+                                </div>
+                          
+                                  @if ($data->hasMorePages())
+                                      <li class="page-item">
+                                          <a class="page-link" href="{{ $data->nextPageUrl() }}" rel="next" aria-label="Next">
+                                              <span aria-hidden="true">&rsaquo;</span>
+                                          </a>
+                                      </li>
+                                  @else
+                                      <li class="page-item disabled">
+                                          <span class="page-link" aria-label="Next">
+                                              <span aria-hidden="true">&rsaquo;</span>
+                                          </span>
+                                      </li>
+                                  @endif
+                              </ul>
+                          </div>
+
+                          </table>
+                        </div>
+                      </div>
                     </div>
-              
-                      @if ($data->hasMorePages())
-                          <li class="page-item">
-                              <a class="page-link" href="{{ $data->nextPageUrl() }}" rel="next" aria-label="Next">
-                                  <span aria-hidden="true">&rsaquo;</span>
-                              </a>
-                          </li>
-                      @else
-                          <li class="page-item disabled">
-                              <span class="page-link" aria-label="Next">
-                                  <span aria-hidden="true">&rsaquo;</span>
-                              </span>
-                          </li>
-                      @endif
-                  </ul>
+                  </div>
+                </div>
+  
+                <footer class="footer pt-3  ">
+                  <div class="container-fluid">
+                    <div class="row align-items-center justify-content-lg-between">
+                      <div class="col-lg-6 mb-lg-0 mb-4">
+                        <div class="copyright text-center text-sm text-muted text-lg-start">
+                          © <script>
+                            document.write(new Date().getFullYear())
+                          </script>,
+                          Template by <a title="CSS Templates" rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>,
+                          <a title="CSS Templates" rel="sponsored" href="https://themewagon.com/themes/free-bootstrap-4-html-5-blog-website-template-nextpage/" target="_blank">NextPage </a> and
+                          <a title="CSS Templates" rel="sponsored" href="https://www.creative-tim.com" target="_blank">Crative Tim </a> 
+                          Edited By <a title="CSS Templates" rel="sponsored" href="#" target="_blank">GSG Team</a></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </footer>
               </div>
               
               </div>

@@ -110,12 +110,25 @@
           <ul class="navbar-nav  justify-content-end">
             <li class="nav-item d-flex align-items-center">
               <a href="/profileAdmin" class="nav-link text-white font-weight-bold px-0">
-                <i><img src="{{ asset('fotoProfil/' . Auth::user()->fotoProfil) }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;"></i>
-                <span class="d-sm-inline d-none">{{Auth::user()->name}}</span> |
-                <i class="ni ni-button-power"></i>
-                <a href="/logout" class="d-sm-inline d-none text-white text-bold"> Logout
+                  <i>
+                      <?php
+                      $fotoProfil = Auth::user()->fotoProfil;
+                      if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
+                      ?>
+                      <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
+                      <?php
+                      } else {
+                      ?>
+                      <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
+                      <?php
+                      }
+                      ?>
+                  </i>
+                  <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span> |
+                  <i class="ni ni-button-power"></i>
+                  <a href="/logout" class="d-sm-inline d-none text-white text-bold"> Logout</a>
               </a>
-            </li>
+          </li>
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
                 <div class="sidenav-toggler-inner">
@@ -136,7 +149,7 @@
       </div>
     </nav>
     <!-- End Navbar -->
-    
+
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-12">
@@ -146,55 +159,157 @@
               <h6>List User Terdaftar</h6>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">
-                <table>
-                  <thead>
-                    <tr>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Email</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Password (bcrypt)</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Role</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Buat</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">-</th>
-                    </tr>
-                  </thead>
-                  @foreach ($users as $user)
-                  <tbody>
-                    <tr>
-                      <td class="text-center text-xs font-weight-bold mb-0 px-2 py-1">
-                        {{$user['id']}}
-                      </td>
-                      <td class="text-center text-xs font-weight-bold mb-0 px-2 py-1">
-                        {{$user['name']}}
-                      </td>
-                      <td class="text-center text-xs font-weight-bold mb-0 px-2 py-1">
-                        {{$user['email']}}
-                    </td>
-                      <td class="text-center text-xs font-weight-bold mb-0 px-2 py-1">
-                       {{$user['password']}}</p>
-                      </td>
-                      <td class="text-center text-xs font-weight-bold mb-0 px-2 py-1">
-                        {{$user['role']}}</p>
-                       </td>
-                      <td class="text-center text-xs font-weight-bold mb-0 px-2 py-1">
-                        {{$user['created_at']}}</p>
-                       </td>
-                      <td>
-                        <a href="{{"deleteP/".$user['id']}}" class="btn btn-danger" onclick="return confirm('Apakah Anda Yakin Mau Menghapus Data Ini?')">Hapus</i></a>
-                        </a>
-                      </td>
-                    </tr>            
-                  </tbody>
-                  @endforeach
-                </table>
+              <div class="table-responsive p-0">   
+
+              <div class="row">
+                <div class="col-12">
+                  <div class="card mb-4">
+                    <div class="card-header pb-0">
+                    </div>
+                    <div class="card-body px-0 pt-0 pb-2">
+                      <div class="table-responsive p-0">
+                        
+                        <div class="d-flex justify-content-center">
+                          <ul class="pagination">
+                              @if ($users->onFirstPage())
+                                  <li class="page-item disabled">
+                                      <span class="page-link" aria-label="Previous">
+                                          <span aria-hidden="true">&lsaquo;</span>
+                                      </span>
+                                  </li>
+                              @else
+                                  <li class="page-item">
+                                      <a class="page-link" href="{{ $users->previousPageUrl() }}" rel="prev" aria-label="Previous">
+                                          <span aria-hidden="true">&lsaquo;</span>
+                                      </a>
+                                  </li>
+                              @endif
+        
+                            <!-- Menampilkan halaman berapa -->
+                            <div class="text-center">
+                                {{ $users->currentPage() }} dari {{ $users->lastPage() }}
+                            </div>
+                      
+                              @if ($users->hasMorePages())
+                                  <li class="page-item">
+                                      <a class="page-link" href="{{ $users->nextPageUrl() }}" rel="next" aria-label="Next">
+                                          <span aria-hidden="true">&rsaquo;</span>
+                                      </a>
+                                  </li>
+                              @else
+                                  <li class="page-item disabled">
+                                      <span class="page-link" aria-label="Next">
+                                          <span aria-hidden="true">&rsaquo;</span>
+                                      </span>
+                                  </li>
+                              @endif
+                          </ul>
+                      </div>
+
+                        <table class="table align-items-center mb-0">
+                          <thead>
+                            <tr>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pengguna</th>
+                              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Alamat</th>
+                              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Instagram</th>
+                              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Facebook</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Role</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Like</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Dislike</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Upload</th>
+                              <th class="text-secondary opacity-7"></th>
+                            </tr>
+                          </thead>
+                          @foreach ($users as $user)
+                          <tbody>
+                            <tr>
+                              <td class="align-middle text-center">
+                                <p class="text-xs font-weight-bold mb-0">{{$user['id']}}</p>
+                              </td>
+                              <td>
+                                <div class="d-flex px-2 py-1">
+                                  <div>
+                                    <img src="{{ asset('fotoProfil/' . $user['fotoProfil']) }}" class="avatar avatar-sm me-3" alt="user1">
+                                  </div>
+                                  <div class="d-flex flex-column justify-content-center">
+                                    <h6 class="mb-0 text-sm">{{$user['name']}}</h6>
+                                    <p class="text-xs text-secondary mb-0">{{$user['email']}}</p>
+                                  </div>
+                                </div>
+                              </td>
+                              <td>
+                                <p class="text-xs font-weight-bold mb-0">{{$user['alamat']}}</p>
+                              </td>
+                              <td>
+                                <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
+                                  {{$user['instagram']}}
+                                </p>
+                              </td>   
+                              <td>
+                                <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
+                                  {{$user['facebook']}}
+                                </p>
+                              </td>   
+                              <td>
+                                <p class="align-middle text-center" style="white-space: normal; max-width: 1000px;">
+                                  {{$user['role']}}
+                                </p>
+                              </td> 
+                              <td>
+                                <p class="align-middle text-center" style="white-space: normal; max-width: 1000px;">
+                                  {{ $user->likes ? $user->likes->count() : 0 }}
+                                </p>
+                              </td> 
+                              <td>
+                                <p class="align-middle text-center" style="white-space: normal; max-width: 1000px;">
+                                  {{ $user->dislikes ? $user->dislikes->count() : 0 }}
+                                </p>
+                              </td>  
+                              <td class="align-middle text-center">
+                                <span class="text-secondary text-xs font-weight-bold">{{$user['created_at']->format('l, d F Y H:i:s') }}</span>
+                              </td>
+                              <td class="align-middle">
+                                <a href="{{"deleteP/".$user['id']}}" class="btn btn-danger" onclick="return confirm('Apakah Anda Yakin Mau Menghapus Data Ini?')">Hapus</i></a>
+                              </td>
+                            </tr>
+                          </tbody>
+                            @endforeach
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
+
+
+              <footer class="footer pt-3  ">
+                <div class="container-fluid">
+                  <div class="row align-items-center justify-content-lg-between">
+                    <div class="col-lg-6 mb-lg-0 mb-4">
+                      <div class="copyright text-center text-sm text-muted text-lg-start">
+                        © <script>
+                          document.write(new Date().getFullYear())
+                        </script>,
+                        Template by <a title="CSS Templates" rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>,
+                        <a title="CSS Templates" rel="sponsored" href="https://themewagon.com/themes/free-bootstrap-4-html-5-blog-website-template-nextpage/" target="_blank">NextPage </a> and
+                        <a title="CSS Templates" rel="sponsored" href="https://www.creative-tim.com" target="_blank">Crative Tim </a> 
+                        Edited By <a title="CSS Templates" rel="sponsored" href="#" target="_blank">GSG Team</a></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </footer>
+            </div>
+            
             </div>
           </div>
         </div>
       </div>
     </div>
-  </main>
+  </div>
+</main>
+
   <div class="fixed-plugin">
     <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
       <i class="fa fa-cog py-2"> </i>
@@ -273,6 +388,24 @@
   <script src="../assets2/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/chartjs.min.js"></script>
+
+  <!-- Rating -->
+<script>
+  const stars = document.querySelectorAll('.star');
+  const ratingInput = document.getElementById('rating');
+
+  stars.forEach((star) => {
+    star.addEventListener('click', () => {
+      const ratingValue = parseInt(star.getAttribute('data-rating'));
+      ratingInput.value = ratingValue;
+      stars.forEach((s) => s.classList.remove('selected')); // Hapus kelas 'selected' dari semua bintang
+      for (let i = 0; i < ratingValue; i++) {
+        stars[i].classList.add('selected'); // Tambahkan kelas 'selected' pada bintang yang dipilih
+      }
+    });
+  });
+</script>
+
   <script>
     var ctx1 = document.getElementById("chart-line").getContext("2d");
 

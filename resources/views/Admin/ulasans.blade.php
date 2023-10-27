@@ -33,6 +33,31 @@
   <link href="../assets2/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets2/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+
+  <style>
+      .rating {
+        font-size: 20px;
+      }
+
+      .star {
+        color: gray; /* Mengatur warna bintang awalnya menjadi gray */
+        cursor: pointer;
+      }
+
+      .star.selected {
+        color: gold; /* Mengatur warna bintang yang dipilih menjadi gold */
+      }
+
+      .rating-container {
+          font-size: 20px; /* Atur ukuran teks rata-rata rating */
+          margin: 15px; /* Atur margin untuk jarak dari teks sekitarnya */
+        }
+
+        .filled-star {
+          color: gold; /* Warna bintang yang diisi */
+        }
+
+</style>
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -110,12 +135,25 @@
           <ul class="navbar-nav  justify-content-end">
             <li class="nav-item d-flex align-items-center">
               <a href="/profileAdmin" class="nav-link text-white font-weight-bold px-0">
-                <i><img src="{{ asset('fotoProfil/' . Auth::user()->fotoProfil) }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;"></i>
-                <span class="d-sm-inline d-none">{{Auth::user()->name}}</span> |
-                <i class="ni ni-button-power"></i>
-                <a href="/logout" class="d-sm-inline d-none text-white text-bold"> Logout
+                  <i>
+                      <?php
+                      $fotoProfil = Auth::user()->fotoProfil;
+                      if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
+                      ?>
+                      <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
+                      <?php
+                      } else {
+                      ?>
+                      <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
+                      <?php
+                      }
+                      ?>
+                  </i>
+                  <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span> |
+                  <i class="ni ni-button-power"></i>
+                  <a href="/logout" class="d-sm-inline d-none text-white text-bold"> Logout</a>
               </a>
-            </li>
+          </li>
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
                 <div class="sidenav-toggler-inner">
@@ -142,51 +180,142 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <h6>List Ulasan User</h6>
+              <a href="/formTambahUserAdm" class="btn btn-primary">Tambah User Admin</i></a>
+              <h6>List User Terdaftar</h6>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">
-                <table>
-                  <thead>
-                    <tr>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Email</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pesan</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">rating</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Upload</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">-</th>
-                    </tr>
-                  </thead>
-                  @foreach ($data1 as $ulasan)
-                  <tbody>
-                    <tr>
-                      <td class="text-center text-xs font-weight-bold mb-0 px-2 py-1">
-                        {{$ulasan['id']}}
-                      </td>
-                      <td class="text-center text-xs font-weight-bold mb-0 px-2 py-1">
-                        {{$ulasan['email']}}
-                      </td>
-                      <td class="text-center text-xs font-weight-bold mb-0 px-2 py-1">
-                        {{$ulasan['nama']}}
-                      </td>
-                      <td class="text-center text-xs font-weight-bold mb-0 px-2 py-1">
-                        {{$ulasan['pesan']}}
-                      </td>
-                      <td class="text-center text-xs font-weight-bold mb-0 px-2 py-1">
-                        {{$ulasan['rating']}}
-                      </td>
-                      <td class="text-center text-xs font-weight-bold mb-0 px-2 py-1">
-                       {{$ulasan['created_at']}}</p>
-                      </td>
-                      <td class="px-2 py-1">
-                        <a href="{{"deleteU/".$ulasan['id']}}" class="btn btn-danger" onclick="return confirm('Yakin Mau Hapus Data?')">Hapus</a>
-                      </td>
-                    </tr>            
-                  </tbody>
-                  @endforeach
-                </table>
+              <div class="table-responsive p-0">             
+
+              <div class="row">
+                <div class="col-12">
+                  <div class="card mb-4">
+                    <div class="card-header pb-0">
+                    </div>
+                    <div class="card-body px-0 pt-0 pb-2">
+                      <div class="rating-container">
+                    </div> 
+                    
+                    <div class="d-flex justify-content-center">
+                      <ul class="pagination">
+                          @if ($data1->onFirstPage())
+                              <li class="page-item disabled">
+                                  <span class="page-link" aria-label="Previous">
+                                      <span aria-hidden="true">&lsaquo;</span>
+                                  </span>
+                              </li>
+                          @else
+                              <li class="page-item">
+                                  <a class="page-link" href="{{ $data1->previousPageUrl() }}" rel="prev" aria-label="Previous">
+                                      <span aria-hidden="true">&lsaquo;</span>
+                                  </a>
+                              </li>
+                          @endif
+    
+                        <!-- Menampilkan halaman berapa -->
+                        <div class="text-center">
+                            {{ $data1->currentPage() }} dari {{ $data1->lastPage() }}
+                        </div>
+                  
+                          @if ($data1->hasMorePages())
+                              <li class="page-item">
+                                  <a class="page-link" href="{{ $data1->nextPageUrl() }}" rel="next" aria-label="Next">
+                                      <span aria-hidden="true">&rsaquo;</span>
+                                  </a>
+                              </li>
+                          @else
+                              <li class="page-item disabled">
+                                  <span class="page-link" aria-label="Next">
+                                      <span aria-hidden="true">&rsaquo;</span>
+                                  </span>
+                              </li>
+                          @endif
+                      </ul>
+                  </div>
+
+                      <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0">
+                          <thead>
+                            <tr>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pengguna</th>
+                              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pesan</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Rating</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Upload</th>
+                              <th class="text-secondary opacity-7"></th>
+                            </tr>
+                          </thead>
+                          @foreach ($data1 as $ulasan)
+                          <tbody>
+                            <tr>
+                              <td class="align-middle text-center">
+                                <p>{{$ulasan['id']}}</p>
+                              </td>
+                              <td>
+                                <div class="d-flex px-2 py-1">
+                                  <div>
+                                    <img src="{{ asset('fotoProfil/' . $ulasan['fotoProfil']) }}" class="avatar avatar-sm me-3" alt="user1">
+                                  </div>
+                                  <div class="d-flex flex-column justify-content-center">
+                                    <h6 class="mb-0 text-sm">{{$ulasan['nama']}}</h6>
+                                    <p class="text-xs text-secondary mb-0">{{$ulasan['email']}}</p>
+                                  </div>
+                                </div>
+                              </td>  
+                              <td>
+                                <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
+                                  {{$ulasan['pesan']}}
+                                </p>
+                              </td> 
+                              <td>
+                                <p class="align-middle text-center" style="white-space: normal; max-width: 1000px;">
+                                  <span class="rating">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                      @if ($i <= $ulasan->rating)
+                                        <span class="star selected">&#9733;</span>
+                                      @else
+                                        <span class="star">&#9733;</span>
+                                      @endif
+                                    @endfor
+                                  </span>
+                                </p>
+                              </td>    
+                              <td class="align-middle text-center">
+                                <span class="text-secondary text-xs font-weight-bold">{{$ulasan['created_at']->format('l, d F Y H:i:s') }}</span>
+                              </td>
+                              <td class="align-middle">
+                                <a href="{{"deleteP/".$ulasan['id']}}" class="btn btn-danger" onclick="return confirm('Apakah Anda Yakin Mau Menghapus Data Ini?')">Hapus</i></a>
+                              </td>
+                            </tr>
+                          </tbody>
+                            @endforeach
+                        </table>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
+
+
+              <footer class="footer pt-3  ">
+                <div class="container-fluid">
+                  <div class="row align-items-center justify-content-lg-between">
+                    <div class="col-lg-6 mb-lg-0 mb-4">
+                      <div class="copyright text-center text-sm text-muted text-lg-start">
+                        © <script>
+                          document.write(new Date().getFullYear())
+                        </script>,
+                        Template by <a title="CSS Templates" rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>,
+                        <a title="CSS Templates" rel="sponsored" href="https://themewagon.com/themes/free-bootstrap-4-html-5-blog-website-template-nextpage/" target="_blank">NextPage </a> and
+                        <a title="CSS Templates" rel="sponsored" href="https://www.creative-tim.com" target="_blank">Crative Tim </a> 
+                        Edited By <a title="CSS Templates" rel="sponsored" href="#" target="_blank">GSG Team</a></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </footer>
+            </div>
+            
             </div>
           </div>
         </div>

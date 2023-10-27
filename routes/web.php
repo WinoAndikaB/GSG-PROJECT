@@ -74,6 +74,7 @@ Route::post('/updateDataIdArtikel/{id}',[AdminController::class,'updateDataIdArt
 
 //Route Tab Pengguna
 Route::get('/pengguna', [AdminController::class, 'listUserTerdaftar'])->name('listUserTerdaftar');
+Route::get('/PenggunaLikeDislike', [AdminController::class, 'PenggunaLikeDislike'])->name('PenggunaLikeDislike');
 Route::get('/formTambahUserAdm', [AdminController::class, 'formTambahUserAdm'])->name('formTambahUserAdm');
 Route::post('/registerAdmin',[AdminController::class,'registerAdmin']);
 Route::get('/deleteP/{id}',[AdminController::class,'deleteUserTerdaftar']);
