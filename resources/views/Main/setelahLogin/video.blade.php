@@ -135,7 +135,7 @@
                             <div class="details">
                                 <div class="post-meta-single mb-4 pt-1">
                                     <ul>
-                                        <li><a class="tag-base tag-blue" href="/login">{{$item->uploader}}</a></li>
+                                        <li><a class="tag-base tag-blue" href="{{ route('showDetailVideo', ['id' => $item->id]) }}">{{$item->uploader}}</a></li>
                                         <li><i class="fa fa-clock-o"></i>
                                             @php
                                             $ulasanCreatedAt = \Carbon\Carbon::parse($item['created_at']);
@@ -257,7 +257,7 @@
                       <p class="btn-date"><i class="fa fa-clock-o"></i>{{$item->created_at}}</p>
                   </div>
                   <div class="details">
-                      <h6 class="title"><a href="#">{{$item->judulVideo}}</a></h6>
+                      <h6 class="title"><a href={{ route('showDetailVideo', ['id' => $item->id]) }}#">{{$item->judulVideo}}</a></h6>
                   </div>
               </div>
               <div class="single-post-wrap">
@@ -266,7 +266,7 @@
                       <p class="btn-date"><i class="fa fa-clock-o"></i>{{$item->created_at}}</p>
                   </div>
                   <div class="details">
-                      <h6 class="title"><a href="#">{{$item->judulVideo}}</a></h6>
+                      <h6 class="title"><a href="{{ route('showDetailVideo', ['id' => $item->id]) }}">{{$item->judulVideo}}</a></h6>
                   </div>
               </div>
           </div>
@@ -292,7 +292,7 @@
                                                   <li><i class="fa fa-clock-o"></i>{{$item->created_at}}</li>
                                               </ul>
                                           </div>
-                                          <h6 class="title"><a href="#">{{$item->judulVideo}}</a></h6>
+                                          <h6 class="title"><a href="{{ route('showDetailVideo', ['id' => $item->id]) }}">{{$item->judulVideo}}</a></h6>
                                       </div>
                                   </div>
                               </div>
