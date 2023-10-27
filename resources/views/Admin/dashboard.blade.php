@@ -253,22 +253,22 @@
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Rating Website</p>
-                    <h5 class="font-weight-bolder">
-                        @php
-                            $averageRating = round($averageRating); 
-                        @endphp
-                        @for ($i = 1; $i <= 5; $i++)
-                            @if ($i <= $averageRating)
-                                <i class="fas fa-star filled-star"></i>
-                            @else
-                                <i class="fas fa-star"></i>
-                            @endif
-                        @endfor
-                    <p>{{ number_format($averageRating, 1) }} | {{$totalUlasan}} Ulasan</p>
-                    </h5>
+                      <p class="text-sm mb-0 text-uppercase font-weight-bold">Rating Website</p>
+                      <h5 class="font-weight-bolder">
+                          @php
+                              $averageRating = round($averageRating, 1);
+                          @endphp
+                          @for ($i = 1; $i <= 5; $i++)
+                              @if ($i <= $averageRating)
+                                  <i class="fas fa-star filled-star"></i>
+                              @else
+                                  <i class="fas fa-star"></i>
+                              @endif
+                          @endfor
+                          <p>{{ number_format($averageRating, 1) }} | {{$totalUlasan}} Ulasan</p>
+                      </h5>
                   </div>
-                </div>
+              </div>              
                 <div class="col-4 text-end">
                   <div class="icon icon-shape bg-gradient-warning shadow-warning text-center rounded-circle">
                     <i class="ni ni-satisfied text-lg opacity-10" aria-hidden="true"></i>

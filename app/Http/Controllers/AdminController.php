@@ -231,7 +231,7 @@ function dataArtikel(){
 
         //Rating
         $ratings = $data1->pluck('rating')->map(function ($rating) {
-            return (int) $rating; // Mengonversi rating ke integer
+            return (int) $rating; 
         });
         
         $totalRatings = $ratings->sum();
@@ -240,7 +240,7 @@ function dataArtikel(){
         //Hitung Ulasan
         $totalUlasan = ulasans::count();
 
-        return view('admin.ulasans', compact('data1', 'averageRating', 'totalUlasan'));
+        return view('admin.dashboard', compact('data1', 'averageRating', 'totalUlasan'));
     }
 
     //Delete data ulasan pada Tabel Admin
