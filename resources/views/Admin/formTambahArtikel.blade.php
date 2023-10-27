@@ -61,6 +61,14 @@
           </a>
         </li>
         <li class="nav-item">
+          <a class="nav-link " href="/videoAdmin">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-tv-2 text-warning text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Video</span>
+          </a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link " href="/pengguna">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-circle-08 text-warning text-sm opacity-10"></i>

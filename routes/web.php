@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/',[LoginController::class,'landingPage']);
+Route::get('/landingPageVideo',[LoginController::class,'landingPageVideo'])->name('landingPageVideo');
 Route::get('/login',[LoginController::class,'log']);
 Route::post('/login',[LoginController::class,'login'])->name('login');
 Route::get('/register',[LoginController::class,'register']);
@@ -71,6 +72,14 @@ Route::get('/deleteA/{id}',[AdminController::class,'deleteArtikel']);
 
 Route::get('/tampilDataEditArtikel/{id}',[AdminController::class,'tampilDataEditArtikel']);
 Route::post('/updateDataIdArtikel/{id}',[AdminController::class,'updateDataIdArtikel']);
+
+//Route Tab Video
+Route::get('/videoAdmin', [AdminController::class, 'videoAdmin'])->name('videoAdmin');
+Route::get('/formTambahVideo', [AdminController::class, 'formTambahVideo'])->name('formTambahVideo');
+Route::post('/formTambahVideo/storeVideo',  [AdminController::class, 'storeVideo'])->name('storeVideo');
+Route::get('/formEditVideo/{id}',[AdminController::class,'formEditVideo'])->name('formEditVideo');
+Route::post('/formEditVideo/updateVideo/{id}',[AdminController::class,'updateVideo'])->name('updateVideo');
+Route::get('/deleteV/{id}',[AdminController::class,'deleteVideo'])->name('deleteVideo');
 
 //Route Tab Pengguna
 Route::get('/pengguna', [AdminController::class, 'listUserTerdaftar'])->name('listUserTerdaftar');

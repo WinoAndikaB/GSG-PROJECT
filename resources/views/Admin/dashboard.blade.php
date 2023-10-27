@@ -85,6 +85,14 @@
           </a>
         </li>
         <li class="nav-item">
+          <a class="nav-link " href="/videoAdmin">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-tv-2 text-warning text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Video</span>
+          </a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link " href="/pengguna">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-circle-08 text-warning text-sm opacity-10"></i>
@@ -275,7 +283,7 @@
           <div class="col-lg-7 mb-lg-0 mb-4">
             <div class="card z-index-2 h-100">
               <div class="card-header pb-0 pt-3 bg-transparent">
-                <h6 class="text-capitalize">Sales overview</h6>
+                <h6 class="text-capitalize">Rating</h6>
                 <p class="text-sm mb-0">
                   <i class="fa fa-arrow-up text-success"></i>
                   <span class="font-weight-bold">4% more</span> in 2021

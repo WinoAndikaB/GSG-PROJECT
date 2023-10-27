@@ -4,10 +4,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href=".../assets2/img/lg1.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Artikel | GSG PROJECT
+    Profile | GSG PROJECT
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -15,11 +15,30 @@
   <link href="../assets2/css/nucleo-icons.css" rel="stylesheet" />
   <link href="../assets2/css/nucleo-svg.css" rel="stylesheet" />
   <!-- Font Awesome Icons -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <link href="../assets2/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets2/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
-  
+  <script>
+    // Function to auto-adjust textarea height
+    function autoResizeTextarea() {
+        const textarea = document.getElementById("auto-resize-textarea");
+        textarea.style.height = "auto";
+        textarea.style.height = textarea.scrollHeight + "px";
+    }
+
+    // Attach the autoResizeTextarea function to the textarea's input event
+    $(document).ready(function() {
+        $("#auto-resize-textarea").on("input", function() {
+            autoResizeTextarea();
+        });
+
+        // Initialize the textarea's height when the page loads
+        autoResizeTextarea();
+    });
+</script>
+
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -52,7 +71,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/artikelAdmin">
+          <a class="nav-link" href="/artikelAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
             </div>
@@ -60,7 +79,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/videoAdmin">
+          <a class="nav-link active" href="/videoAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-warning text-sm opacity-10"></i>
             </div>
@@ -95,9 +114,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Artikel</li>
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Video</li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Artikel</h6>
+          <h6 class="font-weight-bolder text-white mb-0">Form Edit Video </h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -138,7 +157,6 @@
                 <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
               </a>
             </li>
-            </li>
           </ul>
         </div>
       </div>
@@ -150,147 +168,64 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <a href="/artikel/create" class="btn btn-primary">Tambah Artikel</i></a>
-              <h6>List Artikel Tersedia</h6>
-            </div>
-            <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">          
-
-              <div class="container-fluid py-4">
+              <h6>Form Edit Video</h6>
+              <form action="/formEditVideo/updateVideo/{{$data->id}}" method="POST" enctype="multipart/form-data">
+              @csrf
                 <div class="row">
-                  <div class="col-12">
-                    <div class="card mb-4">
-                      <div class="card-header pb-0">
-                      </div>
-                      <div class="card-body px-0 pt-0 pb-2">
-                        <div class="table-responsive p-0">
-                          <table class="table align-items-center mb-0">
-                            <thead>
-                              <tr>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Penulis</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Judul Artikel</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Upload</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                                <th class="text-secondary opacity-7"></th>
-                              </tr>
-                            </thead>
-                            @foreach ($data as $tbhartikel)
-                            <tbody>
-                              <tr>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$tbhartikel['id']}}</p>
-                                </td>
-                                <td>
-                                  <div class="d-flex px-2 py-1">
-                                    <div>
-                                      <img src="{{asset('gambarArtikel/'.$tbhartikel->gambarArtikel)}}" class="avatar avatar-sm me-3" alt="user1">
-                                    </div>
-                                    <div class="d-flex flex-column justify-content-center">
-                                      <h6 class="mb-0 text-sm">{{$tbhartikel['penulis']}}</h6>
-                                      <p class="text-xs text-secondary mb-0">{{$tbhartikel['email']}}</p>
-                                    </div>
-                                  </div>
-                                </td>
-                                <td>
-                                  <p class="text-xs font-weight-bold mb-0">{{$tbhartikel['judulArtikel']}}</p>
-                                </td>
-                                <td style="text-align: justify;">
-                                  <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
-                                    <?php
-                                    $deskripsi = strip_tags($tbhartikel['deskripsi']);
-                                    $words = str_word_count($deskripsi, 2);
-                                    $first_100_words = implode(' ', array_slice($words, 0, 150));
-                                    echo $first_100_words;
-                                    if (str_word_count($deskripsi) > 100) {
-                                      echo '...';
-                                    }
-                                    ?>
-                                  </p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <span class="text-secondary text-xs font-weight-bold">{{$tbhartikel['created_at']->format('l, d F Y H:i:s') }}</span>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-success">Pending</span>
-                                </td>
-                                <td class="align-middle">
-                                  <a href="/tampilDataEditArtikel/{{ $tbhartikel->id}}" class="btn btn-edit">Edit</a>
-                                  <a href="{{"deleteA/".$tbhartikel['id']}}" class="btn btn-danger" onclick="return showConfirmation()">Hapus</a>
-                                </td>
-                              </tr>
-                            </tbody>
-                            @endforeach
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="form-group">
+                        <label for="" class="form-control-label">Link Video</label>
+                        <input class="form-control" type="text" id="uploadGambar" name="linkVideo" value="{{ $data->linkVideo }}">
+                        <br>
+                        <iframe width="340" height="190" src="{{$data->linkVideo}}" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                      <label for="" class="form-control-label">Judul Video</label>
+                      <textarea class="form-control" type="textarea" name="judulVideo">{{ $data->judulVideo }}</textarea>
+                    </div>
+                    <div class="form-group mt-3">
+                      <label for="" class="form-control-label">Uploader</label>
+                      <input class="form-control" type="text" name="uploader" value="{{ $data->uploader }}" disabled>
+                  </div>
+                    <div class="form-group">
+                      <label for="" class="form-control-label">Deskirpsi Video</label>
+                      <textarea class="form-control" type="text" name="deskripsiVideo" id="editor">{{ $data->deskripsiVideo }}</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">Edit</button>
+                    <a href="/videoAdmin" class="btn btn-info mt-3">Kembali</i></a>
+                  </div>
+                </div>
+              </form>
 
-                            <div class="d-flex justify-content-center">
-                              <ul class="pagination">
-                                  @if ($data->onFirstPage())
-                                      <li class="page-item disabled">
-                                          <span class="page-link" aria-label="Previous">
-                                              <span aria-hidden="true">&lsaquo;</span>
-                                          </span>
-                                      </li>
-                                  @else
-                                      <li class="page-item">
-                                          <a class="page-link" href="{{ $data->previousPageUrl() }}" rel="prev" aria-label="Previous">
-                                              <span aria-hidden="true">&lsaquo;</span>
-                                          </a>
-                                      </li>
-                                  @endif
-            
-                                <!-- Menampilkan halaman berapa -->
-                                <div class="text-center">
-                                    {{ $data->currentPage() }} dari {{ $data->lastPage() }}
-                                </div>
-                          
-                                  @if ($data->hasMorePages())
-                                      <li class="page-item">
-                                          <a class="page-link" href="{{ $data->nextPageUrl() }}" rel="next" aria-label="Next">
-                                              <span aria-hidden="true">&rsaquo;</span>
-                                          </a>
-                                      </li>
-                                  @else
-                                      <li class="page-item disabled">
-                                          <span class="page-link" aria-label="Next">
-                                              <span aria-hidden="true">&rsaquo;</span>
-                                          </span>
-                                      </li>
-                                  @endif
-                              </ul>
-                          </div>
-
-                          </table>
+            <div class="card-body px-0 pt-12 pb-2">
+              <div class="table-responsive p-0">
+                <div class="panel-header panel-header-sm">
+                </div>
+                <div class="content">
+                  <div class="row">
+                    <div class="col-md-12">
+                        <div class="card-body ">
+                          <div id="map" class="map"></div>
                         </div>
-                      </div>
                     </div>
                   </div>
                 </div>
-  
-                <footer class="footer pt-3  ">
-                  <div class="container-fluid">
-                    <div class="row align-items-center justify-content-lg-between">
-                      <div class="col-lg-6 mb-lg-0 mb-4">
-                        <div class="copyright text-center text-sm text-muted text-lg-start">
-                          © <script>
-                            document.write(new Date().getFullYear())
-                          </script>,
-                          Template by <a title="CSS Templates" rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>,
-                          <a title="CSS Templates" rel="sponsored" href="https://themewagon.com/themes/free-bootstrap-4-html-5-blog-website-template-nextpage/" target="_blank">NextPage </a> and
-                          <a title="CSS Templates" rel="sponsored" href="https://www.creative-tim.com" target="_blank">Crative Tim </a> 
-                          Edited By <a title="CSS Templates" rel="sponsored" href="#" target="_blank">GSG Team</a></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </footer>
-              </div>
-              
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+
+      <footer class="footer pt-3  ">
+        <div class="container-fluid">
+          <div class="row align-items-center justify-content-lg-between">
+            <div class="col-lg-6 mb-lg-0 mb-4">
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   </main>
   <div class="fixed-plugin">
@@ -372,11 +307,17 @@
   <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/chartjs.min.js"></script>
 
+  <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
+  <script>
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
 
-  <!-- Github buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
+
+ 
 </body>
 
 </html>
