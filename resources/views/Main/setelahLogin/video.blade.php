@@ -22,11 +22,28 @@
                               <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
                           </form>
                           </li>
-                          <li><a href=""></a></li> 
-                      </ul>        
-                      <a class='menu-trigger'>
-                          <span>Menu</span>
-                      </a>
+                          <li class="scroll-to-section">
+                            <a href="/profileUser" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center">
+                              <div class="profile-picture" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
+                                  <?php
+                                  $fotoProfil = Auth::user()->fotoProfil;
+                                  if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
+                                  ?>
+                                  <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                                  <?php
+                                  } else {
+                                  ?>
+                                  <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                                  <?php
+                                  }
+                                  ?>
+                              </div>
+                              <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
+                          </a>                        
+                          </li>
+                          <li class="scroll-to-section">
+                              <a href="/logout" class="text-right">Logout</a>
+                          </li>
                   </nav>
               </div>
           </div>
