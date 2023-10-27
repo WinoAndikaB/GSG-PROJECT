@@ -7,6 +7,7 @@ use App\Models\Dislikes;
 use App\Models\Likes;
 use App\Models\ulasans;
 use App\Models\user;
+use App\Models\video;
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\UploadedFile;
 use Illuminate\Foundation\Auth\User as AuthUser;
@@ -37,12 +38,13 @@ function dashboard(){
     
     $totalRatings = $ratings->sum();
     $averageRating = $ratings->count() > 0 ? $totalRatings / $ratings->count() : 0;
+    
 
     return view('admin.dashboard', compact('totalArtikel', 'totalUser', 'totalUlasan', 'averageRating', 'totalUlasan', 'dataAddedInLast24HoursUlasan','dataAddedInLast24HoursUser','dataAddedInLast24HoursArtikel'));
 }
 
 function dataArtikel(){
-    $data = artikels::paginate(5);
+    $data = artikels::orderBy('created_at', 'desc')->paginate(5);
     return view('admin.tables', compact('data'));
 }
 
@@ -104,8 +106,82 @@ function dataArtikel(){
         return redirect()->route('dataArtikel')->with('success','Data Berhasil di Update');
     }    
 
+    // [Bagian Video]
+    function videoAdmin(){
+
+        $tableVideo = video::orderBy('created_at', 'desc')->paginate(10);
+
+        return view('admin.video', compact('tableVideo'));
+    }
+
+    function formTambahVideo(){
+
+        return view('admin.formTambahVideo');
+    }
+
+    public function storeVideo(Request $request)
+    {
+        $videos = new Video;
+        $videos->judulVideo = $request->input('judulVideo');
+        $videos->uploader = $request->input('uploader');
+        $videos->email = $request->input('email');
+        $videos->deskripsiVideo = $request->input('deskripsiVideo');
+        
+        // Konversi link YouTube ke URL embed
+        $linkVideo = $request->input('linkVideo');
+        $videoId = '';
+
+        // Cek apakah input mengandung "youtube.com/watch?v="
+        if (strpos($linkVideo, 'youtube.com/watch?v=') !== false) {
+            $videoId = explode('v=', parse_url($linkVideo, PHP_URL_QUERY))[1];
+        }
+
+        // Cek apakah input mengandung "youtu.be/"
+        if (strpos($linkVideo, 'youtu.be/') !== false) {
+            $videoId = explode('/', parse_url($linkVideo, PHP_URL_PATH))[1];
+        }
+
+        // Jika berhasil mengekstrak ID video, buat URL embed
+        if (!empty($videoId)) {
+            $embedUrl = "https://www.youtube.com/embed/$videoId";
+            $videos->linkVideo = $embedUrl;
+        } else {
+            // Jika ID video tidak dapat diekstrak, mungkin berikan pesan kesalahan atau penanganan lainnya
+            return redirect('/videoAdmin')->with('error', 'Invalid YouTube video link.');
+        }
+
+        $videos->save();
+
+        return redirect('/videoAdmin')->with('success', 'Video added successfully.');
+    }
+
+      //[Edit Video]
+      function formEditVideo($id){
+        $data = video::find($id);
+        return view('admin.formEditVideo', compact('data'));
+    }
+
+    function updateVideo(Request $request, $id){
+        $data = Video::find($id);
+    
+        $data->linkVideo = $request->input('linkVideo');
+        $data->judulVideo = $request->input('judulVideo');
+        $data->deskripsiVideo = $request->input('deskripsiVideo');
+        
+        $data->save();
+    
+        return redirect()->route('videoAdmin')->with('success','Data Berhasil di Update');
+    }    
+    
+    function deleteVideo($id){
+        $data=video::find($id);
+        $data->delete();
+        return redirect('/videoAdmin');
+    }
+
+    //[Bagian Pengguna]
     function listUserTerdaftar(){
-        $users = User::paginate(10);
+        $users = user::orderBy('created_at', 'desc')->paginate(10);
         
         $userId = Auth::user()->id;
         
@@ -151,7 +227,7 @@ function dataArtikel(){
 
     //Menampilkan Data Ulasan pada Tabel Admin
     function ulasanAdmin(){
-        $data1=ulasans::paginate(9);
+        $data1 = ulasans::orderBy('created_at', 'desc')->paginate(10);
 
         //Rating
         $ratings = $data1->pluck('rating')->map(function ($rating) {

@@ -94,20 +94,29 @@ class PenggunaController extends Controller
         return view('main.setelahLogin.ulasan', compact('data1', 'averageRating', 'totalUlasan'));
     }
 
-    function storeUlasan(Request $request){
-        $ulasan = new ulasans;
-        $ulasan->rating = $request->rating;
-        $ulasan->email = $request->email;
-        $ulasan->nama = $request->nama;
-        $ulasan->pesan = $request->pesan;
-    
-        // Get the user's profile picture
-        $ulasan->fotoProfil = Auth::user()->fotoProfil;
-    
-        $ulasan->save();
-    
-        return redirect('ulasan');
-    }
+    public function storeUlasan(Request $request)
+{
+    $request->validate([
+        'rating' => 'required',
+        'email' => 'required|email',
+        'nama' => 'required',
+        'pesan' => 'required',
+    ]);
+
+    $ulasan = new Ulasans;
+    $ulasan->rating = $request->rating;
+    $ulasan->email = $request->email;
+    $ulasan->nama = $request->nama;
+    $ulasan->pesan = $request->pesan;
+
+    $user = Auth::user();
+    $ulasan->fotoProfil = $user->fotoProfil;
+
+    $ulasan->save();
+
+    return redirect('ulasan');
+}
+
 
     public function simpanEditUlasan(Request $request, $id) {
    

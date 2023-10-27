@@ -16,6 +16,7 @@ class PenggunaSeeder extends Seeder
     {
         $userData = [
             [
+                'fotoProfil'=>'https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999',
                 'username'=>'Wino88',
                 'name'=>'Wino Andika Batara',
                 'email'=>'wino.andika@si.ukdw.ac.id',
@@ -27,6 +28,7 @@ class PenggunaSeeder extends Seeder
                 'aboutme'=>'Hidup Kadang Tidak Adil Abang Kuh'
             ],
             [
+                'fotoProfil'=>'https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999',
                 'username'=>'Agent98',
                 'name'=>'Vestia Zeta',
                 'email'=>'Vestia@gmail.com',
@@ -38,6 +40,7 @@ class PenggunaSeeder extends Seeder
                 'aboutme'=>'Senggol Dong'
             ],
             [
+                'fotoProfil'=>'https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999',
                 'username'=>'Kobokan',
                 'name'=>'Kobo Kanaeru',
                 'email'=>'kobokan@gmail.com',
@@ -49,6 +52,7 @@ class PenggunaSeeder extends Seeder
                 'aboutme'=>'Bokobokobo kanaeru at your service, let me to be your sun to sun your day ehe'
             ],
             [
+                'fotoProfil'=>'https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999',
                 'username'=>'Moona98',
                 'name'=>'Moona Hoshinova',
                 'email'=>'moona@gmail.com',

@@ -9,6 +9,7 @@ use App\Models\tambahdonases;
 use App\Models\ulasans;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\video;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -74,11 +75,60 @@ class LoginController extends Controller
     return view('main.sebelumLogin.landingPage', compact('trending', 'latest','whatsnew','semua', 'box', 'todayDate'));
 }
 
-
-    
-
     function aboutLandingPage(){
         return view('main.sebelumLogin.aboutLandingPage');
+    }
+
+    function landingPageVideo(Request $request){
+
+        $search = $request->input('search');
+
+        $query1 = video::query();
+        $query2 = video::query(); 
+        $query3 = video::query(); 
+        $query4 = video::query(); 
+    
+        if (!empty($search)) {
+            $query1->where(function($query) use ($search) {
+                $query->where('judulVideo', 'LIKE', '%' . $search . '%')
+                      ->orWhere('uploader', 'LIKE', '%' . $search . '%')
+                      ->orWhere('deskripsiVideo', 'LIKE', '%' . $search . '%');
+            });
+    
+            $query2->where(function($query) use ($search) {
+                $query->where('judulVideo', 'LIKE', '%' . $search . '%')
+                      ->orWhere('uploader', 'LIKE', '%' . $search . '%')
+                      ->orWhere('deskripsiVideo', 'LIKE', '%' . $search . '%');
+            });
+            $query3->where(function($query) use ($search) {
+                $query->where('judulVideo', 'LIKE', '%' . $search . '%')
+                      ->orWhere('uploader', 'LIKE', '%' . $search . '%')
+                      ->orWhere('deskripsiVideo', 'LIKE', '%' . $search . '%');
+            });
+            $query4->where(function($query) use ($search) {
+                $query->where('judulVideo', 'LIKE', '%' . $search . '%')
+                      ->orWhere('uploader', 'LIKE', '%' . $search . '%')
+                      ->orWhere('deskripsiVideo', 'LIKE', '%' . $search . '%');
+            });
+        }
+    
+            
+                // Get trending articles randomly
+                $trendingVideo = video::orderBy('created_at', 'desc')->paginate(3);
+    
+                // Get the latest articles
+                $latestVideo = video::orderBy('created_at', 'desc')->take(8)->get();
+    
+                // Get what's new articles randomly
+                $whatsNewVideo = video::inRandomOrder()->take(5)->get();
+    
+                // Get a box of articles randomly
+                $boxVideo = video::inRandomOrder()->take(8)->get();
+    
+                $semuaVideo = video::all();
+                $todayDate = date('l, d M Y H.i');
+
+        return view('main.sebelumLogin.landingPageVideo', compact('trendingVideo', 'latestVideo','whatsNewVideo','semuaVideo', 'boxVideo', 'todayDate'));
     }
     
     function registerUser(Request $req){
