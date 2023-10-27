@@ -86,6 +86,7 @@
                         <li class="scroll-to-section"><a href="/home" class="text-center">Home</a></li>
                         <li class="scroll-to-section"><a href="/home" class="text-center">Trending</a></li>
                         <li class="scroll-to-section"><a href="/home" class="text-center">Artikel</a></li>
+                        <li class="scroll-to-section"><a href="/Video">Video</a></li>
                         <li class="scroll-to-section"><a href="/ulasan" class="text-center">Ulasan</a></li>
                         <li class="scroll-to-section"><a href="/about" class="text-center">Tentang</a></li>
                     </ul>

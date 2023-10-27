@@ -12,7 +12,7 @@
     <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <title>Detail Artikel - GSG Project</title>
+    <title>Detail Video - GSG Project</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/owl.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}">
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css">
-
+ 
     <link href="{{ asset('aset1/css/media_query.css')}}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('aset1/css/bootstrap.css')}}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('aset1/css/owl.carousel.css')}}" rel="stylesheet" type="text/css"/>
@@ -99,25 +99,25 @@
       
         <div class="col-md-8 animate-box" data-animate-effect="fadeInRight">
           <section>
-              <h1 style="color: rgba(47, 72, 88, 1);">{{ $article->judulArtikel }}</h1><br>
-              <p style="color: rgba(242, 100, 25, 1);">{{ $article->penulis}} <br>
-                  <span style="color: rgba(165, 165, 165, 1);">{{ \Carbon\Carbon::parse($article['created_at'])->format('l, d M Y H.i') }}
+              <h1 style="color: rgba(47, 72, 88, 1);">{{ $video->judulVideo }}</h1><br>
+              <p style="color: rgba(242, 100, 25, 1);">{{ $video->uploader}} <br>
+                  <span style="color: rgba(165, 165, 165, 1);">{{ \Carbon\Carbon::parse($video['created_at'])->format('l, d M Y H.i') }}
                   </span>
               </p>
           </section>
           <span style="text-align: right">
               <p class="icon-bagikan" style="color: rgba(165, 165, 165, 1); display: flex; align-items: center; justify-content: end; gap: 0.5em;">
                   Share &nbsp;&nbsp;&nbsp;
-                  <a href="https://www.facebook.com/sharer.php?u=https://www.example.com/post-url{{ $article->judulArtikel }}">
+                  <a href="https://www.facebook.com/sharer.php?u=https://www.example.com/post-url{{ $video->judulVideo }}">
                       <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Facebook_logo_%28square%29.png/640px-Facebook_logo_%28square%29.png" alt="Facebook" style="width: 32px; height: 32px;">
                   </a>
-                  <a href="https://twitter.com/intent/tweet?url=https://www.example.com/post-url&text={{ $article->judulArtikel }}">
+                  <a href="https://twitter.com/intent/tweet?url=https://www.example.com/post-url&text={{ $video->judulVideo }}">
                       <img src="https://seeklogo.com/images/T/twitter-x-logo-101C7D2420-seeklogo.com.png?v=638258862800000000" alt="Twitter" style="width: 32px; height: 32px;">
                   </a>
-                  <a href="whatsapp://send?text={{ $article->judulArtikel }}%20-%20https://www.example.com/post-url">
+                  <a href="whatsapp://send?text={{ $video->judulVideo }}%20-%20https://www.example.com/post-url">
                       <img src="https://cdn4.iconfinder.com/data/icons/miu-square-flat-social/60/whatsapp-square-social-media-512.png" alt="WhatsApp" style="width: 32px; height: 32px;">
                   </a>
-                  <a href="https://telegram.me/share/url?url=https://www.example.com/post-url&text={{ $article->judulArtikel }}">
+                  <a href="https://telegram.me/share/url?url=https://www.example.com/post-url&text={{ $video->judulVideo }}">
                       <img src="https://cdn3.iconfinder.com/data/icons/social-media-chamfered-corner/154/telegram-512.png" alt="Telegram" style="width: 32px; height: 32px;">
                   </a>
               </p>
@@ -125,11 +125,11 @@
 
           <br>
           
-          <img src="{{ asset('gambarArtikel/' . $article->gambarArtikel) }}" class="main-image" style="max-width: 100%; height: auto; margin-bottom: 20px;">
+          <iframe width="730" height="450" src="{{$video->linkVideo}}" frameborder="0" allowfullscreen></iframe>
 
           <div style="font-size: 18px; text-align: justify; margin-top: 20px;">
             <div style="font-size: 18px; line-height: 2;">
-              {!! str_replace('<img', '<img style="max-width: 1152px; width: 100%; height: auto; display: block; margin: 0 auto;"', $article->deskripsi) !!}
+              {!! str_replace('<img', '<img style="max-width: 1152px; width: 100%; height: auto; display: block; margin: 0 auto;"', $video->deskripsiVideo) !!}
             </div>
           </div>
         </div>
@@ -158,12 +158,12 @@
               
             <div class="fh5co_heading fh5co_heading_border_bottom pt-3 py-2 mb-4">Most Popular</div>
             <div class="row pb-3">
-                @foreach($box as $item)
-                <div class="col-5 align-self-center mb-3">
-                    <img src="{{ asset('gambarArtikel/' . $item->gambarArtikel) }}" alt="img" class="fh5co_most_trading"/>
+                @foreach($boxVideo as $item)
+                <div class="col-4 align-self-center mb-3">
+                  <img src="{{ asset('gambarArtikel/' . $item->gambarArtikel) }}" alt="img" class="fh5co_most_trading"/>
                 </div>
-                <div class="col-7 padding">
-                    <div class="most_fh5co_trending_font"><a href="{{ route('detail.artikel', ['id' => $item->id]) }}">{{ $item->judulArtikel }}</a></div>
+                <div class="col-8 padding">
+                    <div class="most_fh5co_trending_font"><a href="{{ route('showDetailVideo', ['id' => $item->id]) }}">{{ $item->judulVideo }}</a></div>
                     <div class="most_fh5co_trending_font_123">{{ \Carbon\Carbon::parse($item['created_at'])->format('l, d M Y H.i') }}</div>
                 </div>
                 @endforeach

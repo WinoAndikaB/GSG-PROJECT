@@ -7,6 +7,7 @@ use App\Models\Dislikes;
 use App\Models\Likes;
 use App\Models\ulasans;
 use App\Models\user;
+use App\Models\video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -70,7 +71,6 @@ class PenggunaController extends Controller
     
         return view('main.setelahLogin.detailArt', compact('article','box'));
     }
-    
     
     function about(){
         return view('main.setelahLogin.about');
@@ -223,5 +223,65 @@ class PenggunaController extends Controller
       
           return redirect('/profileUser');
       }
-      
+
+      function Video(Request $request){
+
+        $search = $request->input('search');
+
+        $query1 = video::query();
+        $query2 = video::query(); 
+        $query3 = video::query(); 
+        $query4 = video::query(); 
+    
+        if (!empty($search)) {
+            $query1->where(function($query) use ($search) {
+                $query->where('judulVideo', 'LIKE', '%' . $search . '%')
+                      ->orWhere('uploader', 'LIKE', '%' . $search . '%')
+                      ->orWhere('deskripsiVideo', 'LIKE', '%' . $search . '%');
+            });
+    
+            $query2->where(function($query) use ($search) {
+                $query->where('judulVideo', 'LIKE', '%' . $search . '%')
+                      ->orWhere('uploader', 'LIKE', '%' . $search . '%')
+                      ->orWhere('deskripsiVideo', 'LIKE', '%' . $search . '%');
+            });
+            $query3->where(function($query) use ($search) {
+                $query->where('judulVideo', 'LIKE', '%' . $search . '%')
+                      ->orWhere('uploader', 'LIKE', '%' . $search . '%')
+                      ->orWhere('deskripsiVideo', 'LIKE', '%' . $search . '%');
+            });
+            $query4->where(function($query) use ($search) {
+                $query->where('judulVideo', 'LIKE', '%' . $search . '%')
+                      ->orWhere('uploader', 'LIKE', '%' . $search . '%')
+                      ->orWhere('deskripsiVideo', 'LIKE', '%' . $search . '%');
+            });
+        }
+    
+            
+                // Get trending articles randomly
+                $trendingVideo = video::orderBy('created_at', 'desc')->paginate(3);
+    
+                // Get the latest articles
+                $latestVideo = video::orderBy('created_at', 'desc')->take(8)->get();
+    
+                // Get what's new articles randomly
+                $whatsNewVideo = video::inRandomOrder()->take(5)->get();
+    
+                // Get a box of articles randomly
+                $boxVideo = video::inRandomOrder()->take(8)->get();
+    
+                $semuaVideo = video::all();
+                $todayDate = date('l, d M Y H.i');
+
+        return view('main.setelahLogin.video', compact('trendingVideo', 'latestVideo','whatsNewVideo','semuaVideo', 'boxVideo', 'todayDate'));
+    }
+
+    public function showDetailVideo($id)
+    {
+        $video = video::findOrFail($id);
+
+        $boxVideo = video::inRandomOrder()->take(8)->get();
+    
+        return view('main.setelahLogin.detailVid', compact('video','boxVideo'));
+    }
 }

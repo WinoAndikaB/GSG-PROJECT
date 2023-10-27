@@ -36,10 +36,12 @@ Route::get('/test-image', function () {
 //Memberikan Hak Akses User
 Route::middleware(['user'])->group(function () {
 Route::get('/home',[PenggunaController::class,'HomeSetelahLogin'])->name('HomeSetelahLogin');
+Route::get('/Video',[PenggunaController::class,'Video'])->name('Video');
 Route::get('/profileUser', [PenggunaController::class, 'profileUser'])->name('profileUser');
 Route::put('/profileUser/updateUser/{id}',[PenggunaController::class,'updateUser'])->name('updateUser');
 Route::get('/artikel', [PenggunaController::class, 'dataArtikelHome'])->name('dataArtikelHome');
 Route::get('/detailArtikel/{id}', [PenggunaController::class, 'showDetailArtikel'])->name('detail.artikel');
+Route::get('/detailVideo/{id}', [PenggunaController::class, 'showDetailVideo'])->name('showDetailVideo');
 Route::get('/about', [PenggunaController::class, 'about'])->name('about');
 
 //ulasan
