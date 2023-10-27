@@ -67,12 +67,21 @@ class LoginController extends Controller
             $whatsnew = artikels::inRandomOrder()->take(5)->get();
 
             // Get a box of articles randomly
+            $boxLong = artikels::inRandomOrder()->take(1)->get();
+
+            // Get a box of articles randomly
+            $box3 = artikels::inRandomOrder()->take(5)->get();
+
+            // Get a box of articles randomly
+            $box2 = artikels::inRandomOrder()->take(2)->get();
+
+            // Get a box of articles randomly
             $box = artikels::inRandomOrder()->take(8)->get();
 
             $semua = artikels::all();
             $todayDate = date('l, d M Y H.i');
 
-    return view('main.sebelumLogin.landingPage', compact('trending', 'latest','whatsnew','semua', 'box', 'todayDate'));
+    return view('main.sebelumLogin.landingPage', compact('trending', 'latest','whatsnew','semua', 'box', 'box2', 'box3', 'boxLong', 'todayDate'));
 }
 
     function aboutLandingPage(){
@@ -121,6 +130,12 @@ class LoginController extends Controller
     
                 // Get what's new articles randomly
                 $whatsNewVideo = video::inRandomOrder()->take(5)->get();
+
+                // Get a box of articles randomly
+                 $boxVideo3 = video::inRandomOrder()->take(5)->get();
+
+                // Get a box of articles randomly
+                $boxVideo2 = video::inRandomOrder()->take(2)->get();
     
                 // Get a box of articles randomly
                 $boxVideo = video::inRandomOrder()->take(8)->get();
@@ -128,7 +143,7 @@ class LoginController extends Controller
                 $semuaVideo = video::all();
                 $todayDate = date('l, d M Y H.i');
 
-        return view('main.sebelumLogin.landingPageVideo', compact('trendingVideo', 'latestVideo','whatsNewVideo','semuaVideo', 'boxVideo', 'todayDate'));
+        return view('main.sebelumLogin.landingPageVideo', compact('trendingVideo', 'latestVideo','whatsNewVideo','semuaVideo', 'boxVideo', 'boxVideo2', 'boxVideo3', 'todayDate'));
     }
     
     function registerUser(Request $req){

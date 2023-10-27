@@ -181,7 +181,7 @@
                                     @endphp
                                   </p>
                                 </div>
-                                <h6 class="title"><a href="/login">{{$item->judulArtikel}}</a></h6>
+                                <h6 class="title"><a href="/login">{{$item->judulVideo}}</a></h6>
                             </div>
                         </div>
                     </div>
@@ -189,8 +189,6 @@
         </div>
         @endforeach                        
       </div>
-
-        
             <div class="col-lg-3 col-md-6">
                 <div class="section-title">
                     <h6 class="title">Join With Us</h6>
@@ -211,7 +209,83 @@
         </div>
     </div>
 </div>
-  
+
+<div class="bg-sky pd-top-80 pd-bottom-50" id="latest">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-3 col-sm-6">
+              <div class="single-post-wrap style-overlay-bg">
+                  <div class="thumb">
+                      <img src="assets/img/post/9.png" alt="img">
+                  </div>
+                  <div class="details">
+                      <div class="post-meta-single mb-3">
+                          <ul>
+                              <li><a class="tag-base tag-blue" href="cat-fashion.html">fashion</a></li>
+                              <li><p><i class="fa fa-clock-o"></i>08.22.2020</p></li>
+                          </ul>
+                      </div>
+                      <h6 class="title"><a href="#">A Comparison of the Sony FE 85mm f/1.4 GM and Sigma</a></h6>
+                  </div>
+              </div>
+          </div>
+
+          @foreach ($boxVideo2 as $item)
+          <div class="col-lg-3 col-sm-6">
+              <div class="single-post-wrap">
+                  <div class="thumb">
+                    <iframe width="560" height="200" src="{{$item->linkVideo}}" frameborder="0" allowfullscreen></iframe>
+                      <p class="btn-date"><i class="fa fa-clock-o"></i>{{$item->created_at}}</p>
+                  </div>
+                  <div class="details">
+                      <h6 class="title"><a href="#">{{$item->judulVideo}}</a></h6>
+                  </div>
+              </div>
+              <div class="single-post-wrap">
+                  <div class="thumb">
+                    <iframe width="560" height="200" src="{{$item->linkVideo}}" frameborder="0" allowfullscreen></iframe>
+                      <p class="btn-date"><i class="fa fa-clock-o"></i>{{$item->created_at}}</p>
+                  </div>
+                  <div class="details">
+                      <h6 class="title"><a href="#">{{$item->judulVideo}}</a></h6>
+                  </div>
+              </div>
+          </div>
+          @endforeach
+
+          <div class="col-lg-3 col-sm-6">
+              <div class="trending-post style-box">
+                  <div class="section-title">
+                      <h6 class="title">Trending News</h6>
+                  </div>
+                  @foreach ($boxVideo3 as $item)
+                  <div class="post-slider owl-carousel">
+                      <div class="item">
+                          <div class="single-post-list-wrap">
+                              <div class="media">
+                                  <div class="media-left">
+                                    <iframe width="100" height="100" src="{{$item->linkVideo}}" frameborder="0" allowfullscreen></iframe>
+                                  </div>
+                                  <div class="media-body">
+                                      <div class="details">
+                                          <div class="post-meta-single">
+                                              <ul>
+                                                  <li><i class="fa fa-clock-o"></i>{{$item->created_at}}</li>
+                                              </ul>
+                                          </div>
+                                          <h6 class="title"><a href="#">{{$item->judulVideo}}</a></h6>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                    @endforeach
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>  
 
   <section class="about-us" id="about">
     <div class="container">

@@ -55,12 +55,21 @@ class PenggunaController extends Controller
             $whatsnew = artikels::inRandomOrder()->take(5)->get();
 
             // Get a box of articles randomly
+            $boxLong = artikels::inRandomOrder()->take(1)->get();
+
+            // Get a box of articles randomly
+            $box3 = artikels::inRandomOrder()->take(5)->get();
+          
+             // Get a box of articles randomly
+            $box2 = artikels::inRandomOrder()->take(2)->get();
+
+            // Get a box of articles randomly
             $box = artikels::inRandomOrder()->take(8)->get();
 
             $semua = artikels::all();
             $todayDate = date('l, d M Y H.i');
     
-        return view('main.setelahLogin.home', compact('trending', 'latest','whatsnew','semua', 'box', 'todayDate'));
+        return view('main.setelahLogin.home', compact('trending', 'latest','whatsnew','semua', 'box', 'box2', 'box3', 'boxLong', 'todayDate'));
     }
 
     public function showDetailArtikel($id)
@@ -268,12 +277,21 @@ class PenggunaController extends Controller
                 $whatsNewVideo = video::inRandomOrder()->take(5)->get();
     
                 // Get a box of articles randomly
+                $boxVideoLong = video::inRandomOrder()->take(1)->get();
+
+                // Get a box of articles randomly
+                $boxVideo3 = video::inRandomOrder()->take(5)->get();
+
+                // Get a box of articles randomly
+                $boxVideo2 = video::inRandomOrder()->take(2)->get();
+
+                // Get a box of articles randomly
                 $boxVideo = video::inRandomOrder()->take(8)->get();
     
                 $semuaVideo = video::all();
                 $todayDate = date('l, d M Y H.i');
 
-        return view('main.setelahLogin.video', compact('trendingVideo', 'latestVideo','whatsNewVideo','semuaVideo', 'boxVideo', 'todayDate'));
+        return view('main.setelahLogin.video', compact('trendingVideo', 'latestVideo','whatsNewVideo','semuaVideo', 'boxVideo', 'boxVideo2', 'boxVideo3', 'boxVideoLong', 'todayDate'));
     }
 
     public function showDetailVideo($id)

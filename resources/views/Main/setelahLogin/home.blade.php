@@ -240,7 +240,86 @@
         </div>
     </div>
 </div>
-  
+
+<div class="bg-sky pd-top-80 pd-bottom-50" id="latest">
+  <div class="container">
+      <div class="row">
+        @foreach ($boxLong as $item)
+          <div class="col-lg-3 col-sm-6">
+              <div class="single-post-wrap style-overlay-bg">
+                <div class="thumb" style="height: 605px;">
+                  <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" class="media-left" style="height: 100%; width: auto;">
+              </div>
+                           
+                  <div class="details">
+                      <div class="post-meta-single mb-3">
+                          <ul>
+                              <li><a class="tag-base tag-blue" href="cat-fashion.html">{{$item->kategori}}</a></li>
+                              <li><p><i class="fa fa-clock-o"></i>{{$item->created_at}}</p></li>
+                          </ul>
+                      </div>
+                      <h6 class="title"><a href="#">{{$item->judulArtikel}}</a></h6>
+                  </div>
+              </div>
+          </div>
+          @endforeach
+
+          @foreach ($box2 as $item)
+          <div class="col-lg-3 col-sm-6">
+              <div class="single-post-wrap">
+                  <div class="thumb">
+                    <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" class="media-left" style="width: 400; height: 250;">
+                      <p class="btn-date"><i class="fa fa-clock-o"></i>{{$item->created_at}}</p>
+                  </div>
+                  <div class="details">
+                      <h6 class="title"><a href="#">{{$item->judulArtikel}}</a></h6>
+                  </div>
+              </div>
+              <div class="single-post-wrap">
+                  <div class="thumb">
+                    <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" class="media-left" style="width: 400; height: 250;">
+                      <p class="btn-date"><i class="fa fa-clock-o"></i>{{$item->created_at}}</p>
+                  </div>
+                  <div class="details">
+                      <h6 class="title"><a href="#">{{$item->judulArtikel}}</a></h6>
+                  </div>
+              </div>
+          </div>
+          @endforeach
+
+          <div class="col-lg-3 col-sm-6">
+              <div class="trending-post style-box">
+                  <div class="section-title">
+                      <h6 class="title">Trending News</h6>
+                  </div>
+                  @foreach ($box3 as $item)
+                  <div class="post-slider owl-carousel">
+                      <div class="item">
+                          <div class="single-post-list-wrap">
+                              <div class="media">
+                                  <div class="media-left">
+                                    <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" class="media-left" style="width: 100px; height: 60px;">
+                                  </div>
+                                  <div class="media-body">
+                                      <div class="details">
+                                          <div class="post-meta-single">
+                                              <ul>
+                                                  <li><i class="fa fa-clock-o"></i>{{$item->created_at}}</li>
+                                              </ul>
+                                          </div>
+                                          <h6 class="title"><a href="#">{{$item->judulArtikel}}</a></h6>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                    @endforeach
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div> 
 
   <section class="about-us" id="about">
     <div class="container">
