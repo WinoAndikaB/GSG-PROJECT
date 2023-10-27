@@ -240,7 +240,7 @@ function dataArtikel(){
         //Hitung Ulasan
         $totalUlasan = ulasans::count();
 
-        return view('admin.dashboard', compact('data1', 'averageRating', 'totalUlasan'));
+        return view('admin.ulasans', compact('data1', 'averageRating', 'totalUlasan'));
     }
 
     //Delete data ulasan pada Tabel Admin

@@ -1,5 +1,8 @@
 @extends('Main.layout.homeStyle')
 
+<link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/lg1.png">
+<link rel="icon" type="image/png" href="../assets2/img/lg1.png">
+
 <title>Video - GSG Project</title>
 
 <body>
