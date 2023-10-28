@@ -192,17 +192,17 @@
     <!-- End Navbar -->
 
       <!-- Modal Logout -->
-  <div id="logout-modal" class="modal">
-    <div class="modal-content">
-      <span class="close" id="close-button" onclick="closeModal()">&times;</span>
-      <h2>Konfirmasi Logout</h2>
-      <p>Apakah anda mau logout?</p>
-      <div style="text-align: center;">
-        <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
-        <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
+      <div id="logout-modal" class="modal">
+        <div class="modal-content">
+          <span class="close" id="close-button" onclick="closeModal()">&times;</span>
+          <h2>Konfirmasi Logout</h2>
+          <p>Apakah anda mau logout?</p>
+          <div style="text-align: center;">
+            <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
+            <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
     
     <div class="container-fluid py-4">
       <div class="row">
@@ -221,8 +221,8 @@
                     <div class="card mb-4">
                       <div class="card-header pb-0">
                       </div>
-                      <div class="card-body px-0 pt-0 pb-2 overflow: auto;">
-                        <div class="table-responsive p-0 ">
+                      <div class="card-body px-0 pt-0 pb-2">
+                        <div class="table-responsive p-0">
                           <table class="table align-items-center mb-0">
                             <thead>
                               <tr>
@@ -437,37 +437,37 @@
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
 
-   <!-- MODAL LOGOUT -->
-   <script>
-    // JavaScript untuk modal logout
-    function openModal() {
-      const modal = document.getElementById('logout-modal');
-      modal.style.display = 'block';
-    }
-  
-    function closeModal() {
-      const modal = document.getElementById('logout-modal');
-      modal.style.display = 'none';
-    }
-  
-    function confirmLogout(confirmed) {
-      if (confirmed) {
-        // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
-        window.location.href = '/logout';
-      } else {
-        // Tutup modal jika pengguna memilih "No"
-        closeModal();
+     <!-- MODAL LOGOUT -->
+     <script>
+      // JavaScript untuk modal logout
+      function openModal() {
+        const modal = document.getElementById('logout-modal');
+        modal.style.display = 'block';
       }
-    }
-  
-    // Tutup modal jika pengguna mengklik di luar modal
-    window.addEventListener('click', (event) => {
-      const modal = document.getElementById('logout-modal');
-      if (event.target == modal) {
+    
+      function closeModal() {
+        const modal = document.getElementById('logout-modal');
         modal.style.display = 'none';
       }
-    });
-  </script>
-
+    
+      function confirmLogout(confirmed) {
+        if (confirmed) {
+          // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
+          window.location.href = '/logout';
+        } else {
+          // Tutup modal jika pengguna memilih "No"
+          closeModal();
+        }
+      }
+    
+      // Tutup modal jika pengguna mengklik di luar modal
+      window.addEventListener('click', (event) => {
+        const modal = document.getElementById('logout-modal');
+        if (event.target == modal) {
+          modal.style.display = 'none';
+        }
+      });
+    </script>
 </body>
+
 </html>
