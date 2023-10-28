@@ -228,6 +228,14 @@
                   <label for="email">Email</label>
                   <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}" readonly>
               </div>
+              <div class="form-group">
+                <label for="kategoriVideo">Kategori</label>
+                <input type="text" class="form-control" id="kategoriVideo" name="kategoriVideo" required>
+            </div>
+            <div class="form-group">
+              <label for="tagsVideo">Tags</label>
+              <input type="text" class="form-control" id="tagsVideo" name="tagsVideo" required>
+          </div>
                 <div class="form-group">
                   <label for="" class="form-control-label">Deskirpsi Video</label>
                   <textarea class="form-control" type="text" name="deskripsiVideo" id="editor"></textarea>

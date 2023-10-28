@@ -9,5 +9,5 @@ class artikels extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id','gambarArtikel','judulArtikel','penulis','email','deskripsi'];
+        'id','gambarArtikel','judulArtikel','penulis','email','deskripsi','status','kategori','tags'];
 }

@@ -232,6 +232,8 @@
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Upload</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kategori</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tags</th>
                                 <th class="text-secondary opacity-7"></th>
                               </tr>
                             </thead>
@@ -273,6 +275,12 @@
                                 </td>
                                 <td class="align-middle text-center">
                                   <span class="badge badge-sm bg-gradient-success">Pending</span>
+                                </td>
+                                <td class="align-middle text-center">
+                                  <span class="badge badge-sm bg-gradient-success">{{$tbhartikel['kategori']}}</span>
+                                </td>
+                                <td class="align-middle text-center">
+                                  <span class="badge badge-sm bg-gradient-success">{{$tbhartikel['tags']}}</span>
                                 </td>
                                 <td class="align-middle">
                                   <a href="/tampilDataEditArtikel/{{ $tbhartikel->id}}" class="btn btn-warning btn btn-primary btn-round">

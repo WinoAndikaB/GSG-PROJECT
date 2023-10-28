@@ -327,25 +327,22 @@
 <div class="bg-sky pd-top-80 pd-bottom-50" id="latest">
   <div class="container">
       <div class="row">
-        @foreach ($boxLong as $item)
-          <div class="col-lg-3 col-sm-6">
-              <div class="single-post-wrap style-overlay-bg">
-                <div class="thumb" style="height: 605px;">
-                  <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" class="media-left" style="height: 100%; width: auto;">
+        <div class="col-lg-3 col-sm-6">
+          <div class="single-post-wrap style-overlay-bg">
+              <div class="thumb">
+                  <img src="assets/img/post/9.png" alt="img">
               </div>
-                           
-                  <div class="details">
-                      <div class="post-meta-single mb-3">
-                          <ul>
-                              <li><a class="tag-base tag-blue" href="cat-fashion.html">{{$item->kategori}}</a></li>
-                              <li><p><i class="fa fa-clock-o"></i>{{$item->created_at}}</p></li>
-                          </ul>
-                      </div>
-                      <h6 class="title"><a href="#">{{$item->judulArtikel}}</a></h6>
+              <div class="details">
+                  <div class="post-meta-single mb-3">
+                      <ul>
+                          <li><a class="tag-base tag-blue" href="cat-fashion.html">fashion</a></li>
+                          <li><p><i class="fa fa-clock-o"></i>08.22.2020</p></li>
+                      </ul>
                   </div>
+                  <h6 class="title"><a href="#">A Comparison of the Sony FE 85mm f/1.4 GM and Sigma</a></h6>
               </div>
           </div>
-          @endforeach
+      </div>
 
           @foreach ($box2 as $item)
           <div class="col-lg-3 col-sm-6">

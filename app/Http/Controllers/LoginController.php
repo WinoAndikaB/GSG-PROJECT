@@ -147,7 +147,7 @@ class LoginController extends Controller
                 $boxVideo = video::inRandomOrder()->take(8)->get();
     
                 $semuaVideo = video::all();
-                $todayDate = date('l, d M Y H.i');
+                $todayDate = date('l, d M Y');
 
         return view('main.sebelumLogin.landingPageVideo', compact('trendingVideo', 'latestVideo','whatsNewVideo','semuaVideo', 'boxVideo', 'boxVideo2', 'boxVideo3', 'todayDate'));
     }

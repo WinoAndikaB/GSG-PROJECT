@@ -65,6 +65,8 @@ function dataArtikel(){
         $article->judulArtikel = $request->input('judulArtikel');
         $article->penulis = $request->input('penulis');
         $article->email = $request->input('email');
+        $article->kategori = $request->input('kategori');
+        $article->tags = $request->input('tags');
         $article->deskripsi = $request->input('deskripsi');
     
         // Handle file upload
@@ -126,6 +128,8 @@ function dataArtikel(){
         $videos->judulVideo = $request->input('judulVideo');
         $videos->uploader = $request->input('uploader');
         $videos->email = $request->input('email');
+        $videos->kategoriVideo = $request->input('kategoriVideo');
+        $videos->tagsVideo = $request->input('tagsVideo');
         $videos->deskripsiVideo = $request->input('deskripsiVideo');
         
         // Konversi link YouTube ke URL embed
