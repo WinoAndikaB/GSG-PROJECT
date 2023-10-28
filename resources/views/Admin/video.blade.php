@@ -19,6 +19,53 @@
   <link href="../assets2/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets2/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+
+  <style>
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      overflow: hidden; /* Tidak dapat di-scroll */
+    }
+
+    .modal-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #fff;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      border: 1px solid #888;
+      width: 40%;
+      height: 30%; /* Mengatur tinggi modal menjadi 60% */
+      text-align: center;
+    }
+
+    .close {
+      color: #888;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #confirm-button, #cancel-button {
+      padding: 10px 20px;
+      margin: 25px;
+      cursor: pointer;
+    }
+</style>
   
 </head>
 
@@ -120,8 +167,7 @@
                       ?>
                   </i>
                   <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span> |
-                  <i class="ni ni-button-power"></i>
-                  <a href="/logout" class="d-sm-inline d-none text-white text-bold"> Logout</a>
+                  <a href="#" class="d-sm-inline d-none text-white text-bold" id="logout-link" onclick="openModal()"> Logout</a>
               </a>
           </li>
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -144,6 +190,19 @@
       </div>
     </nav>
     <!-- End Navbar -->
+
+      <!-- Modal Logout -->
+  <div id="logout-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="close-button" onclick="closeModal()">&times;</span>
+      <h2>Konfirmasi Logout</h2>
+      <p>Apakah anda mau logout?</p>
+      <div style="text-align: center;">
+        <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
+        <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
+      </div>
+    </div>
+  </div>
     
     <div class="container-fluid py-4">
       <div class="row">
@@ -162,7 +221,7 @@
                     <div class="card mb-4">
                       <div class="card-header pb-0">
                       </div>
-                      <div class="card-body px-0 pt-0 pb-2">
+                      <div class="card-body px-0 pt-0 pb-2 overflow: auto;"">
                         <div class="table-responsive p-0">
                           <table class="table align-items-center mb-0">
                             <thead>
@@ -343,6 +402,37 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
-</body>
 
+   <!-- MODAL LOGOUT -->
+   <script>
+    // JavaScript untuk modal logout
+    function openModal() {
+      const modal = document.getElementById('logout-modal');
+      modal.style.display = 'block';
+    }
+  
+    function closeModal() {
+      const modal = document.getElementById('logout-modal');
+      modal.style.display = 'none';
+    }
+  
+    function confirmLogout(confirmed) {
+      if (confirmed) {
+        // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
+        window.location.href = '/logout';
+      } else {
+        // Tutup modal jika pengguna memilih "No"
+        closeModal();
+      }
+    }
+  
+    // Tutup modal jika pengguna mengklik di luar modal
+    window.addEventListener('click', (event) => {
+      const modal = document.getElementById('logout-modal');
+      if (event.target == modal) {
+        modal.style.display = 'none';
+      }
+    });
+  </script>
+</body>
 </html>

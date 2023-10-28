@@ -21,6 +21,9 @@
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets2/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+
   <style>
       .rating {
         font-size: 24px;
@@ -44,7 +47,51 @@
           color: gold; /* Warna bintang yang diisi */
         }
 
-</style>
+        .modal {
+          display: none;
+          position: fixed;
+          z-index: 1;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.5);
+          overflow: hidden; /* Tidak dapat di-scroll */
+        }
+
+        .modal-content {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          background-color: #fff;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          padding: 20px;
+          border: 1px solid #888;
+          width: 40%;
+          height: 30%; /* Mengatur tinggi modal menjadi 60% */
+          text-align: center;
+        }
+
+        .close {
+          color: #888;
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          font-size: 20px;
+          font-weight: bold;
+          cursor: pointer;
+        }
+
+        #confirm-button, #cancel-button {
+          padding: 10px 20px;
+          margin: 25px;
+          cursor: pointer;
+        }
+  </style>
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -145,23 +192,9 @@
                     ?>
                 </i>
                 <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span> |
-                <i class="ni ni-button-power"></i>
-                <a href="/logout" class="d-sm-inline d-none text-white text-bold"> Logout</a>
-            </a>
-        </li>
-        
-          <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-            <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
-              <div class="sidenav-toggler-inner">
-                <i class="sidenav-toggler-line bg-white"></i>
-                <i class="sidenav-toggler-line bg-white"></i>
-                <i class="sidenav-toggler-line bg-white"></i>
-              </div>
-            </a>
-          </li>
-          <li class="nav-item px-3 d-flex align-items-center">
-            <a href="javascript:;" class="nav-link text-white p-0">
-              <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
+
+                <a href="#" class="d-sm-inline d-none text-white text-bold" id="logout-link" onclick="openModal()"> Logout</a>
+
             </a>
           </li>
           </li>
@@ -170,6 +203,21 @@
     </div>
   </nav>
   <!-- End Navbar -->
+
+  <!-- Modal Logout -->
+  <div id="logout-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="close-button" onclick="closeModal()">&times;</span>
+      <h2>Konfirmasi Logout</h2>
+      <p>Apakah anda mau logout?</p>
+      <div style="text-align: center;">
+        <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
+        <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
+      </div>
+    </div>
+  </div>
+  
+  
   
     <div class="container-fluid py-4">
       <div class="row">
@@ -279,23 +327,8 @@
           </div>
         </div>
 
-        <div class="row mt-4">
-          <div class="col-lg-7 mb-lg-0 mb-4">
-            <div class="card z-index-2 h-100">
-              <div class="card-header pb-0 pt-3 bg-transparent">
-                <h6 class="text-capitalize">Rating</h6>
-                <p class="text-sm mb-0">
-                  <i class="fa fa-arrow-up text-success"></i>
-                  <span class="font-weight-bold">4% more</span> in 2021
-                </p>
-              </div>
-              <div class="card-body p-3">
-                <div class="chart">
-                  <canvas id="chart-line" class="chart-canvas" height="300"></canvas>
-                </div>
-              </div>
-            </div>
-          </div>
+     
+
           <div class="col-lg-5">
             <div class="card card-carousel overflow-hidden h-100 p-0">
               <div id="carouselExampleCaptions" class="carousel slide h-100" data-bs-ride="carousel">
@@ -571,78 +604,7 @@
       </div>
       </div>
   </main>
-  <div class="fixed-plugin">
-    <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
-      <i class="fa fa-cog py-2"> </i>
-    </a>
-    <div class="card shadow-lg">
-      <div class="card-header pb-0 pt-3 ">
-        <div class="float-start">
-          <h5 class="mt-3 mb-0">Argon Configurator</h5>
-          <p>See our dashboard options.</p>
-        </div>
-        <div class="float-end mt-4">
-          <button class="btn btn-link text-dark p-0 fixed-plugin-close-button">
-            <i class="fa fa-close"></i>
-          </button>
-        </div>
-        <!-- End Toggle Button -->
-      </div>
-      <hr class="horizontal dark my-1">
-      <div class="card-body pt-sm-3 pt-0 overflow-auto">
-        <!-- Sidebar Backgrounds -->
-        <div>
-          <h6 class="mb-0">Sidebar Colors</h6>
-        </div>
-        <a href="javascript:void(0)" class="switch-trigger background-color">
-          <div class="badge-colors my-2 text-start">
-            <span class="badge filter bg-gradient-primary active" data-color="primary" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-dark" data-color="dark" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-info" data-color="info" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-success" data-color="success" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-warning" data-color="warning" onclick="sidebarColor(this)"></span>
-            <span class="badge filter bg-gradient-danger" data-color="danger" onclick="sidebarColor(this)"></span>
-          </div>
-        </a>
-        <!-- Sidenav Type -->
-        <div class="mt-3">
-          <h6 class="mb-0">Sidenav Type</h6>
-          <p class="text-sm">Choose between 2 different sidenav types.</p>
-        </div>
-        <div class="d-flex">
-          <button class="btn bg-gradient-primary w-100 px-3 mb-2 active me-2" data-class="bg-white" onclick="sidebarType(this)">White</button>
-          <button class="btn bg-gradient-primary w-100 px-3 mb-2" data-class="bg-default" onclick="sidebarType(this)">Dark</button>
-        </div>
-        <p class="text-sm d-xl-none d-block mt-2">You can change the sidenav type just on desktop view.</p>
-        <!-- Navbar Fixed -->
-        <div class="d-flex my-3">
-          <h6 class="mb-0">Navbar Fixed</h6>
-          <div class="form-check form-switch ps-0 ms-auto my-auto">
-            <input class="form-check-input mt-1 ms-auto" type="checkbox" id="navbarFixed" onclick="navbarFixed(this)">
-          </div>
-        </div>
-        <hr class="horizontal dark my-sm-4">
-        <div class="mt-2 mb-5 d-flex">
-          <h6 class="mb-0">Light / Dark</h6>
-          <div class="form-check form-switch ps-0 ms-auto my-auto">
-            <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark-version" onclick="darkMode(this)">
-          </div>
-        </div>
-        <a class="btn bg-gradient-dark w-100" href="https://www.creative-tim.com/product/argon-dashboard">Free Download</a>
-        <a class="btn btn-outline-dark w-100" href="https://www.creative-tim.com/learning-lab/bootstrap/license/argon-dashboard">View documentation</a>
-        <div class="w-100 text-center">
-          <a class="github-button" href="https://github.com/creativetimofficial/argon-dashboard" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star creativetimofficial/argon-dashboard on GitHub">Star</a>
-          <h6 class="mt-3">Thank you for sharing!</h6>
-          <a href="https://twitter.com/intent/tweet?text=Check%20Argon%20Dashboard%20made%20by%20%40CreativeTim%20%23webdesign%20%23dashboard%20%23bootstrap5&amp;url=https%3A%2F%2Fwww.creative-tim.com%2Fproduct%2Fargon-dashboard" class="btn btn-dark mb-0 me-2" target="_blank">
-            <i class="fab fa-twitter me-1" aria-hidden="true"></i> Tweet
-          </a>
-          <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.creative-tim.com/product/argon-dashboard" class="btn btn-dark mb-0 me-2" target="_blank">
-            <i class="fab fa-facebook-square me-1" aria-hidden="true"></i> Share
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
+
    <!--   Core JS Files   -->
    <script src="../assets2/js/core/popper.min.js"></script>
    <script src="../assets2/js/core/bootstrap.min.js"></script>
@@ -745,6 +707,38 @@
    <script async defer src="https://buttons.github.io/buttons.js"></script>
    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
    <script src="../assets/js/argon-dashboard.min.js?v=2.0.4"></script>
-</body>
 
+   <!-- MODAL LOGOUT -->
+   <script>
+    // JavaScript untuk modal logout
+    function openModal() {
+      const modal = document.getElementById('logout-modal');
+      modal.style.display = 'block';
+    }
+  
+    function closeModal() {
+      const modal = document.getElementById('logout-modal');
+      modal.style.display = 'none';
+    }
+  
+    function confirmLogout(confirmed) {
+      if (confirmed) {
+        // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
+        window.location.href = '/logout';
+      } else {
+        // Tutup modal jika pengguna memilih "No"
+        closeModal();
+      }
+    }
+  
+    // Tutup modal jika pengguna mengklik di luar modal
+    window.addEventListener('click', (event) => {
+      const modal = document.getElementById('logout-modal');
+      if (event.target == modal) {
+        modal.style.display = 'none';
+      }
+    });
+  </script>
+    
+</body>
 </html>
