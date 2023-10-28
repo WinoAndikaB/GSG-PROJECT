@@ -248,6 +248,14 @@
                       <input class="form-control" type="text" name="penulis" value="{{ $data->penulis }}">
                     </div>
                     <div class="form-group">
+                      <label for="" class="form-control-label">Kategori</label>
+                      <textarea class="form-control" type="text" name="kategori">{{ $data->kategori }}</textarea>
+                    </div>
+                    <div class="form-group">
+                      <label for="" class="form-control-label">Tags</label>
+                      <textarea class="form-control" type="text" name="tags">{{ $data->tags }}</textarea>
+                    </div>
+                    <div class="form-group">
                       <label for="" class="form-control-label">Deskirpsi</label>
                       <textarea class="form-control" type="text" name="deskripsi" id="editor">{{ $data->deskripsi }}</textarea>
                     </div>

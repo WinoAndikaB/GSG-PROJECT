@@ -171,6 +171,8 @@ function dataArtikel(){
     
         $data->linkVideo = $request->input('linkVideo');
         $data->judulVideo = $request->input('judulVideo');
+        $data->kategoriVideo = $request->input('kategoriVideo');
+        $data->tagsVideo = $request->input('tagsVideo');
         $data->deskripsiVideo = $request->input('deskripsiVideo');
         
         $data->save();

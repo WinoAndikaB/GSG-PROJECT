@@ -199,6 +199,14 @@
                       <label for="" class="form-control-label">Uploader</label>
                       <input class="form-control" type="text" name="uploader" value="{{ $data->uploader }}" disabled>
                   </div>
+                  <div class="form-group">
+                    <label for="" class="form-control-label">Kategori</label>
+                    <textarea class="form-control" type="text" name="kategoriVideo">{{ $data->kategoriVideo }}</textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="" class="form-control-label">Tags</label>
+                    <textarea class="form-control" type="text" name="tagsVideo">{{ $data->tagsVideo}}</textarea>
+                  </div>
                     <div class="form-group">
                       <label for="" class="form-control-label">Deskirpsi Video</label>
                       <textarea class="form-control" type="text" name="deskripsiVideo" id="editor">{{ $data->deskripsiVideo }}</textarea>
