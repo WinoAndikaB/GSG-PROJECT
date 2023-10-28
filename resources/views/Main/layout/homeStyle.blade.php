@@ -44,6 +44,8 @@
       <!-- CSS Just for demo purpose, don't include it in your project -->
       <link href="../assets/demo/demo.css" rel="stylesheet" />
 
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
       <style>
         .nav-link {
           display: flex;
@@ -87,10 +89,8 @@
                       <p class="text-white">Provide you a qualified articles and informative articles from a lot sources.</p>
                       <ul class="social-area social-area-2 mt-4">
                           <li><a class="facebook-icon" href="#"><i class="fa fa-facebook"></i></a></li>
-                          <li><a class="twitter-icon" href="#"><i class="fa fa-twitter"></i></a></li>
-                          <li><a class="youtube-icon" href="#"><i class="fa fa-youtube-play"></i></a></li>
                           <li><a class="instagram-icon" href="#"><i class="fa fa-instagram"></i></a></li>
-                          <li><a class="google-icon" href="#"><i class="fa fa-google-plus"></i></a></li>
+                          <li><a class="youtube-icon" href="#"><i class="fa fa-youtube"></i></a></li>
                       </ul>
                   </div>
               </div>
@@ -122,7 +122,15 @@
                     <li style="color: white;"><i class="fa fa-envelope-o" style="color: white;"></i> gsg@website.com <br> gsg@mail.com</li>
                 </ul>
             </div>
-        </div>            
+        </div>  
+        <div class="col-lg-3 col-sm-6">
+          <div class="widget">
+              <h5 class="widget-title" style="color: white;">INFORMASI</h5>
+              <ul class="contact_info_list">
+                  <a href="/syaratKetentuan" style="color: white;"></i>Syarat & Ketentuan</li>
+              </ul>
+          </div>
+      </div>            
 
     <div class="container">
       <div class="row">

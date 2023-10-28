@@ -331,14 +331,17 @@
                       </div>
                     </div>
                     <br>
-                    <div class="button-container">
-                      <a href="{{ Auth::user()->instagram}};" class="btn btn-info mb-0 d-none d-lg-block">
+                    <div class="button-container" style="display: flex; justify-content: center; align-items: center;">
+                      <a href="{{ Auth::user()->instagram }}" class="btn btn-info mb-0 d-none d-lg-block" style="margin-right: 10px;">
                           <i class="fab fa-instagram"></i> Instagram
                       </a>
-                      <a href="{{ Auth::user()->facebook}}" class="btn btn-dark mb-0 d-none d-lg-block">
+                      <a href="{{ Auth::user()->facebook }}" class="btn btn-dark mb-0 d-none d-lg-block">
                           <i class="fab fa-facebook"></i> Facebook
                       </a>
-                  </div>                                                    
+                  </div>
+                  
+                  
+                                                                                   
                   </div>
                 </div>
               </div>

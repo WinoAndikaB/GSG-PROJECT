@@ -275,8 +275,12 @@
                                   <span class="badge badge-sm bg-gradient-success">Pending</span>
                                 </td>
                                 <td class="align-middle">
-                                  <a href="/tampilDataEditArtikel/{{ $tbhartikel->id}}" class="btn btn-edit">Edit</a>
-                                  <a href="{{"deleteA/".$tbhartikel['id']}}" class="btn btn-danger" onclick="return showConfirmation()">Hapus</a>
+                                  <a href="/tampilDataEditArtikel/{{ $tbhartikel->id}}" class="btn btn-warning btn btn-primary btn-round">
+                                    <i class="fa fa-pencil"></i>
+                                  </a>
+                                  <a href="{{"deleteA/".$tbhartikel['id']}}" class="btn btn-danger btn btn-primary btn-round" onclick="return showConfirmation()">
+                                    <i class="fa fa-trash"></i>
+                                  </a>
                                 </td>
                               </tr>
                             </tbody>

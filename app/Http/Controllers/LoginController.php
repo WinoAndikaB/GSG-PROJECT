@@ -79,7 +79,7 @@ class LoginController extends Controller
             $box = artikels::inRandomOrder()->take(8)->get();
 
             $semua = artikels::all();
-            $todayDate = date('l, d M Y H.i');
+            $todayDate = date('l, d M Y');
 
     return view('main.sebelumLogin.landingPage', compact('trending', 'latest','whatsnew','semua', 'box', 'box2', 'box3', 'boxLong', 'todayDate'));
 }
@@ -87,6 +87,12 @@ class LoginController extends Controller
     function aboutLandingPage(){
         return view('main.sebelumLogin.aboutLandingPage');
     }
+
+    function syaratKetentuan(){
+        $syarat = artikels::find(12); // Mengambil artikel dengan ID 12
+        return view('main.sebelumLogin.syaratKetentuan', compact('syarat'));
+    }
+    
 
     function landingPageVideo(Request $request){
 

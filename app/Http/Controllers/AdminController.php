@@ -106,10 +106,11 @@ function dataArtikel(){
         return redirect()->route('dataArtikel')->with('success','Data Berhasil di Update');
     }    
 
+    
     // [Bagian Video]
     function videoAdmin(){
 
-        $tableVideo = video::orderBy('created_at', 'desc')->paginate(10);
+        $tableVideo = video::orderBy('created_at', 'desc')->paginate(4);
 
         return view('admin.video', compact('tableVideo'));
     }

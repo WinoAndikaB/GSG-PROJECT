@@ -279,12 +279,54 @@
                                   <span class="badge badge-sm bg-gradient-success">Pending</span>
                                 </td>
                                 <td class="align-middle">
-                                  <a href="/formEditVideo/{{ $item->id}}" class="btn btn-edit">Edit</a>
-                                  <a href="{{"deleteV/".$item['id']}}" class="btn btn-danger" onclick="return showConfirmation()">Hapus</a>
+                                  <a href="/formEditVideo/{{ $item->id}}" class="btn btn-warning btn btn-primary btn-round">
+                                    <i class="fa fa-pencil"></i>
+                                  </a>
+                                  <a href="{{"deleteV/".$item['id']}}" class="btn btn-danger btn btn-primary btn-round" onclick="return confirm('Apakah Anda Yakin Mau Menghapus Data Ini?')">
+                                    <i class="fa fa-trash"></i>
+                                  </a>
                                 </td>
                               </tr>
                             </tbody>
-                            @endforeach                           
+                            @endforeach 
+                            
+                            <div class="d-flex justify-content-center">
+                              <ul class="pagination">
+                                  @if ($tableVideo->onFirstPage())
+                                      <li class="page-item disabled">
+                                          <span class="page-link" aria-label="Previous">
+                                              <span aria-hidden="true">&lsaquo;</span>
+                                          </span>
+                                      </li>
+                                  @else
+                                      <li class="page-item">
+                                          <a class="page-link" href="{{ $tableVideo->previousPageUrl() }}" rel="prev" aria-label="Previous">
+                                              <span aria-hidden="true">&lsaquo;</span>
+                                          </a>
+                                      </li>
+                                  @endif
+            
+                                <!-- Menampilkan halaman berapa -->
+                                <div class="text-center">
+                                    {{ $tableVideo->currentPage() }} dari {{ $tableVideo->lastPage() }}
+                                </div>
+                          
+                                  @if ($tableVideo->hasMorePages())
+                                      <li class="page-item">
+                                          <a class="page-link" href="{{ $tableVideo->nextPageUrl() }}" rel="next" aria-label="Next">
+                                              <span aria-hidden="true">&rsaquo;</span>
+                                          </a>
+                                      </li>
+                                  @else
+                                      <li class="page-item disabled">
+                                          <span class="page-link" aria-label="Next">
+                                              <span aria-hidden="true">&rsaquo;</span>
+                                          </span>
+                                      </li>
+                                  @endif
+                              </ul>
+                          </div>
+                          
                           </table>
                         </div>
                       </div>

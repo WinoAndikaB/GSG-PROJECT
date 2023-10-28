@@ -67,7 +67,7 @@ class PenggunaController extends Controller
             $box = artikels::inRandomOrder()->take(8)->get();
 
             $semua = artikels::all();
-            $todayDate = date('l, d M Y H.i');
+            $todayDate = date('l, d M Y');
     
         return view('main.setelahLogin.home', compact('trending', 'latest','whatsnew','semua', 'box', 'box2', 'box3', 'boxLong', 'todayDate'));
     }

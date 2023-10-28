@@ -26,11 +26,7 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/', [LoginController::class, 'landingPage'])->name('landingPage');
 Route::get('/abouts', [LoginController::class, 'aboutLandingPage'])->name('aboutLandingPage');
 Route::get('/ulasanLandingPage', [LoginController::class, 'ulasanLandingPage'])->name('ulasanLandingPage');
-
-Route::get('/test-image', function () {
-    return response()->file(storage_path('app/public/fotoProfil/MfZHRTSjrflHqK4X2SKyoWC1zblRxGIJ3alHgs57.jpg'));
-});
-
+Route::get('/syaratKetentuan', [LoginController::class, 'syaratKetentuan'])->name('syaratKetentuan');
 
 //---- HOME ----
 //Memberikan Hak Akses User
@@ -70,7 +66,7 @@ Route::get('/artikelAdmin', [AdminController::class, 'dataArtikel'])->name('data
 Route::get('/artikel/create',  [AdminController::class, 'create'])->name('artikel.create');
 Route::post('/artikel/store',  [AdminController::class, 'store'])->name('artikel.store');
 
-Route::get('/deleteA/{id}',[AdminController::class,'deleteArtikel']);
+Route::get('/deleteA/{id}',[AdminController::class,'deleteArtikel'])->name('deleteArtikel');
 
 Route::get('/tampilDataEditArtikel/{id}',[AdminController::class,'tampilDataEditArtikel']);
 Route::post('/updateDataIdArtikel/{id}',[AdminController::class,'updateDataIdArtikel']);
