@@ -58,46 +58,43 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-12">
-                <nav class="main-nav d-flex align-items-center justify-content-between">
-                    <ul class="nav">
-                        <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
-                        <li class="scroll-to-section"><a href="#trends" class="text-center">Trending</a></li>
-                        <li class="scroll-to-section"><a href="#about" class="text-center">Artikel</a></li>
-                        <li class="scroll-to-section"><a href="/Video">Video</a></li>
-                        <li class="scroll-to-section"><a href="/ulasan" class="text-center">Ulasan</a></li>
-                        <li class="scroll-to-section"><a href="/about" class="text-center">Tentang</a></li>
-                    </ul>
-                    <ul class="nav">
-                        <li class="scroll-to-section">
-                            <form action="{{ route('landingPage') }}" method="GET" class="input-group ml-auto">
-                                <input type="text" name="search" class="form-control search-input" placeholder="Cari Artikel..." aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ request('search') }}">
-                                <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
-                            </form>
-                        </li>
-                        <li class="scroll-to-section">
-                          <a href="/profileUser" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center">
-                            <div class="profile-picture" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
-                                <?php
-                                $fotoProfil = Auth::user()->fotoProfil;
-                                if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
-                                ?>
-                                <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
-                                <?php
-                                } else {
-                                ?>
-                                <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
-                                <?php
-                                }
-                                ?>
-                            </div>
-                            <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
-                        </a>                        
-                        </li>
-                        <li class="scroll-to-section">
-                          <a href="#" class="d-sm-inline d-none text-white text-bold" id="logout-link" onclick="openModal()"> Logout</a>
-                        </li>
-                    </ul>
-                </nav>
+              <nav class="main-nav">
+                <ul class="nav">
+                    <li class="scroll-to-section"><a href="/" class="active">Home</a></li>
+                    <li class="scroll-to-section"><a href="#trends">Trending</a></li>
+                    <li class="scroll-to-section"><a href="#about">Artikel</a></li>
+                    <li class="scroll-to-section"><a href="/Video" class="">Video</a></li>
+                    <li class="scroll-to-section"><a href="/ulasan" class="text-center">Ulasan</a></li>
+                    <li class="scroll-to-section"><a href="/about">Tentang</a></li>
+                    <li>
+                      <form action="" method="GET" class="input-group">
+                        <input type="text" name="search" class="form-control" placeholder="Cari Video..." aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ request('search') }}">
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
+                    </form>
+                    </li>
+                    <li class="scroll-to-section">
+                      <a href="/profileUser" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center">
+                        <div class="profile-picture" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
+                            <?php
+                            $fotoProfil = Auth::user()->fotoProfil;
+                            if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
+                            ?>
+                            <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                            <?php
+                            } else {
+                            ?>
+                            <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                            <?php
+                            }
+                            ?>
+                        </div>
+                        <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
+                    </a>                        
+                    </li>
+                    <li class="scroll-to-section">
+                      <a href="#" class="d-sm-inline d-none text-white text-bold" id="logout-link" onclick="openModal()"> Logout</a>
+                    </li>
+            </nav>
             </div>
         </div>
     </div>

@@ -65,7 +65,7 @@
                           <li class="scroll-to-section"><a href="#about">Artikel</a></li>
                           <li class="scroll-to-section"><a href="/Video" class="active">Video</a></li>
                           <li class="scroll-to-section"><a href="/ulasan" class="text-center">Ulasan</a></li>
-                          <li class="scroll-to-section"><a href="/abouts">Tentang</a></li>
+                          <li class="scroll-to-section"><a href="/about">Tentang</a></li>
                           <li>
                             <form action="" method="GET" class="input-group">
                               <input type="text" name="search" class="form-control" placeholder="Cari Video..." aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ request('search') }}">
