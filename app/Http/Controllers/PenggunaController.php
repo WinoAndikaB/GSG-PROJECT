@@ -77,8 +77,12 @@ class PenggunaController extends Controller
         $article = artikels::findOrFail($id);
 
         $box = artikels::inRandomOrder()->take(8)->get();
+
+        $tags = artikels::inRandomOrder()->take(10)->get();
+
+        $kategori = artikels::inRandomOrder()->take(10)->get();
     
-        return view('main.setelahLogin.detailArt', compact('article','box'));
+        return view('main.setelahLogin.detailArt', compact('article','box', 'tags', 'kategori'));
     }
     
     function about(){
@@ -298,8 +302,12 @@ class PenggunaController extends Controller
     {
         $video = video::findOrFail($id);
 
-        $boxVideo = video::inRandomOrder()->take(8)->get();
-    
-        return view('main.setelahLogin.detailVid', compact('video','boxVideo'));
+        $boxVideo = video::inRandomOrder()->take(10)->get();
+
+        $tagsV = video::inRandomOrder()->take(10)->get();
+
+        $kategoriV = video::inRandomOrder()->take(10)->get();
+        
+        return view('main.setelahLogin.detailVid', compact('video','boxVideo', 'tagsV', 'kategoriV'));
     }
 }

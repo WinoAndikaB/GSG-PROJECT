@@ -160,11 +160,20 @@
       
         <div class="col-md-8 animate-box" data-animate-effect="fadeInRight">
           <section>
+            
               <h1 style="color: rgba(47, 72, 88, 1);">{{ $article->judulArtikel }}</h1><br>
               <p style="color: rgba(242, 100, 25, 1);">{{ $article->penulis}} <br>
                   <span style="color: rgba(165, 165, 165, 1);">{{ \Carbon\Carbon::parse($article['created_at'])->format('l, d M Y H.i') }}
                   </span>
               </p>
+              
+              <span class="fh5co_tags_all">
+                <a href="#" class="fh5co_tagg">{{ $article->kategori }}</a>
+            </span>
+            <span class="fh5co_tags_all">
+              <a href="#" class="fh5co_tagg">{{ $article->tags }}</a>
+          </span>
+
           </section>
           <span style="text-align: right">
               <p class="icon-bagikan" style="color: rgba(165, 165, 165, 1); display: flex; align-items: center; justify-content: end; gap: 0.5em;">
@@ -198,25 +207,25 @@
 
           <div class="col-md-4 animate-box" data-animate-effect="fadeInRight">
             <div>
-                <div class="fh5co_heading fh5co_heading_border_bottom py-2 mb-4">Tags</div>
-            </div>
-            <div class="clearfix"></div>
-            <div class="fh5co_tags_all">
-                <a href="#" class="fh5co_tagg">Business</a>
-                <a href="#" class="fh5co_tagg">Technology</a>
-                <a href="#" class="fh5co_tagg">Sport</a>
-                <a href="#" class="fh5co_tagg">Art</a>
-                <a href="#" class="fh5co_tagg">Lifestyle</a>
-                <a href="#" class="fh5co_tagg">Three</a>
-                <a href="#" class="fh5co_tagg">Photography</a>
-                <a href="#" class="fh5co_tagg">Lifestyle</a>
-                <a href="#" class="fh5co_tagg">Art</a>
-                <a href="#" class="fh5co_tagg">Education</a>
-                <a href="#" class="fh5co_tagg">Social</a>
-                <a href="#" class="fh5co_tagg">Three</a>
-            </div>
+              <div class="fh5co_heading fh5co_heading_border_bottom py-2 mb-4">Kategori</div>
+          </div>
+          <div class="clearfix"></div>
+          @foreach($kategori as $item)
+              <span class="fh5co_tags_all">
+                  <a href="#" class="fh5co_tagg">{{ $item->kategori }}</a>
+              </span>
+          @endforeach
 
-              
+          <div>
+            <div class="fh5co_heading fh5co_heading_border_bottom py-2 mb-4">Tags</div>
+        </div>
+        <div class="clearfix"></div>
+        @foreach($tags as $item)
+            <span class="fh5co_tags_all">
+                <a href="#" class="fh5co_tagg">{{ $item->tags }}</a>
+            </span>
+        @endforeach
+                    
             <div class="fh5co_heading fh5co_heading_border_bottom pt-3 py-2 mb-4">Most Popular</div>
             <div class="row pb-3">
                 @foreach($box as $item)
