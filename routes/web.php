@@ -9,105 +9,158 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
 */
 
-Route::get('/',[LoginController::class,'landingPage']);
-Route::get('/landingPageVideo',[LoginController::class,'landingPageVideo'])->name('landingPageVideo');
-Route::get('/login',[LoginController::class,'log']);
-Route::post('/login',[LoginController::class,'login'])->name('login');
-Route::get('/register',[LoginController::class,'register']);
-Route::post('/registerUser',[LoginController::class,'registerUser']);
-Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-Route::get('/', [LoginController::class, 'landingPage'])->name('landingPage');
-Route::get('/abouts', [LoginController::class, 'aboutLandingPage'])->name('aboutLandingPage');
-Route::get('/ulasanLandingPage', [LoginController::class, 'ulasanLandingPage'])->name('ulasanLandingPage');
-Route::get('/syaratKetentuanLP', [LoginController::class, 'syaratKetentuanLP'])->name('syaratKetentuanLP');
+// [Halaman Non-User]
 
-//---- HOME ----
-//Memberikan Hak Akses User
-Route::middleware(['user'])->group(function () {
-Route::get('/home',[PenggunaController::class,'HomeSetelahLogin'])->name('HomeSetelahLogin');
-Route::get('/Video',[PenggunaController::class,'Video'])->name('Video');
-Route::get('/profileUser', [PenggunaController::class, 'profileUser'])->name('profileUser');
-Route::put('/profileUser/updateUser/{id}',[PenggunaController::class,'updateUser'])->name('updateUser');
-Route::get('/artikel', [PenggunaController::class, 'dataArtikelHome'])->name('dataArtikelHome');
-Route::get('/detailArtikel/{id}', [PenggunaController::class, 'showDetailArtikel'])->name('detail.artikel');
-Route::get('/detailVideo/{id}', [PenggunaController::class, 'showDetailVideo'])->name('showDetailVideo');
-Route::get('/about', [PenggunaController::class, 'about'])->name('about');
-Route::get('/syaratKetentuanA', [PenggunaController::class, 'syaratKetentuanA'])->name('syaratKetentuanA');
+        //[Non-User] Tab Home landing Page
+        Route::get('/', [LoginController::class, 'landingPage'])->name('landingPage');
 
-//ulasan
-Route::get('/ulasan', [PenggunaController::class, 'ulasan'])->name('ulasan');
-Route::post('/storeUlasan',[PenggunaController::class,'storeUlasan']);
-Route::get('/deleteUlasan/{id}', [PenggunaController::class, 'deleteUlasan'])->name('deleteUlasan');
-Route::get('/likeUlasan/{id}', [PenggunaController::class, 'likeUlasan'])->name('likeUlasan');
-Route::get('/dislikeUlasan/{id}', [PenggunaController::class, 'dislikeUlasan'])->name('dislikeUlasan');
-Route::post('/reply', [PenggunaController::class, 'postReply'])->name('postReply');
-Route::post('/simpanEditUlasan/{id}', [PenggunaController::class, 'simpanEditUlasan'])->name('simpanEditUlasan');
-});
+         //[Non-User] Tab Home landing Page Video
+        Route::get('/landingPageVideo',[LoginController::class,'landingPageVideo'])->name('landingPageVideo');
 
-//---- ADMIN ----
-//Memberikan Hak Akses Admin
-Route::middleware(['admin'])->group(function () {
-//Route Tab Dashboard
-Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+         //[Non-User] Halaman Login
+        Route::get('/login',[LoginController::class,'log']);
+        Route::post('/login',[LoginController::class,'login'])->name('login');
 
-//Profile
-Route::get('/profileAdmin', [AdminController::class, 'profileAdmin'])->name('profileAdmin');
-Route::put('/profileAdmin/updateAdmin/{id}',[AdminController::class,'updateAdmin'])->name('updateAdmin');
+        //[Non-User] Tab Register User
+        Route::get('/register',[LoginController::class,'register']);
+        Route::post('/registerUser',[LoginController::class,'registerUser']);
 
-//Route Tab Artikel
-Route::get('/artikelAdmin', [AdminController::class, 'dataArtikel'])->name('dataArtikel');
+        //[Non-User] Tab Register Logout
+        Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+        
+        //[Non-User] Tab About Landing Page
+        Route::get('/abouts', [LoginController::class, 'aboutLandingPage'])->name('aboutLandingPage');
 
-Route::get('/artikel/create',  [AdminController::class, 'create'])->name('artikel.create');
-Route::post('/artikel/store',  [AdminController::class, 'store'])->name('artikel.store');
+        //[Non-User] Tab Ulasan Landing Page
+        Route::get('/ulasanLandingPage', [LoginController::class, 'ulasanLandingPage'])->name('ulasanLandingPage');
 
-Route::get('/deleteA/{id}',[AdminController::class,'deleteArtikel'])->name('deleteArtikel');
+        //[Non-User] Halaaman Syarat Ketentuan Landing Page
+        Route::get('/syaratKetentuanLP', [LoginController::class, 'syaratKetentuanLP'])->name('syaratKetentuanLP');
 
-Route::get('/tampilDataEditArtikel/{id}',[AdminController::class,'tampilDataEditArtikel']);
-Route::post('/updateDataIdArtikel/{id}',[AdminController::class,'updateDataIdArtikel']);
+// [Halaman User]
 
-//Route Tab Video
-Route::get('/videoAdmin', [AdminController::class, 'videoAdmin'])->name('videoAdmin');
-Route::get('/formTambahVideo', [AdminController::class, 'formTambahVideo'])->name('formTambahVideo');
-Route::post('/formTambahVideo/storeVideo',  [AdminController::class, 'storeVideo'])->name('storeVideo');
-Route::get('/formEditVideo/{id}',[AdminController::class,'formEditVideo'])->name('formEditVideo');
-Route::post('/formEditVideo/updateVideo/{id}',[AdminController::class,'updateVideo'])->name('updateVideo');
-Route::get('/deleteV/{id}',[AdminController::class,'deleteVideo'])->name('deleteVideo');
+    //[Admin] Membatasi Hak Akases Admin
+    Route::middleware(['user'])->group(function () {
 
-//Route Tab Pengguna
-Route::get('/pengguna', [AdminController::class, 'listUserTerdaftar'])->name('listUserTerdaftar');
-Route::get('/PenggunaLikeDislike', [AdminController::class, 'PenggunaLikeDislike'])->name('PenggunaLikeDislike');
-Route::get('/formTambahUserAdm', [AdminController::class, 'formTambahUserAdm'])->name('formTambahUserAdm');
-Route::post('/registerAdmin',[AdminController::class,'registerAdmin']);
-Route::get('/deleteP/{id}',[AdminController::class,'deleteUserTerdaftar']);
+        //[User] Tab Home
+        Route::get('/home',[PenggunaController::class,'HomeSetelahLogin'])->name('HomeSetelahLogin');
+        Route::get('/detailArtikel/{id}', [PenggunaController::class, 'showDetailArtikel'])->name('detail.artikel');
 
-//[Admin] Tab Ulasan
+        //[User] Tab Video
+        Route::get('/Video',[PenggunaController::class,'Video'])->name('Video');
+        Route::get('/detailVideo/{id}', [PenggunaController::class, 'showDetailVideo'])->name('showDetailVideo');
 
-    //[Admin] Tabel Ulasan
-    Route::get('/ulasans', [AdminController::class, 'ulasanAdmin'])->name('ulasanAdmin');
+        //[User] Tab Profil
+        Route::get('/profileUser', [PenggunaController::class, 'profileUser'])->name('profileUser');
+        Route::put('/profileUser/updateUser/{id}',[PenggunaController::class,'updateUser'])->name('updateUser');
 
-     //[Admin] Delete Ulasan
-    Route::get('/deleteU/{id}',[AdminController::class,'deleteUlasan']);
+        //[User] Tab About
+        Route::get('/about', [PenggunaController::class, 'about'])->name('about');
+
+        //[User] Tab Syarat & Ketentuan
+        Route::get('/syaratKetentuanA', [PenggunaController::class, 'syaratKetentuanA'])->name('syaratKetentuanA');
+
+        //[User] Tab Ulasan
+
+        //[User] Tab Halaman Ulasan
+        Route::get('/ulasan', [PenggunaController::class, 'ulasan'])->name('ulasan');
+
+        //[User] Tab Tambah Ulasan
+        Route::post('/storeUlasan',[PenggunaController::class,'storeUlasan']);
+
+        //[User] Tab Delete Ulasan
+        Route::get('/deleteUlasan/{id}', [PenggunaController::class, 'deleteUlasan'])->name('deleteUlasan');
+
+        //[User] Tab Like & Dislike Ulasan
+        Route::get('/likeUlasan/{id}', [PenggunaController::class, 'likeUlasan'])->name('likeUlasan');
+        Route::get('/dislikeUlasan/{id}', [PenggunaController::class, 'dislikeUlasan'])->name('dislikeUlasan');
+
+         //[User] Tab Edit Ulasan
+        Route::post('/simpanEditUlasan/{id}', [PenggunaController::class, 'simpanEditUlasan'])->name('simpanEditUlasan');
     });
 
-//[Admin] Tab Syarat & Ketentuan
+// [Halaman Admin]
 
-    //[Admin] Tabel Syarat & Ketentuan
-    Route::get('/syaratdanketentuan',[AdminController::class,'syaratdanketentuan'])->name('syaratdanketentuan');
+    //[Admin] Membatasi Hak Akases Admin
+    Route::middleware(['admin'])->group(function () {
 
-    //[Admin] Form Tambah Syarat & Ketentuan
-    Route::get('/formTambahTdanC',  [AdminController::class, 'formTambahTdanC'])->name('formTambahTdanC');
-    Route::post('/formTambahTdanC/storeTdanC',  [AdminController::class, 'storeTdanC'])->name('storeTdanC');
+    //[Admin] Tab Dashboard
+        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
-    //[Admin] Delete Syarat & Ketentuan
-    Route::get('/deleteTdanC/{id}',[AdminController::class,'deleteTdanC']);
+    //[Admin] Tab Profil
+        Route::get('/profileAdmin', [AdminController::class, 'profileAdmin'])->name('profileAdmin');
+        Route::put('/profileAdmin/updateAdmin/{id}',[AdminController::class,'updateAdmin'])->name('updateAdmin');
 
-    //[Admin] Edit Syarat & Ketentuan
-    Route::get('/formEditTdanC/{id}',[AdminController::class,'formEditTdanC'])->name('formEditTdanC');
-    Route::post('/formEditTdanC/updateTdanC/{id}',[AdminController::class,'updateTdanC'])->name('updateTdanC');
+    //[Admin] Tab Artikel
+
+        //[Admin] Tabel Artikel
+        Route::get('/artikelAdmin', [AdminController::class, 'dataArtikel'])->name('dataArtikel');
+
+        //[Admin] Tambah Artikel
+        Route::get('/artikel/create',  [AdminController::class, 'create'])->name('artikel.create');
+        Route::post('/artikel/store',  [AdminController::class, 'store'])->name('artikel.store');
+
+        //[Admin] Delete Artikel
+        Route::get('/deleteA/{id}',[AdminController::class,'deleteArtikel'])->name('deleteArtikel');
+
+        //[Admin] Edit Artikel
+        Route::get('/tampilDataEditArtikel/{id}',[AdminController::class,'tampilDataEditArtikel']);
+        Route::post('/updateDataIdArtikel/{id}',[AdminController::class,'updateDataIdArtikel']);
+
+    //[Admin] Tab Video
+
+        //[Admin] Tabel Video
+        Route::get('/videoAdmin', [AdminController::class, 'videoAdmin'])->name('videoAdmin');
+
+        //[Admin] Tambah Video Admin
+        Route::get('/formTambahVideo', [AdminController::class, 'formTambahVideo'])->name('formTambahVideo');
+        Route::post('/formTambahVideo/storeVideo',  [AdminController::class, 'storeVideo'])->name('storeVideo');
+
+        //[Admin] Edit Video
+        Route::get('/formEditVideo/{id}',[AdminController::class,'formEditVideo'])->name('formEditVideo');
+        Route::post('/formEditVideo/updateVideo/{id}',[AdminController::class,'updateVideo'])->name('updateVideo');
+
+        //[Admin] Delete Pengguna
+        Route::get('/deleteV/{id}',[AdminController::class,'deleteVideo'])->name('deleteVideo');
+
+    //[Admin] Tab Pengguna
+
+        //[Admin] Tabel Pengguna
+        Route::get('/pengguna', [AdminController::class, 'listUserTerdaftar'])->name('listUserTerdaftar');
+
+        //[Admin] Tabel Pengguna Like Dislike
+        Route::get('/PenggunaLikeDislike', [AdminController::class, 'PenggunaLikeDislike'])->name('PenggunaLikeDislike');
+
+        //[Admin] Tambah User Admin
+        Route::get('/formTambahUserAdm', [AdminController::class, 'formTambahUserAdm'])->name('formTambahUserAdm');
+        Route::post('/registerAdmin',[AdminController::class,'registerAdmin']);
+
+        //[Admin] Delete Pengguna
+        Route::get('/deleteP/{id}',[AdminController::class,'deleteUserTerdaftar']);
+
+    //[Admin] Tab Ulasan
+
+        //[Admin] Tabel Ulasan
+        Route::get('/ulasans', [AdminController::class, 'ulasanAdmin'])->name('ulasanAdmin');
+
+        //[Admin] Delete Ulasan
+        Route::get('/deleteU/{id}',[AdminController::class,'deleteUlasan']);
+        });
+
+    //[Admin] Tab Syarat & Ketentuan
+
+        //[Admin] Tabel Syarat & Ketentuan
+        Route::get('/syaratdanketentuan',[AdminController::class,'syaratdanketentuan'])->name('syaratdanketentuan');
+
+        //[Admin] Tambah Syarat & Ketentuan
+        Route::get('/formTambahTdanC',  [AdminController::class, 'formTambahTdanC'])->name('formTambahTdanC');
+        Route::post('/formTambahTdanC/storeTdanC',  [AdminController::class, 'storeTdanC'])->name('storeTdanC');
+
+        //[Admin] Delete Syarat & Ketentuan
+        Route::get('/deleteTdanC/{id}',[AdminController::class,'deleteTdanC']);
+
+        //[Admin] Edit Syarat & Ketentuan
+        Route::get('/formEditTdanC/{id}',[AdminController::class,'formEditTdanC'])->name('formEditTdanC');
+        Route::post('/formEditTdanC/updateTdanC/{id}',[AdminController::class,'updateTdanC'])->name('updateTdanC');

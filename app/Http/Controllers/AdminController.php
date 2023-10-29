@@ -5,17 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\artikels;
 use App\Models\Dislikes;
 use App\Models\Likes;
-use App\Models\SyaratDanKetentuan;
 use App\Models\syaratdanketentuans;
 use App\Models\ulasans;
 use App\Models\user;
 use App\Models\video;
 use Carbon\Carbon;
-use GuzzleHttp\Psr7\UploadedFile;
-use Illuminate\Foundation\Auth\User as AuthUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Symfony\Component\Console\Input\Input;
 
 class AdminController extends Controller
 {
