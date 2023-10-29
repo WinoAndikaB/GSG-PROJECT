@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\artikels;
 use App\Models\Dislikes;
 use App\Models\Likes;
+use App\Models\SyaratDanKetentuan;
+use App\Models\syaratdanketentuans;
 use App\Models\ulasans;
 use App\Models\user;
 use App\Models\video;
@@ -289,5 +291,50 @@ function dataArtikel(){
         }
 
         return redirect('/profileAdmin');
+    }
+
+    // [Syarat & Ketentuan]
+    public function syaratdanketentuan()
+    {
+        $data = syaratdanketentuans::all();
+
+        return view('admin.term&Condition', compact('data'));
+    }
+
+    // [Syarat & Ketentuan] Form Tambah T&C
+    function formTambahTdanC(){
+        return view('admin.formTambahTdanC');
+    }
+
+    function storeTdanC(Request $req){
+            syaratdanketentuans::create([
+                'judulsyarat' => $req->judulsyarat,
+                'deskripsisyarat' => $req->deskripsisyarat,
+            ]);
+                 return redirect('/syaratdanketentuan');
+         }
+
+     // [Syarat & Ketentuan] Form Edit T&C
+    function formEditTdanC($id){
+            $data = syaratdanketentuans::find($id);
+            return view('admin.formEditTermOfCondition', compact('data'));
+        }
+    
+    function updateTdanC(Request $request, $id){
+            $data = syaratdanketentuans::find($id);
+        
+            $data->judulsyarat = $request->input('judulsyarat');
+            $data->deskripsisyarat = $request->input('deskripsisyarat');
+            $data->save();
+        
+            return redirect()->route('syaratdanketentuan')->with('success','Data Berhasil di Update');
+        }  
+
+    // [Syarat & Ketentuan] Delete T&C
+    function deleteTdanC($id)
+    {
+        $data=syaratdanketentuans::find($id);
+        $data->delete();
+        return redirect('/syaratdanketentuan');
     }
 }

@@ -24,16 +24,9 @@
     <link rel="stylesheet" href="assets/css/owl.css">
     <link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css">
-<!--
 
-TemplateMo 574 Mexant
-
-https://templatemo.com/tm-574-mexant
-
--->
 
   </head>
-
 <body>
 
 
@@ -85,10 +78,15 @@ https://templatemo.com/tm-574-mexant
 
   <div class="container">
         <div class="col-lg-20">
-    {!! str_replace('<img', '<img style="max-width: 1152px; width: 300%; height: auto; display: block; margin: 20% auto;"', $syarat->deskripsi) !!}
+          @foreach ($syarat as $item)
+          <div style="font-size: 18px; text-align: justify; margin-top: 20px;">
+            <div style="font-size: 18px; line-height: 2;">
+              {!! str_replace('<img', '<img style="max-width: 1152px; width: 100%; height: auto; display: block; margin: 0 auto;"', $item->deskripsisyarat) !!}
+            </div>
+          </div>
+          @endforeach
 
       </div>
-  </div>
-  
+    </div>
   </body>
 </html>

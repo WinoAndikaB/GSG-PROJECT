@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\artikels;
 use App\Models\Dislikes;
 use App\Models\Likes;
+use App\Models\syaratdanketentuans;
 use App\Models\ulasans;
 use App\Models\user;
 use App\Models\video;
@@ -88,6 +89,11 @@ class PenggunaController extends Controller
     function about(){
         return view('main.setelahLogin.about');
     }
+
+    function syaratKetentuanA(){
+        $syarat = syaratdanketentuans::all();
+        return view('main.setelahLogin.syaratKetentuanA', compact('syarat'));
+    } 
 
     function ulasan(){
         // Mengambil data ulasan dengan mengurutkannya berdasarkan created_at

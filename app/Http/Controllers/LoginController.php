@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\artikels;
 use App\Models\donasibarangs;
 use App\Models\donasiuangs;
+use App\Models\syaratdanketentuans;
 use App\Models\tambahdonases;
 use App\Models\ulasans;
 use Illuminate\Http\Request;
@@ -88,11 +89,10 @@ class LoginController extends Controller
         return view('main.sebelumLogin.aboutLandingPage');
     }
 
-    function syaratKetentuan(){
-        $syarat = artikels::find(12); // Mengambil artikel dengan ID 12
-        return view('main.sebelumLogin.syaratKetentuan', compact('syarat'));
+    function syaratKetentuanLP(){
+        $syarat = syaratdanketentuans::all();
+        return view('main.sebelumLogin.syaratKetentuanLP', compact('syarat'));
     }
-    
 
     function landingPageVideo(Request $request){
 

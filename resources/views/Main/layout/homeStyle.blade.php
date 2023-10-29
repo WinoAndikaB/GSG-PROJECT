@@ -127,7 +127,7 @@
           <div class="widget">
               <h5 class="widget-title" style="color: white;">INFORMASI</h5>
               <ul class="contact_info_list">
-                  <a href="/syaratKetentuan" style="color: white;"></i>Syarat & Ketentuan</li>
+                  <a href="/syaratKetentuanLP" style="color: white;"></i>Syarat & Ketentuan</li>
               </ul>
           </div>
       </div>            

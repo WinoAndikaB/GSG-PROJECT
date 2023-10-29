@@ -131,6 +131,14 @@
             <span class="nav-link-text ms-1">Ulasan</span>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/syaratdanketentuan">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-collection text-warning text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Term  & Conditions</span>
+          </a>
+        </li>
       </ul>
     </div>
     <div class="sidenav-footer mx-3 ">
@@ -241,6 +249,7 @@
                   <textarea class="form-control" type="text" name="deskripsiVideo" id="editor"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary mt-3">Tambah</button>
+                <a href="/videoAdmin" class="btn btn-info mt-3">Kembali</i></a>
             </form>            
             <div class="card-body px-0 pt-12 pb-2">
               <div class="table-responsive p-0">

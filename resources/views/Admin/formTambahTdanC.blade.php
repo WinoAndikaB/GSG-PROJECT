@@ -1,13 +1,27 @@
+<!--
+=========================================================
+* Argon Dashboard 2 - v2.0.4
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/argon-dashboard
+* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://www.creative-tim.com/license)
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+-->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href=".../assets2/img/lg1.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Artikel | GSG PROJECT
+    Tambah Term & Condition | GSG PROJECT
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -66,7 +80,6 @@
       cursor: pointer;
     }
 </style>
-  
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -99,7 +112,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/artikelAdmin">
+          <a class="nav-link " href="/artikelAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
             </div>
@@ -115,7 +128,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/pengguna">
+          <a class="nav-link" href="/pengguna">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-circle-08 text-warning text-sm opacity-10"></i>
             </div>
@@ -131,7 +144,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/syaratdanketentuan">
+          <a class="nav-link active" href="/syaratdanketentuan">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
             </div>
@@ -150,9 +163,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Artikel</li>
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Terms & Condition</li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Artikel</h6>
+          <h6 class="font-weight-bolder text-white mb-0">Form Tambah Terms & Condition</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -192,7 +205,6 @@
                 <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
               </a>
             </li>
-            </li>
           </ul>
         </div>
       </div>
@@ -200,176 +212,84 @@
     <!-- End Navbar -->
 
       <!-- Modal Logout -->
-      <div id="logout-modal" class="modal">
-        <div class="modal-content">
-          <span class="close" id="close-button" onclick="closeModal()">&times;</span>
-          <h2>Konfirmasi Logout</h2>
-          <p>Apakah anda mau logout?</p>
-          <div style="text-align: center;">
-            <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
-            <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
-          </div>
-        </div>
+  <div id="logout-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="close-button" onclick="closeModal()">&times;</span>
+      <h2>Konfirmasi Logout</h2>
+      <p>Apakah anda mau logout?</p>
+      <div style="text-align: center;">
+        <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
+        <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
       </div>
+    </div>
+  </div>
+
+      <!-- Modal Logout -->
+  <div id="logout-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="close-button" onclick="closeModal()">&times;</span>
+      <h2>Konfirmasi Logout</h2>
+      <p>Apakah anda mau logout?</p>
+      <div style="text-align: center;">
+        <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
+        <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
+      </div>
+    </div>
+  </div>
     
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <a href="/artikel/create" class="btn btn-primary">Tambah Artikel</i></a>
-              <h6>List Artikel Tersedia</h6>
-            </div>
-            <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">          
-
-              <div class="container-fluid py-4">
+              <h6>Tambah Terms & Condition</h6>
+              <form class="form" method="POST" action="/formTambahTdanC/storeTdanC">
+                @csrf
                 <div class="row">
-                  <div class="col-12">
-                    <div class="card mb-4">
-                      <div class="card-header pb-0">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="form-group">
+                        <label for="" class="form-control-label">Judul T&C</label>
+                        <textarea class="form-control" type="text" name="judulsyarat"></textarea>
                       </div>
-                      <div class="card-body px-0 pt-0 pb-2">
-                        <div class="table-responsive p-0">
-                          <table class="table align-items-center mb-0">
-                            <thead>
-                              <tr>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Penulis</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Judul Artikel</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Upload</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kategori</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tags</th>
-                                <th class="text-secondary opacity-7"></th>
-                              </tr>
-                            </thead>
-                            @foreach ($data as $tbhartikel)
-                            <tbody>
-                              <tr>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$tbhartikel['id']}}</p>
-                                </td>
-                                <td>
-                                  <div class="d-flex px-2 py-1">
-                                    <div>
-                                      <img src="{{asset('gambarArtikel/'.$tbhartikel->gambarArtikel)}}" class="avatar avatar-sm me-3" alt="user1">
-                                    </div>
-                                    <div class="d-flex flex-column justify-content-center">
-                                      <h6 class="mb-0 text-sm">{{$tbhartikel['penulis']}}</h6>
-                                      <p class="text-xs text-secondary mb-0">{{$tbhartikel['email']}}</p>
-                                    </div>
-                                  </div>
-                                </td>
-                                <td>
-                                  <p class="text-xs font-weight-bold mb-0">{{$tbhartikel['judulArtikel']}}</p>
-                                </td>
-                                <td style="text-align: justify;">
-                                  <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
-                                    <?php
-                                    $deskripsi = strip_tags($tbhartikel['deskripsi']);
-                                    $words = str_word_count($deskripsi, 2);
-                                    $first_100_words = implode(' ', array_slice($words, 0, 150));
-                                    echo $first_100_words;
-                                    if (str_word_count($deskripsi) > 100) {
-                                      echo '...';
-                                    }
-                                    ?>
-                                  </p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <span class="text-secondary text-xs font-weight-bold">{{$tbhartikel['created_at']->format('l, d F Y H:i:s') }}</span>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-success">Pending</span>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-success">{{$tbhartikel['kategori']}}</span>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-success">{{$tbhartikel['tags']}}</span>
-                                </td>
-                                <td class="align-middle">
-                                  <a href="/tampilDataEditArtikel/{{ $tbhartikel->id}}" class="btn btn-warning btn btn-primary btn-round">
-                                    <i class="fa fa-pencil"></i>
-                                  </a>
-                                  <a href="{{"deleteA/".$tbhartikel['id']}}" class="btn btn-danger btn btn-primary btn-round" onclick="return showConfirmation()">
-                                    <i class="fa fa-trash"></i>
-                                  </a>
-                                </td>
-                              </tr>
-                            </tbody>
-                            @endforeach
+                      <div class="form-group">
+                        <label for="" class="form-control-label">Deskripsi T&C</label>
+                        <textarea class="form-control" type="text" name="deskripsisyarat" id="editor"></textarea>
+                      </div>
+                    <button type="submit" class="btn btn-primary mt-3">Tambah</button>
+                    <a href="/syaratdanketentuan" class="btn btn-info mt-3">Kembali</i></a>
+                  </div>
+                </div>
+              </form>
 
-                            <div class="d-flex justify-content-center">
-                              <ul class="pagination">
-                                  @if ($data->onFirstPage())
-                                      <li class="page-item disabled">
-                                          <span class="page-link" aria-label="Previous">
-                                              <span aria-hidden="true">&lsaquo;</span>
-                                          </span>
-                                      </li>
-                                  @else
-                                      <li class="page-item">
-                                          <a class="page-link" href="{{ $data->previousPageUrl() }}" rel="prev" aria-label="Previous">
-                                              <span aria-hidden="true">&lsaquo;</span>
-                                          </a>
-                                      </li>
-                                  @endif
-            
-                                <!-- Menampilkan halaman berapa -->
-                                <div class="text-center">
-                                    {{ $data->currentPage() }} dari {{ $data->lastPage() }}
-                                </div>
-                          
-                                  @if ($data->hasMorePages())
-                                      <li class="page-item">
-                                          <a class="page-link" href="{{ $data->nextPageUrl() }}" rel="next" aria-label="Next">
-                                              <span aria-hidden="true">&rsaquo;</span>
-                                          </a>
-                                      </li>
-                                  @else
-                                      <li class="page-item disabled">
-                                          <span class="page-link" aria-label="Next">
-                                              <span aria-hidden="true">&rsaquo;</span>
-                                          </span>
-                                      </li>
-                                  @endif
-                              </ul>
-                          </div>
-
-                          </table>
+            <div class="card-body px-0 pt-12 pb-2">
+              <div class="table-responsive p-0">
+                <div class="panel-header panel-header-sm">
+                </div>
+                <div class="content">
+                  <div class="row">
+                    <div class="col-md-12">
+                        <div class="card-body ">
+                          <div id="map" class="map"></div>
                         </div>
-                      </div>
                     </div>
                   </div>
                 </div>
-  
-                <footer class="footer pt-3  ">
-                  <div class="container-fluid">
-                    <div class="row align-items-center justify-content-lg-between">
-                      <div class="col-lg-6 mb-lg-0 mb-4">
-                        <div class="copyright text-center text-sm text-muted text-lg-start">
-                          © <script>
-                            document.write(new Date().getFullYear())
-                          </script>,
-                          Template by <a title="CSS Templates" rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>,
-                          <a title="CSS Templates" rel="sponsored" href="https://themewagon.com/themes/free-bootstrap-4-html-5-blog-website-template-nextpage/" target="_blank">NextPage </a> and
-                          <a title="CSS Templates" rel="sponsored" href="https://www.creative-tim.com" target="_blank">Crative Tim </a> 
-                          Edited By <a title="CSS Templates" rel="sponsored" href="#" target="_blank">GSG Team</a></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </footer>
-              </div>
-              
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+
+      <footer class="footer pt-3  ">
+        <div class="container-fluid">
+          <div class="row align-items-center justify-content-lg-between">
+
+          </div>
+        </div>
+      </footer>
     </div>
   </main>
   <div class="fixed-plugin">
@@ -450,44 +370,253 @@
   <script src="../assets2/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/chartjs.min.js"></script>
+  <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
+  <script>
+      ClassicEditor
+          .create( document.querySelector( '#editor' ), {
+              plugins: [ 'fontSize' ],
+              toolbar: [ 'heading', '|', 'fontSize', '|', 'bold', 'italic', 'link' ],
+              fontSize: {
+                  options: [12, 14, 16, 18, 24, 30, 36],
+                  supportAllValues: true
+              }
+          } )
+          .catch( error => {
+              console.error( error );
+          });
+  </script>
+  
+  <script>
+    var ctx1 = document.getElementById("chart-line").getContext("2d");
 
+    var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke1.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
+    gradientStroke1.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
+    gradientStroke1.addColorStop(0, 'rgba(94, 114, 228, 0)');
+    new Chart(ctx1, {
+      type: "line",
+      data: {
+        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        datasets: [{
+          label: "Mobile apps",
+          tension: 0.4,
+          borderWidth: 0,
+          pointRadius: 0,
+          borderColor: "#5e72e4",
+          backgroundColor: gradientStroke1,
+          borderWidth: 3,
+          fill: true,
+          data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
+          maxBarThickness: 6
+
+        }],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false,
+          }
+        },
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
+        scales: {
+          y: {
+            grid: {
+              drawBorder: false,
+              display: true,
+              drawOnChartArea: true,
+              drawTicks: false,
+              borderDash: [5, 5]
+            },
+            ticks: {
+              display: true,
+              padding: 10,
+              color: '#fbfbfb',
+              font: {
+                size: 11,
+                family: "Open Sans",
+                style: 'normal',
+                lineHeight: 2
+              },
+            }
+          },
+          x: {
+            grid: {
+              drawBorder: false,
+              display: false,
+              drawOnChartArea: false,
+              drawTicks: false,
+              borderDash: [5, 5]
+            },
+            ticks: {
+              display: true,
+              color: '#ccc',
+              padding: 20,
+              font: {
+                size: 11,
+                family: "Open Sans",
+                style: 'normal',
+                lineHeight: 2
+              },
+            }
+          },
+        },
+      },
+    });
+  </script>
+  <script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+  </script>
 
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
 
+  <script>
+        var map;
+        var markers = [];
+        var routePolyline;
+
+        var maxClicks = 2; // Jumlah maksimum klik yang diinginkan
+        var clickCount = 0; // Jumlah klik saat ini
+
+        function initMap() {
+            // Initialize map
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: -6.2088, lng: 106.8456 },
+                zoom: 12
+            });
+
+            // Add click event listener to the map
+            map.addListener('click', function(event) {
+                if (clickCount < maxClicks) {
+                    addMarker(event.latLng);
+                    clickCount++;
+                    if (clickCount === maxClicks) {
+                        // Terakhir kali klik, buat garis rute berdasarkan urutan titik yang diklik
+                        updateRoutePolyline();
+                    }
+                } else {
+                    // Jika melebihi jumlah maksimum klik, hapus titik terakhir dan buat garis rute baru
+                    markers.pop();
+                    removeRoutePolyline();
+                    updateRoutePolyline();
+                    clickCount--;
+                }
+            });
+            // Add click event listener to the reset button
+            var resetButton = document.getElementById('resetButton');
+            resetButton.addEventListener('click', function() {
+                resetMap();
+            });
+        }
+
+        function addMarker(latLng) {
+            var marker = new google.maps.Marker({
+                position: latLng,
+                map: map
+            });
+
+            markers.push(marker);
+        }
+
+        function updateRoutePolyline() {
+            if (routePolyline) {
+                routePolyline.setMap(null);
+            }
+
+            var routeCoordinates = [];
+            var bounds = new google.maps.LatLngBounds();
+
+            for (var i = 0; i < markers.length; i++) {
+                var position = markers[i].getPosition();
+                routeCoordinates.push(position);
+                bounds.extend(position);
+            }
+
+            if (clickCount === maxClicks) {
+                // Jika jumlah klik sama dengan jumlah maksimum, tambahkan garis dari titik keempat ke titik pertama
+                routeCoordinates.push(markers[0].getPosition());
+            }
+
+            routePolyline = new google.maps.Polyline({
+                path: routeCoordinates,
+                strokeColor: '#FF0000',
+                strokeOpacity: 1.0,
+                strokeWeight: 2,
+                map: map
+            });
+
+            map.fitBounds(bounds);
+        }
+
+        function removeRoutePolyline() {
+            if (routePolyline) {
+                routePolyline.setMap(null);
+            }
+        }
+
+      
+        // Mengambil nilai maxClicks dari input
+        // var maxClicksInput = document.getElementById('luas');
+        // maxClicksInput.addEventListener('input', function() {
+        //     maxClicks = parseInt(maxClicksInput.value);
+        //     resetMap();
+        // });
+
+        function resetMap() {
+            clickCount = 0;
+            removeRoutePolyline();
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(null);
+            }
+            markers = [];
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBau8YkGc472asE5eahYg0q-yNG9iYHAZs&callback=initMap" async defer></script>
+
      <!-- MODAL LOGOUT -->
-     <script>
-      // JavaScript untuk modal logout
-      function openModal() {
-        const modal = document.getElementById('logout-modal');
-        modal.style.display = 'block';
+   <script>
+    // JavaScript untuk modal logout
+    function openModal() {
+      const modal = document.getElementById('logout-modal');
+      modal.style.display = 'block';
+    }
+  
+    function closeModal() {
+      const modal = document.getElementById('logout-modal');
+      modal.style.display = 'none';
+    }
+  
+    function confirmLogout(confirmed) {
+      if (confirmed) {
+        // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
+        window.location.href = '/logout';
+      } else {
+        // Tutup modal jika pengguna memilih "No"
+        closeModal();
       }
-    
-      function closeModal() {
-        const modal = document.getElementById('logout-modal');
+    }
+  
+    // Tutup modal jika pengguna mengklik di luar modal
+    window.addEventListener('click', (event) => {
+      const modal = document.getElementById('logout-modal');
+      if (event.target == modal) {
         modal.style.display = 'none';
       }
-    
-      function confirmLogout(confirmed) {
-        if (confirmed) {
-          // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
-          window.location.href = '/logout';
-        } else {
-          // Tutup modal jika pengguna memilih "No"
-          closeModal();
-        }
-      }
-    
-      // Tutup modal jika pengguna mengklik di luar modal
-      window.addEventListener('click', (event) => {
-        const modal = document.getElementById('logout-modal');
-        if (event.target == modal) {
-          modal.style.display = 'none';
-        }
-      });
-    </script>
+    });
+  </script>
 </body>
-
 </html>

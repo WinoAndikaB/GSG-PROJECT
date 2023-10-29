@@ -26,7 +26,7 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/', [LoginController::class, 'landingPage'])->name('landingPage');
 Route::get('/abouts', [LoginController::class, 'aboutLandingPage'])->name('aboutLandingPage');
 Route::get('/ulasanLandingPage', [LoginController::class, 'ulasanLandingPage'])->name('ulasanLandingPage');
-Route::get('/syaratKetentuan', [LoginController::class, 'syaratKetentuan'])->name('syaratKetentuan');
+Route::get('/syaratKetentuanLP', [LoginController::class, 'syaratKetentuanLP'])->name('syaratKetentuanLP');
 
 //---- HOME ----
 //Memberikan Hak Akses User
@@ -39,6 +39,7 @@ Route::get('/artikel', [PenggunaController::class, 'dataArtikelHome'])->name('da
 Route::get('/detailArtikel/{id}', [PenggunaController::class, 'showDetailArtikel'])->name('detail.artikel');
 Route::get('/detailVideo/{id}', [PenggunaController::class, 'showDetailVideo'])->name('showDetailVideo');
 Route::get('/about', [PenggunaController::class, 'about'])->name('about');
+Route::get('/syaratKetentuanA', [PenggunaController::class, 'syaratKetentuanA'])->name('syaratKetentuanA');
 
 //ulasan
 Route::get('/ulasan', [PenggunaController::class, 'ulasan'])->name('ulasan');
@@ -86,7 +87,27 @@ Route::get('/formTambahUserAdm', [AdminController::class, 'formTambahUserAdm'])-
 Route::post('/registerAdmin',[AdminController::class,'registerAdmin']);
 Route::get('/deleteP/{id}',[AdminController::class,'deleteUserTerdaftar']);
 
-//Route Tab Ulasan
-Route::get('/ulasans', [AdminController::class, 'ulasanAdmin'])->name('ulasanAdmin');
-Route::get('/deleteU/{id}',[AdminController::class,'deleteUlasan']);
-});
+//[Admin] Tab Ulasan
+
+    //[Admin] Tabel Ulasan
+    Route::get('/ulasans', [AdminController::class, 'ulasanAdmin'])->name('ulasanAdmin');
+
+     //[Admin] Delete Ulasan
+    Route::get('/deleteU/{id}',[AdminController::class,'deleteUlasan']);
+    });
+
+//[Admin] Tab Syarat & Ketentuan
+
+    //[Admin] Tabel Syarat & Ketentuan
+    Route::get('/syaratdanketentuan',[AdminController::class,'syaratdanketentuan'])->name('syaratdanketentuan');
+
+    //[Admin] Form Tambah Syarat & Ketentuan
+    Route::get('/formTambahTdanC',  [AdminController::class, 'formTambahTdanC'])->name('formTambahTdanC');
+    Route::post('/formTambahTdanC/storeTdanC',  [AdminController::class, 'storeTdanC'])->name('storeTdanC');
+
+    //[Admin] Delete Syarat & Ketentuan
+    Route::get('/deleteTdanC/{id}',[AdminController::class,'deleteTdanC']);
+
+    //[Admin] Edit Syarat & Ketentuan
+    Route::get('/formEditTdanC/{id}',[AdminController::class,'formEditTdanC'])->name('formEditTdanC');
+    Route::post('/formEditTdanC/updateTdanC/{id}',[AdminController::class,'updateTdanC'])->name('updateTdanC');
