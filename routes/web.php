@@ -150,7 +150,7 @@ use Illuminate\Support\Facades\Route;
         Route::get('/ulasans', [AdminController::class, 'ulasanAdmin'])->name('ulasanAdmin');
 
         //[Admin] Delete Ulasan
-        Route::get('/deleteU/{id}',[AdminController::class,'deleteUlasan']);
+        Route::get('/deleteU/{id}',[AdminController::class,'deleteUlasanA']);
         });
 
     //[Admin] Tab Syarat & Ketentuan

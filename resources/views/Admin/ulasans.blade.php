@@ -295,6 +295,7 @@
                           <thead>
                             <tr>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User ID</th>
                               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pengguna</th>
                               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pesan</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Rating</th>
@@ -307,6 +308,9 @@
                             <tr>
                               <td class="align-middle text-center">
                                 <p>{{$ulasan['id']}}</p>
+                              </td>
+                              <td class="align-middle text-center">
+                                <p class="text-xs font-weight-bold mb-0">{{$ulasan['user_id']}}</p>
                               </td>
                               <td>
                                 <div class="d-flex px-2 py-1">
@@ -341,7 +345,7 @@
                                 <span class="text-secondary text-xs font-weight-bold">{{$ulasan['created_at']->format('l, d F Y H:i:s') }}</span>
                               </td>
                               <td class="align-middle">
-                                <a href="{{"deleteP/".$ulasan['id']}}" class="btn btn-danger btn btn-primary btn-round" onclick="return confirm('Apakah Anda Yakin Mau Menghapus Data Ini?')">
+                                <a href="{{"deleteU/".$ulasan['id']}}" class="btn btn-danger btn btn-primary btn-round" onclick="return confirm('Apakah Anda Yakin Mau Menghapus Data Ini?')">
                                   <i class="fa fa-trash"></i>
                                 </a>
                               </td>

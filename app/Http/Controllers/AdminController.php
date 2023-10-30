@@ -291,7 +291,7 @@ class AdminController extends Controller
     }
 
     //[Admin-Ulasan] Delete Ulasan
-    function deleteUlasan($id){
+    function deleteUlasanA($id){
         $data1=ulasans::find($id);
         $data1->delete();
         return redirect('ulasans');

@@ -203,40 +203,51 @@ class PenggunaController extends Controller
     //[User-Ulasan] Tambah Ulasan
     public function storeUlasan(Request $request)
     {
-    $request->validate([
-        'rating' => 'required',
-        'email' => 'required|email',
-        'nama' => 'required',
-        'pesan' => 'required',
-    ]);
+        $request->validate([
+            'rating' => 'required',
+            'email' => 'required|email',
+            'nama' => 'required',
+            'pesan' => 'required',
+        ]);
 
-    $ulasan = new Ulasans;
-    $ulasan->rating = $request->rating;
-    $ulasan->email = $request->email;
-    $ulasan->nama = $request->nama;
-    $ulasan->pesan = $request->pesan;
+        $ulasan = new Ulasans;
+        $ulasan->rating = $request->rating;
+        $ulasan->email = $request->email;
+        $ulasan->nama = $request->nama;
+        $ulasan->pesan = $request->pesan;
 
-    $user = Auth::user();
-    $ulasan->fotoProfil = $user->fotoProfil;
+         // Mengisi user_id dari pengguna yang sedang masuk
+        $ulasan->user_id = Auth::id();
 
-    $ulasan->save();
+        // Sisipkan foto profil pengguna
+        $user = Auth::user();
+        $ulasan->fotoProfil = $user->fotoProfil;
 
-    return redirect('ulasan');
+        $ulasan->save();
+
+        return redirect('ulasan');
     }
 
     //[User-Ulasan] Edit Ulasan
     public function simpanEditUlasan(Request $request, $id) {
-   
+
         $ulasan = ulasans::find($id);
-        
-        if ($ulasan) {
-            $ulasan->pesan = $request->input('pesan');
-            $ulasan->save();
-            return response()->json(['message' => 'Pesan ulasan berhasil diperbarui']);
-        } else {
+
+        if (!$ulasan) {
             return response()->json(['error' => 'Ulasan tidak ditemukan'], 404);
         }
+
+        // Periksa apakah pengguna saat ini adalah pemilik ulasan
+        if ($ulasan->user_id !== auth()->user()->id) {
+            return response()->json(['error' => 'Anda tidak memiliki izin untuk mengedit ulasan ini'], 403);
+        }
+
+        $ulasan->pesan = $request->input('pesan');
+        $ulasan->save();
+
+        return response()->json(['message' => 'Pesan ulasan berhasil diperbarui']);
     }
+
 
     //[User-Ulasan] Like Ulasan
     public function likeUlasan($id){
@@ -293,16 +304,29 @@ class PenggunaController extends Controller
     //[User-Ulasan] Delete Ulasan
     public function deleteUlasan($id)
     {
-        $data=ulasans::find($id);
-        $data->delete();
-        return redirect('/ulasan');
+        $ulasan = ulasans::find($id);
+
+        // Pastikan ulasan ditemukan
+        if (!$ulasan) {
+            return redirect('/ulasan')->with('error', 'Ulasan tidak ditemukan');
+        }
+
+        // Pastikan pengguna yang mencoba menghapus ulasan adalah pemiliknya
+        if (Auth::check() && $ulasan->user_id === Auth::user()->id) {
+            $ulasan->delete();
+            return redirect('/ulasan')->with('success', 'Ulasan berhasil dihapus');
+        } else {
+            return redirect('/ulasan')->with('error', 'Anda tidak diizinkan menghapus ulasan ini');
+        }
     }
 
-      //[User-Profil] Halaman Profil
-      public function profileUser()
-      {
-          return view('main.setelahLogin.profile');
-      }  
+
+
+    //[User-Profil] Halaman Profil
+  public function profileUser()
+    {
+        return view('main.setelahLogin.profile');
+    }  
     
 
       //[User-Profil] Edit Profil
