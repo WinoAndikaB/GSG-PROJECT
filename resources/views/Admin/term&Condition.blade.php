@@ -246,11 +246,11 @@
                                 <td class="align-middle text-center">
                                   <p class="text-xs font-weight-bold mb-0">{{$item['id']}}</p>
                                 </td>
-                                <td class="align-middle text-center">
+                                <td class="d-flex flex-column justify-content-center">
                                   <p class="text-xs font-weight-bold mb-0">{{$item['judulsyarat']}}</p>
                                 </td>
                                 <td style="text-align: justify;">
-                                  <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
+                                  <p class="align-middle text-center" style="white-space: normal; max-width: 1000px;">
                                     <?php
                                     $deskripsisyarat = strip_tags($item['deskripsisyarat']);
                                     $words = str_word_count($deskripsisyarat, 2);

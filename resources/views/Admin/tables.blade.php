@@ -239,6 +239,7 @@
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Judul Artikel</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Upload</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Update</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kategori</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tags</th>
@@ -270,7 +271,7 @@
                                     <?php
                                     $deskripsi = strip_tags($tbhartikel['deskripsi']);
                                     $words = str_word_count($deskripsi, 2);
-                                    $first_100_words = implode(' ', array_slice($words, 0, 150));
+                                    $first_100_words = implode(' ', array_slice($words, 0, 5));
                                     echo $first_100_words;
                                     if (str_word_count($deskripsi) > 100) {
                                       echo '...';
@@ -280,6 +281,9 @@
                                 </td>
                                 <td class="align-middle text-center">
                                   <span class="text-secondary text-xs font-weight-bold">{{$tbhartikel['created_at']->format('l, d F Y H:i:s') }}</span>
+                                </td>
+                                <td class="align-middle text-center">
+                                  <span class="text-secondary text-xs font-weight-bold">{{$tbhartikel['updated_at']->format('l, d F Y H:i:s') }}</span>
                                 </td>
                                 <td class="align-middle text-center">
                                   <span class="badge badge-sm bg-gradient-success">Pending</span>

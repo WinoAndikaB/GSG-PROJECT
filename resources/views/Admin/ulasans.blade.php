@@ -300,6 +300,7 @@
                               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pesan</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Rating</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Upload</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Update</th>
                               <th class="text-secondary opacity-7"></th>
                             </tr>
                           </thead>
@@ -343,6 +344,9 @@
                               </td>    
                               <td class="align-middle text-center">
                                 <span class="text-secondary text-xs font-weight-bold">{{$ulasan['created_at']->format('l, d F Y H:i:s') }}</span>
+                              </td>
+                              <td class="align-middle text-center">
+                                <span class="text-secondary text-xs font-weight-bold">{{$ulasan['updated_at']->format('l, d F Y H:i:s') }}</span>
                               </td>
                               <td class="align-middle">
                                 <a href="{{"deleteU/".$ulasan['id']}}" class="btn btn-danger btn btn-primary btn-round" onclick="return confirm('Apakah Anda Yakin Mau Menghapus Data Ini?')">

@@ -91,7 +91,7 @@ class AdminController extends Controller
     //[Admin-Artikel] Halaman Tambah Artikel
     public function create()
     {
-        return view('admin.formTambahArtikel');
+        return view('admin.FormAdmin.formTambahArtikel');
     }
 
     public function store(Request $request)
@@ -122,7 +122,7 @@ class AdminController extends Controller
     //[Admin-Artikel] Edit Data Artikel
     function tampilDataEditArtikel($id){
         $data = artikels::find($id);
-        return view('admin.formEditArtikel', compact('data'));
+        return view('admin.FormAdmin.formEditArtikel', compact('data'));
     }
 
     function updateDataIdArtikel(Request $request, $id){
@@ -155,7 +155,7 @@ class AdminController extends Controller
     //[Admin-Video] Halaman Tambah Video
     function formTambahVideo(){
 
-        return view('admin.formTambahVideo');
+        return view('admin.FormAdmin.formTambahVideo');
     }
 
     public function storeVideo(Request $request)
@@ -199,7 +199,7 @@ class AdminController extends Controller
       //[Admin-Video] Halaman Edit Video
       function formEditVideo($id){
         $data = video::find($id);
-        return view('admin.formEditVideo', compact('data'));
+        return view('admin.FormAdmin.formEditVideo', compact('data'));
     }
 
     function updateVideo(Request $request, $id){
@@ -250,7 +250,7 @@ class AdminController extends Controller
 
     //[Admin-Pengguna] Tambah Pengguna
     function formTambahUserAdm(){
-        return view('admin.formTambahUserAdm');
+        return view('admin.FormAdmin.formTambahUserAdm');
     }
 
     function registerAdmin(Request $req){
@@ -307,7 +307,7 @@ class AdminController extends Controller
 
     // [Syarat & Ketentuan] Form Tambah T&C
     function formTambahTdanC(){
-        return view('admin.formTambahTdanC');
+        return view('admin.FormAdmin.formTambahTdanC');
     }
 
     function storeTdanC(Request $req){
@@ -321,7 +321,7 @@ class AdminController extends Controller
      // [Syarat & Ketentuan] Form Edit T&C
     function formEditTdanC($id){
             $data = syaratdanketentuans::find($id);
-            return view('admin.formEditTermOfCondition', compact('data'));
+            return view('admin.FormAdmin.formEditTermOfCondition', compact('data'));
         }
     
     function updateTdanC(Request $request, $id){

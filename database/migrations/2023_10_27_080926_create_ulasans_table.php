@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('ulasans', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('user_id');
             $table->string('email');
             $table->string('nama');
             $table->string('pesan');

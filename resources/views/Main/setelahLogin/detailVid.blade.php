@@ -162,8 +162,8 @@
           <section>
               <h1 style="color: rgba(47, 72, 88, 1);">{{ $video->judulVideo }}</h1><br>
               <p style="color: rgba(242, 100, 25, 1);">{{ $video->uploader}} <br>
-                  <span style="color: rgba(165, 165, 165, 1);">{{ \Carbon\Carbon::parse($video['created_at'])->format('l, d M Y H.i') }}
-                  </span>
+                  Dibuat: <span style="color: rgba(165, 165, 165, 1);">{{ \Carbon\Carbon::parse($video['created_at'])->format('l, d M Y H.i') }}</span><br>
+                  Diperbarui: <span style="color: rgba(165, 165, 165, 1);">{{ \Carbon\Carbon::parse($video['updated_at'])->format('l, d M Y H.i') }}</span>
               </p>
 
               <span class="fh5co_tags_all">
@@ -240,6 +240,14 @@
             </div>            
         </div>
     </div>
+    <form action="proses.php" method="post">
+      <label for="pesan" style="font-size: 24px;">Beri Komentar:</label><br>
+        <textarea name="pesan" id="pesan" placeholder="Berikan Tanggapan Anda..." required style="width: 730px; height: 200px; border-radius: 10px;"></textarea><br>
+        <div class="green-button">
+          <button type="submit" style="background-color: orange; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Kirim</button>
+        </div>
+    </form>
+  </div>
 </div>
 </div>
 
