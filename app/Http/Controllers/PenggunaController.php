@@ -96,7 +96,7 @@ class PenggunaController extends Controller
         return view('main.setelahLogin.detailArt', compact('article', 'box', 'tags', 'kategori', 'komentarArtikels'));
     }
 
-    //[User-Detail Artiekl] Menampilkan Detail Artikel Ketika Di Klik
+    //[User-Detail Artikel] Menampilkan Detail Artikel Ketika Di Klik
     public function storeKomentarArtikel(Request $request)
     {
         // Validasi data komentar jika diperlukan
@@ -113,6 +113,18 @@ class PenggunaController extends Controller
 
         // Redirect atau tampilkan pesan sukses
         return redirect()->back()->with('success', 'Komentar berhasil disimpan.');
+    }
+
+    //[User-Detail Artikel] Delete Komentar Video
+    public function deleteKomentarA($id)
+    {
+        $article = komentar_artikel::find($id);
+        if (!$article) {
+            return redirect('/detailArtikel/' . $id)->with('error', 'Komentar tidak ditemukan');
+        }
+
+        $article->delete();
+        return redirect('/detailArtikel/' . $id)->with('success', 'Komentar berhasil dihapus');
     }
 
 
@@ -180,7 +192,7 @@ class PenggunaController extends Controller
             return view('main.setelahLogin.video', compact('trendingVideo', 'latestVideo','whatsNewVideo','semuaVideo', 'boxVideo', 'boxVideo2', 'boxVideo3', 'boxVideoLong', 'todayDate'));
         }
     
-    //[User-Video] Halaman Detail Video Ketika Di Klik
+    //[User-Detail Video] Halaman Detail Video Ketika Di Klik
     public function showDetailVideo($id)
     {
         $video = Video::findOrFail($id);
@@ -194,7 +206,7 @@ class PenggunaController extends Controller
         return view('main.setelahLogin.detailVid', compact('video', 'boxVideo', 'tagsV', 'kategoriV', 'komentarVideos'));
     }
 
-    //[User-Video] Komentar Video User
+    //[User-Detail Video] Komentar Video User
     public function storeKomentarVideo(Request $request)
     {
         // Validasi data komentar jika diperlukan
@@ -221,8 +233,19 @@ class PenggunaController extends Controller
         // Redirect atau tampilkan pesan sukses
         return redirect()->back()->with('success', 'Komentar berhasil disimpan.');
     }
-    
-    
+
+    //[User-Ulasan] Delete Komentar Video
+    public function deleteKomentarV($id)
+    {
+        $video = komentar_video::find($id);
+        if (!$video) {
+            return redirect('/detailVideo/' . $id)->with('error', 'Komentar tidak ditemukan');
+        }
+
+        $video->delete();
+        return redirect('/detailVideo/' . $id)->with('success', 'Komentar berhasil dihapus');
+    }
+
     //[User-About] Halaman About
     function about(){
         return view('main.setelahLogin.about');

@@ -267,6 +267,10 @@
                       <i class="fa fa-thumbs-up"></i> Like
                   </a>
                   <a href="report_action.html">
+                    <i class="fa fa-thumbs-down"></i> Dislike
+                 </a>
+                 <a href="{{ route('deleteKomentarV', ['id' => $video->id]) }}"><i class="fas fa-trash"></i> Hapus</a>
+                  <a href="report_action.html">
                       <i class="fa fa-flag"></i> Laporkan
                   </a>
               </div>

@@ -266,9 +266,7 @@
                       <a href="report_action.html">
                         <i class="fa fa-thumbs-down"></i> Dislike
                      </a>
-                      <a href="report_action.html">
-                          <i class="fa fa-trash"></i> Hapus
-                      </a>
+                     <a href="{{ route('deleteKomentarA', ['id' => $article->id]) }}"><i class="fas fa-trash"></i> Hapus</a>
                       <a href="report_action.html">
                           <i class="fa fa-flag"></i> Laporkan
                       </a>
