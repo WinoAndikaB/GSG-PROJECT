@@ -242,16 +242,42 @@
     </div>
     <form action="proses.php" method="post">
       <label for="pesan" style="font-size: 24px;">Beri Komentar:</label><br>
-        <textarea name="pesan" id="pesan" placeholder="Berikan Tanggapan Anda..." required style="width: 730px; height: 200px; border-radius: 10px;"></textarea><br>
-        <div class="green-button">
-          <button type="submit" style="background-color: orange; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Kirim</button>
+      <textarea name="pesan" id="pesan" placeholder="Berikan Tanggapan Anda..." required style="width: 730px; height: 200px; border-radius: 10px;"></textarea><br>
+      <div class="green-button">
+        <button type="submit" style="background-color: orange; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Kirim</button>
+      </div>
+  </form>
+
+  <br>
+
+
+  <div class="card" style="max-width: 730px;">
+    <div class="card-body" style="display: flex;">
+        <div class="profil-foto" style="margin-right: 10px;">
+            <img src="https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999" alt="Foto Profil" style="border-radius: 50%; width: 50px; height: 50px;">
         </div>
-    </form>
-  </div>
-</div>
+        <div style="flex: 1;">
+            <h5 class="card-title">Nama Pengguna</h5>
+            <p>20 November 2022 | 2 Jam yang lalu</p>
+            <p class="card-text" style="text-align: justify;">
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book...
+            </p>
+            <div style="align-items: right; margin-top: 2px; margin-bottom: 10px;">
+                <a href="like_action.html">
+                    <i class="fa fa-thumbs-up"></i> Like
+                </a>
+                <a href="report_action.html">
+                    <i class="fa fa-flag"></i> Laporkan
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
 
-          <br>
+</div>
+
+      <br>
+      <br>
 
           <div class="text-center">
             <div class="buttons" style="display: flex; justify-content: center; gap: 10px;">

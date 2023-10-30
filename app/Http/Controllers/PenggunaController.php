@@ -88,8 +88,10 @@ class PenggunaController extends Controller
         $tags = artikels::inRandomOrder()->take(10)->get();
 
         $kategori = artikels::inRandomOrder()->take(10)->get();
+
+        $komentar = artikels::orderBy('created_at', 'desc')->get();
     
-        return view('main.setelahLogin.detailArt', compact('article','box', 'tags', 'kategori'));
+        return view('main.setelahLogin.detailArt', compact('article','box', 'tags', 'kategori','komentar'));
     }
 
     //[User-Video] Halaman Video
