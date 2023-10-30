@@ -251,30 +251,71 @@
 
 
   @foreach ($komentarVideos as $komentar)
-      <div class="card" style="max-width: 730px;">
-          <div class="card-body" style="display: flex;">
-              <div class="profil-foto" style="margin-right: 10px;">
-                <img src="{{ asset('fotoProfil/' . $komentar->user->fotoProfil) }}" alt="Foto Profil" style="border-radius: 50%; width: 50px; height: 50px;">
-              </div>
-              <div style="flex: 1;">
-                  <h5 class="card-title">{{ $komentar->user->name }}</h5>
-                  <p>{{ $komentar->created_at->format('d F Y') }} | {{ $komentar->created_at->diffForHumans() }}</p>
-                  <p class="card-text" style="text-align: justify;">
-                      {{ $komentar->pesan }}
-                  </p>
-                  <div style="align-items: right; margin-top: 2px; margin-bottom: 10px;">
-                      <a href="like_action.html">
-                          <i class="fa fa-thumbs-up"></i> Like
-                      </a>
-                      <a href="report_action.html">
-                          <i class="fa fa-flag"></i> Laporkan
-                      </a>
-                  </div>
+  <div class="card" style="max-width: 730px; margin-bottom: 10px;"> <!-- Add margin-bottom here -->
+      <div class="card-body" style="display: flex;">
+          <div class="profil-foto" style="margin-right: 10px;">
+              <img src="{{ asset('fotoProfil/' . $komentar->user->fotoProfil) }}" alt="Foto Profil" style="border-radius: 50%; width: 50px; height: 50px;">
+          </div>
+          <div style="flex: 1;">
+              <h5 class="card-title">{{ $komentar->user->name }}</h5>
+              <p>{{ $komentar->created_at->format('d F Y') }} | {{ $komentar->created_at->diffForHumans() }}</p>
+              <p class="card-text" style="text-align: justify;">
+                  {{ $komentar->pesan }}
+              </p>
+              <div style="align-items: right; margin-top: 2px; margin-bottom: 10px;">
+                  <a href="like_action.html">
+                      <i class="fa fa-thumbs-up"></i> Like
+                  </a>
+                  <a href="report_action.html">
+                      <i class="fa fa-flag"></i> Laporkan
+                  </a>
               </div>
           </div>
       </div>
-      @endforeach
+  </div>
+  @endforeach
 
+  <div class="d-flex justify-content-center">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            @if ($komentarVideos->onFirstPage())
+                <li class="page-item disabled">
+                    <span class="page-link" aria-label="Previous">
+                        <span aria-hidden="true">&lsaquo;</span>
+                    </span>
+                </li>
+            @else
+                <li class="page-item">
+                    <a class="page-link" href="{{ $komentarVideos->previousPageUrl() }}" rel="prev" aria-label="Previous">
+                        <span aria-hidden="true">&lsaquo;</span>
+                    </a>
+                </li>
+            @endif
+
+            <!-- Display current page and total pages -->
+            <li class="page-item disabled">
+                <span class="page-link">
+                    {{ $komentarVideos->currentPage() }} dari {{ $komentarVideos->lastPage() }}
+                </span>
+            </li>
+
+            @if ($komentarVideos->hasMorePages())
+                <li class="page-item">
+                    <a class="page-link" href="{{ $komentarVideos->nextPageUrl() }}" rel="next" aria-label="Next">
+                        <span aria-hidden="true">&rsaquo;</span>
+                    </a>
+                </li>
+            @else
+                <li class="page-item disabled">
+                    <span class="page-link" aria-label="Next">
+                        <span aria-hidden="true">&rsaquo;</span>
+                    </span>
+                </li>
+            @endif
+        </ul>
+    </nav>
+</div>
+      
 </div>
 
       <br>

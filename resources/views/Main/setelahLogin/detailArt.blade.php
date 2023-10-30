@@ -247,12 +247,11 @@
   </form>
   
       <br>
-
       @foreach ($komentarArtikels as $komentar)
-      <div class="card" style="max-width: 730px;">
+      <div class="card" style="max-width: 730px; margin-bottom: 10px;"> <!-- Tambahkan margin-bottom di sini -->
           <div class="card-body" style="display: flex;">
               <div class="profil-foto" style="margin-right: 10px;">
-                <img src="{{ asset('fotoProfil/' . $komentar->user->fotoProfil) }}" alt="Foto Profil" style="border-radius: 50%; width: 50px; height: 50px;">
+                  <img src="{{ asset('fotoProfil/' . $komentar->user->fotoProfil) }}" alt="Foto Profil" style="border-radius: 50%; width: 50px; height: 50px;">
               </div>
               <div style="flex: 1;">
                   <h5 class="card-title">{{ $komentar->user->name }}</h5>
@@ -265,6 +264,12 @@
                           <i class="fa fa-thumbs-up"></i> Like
                       </a>
                       <a href="report_action.html">
+                        <i class="fa fa-thumbs-down"></i> Dislike
+                     </a>
+                      <a href="report_action.html">
+                          <i class="fa fa-trash"></i> Hapus
+                      </a>
+                      <a href="report_action.html">
                           <i class="fa fa-flag"></i> Laporkan
                       </a>
                   </div>
@@ -273,6 +278,51 @@
       </div>
       @endforeach
 
+      <div class="d-flex justify-content-center">
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                @if ($komentarArtikels->onFirstPage())
+                    <li class="page-item disabled">
+                        <span class="page-link" aria-label="Previous">
+                            <span aria-hidden="true">&lsaquo;</span>
+                        </span>
+                    </li>
+                @else
+                    <li class="page-item">
+                        <a class="page-link" href="{{ $komentarArtikels->previousPageUrl() }}" rel="prev" aria-label="Previous">
+                            <span aria-hidden="true">&lsaquo;</span>
+                        </a>
+                    </li>
+                @endif
+    
+                <!-- Display current page and total pages -->
+                <li class="page-item disabled">
+                    <span class="page-link">
+                        {{ $komentarArtikels->currentPage() }} dari {{ $komentarArtikels->lastPage() }}
+                    </span>
+                </li>
+    
+                @if ($komentarArtikels->hasMorePages())
+                    <li class="page-item">
+                        <a class="page-link" href="{{ $komentarArtikels->nextPageUrl() }}" rel="next" aria-label="Next">
+                            <span aria-hidden="true">&rsaquo;</span>
+                        </a>
+                    </li>
+                @else
+                    <li class="page-item disabled">
+                        <span class="page-link" aria-label="Next">
+                            <span aria-hidden="true">&rsaquo;</span>
+                        </span>
+                    </li>
+                @endif
+            </ul>
+        </nav>
+    </div>
+    
+    
+
+      
+      
     </div>
 
           <br>

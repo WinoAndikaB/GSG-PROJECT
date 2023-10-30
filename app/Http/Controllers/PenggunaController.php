@@ -91,11 +91,12 @@ class PenggunaController extends Controller
 
         $kategori = artikels::inRandomOrder()->take(10)->get();
     
-        $komentarArtikels = komentar_artikel::where('artikel_id', $id)->get();
+        $komentarArtikels = komentar_artikel::where('artikel_id', $id)->latest()->paginate(6);
     
         return view('main.setelahLogin.detailArt', compact('article', 'box', 'tags', 'kategori', 'komentarArtikels'));
     }
 
+    //[User-Detail Artiekl] Menampilkan Detail Artikel Ketika Di Klik
     public function storeKomentarArtikel(Request $request)
     {
         // Validasi data komentar jika diperlukan
@@ -179,20 +180,21 @@ class PenggunaController extends Controller
             return view('main.setelahLogin.video', compact('trendingVideo', 'latestVideo','whatsNewVideo','semuaVideo', 'boxVideo', 'boxVideo2', 'boxVideo3', 'boxVideoLong', 'todayDate'));
         }
     
-        //[User-Video] Halaman Detail Video Ketika Di Klik
-        public function showDetailVideo($id)
-{
+    //[User-Video] Halaman Detail Video Ketika Di Klik
+    public function showDetailVideo($id)
+    {
         $video = Video::findOrFail($id);
 
         $boxVideo = Video::inRandomOrder()->take(10)->get();
         $tagsV = Video::inRandomOrder()->take(10)->get();
         $kategoriV = Video::inRandomOrder()->take(10)->get();
 
-        $komentarVideos = $video->komentarVideo; // Mengambil komentar video terkait
+        $komentarVideos = komentar_video::where('video_id', $id)->latest()->paginate(6);
         
         return view('main.setelahLogin.detailVid', compact('video', 'boxVideo', 'tagsV', 'kategoriV', 'komentarVideos'));
     }
 
+    //[User-Video] Komentar Video User
     public function storeKomentarVideo(Request $request)
     {
         // Validasi data komentar jika diperlukan
