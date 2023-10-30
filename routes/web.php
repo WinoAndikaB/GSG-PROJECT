@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PenggunaController;
 use Illuminate\Support\Facades\Route;
@@ -14,10 +15,19 @@ use Illuminate\Support\Facades\Route;
 // [Halaman Non-User]
 
         //[Non-User] Tab Home landing Page
-        Route::get('/', [LoginController::class, 'landingPage'])->name('landingPage');
+        Route::get('/', [LandingPageController::class, 'landingPage'])->name('landingPage');
 
          //[Non-User] Tab Home landing Page Video
-        Route::get('/landingPageVideo',[LoginController::class,'landingPageVideo'])->name('landingPageVideo');
+        Route::get('/landingPageVideo',[LandingPageController::class,'landingPageVideo'])->name('landingPageVideo');
+
+        //[Non-User] Tab About Landing Page
+        Route::get('/abouts', [LandingPageController::class, 'aboutLandingPage'])->name('aboutLandingPage');
+
+        //[Non-User] Tab Ulasan Landing Page
+        Route::get('/ulasanLandingPage', [LandingPageController::class, 'ulasanLandingPage'])->name('ulasanLandingPage');
+        
+        //[Non-User] Halaaman Syarat Ketentuan Landing Page
+        Route::get('/syaratKetentuanLP', [LandingPageController::class, 'syaratKetentuanLP'])->name('syaratKetentuanLP');
 
          //[Non-User] Halaman Login
         Route::get('/login',[LoginController::class,'log']);
@@ -27,17 +37,11 @@ use Illuminate\Support\Facades\Route;
         Route::get('/register',[LoginController::class,'register']);
         Route::post('/registerUser',[LoginController::class,'registerUser']);
 
+        //[Non-User] Tab Lupa Password User
+        Route::get('/lupaPassword',[LoginController::class,'lupaPassword']);
+
         //[Non-User] Tab Register Logout
         Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-        
-        //[Non-User] Tab About Landing Page
-        Route::get('/abouts', [LoginController::class, 'aboutLandingPage'])->name('aboutLandingPage');
-
-        //[Non-User] Tab Ulasan Landing Page
-        Route::get('/ulasanLandingPage', [LoginController::class, 'ulasanLandingPage'])->name('ulasanLandingPage');
-
-        //[Non-User] Halaaman Syarat Ketentuan Landing Page
-        Route::get('/syaratKetentuanLP', [LoginController::class, 'syaratKetentuanLP'])->name('syaratKetentuanLP');
 
 // [Halaman User]
 
