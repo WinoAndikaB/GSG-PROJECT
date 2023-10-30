@@ -9,12 +9,12 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
 
-    //[Login] Halaman Sign In
+    //[Login-Sign In] Halaman Sign In
     function log(){
         return view('login.sign-in');
     }
 
-    //[Login] Halaman Register User
+    //[Login-Sign Up] Halaman Register User
     function register(){
         return view('login.signup');
     }
@@ -30,7 +30,7 @@ class LoginController extends Controller
             return redirect('/login');
     }
 
-    //[Login] Verifikasi User Login
+    //[Login-Verifikasi User] Verifikasi User Login
     public function login(Request $request){
         $credentials = $request->validate([
             'email' => ['required', 'string', 'max:100', 'email'],
@@ -52,12 +52,12 @@ class LoginController extends Controller
         ])->onlyInput('email');
     }
 
-    //[Login] Halaman Lupa Password
+    //[Login-Lupa Password] Halaman Lupa Password
     function lupaPassword(){
         return view('login.lupaPassword');
     }
 
-    //[Login] Logout User
+    //[Login-Logout] Logout User
         function logout(){
             Auth::logout();
             return redirect('/');

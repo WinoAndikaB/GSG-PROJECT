@@ -16,42 +16,79 @@ use Illuminate\Support\Facades\Auth;
 class AdminController extends Controller
 {
 
-//Menampilkan Data Dashboard Admin
-function dashboard(){
-    $totalArtikel = artikels::count();
-    $totalUser = user::count();
-    $totalUlasan = ulasans::count();
-    $totalUlasan = ulasans::count();
-    $data1 = ulasans::all();
-
-    // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
-    $dataAddedInLast24HoursUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
-    $dataAddedInLast24HoursUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
-    $dataAddedInLast24HoursArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
-
-    //Rating
-    $ratings = $data1->pluck('rating')->map(function ($rating) {
-        return (int) $rating; // Mengonversi rating ke integer
-    });
+    //[Admin-Profile] Profil User
+    public function profileAdmin()
+    {
+        
+        return view('Admin.profileA');
+    }  
+  
+    //[Admin-Profile] Edit Profil Admin
+    public function updateAdmin(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->update([
+            'name' => $request->input('name'),
+            'alamat' => $request->input('alamat'),
+            'instagram' => $request->input('instagram'),
+            'facebook' => $request->input('facebook'),
+            'aboutme' => $request->input('aboutme'),
+        ]);
     
-    $totalRatings = $ratings->sum();
-    $averageRating = $ratings->count() > 0 ? $totalRatings / $ratings->count() : 0;
+        // Handle Upload Foto
+        if ($request->hasFile('fotoProfil')) {
+            $image = $request->file('fotoProfil');
     
+            $filename = 'fotoProfil.' . $user->name . ' ' . $user->username . '.' . $image->getClientOriginalExtension();
 
-    return view('admin.dashboard', compact('totalArtikel', 'totalUser', 'totalUlasan', 'averageRating', 'totalUlasan', 'dataAddedInLast24HoursUlasan','dataAddedInLast24HoursUser','dataAddedInLast24HoursArtikel'));
-}
+            $image->move(public_path('fotoProfil'), $filename);
+    
+            $user->fotoProfil = $filename;
+            $user->save();
+        }
 
-function dataArtikel(){
-    $data = artikels::orderBy('created_at', 'desc')->paginate(5);
-    return view('admin.tables', compact('data'));
-}
+        return redirect('/profileAdmin');
+    }
 
+    //[Admin-Dashboard] Halaman Dashboard
+    function dashboard(){
+        $totalArtikel = artikels::count();
+        $totalUser = user::count();
+        $totalUlasan = ulasans::count();
+        $totalUlasan = ulasans::count();
+        $data1 = ulasans::all();
+
+        // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+        $dataAddedInLast24HoursUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataAddedInLast24HoursUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataAddedInLast24HoursArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        //Rating
+        $ratings = $data1->pluck('rating')->map(function ($rating) {
+            return (int) $rating; // Mengonversi rating ke integer
+        });
+        
+        $totalRatings = $ratings->sum();
+        $averageRating = $ratings->count() > 0 ? $totalRatings / $ratings->count() : 0;
+        
+
+        return view('admin.dashboard', compact('totalArtikel', 'totalUser', 'totalUlasan', 'averageRating', 'totalUlasan', 'dataAddedInLast24HoursUlasan','dataAddedInLast24HoursUser','dataAddedInLast24HoursArtikel'));
+    }
+
+    //[Admin-Artikel] Halaman Tables Artikel
+    function dataArtikel(){
+        $data = artikels::orderBy('created_at', 'desc')->paginate(5);
+        return view('admin.tables', compact('data'));
+    }
+
+    //[Admin-Artikel] Delete Data Artikel
     function deleteArtikel($id){
         $data=artikels::find($id);
         $data->delete();
         return redirect('/artikelAdmin');
     }
 
+    //[Admin-Artikel] Halaman Tambah Artikel
     public function create()
     {
         return view('admin.formTambahArtikel');
@@ -82,7 +119,7 @@ function dataArtikel(){
     }
     
 
-    //Edit Data Tabel
+    //[Admin-Artikel] Edit Data Artikel
     function tampilDataEditArtikel($id){
         $data = artikels::find($id);
         return view('admin.formEditArtikel', compact('data'));
@@ -107,7 +144,7 @@ function dataArtikel(){
     }    
 
     
-    // [Bagian Video]
+    //[Admin-Video] Halaman Tabel Video
     function videoAdmin(){
 
         $tableVideo = video::orderBy('created_at', 'desc')->paginate(4);
@@ -115,6 +152,7 @@ function dataArtikel(){
         return view('admin.video', compact('tableVideo'));
     }
 
+    //[Admin-Video] Halaman Tambah Video
     function formTambahVideo(){
 
         return view('admin.formTambahVideo');
@@ -158,7 +196,7 @@ function dataArtikel(){
         return redirect('/videoAdmin')->with('success', 'Video added successfully.');
     }
 
-      //[Edit Video]
+      //[Admin-Video] Halaman Edit Video
       function formEditVideo($id){
         $data = video::find($id);
         return view('admin.formEditVideo', compact('data'));
@@ -178,13 +216,14 @@ function dataArtikel(){
         return redirect()->route('videoAdmin')->with('success','Data Berhasil di Update');
     }    
     
+    //[Admin-Video] Delete Video
     function deleteVideo($id){
         $data=video::find($id);
         $data->delete();
         return redirect('/videoAdmin');
     }
 
-    //[Bagian Pengguna]
+    //[Admin-Pengguna] Halaman Tabel Pengguna
     function listUserTerdaftar(){
         $users = user::orderBy('created_at', 'desc')->paginate(10);
         
@@ -197,6 +236,7 @@ function dataArtikel(){
     }
     
 
+    //[Admin-Pengguna] Fungsi Like & Dislike
     public function likes()
     {
         return $this->hasMany(Likes::class, 'user_id', 'id');
@@ -208,6 +248,7 @@ function dataArtikel(){
     }
 
 
+    //[Admin-Pengguna] Tambah Pengguna
     function formTambahUserAdm(){
         return view('admin.formTambahUserAdm');
     }
@@ -223,6 +264,7 @@ function dataArtikel(){
                  return redirect('pengguna');
          }
 
+    //[Admin-Pengguna] Delete Pengguna
     function deleteUserTerdaftar($id)
     {
         $data=user::find($id);
@@ -230,7 +272,7 @@ function dataArtikel(){
         return redirect('pengguna');
     }
 
-    //Menampilkan Data Ulasan pada Tabel Admin
+    //[Admin-Ulasan] Halaman Tabel Ulasan 
     function ulasanAdmin(){
         $data1 = ulasans::orderBy('created_at', 'desc')->paginate(10);
 
@@ -248,48 +290,14 @@ function dataArtikel(){
         return view('admin.ulasans', compact('data1', 'averageRating', 'totalUlasan'));
     }
 
-    //Delete data ulasan pada Tabel Admin
+    //[Admin-Ulasan] Delete Ulasan
     function deleteUlasan($id){
         $data1=ulasans::find($id);
         $data1->delete();
         return redirect('ulasans');
     }
 
-    //Profile
-    public function profileAdmin()
-    {
-        
-        return view('Admin.profileA');
-    }  
-  
-
-    public function updateAdmin(Request $request, $id)
-    {
-        $user = User::findOrFail($id);
-        $user->update([
-            'name' => $request->input('name'),
-            'alamat' => $request->input('alamat'),
-            'instagram' => $request->input('instagram'),
-            'facebook' => $request->input('facebook'),
-            'aboutme' => $request->input('aboutme'),
-        ]);
-    
-        // Handle profile picture upload
-        if ($request->hasFile('fotoProfil')) {
-            $image = $request->file('fotoProfil');
-    
-            $filename = 'fotoProfil.' . $user->name . ' ' . $user->username . '.' . $image->getClientOriginalExtension();
-
-            $image->move(public_path('fotoProfil'), $filename);
-    
-            $user->fotoProfil = $filename;
-            $user->save();
-        }
-
-        return redirect('/profileAdmin');
-    }
-
-    // [Syarat & Ketentuan]
+    // [Syarat & Ketentuan] Halaman Tabel 
     public function syaratdanketentuan()
     {
         $data = syaratdanketentuans::all();
