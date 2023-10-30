@@ -297,6 +297,12 @@ class AdminController extends Controller
         return redirect('ulasans');
     }
 
+    //[Admin-Video] Halaman Tambah Video
+    function laporanUser(){
+
+        return view('admin.laporanUser');
+    }
+
     // [Syarat & Ketentuan] Halaman Tabel 
     public function syaratdanketentuan()
     {

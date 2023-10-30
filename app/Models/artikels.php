@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class artikels extends Model
 {
     use HasFactory;
+    
     protected $fillable = [
-        'id','gambarArtikel','judulArtikel','penulis','email','deskripsi','status','kategori','tags'];
+        'id', 'user_id', 'artikel_id', 'gambarArtikel', 'judulArtikel', 'penulis', 'email', 'deskripsi', 'status', 'kategori', 'tags'
+    ];
+
+    public function komentarArtikel()
+    {
+        return $this->hasMany(komentar_artikel::class, 'artikel_id');
+    }   
 }

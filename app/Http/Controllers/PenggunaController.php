@@ -9,6 +9,8 @@ use App\Models\syaratdanketentuans;
 use App\Models\ulasans;
 use App\Models\user;
 use App\Models\video;
+use App\Models\komentar_artikel;
+use App\Models\komentar_video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -88,11 +90,30 @@ class PenggunaController extends Controller
         $tags = artikels::inRandomOrder()->take(10)->get();
 
         $kategori = artikels::inRandomOrder()->take(10)->get();
-
-        $komentar = artikels::orderBy('created_at', 'desc')->get();
     
-        return view('main.setelahLogin.detailArt', compact('article','box', 'tags', 'kategori','komentar'));
+        $komentarArtikels = komentar_artikel::where('artikel_id', $id)->get();
+    
+        return view('main.setelahLogin.detailArt', compact('article', 'box', 'tags', 'kategori', 'komentarArtikels'));
     }
+
+    public function storeKomentarArtikel(Request $request)
+    {
+        // Validasi data komentar jika diperlukan
+        $request->validate([
+            'pesan' => 'required',
+        ]);
+
+            // Simpan komentar ke dalam basis data
+            $artikel = artikels::find($request->input('artikel_id'));
+            $artikel->komentarArtikel()->create([
+                'pesan' => $request->input('pesan'),
+                'user_id' => auth()->id(),
+            ]);
+
+        // Redirect atau tampilkan pesan sukses
+        return redirect()->back()->with('success', 'Komentar berhasil disimpan.');
+    }
+
 
     //[User-Video] Halaman Video
     function Video(Request $request){
@@ -160,17 +181,45 @@ class PenggunaController extends Controller
     
         //[User-Video] Halaman Detail Video Ketika Di Klik
         public function showDetailVideo($id)
-        {
-            $video = video::findOrFail($id);
+{
+        $video = Video::findOrFail($id);
+
+        $boxVideo = Video::inRandomOrder()->take(10)->get();
+        $tagsV = Video::inRandomOrder()->take(10)->get();
+        $kategoriV = Video::inRandomOrder()->take(10)->get();
+
+        $komentarVideos = $video->komentarVideo; // Mengambil komentar video terkait
+        
+        return view('main.setelahLogin.detailVid', compact('video', 'boxVideo', 'tagsV', 'kategoriV', 'komentarVideos'));
+    }
+
+    public function storeKomentarVideo(Request $request)
+    {
+        // Validasi data komentar jika diperlukan
+        $request->validate([
+            'pesan' => 'required',
+        ]);
     
-            $boxVideo = video::inRandomOrder()->take(10)->get();
+        // Ambil video berdasarkan ID yang disimpan dalam input tersembunyi
+        $video = Video::find($request->input('video_id'));
     
-            $tagsV = video::inRandomOrder()->take(10)->get();
-    
-            $kategoriV = video::inRandomOrder()->take(10)->get();
-            
-            return view('main.setelahLogin.detailVid', compact('video','boxVideo', 'tagsV', 'kategoriV'));
+        if (!$video) {
+            // Tambahkan penanganan kesalahan jika video tidak ditemukan
+            return redirect()->back()->with('error', 'Video tidak ditemukan.');
         }
+    
+        // Simpan komentar ke dalam basis data dengan mengaitkannya dengan video yang tepat
+        $komentar = new komentar_video([
+            'pesan' => $request->input('pesan'),
+            'user_id' => auth()->id(),
+        ]);
+    
+        $video->komentarVideo()->save($komentar);
+    
+        // Redirect atau tampilkan pesan sukses
+        return redirect()->back()->with('success', 'Komentar berhasil disimpan.');
+    }
+    
     
     //[User-About] Halaman About
     function about(){

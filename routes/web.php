@@ -51,10 +51,12 @@ use Illuminate\Support\Facades\Route;
         //[User] Tab Home
         Route::get('/home',[PenggunaController::class,'HomeSetelahLogin'])->name('HomeSetelahLogin');
         Route::get('/detailArtikel/{id}', [PenggunaController::class, 'showDetailArtikel'])->name('detail.artikel');
+        Route::post('/komentarArtikel', [PenggunaController::class, 'storeKomentarArtikel'])->name('storeKomentarArtikel');
 
         //[User] Tab Video
         Route::get('/Video',[PenggunaController::class,'Video'])->name('Video');
         Route::get('/detailVideo/{id}', [PenggunaController::class, 'showDetailVideo'])->name('showDetailVideo');
+        Route::post('/komentarVideo', [PenggunaController::class, 'storeKomentarVideo'])->name('storeKomentarVideo');
 
         //[User] Tab Profil
         Route::get('/profileUser', [PenggunaController::class, 'profileUser'])->name('profileUser');
@@ -152,6 +154,11 @@ use Illuminate\Support\Facades\Route;
         //[Admin] Delete Ulasan
         Route::get('/deleteU/{id}',[AdminController::class,'deleteUlasanA']);
         });
+    
+     //[Admin] Tab Laporan User
+
+        //[Admin] Tabel Laporan
+        Route::get('/laporanUser', [AdminController::class, 'laporanUser'])->name('laporanUser');
 
     //[Admin] Tab Syarat & Ketentuan
 
@@ -168,3 +175,4 @@ use Illuminate\Support\Facades\Route;
         //[Admin] Edit Syarat & Ketentuan
         Route::get('/formEditTdanC/{id}',[AdminController::class,'formEditTdanC'])->name('formEditTdanC');
         Route::post('/formEditTdanC/updateTdanC/{id}',[AdminController::class,'updateTdanC'])->name('updateTdanC');
+

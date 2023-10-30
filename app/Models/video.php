@@ -10,4 +10,9 @@ class video extends Model
     use HasFactory;
     protected $fillable = [
         'id','linkVideo','judulVideo','uploader','email','deskripsiVideo','statusVideo','kategoriVideo','tagsVideo'];
+
+    public function komentarVideo()
+    {
+        return $this->hasMany(komentar_video::class, 'video_id');
+    }
 }
