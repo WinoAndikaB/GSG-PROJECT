@@ -170,6 +170,14 @@
               <a href="#" class="fh5co_tagg">{{ $video->tagsVideo }}</a>
           </span>
 
+          
+          <br>
+          <br>
+
+          <a href="#" id="showModal" class="laporan-button">
+            <i class="fa fa-flag"></i> Laporkan
+          </a>
+
           </section>
           <span style="text-align: right">
               <p class="icon-bagikan" style="color: rgba(165, 165, 165, 1); display: flex; align-items: center; justify-content: end; gap: 0.5em;">
@@ -339,6 +347,33 @@
     </div>
   </section>
 
+  <div id="modalLaporan" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1;">
+    <div style="background-color: #ffffff; border-radius: 10px; text-align: center; padding: 20px; width: 600px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
+      <span style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 20px;" id="closeLaporan">&times;</span>
+      <h2 style="color: #007bff; font-size: 24px;">Laporkan Video</h2>
+      <form id="reportForm">
+        <div style="text-align: left;">
+          <label style="font-size: 16px;"><input type="radio" name="reason" value="Konten Seksual"> Konten Seksual</label><br>
+          <label style="font-size: 16px;"><input type="radio" name="reason" value="Konten kekerasan atau menjijikkan"> Konten kekerasan atau menjijikkan</label><br>
+          <label style="font-size: 16px;"><input type="radio" name="reason" value="Konten kebencian atau pelecehan"> Konten kebencian atau pelecehan</label><br>
+          <label style="font-size: 16px;"><input type="radio" name="reason" value="Pelecehan atau penindasan"> Pelecehan atau penindasan</label><br>
+          <label style="font-size: 16px;"><input type="radio" name="reason" value="Tindakan merugikan atau berbahaya"> Tindakan merugikan atau berbahaya</label><br>
+          <label style="font-size: 16px;"><input type="radio" name="reason" value="Misinformasi"> Misinformasi</label><br>
+          <label style="font-size: 16px;"><input type="radio" name="reason" value="Pelecehan terhadap anak"> Pelecehan terhadap anak</label><br>
+          <label style="font-size: 16px;"><input type="radio" name="reason" value="Mendukung terorisme"> Mendukung terorisme</label><br>
+          <label style="font-size: 16px;"><input type="radio" name="reason" value="Spam atau menyesatkan"> Spam atau menyesatkan</label><br>
+          <label style="font-size: 16px;"><input type="radio" name="reason" value="Masalah hukum"> Masalah hukum</label><br>
+          <label style="font-size: 16px;"><input type="radio" name="reason" value="Teks bermasalah"> Teks bermasalah</label><br>
+        </div><br>
+        <textarea id="reportTextLaporan" style="width: 100%; padding: 10px; font-size: 16px;" placeholder="Kenapa Anda melaporkan artikel ini?"></textarea><br>
+        <button type="submit" class="submit-buttonLaporan" style="background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; padding: 10px 20px; font-size: 18px;">Kirim Laporan</button>
+      </form>
+      <div style="text-align: left; padding: 10px;">
+        <p style="font-size: 14px;">Video dan pengguna yang dilaporkan akan ditinjau oleh staf kami untuk menentukan apakah video dan pengguna tersebut melanggar Pedoman kami atau tidak. Akun akan dikenai sanksi jika melanggar Pedoman Komunitas, dan pelanggaran serius atau berulang dapat berakibat pada penghentian akun.</p>
+      </div>
+    </div>
+  </div>
+
   <!-- Scripts -->
   <!-- Bootstrap core JavaScript -->
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
@@ -401,5 +436,39 @@
         }
       });
     </script>
+
+       <!-- Laporkan Modal -->
+       <script>
+        // Get the modal and close button elements
+        var modal = document.getElementById("modalLaporan");
+        var showModalButton = document.getElementById("showModal");
+        var closeButton = document.getElementById("closeLaporan");
+    
+        // Show the modal when the laporan-button is clicked
+        showModalButton.addEventListener("click", function(event) {
+          event.preventDefault();
+          modal.style.display = "block";
+        });
+    
+        // Close the modal when the close button is clicked
+        closeButton.addEventListener("click", function() {
+          modal.style.display = "none";
+        });
+    
+        // Close the modal when the user clicks outside of it
+        window.addEventListener("click", function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        });
+    
+        // Submit the form
+        document.getElementById("reportForm").addEventListener("submit", function(event) {
+          event.preventDefault();
+          // Anda dapat menambahkan kode untuk menangani pengiriman laporan di sini
+          modal.style.display = "none";
+          alert("Laporan telah dikirim!");
+        });
+      </script>
   </body>
 </html>
