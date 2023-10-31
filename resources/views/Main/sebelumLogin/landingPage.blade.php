@@ -272,7 +272,7 @@
                       <p class="btn-date"><i class="fa fa-clock-o"></i>{{$item->created_at}}</p>
                   </div>
                   <div class="details">
-                      <h6 class="title"><a href="#">{{$item->judulArtikel}}</a></h6>
+                      <h6 class="title"><a href="{{ route('showDetailLPArtikel', ['id' => $item->id]) }}">{{$item->judulArtikel}}</a></h6>
                   </div>
               </div>
               <div class="single-post-wrap">
@@ -281,7 +281,7 @@
                       <p class="btn-date"><i class="fa fa-clock-o"></i>{{$item->created_at}}</p>
                   </div>
                   <div class="details">
-                      <h6 class="title"><a href="#">{{$item->judulArtikel}}</a></h6>
+                      <h6 class="title"><a href="{{ route('showDetailLPArtikel', ['id' => $item->id]) }}">{{$item->judulArtikel}}</a></h6>
                   </div>
               </div>
           </div>
@@ -307,7 +307,7 @@
                                                   <li><i class="fa fa-clock-o"></i>{{$item->created_at}}</li>
                                               </ul>
                                           </div>
-                                          <h6 class="title"><a href="#">{{$item->judulArtikel}}</a></h6>
+                                          <h6 class="title"><a href="{{ route('showDetailLPArtikel', ['id' => $item->id]) }}">{{$item->judulArtikel}}</a></h6>
                                       </div>
                                   </div>
                               </div>
