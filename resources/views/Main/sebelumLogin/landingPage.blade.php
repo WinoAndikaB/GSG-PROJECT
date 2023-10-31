@@ -118,9 +118,12 @@
                                               echo floor($selisihWaktu / 1440) . ' Hari Lalu';
                                             } elseif ($selisihWaktu < 43200) {
                                               echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
-                                            } else {
+                                            } elseif ($selisihWaktu < 525600) {
                                               echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
+                                            } else {
+                                              echo floor($selisihWaktu / 525600) . ' Tahun Lalu';
                                             }
+
                                           @endphp
                                         </p>
                                       </div>
@@ -161,9 +164,12 @@
                                                   echo floor($selisihWaktu / 1440) . ' Hari Lalu';
                                                 } elseif ($selisihWaktu < 43200) {
                                                   echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
-                                                } else {
+                                                } elseif ($selisihWaktu < 525600) {
                                                   echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
+                                                } else {
+                                                  echo floor($selisihWaktu / 525600) . ' Tahun Lalu';
                                                 }
+
                                               @endphp
                                               </li>
                                           </ul>
@@ -207,9 +213,12 @@
                                               echo floor($selisihWaktu / 1440) . ' Hari Lalu';
                                             } elseif ($selisihWaktu < 43200) {
                                               echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
-                                            } else {
+                                            } elseif ($selisihWaktu < 525600) {
                                               echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
+                                            } else {
+                                              echo floor($selisihWaktu / 525600) . ' Tahun Lalu';
                                             }
+
                                           @endphp
                                         </li>
                                     </ul>
@@ -358,8 +367,10 @@
                       echo floor($selisihWaktu / 1440) . ' Hari Lalu';
                     } elseif ($selisihWaktu < 43200) {
                       echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
-                    } else {
+                    } elseif ($selisihWaktu < 525600) {
                       echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
+                    } else {
+                      echo floor($selisihWaktu / 525600) . ' Tahun Lalu';
                     }
                   @endphp
                   | 
@@ -404,9 +415,12 @@
                                   echo floor($selisihWaktu / 1440) . ' Hari Lalu';
                                 } elseif ($selisihWaktu < 43200) {
                                   echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
-                                } else {
+                                } elseif ($selisihWaktu < 525600) {
                                   echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
+                                } else {
+                                  echo floor($selisihWaktu / 525600) . ' Tahun Lalu';
                                 }
+
                               @endphp
                             </p>
                         </div>

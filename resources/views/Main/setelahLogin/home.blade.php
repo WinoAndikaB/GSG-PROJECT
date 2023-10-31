@@ -196,9 +196,12 @@
                                               echo floor($selisihWaktu / 1440) . ' Hari Lalu';
                                             } elseif ($selisihWaktu < 43200) {
                                               echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
-                                            } else {
+                                            } elseif ($selisihWaktu < 525600) {
                                               echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
+                                            } else {
+                                              echo floor($selisihWaktu / 525600) . ' Tahun Lalu';
                                             }
+
                                           @endphp
                                         </p>
                                       </div>
@@ -241,9 +244,12 @@
                                                       echo floor($selisihWaktu / 1440) . ' Hari Lalu';
                                                     } elseif ($selisihWaktu < 43200) {
                                                       echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
-                                                    } else {
+                                                    } elseif ($selisihWaktu < 525600) {
                                                       echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
+                                                    } else {
+                                                      echo floor($selisihWaktu / 525600) . ' Tahun Lalu';
                                                     }
+
                                                   @endphp
                                                 </li>
                                               </ul>
@@ -287,9 +293,12 @@
                                               echo floor($selisihWaktu / 1440) . ' Hari Lalu';
                                             } elseif ($selisihWaktu < 43200) {
                                               echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
-                                            } else {
+                                            } elseif ($selisihWaktu < 525600) {
                                               echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
+                                            } else {
+                                              echo floor($selisihWaktu / 525600) . ' Tahun Lalu';
                                             }
+
                                           @endphp
                                         </li>
                                     </ul>
@@ -437,9 +446,12 @@
                       echo floor($selisihWaktu / 1440) . ' Hari Lalu';
                     } elseif ($selisihWaktu < 43200) {
                       echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
-                    } else {
+                    } elseif ($selisihWaktu < 525600) {
                       echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
+                    } else {
+                      echo floor($selisihWaktu / 525600) . ' Tahun Lalu';
                     }
+
                   @endphp
                   | 
                       <a href="{{ route('detail.artikel', ['id' => $item->id]) }}" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a></p></span>
@@ -483,9 +495,12 @@
                                   echo floor($selisihWaktu / 1440) . ' Hari Lalu';
                                 } elseif ($selisihWaktu < 43200) {
                                   echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
-                                } else {
+                                } elseif ($selisihWaktu < 525600) {
                                   echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
+                                } else {
+                                  echo floor($selisihWaktu / 525600) . ' Tahun Lalu';
                                 }
+
                               @endphp
                             </p>
                         </div>
