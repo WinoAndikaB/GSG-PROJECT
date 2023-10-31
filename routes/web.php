@@ -16,9 +16,11 @@ use Illuminate\Support\Facades\Route;
 
         //[Non-User] Tab Home landing Page
         Route::get('/', [LandingPageController::class, 'landingPage'])->name('landingPage');
+        Route::get('/detailArtikelLP/{id}', [LandingPageController::class, 'showDetailLPArtikel'])->name('showDetailLPArtikel');
 
          //[Non-User] Tab Home landing Page Video
         Route::get('/landingPageVideo',[LandingPageController::class,'landingPageVideo'])->name('landingPageVideo');
+        Route::get('/detailVideoLP/{id}', [LandingPageController::class, 'showDetailLPVideo'])->name('showDetailLPVideo');
 
         //[Non-User] Tab About Landing Page
         Route::get('/abouts', [LandingPageController::class, 'aboutLandingPage'])->name('aboutLandingPage');

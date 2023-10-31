@@ -99,7 +99,7 @@
                                           @endphp
                                         </p>
                                       </div>
-                                      <h6 class="title"><a href="/login">{{$item->judulVideo}}</a></h6>
+                                      <h6 class="title"><a href="{{ route('showDetailLPVideo', ['id' => $item->id]) }}">{{$item->judulVideo}}</a></h6>
                                   </div>
                               </div>
                           </div>
@@ -121,7 +121,7 @@
                             <div class="details">
                                 <div class="post-meta-single mb-4 pt-1">
                                     <ul>
-                                        <li><a class="tag-base tag-blue" href="/login">{{$item->uploader}}</a></li>
+                                        <li><a class="tag-base tag-blue" href="{{ route('showDetailLPVideo', ['id' => $item->id]) }}">{{$item->uploader}}</a></li>
                                         <li><i class="fa fa-clock-o"></i>
                                             @php
                                             $ulasanCreatedAt = \Carbon\Carbon::parse($item['created_at']);
@@ -143,7 +143,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <h6 class="title"><a href="/login">{{$item->judulVideo}}</a></h6>
+                                <h6 class="title"><a href="{{ route('showDetailLPVideo', ['id' => $item->id]) }}">{{$item->judulVideo}}</a></h6>
                                 <p>{{ \Illuminate\Support\Str::limit($item->deskripsiVideo, 600) }}</p>
                             </div>
                         </div>
@@ -184,7 +184,7 @@
                                     @endphp
                                   </p>
                                 </div>
-                                <h6 class="title"><a href="/login">{{$item->judulVideo}}</a></h6>
+                                <h6 class="title"><a href="{{ route('showDetailLPVideo', ['id' => $item->id]) }}">{{$item->judulVideo}}</a></h6>
                             </div>
                         </div>
                     </div>
@@ -329,7 +329,7 @@
                     }
                   @endphp
                   | 
-                      <a href="/login" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a></p></span>
+                      <a href="{{ route('showDetailLPVideo', ['id' => $item->id]) }}" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a></p></span>
               </div>
               <hr>
               @endforeach
@@ -375,7 +375,7 @@
                               @endphp
                             </p>
                         </div>
-                        <h6 class="title"><a href="/login">{{ $item->judulVideo }}</a></h6>
+                        <h6 class="title"><a href="{{ route('showDetailLPVideo', ['id' => $item->id]) }}">{{ $item->judulVideo }}</a></h6>
                     </div>
                 </div>
             </div>

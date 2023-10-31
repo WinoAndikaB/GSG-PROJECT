@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\artikels;
+use App\Models\komentar_artikel;
+use App\Models\komentar_video;
 use App\Models\syaratdanketentuans;
 use App\Models\ulasans;
 use App\Models\video;
@@ -71,6 +73,22 @@ class LandingPageController extends Controller
                 $todayDate = date('l, d M Y');
     
         return view('main.sebelumLogin.landingPage', compact('trending', 'latest','whatsnew','semua', 'box', 'box2', 'box3', 'boxLong', 'todayDate'));
+    }
+
+    //[Landing Page] Menampilkan Detail Artikel Ketika Di Klik
+    public function showDetailLPArtikel($id)
+    {
+        $article = artikels::findOrFail($id);
+
+        $box = artikels::inRandomOrder()->take(8)->get();
+
+        $tags = artikels::inRandomOrder()->take(10)->get();
+
+        $kategori = artikels::inRandomOrder()->take(10)->get();
+
+        $komentarArtikels = komentar_artikel::where('artikel_id', $id)->latest()->paginate(6);
+    
+        return view('main.sebelumLogin.detailArtLP', compact('article', 'box', 'tags', 'kategori', 'komentarArtikels'));
     }
 
     //[Landing Page] Halaman About landing Page
@@ -144,6 +162,20 @@ class LandingPageController extends Controller
                 $todayDate = date('l, d M Y');
 
         return view('main.sebelumLogin.landingPageVideo', compact('trendingVideo', 'latestVideo','whatsNewVideo','semuaVideo', 'boxVideo', 'boxVideo2', 'boxVideo3', 'todayDate'));
+    }
+
+    //[Landing Page] Halaman Detail Video Ketika Di Klik
+    public function showDetailLPVideo($id)
+    {
+        $video = Video::findOrFail($id);
+
+        $boxVideo = Video::inRandomOrder()->take(10)->get();
+        $tagsV = Video::inRandomOrder()->take(10)->get();
+        $kategoriV = Video::inRandomOrder()->take(10)->get();
+
+        $komentarVideos = komentar_video::where('video_id', $id)->latest()->paginate(6);
+        
+        return view('main.sebelumLogin.detailVidLP', compact('video', 'boxVideo', 'tagsV', 'kategoriV', 'komentarVideos'));
     }
 
     //[Landing Page] Ulasan landing Page
