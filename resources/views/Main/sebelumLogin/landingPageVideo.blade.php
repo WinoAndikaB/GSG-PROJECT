@@ -69,7 +69,7 @@
         <div class="row">
             <div class="col-lg-3 col-md-6">
                 <div class="section-title">
-                    <h6 class="title">Trending Video</h6>
+                    <h6 class="title">Trending</h6>
                 </div>
                 @foreach ($trendingVideo as $item)
                 <div class="post-slider owl-carousel">
@@ -259,7 +259,7 @@
           <div class="col-lg-3 col-sm-6">
               <div class="trending-post style-box">
                   <div class="section-title">
-                      <h6 class="title">Trending News</h6>
+                      <h6 class="title">Trending</h6>
                   </div>
                   @foreach ($boxVideo3 as $item)
                   <div class="post-slider owl-carousel">

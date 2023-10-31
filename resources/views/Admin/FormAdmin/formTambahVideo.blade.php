@@ -132,6 +132,14 @@
           </a>
         </li>
         <li class="nav-item">
+          <a class="nav-link " href="/laporanUser">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-sound-wave text-warning text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Laporan User</span>
+          </a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="/syaratdanketentuan">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
@@ -226,15 +234,15 @@
               </div>              
                 <div class="form-group">
                     <label for="judulArtikel">Judul Video</label>
-                    <textarea class="form-control" type="textarea" name="judulVideo"></textarea>
+                    <textarea class="form-control" type="textarea" name="judulVideo" required></textarea>
                 </div>
                 <div class="form-group">
                     <label for="penulis">Uploader</label>
-                    <input type="text" class="form-control" id="uploader" name="uploader" value="{{ Auth::user()->name}}" readonly>
+                    <input type="text" class="form-control" id="uploader" name="uploader" value="{{ Auth::user()->name}}" required readonly>
                 </div>
                 <div class="form-group">
                   <label for="email">Email</label>
-                  <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}" readonly>
+                  <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}" required readonly>
               </div>
               <div class="form-group">
                 <label for="kategoriVideo">Kategori</label>
@@ -246,7 +254,7 @@
           </div>
                 <div class="form-group">
                   <label for="" class="form-control-label">Deskirpsi Video</label>
-                  <textarea class="form-control" type="text" name="deskripsiVideo" id="editor"></textarea>
+                  <textarea class="form-control" type="text" name="deskripsiVideo" id="editor" required></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary mt-3">Tambah</button>
                 <a href="/videoAdmin" class="btn btn-info mt-3">Kembali</i></a>

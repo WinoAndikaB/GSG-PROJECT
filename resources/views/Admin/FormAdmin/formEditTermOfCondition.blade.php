@@ -39,6 +39,54 @@
     });
 </script>
 
+
+<style>
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: hidden; /* Tidak dapat di-scroll */
+  }
+
+  .modal-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%;
+    height: 30%; /* Mengatur tinggi modal menjadi 60% */
+    text-align: center;
+  }
+
+  .close {
+    color: #888;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  #confirm-button, #cancel-button {
+    padding: 10px 20px;
+    margin: 25px;
+    cursor: pointer;
+  }
+</style>
+
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -100,6 +148,14 @@
               <i class="ni ni-paper-diploma text-warning text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Ulasan</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="/laporanUser">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-sound-wave text-warning text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Laporan User</span>
           </a>
         </li>
         <li class="nav-item">

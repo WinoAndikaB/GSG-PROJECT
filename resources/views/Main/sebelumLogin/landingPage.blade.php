@@ -92,7 +92,7 @@
         <div class="row">
             <div class="col-lg-3 col-md-6">
                 <div class="section-title">
-                    <h6 class="title">Trending News</h6>
+                    <h6 class="title">Trending</h6>
                 </div>
                 @foreach ($trending->take(5) as $item)
                 <div class="post-slider owl-carousel">
@@ -135,7 +135,7 @@
             </div>
             <div class="col-lg-3 col-md-6">
               <div class="section-title">
-                  <h6 class="title">Latest News</h6>
+                  <h6 class="title">Latest</h6>
               </div>
               @foreach ($latest as $item)
               <div class="post-slider owl-carousel">
@@ -290,7 +290,7 @@
           <div class="col-lg-3 col-sm-6">
               <div class="trending-post style-box">
                   <div class="section-title">
-                      <h6 class="title">Trending News</h6>
+                      <h6 class="title">Trending</h6>
                   </div>
                   @foreach ($box3 as $item)
                   <div class="post-slider owl-carousel">

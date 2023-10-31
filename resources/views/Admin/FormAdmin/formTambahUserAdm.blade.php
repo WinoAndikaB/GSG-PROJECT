@@ -130,6 +130,14 @@
           </a>
         </li>
         <li class="nav-item">
+          <a class="nav-link " href="/laporanUser">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-sound-wave text-warning text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Laporan User</span>
+          </a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="/syaratdanketentuan">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
@@ -236,18 +244,18 @@
                     <div class="form-group">
                       <div class="form-group">
                         <label for="" class="form-control-label">Username</label>
-                        <input class="form-control" type="text" name="username" value="">
+                        <input class="form-control" type="text" name="username" value="" required>
                       </div>
                       <div class="form-group">
                         <label for="" class="form-control-label">Nama</label>
-                        <input class="form-control" type="text" name="name" value="">
+                        <input class="form-control" type="text" name="name" value="" required>
                       </div>
                       <label for="" class="form-control-label">Email</label>
-                      <input class="form-control" type="email" name="email" value="">
+                      <input class="form-control" type="email" name="email" value="" required>
                     </div>
                     <div class="form-group">
                       <label for="" class="form-control-label">Password</label>
-                      <input class="form-control" type="password" name="password" value="">
+                      <input class="form-control" type="password" name="password" value="" required>
                     </div>
                     <button type="submit" class="btn btn-primary mt-3">Register</button>
                     <a href="/pengguna" class="btn btn-info mt-3">Kembali</i></a>

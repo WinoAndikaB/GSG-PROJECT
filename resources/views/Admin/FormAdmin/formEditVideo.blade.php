@@ -103,6 +103,14 @@
           </a>
         </li>
         <li class="nav-item">
+          <a class="nav-link " href="/laporanUser">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-sound-wave text-warning text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Laporan User</span>
+          </a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="/syaratdanketentuan">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
@@ -196,24 +204,24 @@
                     <div class="form-group">
                       <div class="form-group">
                         <label for="" class="form-control-label">Link Video</label>
-                        <input class="form-control" type="text" id="uploadGambar" name="linkVideo" value="{{ $data->linkVideo }}">
+                        <input class="form-control" type="text" id="uploadGambar" name="linkVideo" value="{{ $data->linkVideo }}" required>
                         <br>
                         <iframe width="340" height="190" src="{{$data->linkVideo}}" frameborder="0" allowfullscreen></iframe>
                     </div>
                       <label for="" class="form-control-label">Judul Video</label>
-                      <textarea class="form-control" type="textarea" name="judulVideo">{{ $data->judulVideo }}</textarea>
+                      <textarea class="form-control" type="textarea" name="judulVideo" required>{{ $data->judulVideo }}</textarea>
                     </div>
                     <div class="form-group mt-3">
                       <label for="" class="form-control-label">Uploader</label>
-                      <input class="form-control" type="text" name="uploader" value="{{ $data->uploader }}" disabled>
+                      <input class="form-control" type="text" name="uploader" value="{{ $data->uploader }}" disabled required>
                   </div>
                   <div class="form-group">
                     <label for="" class="form-control-label">Kategori</label>
-                    <textarea class="form-control" type="text" name="kategoriVideo">{{ $data->kategoriVideo }}</textarea>
+                    <textarea class="form-control" type="text" name="kategoriVideo" required>{{ $data->kategoriVideo }}</textarea>
                   </div>
                   <div class="form-group">
                     <label for="" class="form-control-label">Tags</label>
-                    <textarea class="form-control" type="text" name="tagsVideo">{{ $data->tagsVideo}}</textarea>
+                    <textarea class="form-control" type="text" name="tagsVideo" required>{{ $data->tagsVideo}}</textarea>
                   </div>
                     <div class="form-group">
                       <label for="" class="form-control-label">Deskirpsi Video</label>
