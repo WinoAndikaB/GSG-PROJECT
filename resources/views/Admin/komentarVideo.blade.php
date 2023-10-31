@@ -130,7 +130,7 @@
             <span class="nav-link-text ms-1">Ulasan</span>
           </a>
         </li>
-        <li class="nav-item">
+          <li class="nav-item">
           <a class="nav-link " href="/laporanUser">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-sound-wave text-warning text-sm opacity-10"></i>
@@ -226,6 +226,7 @@
           <div class="card mb-4">
             <div class="card-header pb-0">
               <a href="/artikel/create" class="btn btn-primary">Tambah Artikel</i></a>
+              <a href="/komentarArtikel" class="btn btn-success">Komentar Artikel</i></a>
               <h6>List Artikel Tersedia</h6>
             </div>
             <div class="card-body px-0 pt-0 pb-2">

@@ -128,7 +128,9 @@
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Artikel</span>
+            <span class="nav-link-text ms-1">Artikel
+              <span class="text-success text-sm font-weight-bolder">+ {{ $dataAddedInLast24HoursKomentarArtikel + $dataAddedInLast24HoursArtikel}}</span> 
+            </span>
           </a>
         </li>
         <li class="nav-item">
@@ -152,7 +154,9 @@
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-paper-diploma text-warning text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Ulasan</span>
+            <span class="nav-link-text ms-1">Ulasan 
+              <span class="text-success text-sm font-weight-bolder"></span>
+            </span>
           </a>
         </li>
         <li class="nav-item">
@@ -160,7 +164,9 @@
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-sound-wave text-warning text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Laporan User</span>
+            <span class="nav-link-text ms-1">Laporan User 
+
+            </span>
           </a>
         </li>
         <li class="nav-item">

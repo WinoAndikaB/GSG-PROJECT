@@ -226,6 +226,7 @@
           <div class="card mb-4">
             <div class="card-header pb-0">
               <a href="/formTambahVideo" class="btn btn-primary">Tambah Video</i></a>
+              <a href="/komentarVideo" class="btn btn-success">Komentar Video</i></a>
               <h6>List Video Tersedia</h6>
             </div>
             <div class="card-body px-0 pt-0 pb-2">

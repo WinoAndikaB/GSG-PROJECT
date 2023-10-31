@@ -144,6 +144,13 @@
               <a href="#" class="fh5co_tagg">{{ $article->tags }}</a>
           </span>
 
+          <br>
+          <br>
+
+          <a href="/login" class="">
+            <i class="fa fa-flag"></i> Laporkan
+          </a>
+
           </section>
           <span style="text-align: right">
               <p class="icon-bagikan" style="color: rgba(165, 165, 165, 1); display: flex; align-items: center; justify-content: end; gap: 0.5em;">

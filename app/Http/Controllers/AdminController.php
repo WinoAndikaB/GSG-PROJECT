@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\artikels;
 use App\Models\Dislikes;
+use App\Models\komentar_artikel;
+use App\Models\komentar_video;
 use App\Models\Likes;
 use App\Models\syaratdanketentuans;
 use App\Models\ulasans;
@@ -63,6 +65,8 @@ class AdminController extends Controller
         $dataAddedInLast24HoursUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
         $dataAddedInLast24HoursArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
+        $dataAddedInLast24HoursKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
         //Rating
         $ratings = $data1->pluck('rating')->map(function ($rating) {
             return (int) $rating; // Mengonversi rating ke integer
@@ -72,13 +76,25 @@ class AdminController extends Controller
         $averageRating = $ratings->count() > 0 ? $totalRatings / $ratings->count() : 0;
         
 
-        return view('admin.dashboard', compact('totalArtikel', 'totalUser', 'totalUlasan', 'averageRating', 'totalUlasan', 'dataAddedInLast24HoursUlasan','dataAddedInLast24HoursUser','dataAddedInLast24HoursArtikel'));
+        return view('admin.dashboard', compact('totalArtikel', 'totalUser', 'totalUlasan', 'averageRating', 'totalUlasan', 
+        'dataAddedInLast24HoursUlasan','dataAddedInLast24HoursUser','dataAddedInLast24HoursArtikel','dataAddedInLast24HoursKomentarArtikel'));
     }
 
     //[Admin-Artikel] Halaman Tables Artikel
-    function dataArtikel(){
+    function artikel(){
         $data = artikels::orderBy('created_at', 'desc')->paginate(5);
-        return view('admin.tables', compact('data'));
+
+        $dataAddedInLast24HoursKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataAddedInLast24HoursArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        return view('admin.artikel', compact('data','dataAddedInLast24HoursKomentarArtikel','dataAddedInLast24HoursArtikel'));
+    }
+
+    //[Admin-Artikel] Halaman Komentar Artikel
+      function komentarArtikel(){
+        $komenarA = komentar_artikel::orderBy('created_at', 'desc')->paginate(20);
+        $dataAddedInLast24HoursKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataAddedInLast24HoursArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        return view('admin.komentarArtikel', compact('komenarA','dataAddedInLast24HoursArtikel','dataAddedInLast24HoursKomentarArtikel'));
     }
 
     //[Admin-Artikel] Delete Data Artikel

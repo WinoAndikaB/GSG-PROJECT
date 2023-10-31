@@ -106,7 +106,8 @@ use Illuminate\Support\Facades\Route;
     //[Admin] Tab Artikel
 
         //[Admin] Tabel Artikel
-        Route::get('/artikelAdmin', [AdminController::class, 'dataArtikel'])->name('dataArtikel');
+        Route::get('/artikelAdmin', [AdminController::class, 'artikel'])->name('artikel');
+        Route::get('/komentarArtikel', [AdminController::class, 'komentarArtikel'])->name('komentarArtikel');
 
         //[Admin] Tambah Artikel
         Route::get('/artikel/create',  [AdminController::class, 'create'])->name('artikel.create');
@@ -123,6 +124,7 @@ use Illuminate\Support\Facades\Route;
 
         //[Admin] Tabel Video
         Route::get('/videoAdmin', [AdminController::class, 'videoAdmin'])->name('videoAdmin');
+        Route::get('/komentarVideo', [AdminController::class, 'komentarVideo'])->name('komentarVideo');
 
         //[Admin] Tambah Video Admin
         Route::get('/formTambahVideo', [AdminController::class, 'formTambahVideo'])->name('formTambahVideo');
@@ -163,6 +165,10 @@ use Illuminate\Support\Facades\Route;
 
         //[Admin] Tabel Laporan
         Route::get('/laporanUser', [AdminController::class, 'laporanUser'])->name('laporanUser');
+        Route::get('/laporanKomentarVideo', [AdminController::class, 'laporanKomentarVideo'])->name('laporanKomentarVideo');
+        Route::get('/laporanArtikel', [AdminController::class, 'laporanArtikel'])->name('laporanArtikel');
+        Route::get('/laporanVideo', [AdminController::class, 'laporanVideo'])->name('laporanVideo');
+        Route::get('/laporanUlasan', [AdminController::class, 'laporanUlasan'])->name('laporanUlasan');
 
     //[Admin] Tab Syarat & Ketentuan
 
