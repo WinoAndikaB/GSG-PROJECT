@@ -181,8 +181,21 @@ class AdminController extends Controller
 
         $tableVideo = video::orderBy('created_at', 'desc')->paginate(4);
 
-        return view('admin.video', compact('tableVideo'));
+        $dataAddedInLast24HoursKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataAddedInLast24HoursVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        return view('admin.video', compact('tableVideo','dataAddedInLast24HoursKomentarVideo','dataAddedInLast24HoursVideo'));
     }
+
+    //[Admin-Artikel] Halaman Komentar Artikel
+    function komentarVideo(){
+        $komenarV = komentar_video::orderBy('created_at', 'desc')->paginate(20);
+
+        $dataAddedInLast24HoursKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataAddedInLast24HoursVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        return view('admin.komentarVideo', compact('komenarV','dataAddedInLast24HoursKomentarVideo','dataAddedInLast24HoursVideo'));
+    }    
 
     //[Admin-Video] Halaman Tambah Video
     function formTambahVideo(){
