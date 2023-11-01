@@ -57,6 +57,11 @@ class LoginController extends Controller
         return view('login.lupaPassword');
     }
 
+     //[Login-Reset Password] Halaman Reset Password
+     function resetPassword(){
+        return view('login.resetPassword');
+    }
+
     //[Login-Logout] Logout User
         function logout(){
             Auth::logout();

@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Lupa Password | GSG PROJECT
+    Reset Password | GSG PROJECT
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -36,22 +36,28 @@
             <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
               <div class="card card-plain">
                 <div class="card-header pb-0 text-start">
-                  <h4 class="font-weight-bolder">Lupa Password</h4>
-                  <p class="mb-0">Masukkan Email</p>
+                  <h4 class="font-weight-bolder">Reset Password</h4>
+                  <p class="mb-0">Masukkan Semua Ketentuan Yang Dibutuhkan</p>
                 </div>
                 <div class="card-body">
-                  <form method="POST" action="/resetPassword">
+                  <form method="POST" action="">
                     @csrf
                     <div class="mb-3">
-                        <input type="email" name="email" class="form-control" placeholder="Email..." required>
+                        <input type="text" name="token" class="form-control" placeholder="Token..." required>
                     </div>
-                    <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Kirim Email</button>
+                    <div class="mb-3">
+                        <input type="email" name="email" class="form-control" placeholder="Email..." required>
+                      </div>
+                      <div class="mb-3">
+                        <input type="password" name="password" class="form-control" placeholder="password..." required>
+                       </div>
+                    <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Atur Ulang Kata Sandinya</button>
                 </form>
                 <br>
                 <div class="card-footer text-center pt-0 px-lg-2 px-1">
                   <p class="mb-4 text-sm mx-auto">
                     Sudah Ingat Passwordnya?
-                    <a href="/login" class="text-primary text-gradient font-weight-bold">Kembali</a>
+                    <a href="/lupaPassword" class="text-primary text-gradient font-weight-bold">Kembali</a>
                   </p>
                 </div>
                 </div>

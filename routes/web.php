@@ -47,6 +47,7 @@ use Illuminate\Support\Facades\Route;
 
         //[Non-User] Tab Lupa Password User
         Route::get('/lupaPassword',[LoginController::class,'lupaPassword']);
+        Route::get('/resetPassword',[LoginController::class,'resetPassword']);
 
         //[Non-User] Tab Register Logout
         Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
