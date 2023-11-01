@@ -91,18 +91,70 @@ class LandingPageController extends Controller
         return view('main.sebelumLogin.detailArtLP', compact('article', 'box', 'tags', 'kategori', 'komentarArtikels'));
     }
 
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    //[Landing Page] Halaman Kategori landing Page
+
+    function kategoriLandingPage(){
+
+        return view('main.sebelumLogin.KategoriSL.kategoriLandingPage');
+    }
+
+        function kategoriAnime(){
+            $kategori = 'Anime';
+        
+            $kategoriAnime = artikels::where('kategori', $kategori)
+                                    ->inRandomOrder()
+                                    ->take(10)
+                                    ->get();
+        
+            return view('main.sebelumLogin.KategoriSL.kategoriAnime', compact('kategoriAnime'));
+        }
+
+        function kategoriVTuber(){
+            $kategori = 'VTuber';
+        
+            $kategoriVTuber = artikels::where('kategori', $kategori)
+                                    ->inRandomOrder()
+                                    ->take(10)
+                                    ->get();
+        
+            return view('main.sebelumLogin.KategoriSL.kategoriVTuber', compact('kategoriVTuber'));
+        }
+
+        function kategoriGame(){
+            $kategori = 'Game';
+        
+            $kategoriGame = artikels::where('kategori', $kategori)
+                                    ->inRandomOrder()
+                                    ->take(10)
+                                    ->get();
+        
+            return view('main.sebelumLogin.KategoriSL.kategoriGame', compact('kategoriGame'));
+        }
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
     //[Landing Page] Halaman About landing Page
 
     function aboutLandingPage(){
         return view('main.sebelumLogin.aboutLandingPage');
     }
 
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   
     //[Landing Page] Syarat Ketentuan landing Page
 
     function syaratKetentuanLP(){
         $syarat = syaratdanketentuans::all();
         return view('main.sebelumLogin.syaratKetentuanLP', compact('syarat'));
     }
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //[Landing Page] Halaman Video landing Page
 
@@ -177,6 +229,9 @@ class LandingPageController extends Controller
         
         return view('main.sebelumLogin.detailVidLP', compact('video', 'boxVideo', 'tagsV', 'kategoriV', 'komentarVideos'));
     }
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //[Landing Page] Ulasan landing Page
 

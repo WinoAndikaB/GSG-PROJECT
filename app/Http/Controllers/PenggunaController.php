@@ -96,7 +96,7 @@ class PenggunaController extends Controller
         return view('main.setelahLogin.detailArt', compact('article', 'box', 'tags', 'kategori', 'komentarArtikels'));
     }
 
-    //[User-Detail Artikel] Menampilkan Detail Artikel Ketika Di Klik
+    //[User-Detail Artikel] Menampilkan Komentar Pada Detail Artikel Ketika Di Klik
     public function storeKomentarArtikel(Request $request)
     {
         // Validasi data komentar jika diperlukan
@@ -127,6 +127,8 @@ class PenggunaController extends Controller
         return redirect('/detailArtikel/' . $id)->with('success', 'Komentar berhasil dihapus');
     }
 
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //[User-Video] Halaman Video
     function Video(Request $request){
@@ -246,16 +248,68 @@ class PenggunaController extends Controller
         return redirect('/detailVideo/' . $id)->with('success', 'Komentar berhasil dihapus');
     }
 
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    //[User] Halaman Kategori 
+
+    function kategori(){
+
+        return view('main.setelahLogin.Kategori.kategori');
+    }
+
+        function kategoriAnimeLog(){
+            $kategori = 'Anime';
+        
+            $kategoriAnime = artikels::where('kategori', $kategori)
+                                    ->inRandomOrder()
+                                    ->take(10)
+                                    ->get();
+        
+            return view('main.setelahLogin.Kategori.kategoriAnimeLog', compact('kategoriAnime'));
+        }
+
+        function kategoriVTuberLog(){
+            $kategori = 'VTuber';
+        
+            $kategoriVTuber = artikels::where('kategori', $kategori)
+                                    ->inRandomOrder()
+                                    ->take(10)
+                                    ->get();
+        
+            return view('main.setelahLogin.Kategori.kategoriVTuberLog', compact('kategoriVTuber'));
+        }
+
+        function kategoriGameLog(){
+            $kategori = 'Game';
+        
+            $kategoriGame = artikels::where('kategori', $kategori)
+                                    ->inRandomOrder()
+                                    ->take(10)
+                                    ->get();
+        
+            return view('main.setelahLogin.Kategori.kategoriGameLog', compact('kategoriGame'));
+        }
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
     //[User-About] Halaman About
     function about(){
         return view('main.setelahLogin.about');
     }
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //[User-Syarat & Ketentuan] Halaman Syarat & Ketentuan
     function syaratKetentuanA(){
         $syarat = syaratdanketentuans::all();
         return view('main.setelahLogin.syaratKetentuanA', compact('syarat'));
     } 
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //[User-Ulasan] Halaman Ulasan
     function ulasan(){
@@ -397,6 +451,8 @@ class PenggunaController extends Controller
     }
 
 
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //[User-Profil] Halaman Profil
   public function profileUser()

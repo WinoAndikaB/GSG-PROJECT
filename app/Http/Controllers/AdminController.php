@@ -52,6 +52,9 @@ class AdminController extends Controller
         return redirect('/profileAdmin');
     }
 
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
     //[Admin-Dashboard] Halaman Dashboard
     function dashboard(){
         $totalArtikel = artikels::count();
@@ -80,20 +83,26 @@ class AdminController extends Controller
         'dataAddedInLast24HoursUlasan','dataAddedInLast24HoursUser','dataAddedInLast24HoursArtikel','dataAddedInLast24HoursKomentarArtikel'));
     }
 
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
     //[Admin-Artikel] Halaman Tables Artikel
     function artikel(){
         $data = artikels::orderBy('created_at', 'desc')->paginate(5);
 
         $dataAddedInLast24HoursKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
         $dataAddedInLast24HoursArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
         return view('admin.artikel', compact('data','dataAddedInLast24HoursKomentarArtikel','dataAddedInLast24HoursArtikel'));
     }
 
     //[Admin-Artikel] Halaman Komentar Artikel
       function komentarArtikel(){
         $komenarA = komentar_artikel::orderBy('created_at', 'desc')->paginate(20);
+
         $dataAddedInLast24HoursKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
         $dataAddedInLast24HoursArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
         return view('admin.komentarArtikel', compact('komenarA','dataAddedInLast24HoursArtikel','dataAddedInLast24HoursKomentarArtikel'));
     }
 
@@ -159,7 +168,9 @@ class AdminController extends Controller
         return redirect()->route('dataArtikel')->with('success','Data Berhasil di Update');
     }    
 
-    
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
     //[Admin-Video] Halaman Tabel Video
     function videoAdmin(){
 
@@ -239,6 +250,9 @@ class AdminController extends Controller
         return redirect('/videoAdmin');
     }
 
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
     //[Admin-Pengguna] Halaman Tabel Pengguna
     function listUserTerdaftar(){
         $users = user::orderBy('created_at', 'desc')->paginate(10);
@@ -288,6 +302,9 @@ class AdminController extends Controller
         return redirect('pengguna');
     }
 
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
     //[Admin-Ulasan] Halaman Tabel Ulasan 
     function ulasanAdmin(){
         $data1 = ulasans::orderBy('created_at', 'desc')->paginate(10);
@@ -313,11 +330,17 @@ class AdminController extends Controller
         return redirect('ulasans');
     }
 
-    //[Admin-Video] Halaman Tambah Video
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    //[Admin-Laporan User] Halaman Tambah Video
     function laporanUser(){
 
         return view('admin.laporanUser');
     }
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     // [Syarat & Ketentuan] Halaman Tabel 
     public function syaratdanketentuan()

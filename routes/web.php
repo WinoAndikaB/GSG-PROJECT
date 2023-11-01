@@ -22,6 +22,12 @@ use Illuminate\Support\Facades\Route;
         Route::get('/landingPageVideo',[LandingPageController::class,'landingPageVideo'])->name('landingPageVideo');
         Route::get('/detailVideoLP/{id}', [LandingPageController::class, 'showDetailLPVideo'])->name('showDetailLPVideo');
 
+        //[Non-User] Tab Kategori Landing Page
+        Route::get('/kategoriLandingPage', [LandingPageController::class, 'kategoriLandingPage'])->name('kategoriLandingPage');
+        Route::get('/kategoriAnime', [LandingPageController::class, 'kategoriAnime'])->name('kategoriAnime');
+        Route::get('/kategoriVTuber', [LandingPageController::class, 'kategoriVTuber'])->name('kategoriVTuber');
+        Route::get('/kategoriGame', [LandingPageController::class, 'kategoriGame'])->name('kategoriGame');
+
         //[Non-User] Tab About Landing Page
         Route::get('/abouts', [LandingPageController::class, 'aboutLandingPage'])->name('aboutLandingPage');
 
@@ -61,6 +67,12 @@ use Illuminate\Support\Facades\Route;
         Route::get('/detailVideo/{id}', [PenggunaController::class, 'showDetailVideo'])->name('showDetailVideo');
         Route::post('/komentarVideo', [PenggunaController::class, 'storeKomentarVideo'])->name('storeKomentarVideo');
         Route::get('/deleteKomentarV/{id}', [PenggunaController::class, 'deleteKomentarV'])->name('deleteKomentarV');
+
+        //[User] Tab Kategori
+        Route::get('/kategori', [PenggunaController::class, 'kategori'])->name('kategori');
+        Route::get('/kategoriAnimeLog', [PenggunaController::class, 'kategoriAnimeLog'])->name('kategoriAnimeLog');
+        Route::get('/kategoriVTuberLog', [PenggunaController::class, 'kategoriVTuberLog'])->name('kategoriVTuberLog');
+        Route::get('/kategoriGameLog', [PenggunaController::class, 'kategoriGameLog'])->name('kategoriGameLog');
 
         //[User] Tab Profil
         Route::get('/profileUser', [PenggunaController::class, 'profileUser'])->name('profileUser');
