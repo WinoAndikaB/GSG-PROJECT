@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href=".../assets2/img/lg1.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Laporan User | GSG PROJECT
+    Laporan Artikel User | GSG PROJECT
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -158,9 +158,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Laporan Komentar Artikel</li>
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Laporan Video</li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Laporan Komentar Artikel</h6>
+          <h6 class="font-weight-bolder text-white mb-0">Laporan Video</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -225,17 +225,14 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-                <a href="/laporanUser" class="btn btn-primary">Laporan Komentar Artikel</a>
-                <a href="/laporanuser" class="btn btn-primary">Laporan Komentar Video</a>
-                <a href="/laporanuser" class="btn btn-primary">Laporan Artikel</a>
-                <a href="/laporanuser" class="btn btn-primary">Laporan Video</a>
-                <a href="/laporanuser" class="btn btn-primary">Laporan Ulasan</a>
+              <a href="/laporanUser" class="btn btn-primary">Laporan Artikel</a>
+              <a href="/laporanVideoUser" class="btn btn-primary">Laporan Video</a>
+              <a href="/laporanUlasanUser" class="btn btn-primary">Laporan Ulasan</a>
             
-              <h6>Laporan Komentar Artikel</h6>
+              <h6>Laporan Video</h6>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">          
-
               <div class="container-fluid py-4">
                 <div class="row">
                   <div class="col-12">
@@ -249,28 +246,37 @@
                               <tr>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User ID</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama User</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Artikel ID</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Artikel</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Laporan</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Alasan</th>
                                 <th class="text-secondary opacity-7"></th>
                               </tr>
                             </thead>
+                            @foreach ($laporanVideoUser as $item)
                             <tbody>
                               <tr>
                                 <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0"> </p>
+                                  <p class="text-xs font-weight-bold mb-0">{{$item['id']}}</p>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0"> </p>
+                                  <p class="text-xs font-weight-bold mb-0">{{$item['user_id']}}</p>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0"> </p>
+                                  <p class="text-xs font-weight-bold mb-0">{{$item['nama_user']}}</p>
+                                </td>
+                                <td class="align-middle text-center">
+                                  <p class="text-xs font-weight-bold mb-0">{{$item['artikel_id']}}</p>
+                                </td>
+                                <td class="align-middle text-center">
+                                  <p class="text-xs font-weight-bold mb-0">{{$item['nama_artikel']}}</p>
                                 </td>
                                 <td>
-                                  <p class="text-xs font-weight-bold mb-0"> </p>
+                                  <p class="text-xs font-weight-bold mb-0">{{$item['laporan']}}</p>
                                 </td>
                                 <td>
-                                  <p class="text-xs font-weight-bold mb-0"> </p>
+                                  <p class="text-xs font-weight-bold mb-0">{{$item['alasan']}}</p>
                                 </td>
                                 <td class="align-middle">
                                   <a href="" class="btn btn-danger btn btn-primary btn-round" onclick="return showConfirmation()">
@@ -279,6 +285,7 @@
                                 </td>
                               </tr>
                             </tbody>
+                            @endforeach
                           </table>
                         </div>
                       </div>

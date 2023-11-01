@@ -61,12 +61,14 @@ use Illuminate\Support\Facades\Route;
         Route::get('/home',[PenggunaController::class,'HomeSetelahLogin'])->name('HomeSetelahLogin');
         Route::get('/detailArtikel/{id}', [PenggunaController::class, 'showDetailArtikel'])->name('detail.artikel');
         Route::post('/komentarArtikel', [PenggunaController::class, 'storeKomentarArtikel'])->name('storeKomentarArtikel');
+        Route::post('/submit/report', [PenggunaController::class, 'storeLaporanArtikel'])->name('storeLaporanArtikel');
         Route::get('/deleteKomentarA/{id}',[PenggunaController::class,'deleteKomentarA'])->name('deleteKomentarA');
 
         //[User] Tab Video
         Route::get('/Video',[PenggunaController::class,'Video'])->name('Video');
         Route::get('/detailVideo/{id}', [PenggunaController::class, 'showDetailVideo'])->name('showDetailVideo');
         Route::post('/komentarVideo', [PenggunaController::class, 'storeKomentarVideo'])->name('storeKomentarVideo');
+        Route::post('/submitV/reportV', [PenggunaController::class, 'storeLaporanVideo'])->name('storeLaporanVideo');
         Route::get('/deleteKomentarV/{id}', [PenggunaController::class, 'deleteKomentarV'])->name('deleteKomentarV');
 
         //[User] Tab Kategori
@@ -178,10 +180,8 @@ use Illuminate\Support\Facades\Route;
 
         //[Admin] Tabel Laporan
         Route::get('/laporanUser', [AdminController::class, 'laporanUser'])->name('laporanUser');
-        Route::get('/laporanKomentarVideo', [AdminController::class, 'laporanKomentarVideo'])->name('laporanKomentarVideo');
-        Route::get('/laporanArtikel', [AdminController::class, 'laporanArtikel'])->name('laporanArtikel');
-        Route::get('/laporanVideo', [AdminController::class, 'laporanVideo'])->name('laporanVideo');
-        Route::get('/laporanUlasan', [AdminController::class, 'laporanUlasan'])->name('laporanUlasan');
+        Route::get('/laporanVideoUser', [AdminController::class, 'laporanVideoUser'])->name('laporanVideoUser');
+        Route::get('/laporanUlasanUser', [AdminController::class, 'laporanUlasanUser'])->name('laporanUlasanUser');
 
     //[Admin] Tab Syarat & Ketentuan
 

@@ -11,6 +11,9 @@ use App\Models\user;
 use App\Models\video;
 use App\Models\komentar_artikel;
 use App\Models\komentar_video;
+use App\Models\LaporanArtikelUser;
+use App\Models\LaporanUlasanUser;
+use App\Models\LaporanVideoUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -126,6 +129,30 @@ class PenggunaController extends Controller
         $article->delete();
         return redirect('/detailArtikel/' . $id)->with('success', 'Komentar berhasil dihapus');
     }
+
+    public function storeLaporanArtikel(Request $request)
+    {
+        // Validasi data yang diterima dari form
+        $request->validate([
+            'user_id' => 'required',
+            'artikel_id' => 'required',
+            'laporan' => 'required',
+            'alasan' => 'required',
+        ]);
+
+        // Simpan data laporan ke dalam database
+        $laporan = new LaporanArtikelUser([
+            'user_id' => $request->user_id,
+            'artikel_id' => $request->artikel_id,
+            'laporan' => $request->laporan,
+            'alasan' => $request->alasan,
+        ]);
+
+        $laporan->save();
+
+        return response()->json(['message' => 'Laporan telah berhasil disimpan.']);
+    }
+
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -246,6 +273,29 @@ class PenggunaController extends Controller
 
         $video->delete();
         return redirect('/detailVideo/' . $id)->with('success', 'Komentar berhasil dihapus');
+    }
+
+    public function storeLaporanVideo(Request $request)
+    {
+        // Validasi data yang diterima dari form
+        $request->validate([
+            'user_id' => 'required',
+            'video_id' => 'required',
+            'laporan' => 'required',
+            'alasan' => 'required',
+        ]);
+
+        // Simpan data laporan ke dalam database
+        $laporan = new LaporanVideoUser([
+            'user_id' => $request->user_id,
+            'video_id' => $request->video_id,
+            'laporan' => $request->laporan,
+            'alasan' => $request->alasan,
+        ]);
+
+        $laporan->save();
+
+        return response()->json(['message' => 'Laporan telah berhasil disimpan.']);
     }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -459,12 +459,43 @@
       });
   
       // Submit the form
-      document.getElementById("reportForm").addEventListener("submit", function(event) {
-        event.preventDefault();
-        // Anda dapat menambahkan kode untuk menangani pengiriman laporan di sini
-        modal.style.display = "none";
+  document.getElementById("reportForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    
+    // Mengambil nilai yang dipilih dari radio button
+    var selectedReason = document.querySelector('input[name="reason"]:checked');
+    if (!selectedReason) {
+      alert("Pilih alasan laporan terlebih dahulu.");
+      return;
+    }
+    
+    // Mengambil alasan laporan dan artikel_id dari elemen form
+    var alasan = document.getElementById("reportTextLaporan").value;
+    var artikelId = {{ $article->id }}; // Ganti dengan nilai artikel_id yang sesuai
+
+    // Kirim data laporan ke server melalui AJAX
+    $.ajax({
+      type: "POST",
+      url: "/submit/report", // Ganti dengan URL yang sesuai
+      data: {
+        _token: "{{ csrf_token() }}",
+        user_id: {{ Auth::user()->id }}, // Ganti dengan user_id yang sesuai
+        artikel_id: artikelId,
+        laporan: alasan,
+        alasan: selectedReason.value,
+      },
+      success: function(response) {
+        // Tindakan setelah pengiriman berhasil
         alert("Laporan telah dikirim!");
-      });
+        modal.style.display = "none"; // Tutup modal
+      },
+      error: function(error) {
+        // Tindakan jika ada kesalahan
+        alert("Terjadi kesalahan saat mengirim laporan.");
+      }
+    });
+  });
     </script>
+    
   </body>
 </html>

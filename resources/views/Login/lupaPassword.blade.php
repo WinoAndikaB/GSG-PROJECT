@@ -45,7 +45,7 @@
                     <div class="mb-3">
                         <input type="email" name="email" class="form-control" placeholder="Email..." required>
                     </div>
-                    <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Kirim Email</button>
+                    <a href="/resetPassword"  class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Kirim Email</a>
                 </form>
                 <br>
                 <div class="card-footer text-center pt-0 px-lg-2 px-1">

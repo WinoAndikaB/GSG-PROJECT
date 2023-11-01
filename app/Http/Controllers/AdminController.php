@@ -11,6 +11,11 @@ use App\Models\syaratdanketentuans;
 use App\Models\ulasans;
 use App\Models\user;
 use App\Models\video;
+use App\Models\laporanArtikelUser;
+use App\Models\laporanKomentarArtikelUser;
+use App\Models\laporanKomentarVideoUser;
+use App\Models\LaporanUlasanUser;
+use App\Models\LaporanVideoUser;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -333,10 +338,26 @@ class AdminController extends Controller
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    //[Admin-Laporan User] Halaman Tambah Video
+    //[Admin-Laporan User] 
     function laporanUser(){
 
-        return view('admin.laporanUser');
+        $laporanArtikelU = laporanArtikelUser::orderBy('created_at', 'desc')->paginate(10);
+
+        return view('admin.laporan.laporanUser', compact('laporanArtikelU'));
+    }
+
+    function laporanVideoUser(){
+
+        $laporanVideoUser = LaporanVideoUser::orderBy('created_at', 'desc')->paginate(10);
+
+        return view('admin.laporan.laporanVideoUser', compact('laporanVideoUser'));
+    }
+
+    function laporanUlasanUser(){
+
+        $laporanUlasanUser = LaporanUlasanUser::orderBy('created_at', 'desc')->paginate(10);
+
+        return view('admin.laporan.laporanUlasanUser', compact('laporanUlasanUser'));
     }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -278,9 +278,9 @@
                     <i class="fa fa-thumbs-down"></i> Dislike
                  </a>
                  <a href="{{ route('deleteKomentarV', ['id' => $video->id]) }}"><i class="fas fa-trash"></i> Hapus</a>
-                  <a href="report_action.html">
-                      <i class="fa fa-flag"></i> Laporkan
-                  </a>
+                 <a href="#" id="showModal" class="laporan-button">
+                  <i class="fa fa-flag"></i> Laporkan
+                </a>  
               </div>
           </div>
       </div>
@@ -350,7 +350,7 @@
   <div id="modalLaporan" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1;">
     <div style="background-color: #ffffff; border-radius: 10px; text-align: center; padding: 20px; width: 600px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
       <span style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 20px;" id="closeLaporan">&times;</span>
-      <h2 style="color: #007bff; font-size: 24px;">Laporkan Video</h2>
+      <h2 style="color: #007bff; font-size: 24px;">Laporkan Artikel</h2>
       <form id="reportForm">
         <div style="text-align: left;">
           <label style="font-size: 16px;"><input type="radio" name="reason" value="Konten Seksual"> Konten Seksual</label><br>
@@ -369,7 +369,7 @@
         <button type="submit" class="submit-buttonLaporan" style="background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; padding: 10px 20px; font-size: 18px;">Kirim Laporan</button>
       </form>
       <div style="text-align: left; padding: 10px;">
-        <p style="font-size: 14px;">Video dan pengguna yang dilaporkan akan ditinjau oleh staf kami untuk menentukan apakah video dan pengguna tersebut melanggar Pedoman kami atau tidak. Akun akan dikenai sanksi jika melanggar Pedoman Komunitas, dan pelanggaran serius atau berulang dapat berakibat pada penghentian akun.</p>
+        <p style="font-size: 14px;">Artikel dan pengguna yang dilaporkan akan ditinjau oleh staf kami untuk menentukan apakah artikel dan pengguna tersebut melanggar Pedoman kami atau tidak. Akun akan dikenai sanksi jika melanggar Pedoman Komunitas, dan pelanggaran serius atau berulang dapat berakibat pada penghentian akun.</p>
       </div>
     </div>
   </div>
@@ -463,12 +463,44 @@
         });
     
         // Submit the form
-        document.getElementById("reportForm").addEventListener("submit", function(event) {
-          event.preventDefault();
-          // Anda dapat menambahkan kode untuk menangani pengiriman laporan di sini
-          modal.style.display = "none";
+    document.getElementById("reportForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      
+      // Mengambil nilai yang dipilih dari radio button
+      var selectedReason = document.querySelector('input[name="reason"]:checked');
+      if (!selectedReason) {
+        alert("Pilih alasan laporan terlebih dahulu.");
+        return;
+      }
+      
+      // Mengambil alasan laporan dan artikel_id dari elemen form
+      var alasan = document.getElementById("reportTextLaporan").value;
+      var videoId = {{ $video->id }};
+
+  
+      // Kirim data laporan ke server melalui AJAX
+      $.ajax({
+        type: "POST",
+        url: "/submitV/reportV", // Ganti dengan URL yang sesuai
+        data: {
+          _token: "{{ csrf_token() }}",
+          user_id: {{ Auth::user()->id }}, // Ganti dengan user_id yang sesuai
+          video_id: videoId,
+          laporan: alasan,
+          alasan: selectedReason.value,
+        },
+        success: function(response) {
+          // Tindakan setelah pengiriman berhasil
           alert("Laporan telah dikirim!");
-        });
+          modal.style.display = "none"; // Tutup modal
+        },
+        error: function(error) {
+          // Tindakan jika ada kesalahan
+          alert("Terjadi kesalahan saat mengirim laporan.");
+        }
+      });
+    });
       </script>
+     
   </body>
 </html>
