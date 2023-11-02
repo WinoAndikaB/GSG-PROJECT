@@ -215,11 +215,21 @@
               <div class="fh5co_heading fh5co_heading_border_bottom py-2 mb-4">Kategori</div>
           </div>
           <div class="clearfix"></div>
+
+          @php
+          $uniqueCategories = [];
+          @endphp
+
           @foreach($kategori as $item)
+          @if (!in_array($item->kategori, $uniqueCategories))
               <span class="fh5co_tags_all">
-                  <a href="#" class="fh5co_tagg">{{ $item->kategori }}</a>
+                  <a href="{{ $item->kategori === 'Game' ? route('kategoriGameLog') : ($item->kategori === 'VTuber' ? route('kategoriVTuberLog') : route('kategoriAnimeLog')) }}" class="fh5co_tagg">{{ $item->kategori }}</a>
               </span>
-          @endforeach
+              @php
+              $uniqueCategories[] = $item->kategori;
+              @endphp
+          @endif
+      @endforeach
 
           <div>
             <div class="fh5co_heading fh5co_heading_border_bottom py-2 mb-4">Tags</div>
