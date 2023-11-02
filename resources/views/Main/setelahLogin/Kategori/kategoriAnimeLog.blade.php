@@ -13,7 +13,7 @@
     <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <title>Kategori Anime - GSG Project</title>
+    <title>Kategori Artikel Anime - GSG Project</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -69,6 +69,33 @@
         margin: 25px;
         cursor: pointer;
       }
+
+            /* Style for the buttons */
+            .animated-button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+        cursor: pointer;
+        margin: 5px;
+        font-size: 16px;
+      }
+      
+      .animated-button:hover {
+        background-color: #0056b3;
+      }
+      
+      /* Additional styling for the second button */
+      .animated-button:nth-of-type(2) {
+        background-color: #ff6600;
+      }
+      
+      .animated-button:nth-of-type(2):hover {
+        background-color: #ff4500;
+      }
+      
     </style>
   </head>
 
@@ -155,7 +182,9 @@
             <div class="col-lg-6 offset-lg-3">
               <div class="section-heading">
                 <h6>Anime</h6>
-                <h4>List Kategori Anime</h4>
+                <h4>List Artikel Anime</h4>
+                <a href="/kategoriAnimeLog" class="animated-button">Artikel</a>
+                <a href="/kategoriAnimeLogV" class="animated-button">Video</a>
               </div>
             </div>
             <div>

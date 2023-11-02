@@ -83,8 +83,13 @@ use Illuminate\Support\Facades\Route;
         //[User] Tab Kategori
         Route::get('/kategori', [PenggunaController::class, 'kategori'])->name('kategori');
         Route::get('/kategoriAnimeLog', [PenggunaController::class, 'kategoriAnimeLog'])->name('kategoriAnimeLog');
+        Route::get('/kategoriAnimeLogV', [PenggunaController::class, 'kategoriAnimeLogV'])->name('kategoriAnimeLogV');
+
         Route::get('/kategoriVTuberLog', [PenggunaController::class, 'kategoriVTuberLog'])->name('kategoriVTuberLog');
+        Route::get('/kategoriVTuberLogV', [PenggunaController::class, 'kategoriVTuberLogV'])->name('kategoriVTuberLogV');
+
         Route::get('/kategoriGameLog', [PenggunaController::class, 'kategoriGameLog'])->name('kategoriGameLog');
+        Route::get('/kategoriGameLogV', [PenggunaController::class, 'kategoriGameLogV'])->name('kategoriGameLogV');
 
         //[User] Tab Profil
         Route::get('/profileUser', [PenggunaController::class, 'profileUser'])->name('profileUser');

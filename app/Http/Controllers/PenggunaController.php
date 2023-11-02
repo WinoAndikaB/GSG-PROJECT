@@ -319,6 +319,17 @@ class PenggunaController extends Controller
             return view('main.setelahLogin.Kategori.kategoriAnimeLog', compact('kategoriAnime'));
         }
 
+        function kategoriAnimeLogV(){
+            $kategori = 'Anime';
+        
+            $kategoriAnimeLogV = video::where('kategoriVideo', $kategori)
+                                    ->inRandomOrder()
+                                    ->take(10)
+                                    ->get();
+        
+            return view('main.setelahLogin.Kategori.kategoriAnimeVideo', compact('kategoriAnimeLogV'));
+        }
+
         function kategoriVTuberLog(){
             $kategori = 'VTuber';
         
@@ -330,6 +341,17 @@ class PenggunaController extends Controller
             return view('main.setelahLogin.Kategori.kategoriVTuberLog', compact('kategoriVTuber'));
         }
 
+        function kategoriVTuberLogV(){
+            $kategori = 'VTuber';
+        
+            $kategoriVTuberLogV = video::where('kategoriVideo', $kategori)
+                                    ->inRandomOrder()
+                                    ->take(10)
+                                    ->get();
+        
+            return view('main.setelahLogin.Kategori.kategoriVTuberVideo', compact('kategoriVTuberLogV'));
+        }
+
         function kategoriGameLog(){
             $kategori = 'Game';
         
@@ -339,6 +361,18 @@ class PenggunaController extends Controller
                                     ->get();
         
             return view('main.setelahLogin.Kategori.kategoriGameLog', compact('kategoriGame'));
+        }
+
+        
+        function kategoriGameLogV(){
+            $kategori = 'Game';
+        
+            $kategoriGameLogV = video::where('kategoriVideo', $kategori)
+                                    ->inRandomOrder()
+                                    ->take(10)
+                                    ->get();
+        
+            return view('main.setelahLogin.Kategori.kategoriGameVideo', compact('kategoriGameLogV'));
         }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

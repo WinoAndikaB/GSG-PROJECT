@@ -69,6 +69,33 @@
         margin: 25px;
         cursor: pointer;
       }
+
+            /* Style for the buttons */
+            .animated-button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+        cursor: pointer;
+        margin: 5px;
+        font-size: 16px;
+      }
+      
+      .animated-button:hover {
+        background-color: #0056b3;
+      }
+      
+      /* Additional styling for the second button */
+      .animated-button:nth-of-type(2) {
+        background-color: #ff6600;
+      }
+      
+      .animated-button:nth-of-type(2):hover {
+        background-color: #ff4500;
+      }
+      
     </style>
 
   </head>
@@ -156,7 +183,9 @@
             <div class="col-lg-6 offset-lg-3">
               <div class="section-heading">
                 <h6>Game</h6>
-                <h4>List Kategori Game</h4>
+                <h4>List Artikel Game</h4><br>
+                <a href="/kategoriGameLog" class="animated-button">Artikel</a>
+                <a href="/kategoriGameLogV" class="animated-button">Video</a>
               </div>
             </div>
             <div>

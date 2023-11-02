@@ -13,7 +13,7 @@
     <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <title>Kategori VTuber - GSG Project</title>
+    <title>Kategori VTuber Video - GSG Project</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -24,54 +24,10 @@
     <link rel="stylesheet" href="assets/css/owl.css">
     <link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css">
-    <style>
-      .modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        overflow: hidden; /* Tidak dapat di-scroll */
-      }
-    
-      .modal-content {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        background-color: #fff;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        padding: 20px;
-        border: 1px solid #888;
-        width: 20%;
-        height: 30%; /* Mengatur tinggi modal menjadi 60% */
-        text-align: center;
-      }
-    
-      .close {
-        color: #888;
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        font-size: 20px;
-        font-weight: bold;
-        cursor: pointer;
-      }
-    
-      #confirm-button, #cancel-button {
-        padding: 10px 20px;
-        margin: 25px;
-        cursor: pointer;
-      }
 
-            /* Style for the buttons */
-            .animated-button {
+    <style>
+      /* Style for the buttons */
+      .animated-button {
         padding: 10px 20px;
         background-color: #007bff;
         color: #fff;
@@ -96,7 +52,7 @@
         background-color: #ff4500;
       }
       
-    </style>
+          </style>
 
   </head>
 
@@ -146,25 +102,12 @@
 </header>
   <!-- ***** Header Area End ***** -->
 
-       <!-- Modal Logout -->
-       <div id="logout-modal" class="modal">
-        <div class="modal-content">
-          <span class="close" id="close-button" onclick="closeModal()">&times;</span>
-          <h2>Konfirmasi Logout</h2>
-          <p>Apakah anda mau logout?</p>
-          <div style="text-align: center;">
-            <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
-            <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
-          </div>
-        </div>
-      </div>
-
   <div class="page-heading">
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
           <div class="header-text">
-            <h2>Kategori VTuber</h2>
+            <h2>Kategori Anime</h2>
             <div class="div-dec"></div>
           </div>
         </div>
@@ -177,36 +120,35 @@
   <div class="pd-top-80 pd-bottom-50" id="grid">
     <div class="container">
 
+
       <section class="about-us" id="about">
         <div class="container">
           <div class="row">
             <div class="col-lg-6 offset-lg-3">
               <div class="section-heading">
                 <h6>VTuber</h6>
-                <h4>List Artikel VTuber</h4><br>
+                <h4>List Video VTuber</h4><br>
                 <a href="/kategoriVTuberLog" class="animated-button">Artikel</a>
                 <a href="/kategoriVTuberLogV" class="animated-button">Video</a>
               </div>
             </div>
             <div>
-              @foreach ($kategoriVTuber as $item)
+              @foreach ($kategoriVTuberLogV as $item)
                   <div class="row" style="text-align: justify">
                       <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
-                          <div class="d-flex justify-content-center">
-                              <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" style="max-width: 100%; height: auto; border-radius: 14px">
-                          </div>
+                        <iframe width="560" height="200" src="{{$item->linkVideo}}" frameborder="0" allowfullscreen></iframe>
                       </div>
                       <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
-                          <h4 style="text-align: left" >{{ $item->judulArtikel }} </h4>
-                          <span class="d-flex"><b>{{ $item->penulis }}</b></span>
-                          <p>{!! substr(strip_tags($item->deskripsi), 0, 400) . (strlen(strip_tags($item->content)) > 400 ? '...' : '') !!}</p>
+                          <h4 style="text-align: left" >{{ $item->judulVideo }} </h4>
+                          <span class="d-flex"><b>{{ $item->uploader }}</b></span>
+                          <p>{!! substr(strip_tags($item->deskripsiVideo), 0, 400) . (strlen(strip_tags($item->content)) > 400 ? '...' : '') !!}</p>
                       </div>
                       <span style="text-align: right; color: rgba(165, 165, 165, 1);"><p>
                         @php
                         $ulasanCreatedAt = \Carbon\Carbon::parse($item['created_at']);
                         $sekarang = \Carbon\Carbon::now();
                         $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
-      
+    
                         if ($selisihWaktu < 60) {
                           echo $selisihWaktu . ' Menit Lalu';
                         } elseif ($selisihWaktu < 1440) {
@@ -222,7 +164,7 @@
                         }
                       @endphp
                       | 
-                          <a href="{{ route('showDetailLPArtikel', ['id' => $item->id]) }}" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a></p></span>
+                          <a href="{{ route('showDetailLPVideo', ['id' => $item->id]) }}" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a></p></span>
                   </div>
                   <hr>
                   @endforeach
@@ -235,37 +177,7 @@
     </div>
 </div>
 
-<!-- MODAL LOGOUT -->
-<script>
-  // JavaScript untuk modal logout
-  function openModal() {
-    const modal = document.getElementById('logout-modal');
-    modal.style.display = 'block';
-  }
 
-  function closeModal() {
-    const modal = document.getElementById('logout-modal');
-    modal.style.display = 'none';
-  }
-
-  function confirmLogout(confirmed) {
-    if (confirmed) {
-      // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
-      window.location.href = '/logout';
-    } else {
-      // Tutup modal jika pengguna memilih "No"
-      closeModal();
-    }
-  }
-
-  // Tutup modal jika pengguna mengklik di luar modal
-  window.addEventListener('click', (event) => {
-    const modal = document.getElementById('logout-modal');
-    if (event.target == modal) {
-      modal.style.display = 'none';
-    }
-  });
-</script>
-
+  
   </body>
 </html>
