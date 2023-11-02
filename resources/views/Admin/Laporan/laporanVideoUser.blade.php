@@ -282,10 +282,10 @@
                                       <p class="text-xs font-weight-bold mb-0">{{$item['video']['judulVideo']}}</p>
                                   </td>
                                   <td class="align-middle text-center">
-                                      <p class="text-xs font-weight-bold mb-0">{{$item['laporan']}}</p>
+                                      <p class="text-xs font-weight-bold mb-0">{{$item['alasan']}}</p>
                                   </td>
                                   <td class="align-middle text-center">
-                                      <p class="text-xs font-weight-bold mb-0">{{$item['alasan']}}</p>
+                                      <p class="text-xs font-weight-bold mb-0">{{$item['laporan']}}</p>
                                   </td>
                                   <td class="align-middle">
                                     <a href="{{"deleteLaporanVA/".$item['id']}}" class="btn btn-danger btn btn-primary btn-round" onclick="return showConfirmation()">
