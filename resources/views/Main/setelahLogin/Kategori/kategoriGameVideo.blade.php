@@ -164,7 +164,7 @@
                         }
                       @endphp
                       | 
-                          <a href="{{ route('showDetailLPVideo', ['id' => $item->id]) }}" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a></p></span>
+                          <a href="{{ route('showDetailVideo', ['id' => $item->id]) }}" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a></p></span>
                   </div>
                   <hr>
                   @endforeach

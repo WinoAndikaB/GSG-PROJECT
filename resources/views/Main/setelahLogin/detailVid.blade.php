@@ -94,6 +94,7 @@
                     <li class="scroll-to-section"><a href="#trends">Trending</a></li>
                     <li class="scroll-to-section"><a href="#about">Artikel</a></li>
                     <li class="scroll-to-section"><a href="/Video" class="">Video</a></li>
+                    <li class="scroll-to-section"><a href="/kategori">Kategori</a></li>
                     <li class="scroll-to-section"><a href="/ulasan" class="text-center">Ulasan</a></li>
                     <li class="scroll-to-section"><a href="/about" class="">Tentang</a></li>
                     <li class="scroll-to-section">
@@ -143,7 +144,7 @@
       <div class="row">
         <div class="col-lg-12">
           <div class="header-text">
-            <h2>Detail Artikel</h2>
+            <h2>Detail Video</h2>
             <div class="div-dec"></div>
           </div>
         </div>
@@ -350,7 +351,7 @@
   <div id="modalLaporan" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1;">
     <div style="background-color: #ffffff; border-radius: 10px; text-align: center; padding: 20px; width: 600px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
       <span style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 20px;" id="closeLaporan">&times;</span>
-      <h2 style="color: #007bff; font-size: 24px;">Laporkan Artikel</h2>
+      <h2 style="color: #007bff; font-size: 24px;">Laporkan Video</h2>
       <form id="reportForm">
         <div style="text-align: left;">
           <label style="font-size: 16px;"><input type="radio" name="reason" value="Konten Seksual"> Konten Seksual</label><br>
@@ -369,7 +370,7 @@
         <button type="submit" class="submit-buttonLaporan" style="background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; padding: 10px 20px; font-size: 18px;">Kirim Laporan</button>
       </form>
       <div style="text-align: left; padding: 10px;">
-        <p style="font-size: 14px;">Artikel dan pengguna yang dilaporkan akan ditinjau oleh staf kami untuk menentukan apakah artikel dan pengguna tersebut melanggar Pedoman kami atau tidak. Akun akan dikenai sanksi jika melanggar Pedoman Komunitas, dan pelanggaran serius atau berulang dapat berakibat pada penghentian akun.</p>
+        <p style="font-size: 14px;">Video dan pengguna yang dilaporkan akan ditinjau oleh staf kami untuk menentukan apakah video dan pengguna tersebut melanggar Pedoman kami atau tidak. Akun akan dikenai sanksi jika melanggar Pedoman Komunitas, dan pelanggaran serius atau berulang dapat berakibat pada penghentian akun.</p>
       </div>
     </div>
   </div>

@@ -96,6 +96,7 @@
                       <li class="scroll-to-section"><a href="/">Trending</a></li>
                       <li class="scroll-to-section"><a href="/">Artikel</a></li>
                       <li class="scroll-to-section"><a href="/landingPageVideo" class="text-center">Video</a></li>
+                      <li class="scroll-to-section"><a href="/kategoriLandingPage">Kategori</a></li>
                       <li class="scroll-to-section"><a href="/ulasanLandingPage" class="active">Ulasan</a></li>
                       <li class="scroll-to-section"><a href="/abouts">Tentang</a></li>
                       <li class="scroll-to-section"><a href="/login">Login</a></li>
@@ -159,6 +160,17 @@
   <br>
   <br>
   <br>
+
+  <div class="container text-center">
+    <div class="filter-options d-inline-block">
+        <select name="filter" id="filter" onchange="filterComments(this.value)" style="padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px;">
+            <option value="" selected>Urutkan</option>
+            <option value="newest">Terbaru</option>
+            <option value="oldest">Terlama</option>
+            <option value="mine">Komen Saya</option>
+        </select>
+    </div>
+</div>
 
     <div class="container">
       @foreach ($data1 as $item)
@@ -234,13 +246,7 @@
         </div>        
         </div>
       @endforeach
-    </div>
-    
-    
-    
-    
-  
-          
+    </div>        
 
   <div class="text-center">
     <div class="buttons" style="display: flex; justify-content: center; gap: 10px;">
@@ -252,6 +258,13 @@
         </div>
     </div>
 </div>
+
+  <!-- Filter Komen Ulansan -->
+  <script>
+    function filterComments(filter) {
+        window.location.href = '{{ route('ulasan') }}?filter=' + filter;
+    }
+    </script>
 
 <script>
   // Optional: Menambahkan animasi scroll horizontal

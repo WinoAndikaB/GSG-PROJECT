@@ -222,7 +222,7 @@
                         }
                       @endphp
                       | 
-                          <a href="{{ route('showDetailLPArtikel', ['id' => $item->id]) }}" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a></p></span>
+                          <a href="{{ route('detail.artikel', ['id' => $item->id]) }}" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a></p></span>
                   </div>
                   <hr>
                   @endforeach

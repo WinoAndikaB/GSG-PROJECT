@@ -133,6 +133,7 @@
                     <li class="scroll-to-section"><a href="#trends">Trending</a></li>
                     <li class="scroll-to-section"><a href="#about">Artikel</a></li>
                     <li class="scroll-to-section"><a href="/Video" class="text-center">Video</a></li>
+                    <li class="scroll-to-section"><a href="/kategori">Kategori</a></li>
                     <li class="scroll-to-section"><a href="/ulasan" class="active">Ulasan</a></li>
                     <li class="scroll-to-section"><a href="/about">Tentang</a></li>
                     <li class="scroll-to-section">
@@ -426,7 +427,7 @@
   <!-- Filter Komen Ulansan -->
     <script>
       function filterComments(filter) {
-          window.location.href = '{{ route('ulasan') }}?filter=' + filter;
+          window.location.href = '{{ route('ulasanLandingPage') }}?filter=' + filter;
       }
       </script>
     

@@ -17,6 +17,7 @@
                           <li class="scroll-to-section"><a href="#trends">Trending</a></li>
                           <li class="scroll-to-section"><a href="#about">Artikel</a></li>
                           <li class="scroll-to-section"><a href="/landingPageVideo" class="active">Video</a></li>
+                          <li class="scroll-to-section"><a href="/kategoriLandingPage">Kategori</a></li>
                           <li class="scroll-to-section"><a href="/ulasanLandingPage" class="text-center">Ulasan</a></li>
                           <li class="scroll-to-section"><a href="/abouts">Tentang</a></li>
                           <li>

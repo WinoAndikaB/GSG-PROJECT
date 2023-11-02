@@ -62,6 +62,7 @@
                   <li class="scroll-to-section"><a href="#trends">Trending</a></li>
                   <li class="scroll-to-section"><a href="#about">Artikel</a></li>
                   <li class="scroll-to-section"><a href="/Video" class="">Video</a></li>
+                  <li class="scroll-to-section"><a href="/kategori">Kategori</a></li>
                   <li class="scroll-to-section"><a href="/ulasan" class="text-center">Ulasan</a></li>
                   <li class="scroll-to-section"><a href="/about" class="">Tentang</a></li>
                   <li class="scroll-to-section">
