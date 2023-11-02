@@ -130,6 +130,7 @@ use Illuminate\Support\Facades\Route;
 
         //[Admin] Delete Artikel
         Route::get('/deleteA/{id}',[AdminController::class,'deleteArtikel'])->name('deleteArtikel');
+        Route::get('/deleteKomentarAA/{id}',[AdminController::class,'deleteKomentarAA'])->name('deleteKomentarAA');
 
         //[Admin] Edit Artikel
         Route::get('/tampilDataEditArtikel/{id}',[AdminController::class,'tampilDataEditArtikel']);
@@ -151,6 +152,7 @@ use Illuminate\Support\Facades\Route;
 
         //[Admin] Delete Pengguna
         Route::get('/deleteV/{id}',[AdminController::class,'deleteVideo'])->name('deleteVideo');
+        Route::get('/deleteKomentarVA/{id}',[AdminController::class,'deleteKomentarVA'])->name('deleteKomentarVA');
 
     //[Admin] Tab Pengguna
 
@@ -182,6 +184,9 @@ use Illuminate\Support\Facades\Route;
         Route::get('/laporanUser', [AdminController::class, 'laporanUser'])->name('laporanUser');
         Route::get('/laporanVideoUser', [AdminController::class, 'laporanVideoUser'])->name('laporanVideoUser');
         Route::get('/laporanUlasanUser', [AdminController::class, 'laporanUlasanUser'])->name('laporanUlasanUser');
+
+        Route::get('/deleteLaporanUA/{id}',[AdminController::class,'deleteLaporanUA'])->name('deleteLaporanUA');
+        Route::get('/deleteLaporanVA/{id}',[AdminController::class,'deleteLaporanVA'])->name('deleteLaporanVA');
 
     //[Admin] Tab Syarat & Ketentuan
 

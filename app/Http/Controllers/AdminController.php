@@ -118,6 +118,14 @@ class AdminController extends Controller
         return redirect('/artikelAdmin');
     }
 
+     //[Admin-Artikel] Delete Komentar Artikel
+     function deleteKomentarAA($id){
+        $data=komentar_artikel::find($id);
+        $data->delete();
+        return redirect('/komentarArtikel');
+    }
+
+
     //[Admin-Artikel] Halaman Tambah Artikel
     public function create()
     {
@@ -268,6 +276,14 @@ class AdminController extends Controller
         return redirect('/videoAdmin');
     }
 
+       
+    //[Admin-Video] Delete Komentar Video
+    function deleteKomentarVA($id){
+        $data=komentar_video::find($id);
+        $data->delete();
+        return redirect('/komentarVideo');
+    }
+
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -359,18 +375,26 @@ class AdminController extends Controller
         return view('admin.laporan.laporanUser', compact('laporanArtikelU'));
     }
 
+        
+    //[Admin-Laporan User] Delete Artikel User
+        function deleteLaporanUA($id){
+            $data1=laporanArtikelUser::find($id);
+            $data1->delete();
+            return redirect('/laporanUser');
+        }
+
+        //[Admin-Laporan User] Delete Artikel User
+        function deleteLaporanVA($id){
+            $data1=laporanVideoUser::find($id);
+            $data1->delete();
+            return redirect('/laporanVideoUser');
+        }
+
     function laporanVideoUser(){
 
         $laporanVideoUser = LaporanVideoUser::orderBy('created_at', 'desc')->paginate(10);
 
         return view('admin.laporan.laporanVideoUser', compact('laporanVideoUser'));
-    }
-
-    function laporanUlasanUser(){
-
-        $laporanUlasanUser = LaporanUlasanUser::orderBy('created_at', 'desc')->paginate(10);
-
-        return view('admin.laporan.laporanUlasanUser', compact('laporanUlasanUser'));
     }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

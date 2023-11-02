@@ -249,43 +249,43 @@
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama User</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Artikel ID</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Artikel</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Laporan</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Alasan</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"">Laporan</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"">Alasan</th>
                                 <th class="text-secondary opacity-7"></th>
                               </tr>
                             </thead>
-                             @foreach ($laporanArtikelU as $item)
+                            @foreach ($laporanArtikelU as $item)
                             <tbody>
-                              <tr>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['id']}}</p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['user_id']}}</p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['nama_user']}}</p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['artikel_id']}}</p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['nama_artikel']}}</p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['laporan']}}</p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['alasan']}}</p>
-                                </td>
-                                <td class="align-middle">
-                                  <a href="" class="btn btn-danger btn btn-primary btn-round" onclick="return showConfirmation()">
-                                    <i class="fa fa-trash"></i>
-                                  </a>
-                                </td>
-                              </tr>
+                                <tr>
+                                    <td class="align-middle text-center">
+                                        <p class="text-xs font-weight-bold mb-0">{{$item['id']}}</p>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <p class="text-xs font-weight-bold mb-0">{{$item['user_id']}}</p>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <p class="text-xs font-weight-bold mb-0">{{$item['user']['name']}}</p>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <p class="text-xs font-weight-bold mb-0">{{$item['artikel_id']}}</p>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <p class="text-xs font-weight-bold mb-0">{{$item['artikel']['judulArtikel']}}</p>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <p class="text-xs font-weight-bold mb-0">{{$item['laporan']}}</p>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <p class="text-xs font-weight-bold mb-0">{{$item['alasan']}}</p>
+                                    </td>
+                                    <td class="align-middle">
+                                      <a href="{{"deleteLaporanUA/".$item['id']}}" class="btn btn-danger btn btn-primary btn-round" onclick="return showConfirmation()">
+                                        <i class="fa fa-trash"></i>
+                                      </a>
+                                    </td>
+                                </tr>
                             </tbody>
-                            @endforeach
+                        @endforeach                        
                           </table>
                         </div>
                       </div>

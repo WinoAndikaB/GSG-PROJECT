@@ -12,11 +12,11 @@ class LaporanArtikelUser extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function artikel()
     {
-        return $this->belongsTo(Artikel::class, 'artikel_id');
+        return $this->belongsTo(artikels::class, 'artikel_id', 'id');
     }
 }

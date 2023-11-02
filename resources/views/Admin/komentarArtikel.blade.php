@@ -264,13 +264,13 @@
                                   <p class="text-xs font-weight-bold mb-0">{{$item['artikel_id']}}</p>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['namaArtikel']}}</p>
+                                  <p class="text-xs font-weight-bold mb-0">{{$item['artikel']['judulArtikel']}}</p>
                                 </td>
                                 <td class="align-middle text-center">
                                   <p class="text-xs font-weight-bold mb-0">{{$item['user_id']}}</p>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['namaUser']}}</p>
+                                  <p class="text-xs font-weight-bold mb-0">{{$item['user']['name']}}</p>
                                 </td>
                                 <td class="align-middle text-center">
                                   <p class="text-xs font-weight-bold mb-0">{{$item['pesan']}}</p>
@@ -279,10 +279,7 @@
                                   <span class="badge badge-sm bg-gradient-success">{{ \Carbon\Carbon::parse($item['created_at'])->translatedFormat('l, j F Y') }}</span>
                                 </td>
                                 <td class="align-middle">
-                                  <a href="/tampilDataEditArtikel/{{ $item->id}}" class="btn btn-warning btn btn-primary btn-round">
-                                    <i class="fa fa-pencil"></i>
-                                  </a>
-                                  <a href="{{"deleteA/".$item['id']}}" class="btn btn-danger btn btn-primary btn-round" onclick="return showConfirmation()">
+                                  <a href="{{"deleteKomentarAA/".$item['id']}}" class="btn btn-danger btn btn-primary btn-round" onclick="return showConfirmation()">
                                     <i class="fa fa-trash"></i>
                                   </a>
                                 </td>
