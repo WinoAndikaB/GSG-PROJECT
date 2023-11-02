@@ -104,7 +104,7 @@
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Artikel
-              <span class="text-success text-sm font-weight-bolder">+ {{ $dataAddedInLast24HoursKomentarArtikel + $dataAddedInLast24HoursArtikel}}</span> 
+              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruArtikel + $dataBaruKomentarArtikel}}</span> 
             </span>
           </a>
         </li>
@@ -113,7 +113,9 @@
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-warning text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Video</span>
+            <span class="nav-link-text ms-1">Video
+              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruVideo + $dataBaruKomentarVideo}}</span> 
+            </span>
           </a>
         </li>
         <li class="nav-item">
@@ -121,7 +123,9 @@
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-circle-08 text-warning text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Pengguna</span>
+            <span class="nav-link-text ms-1">Pengguna
+              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruUser}}</span> 
+            </span>
           </a>
         </li>
         <li class="nav-item">
@@ -129,19 +133,23 @@
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-paper-diploma text-warning text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Ulasan</span>
+            <span class="nav-link-text ms-1">Ulasan 
+              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruUlasan}}</span> 
+            </span>
           </a>
         </li>
-          <li class="nav-item">
+        <li class="nav-item">
           <a class="nav-link " href="/laporanUser">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-sound-wave text-warning text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Laporan User</span>
+            <span class="nav-link-text ms-1">Laporan User 
+              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruLaporanArtikel + $dataBaruLaporanVideo}}</span> 
+            </span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/syaratdanketentuan">
+          <a class="nav-link " href="/syaratdanketentuan">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
             </div>
@@ -150,8 +158,8 @@
         </li>
       </ul>
     </div>
-    <div class="sidenav-footer mx-3 ">
-       
+
+  <div class="sidenav-footer mx-3 ">     
   </aside>
   <main class="main-content position-relative border-radius-lg ">
     <!-- Navbar -->

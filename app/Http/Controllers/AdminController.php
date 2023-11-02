@@ -26,8 +26,20 @@ class AdminController extends Controller
     //[Admin-Profile] Profil User
     public function profileAdmin()
     {
-        
-        return view('Admin.profileA');
+        // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+        $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        return view('Admin.profileA', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 
+        'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }  
   
     //[Admin-Profile] Edit Profil Admin
@@ -69,11 +81,16 @@ class AdminController extends Controller
         $data1 = ulasans::all();
 
         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
-        $dataAddedInLast24HoursUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataAddedInLast24HoursUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataAddedInLast24HoursArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-        $dataAddedInLast24HoursKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
         //Rating
         $ratings = $data1->pluck('rating')->map(function ($rating) {
@@ -85,7 +102,8 @@ class AdminController extends Controller
         
 
         return view('admin.dashboard', compact('totalArtikel', 'totalUser', 'totalUlasan', 'averageRating', 'totalUlasan', 
-        'dataAddedInLast24HoursUlasan','dataAddedInLast24HoursUser','dataAddedInLast24HoursArtikel','dataAddedInLast24HoursKomentarArtikel'));
+        'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 
+        'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -95,20 +113,40 @@ class AdminController extends Controller
     function artikel(){
         $data = artikels::orderBy('created_at', 'desc')->paginate(5);
 
-        $dataAddedInLast24HoursKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataAddedInLast24HoursArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+        $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-        return view('admin.artikel', compact('data','dataAddedInLast24HoursKomentarArtikel','dataAddedInLast24HoursArtikel'));
+        $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        return view('admin.artikel', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
     //[Admin-Artikel] Halaman Komentar Artikel
       function komentarArtikel(){
         $komenarA = komentar_artikel::orderBy('created_at', 'desc')->paginate(20);
 
-        $dataAddedInLast24HoursKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataAddedInLast24HoursArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+         $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+ 
+         $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+ 
+         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-        return view('admin.komentarArtikel', compact('komenarA','dataAddedInLast24HoursArtikel','dataAddedInLast24HoursKomentarArtikel'));
+        return view('admin.komentarArtikel', compact('komenarA', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
     //[Admin-Artikel] Delete Data Artikel
@@ -129,7 +167,20 @@ class AdminController extends Controller
     //[Admin-Artikel] Halaman Tambah Artikel
     public function create()
     {
-        return view('admin.FormAdmin.formTambahArtikel');
+         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+         $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+ 
+         $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+ 
+         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        return view('admin.FormAdmin.formTambahArtikel', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
     public function store(Request $request)
@@ -160,7 +211,21 @@ class AdminController extends Controller
     //[Admin-Artikel] Edit Data Artikel
     function tampilDataEditArtikel($id){
         $data = artikels::find($id);
-        return view('admin.FormAdmin.formEditArtikel', compact('data'));
+
+         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+         $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+ 
+         $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+ 
+         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         
+        return view('admin.FormAdmin.formEditArtikel', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
     function updateDataIdArtikel(Request $request, $id){
@@ -189,27 +254,60 @@ class AdminController extends Controller
 
         $tableVideo = video::orderBy('created_at', 'desc')->paginate(4);
 
-        $dataAddedInLast24HoursKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataAddedInLast24HoursVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+         $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+ 
+         $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+ 
+         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-        return view('admin.video', compact('tableVideo','dataAddedInLast24HoursKomentarVideo','dataAddedInLast24HoursVideo'));
+        return view('admin.video', compact('tableVideo', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
     //[Admin-Artikel] Halaman Komentar Artikel
     function komentarVideo(){
         $komenarV = komentar_video::orderBy('created_at', 'desc')->paginate(20);
 
-        $dataAddedInLast24HoursKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataAddedInLast24HoursVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+         $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+ 
+         $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+ 
+         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-        return view('admin.komentarVideo', compact('komenarV','dataAddedInLast24HoursKomentarVideo','dataAddedInLast24HoursVideo'));
+        return view('admin.komentarVideo', compact('komenarV', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }    
 
     //[Admin-Video] Halaman Tambah Video
     function formTambahVideo(){
 
-        return view('admin.FormAdmin.formTambahVideo');
-    }
+         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+         $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+ 
+         $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+ 
+         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        return view('admin.FormAdmin.formTambahVideo', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
+    }    
 
     public function storeVideo(Request $request)
     {
@@ -252,8 +350,22 @@ class AdminController extends Controller
       //[Admin-Video] Halaman Edit Video
       function formEditVideo($id){
         $data = video::find($id);
-        return view('admin.FormAdmin.formEditVideo', compact('data'));
-    }
+
+         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+         $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+ 
+         $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+ 
+         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        return view('admin.FormAdmin.formEditVideo', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
+    }    
 
     function updateVideo(Request $request, $id){
         $data = Video::find($id);
@@ -295,9 +407,22 @@ class AdminController extends Controller
         
         $totalLikes = Likes::where('user_id', $userId)->count();
         $totalDislikes = Dislikes::where('user_id', $userId)->count();
+
+         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+         $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+ 
+         $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+ 
+         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
     
-        return view('admin.pengguna', compact('users', 'totalLikes', 'totalDislikes'));
-    }
+        return view('admin.pengguna', compact('users', 'totalLikes', 'totalDislikes', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
+    }    
     
 
     //[Admin-Pengguna] Fungsi Like & Dislike
@@ -314,8 +439,21 @@ class AdminController extends Controller
 
     //[Admin-Pengguna] Tambah Pengguna
     function formTambahUserAdm(){
-        return view('admin.FormAdmin.formTambahUserAdm');
-    }
+        // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+         $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+ 
+         $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+ 
+         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        return view('admin.FormAdmin.formTambahUserAdm', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
+    }    
 
     function registerAdmin(Request $req){
             user::create([
@@ -354,7 +492,20 @@ class AdminController extends Controller
         //Hitung Ulasan
         $totalUlasan = ulasans::count();
 
-        return view('admin.ulasans', compact('data1', 'averageRating', 'totalUlasan'));
+        // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+        $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        return view('admin.ulasans', compact('data1', 'averageRating', 'totalUlasan', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
     //[Admin-Ulasan] Delete Ulasan
@@ -372,7 +523,20 @@ class AdminController extends Controller
 
         $laporanArtikelU = laporanArtikelUser::orderBy('created_at', 'desc')->paginate(10);
 
-        return view('admin.laporan.laporanUser', compact('laporanArtikelU'));
+        // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+        $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        return view('admin.laporan.laporanUser', compact('laporanArtikelU', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
         
@@ -394,7 +558,20 @@ class AdminController extends Controller
 
         $laporanVideoUser = LaporanVideoUser::orderBy('created_at', 'desc')->paginate(10);
 
-        return view('admin.laporan.laporanVideoUser', compact('laporanVideoUser'));
+        // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+        $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        return view('admin.laporan.laporanVideoUser', compact('laporanVideoUser', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -405,12 +582,39 @@ class AdminController extends Controller
     {
         $data = syaratdanketentuans::all();
 
-        return view('admin.term&Condition', compact('data'));
+        // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+        $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        return view('admin.term&Condition', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
     // [Syarat & Ketentuan] Form Tambah T&C
     function formTambahTdanC(){
-        return view('admin.FormAdmin.formTambahTdanC');
+
+        // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+        $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        
+        return view('admin.FormAdmin.formTambahTdanC', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
     function storeTdanC(Request $req){
@@ -424,7 +628,21 @@ class AdminController extends Controller
      // [Syarat & Ketentuan] Form Edit T&C
     function formEditTdanC($id){
             $data = syaratdanketentuans::find($id);
-            return view('admin.FormAdmin.formEditTermOfCondition', compact('data'));
+
+            // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+            $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
+            $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
+            $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+            $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+    
+            $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+            $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+    
+            $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+            $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+            return view('admin.FormAdmin.formEditTermOfCondition', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+            'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
         }
     
     function updateTdanC(Request $request, $id){
