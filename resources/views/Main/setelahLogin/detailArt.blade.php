@@ -221,24 +221,34 @@
           @endphp
 
           @foreach($kategori as $item)
-          @if (!in_array($item->kategori, $uniqueCategories))
-              <span class="fh5co_tags_all">
-                  <a href="{{ $item->kategori === 'Game' ? route('kategoriGameLog') : ($item->kategori === 'VTuber' ? route('kategoriVTuberLog') : route('kategoriAnimeLog')) }}" class="fh5co_tagg">{{ $item->kategori }}</a>
-              </span>
-              @php
-              $uniqueCategories[] = $item->kategori;
-              @endphp
-          @endif
-      @endforeach
+            @if (!in_array($item->kategori, $uniqueCategories))
+                <span class="fh5co_tags_all">
+                    <a href="{{ $item->kategori === 'Game' ? route('kategoriGameLog') : ($item->kategori === 'VTuber' ? route('kategoriVTuberLog') : route('kategoriAnimeLog')) }}" class="fh5co_tagg">{{ $item->kategori }}</a>
+                </span>
+                @php
+                $uniqueCategories[] = $item->kategori;
+                @endphp
+              @endif
+          @endforeach
 
           <div>
             <div class="fh5co_heading fh5co_heading_border_bottom py-2 mb-4">Tags</div>
         </div>
         <div class="clearfix"></div>
+       
+        @php
+        $uniqueArtikel = [];
+        @endphp
+
         @foreach($tags as $item)
-            <span class="fh5co_tags_all">
-                <a href="#" class="fh5co_tagg">{{ $item->tags }}</a>
-            </span>
+            @if (!in_array($item->tags, $uniqueArtikel))
+              <span class="fh5co_tags_all">
+                  <a href="#" class="fh5co_tagg">{{ $item->tags }}</a>
+              </span>
+              @php
+              $uniqueArtikel[] = $item->tags;
+              @endphp
+           @endif
         @endforeach
                     
             <div class="fh5co_heading fh5co_heading_border_bottom pt-3 py-2 mb-4">Most Popular</div>

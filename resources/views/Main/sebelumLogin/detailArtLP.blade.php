@@ -208,11 +208,21 @@
             <div class="fh5co_heading fh5co_heading_border_bottom py-2 mb-4">Tags</div>
         </div>
         <div class="clearfix"></div>
-        @foreach($tags as $item)
-            <span class="fh5co_tags_all">
-                <a href="#" class="fh5co_tagg">{{ $item->tags }}</a>
-            </span>
-        @endforeach
+
+        @php
+          $uniqueArtikel = [];
+          @endphp
+
+          @foreach($tags as $item)
+              @if (!in_array($item->tags, $uniqueArtikel))
+                  <span class="fh5co_tags_all">
+                      <a href="#" class="fh5co_tagg">{{ $item->tags }}</a>
+                  </span>
+                  @php
+                  $uniqueArtikel[] = $item->tags;
+                  @endphp
+              @endif
+          @endforeach
                     
             <div class="fh5co_heading fh5co_heading_border_bottom pt-3 py-2 mb-4">Most Popular</div>
             <div class="row pb-3">

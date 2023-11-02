@@ -273,21 +273,8 @@ class LandingPageController extends Controller
         // Mengambil data ulasan dengan mengurutkannya berdasarkan created_at
         $data1 = ulasans::orderBy('created_at', 'desc')->get();
 
-             // Mengambil data ulasan secara acak
-             $query = ulasans::inRandomOrder();
-
-           //Filter
-           $filter = $request->input('filter'); 
-
-           if ($filter === 'newest') {
-               // Urutkan ulasan berdasarkan yang terbaru
-               $query->orderByRaw('created_at DESC');
-           } elseif ($filter === 'oldest') {
-               // Urutkan ulasan berdasarkan yang terlama
-               $query->orderByRaw('created_at ASC');
-           } 
-   
-           $data1 = $query->get();
+        // Mengambil data ulasan secara acak
+        $query = ulasans::inRandomOrder();
     
         //Rating
         $ratings = $data1->pluck('rating')->map(function ($rating) {

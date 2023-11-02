@@ -158,7 +158,7 @@
                     <li class="scroll-to-section">
                       <a href="#" class="d-sm-inline d-none text-white text-bold" id="logout-link" onclick="openModal()"> Logout</a>
                     </li>
-            </nav>
+              </nav>
             </div>
         </div>
     </div>
@@ -427,7 +427,7 @@
   <!-- Filter Komen Ulansan -->
     <script>
       function filterComments(filter) {
-          window.location.href = '{{ route('ulasanLandingPage') }}?filter=' + filter;
+          window.location.href = '{{ route('ulasan') }}?filter=' + filter;
       }
       </script>
     

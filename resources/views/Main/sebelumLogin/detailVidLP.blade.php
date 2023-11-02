@@ -207,10 +207,20 @@
           <div class="fh5co_heading fh5co_heading_border_bottom py-2 mb-4">Tags</div>
       </div>
       <div class="clearfix"></div>
+
+      @php
+      $uniqueVideo = [];
+      @endphp
+      
       @foreach($tagsV as $item)
+      @if (!in_array($item->tagsVideo, $uniqueVideo))
           <span class="fh5co_tags_all">
               <a href="#" class="fh5co_tagg">{{ $item->tagsVideo }}</a>
           </span>
+          @php
+          $uniqueVideo[] = $item->tagsVideo;
+          @endphp
+      @endif
       @endforeach
 
               
