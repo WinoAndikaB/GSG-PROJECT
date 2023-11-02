@@ -240,33 +240,34 @@
                 @csrf
                 <div class="form-group">
                   <label for="gambarArtikel">Link Video</label>
-                  <input type="text" class="form-control" id="linkVideo" name="linkVideo" required>
+                  <input type="text" class="form-control" id="linkVideo" name="linkVideo" >
               </div>              
                 <div class="form-group">
                     <label for="judulArtikel">Judul Video</label>
-                    <textarea class="form-control" type="textarea" name="judulVideo" required></textarea>
+                    <textarea class="form-control" type="textarea" name="judulVideo" ></textarea>
                 </div>
                 <div class="form-group">
                     <label for="penulis">Uploader</label>
-                    <input type="text" class="form-control" id="uploader" name="uploader" value="{{ Auth::user()->name}}" required readonly>
+                    <input type="text" class="form-control" id="uploader" name="uploader" value="{{ Auth::user()->name}}" readonly>
                 </div>
                 <div class="form-group">
                   <label for="email">Email</label>
-                  <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}" required readonly>
+                  <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}" readonly>
               </div>
               <div class="form-group">
                 <label for="kategoriVideo">Kategori</label>
-                <input type="text" class="form-control" id="kategoriVideo" name="kategoriVideo" required>
+                <input type="text" class="form-control" id="kategoriVideo" name="kategoriVideo" >
             </div>
             <div class="form-group">
               <label for="tagsVideo">Tags</label>
-              <input type="text" class="form-control" id="tagsVideo" name="tagsVideo" required>
+              <input type="text" class="form-control" id="tagsVideo" name="tagsVideo" >
           </div>
                 <div class="form-group">
                   <label for="" class="form-control-label">Deskirpsi Video</label>
-                  <textarea class="form-control" type="text" name="deskripsiVideo" id="editor" required></textarea>
+                  <textarea class="form-control" type="text" name="deskripsiVideo" id="editor" ></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary mt-3">Tambah</button>
+
                 <a href="/videoAdmin" class="btn btn-info mt-3">Kembali</i></a>
             </form>            
             <div class="card-body px-0 pt-12 pb-2">

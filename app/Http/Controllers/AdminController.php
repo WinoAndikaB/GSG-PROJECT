@@ -185,6 +185,17 @@ class AdminController extends Controller
 
     public function store(Request $request)
     {
+        // Validate the request data
+        $request->validate([
+            'judulArtikel' => 'required',
+            'penulis' => 'required',
+            'email' => 'required|email',
+            'kategori' => 'required',
+            'tags' => 'required',
+            'deskripsi' => 'required',
+            'gambarArtikel' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Adjust the allowed file types and size
+        ]);
+    
         $article = new artikels;
         $article->judulArtikel = $request->input('judulArtikel');
         $article->penulis = $request->input('penulis');
@@ -195,18 +206,19 @@ class AdminController extends Controller
     
         // Handle file upload
         if ($request->hasFile('gambarArtikel')) {
-            $file = $request->file('gambarArtikel');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->storeAs('your_upload_folder', $fileName, 'public'); 
+            $image = $request->file('gambarArtikel');
     
-            $article->gambarArtikel = $fileName;
+            $filename = $image->getClientOriginalName();
+            $image->move(public_path('gambarArtikel'), $filename);
+            
+            // Set the image file name in the database
+            $article->gambarArtikel = $filename;
         }
     
         $article->save();
     
         return redirect('/artikelAdmin')->with('success', 'Article added successfully.');
-    }
-    
+    }      
 
     //[Admin-Artikel] Edit Data Artikel
     function tampilDataEditArtikel($id){
@@ -228,9 +240,8 @@ class AdminController extends Controller
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
-    function updateDataIdArtikel(Request $request, $id){
+    function updateArtikel(Request $request, $id){
         $data = artikels::find($id);
-        $data->update($request->all());
     
         if ($request->hasFile('gambarArtikel')) {
             $image = $request->file('gambarArtikel');
@@ -242,9 +253,11 @@ class AdminController extends Controller
             $data->gambarArtikel = $filename;
             $data->save();
         }
+
+        $data->save();
     
-        return redirect()->route('dataArtikel')->with('success','Data Berhasil di Update');
-    }    
+        return redirect()->route('artikel')->with('success','Data Berhasil di Update');
+    }   
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -311,6 +324,17 @@ class AdminController extends Controller
 
     public function storeVideo(Request $request)
     {
+        // Validate the request data
+        $request->validate([
+            'judulVideo' => 'required',
+            'uploader' => 'required',
+            'email' => 'required|email',
+            'kategoriVideo' => 'required',
+            'tagsVideo' => 'required',
+            'deskripsiVideo' => 'required',
+            'linkVideo' => 'required|url', // Ensure the link is a valid URL
+        ]);
+    
         $videos = new Video;
         $videos->judulVideo = $request->input('judulVideo');
         $videos->uploader = $request->input('uploader');
@@ -318,34 +342,29 @@ class AdminController extends Controller
         $videos->kategoriVideo = $request->input('kategoriVideo');
         $videos->tagsVideo = $request->input('tagsVideo');
         $videos->deskripsiVideo = $request->input('deskripsiVideo');
-        
-        // Konversi link YouTube ke URL embed
-        $linkVideo = $request->input('linkVideo');
+        $videos->linkVideo = $request->input('linkVideo'); // Store the original video link
+    
         $videoId = '';
-
-        // Cek apakah input mengandung "youtube.com/watch?v="
-        if (strpos($linkVideo, 'youtube.com/watch?v=') !== false) {
-            $videoId = explode('v=', parse_url($linkVideo, PHP_URL_QUERY))[1];
+    
+        // Extract the video ID from the YouTube link
+        if (strpos($request->input('linkVideo'), 'youtube.com/watch?v=') !== false) {
+            $videoId = explode('v=', parse_url($request->input('linkVideo'), PHP_URL_QUERY))[1];
+        } elseif (strpos($request->input('linkVideo'), 'youtu.be/') !== false) {
+            $videoId = explode('/', parse_url($request->input('linkVideo'), PHP_URL_PATH))[1];
         }
-
-        // Cek apakah input mengandung "youtu.be/"
-        if (strpos($linkVideo, 'youtu.be/') !== false) {
-            $videoId = explode('/', parse_url($linkVideo, PHP_URL_PATH))[1];
-        }
-
-        // Jika berhasil mengekstrak ID video, buat URL embed
+    
         if (!empty($videoId)) {
             $embedUrl = "https://www.youtube.com/embed/$videoId";
-            $videos->linkVideo = $embedUrl;
+            $videos->linkVideo = $embedUrl; // Update the link to the embedded video
         } else {
-            // Jika ID video tidak dapat diekstrak, mungkin berikan pesan kesalahan atau penanganan lainnya
             return redirect('/videoAdmin')->with('error', 'Invalid YouTube video link.');
         }
-
+    
         $videos->save();
-
+    
         return redirect('/videoAdmin')->with('success', 'Video added successfully.');
     }
+    
 
       //[Admin-Video] Halaman Edit Video
       function formEditVideo($id){
@@ -376,6 +395,22 @@ class AdminController extends Controller
         $data->tagsVideo = $request->input('tagsVideo');
         $data->deskripsiVideo = $request->input('deskripsiVideo');
         
+        $videoId = '';
+    
+        // Extract the video ID from the YouTube link
+        if (strpos($request->input('linkVideo'), 'youtube.com/watch?v=') !== false) {
+            $videoId = explode('v=', parse_url($request->input('linkVideo'), PHP_URL_QUERY))[1];
+        } elseif (strpos($request->input('linkVideo'), 'youtu.be/') !== false) {
+            $videoId = explode('/', parse_url($request->input('linkVideo'), PHP_URL_PATH))[1];
+        }
+    
+        if (!empty($videoId)) {
+            $embedUrl = "https://www.youtube.com/embed/$videoId";
+            $data->linkVideo = $embedUrl; // Update the link to the embedded video
+        } else {
+            return redirect('/videoAdmin')->with('error', 'Invalid YouTube video link.');
+        }
+    
         $data->save();
     
         return redirect()->route('videoAdmin')->with('success','Data Berhasil di Update');

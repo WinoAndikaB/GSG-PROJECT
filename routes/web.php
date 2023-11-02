@@ -134,7 +134,8 @@ use Illuminate\Support\Facades\Route;
 
         //[Admin] Edit Artikel
         Route::get('/tampilDataEditArtikel/{id}',[AdminController::class,'tampilDataEditArtikel']);
-        Route::post('/updateDataIdArtikel/{id}',[AdminController::class,'updateDataIdArtikel']);
+        // Route::post('/updateDataIdArtikel/{id}',[AdminController::class,'updateDataIdArtikel']);
+        Route::post('/formEditArtikel/updateArtikel/{id}',[AdminController::class,'updateArtikel'])->name('updateArtikel');
 
     //[Admin] Tab Video
 
