@@ -25,8 +25,17 @@ use Illuminate\Support\Facades\Route;
         //[Non-User] Tab Kategori Landing Page
         Route::get('/kategoriLandingPage', [LandingPageController::class, 'kategoriLandingPage'])->name('kategoriLandingPage');
         Route::get('/kategoriAnime', [LandingPageController::class, 'kategoriAnime'])->name('kategoriAnime');
+        Route::get('/kategoriAnimeV', [LandingPageController::class, 'kategoriAnimeV'])->name('kategoriAnimeV');
+
         Route::get('/kategoriVTuber', [LandingPageController::class, 'kategoriVTuber'])->name('kategoriVTuber');
+        Route::get('/kategoriVTuberV', [LandingPageController::class, 'kategoriVTuberV'])->name('kategoriVTuberV');
+
         Route::get('/kategoriGame', [LandingPageController::class, 'kategoriGame'])->name('kategoriGame');
+        Route::get('/kategoriGameV', [LandingPageController::class, 'kategoriGameV'])->name('kategoriGameV');
+
+        Route::get('/kategoriAnimeVideo', [LandingPageController::class, 'kategoriAnimeVideo'])->name('kategoriAnimeVideo');
+        Route::get('/kategoriVTuberVideo', [LandingPageController::class, 'kategoriVTuberVideo'])->name('kategoriVTuberVideo');
+        Route::get('/kategoriGameVideo', [LandingPageController::class, 'kategoriGameVideo'])->name('kategoriGameVideo');
 
         //[Non-User] Tab About Landing Page
         Route::get('/abouts', [LandingPageController::class, 'aboutLandingPage'])->name('aboutLandingPage');

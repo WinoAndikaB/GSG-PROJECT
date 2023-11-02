@@ -13,7 +13,7 @@
     <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <title>Kategori VTuber - GSG Project</title>
+    <title>Kategori Aritikel VTuber - GSG Project</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -24,13 +24,35 @@
     <link rel="stylesheet" href="assets/css/owl.css">
     <link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css">
-<!--
 
-TemplateMo 574 Mexant
-
-https://templatemo.com/tm-574-mexant
-
--->
+    <style>
+      /* Style for the buttons */
+      .animated-button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+        cursor: pointer;
+        margin: 5px;
+        font-size: 16px;
+      }
+      
+      .animated-button:hover {
+        background-color: #0056b3;
+      }
+      
+      /* Additional styling for the second button */
+      .animated-button:nth-of-type(2) {
+        background-color: #ff6600;
+      }
+      
+      .animated-button:nth-of-type(2):hover {
+        background-color: #ff4500;
+      }
+      
+          </style>
 
   </head>
 
@@ -86,13 +108,16 @@ https://templatemo.com/tm-574-mexant
   <div class="pd-top-80 pd-bottom-50" id="grid">
     <div class="container">
 
+      
       <section class="about-us" id="about">
         <div class="container">
           <div class="row">
             <div class="col-lg-6 offset-lg-3">
               <div class="section-heading">
                 <h6>VTuber</h6>
-                <h4>List Kategori VTuber</h4>
+                <h4>List Artikel VTuber</h4>
+                <a href="/kategoriVTuber" class="animated-button">Artikel</a>
+                <a href="/kategoriVTuberV" class="animated-button">Video</a>
               </div>
             </div>
             <div>

@@ -24,16 +24,37 @@
     <link rel="stylesheet" href="assets/css/owl.css">
     <link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css">
-<!--
+    
+    <style>
+/* Style for the buttons */
+.animated-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  cursor: pointer;
+  margin: 5px;
+  font-size: 16px;
+}
 
-TemplateMo 574 Mexant
+.animated-button:hover {
+  background-color: #0056b3;
+}
 
-https://templatemo.com/tm-574-mexant
+/* Additional styling for the second button */
+.animated-button:nth-of-type(2) {
+  background-color: #ff6600;
+}
 
--->
+.animated-button:nth-of-type(2):hover {
+  background-color: #ff4500;
+}
 
-  </head>
+    </style>
 
+</head>
 <body>
 
 
@@ -92,7 +113,9 @@ https://templatemo.com/tm-574-mexant
             <div class="col-lg-6 offset-lg-3">
               <div class="section-heading">
                 <h6>Anime</h6>
-                <h4>List Kategori Anime</h4>
+                <h4>List Artikel Anime</h4><br>
+                <a href="/kategoriAnime" class="animated-button">Artikel</a>
+                <a href="/kategoriAnimeV" class="animated-button">Video</a>
               </div>
             </div>
             <div>

@@ -112,6 +112,17 @@ class LandingPageController extends Controller
             return view('main.sebelumLogin.KategoriSL.kategoriAnime', compact('kategoriAnime'));
         }
 
+        function kategoriAnimeV(){
+            $kategori = 'Anime';
+        
+            $kategoriAnimeV = video::where('kategoriVideo', $kategori)
+                                    ->inRandomOrder()
+                                    ->take(10)
+                                    ->get();
+        
+            return view('main.sebelumLogin.KategoriSL.kategoriAnimeVideo', compact('kategoriAnimeV'));
+        }
+
         function kategoriVTuber(){
             $kategori = 'VTuber';
         
@@ -121,6 +132,18 @@ class LandingPageController extends Controller
                                     ->get();
         
             return view('main.sebelumLogin.KategoriSL.kategoriVTuber', compact('kategoriVTuber'));
+        }
+        
+
+        function kategoriVTuberV(){
+            $kategori = 'VTuber';
+        
+            $kategoriVtuberV = video::where('kategoriVideo', $kategori)
+                                    ->inRandomOrder()
+                                    ->take(10)
+                                    ->get();
+        
+            return view('main.sebelumLogin.KategoriSL.kategoriVTuberVideo', compact('kategoriVtuberV'));
         }
 
         function kategoriGame(){
@@ -132,6 +155,17 @@ class LandingPageController extends Controller
                                     ->get();
         
             return view('main.sebelumLogin.KategoriSL.kategoriGame', compact('kategoriGame'));
+        }
+
+        function kategoriGameV(){
+            $kategori = 'Game';
+        
+            $kategoriGameV = video::where('kategoriVideo', $kategori)
+                                    ->inRandomOrder()
+                                    ->take(10)
+                                    ->get();
+        
+            return view('main.sebelumLogin.KategoriSL.kategoriGameVideo', compact('kategoriGameV'));
         }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

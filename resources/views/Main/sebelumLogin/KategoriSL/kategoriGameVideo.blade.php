@@ -52,7 +52,7 @@
         background-color: #ff4500;
       }
       
-      </style>
+          </style>
 
   </head>
 
@@ -108,6 +108,7 @@
   <div class="pd-top-80 pd-bottom-50" id="grid">
     <div class="container">
 
+
       <section class="about-us" id="about">
         <div class="container">
           <div class="row">
@@ -120,24 +121,22 @@
               </div>
             </div>
             <div>
-              @foreach ($kategoriGame as $item)
+              @foreach ($kategoriGameV as $item)
                   <div class="row" style="text-align: justify">
                       <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
-                          <div class="d-flex justify-content-center">
-                              <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" style="max-width: 100%; height: auto; border-radius: 14px">
-                          </div>
+                        <iframe width="560" height="200" src="{{$item->linkVideo}}" frameborder="0" allowfullscreen></iframe>
                       </div>
                       <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
-                          <h4 style="text-align: left" >{{ $item->judulArtikel }} </h4>
-                          <span class="d-flex"><b>{{ $item->penulis }}</b></span>
-                          <p>{!! substr(strip_tags($item->deskripsi), 0, 400) . (strlen(strip_tags($item->content)) > 400 ? '...' : '') !!}</p>
+                          <h4 style="text-align: left" >{{ $item->judulVideo }} </h4>
+                          <span class="d-flex"><b>{{ $item->uploader }}</b></span>
+                          <p>{!! substr(strip_tags($item->deskripsiVideo), 0, 400) . (strlen(strip_tags($item->content)) > 400 ? '...' : '') !!}</p>
                       </div>
                       <span style="text-align: right; color: rgba(165, 165, 165, 1);"><p>
                         @php
                         $ulasanCreatedAt = \Carbon\Carbon::parse($item['created_at']);
                         $sekarang = \Carbon\Carbon::now();
                         $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
-      
+    
                         if ($selisihWaktu < 60) {
                           echo $selisihWaktu . ' Menit Lalu';
                         } elseif ($selisihWaktu < 1440) {
@@ -153,7 +152,7 @@
                         }
                       @endphp
                       | 
-                          <a href="{{ route('showDetailLPArtikel', ['id' => $item->id]) }}" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a></p></span>
+                          <a href="{{ route('showDetailLPVideo', ['id' => $item->id]) }}" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a></p></span>
                   </div>
                   <hr>
                   @endforeach
