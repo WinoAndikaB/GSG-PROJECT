@@ -227,7 +227,6 @@
             <div class="card-header pb-0">
               <a href="/laporanUser" class="btn btn-primary">Laporan Artikel</a>
               <a href="/laporanVideoUser" class="btn btn-primary">Laporan Video</a>
-              <a href="/laporanUlasanUser" class="btn btn-primary">Laporan Ulasan</a>
             
               <h6>Laporan Video</h6>
             </div>

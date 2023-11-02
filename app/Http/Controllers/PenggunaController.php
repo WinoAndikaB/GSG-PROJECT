@@ -362,23 +362,40 @@ class PenggunaController extends Controller
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //[User-Ulasan] Halaman Ulasan
-    function ulasan(){
-        // Mengambil data ulasan dengan mengurutkannya berdasarkan created_at
-        $data1 = ulasans::orderBy('created_at', 'desc')->get();
+    function ulasan(Request $request){
+        // Mengambil data ulasan secara acak
+        $query = ulasans::inRandomOrder();
+    
+       //Filter
+        $filter = $request->input('filter'); 
+
+        if ($filter === 'newest') {
+            // Urutkan ulasan berdasarkan yang terbaru
+            $query->orderByRaw('created_at DESC');
+        } elseif ($filter === 'oldest') {
+            // Urutkan ulasan berdasarkan yang terlama
+            $query->orderByRaw('created_at ASC');
+        } elseif ($filter === 'mine') {
+            // Filter ulasan yang dimiliki oleh pengguna yang sedang login
+            $query->where('user_id', auth()->user()->id);
+        }
+
+        $data1 = $query->get();
     
         //Rating
         $ratings = $data1->pluck('rating')->map(function ($rating) {
             return (int) $rating; // Mengonversi rating ke integer
         });
-        
+    
         $totalRatings = $ratings->sum();
         $averageRating = $ratings->count() > 0 ? $totalRatings / $ratings->count() : 0;
     
         //Hitung Ulasan
         $totalUlasan = ulasans::count();
-        
+    
         return view('main.setelahLogin.ulasan', compact('data1', 'averageRating', 'totalUlasan'));
     }
+    
 
     //[User-Ulasan] Tambah Ulasan
     public function storeUlasan(Request $request)

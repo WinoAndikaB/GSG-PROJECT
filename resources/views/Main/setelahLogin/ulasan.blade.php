@@ -320,6 +320,18 @@
   <br>
   <br>
    
+  <div class="container text-center">
+    <div class="filter-options d-inline-block">
+        <select name="filter" id="filter" onchange="filterComments(this.value)" style="padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px;">
+            <option value="" selected>Urutkan</option>
+            <option value="newest">Terbaru</option>
+            <option value="oldest">Terlama</option>
+            <option value="mine">Komen Saya</option>
+        </select>
+    </div>
+</div>
+
+<br>
 
     <div class="container">
       @foreach ($data1 as $item)
@@ -410,8 +422,13 @@
       @endforeach
     </div>
     
-    
-  </div>
+  
+  <!-- Filter Komen Ulansan -->
+    <script>
+      function filterComments(filter) {
+          window.location.href = '{{ route('ulasan') }}?filter=' + filter;
+      }
+      </script>
     
   <!-- Edit Ulansan -->
   <script>
