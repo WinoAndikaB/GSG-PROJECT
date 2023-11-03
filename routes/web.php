@@ -204,21 +204,6 @@ use Illuminate\Support\Facades\Route;
         Route::get('/deleteLaporanUA/{id}',[AdminController::class,'deleteLaporanUA'])->name('deleteLaporanUA');
         Route::get('/deleteLaporanVA/{id}',[AdminController::class,'deleteLaporanVA'])->name('deleteLaporanVA');
 
-    //[Admin] Tab Syarat & Ketentuan
-
-        //[Admin] Tabel Syarat & Ketentuan
-        Route::get('/syaratdanketentuan',[AdminController::class,'syaratdanketentuan'])->name('syaratdanketentuan');
-
-        //[Admin] Tambah Syarat & Ketentuan
-        Route::get('/formTambahTdanC',  [AdminController::class, 'formTambahTdanC'])->name('formTambahTdanC');
-        Route::post('/formTambahTdanC/storeTdanC',  [AdminController::class, 'storeTdanC'])->name('storeTdanC');
-
-        //[Admin] Delete Syarat & Ketentuan
-        Route::get('/deleteTdanC/{id}',[AdminController::class,'deleteTdanC']);
-
-        //[Admin] Edit Syarat & Ketentuan
-        Route::get('/formEditTdanC/{id}',[AdminController::class,'formEditTdanC'])->name('formEditTdanC');
-        Route::post('/formEditTdanC/updateTdanC/{id}',[AdminController::class,'updateTdanC'])->name('updateTdanC');
 
 // [Halaman SuperAdmin]
     //[SuperAdmin] Membatasi Hak Akases SuperAdmin
@@ -296,3 +281,19 @@ use Illuminate\Support\Facades\Route;
     
             Route::get('/deleteLaporanArtikelSA/{id}',[SuperAdminController::class,'deleteLaporanArtikelSA'])->name('deleteLaporanArtikelSA');
             Route::get('/deleteLaporanVideoSA/{id}',[SuperAdminController::class,'deleteLaporanVideoSA'])->name('deleteLaporanVideoSA');
+
+        //[SuperAdmin] Tab Syarat & Ketentuan
+
+            //[SuperAdmin] Tabel Syarat & Ketentuan
+            Route::get('/syaratdanketentuanSA',[SuperAdminController::class,'syaratdanketentuanSA'])->name('syaratdanketentuanSA');
+
+            //[SuperAdmin] Tambah Syarat & Ketentuan
+            Route::get('/formTambahTdanCSA',  [SuperAdminController::class, 'formTambahTdanCSA'])->name('formTambahTdanCSA');
+            Route::post('/formTambahTdanCSA/storeTdanCSA',  [SuperAdminController::class, 'storeTdanCSA'])->name('storeTdanCSA');
+
+            //[SuperAdmin] Delete Syarat & Ketentuan
+            Route::get('/deleteTdanCSA/{id}',[SuperAdminController::class,'deleteTdanCSA']);
+
+            //[SuperAdmin] Edit Syarat & Ketentuan
+            Route::get('/formEditTdanCSA/{id}',[SuperAdminController::class,'formEditTdanCSA'])->name('formEditTdanCSA');
+            Route::post('/formEditTdanCSA/updateTdanCSA/{id}',[SuperAdminController::class,'updateTdanCSA'])->name('updateTdanCSA');

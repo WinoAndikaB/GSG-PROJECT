@@ -97,8 +97,15 @@
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html " target="_blank">
-        <img src="../assets2/img/lg1.png" class="navbar-brand-img h-100" alt="main_logo">
-        <span class="ms-1 font-weight-bold">GSG PROJECT</span>
+        <div class="d-flex px-2 py-1">
+          <div>
+            <img src="{{ asset('assets/img/lg1.png') }}" class="avatar avatar-sm me-3" alt="user1" width="2" height="2">
+          </div>
+          <div class="d-flex flex-column justify-content-center">
+            <h6 class="mb-0 text-sm">GSG PROJECT</h6>
+            <p class="text-xs text-secondary mb-0">Halaman Admin</p>
+          </div>
+        </div>
       </a>
     </div>
     <hr class="horizontal dark mt-0">

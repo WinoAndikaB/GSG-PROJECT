@@ -92,6 +92,32 @@
           cursor: pointer;
         }
   </style>
+  <style>
+    .popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    }
+
+    .popup-content {
+        text-align: center;
+    }
+
+    .close-popup {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+  </style>
+
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -100,8 +126,15 @@
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html " target="_blank">
-        <img src="../assets2/img/lg1.png" class="navbar-brand-img h-100" alt="main_logo">
-        <span class="ms-1 font-weight-bold">GSG PROJECT</span>
+        <div class="d-flex px-2 py-1">
+          <div>
+            <img src="{{ asset('assets/img/lg1.png') }}" class="avatar avatar-sm me-3" alt="user1" width="2" height="2">
+          </div>
+          <div class="d-flex flex-column justify-content-center">
+            <h6 class="mb-0 text-sm">GSG PROJECT</h6>
+            <p class="text-xs text-secondary mb-0">Halaman Admin</p>
+          </div>
+        </div>
       </a>
     </div>
     <hr class="horizontal dark mt-0">
@@ -221,6 +254,14 @@
     </div>
   </nav>
   <!-- End Navbar -->
+
+  <div id="popup" class="popup">
+    <div class="popup-content">
+        <span class="close-popup" onclick="closePopup()">&times;</span>
+        <p>Selamat Datang, {{ Auth::user()->name }}. Anda Sekarang Berada di Halaman Admin</p>
+    </div>
+</div>
+
 
   <!-- Modal Logout -->
   <div id="logout-modal" class="modal">
@@ -629,6 +670,29 @@
    <script src="../assets2/js/plugins/perfect-scrollbar.min.js"></script>
    <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
    <script src="../assets2/js/plugins/chartjs.min.js"></script>
+   
+   <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        // Periksa apakah popup sudah ditampilkan sebelumnya
+        if (!sessionStorage.getItem("popupShown")) {
+            // Tampilkan popup
+            var popup = document.getElementById("popup");
+            popup.style.display = "block";
+
+            // Set timeout untuk menyembunyikan popup setelah 6 detik
+            setTimeout(function () {
+                popup.style.display = "none";
+                // Tandai bahwa popup sudah ditampilkan
+                sessionStorage.setItem("popupShown", "true");
+            }, 6000);
+        }
+    });
+
+    function closePopup() {
+        var popup = document.getElementById("popup");
+        popup.style.display = "none";
+    }
+   </script>
    <script>
      var ctx1 = document.getElementById("chart-line").getContext("2d");
  
