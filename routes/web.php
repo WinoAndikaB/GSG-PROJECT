@@ -296,19 +296,3 @@ use Illuminate\Support\Facades\Route;
     
             Route::get('/deleteLaporanArtikelSA/{id}',[SuperAdminController::class,'deleteLaporanArtikelSA'])->name('deleteLaporanArtikelSA');
             Route::get('/deleteLaporanVideoSA/{id}',[SuperAdminController::class,'deleteLaporanVideoSA'])->name('deleteLaporanVideoSA');
-    
-        //[SuperAdmin] Tab Syarat & Ketentuan
-    
-            //[SuperAdmin] Tabel Syarat & Ketentuan
-            Route::get('/syaratdanketentuanSA',[SuperAdminController::class,'syaratdanketentuanSA'])->name('syaratdanketentuanSA');
-    
-            //[SuperAdmin] Tambah Syarat & Ketentuan
-            Route::get('/formTambahTdanCSA',  [SuperAdminController::class, 'formTambahTdanCSA'])->name('formTambahTdanCSA');
-            Route::post('/formTambahTdanCSA/storeTdanCSA',  [SuperAdminController::class, 'storeTdanCSA'])->name('storeTdanCSA');
-    
-            //[SuperAdmin] Delete Syarat & Ketentuan
-            Route::get('/deleteTdanCSA/{id}',[SuperAdminController::class,'deleteTdanCSA']);
-    
-            //[SuperAdmin] Edit Syarat & Ketentuan
-            Route::get('/formEditTdanCSA/{id}',[SuperAdminController::class,'formEditTdanCSA'])->name('formEditTdanCSA');
-            Route::post('/formEditTdanCSA/updateTdanCSA/{id}',[SuperAdminController::class,'updateTdanCSA'])->name('updateTdanCSA');
