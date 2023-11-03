@@ -4,10 +4,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href=".../assets2/img/lg1.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Form Tambah Artikel | GSG PROJECT
+    Artikel | GSG PROJECT
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -17,8 +17,6 @@
   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <link href="../assets2/css/nucleo-svg.css" rel="stylesheet" />
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets2/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 
@@ -68,7 +66,7 @@
       cursor: pointer;
     }
 </style>
-
+  
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -85,7 +83,7 @@
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="/profileAdmin">
+          <a class="nav-link" href="/profileSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-badge text-primary text-sm opacity-10"></i>
             </div>
@@ -93,7 +91,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/dashboard">
+          <a class="nav-link" href="/dashboardSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
             </div>
@@ -101,7 +99,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/artikelAdmin">
+          <a class="nav-link active" href="/artikelSuperAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
             </div>
@@ -111,7 +109,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/videoAdmin">
+          <a class="nav-link " href="/videoSuperAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-warning text-sm opacity-10"></i>
             </div>
@@ -121,7 +119,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/pengguna">
+          <a class="nav-link " href="/penggunaSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-circle-08 text-warning text-sm opacity-10"></i>
             </div>
@@ -131,7 +129,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/ulasans">
+          <a class="nav-link " href="/ulasansSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-paper-diploma text-warning text-sm opacity-10"></i>
             </div>
@@ -141,7 +139,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/laporanUser">
+          <a class="nav-link " href="/laporanUserSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-sound-wave text-warning text-sm opacity-10"></i>
             </div>
@@ -151,7 +149,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/syaratdanketentuan">
+          <a class="nav-link " href="/syaratdanketentuanSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
             </div>
@@ -161,7 +159,8 @@
       </ul>
     </div>
 
-  <div class="sidenav-footer mx-3 "> 
+
+  <div class="sidenav-footer mx-3 ">
   </aside>
   <main class="main-content position-relative border-radius-lg ">
     <!-- Navbar -->
@@ -172,7 +171,7 @@
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
             <li class="breadcrumb-item text-sm text-white active" aria-current="page">Artikel</li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Form Tambah Artikel </h6>
+          <h6 class="font-weight-bolder text-white mb-0">Artikel</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -212,6 +211,7 @@
                 <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
               </a>
             </li>
+            </li>
           </ul>
         </div>
       </div>
@@ -219,85 +219,183 @@
     <!-- End Navbar -->
 
       <!-- Modal Logout -->
-  <div id="logout-modal" class="modal">
-    <div class="modal-content">
-      <span class="close" id="close-button" onclick="closeModal()">&times;</span>
-      <h2>Konfirmasi Logout</h2>
-      <p>Apakah anda mau logout?</p>
-      <div style="text-align: center;">
-        <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
-        <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
+      <div id="logout-modal" class="modal">
+        <div class="modal-content">
+          <span class="close" id="close-button" onclick="closeModal()">&times;</span>
+          <h2>Konfirmasi Logout</h2>
+          <p>Apakah anda mau logout?</p>
+          <div style="text-align: center;">
+            <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
+            <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
     
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <h6>Tambah Artikel</h6>
-              <form action="{{ route('artikel.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="form-group">
-                  <label for="gambarArtikel">Gambar</label>
-                  <input type="file" class="form-control" id="gambarArtikel" name="gambarArtikel" required>
-              </div>              
-                <div class="form-group">
-                    <label for="judulArtikel">Judul Artikel</label>
-                    <input type="text" class="form-control" id="judulArtikel" name="judulArtikel" required>
-                </div>
-                <div class="form-group">
-                    <label for="penulis">Penulis</label>
-                    <input type="text" class="form-control" id="penulis" name="penulis" value="{{ Auth::user()->name }}" readonly>
-                </div>
-                <div class="form-group">
-                  <label for="email">Email</label>
-                  <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}" readonly>
-              </div>
-              <div class="form-group">
-                <label for="kategori">Kategori</label>
-                <input type="text" class="form-control" id="kategori" name="kategori" required>
+              <a href="/artikelSA/createSA" class="btn btn-primary">Tambah Artikel</i></a>
+              <a href="/komentarArtikelSA" class="btn btn-success">Komentar Artikel</i>
+                + {{ $dataBaruKomentarArtikel }}
+              </a>
+              <h6>List Artikel Tersedia</h6>
             </div>
-            <div class="form-group">
-              <label for="tags">Tags</label>
-              <input type="text" class="form-control" id="tags" name="tags" required>
-          </div>
-                <div class="form-group">
-                  <label for="" class="form-control-label">Deskirpsi</label>
-                  <textarea class="form-control" type="text" name="deskripsi" id="editor"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary mt-3">Tambah</button>
-                <a href="/artikelAdmin" class="btn btn-info mt-3">Kembali</i></a>
-            </form>            
-            <div class="card-body px-0 pt-12 pb-2">
-              <div class="table-responsive p-0">
-                <div class="panel-header panel-header-sm">
-                </div>
-                <div class="content">
-                  <div class="row">
-                    <div class="col-md-12">
-                        <div class="card-body ">
-                          <div id="map" class="map"></div>
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">          
+
+              <div class="container-fluid py-4">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="card mb-4">
+                      <div class="card-header pb-0">
+                      </div>
+                      <div class="card-body px-0 pt-0 pb-2">
+                        <div class="table-responsive p-0">
+                          <table class="table align-items-center mb-0">
+                            <thead>
+                              <tr>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Penulis</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Judul Artikel</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Upload</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Update</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kategori</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tags</th>
+                                <th class="text-secondary opacity-7"></th>
+                              </tr>
+                            </thead>
+                            @foreach ($data as $tbhartikel)
+                            <tbody>
+                              <tr>
+                                <td class="align-middle text-center">
+                                  <p class="text-xs font-weight-bold mb-0">{{$tbhartikel['id']}}</p>
+                                </td>
+                                <td>
+                                  <div class="d-flex px-2 py-1">
+                                    <div>
+                                      <img src="{{asset('gambarArtikel/'.$tbhartikel->gambarArtikel)}}" class="avatar avatar-sm me-3" alt="user1">
+                                    </div>
+                                    <div class="d-flex flex-column justify-content-center">
+                                      <h6 class="mb-0 text-sm">{{$tbhartikel['penulis']}}</h6>
+                                      <p class="text-xs text-secondary mb-0">{{$tbhartikel['email']}}</p>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td>
+                                  <p class="text-xs font-weight-bold mb-0">{{$tbhartikel['judulArtikel']}}</p>
+                                </td>
+                                <td style="text-align: justify;">
+                                  <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
+                                    <?php
+                                    $deskripsi = strip_tags($tbhartikel['deskripsi']);
+                                    $words = str_word_count($deskripsi, 2);
+                                    $first_100_words = implode(' ', array_slice($words, 0, 5));
+                                    echo $first_100_words;
+                                    if (str_word_count($deskripsi) > 100) {
+                                      echo '...';
+                                    }
+                                    ?>
+                                  </p>
+                                </td>
+                                <td class="align-middle text-center">
+                                  <span class="text-secondary text-xs font-weight-bold">{{$tbhartikel['created_at']->format('l, d F Y H:i:s') }}</span>
+                                </td>
+                                <td class="align-middle text-center">
+                                  <span class="text-secondary text-xs font-weight-bold">{{$tbhartikel['updated_at']->format('l, d F Y H:i:s') }}</span>
+                                </td>
+                                <td class="align-middle text-center">
+                                  <span class="badge badge-sm bg-gradient-success">Pending</span>
+                                </td>
+                                <td class="align-middle text-center">
+                                  <span class="badge badge-sm bg-gradient-success">{{$tbhartikel['kategori']}}</span>
+                                </td>
+                                <td class="align-middle text-center">
+                                  <span class="badge badge-sm bg-gradient-success">{{$tbhartikel['tags']}}</span>
+                                </td>
+                                <td class="align-middle">
+                                  <a href="/formEditArtikelSA/{{ $tbhartikel->id}}" class="btn btn-warning btn btn-primary btn-round">
+                                    <i class="fa fa-pencil"></i>
+                                  </a>
+                                  <a href="{{"deleteArtikelSA/".$tbhartikel['id']}}" class="btn btn-danger btn btn-primary btn-round" onclick="return showConfirmation()">
+                                    <i class="fa fa-trash"></i>
+                                  </a>
+                                </td>
+                              </tr>
+                            </tbody>
+                            @endforeach
+
+                            <div class="d-flex justify-content-center">
+                              <ul class="pagination">
+                                  @if ($data->onFirstPage())
+                                      <li class="page-item disabled">
+                                          <span class="page-link" aria-label="Previous">
+                                              <span aria-hidden="true">&lsaquo;</span>
+                                          </span>
+                                      </li>
+                                  @else
+                                      <li class="page-item">
+                                          <a class="page-link" href="{{ $data->previousPageUrl() }}" rel="prev" aria-label="Previous">
+                                              <span aria-hidden="true">&lsaquo;</span>
+                                          </a>
+                                      </li>
+                                  @endif
+            
+                                <!-- Menampilkan halaman berapa -->
+                                <div class="text-center">
+                                    {{ $data->currentPage() }} dari {{ $data->lastPage() }}
+                                </div>
+                          
+                                  @if ($data->hasMorePages())
+                                      <li class="page-item">
+                                          <a class="page-link" href="{{ $data->nextPageUrl() }}" rel="next" aria-label="Next">
+                                              <span aria-hidden="true">&rsaquo;</span>
+                                          </a>
+                                      </li>
+                                  @else
+                                      <li class="page-item disabled">
+                                          <span class="page-link" aria-label="Next">
+                                              <span aria-hidden="true">&rsaquo;</span>
+                                          </span>
+                                      </li>
+                                  @endif
+                              </ul>
+                          </div>
+
+                          </table>
                         </div>
+                      </div>
                     </div>
                   </div>
                 </div>
+  
+                <footer class="footer pt-3  ">
+                  <div class="container-fluid">
+                    <div class="row align-items-center justify-content-lg-between">
+                      <div class="col-lg-6 mb-lg-0 mb-4">
+                        <div class="copyright text-center text-sm text-muted text-lg-start">
+                          © <script>
+                            document.write(new Date().getFullYear())
+                          </script>,
+                          Template by <a title="CSS Templates" rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>,
+                          <a title="CSS Templates" rel="sponsored" href="https://themewagon.com/themes/free-bootstrap-4-html-5-blog-website-template-nextpage/" target="_blank">NextPage </a> and
+                          <a title="CSS Templates" rel="sponsored" href="https://www.creative-tim.com" target="_blank">Crative Tim </a> 
+                          Edited By <a title="CSS Templates" rel="sponsored" href="#" target="_blank">GSG Team</a></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </footer>
+              </div>
+              
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-
-      <footer class="footer pt-3  ">
-        <div class="container-fluid">
-          <div class="row align-items-center justify-content-lg-between">
-
-          </div>
-        </div>
-      </footer>
     </div>
   </main>
   <div class="fixed-plugin">
@@ -378,51 +476,44 @@
   <script src="../assets2/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/chartjs.min.js"></script>
- 
+
+
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
 
-  <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
-  <script>
-    ClassicEditor
-        .create( document.querySelector( '#editor' ) )
-        .catch( error => {
-            console.error( error );
-        } );
-</script>
+     <!-- MODAL LOGOUT -->
+     <script>
+      // JavaScript untuk modal logout
+      function openModal() {
+        const modal = document.getElementById('logout-modal');
+        modal.style.display = 'block';
+      }
+    
+      function closeModal() {
+        const modal = document.getElementById('logout-modal');
+        modal.style.display = 'none';
+      }
+    
+      function confirmLogout(confirmed) {
+        if (confirmed) {
+          // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
+          window.location.href = '/logout';
+        } else {
+          // Tutup modal jika pengguna memilih "No"
+          closeModal();
+        }
+      }
+    
+      // Tutup modal jika pengguna mengklik di luar modal
+      window.addEventListener('click', (event) => {
+        const modal = document.getElementById('logout-modal');
+        if (event.target == modal) {
+          modal.style.display = 'none';
+        }
+      });
+    </script>
+</body>
 
- <!-- MODAL LOGOUT -->
- <script>
-  // JavaScript untuk modal logout
-  function openModal() {
-    const modal = document.getElementById('logout-modal');
-    modal.style.display = 'block';
-  }
-
-  function closeModal() {
-    const modal = document.getElementById('logout-modal');
-    modal.style.display = 'none';
-  }
-
-  function confirmLogout(confirmed) {
-    if (confirmed) {
-      // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
-      window.location.href = '/logout';
-    } else {
-      // Tutup modal jika pengguna memilih "No"
-      closeModal();
-    }
-  }
-
-  // Tutup modal jika pengguna mengklik di luar modal
-  window.addEventListener('click', (event) => {
-    const modal = document.getElementById('logout-modal');
-    if (event.target == modal) {
-      modal.style.display = 'none';
-    }
-  });
-</script>
-    </body>
 </html>

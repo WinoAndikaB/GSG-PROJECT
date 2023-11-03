@@ -234,21 +234,20 @@ use Illuminate\Support\Facades\Route;
         //[SuperAdmin] Tab Artikel
     
             //[SuperAdmin] Tabel Artikel
-            Route::get('/artikelSuperAdmin', [SuperAdminController::class, 'artikel'])->name('artikel');
-            Route::get('/komentarArtikel', [SuperAdminController::class, 'komentarArtikel'])->name('komentarArtikel');
+            Route::get('/artikelSuperAdmin', [SuperAdminController::class, 'artikelSA'])->name('artikelSA');
+            Route::get('/komentarArtikelSA', [SuperAdminController::class, 'komentarArtikelSA'])->name('komentarArtikelSA');
     
             //[SuperAdmin] Tambah Artikel
-            Route::get('/artikel/create',  [SuperAdminController::class, 'create'])->name('artikel.create');
-            Route::post('/artikel/store',  [SuperAdminController::class, 'store'])->name('artikel.store');
+            Route::get('/artikelSA/createSA',  [SuperAdminController::class, 'createSA'])->name('createSA');
+            Route::post('/artikelSA/storeSA',  [SuperAdminController::class, 'storeSA'])->name('storeSA');
     
             //[SuperAdmin] Delete Artikel
-            Route::get('/deleteA/{id}',[SuperAdminController::class,'deleteArtikel'])->name('deleteArtikel');
-            Route::get('/deleteKomentarAA/{id}',[SuperAdminController::class,'deleteKomentarAA'])->name('deleteKomentarAA');
+            Route::get('/deleteArtikelSA/{id}',[SuperAdminController::class,'deleteArtikelSA'])->name('deleteArtikelSA');
+            Route::get('/deleteKomentarSA/{id}',[SuperAdminController::class,'deleteKomentarSA'])->name('deleteKomentarSA');
     
             //[Admin] Edit Artikel
-            Route::get('/tampilDataEditArtikel/{id}',[SuperAdminController::class,'tampilDataEditArtikel']);
-            // Route::post('/updateDataIdArtikel/{id}',[AdminController::class,'updateDataIdArtikel']);
-            Route::post('/formEditArtikel/updateArtikel/{id}',[SuperAdminController::class,'updateArtikel'])->name('updateArtikel');
+            Route::get('/formEditArtikelSA/{id}',[SuperAdminController::class,'formEditArtikelSA'])->name('formEditArtikelSA');
+            Route::post('/formEditArtikelSA/updateArtikelSA/{id}', [SuperAdminController::class, 'updateArtikelSA'])->name('updateArtikelSA');
     
         //[SuperAdmin] Tab Video
     

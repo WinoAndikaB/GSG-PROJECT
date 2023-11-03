@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Profile | GSG PROJECT
+    Form Tambah Artikel | GSG PROJECT
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -15,9 +15,10 @@
   <link href="../assets2/css/nucleo-icons.css" rel="stylesheet" />
   <link href="../assets2/css/nucleo-svg.css" rel="stylesheet" />
   <!-- Font Awesome Icons -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <link href="../assets2/css/nucleo-svg.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets2/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 
@@ -68,25 +69,6 @@
     }
 </style>
 
-  <script>
-    // Function to auto-adjust textarea height
-    function autoResizeTextarea() {
-        const textarea = document.getElementById("auto-resize-textarea");
-        textarea.style.height = "auto";
-        textarea.style.height = textarea.scrollHeight + "px";
-    }
-
-    // Attach the autoResizeTextarea function to the textarea's input event
-    $(document).ready(function() {
-        $("#auto-resize-textarea").on("input", function() {
-            autoResizeTextarea();
-        });
-
-        // Initialize the textarea's height when the page loads
-        autoResizeTextarea();
-    });
-</script>
-
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -103,7 +85,7 @@
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="/profileAdmin">
+          <a class="nav-link" href="/profileSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-badge text-primary text-sm opacity-10"></i>
             </div>
@@ -111,7 +93,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/dashboard">
+          <a class="nav-link" href="/dashboardSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
             </div>
@@ -119,47 +101,57 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/artikelAdmin">
+          <a class="nav-link active" href="/artikelSuperAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Artikel</span>
+            <span class="nav-link-text ms-1">Artikel
+              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruArtikel + $dataBaruKomentarArtikel}}</span> 
+            </span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/videoAdmin">
+          <a class="nav-link " href="/videoSuperAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-warning text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Video</span>
+            <span class="nav-link-text ms-1">Video
+              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruVideo + $dataBaruKomentarVideo}}</span> 
+            </span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/pengguna">
+          <a class="nav-link " href="/penggunaSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-circle-08 text-warning text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Pengguna</span>
+            <span class="nav-link-text ms-1">Pengguna
+              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruUser}}</span> 
+            </span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/ulasans">
+          <a class="nav-link " href="/ulasansSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-paper-diploma text-warning text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Ulasan</span>
+            <span class="nav-link-text ms-1">Ulasan 
+              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruUlasan}}</span> 
+            </span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/laporanUser">
+          <a class="nav-link " href="/laporanUserSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-sound-wave text-warning text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Laporan User</span>
+            <span class="nav-link-text ms-1">Laporan User 
+              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruLaporanArtikel + $dataBaruLaporanVideo}}</span> 
+            </span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/syaratdanketentuan">
+          <a class="nav-link " href="/syaratdanketentuanSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
             </div>
@@ -168,8 +160,8 @@
         </li>
       </ul>
     </div>
-    <div class="sidenav-footer mx-3 ">
-       
+
+  <div class="sidenav-footer mx-3 "> 
   </aside>
   <main class="main-content position-relative border-radius-lg ">
     <!-- Navbar -->
@@ -180,7 +172,7 @@
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
             <li class="breadcrumb-item text-sm text-white active" aria-current="page">Artikel</li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Form Edit Artikel </h6>
+          <h6 class="font-weight-bolder text-white mb-0">Form Tambah Artikel </h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -244,43 +236,40 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <h6>Form Edit Artikel</h6>
-              <form action="/formEditArtikel/updateArtikel/{{$data->id}}" method="POST" enctype="multipart/form-data">
-              @csrf
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <div class="form-group">
-                        <label for="" class="form-control-label">Gambar</label>
-                        <input class="form-control" type="file" id="uploadGambar" name="gambarArtikel" value="{{ $data->gambarArtikel }} required">
-                        <br>
-                        <img src="{{asset('gambarArtikel/'.$data->gambarArtikel)}}" height="10%" width="50%" srcset="">
-                      </div>
-                      <label for="" class="form-control-label">Judul Artikel</label>
-                      <textarea class="form-control" type="textarea" name="judulArtikel" required>{{ $data->judulArtikel }}</textarea>
-                    </div>
-                    <div class="form-group">
-                      <label for="" class="form-control-label">Penulis</label>
-                      <input class="form-control" type="text" name="penulis" value="{{ $data->penulis }}" required readonly>
-                    </div>
-                    <div class="form-group">
-                      <label for="" class="form-control-label">Kategori</label>
-                      <textarea class="form-control" type="text" name="kategori" required>{{ $data->kategori }}</textarea>
-                    </div>
-                    <div class="form-group">
-                      <label for="" class="form-control-label">Tags</label>
-                      <textarea class="form-control" type="text" name="tags" required>{{ $data->tags }}</textarea>
-                    </div>
-                    <div class="form-group">
-                      <label for="" class="form-control-label">Deskirpsi</label>
-                      <textarea class="form-control" type="text" name="deskripsi" id="editor">{{ $data->deskripsi }}</textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary mt-3">Edit</button>
-                    <a href="/artikelAdmin" class="btn btn-info mt-3">Kembali</i></a>
-                  </div>
+              <h6>Tambah Artikel</h6>
+              <form action="{{ route('storeSA') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="form-group">
+                  <label for="gambarArtikel">Gambar</label>
+                  <input type="file" class="form-control" id="gambarArtikel" name="gambarArtikel" required>
+              </div>              
+                <div class="form-group">
+                    <label for="judulArtikel">Judul Artikel</label>
+                    <input type="text" class="form-control" id="judulArtikel" name="judulArtikel" required>
                 </div>
-              </form>
-
+                <div class="form-group">
+                    <label for="penulis">Penulis</label>
+                    <input type="text" class="form-control" id="penulis" name="penulis" value="{{ Auth::user()->name }}" readonly>
+                </div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}" readonly>
+              </div>
+              <div class="form-group">
+                <label for="kategori">Kategori</label>
+                <input type="text" class="form-control" id="kategori" name="kategori" required>
+            </div>
+            <div class="form-group">
+              <label for="tags">Tags</label>
+              <input type="text" class="form-control" id="tags" name="tags" required>
+          </div>
+                <div class="form-group">
+                  <label for="" class="form-control-label">Deskirpsi</label>
+                  <textarea class="form-control" type="text" name="deskripsi" id="editor"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Tambah</button>
+                <a href="/artikelSuperAdmin" class="btn btn-info mt-3">Kembali</i></a>
+            </form>            
             <div class="card-body px-0 pt-12 pb-2">
               <div class="table-responsive p-0">
                 <div class="panel-header panel-header-sm">
@@ -305,8 +294,7 @@
       <footer class="footer pt-3  ">
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">
-            <div class="col-lg-6 mb-lg-0 mb-4">
-            </div>
+
           </div>
         </div>
       </footer>
@@ -390,6 +378,11 @@
   <script src="../assets2/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/chartjs.min.js"></script>
+ 
+  <!-- Github buttons -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
 
   <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
   <script>
@@ -431,7 +424,5 @@
     }
   });
 </script>
-
- 
-</body>
+    </body>
 </html>
