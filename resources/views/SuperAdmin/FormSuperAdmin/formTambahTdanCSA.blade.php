@@ -82,7 +82,7 @@
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="/profileAdmin">
+          <a class="nav-link" href="/profileSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-badge text-primary text-sm opacity-10"></i>
             </div>
@@ -90,7 +90,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/dashboard">
+          <a class="nav-link" href="/dashboardSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
             </div>
@@ -98,7 +98,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/artikelAdmin">
+          <a class="nav-link " href="/artikelSuperAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
             </div>
@@ -108,7 +108,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/videoAdmin">
+          <a class="nav-link " href="/videoSuperAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-warning text-sm opacity-10"></i>
             </div>
@@ -118,7 +118,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/pengguna">
+          <a class="nav-link " href="/penggunaSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-circle-08 text-warning text-sm opacity-10"></i>
             </div>
@@ -128,7 +128,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/ulasans">
+          <a class="nav-link " href="/ulasansSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-paper-diploma text-warning text-sm opacity-10"></i>
             </div>
@@ -138,7 +138,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/laporanUser">
+          <a class="nav-link " href="/laporanUserSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-sound-wave text-warning text-sm opacity-10"></i>
             </div>
@@ -148,7 +148,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/syaratdanketentuan">
+          <a class="nav-link active" href="/syaratdanketentuanSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
             </div>
@@ -227,19 +227,6 @@
       </div>
     </div>
   </div>
-
-      <!-- Modal Logout -->
-  <div id="logout-modal" class="modal">
-    <div class="modal-content">
-      <span class="close" id="close-button" onclick="closeModal()">&times;</span>
-      <h2>Konfirmasi Logout</h2>
-      <p>Apakah anda mau logout?</p>
-      <div style="text-align: center;">
-        <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
-        <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
-      </div>
-    </div>
-  </div>
     
     <div class="container-fluid py-4">
       <div class="row">
@@ -247,7 +234,7 @@
           <div class="card mb-4">
             <div class="card-header pb-0">
               <h6>Tambah Terms & Condition</h6>
-              <form class="form" method="POST" action="/formTambahTdanC/storeTdanC">
+              <form class="form" method="POST" action="{{ route('storeTdanCSA') }}">
                 @csrf
                 <div class="row">
                   <div class="col-md-6">
@@ -261,7 +248,7 @@
                         <textarea class="form-control" type="text" name="deskripsisyarat" id="editor"></textarea>
                       </div>
                     <button type="submit" class="btn btn-primary mt-3">Tambah</button>
-                    <a href="/syaratdanketentuan" class="btn btn-info mt-3">Kembali</i></a>
+                    <a href="/syaratdanketentuanSA" class="btn btn-info mt-3">Kembali</i></a>
                   </div>
                 </div>
               </form>

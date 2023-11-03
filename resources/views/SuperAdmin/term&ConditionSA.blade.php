@@ -83,7 +83,7 @@
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="/profileAdmin">
+          <a class="nav-link" href="/profileSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-badge text-primary text-sm opacity-10"></i>
             </div>
@@ -91,7 +91,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/dashboard">
+          <a class="nav-link" href="/dashboardSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
             </div>
@@ -99,7 +99,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/artikelAdmin">
+          <a class="nav-link " href="/artikelSuperAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
             </div>
@@ -109,7 +109,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/videoAdmin">
+          <a class="nav-link " href="/videoSuperAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-warning text-sm opacity-10"></i>
             </div>
@@ -119,7 +119,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/pengguna">
+          <a class="nav-link " href="/penggunaSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-circle-08 text-warning text-sm opacity-10"></i>
             </div>
@@ -129,7 +129,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/ulasans">
+          <a class="nav-link " href="/ulasansSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-paper-diploma text-warning text-sm opacity-10"></i>
             </div>
@@ -139,7 +139,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/laporanUser">
+          <a class="nav-link " href="/laporanUserSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-sound-wave text-warning text-sm opacity-10"></i>
             </div>
@@ -149,7 +149,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/syaratdanketentuan">
+          <a class="nav-link active" href="/syaratdanketentuanSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
             </div>

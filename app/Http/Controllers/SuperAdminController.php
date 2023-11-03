@@ -435,7 +435,7 @@ class SuperAdminController extends Controller
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //[SuperAdmin-Pengguna] Halaman Tabel Pengguna
-    function listUserTerdaftar(Request $request){
+    function penggunaSA(Request $request){
         $role = $request->input('role'); // Mendapatkan nilai filter role dari request
         $users = user::orderBy('created_at', 'desc');
     
@@ -458,25 +458,13 @@ class SuperAdminController extends Controller
          $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
          $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
     
-         return view('SuperAdmin.pengguna', compact('users', 'dataBaruUlasan', 'dataBaruUser', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 
+         return view('SuperAdmin.penggunaSA', compact('users', 'dataBaruUlasan', 'dataBaruUser', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 
          'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo'));
     }    
     
 
-    //[SuperAdmin-Pengguna] Fungsi Like & Dislike
-    public function likes()
-    {
-        return $this->hasMany(Likes::class, 'user_id', 'id');
-    }
-
-    public function dislikes()
-    {
-        return $this->hasMany(Dislikes::class, 'user_id', 'id');
-    }
-
-
     //[SuperAdmin-Pengguna] Tambah Pengguna
-    function formTambahUserAdm(){
+    function formTambahUserAdmSA(){
         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
          $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
          $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
@@ -489,34 +477,34 @@ class SuperAdminController extends Controller
          $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
          $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-        return view('SuperAdmin.FormSuperAdmin.formTambahUserAdm', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        return view('SuperAdmin.FormSuperAdmin.formTambahUserSA', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }    
 
-    function registerSuperAdmin(Request $req){
+    function registerSuperAdminSA(Request $req){
             user::create([
                 'username' => $req->username,
                  'name' => $req->name,
                  'email' => $req->email,
                  'password' => bcrypt($req->password),
-                 'role' => 'SuperAdmin',
+                 'role' => 'superadmin',
             ]);
-                 return redirect('pengguna');
+                 return redirect('penggunaSA');
          }
 
     //[SuperAdmin-Pengguna] Delete Pengguna
-    function deleteUserTerdaftar($id)
+    function deleteSA($id)
     {
         $data=user::find($id);
         $data->delete();
-        return redirect('pengguna');
+        return redirect('penggunaSA');
     }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //[SuperAdmin-Ulasan] Halaman Tabel Ulasan 
-    function ulasanSuperAdmin(){
+    function ulasansSA(){
         $data1 = ulasans::orderBy('created_at', 'desc')->paginate(10);
 
         //Rating
@@ -542,22 +530,22 @@ class SuperAdminController extends Controller
         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-        return view('SuperAdmin.ulasans', compact('data1', 'averageRating', 'totalUlasan', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        return view('SuperAdmin.ulasansSA', compact('data1', 'averageRating', 'totalUlasan', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
     //[SuperAdmin-Ulasan] Delete Ulasan
-    function deleteUlasanA($id){
+    function deleteUlasanSA($id){
         $data1=ulasans::find($id);
         $data1->delete();
-        return redirect('ulasans');
+        return redirect('ulasansSA');
     }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //[SuperAdmin-Laporan User] 
-    function laporanUser(){
+    function laporanUserSA(){
 
         $laporanArtikelU = laporanArtikelUser::orderBy('created_at', 'desc')->paginate(10);
 
@@ -573,26 +561,26 @@ class SuperAdminController extends Controller
         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-        return view('SuperAdmin.laporan.laporanUser', compact('laporanArtikelU', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        return view('SuperAdmin.laporan.laporanUserSA', compact('laporanArtikelU', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
         
     //[SuperAdmin-Laporan User] Delete Artikel User
-        function deleteLaporanUA($id){
+        function deleteLaporanArtikelSA($id){
             $data1=laporanArtikelUser::find($id);
             $data1->delete();
-            return redirect('/laporanUser');
+            return redirect('/laporanUserSA');
         }
 
         //[SuperAdmin-Laporan User] Delete Artikel User
-        function deleteLaporanVA($id){
+        function deleteLaporanVideoSA($id){
             $data1=laporanVideoUser::find($id);
             $data1->delete();
-            return redirect('/laporanVideoUser');
+            return redirect('/laporanVideoUserSA');
         }
 
-    function laporanVideoUser(){
+    function laporanVideoUserSA(){
 
         $laporanVideoUser = LaporanVideoUser::orderBy('created_at', 'desc')->paginate(10);
 
@@ -608,7 +596,7 @@ class SuperAdminController extends Controller
         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-        return view('SuperAdmin.laporan.laporanVideoUser', compact('laporanVideoUser', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        return view('SuperAdmin.laporan.laporanVideoUserSA', compact('laporanVideoUser', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
@@ -616,7 +604,7 @@ class SuperAdminController extends Controller
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     // [Syarat & Ketentuan] Halaman Tabel 
-    public function syaratdanketentuan()
+    public function syaratdanketentuanSA()
     {
         $data = syaratdanketentuans::all();
 
@@ -632,12 +620,12 @@ class SuperAdminController extends Controller
         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-        return view('SuperAdmin.term&Condition', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        return view('SuperAdmin.term&ConditionSA', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
     // [Syarat & Ketentuan] Form Tambah T&C
-    function formTambahTdanC(){
+    function formTambahTdanCSA(){
 
         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
         $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
@@ -651,20 +639,26 @@ class SuperAdminController extends Controller
         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
         
-        return view('SuperAdmin.FormSuperAdmin.formTambahTdanC', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        return view('SuperAdmin.FormSuperAdmin.formTambahTdanCSA', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
-    function storeTdanC(Request $req){
-            syaratdanketentuans::create([
-                'judulsyarat' => $req->judulsyarat,
-                'deskripsisyarat' => $req->deskripsisyarat,
-            ]);
-                 return redirect('/syaratdanketentuan');
-         }
+    function storeTdanCSA(Request $req) {
+        $validatedData = $req->validate([
+            'judulsyarat' => 'required',
+            'deskripsisyarat' => 'required',
+        ]);
+    
+        syaratdanketentuans::create([
+            'judulsyarat' => $validatedData['judulsyarat'],
+            'deskripsisyarat' => $validatedData['deskripsisyarat'],
+        ]);
+    
+        return redirect('/syaratdanketentuanSA');
+    }
 
      // [Syarat & Ketentuan] Form Edit T&C
-    function formEditTdanC($id){
+    function formEditTdanCSA($id){
             $data = syaratdanketentuans::find($id);
 
             // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
@@ -679,25 +673,25 @@ class SuperAdminController extends Controller
             $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
             $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-            return view('SuperAdmin.FormSuperAdmin.formEditTermOfCondition', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+            return view('SuperAdmin.FormSuperAdmin.formEditTermOfConditionSA', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
             'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
         }
     
-    function updateTdanC(Request $request, $id){
+    function updateTdanCSA(Request $request, $id){
             $data = syaratdanketentuans::find($id);
         
             $data->judulsyarat = $request->input('judulsyarat');
             $data->deskripsisyarat = $request->input('deskripsisyarat');
             $data->save();
         
-            return redirect()->route('syaratdanketentuan')->with('success','Data Berhasil di Update');
+            return redirect()->route('syaratdanketentuanSA')->with('success','Data Berhasil di Update');
         }  
 
     // [Syarat & Ketentuan] Delete T&C
-    function deleteTdanC($id)
+    function deleteTdanCSA($id)
     {
         $data=syaratdanketentuans::find($id);
         $data->delete();
-        return redirect('/syaratdanketentuan');
+        return redirect('/syaratdanketentuanSA');
     }
 }
