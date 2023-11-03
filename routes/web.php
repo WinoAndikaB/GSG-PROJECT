@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\SuperAdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -219,3 +220,100 @@ use Illuminate\Support\Facades\Route;
         Route::get('/formEditTdanC/{id}',[AdminController::class,'formEditTdanC'])->name('formEditTdanC');
         Route::post('/formEditTdanC/updateTdanC/{id}',[AdminController::class,'updateTdanC'])->name('updateTdanC');
 
+// [Halaman SuperAdmin]
+    //[SuperAdmin] Membatasi Hak Akases SuperAdmin
+    Route::middleware(['superadmin'])->group(function () {
+
+        //[SuperAdmin] Tab Dashboard
+            Route::get('/dashboardSA', [SuperAdminController::class, 'dashboardSA'])->name('dashboardSA');
+    
+        //[SuperAdmin] Tab Profil
+            Route::get('/profileSA', [SuperAdminController::class, 'profileSA'])->name('profileSA');
+            Route::put('/profileSA/updateSA/{id}',[SuperAdminController::class,'updateSA'])->name('updateSA');
+    
+        //[SuperAdmin] Tab Artikel
+    
+            //[SuperAdmin] Tabel Artikel
+            Route::get('/artikelSuperAdmin', [SuperAdminController::class, 'artikel'])->name('artikel');
+            Route::get('/komentarArtikel', [SuperAdminController::class, 'komentarArtikel'])->name('komentarArtikel');
+    
+            //[SuperAdmin] Tambah Artikel
+            Route::get('/artikel/create',  [SuperAdminController::class, 'create'])->name('artikel.create');
+            Route::post('/artikel/store',  [SuperAdminController::class, 'store'])->name('artikel.store');
+    
+            //[SuperAdmin] Delete Artikel
+            Route::get('/deleteA/{id}',[SuperAdminController::class,'deleteArtikel'])->name('deleteArtikel');
+            Route::get('/deleteKomentarAA/{id}',[SuperAdminController::class,'deleteKomentarAA'])->name('deleteKomentarAA');
+    
+            //[Admin] Edit Artikel
+            Route::get('/tampilDataEditArtikel/{id}',[SuperAdminController::class,'tampilDataEditArtikel']);
+            // Route::post('/updateDataIdArtikel/{id}',[AdminController::class,'updateDataIdArtikel']);
+            Route::post('/formEditArtikel/updateArtikel/{id}',[SuperAdminController::class,'updateArtikel'])->name('updateArtikel');
+    
+        //[SuperAdmin] Tab Video
+    
+            //[SuperAdmin] Tabel Video
+            Route::get('/videoSuperAdmin', [SuperAdminController::class, 'videoSuperAdmin'])->name('videoSuperAdmin');
+            Route::get('/komentarVideo', [SuperAdminController::class, 'komentarVideo'])->name('komentarVideo');
+    
+            //[SuperAdmin] Tambah Video Admin
+            Route::get('/formTambahVideo', [SuperAdminController::class, 'formTambahVideo'])->name('formTambahVideo');
+            Route::post('/formTambahVideo/storeVideo',  [SuperAdminController::class, 'storeVideo'])->name('storeVideo');
+    
+            //[SuperAdmin] Edit Video
+            Route::get('/formEditVideo/{id}',[SuperAdminController::class,'formEditVideo'])->name('formEditVideo');
+            Route::post('/formEditVideo/updateVideo/{id}',[SuperAdminController::class,'updateVideo'])->name('updateVideo');
+    
+            //[SuperAdmin] Delete Pengguna
+            Route::get('/deleteV/{id}',[SuperAdminController::class,'deleteVideo'])->name('deleteVideo');
+            Route::get('/deleteKomentarVA/{id}',[SuperAdminController::class,'deleteKomentarVA'])->name('deleteKomentarVA');
+    
+        //[SuperAdmin] Tab Pengguna
+    
+            //[SuperAdmin] Tabel Pengguna
+            Route::get('/penggunaSA', [SuperAdminController::class, 'listUserTerdaftar'])->name('listUserTerdaftar');
+    
+            //[AdmiSuperAdminn] Tabel Pengguna Like Dislike
+            Route::get('/PenggunaLikeDislike', [SuperAdminController::class, 'PenggunaLikeDislike'])->name('PenggunaLikeDislike');
+    
+            //[SuperAdmin] Tambah User Admin
+            Route::get('/formTambahUserAdm', [SuperAdminController::class, 'formTambahUserAdm'])->name('formTambahUserAdm');
+            Route::post('/registerSuperAdmin',[SuperAdminController::class,'registerSuperAdmin']);
+    
+            //[SuperAdmin] Delete Pengguna
+            Route::get('/deleteP/{id}',[SuperAdminController::class,'deleteUserTerdaftar']);
+    
+        //[SuperAdmin] Tab Ulasan
+    
+            //[SuperAdmin] Tabel Ulasan
+            Route::get('/ulasansSA', [SuperAdminController::class, 'ulasanSuperAdmin'])->name('ulasanSuperAdmin');
+    
+            //[SuperAdmin] Delete Ulasan
+            Route::get('/deleteU/{id}',[SuperAdminController::class,'deleteUlasanA']);
+            });
+        
+         //[SuperAdmin] Tab Laporan User
+    
+            //[SuperAdmin] Tabel Laporan
+            Route::get('/laporanUserSA', [SuperAdminController::class, 'laporanUser'])->name('laporanUser');
+            Route::get('/laporanVideoUserSA', [SuperAdminController::class, 'laporanVideoUser'])->name('laporanVideoUser');
+            Route::get('/laporanUlasanUserSA', [SuperAdminController::class, 'laporanUlasanUser'])->name('laporanUlasanUser');
+    
+            Route::get('/deleteLaporanUA/{id}',[SuperAdminController::class,'deleteLaporanUA'])->name('deleteLaporanUA');
+            Route::get('/deleteLaporanVA/{id}',[SuperAdminController::class,'deleteLaporanVA'])->name('deleteLaporanVA');
+    
+        //[SuperAdmin] Tab Syarat & Ketentuan
+    
+            //[SuperAdmin] Tabel Syarat & Ketentuan
+            Route::get('/syaratdanketentuanSA',[SuperAdminController::class,'syaratdanketentuan'])->name('syaratdanketentuan');
+    
+            //[SuperAdmin] Tambah Syarat & Ketentuan
+            Route::get('/formTambahTdanC',  [SuperAdminController::class, 'formTambahTdanC'])->name('formTambahTdanC');
+            Route::post('/formTambahTdanC/storeTdanC',  [SuperAdminController::class, 'storeTdanC'])->name('storeTdanC');
+    
+            //[SuperAdmin] Delete Syarat & Ketentuan
+            Route::get('/deleteTdanC/{id}',[SuperAdminController::class,'deleteTdanC']);
+    
+            //[SuperAdmin] Edit Syarat & Ketentuan
+            Route::get('/formEditTdanC/{id}',[SuperAdminController::class,'formEditTdanC'])->name('formEditTdanC');
+            Route::post('/formEditTdanC/updateTdanC/{id}',[SuperAdminController::class,'updateTdanC'])->name('updateTdanC');

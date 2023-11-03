@@ -20,11 +20,11 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AdminController extends Controller
+class SuperAdminController extends Controller
 {
 
-    //[Admin-Profile] Profil User
-    public function profileAdmin()
+    //[SuperAdmin-Profile] Profil User
+    public function profileSA()
     {
         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
         $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
@@ -38,12 +38,12 @@ class AdminController extends Controller
         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-        return view('Admin.profileA', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 
+        return view('SuperAdmin.profileSA', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 
         'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }  
   
-    //[Admin-Profile] Edit Profil Admin
-    public function updateAdmin(Request $request, $id)
+    //[SuperAdmin-Profile] Edit Profil SuperAdmin
+    public function updateSA(Request $request, $id)
     {
         $user = User::findOrFail($id);
         $user->update([
@@ -66,14 +66,14 @@ class AdminController extends Controller
             $user->save();
         }
 
-        return redirect('/profileAdmin');
+        return redirect('/profileSA');
     }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    //[Admin-Dashboard] Halaman Dashboard
-    function dashboard(){
+    //[SuperAdmin-Dashboard] Halaman Dashboard
+    function dashboardSA(){
         $totalArtikel = artikels::count();
         $totalUser = user::count();
         $totalUlasan = ulasans::count();
@@ -101,7 +101,7 @@ class AdminController extends Controller
         $averageRating = $ratings->count() > 0 ? $totalRatings / $ratings->count() : 0;
         
 
-        return view('admin.dashboard', compact('totalArtikel', 'totalUser', 'totalUlasan', 'averageRating', 'totalUlasan', 
+        return view('SuperAdmin.dashboard', compact('totalArtikel', 'totalUser', 'totalUlasan', 'averageRating', 'totalUlasan', 
         'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 
         'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
@@ -109,7 +109,7 @@ class AdminController extends Controller
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    //[Admin-Artikel] Halaman Tables Artikel
+    //[SuperAdmin-Artikel] Halaman Tables Artikel
     function artikel(){
         $data = artikels::orderBy('created_at', 'desc')->paginate(5);
 
@@ -125,11 +125,11 @@ class AdminController extends Controller
         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-        return view('admin.artikel', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        return view('SuperAdmin.artikel', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
-    //[Admin-Artikel] Halaman Komentar Artikel
+    //[SuperAdmin-Artikel] Halaman Komentar Artikel
       function komentarArtikel(){
         $komenarA = komentar_artikel::orderBy('created_at', 'desc')->paginate(20);
 
@@ -145,18 +145,18 @@ class AdminController extends Controller
          $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
          $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-        return view('admin.komentarArtikel', compact('komenarA', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        return view('SuperAdmin.komentarArtikel', compact('komenarA', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
-    //[Admin-Artikel] Delete Data Artikel
+    //[SuperAdmin-Artikel] Delete Data Artikel
     function deleteArtikel($id){
         $data=artikels::find($id);
         $data->delete();
         return redirect('/artikelAdmin');
     }
 
-     //[Admin-Artikel] Delete Komentar Artikel
+     //[SuperAdmin-Artikel] Delete Komentar Artikel
      function deleteKomentarAA($id){
         $data=komentar_artikel::find($id);
         $data->delete();
@@ -164,7 +164,7 @@ class AdminController extends Controller
     }
 
 
-    //[Admin-Artikel] Halaman Tambah Artikel
+    //[SuperAdmin-Artikel] Halaman Tambah Artikel
     public function create()
     {
          // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
@@ -179,7 +179,7 @@ class AdminController extends Controller
          $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
          $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-        return view('admin.FormAdmin.formTambahArtikel', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        return view('SuperAdmin.FormSuperAdmin.formTambahArtikel', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
@@ -217,10 +217,10 @@ class AdminController extends Controller
     
         $article->save();
     
-        return redirect('/artikelAdmin')->with('success', 'Article added successfully.');
+        return redirect('/artikelSuperAdmin')->with('success', 'Article added successfully.');
     }      
 
-    //[Admin-Artikel] Edit Data Artikel
+    //[SuperAdmin-Artikel] Edit Data Artikel
     function tampilDataEditArtikel($id){
         $data = artikels::find($id);
 
@@ -236,7 +236,7 @@ class AdminController extends Controller
          $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
          $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
          
-        return view('admin.FormAdmin.formEditArtikel', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        return view('SuperAdmin.FormSuperAdmin.formEditArtikel', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
@@ -262,8 +262,8 @@ class AdminController extends Controller
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    //[Admin-Video] Halaman Tabel Video
-    function videoAdmin(){
+    //[SuperAdmin-Video] Halaman Tabel Video
+    function videoSuperAdmin(){
 
         $tableVideo = video::orderBy('created_at', 'desc')->paginate(4);
 
@@ -279,11 +279,11 @@ class AdminController extends Controller
          $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
          $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-        return view('admin.video', compact('tableVideo', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        return view('SuperAdmin.video', compact('tableVideo', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
-    //[Admin-Artikel] Halaman Komentar Artikel
+    //[SuperAdmin-Artikel] Halaman Komentar Artikel
     function komentarVideo(){
         $komenarV = komentar_video::orderBy('created_at', 'desc')->paginate(20);
 
@@ -299,11 +299,11 @@ class AdminController extends Controller
          $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
          $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-        return view('admin.komentarVideo', compact('komenarV', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        return view('SuperAdmin.komentarVideo', compact('komenarV', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }    
 
-    //[Admin-Video] Halaman Tambah Video
+    //[SuperAdmin-Video] Halaman Tambah Video
     function formTambahVideo(){
 
          // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
@@ -318,7 +318,7 @@ class AdminController extends Controller
          $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
          $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-        return view('admin.FormAdmin.formTambahVideo', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        return view('SuperAdmin.FormSuperAdmin.formTambahVideo', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }    
 
@@ -357,16 +357,16 @@ class AdminController extends Controller
             $embedUrl = "https://www.youtube.com/embed/$videoId";
             $videos->linkVideo = $embedUrl; // Update the link to the embedded video
         } else {
-            return redirect('/videoAdmin')->with('error', 'Invalid YouTube video link.');
+            return redirect('/videoSuperAdmin')->with('error', 'Invalid YouTube video link.');
         }
     
         $videos->save();
     
-        return redirect('/videoAdmin')->with('success', 'Video added successfully.');
+        return redirect('/videoSuperAdmin')->with('success', 'Video added successfully.');
     }
     
 
-      //[Admin-Video] Halaman Edit Video
+      //[SuperAdmin-Video] Halaman Edit Video
       function formEditVideo($id){
         $data = video::find($id);
 
@@ -382,7 +382,7 @@ class AdminController extends Controller
          $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
          $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-        return view('admin.FormAdmin.formEditVideo', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        return view('SuperAdmin.FormSuperAdmin.formEditVideo', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }    
 
@@ -408,23 +408,23 @@ class AdminController extends Controller
             $embedUrl = "https://www.youtube.com/embed/$videoId";
             $data->linkVideo = $embedUrl; // Update the link to the embedded video
         } else {
-            return redirect('/videoAdmin')->with('error', 'Invalid YouTube video link.');
+            return redirect('/videoSuperAdmin')->with('error', 'Invalid YouTube video link.');
         }
     
         $data->save();
     
-        return redirect()->route('videoAdmin')->with('success','Data Berhasil di Update');
+        return redirect()->route('videoSuperAdmin')->with('success','Data Berhasil di Update');
     }    
     
-    //[Admin-Video] Delete Video
+    //[SuperAdmin-Video] Delete Video
     function deleteVideo($id){
         $data=video::find($id);
         $data->delete();
-        return redirect('/videoAdmin');
+        return redirect('/videoSuperAdmin');
     }
 
        
-    //[Admin-Video] Delete Komentar Video
+    //[SuperAdmin-Video] Delete Komentar Video
     function deleteKomentarVA($id){
         $data=komentar_video::find($id);
         $data->delete();
@@ -434,7 +434,7 @@ class AdminController extends Controller
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    //[Admin-Pengguna] Halaman Tabel Pengguna
+    //[SuperAdmin-Pengguna] Halaman Tabel Pengguna
     function listUserTerdaftar(Request $request){
         $role = $request->input('role'); // Mendapatkan nilai filter role dari request
         $users = user::orderBy('created_at', 'desc');
@@ -458,12 +458,12 @@ class AdminController extends Controller
          $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
          $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
     
-         return view('admin.pengguna', compact('users', 'dataBaruUlasan', 'dataBaruUser', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 
+         return view('SuperAdmin.pengguna', compact('users', 'dataBaruUlasan', 'dataBaruUser', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 
          'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo'));
     }    
     
 
-    //[Admin-Pengguna] Fungsi Like & Dislike
+    //[SuperAdmin-Pengguna] Fungsi Like & Dislike
     public function likes()
     {
         return $this->hasMany(Likes::class, 'user_id', 'id');
@@ -475,7 +475,7 @@ class AdminController extends Controller
     }
 
 
-    //[Admin-Pengguna] Tambah Pengguna
+    //[SuperAdmin-Pengguna] Tambah Pengguna
     function formTambahUserAdm(){
         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
          $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
@@ -489,22 +489,22 @@ class AdminController extends Controller
          $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
          $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-        return view('admin.FormAdmin.formTambahUserAdm', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        return view('SuperAdmin.FormSuperAdmin.formTambahUserAdm', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }    
 
-    function registerAdmin(Request $req){
+    function registerSuperAdmin(Request $req){
             user::create([
                 'username' => $req->username,
                  'name' => $req->name,
                  'email' => $req->email,
                  'password' => bcrypt($req->password),
-                 'role' => 'admin',
+                 'role' => 'SuperAdmin',
             ]);
                  return redirect('pengguna');
          }
 
-    //[Admin-Pengguna] Delete Pengguna
+    //[SuperAdmin-Pengguna] Delete Pengguna
     function deleteUserTerdaftar($id)
     {
         $data=user::find($id);
@@ -515,8 +515,8 @@ class AdminController extends Controller
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    //[Admin-Ulasan] Halaman Tabel Ulasan 
-    function ulasanAdmin(){
+    //[SuperAdmin-Ulasan] Halaman Tabel Ulasan 
+    function ulasanSuperAdmin(){
         $data1 = ulasans::orderBy('created_at', 'desc')->paginate(10);
 
         //Rating
@@ -542,11 +542,11 @@ class AdminController extends Controller
         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-        return view('admin.ulasans', compact('data1', 'averageRating', 'totalUlasan', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        return view('SuperAdmin.ulasans', compact('data1', 'averageRating', 'totalUlasan', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
-    //[Admin-Ulasan] Delete Ulasan
+    //[SuperAdmin-Ulasan] Delete Ulasan
     function deleteUlasanA($id){
         $data1=ulasans::find($id);
         $data1->delete();
@@ -556,7 +556,7 @@ class AdminController extends Controller
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    //[Admin-Laporan User] 
+    //[SuperAdmin-Laporan User] 
     function laporanUser(){
 
         $laporanArtikelU = laporanArtikelUser::orderBy('created_at', 'desc')->paginate(10);
@@ -573,19 +573,19 @@ class AdminController extends Controller
         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-        return view('admin.laporan.laporanUser', compact('laporanArtikelU', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        return view('SuperAdmin.laporan.laporanUser', compact('laporanArtikelU', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
         
-    //[Admin-Laporan User] Delete Artikel User
+    //[SuperAdmin-Laporan User] Delete Artikel User
         function deleteLaporanUA($id){
             $data1=laporanArtikelUser::find($id);
             $data1->delete();
             return redirect('/laporanUser');
         }
 
-        //[Admin-Laporan User] Delete Artikel User
+        //[SuperAdmin-Laporan User] Delete Artikel User
         function deleteLaporanVA($id){
             $data1=laporanVideoUser::find($id);
             $data1->delete();
@@ -608,7 +608,7 @@ class AdminController extends Controller
         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-        return view('admin.laporan.laporanVideoUser', compact('laporanVideoUser', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        return view('SuperAdmin.laporan.laporanVideoUser', compact('laporanVideoUser', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
@@ -632,7 +632,7 @@ class AdminController extends Controller
         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-        return view('admin.term&Condition', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        return view('SuperAdmin.term&Condition', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
@@ -651,7 +651,7 @@ class AdminController extends Controller
         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
         
-        return view('admin.FormAdmin.formTambahTdanC', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        return view('SuperAdmin.FormSuperAdmin.formTambahTdanC', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
@@ -679,7 +679,7 @@ class AdminController extends Controller
             $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
             $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-            return view('admin.FormAdmin.formEditTermOfCondition', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+            return view('SuperAdmin.FormSuperAdmin.formEditTermOfCondition', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
             'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
         }
     

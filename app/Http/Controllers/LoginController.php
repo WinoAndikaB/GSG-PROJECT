@@ -46,6 +46,10 @@ class LoginController extends Controller
                 $request->session()->regenerate();
                 return redirect()->intended('/home');
             }
+            if(Auth::user()->role == 'superadmin'){
+                $request->session()->regenerate();
+                return redirect()->intended('/dashboardSA');
+            }
         }
         return back()->withErrors([
             'email' => 'Email and Password invalid'

@@ -4,10 +4,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href=".../assets2/img/lg1.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Komentar Video | GSG PROJECT
+    Profile | GSG PROJECT
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -15,6 +15,7 @@
   <link href="../assets2/css/nucleo-icons.css" rel="stylesheet" />
   <link href="../assets2/css/nucleo-svg.css" rel="stylesheet" />
   <!-- Font Awesome Icons -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <link href="../assets2/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
@@ -66,7 +67,26 @@
       cursor: pointer;
     }
 </style>
-  
+
+  <script>
+    // Function to auto-adjust textarea height
+    function autoResizeTextarea() {
+        const textarea = document.getElementById("auto-resize-textarea");
+        textarea.style.height = "auto";
+        textarea.style.height = textarea.scrollHeight + "px";
+    }
+
+    // Attach the autoResizeTextarea function to the textarea's input event
+    $(document).ready(function() {
+        $("#auto-resize-textarea").on("input", function() {
+            autoResizeTextarea();
+        });
+
+        // Initialize the textarea's height when the page loads
+        autoResizeTextarea();
+    });
+</script>
+
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -99,23 +119,19 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/artikelAdmin">
+          <a class="nav-link active" href="/artikelAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Artikel
-              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruArtikel + $dataBaruKomentarArtikel}}</span> 
-            </span>
+            <span class="nav-link-text ms-1">Artikel</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/videoAdmin">
+          <a class="nav-link " href="/videoAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-warning text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Video
-              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruVideo + $dataBaruKomentarVideo}}</span> 
-            </span>
+            <span class="nav-link-text ms-1">Video</span>
           </a>
         </li>
         <li class="nav-item">
@@ -123,9 +139,7 @@
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-circle-08 text-warning text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Pengguna
-              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruUser}}</span> 
-            </span>
+            <span class="nav-link-text ms-1">Pengguna</span>
           </a>
         </li>
         <li class="nav-item">
@@ -133,9 +147,7 @@
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-paper-diploma text-warning text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Ulasan 
-              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruUlasan}}</span> 
-            </span>
+            <span class="nav-link-text ms-1">Ulasan</span>
           </a>
         </li>
         <li class="nav-item">
@@ -143,13 +155,11 @@
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-sound-wave text-warning text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Laporan User 
-              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruLaporanArtikel + $dataBaruLaporanVideo}}</span> 
-            </span>
+            <span class="nav-link-text ms-1">Laporan User</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/syaratdanketentuan">
+          <a class="nav-link" href="/syaratdanketentuan">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
             </div>
@@ -158,8 +168,8 @@
         </li>
       </ul>
     </div>
-
-  <div class="sidenav-footer mx-3 ">    
+    <div class="sidenav-footer mx-3 ">
+       
   </aside>
   <main class="main-content position-relative border-radius-lg ">
     <!-- Navbar -->
@@ -168,9 +178,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Komentar Video</li>
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Artikel</li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Komentar Video</h6>
+          <h6 class="font-weight-bolder text-white mb-0">Form Edit Artikel </h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -210,7 +220,6 @@
                 <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
               </a>
             </li>
-            </li>
           </ul>
         </div>
       </div>
@@ -218,151 +227,89 @@
     <!-- End Navbar -->
 
       <!-- Modal Logout -->
-      <div id="logout-modal" class="modal">
-        <div class="modal-content">
-          <span class="close" id="close-button" onclick="closeModal()">&times;</span>
-          <h2>Konfirmasi Logout</h2>
-          <p>Apakah anda mau logout?</p>
-          <div style="text-align: center;">
-            <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
-            <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
-          </div>
-        </div>
+  <div id="logout-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="close-button" onclick="closeModal()">&times;</span>
+      <h2>Konfirmasi Logout</h2>
+      <p>Apakah anda mau logout?</p>
+      <div style="text-align: center;">
+        <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
+        <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
       </div>
+    </div>
+  </div>
     
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <a href="/videoAdmin" class="btn btn-primary">Video</i></a>
-              <h6>List Komentar Video Tersedia</h6>
-            </div>
-            <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">          
-
-              <div class="container-fluid py-4">
+              <h6>Form Edit Artikel</h6>
+              <form action="/formEditArtikel/updateArtikel/{{$data->id}}" method="POST" enctype="multipart/form-data">
+              @csrf
                 <div class="row">
-                  <div class="col-12">
-                    <div class="card mb-4">
-                      <div class="card-header pb-0">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="form-group">
+                        <label for="" class="form-control-label">Gambar</label>
+                        <input class="form-control" type="file" id="uploadGambar" name="gambarArtikel" value="{{ $data->gambarArtikel }} required">
+                        <br>
+                        <img src="{{asset('gambarArtikel/'.$data->gambarArtikel)}}" height="10%" width="50%" srcset="">
                       </div>
-                      <div class="card-body px-0 pt-0 pb-2">
-                        <div class="table-responsive p-0">
-                          <table class="table align-items-center mb-0">
-                            <thead>
-                              <tr>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Video ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Video</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama User</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pesan</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal</th>
-                                <th class="text-secondary opacity-7"></th>
-                              </tr>
-                            </thead>
-                            @foreach ($komenarV as $item)
-                            <tbody>
-                              <tr>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['id']}}</p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['video']['id']}}</p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['video']['judulVideo']}}</p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['user_id']}}</p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['user']['name']}}</p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['pesan']}}</p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-success">{{ \Carbon\Carbon::parse($item['created_at'])->translatedFormat('l, j F Y') }}</span>
-                                </td>
-                                <td class="align-middle">
-                                  <a href="{{"deleteKomentarVA/".$item['id']}}" class="btn btn-danger btn btn-primary btn-round" onclick="return showConfirmation()">
-                                    <i class="fa fa-trash"></i>
-                                  </a>
-                                </td>
-                              </tr>
-                            </tbody>
-                            @endforeach
+                      <label for="" class="form-control-label">Judul Artikel</label>
+                      <textarea class="form-control" type="textarea" name="judulArtikel" required>{{ $data->judulArtikel }}</textarea>
+                    </div>
+                    <div class="form-group">
+                      <label for="" class="form-control-label">Penulis</label>
+                      <input class="form-control" type="text" name="penulis" value="{{ $data->penulis }}" required readonly>
+                    </div>
+                    <div class="form-group">
+                      <label for="" class="form-control-label">Kategori</label>
+                      <textarea class="form-control" type="text" name="kategori" required>{{ $data->kategori }}</textarea>
+                    </div>
+                    <div class="form-group">
+                      <label for="" class="form-control-label">Tags</label>
+                      <textarea class="form-control" type="text" name="tags" required>{{ $data->tags }}</textarea>
+                    </div>
+                    <div class="form-group">
+                      <label for="" class="form-control-label">Deskirpsi</label>
+                      <textarea class="form-control" type="text" name="deskripsi" id="editor">{{ $data->deskripsi }}</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">Edit</button>
+                    <a href="/artikelAdmin" class="btn btn-info mt-3">Kembali</i></a>
+                  </div>
+                </div>
+              </form>
 
-                            <div class="d-flex justify-content-center">
-                              <ul class="pagination">
-                                  @if ($komenarV->onFirstPage())
-                                      <li class="page-item disabled">
-                                          <span class="page-link" aria-label="Previous">
-                                              <span aria-hidden="true">&lsaquo;</span>
-                                          </span>
-                                      </li>
-                                  @else
-                                      <li class="page-item">
-                                          <a class="page-link" href="{{ $komenarV->previousPageUrl() }}" rel="prev" aria-label="Previous">
-                                              <span aria-hidden="true">&lsaquo;</span>
-                                          </a>
-                                      </li>
-                                  @endif
-            
-                                <!-- Menampilkan halaman berapa -->
-                                <div class="text-center">
-                                    {{ $komenarV->currentPage() }} dari {{ $komenarV->lastPage() }}
-                                </div>
-                          
-                                  @if ($komenarV->hasMorePages())
-                                      <li class="page-item">
-                                          <a class="page-link" href="{{ $komenarV->nextPageUrl() }}" rel="next" aria-label="Next">
-                                              <span aria-hidden="true">&rsaquo;</span>
-                                          </a>
-                                      </li>
-                                  @else
-                                      <li class="page-item disabled">
-                                          <span class="page-link" aria-label="Next">
-                                              <span aria-hidden="true">&rsaquo;</span>
-                                          </span>
-                                      </li>
-                                  @endif
-                              </ul>
-                          </div>
-
-                          </table>
+            <div class="card-body px-0 pt-12 pb-2">
+              <div class="table-responsive p-0">
+                <div class="panel-header panel-header-sm">
+                </div>
+                <div class="content">
+                  <div class="row">
+                    <div class="col-md-12">
+                        <div class="card-body ">
+                          <div id="map" class="map"></div>
                         </div>
-                      </div>
                     </div>
                   </div>
                 </div>
-  
-                <footer class="footer pt-3  ">
-                  <div class="container-fluid">
-                    <div class="row align-items-center justify-content-lg-between">
-                      <div class="col-lg-6 mb-lg-0 mb-4">
-                        <div class="copyright text-center text-sm text-muted text-lg-start">
-                          © <script>
-                            document.write(new Date().getFullYear())
-                          </script>,
-                          Template by <a title="CSS Templates" rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>,
-                          <a title="CSS Templates" rel="sponsored" href="https://themewagon.com/themes/free-bootstrap-4-html-5-blog-website-template-nextpage/" target="_blank">NextPage </a> and
-                          <a title="CSS Templates" rel="sponsored" href="https://www.creative-tim.com" target="_blank">Crative Tim </a> 
-                          Edited By <a title="CSS Templates" rel="sponsored" href="#" target="_blank">GSG Team</a></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </footer>
-              </div>
-              
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+
+      <footer class="footer pt-3  ">
+        <div class="container-fluid">
+          <div class="row align-items-center justify-content-lg-between">
+            <div class="col-lg-6 mb-lg-0 mb-4">
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   </main>
   <div class="fixed-plugin">
@@ -444,43 +391,47 @@
   <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/chartjs.min.js"></script>
 
+  <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
+  <script>
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
 
-  <!-- Github buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
+ <!-- MODAL LOGOUT -->
+ <script>
+  // JavaScript untuk modal logout
+  function openModal() {
+    const modal = document.getElementById('logout-modal');
+    modal.style.display = 'block';
+  }
 
-     <!-- MODAL LOGOUT -->
-     <script>
-      // JavaScript untuk modal logout
-      function openModal() {
-        const modal = document.getElementById('logout-modal');
-        modal.style.display = 'block';
-      }
-    
-      function closeModal() {
-        const modal = document.getElementById('logout-modal');
-        modal.style.display = 'none';
-      }
-    
-      function confirmLogout(confirmed) {
-        if (confirmed) {
-          // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
-          window.location.href = '/logout';
-        } else {
-          // Tutup modal jika pengguna memilih "No"
-          closeModal();
-        }
-      }
-    
-      // Tutup modal jika pengguna mengklik di luar modal
-      window.addEventListener('click', (event) => {
-        const modal = document.getElementById('logout-modal');
-        if (event.target == modal) {
-          modal.style.display = 'none';
-        }
-      });
-    </script>
+  function closeModal() {
+    const modal = document.getElementById('logout-modal');
+    modal.style.display = 'none';
+  }
+
+  function confirmLogout(confirmed) {
+    if (confirmed) {
+      // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
+      window.location.href = '/logout';
+    } else {
+      // Tutup modal jika pengguna memilih "No"
+      closeModal();
+    }
+  }
+
+  // Tutup modal jika pengguna mengklik di luar modal
+  window.addEventListener('click', (event) => {
+    const modal = document.getElementById('logout-modal');
+    if (event.target == modal) {
+      modal.style.display = 'none';
+    }
+  });
+</script>
+
+ 
 </body>
-
 </html>

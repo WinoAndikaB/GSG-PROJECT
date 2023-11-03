@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href=".../assets2/img/lg1.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Komentar Video | GSG PROJECT
+    Artikel | GSG PROJECT
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -99,7 +99,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/artikelAdmin">
+          <a class="nav-link active" href="/artikelAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
             </div>
@@ -109,7 +109,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/videoAdmin">
+          <a class="nav-link " href="/videoAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-warning text-sm opacity-10"></i>
             </div>
@@ -159,7 +159,8 @@
       </ul>
     </div>
 
-  <div class="sidenav-footer mx-3 ">    
+
+  <div class="sidenav-footer mx-3 ">
   </aside>
   <main class="main-content position-relative border-radius-lg ">
     <!-- Navbar -->
@@ -168,9 +169,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Komentar Video</li>
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Artikel</li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Komentar Video</h6>
+          <h6 class="font-weight-bolder text-white mb-0">Artikel</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -235,8 +236,11 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <a href="/videoAdmin" class="btn btn-primary">Video</i></a>
-              <h6>List Komentar Video Tersedia</h6>
+              <a href="/artikel/create" class="btn btn-primary">Tambah Artikel</i></a>
+              <a href="/komentarArtikel" class="btn btn-success">Komentar Artikel</i>
+                + {{ $dataBaruKomentarArtikel }}
+              </a>
+              <h6>List Artikel Tersedia</h6>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">          
@@ -253,41 +257,70 @@
                             <thead>
                               <tr>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Video ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Video</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama User</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pesan</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Penulis</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Judul Artikel</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Upload</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Update</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kategori</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tags</th>
                                 <th class="text-secondary opacity-7"></th>
                               </tr>
                             </thead>
-                            @foreach ($komenarV as $item)
+                            @foreach ($data as $tbhartikel)
                             <tbody>
                               <tr>
                                 <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['id']}}</p>
+                                  <p class="text-xs font-weight-bold mb-0">{{$tbhartikel['id']}}</p>
+                                </td>
+                                <td>
+                                  <div class="d-flex px-2 py-1">
+                                    <div>
+                                      <img src="{{asset('gambarArtikel/'.$tbhartikel->gambarArtikel)}}" class="avatar avatar-sm me-3" alt="user1">
+                                    </div>
+                                    <div class="d-flex flex-column justify-content-center">
+                                      <h6 class="mb-0 text-sm">{{$tbhartikel['penulis']}}</h6>
+                                      <p class="text-xs text-secondary mb-0">{{$tbhartikel['email']}}</p>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td>
+                                  <p class="text-xs font-weight-bold mb-0">{{$tbhartikel['judulArtikel']}}</p>
+                                </td>
+                                <td style="text-align: justify;">
+                                  <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
+                                    <?php
+                                    $deskripsi = strip_tags($tbhartikel['deskripsi']);
+                                    $words = str_word_count($deskripsi, 2);
+                                    $first_100_words = implode(' ', array_slice($words, 0, 5));
+                                    echo $first_100_words;
+                                    if (str_word_count($deskripsi) > 100) {
+                                      echo '...';
+                                    }
+                                    ?>
+                                  </p>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['video']['id']}}</p>
+                                  <span class="text-secondary text-xs font-weight-bold">{{$tbhartikel['created_at']->format('l, d F Y H:i:s') }}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['video']['judulVideo']}}</p>
+                                  <span class="text-secondary text-xs font-weight-bold">{{$tbhartikel['updated_at']->format('l, d F Y H:i:s') }}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['user_id']}}</p>
+                                  <span class="badge badge-sm bg-gradient-success">Pending</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['user']['name']}}</p>
+                                  <span class="badge badge-sm bg-gradient-success">{{$tbhartikel['kategori']}}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['pesan']}}</p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-success">{{ \Carbon\Carbon::parse($item['created_at'])->translatedFormat('l, j F Y') }}</span>
+                                  <span class="badge badge-sm bg-gradient-success">{{$tbhartikel['tags']}}</span>
                                 </td>
                                 <td class="align-middle">
-                                  <a href="{{"deleteKomentarVA/".$item['id']}}" class="btn btn-danger btn btn-primary btn-round" onclick="return showConfirmation()">
+                                  <a href="/tampilDataEditArtikel/{{ $tbhartikel->id}}" class="btn btn-warning btn btn-primary btn-round">
+                                    <i class="fa fa-pencil"></i>
+                                  </a>
+                                  <a href="{{"deleteA/".$tbhartikel['id']}}" class="btn btn-danger btn btn-primary btn-round" onclick="return showConfirmation()">
                                     <i class="fa fa-trash"></i>
                                   </a>
                                 </td>
@@ -297,7 +330,7 @@
 
                             <div class="d-flex justify-content-center">
                               <ul class="pagination">
-                                  @if ($komenarV->onFirstPage())
+                                  @if ($data->onFirstPage())
                                       <li class="page-item disabled">
                                           <span class="page-link" aria-label="Previous">
                                               <span aria-hidden="true">&lsaquo;</span>
@@ -305,7 +338,7 @@
                                       </li>
                                   @else
                                       <li class="page-item">
-                                          <a class="page-link" href="{{ $komenarV->previousPageUrl() }}" rel="prev" aria-label="Previous">
+                                          <a class="page-link" href="{{ $data->previousPageUrl() }}" rel="prev" aria-label="Previous">
                                               <span aria-hidden="true">&lsaquo;</span>
                                           </a>
                                       </li>
@@ -313,12 +346,12 @@
             
                                 <!-- Menampilkan halaman berapa -->
                                 <div class="text-center">
-                                    {{ $komenarV->currentPage() }} dari {{ $komenarV->lastPage() }}
+                                    {{ $data->currentPage() }} dari {{ $data->lastPage() }}
                                 </div>
                           
-                                  @if ($komenarV->hasMorePages())
+                                  @if ($data->hasMorePages())
                                       <li class="page-item">
-                                          <a class="page-link" href="{{ $komenarV->nextPageUrl() }}" rel="next" aria-label="Next">
+                                          <a class="page-link" href="{{ $data->nextPageUrl() }}" rel="next" aria-label="Next">
                                               <span aria-hidden="true">&rsaquo;</span>
                                           </a>
                                       </li>

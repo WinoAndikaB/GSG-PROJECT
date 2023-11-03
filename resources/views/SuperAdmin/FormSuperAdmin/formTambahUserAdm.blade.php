@@ -4,10 +4,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href=".../assets2/img/lg1.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Komentar Video | GSG PROJECT
+    Register Admin | GSG PROJECT
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -66,7 +66,6 @@
       cursor: pointer;
     }
 </style>
-  
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -91,7 +90,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/dashboard">
+          <a class="nav-link " href="/dashboard">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
             </div>
@@ -109,7 +108,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/videoAdmin">
+          <a class="nav-link " href="/videoAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-warning text-sm opacity-10"></i>
             </div>
@@ -119,7 +118,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/pengguna">
+          <a class="nav-link active" href="/pengguna">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-circle-08 text-warning text-sm opacity-10"></i>
             </div>
@@ -159,7 +158,7 @@
       </ul>
     </div>
 
-  <div class="sidenav-footer mx-3 ">    
+  <div class="sidenav-footer mx-3 ">
   </aside>
   <main class="main-content position-relative border-radius-lg ">
     <!-- Navbar -->
@@ -168,9 +167,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Komentar Video</li>
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Pengguna</li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Komentar Video</h6>
+          <h6 class="font-weight-bolder text-white mb-0">Form Register Admin</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -210,7 +209,6 @@
                 <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
               </a>
             </li>
-            </li>
           </ul>
         </div>
       </div>
@@ -218,151 +216,91 @@
     <!-- End Navbar -->
 
       <!-- Modal Logout -->
-      <div id="logout-modal" class="modal">
-        <div class="modal-content">
-          <span class="close" id="close-button" onclick="closeModal()">&times;</span>
-          <h2>Konfirmasi Logout</h2>
-          <p>Apakah anda mau logout?</p>
-          <div style="text-align: center;">
-            <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
-            <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
-          </div>
-        </div>
+  <div id="logout-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="close-button" onclick="closeModal()">&times;</span>
+      <h2>Konfirmasi Logout</h2>
+      <p>Apakah anda mau logout?</p>
+      <div style="text-align: center;">
+        <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
+        <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
       </div>
+    </div>
+  </div>
+
+      <!-- Modal Logout -->
+  <div id="logout-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="close-button" onclick="closeModal()">&times;</span>
+      <h2>Konfirmasi Logout</h2>
+      <p>Apakah anda mau logout?</p>
+      <div style="text-align: center;">
+        <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
+        <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
+      </div>
+    </div>
+  </div>
     
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <a href="/videoAdmin" class="btn btn-primary">Video</i></a>
-              <h6>List Komentar Video Tersedia</h6>
-            </div>
-            <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">          
-
-              <div class="container-fluid py-4">
+              <h6>Register User Admin</h6>
+              <form class="form" method="POST" action="registerAdmin">
+                @csrf
                 <div class="row">
-                  <div class="col-12">
-                    <div class="card mb-4">
-                      <div class="card-header pb-0">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="form-group">
+                        <label for="" class="form-control-label">Username</label>
+                        <input class="form-control" type="text" name="username" value="" required>
                       </div>
-                      <div class="card-body px-0 pt-0 pb-2">
-                        <div class="table-responsive p-0">
-                          <table class="table align-items-center mb-0">
-                            <thead>
-                              <tr>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Video ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Video</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama User</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pesan</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal</th>
-                                <th class="text-secondary opacity-7"></th>
-                              </tr>
-                            </thead>
-                            @foreach ($komenarV as $item)
-                            <tbody>
-                              <tr>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['id']}}</p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['video']['id']}}</p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['video']['judulVideo']}}</p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['user_id']}}</p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['user']['name']}}</p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['pesan']}}</p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-success">{{ \Carbon\Carbon::parse($item['created_at'])->translatedFormat('l, j F Y') }}</span>
-                                </td>
-                                <td class="align-middle">
-                                  <a href="{{"deleteKomentarVA/".$item['id']}}" class="btn btn-danger btn btn-primary btn-round" onclick="return showConfirmation()">
-                                    <i class="fa fa-trash"></i>
-                                  </a>
-                                </td>
-                              </tr>
-                            </tbody>
-                            @endforeach
+                      <div class="form-group">
+                        <label for="" class="form-control-label">Nama</label>
+                        <input class="form-control" type="text" name="name" value="" required>
+                      </div>
+                      <label for="" class="form-control-label">Email</label>
+                      <input class="form-control" type="email" name="email" value="" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="" class="form-control-label">Password</label>
+                      <input class="form-control" type="password" name="password" value="" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">Register</button>
+                    <a href="/pengguna" class="btn btn-info mt-3">Kembali</i></a>
+                  </div>
+                </div>
+              </form>
 
-                            <div class="d-flex justify-content-center">
-                              <ul class="pagination">
-                                  @if ($komenarV->onFirstPage())
-                                      <li class="page-item disabled">
-                                          <span class="page-link" aria-label="Previous">
-                                              <span aria-hidden="true">&lsaquo;</span>
-                                          </span>
-                                      </li>
-                                  @else
-                                      <li class="page-item">
-                                          <a class="page-link" href="{{ $komenarV->previousPageUrl() }}" rel="prev" aria-label="Previous">
-                                              <span aria-hidden="true">&lsaquo;</span>
-                                          </a>
-                                      </li>
-                                  @endif
-            
-                                <!-- Menampilkan halaman berapa -->
-                                <div class="text-center">
-                                    {{ $komenarV->currentPage() }} dari {{ $komenarV->lastPage() }}
-                                </div>
-                          
-                                  @if ($komenarV->hasMorePages())
-                                      <li class="page-item">
-                                          <a class="page-link" href="{{ $komenarV->nextPageUrl() }}" rel="next" aria-label="Next">
-                                              <span aria-hidden="true">&rsaquo;</span>
-                                          </a>
-                                      </li>
-                                  @else
-                                      <li class="page-item disabled">
-                                          <span class="page-link" aria-label="Next">
-                                              <span aria-hidden="true">&rsaquo;</span>
-                                          </span>
-                                      </li>
-                                  @endif
-                              </ul>
-                          </div>
-
-                          </table>
+            <div class="card-body px-0 pt-12 pb-2">
+              <div class="table-responsive p-0">
+                <div class="panel-header panel-header-sm">
+                </div>
+                <div class="content">
+                  <div class="row">
+                    <div class="col-md-12">
+                        <div class="card-body ">
+                          <div id="map" class="map"></div>
                         </div>
-                      </div>
                     </div>
                   </div>
                 </div>
-  
-                <footer class="footer pt-3  ">
-                  <div class="container-fluid">
-                    <div class="row align-items-center justify-content-lg-between">
-                      <div class="col-lg-6 mb-lg-0 mb-4">
-                        <div class="copyright text-center text-sm text-muted text-lg-start">
-                          © <script>
-                            document.write(new Date().getFullYear())
-                          </script>,
-                          Template by <a title="CSS Templates" rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>,
-                          <a title="CSS Templates" rel="sponsored" href="https://themewagon.com/themes/free-bootstrap-4-html-5-blog-website-template-nextpage/" target="_blank">NextPage </a> and
-                          <a title="CSS Templates" rel="sponsored" href="https://www.creative-tim.com" target="_blank">Crative Tim </a> 
-                          Edited By <a title="CSS Templates" rel="sponsored" href="#" target="_blank">GSG Team</a></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </footer>
-              </div>
-              
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+
+      <footer class="footer pt-3  ">
+        <div class="container-fluid">
+          <div class="row align-items-center justify-content-lg-between">
+
+          </div>
+        </div>
+      </footer>
     </div>
   </main>
   <div class="fixed-plugin">
@@ -443,44 +381,237 @@
   <script src="../assets2/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/chartjs.min.js"></script>
+  <script>
+    var ctx1 = document.getElementById("chart-line").getContext("2d");
 
+    var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke1.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
+    gradientStroke1.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
+    gradientStroke1.addColorStop(0, 'rgba(94, 114, 228, 0)');
+    new Chart(ctx1, {
+      type: "line",
+      data: {
+        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        datasets: [{
+          label: "Mobile apps",
+          tension: 0.4,
+          borderWidth: 0,
+          pointRadius: 0,
+          borderColor: "#5e72e4",
+          backgroundColor: gradientStroke1,
+          borderWidth: 3,
+          fill: true,
+          data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
+          maxBarThickness: 6
+
+        }],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false,
+          }
+        },
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
+        scales: {
+          y: {
+            grid: {
+              drawBorder: false,
+              display: true,
+              drawOnChartArea: true,
+              drawTicks: false,
+              borderDash: [5, 5]
+            },
+            ticks: {
+              display: true,
+              padding: 10,
+              color: '#fbfbfb',
+              font: {
+                size: 11,
+                family: "Open Sans",
+                style: 'normal',
+                lineHeight: 2
+              },
+            }
+          },
+          x: {
+            grid: {
+              drawBorder: false,
+              display: false,
+              drawOnChartArea: false,
+              drawTicks: false,
+              borderDash: [5, 5]
+            },
+            ticks: {
+              display: true,
+              color: '#ccc',
+              padding: 20,
+              font: {
+                size: 11,
+                family: "Open Sans",
+                style: 'normal',
+                lineHeight: 2
+              },
+            }
+          },
+        },
+      },
+    });
+  </script>
+  <script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+  </script>
 
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
 
+  <script>
+        var map;
+        var markers = [];
+        var routePolyline;
+
+        var maxClicks = 2; // Jumlah maksimum klik yang diinginkan
+        var clickCount = 0; // Jumlah klik saat ini
+
+        function initMap() {
+            // Initialize map
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: -6.2088, lng: 106.8456 },
+                zoom: 12
+            });
+
+            // Add click event listener to the map
+            map.addListener('click', function(event) {
+                if (clickCount < maxClicks) {
+                    addMarker(event.latLng);
+                    clickCount++;
+                    if (clickCount === maxClicks) {
+                        // Terakhir kali klik, buat garis rute berdasarkan urutan titik yang diklik
+                        updateRoutePolyline();
+                    }
+                } else {
+                    // Jika melebihi jumlah maksimum klik, hapus titik terakhir dan buat garis rute baru
+                    markers.pop();
+                    removeRoutePolyline();
+                    updateRoutePolyline();
+                    clickCount--;
+                }
+            });
+            // Add click event listener to the reset button
+            var resetButton = document.getElementById('resetButton');
+            resetButton.addEventListener('click', function() {
+                resetMap();
+            });
+        }
+
+        function addMarker(latLng) {
+            var marker = new google.maps.Marker({
+                position: latLng,
+                map: map
+            });
+
+            markers.push(marker);
+        }
+
+        function updateRoutePolyline() {
+            if (routePolyline) {
+                routePolyline.setMap(null);
+            }
+
+            var routeCoordinates = [];
+            var bounds = new google.maps.LatLngBounds();
+
+            for (var i = 0; i < markers.length; i++) {
+                var position = markers[i].getPosition();
+                routeCoordinates.push(position);
+                bounds.extend(position);
+            }
+
+            if (clickCount === maxClicks) {
+                // Jika jumlah klik sama dengan jumlah maksimum, tambahkan garis dari titik keempat ke titik pertama
+                routeCoordinates.push(markers[0].getPosition());
+            }
+
+            routePolyline = new google.maps.Polyline({
+                path: routeCoordinates,
+                strokeColor: '#FF0000',
+                strokeOpacity: 1.0,
+                strokeWeight: 2,
+                map: map
+            });
+
+            map.fitBounds(bounds);
+        }
+
+        function removeRoutePolyline() {
+            if (routePolyline) {
+                routePolyline.setMap(null);
+            }
+        }
+
+      
+        // Mengambil nilai maxClicks dari input
+        // var maxClicksInput = document.getElementById('luas');
+        // maxClicksInput.addEventListener('input', function() {
+        //     maxClicks = parseInt(maxClicksInput.value);
+        //     resetMap();
+        // });
+
+        function resetMap() {
+            clickCount = 0;
+            removeRoutePolyline();
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(null);
+            }
+            markers = [];
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBau8YkGc472asE5eahYg0q-yNG9iYHAZs&callback=initMap" async defer></script>
+
      <!-- MODAL LOGOUT -->
-     <script>
-      // JavaScript untuk modal logout
-      function openModal() {
-        const modal = document.getElementById('logout-modal');
-        modal.style.display = 'block';
+   <script>
+    // JavaScript untuk modal logout
+    function openModal() {
+      const modal = document.getElementById('logout-modal');
+      modal.style.display = 'block';
+    }
+  
+    function closeModal() {
+      const modal = document.getElementById('logout-modal');
+      modal.style.display = 'none';
+    }
+  
+    function confirmLogout(confirmed) {
+      if (confirmed) {
+        // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
+        window.location.href = '/logout';
+      } else {
+        // Tutup modal jika pengguna memilih "No"
+        closeModal();
       }
-    
-      function closeModal() {
-        const modal = document.getElementById('logout-modal');
+    }
+  
+    // Tutup modal jika pengguna mengklik di luar modal
+    window.addEventListener('click', (event) => {
+      const modal = document.getElementById('logout-modal');
+      if (event.target == modal) {
         modal.style.display = 'none';
       }
-    
-      function confirmLogout(confirmed) {
-        if (confirmed) {
-          // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
-          window.location.href = '/logout';
-        } else {
-          // Tutup modal jika pengguna memilih "No"
-          closeModal();
-        }
-      }
-    
-      // Tutup modal jika pengguna mengklik di luar modal
-      window.addEventListener('click', (event) => {
-        const modal = document.getElementById('logout-modal');
-        if (event.target == modal) {
-          modal.style.display = 'none';
-        }
-      });
-    </script>
+    });
+  </script>
 </body>
-
 </html>

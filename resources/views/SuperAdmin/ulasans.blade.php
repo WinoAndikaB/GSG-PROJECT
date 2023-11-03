@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href=".../assets2/img/lg1.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Komentar Video | GSG PROJECT
+    Ulasan | GSG PROJECT
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -21,52 +21,74 @@
   <link id="pagestyle" href="../assets2/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 
   <style>
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      overflow: hidden; /* Tidak dapat di-scroll */
-    }
+      .rating {
+        font-size: 20px;
+      }
 
-    .modal-content {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background-color: #fff;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      padding: 20px;
-      border: 1px solid #888;
-      width: 40%;
-      height: 30%; /* Mengatur tinggi modal menjadi 60% */
-      text-align: center;
-    }
+      .star {
+        color: gray; /* Mengatur warna bintang awalnya menjadi gray */
+        cursor: pointer;
+      }
 
-    .close {
-      color: #888;
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      font-size: 20px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+      .star.selected {
+        color: gold; /* Mengatur warna bintang yang dipilih menjadi gold */
+      }
 
-    #confirm-button, #cancel-button {
-      padding: 10px 20px;
-      margin: 25px;
-      cursor: pointer;
-    }
-</style>
-  
+      .rating-container {
+          font-size: 20px; /* Atur ukuran teks rata-rata rating */
+          margin: 15px; /* Atur margin untuk jarak dari teks sekitarnya */
+        }
+
+        .filled-star {
+          color: gold; /* Warna bintang yang diisi */
+        }
+
+        .modal {
+          display: none;
+          position: fixed;
+          z-index: 1;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.5);
+          overflow: hidden; /* Tidak dapat di-scroll */
+        }
+
+        .modal-content {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          background-color: #fff;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          padding: 20px;
+          border: 1px solid #888;
+          width: 40%;
+          height: 30%; /* Mengatur tinggi modal menjadi 60% */
+          text-align: center;
+        }
+
+        .close {
+          color: #888;
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          font-size: 20px;
+          font-weight: bold;
+          cursor: pointer;
+        }
+
+        #confirm-button, #cancel-button {
+          padding: 10px 20px;
+          margin: 25px;
+          cursor: pointer;
+        }
+      </style>
+
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -109,7 +131,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/videoAdmin">
+          <a class="nav-link " href="/videoAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-warning text-sm opacity-10"></i>
             </div>
@@ -129,7 +151,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/ulasans">
+          <a class="nav-link active" href="/ulasans">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-paper-diploma text-warning text-sm opacity-10"></i>
             </div>
@@ -159,7 +181,7 @@
       </ul>
     </div>
 
-  <div class="sidenav-footer mx-3 ">    
+  <div class="sidenav-footer mx-3 ">
   </aside>
   <main class="main-content position-relative border-radius-lg ">
     <!-- Navbar -->
@@ -168,9 +190,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Komentar Video</li>
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Ulasan</li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Komentar Video</h6>
+          <h6 class="font-weight-bolder text-white mb-0">Ulasan</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -218,147 +240,168 @@
     <!-- End Navbar -->
 
       <!-- Modal Logout -->
-      <div id="logout-modal" class="modal">
-        <div class="modal-content">
-          <span class="close" id="close-button" onclick="closeModal()">&times;</span>
-          <h2>Konfirmasi Logout</h2>
-          <p>Apakah anda mau logout?</p>
-          <div style="text-align: center;">
-            <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
-            <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
-          </div>
-        </div>
+  <div id="logout-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="close-button" onclick="closeModal()">&times;</span>
+      <h2>Konfirmasi Logout</h2>
+      <p>Apakah anda mau logout?</p>
+      <div style="text-align: center;">
+        <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
+        <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
       </div>
+    </div>
+  </div>
     
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <a href="/videoAdmin" class="btn btn-primary">Video</i></a>
-              <h6>List Komentar Video Tersedia</h6>
+              <h6>List Ulasan</h6>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">          
+              <div class="table-responsive p-0">             
 
-              <div class="container-fluid py-4">
-                <div class="row">
-                  <div class="col-12">
-                    <div class="card mb-4">
-                      <div class="card-header pb-0">
-                      </div>
-                      <div class="card-body px-0 pt-0 pb-2">
-                        <div class="table-responsive p-0">
-                          <table class="table align-items-center mb-0">
-                            <thead>
-                              <tr>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Video ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Video</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama User</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pesan</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal</th>
-                                <th class="text-secondary opacity-7"></th>
-                              </tr>
-                            </thead>
-                            @foreach ($komenarV as $item)
-                            <tbody>
-                              <tr>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['id']}}</p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['video']['id']}}</p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['video']['judulVideo']}}</p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['user_id']}}</p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['user']['name']}}</p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['pesan']}}</p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-success">{{ \Carbon\Carbon::parse($item['created_at'])->translatedFormat('l, j F Y') }}</span>
-                                </td>
-                                <td class="align-middle">
-                                  <a href="{{"deleteKomentarVA/".$item['id']}}" class="btn btn-danger btn btn-primary btn-round" onclick="return showConfirmation()">
-                                    <i class="fa fa-trash"></i>
+              <div class="row">
+                <div class="col-12">
+                  <div class="card mb-4">
+                    <div class="card-header pb-0">
+                    </div>
+                    <div class="card-body px-0 pt-0 pb-2">
+                      <div class="rating-container">
+                    </div> 
+                    
+                    <div class="d-flex justify-content-center">
+                      <ul class="pagination">
+                          @if ($data1->onFirstPage())
+                              <li class="page-item disabled">
+                                  <span class="page-link" aria-label="Previous">
+                                      <span aria-hidden="true">&lsaquo;</span>
+                                  </span>
+                              </li>
+                          @else
+                              <li class="page-item">
+                                  <a class="page-link" href="{{ $data1->previousPageUrl() }}" rel="prev" aria-label="Previous">
+                                      <span aria-hidden="true">&lsaquo;</span>
                                   </a>
-                                </td>
-                              </tr>
-                            </tbody>
-                            @endforeach
-
-                            <div class="d-flex justify-content-center">
-                              <ul class="pagination">
-                                  @if ($komenarV->onFirstPage())
-                                      <li class="page-item disabled">
-                                          <span class="page-link" aria-label="Previous">
-                                              <span aria-hidden="true">&lsaquo;</span>
-                                          </span>
-                                      </li>
-                                  @else
-                                      <li class="page-item">
-                                          <a class="page-link" href="{{ $komenarV->previousPageUrl() }}" rel="prev" aria-label="Previous">
-                                              <span aria-hidden="true">&lsaquo;</span>
-                                          </a>
-                                      </li>
-                                  @endif
-            
-                                <!-- Menampilkan halaman berapa -->
-                                <div class="text-center">
-                                    {{ $komenarV->currentPage() }} dari {{ $komenarV->lastPage() }}
-                                </div>
-                          
-                                  @if ($komenarV->hasMorePages())
-                                      <li class="page-item">
-                                          <a class="page-link" href="{{ $komenarV->nextPageUrl() }}" rel="next" aria-label="Next">
-                                              <span aria-hidden="true">&rsaquo;</span>
-                                          </a>
-                                      </li>
-                                  @else
-                                      <li class="page-item disabled">
-                                          <span class="page-link" aria-label="Next">
-                                              <span aria-hidden="true">&rsaquo;</span>
-                                          </span>
-                                      </li>
-                                  @endif
-                              </ul>
-                          </div>
-
-                          </table>
+                              </li>
+                          @endif
+    
+                        <!-- Menampilkan halaman berapa -->
+                        <div class="text-center">
+                            {{ $data1->currentPage() }} dari {{ $data1->lastPage() }}
                         </div>
+                  
+                          @if ($data1->hasMorePages())
+                              <li class="page-item">
+                                  <a class="page-link" href="{{ $data1->nextPageUrl() }}" rel="next" aria-label="Next">
+                                      <span aria-hidden="true">&rsaquo;</span>
+                                  </a>
+                              </li>
+                          @else
+                              <li class="page-item disabled">
+                                  <span class="page-link" aria-label="Next">
+                                      <span aria-hidden="true">&rsaquo;</span>
+                                  </span>
+                              </li>
+                          @endif
+                      </ul>
+                  </div>
+
+                      <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0">
+                          <thead>
+                            <tr>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User ID</th>
+                              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pengguna</th>
+                              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pesan</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Rating</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Upload</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Update</th>
+                              <th class="text-secondary opacity-7"></th>
+                            </tr>
+                          </thead>
+                          @foreach ($data1 as $ulasan)
+                          <tbody>
+                            <tr>
+                              <td class="align-middle text-center">
+                                <p>{{$ulasan['id']}}</p>
+                              </td>
+                              <td class="align-middle text-center">
+                                <p class="text-xs font-weight-bold mb-0">{{$ulasan['user_id']}}</p>
+                              </td>
+                              <td>
+                                <div class="d-flex px-2 py-1">
+                                  <div>
+                                    <img src="{{ asset('fotoProfil/' . $ulasan['fotoProfil']) }}" class="avatar avatar-sm me-3" alt="user1">
+                                  </div>
+                                  <div class="d-flex flex-column justify-content-center">
+                                    <h6 class="mb-0 text-sm">{{$ulasan['nama']}}</h6>
+                                    <p class="text-xs text-secondary mb-0">{{$ulasan['email']}}</p>
+                                  </div>
+                                </div>
+                              </td>  
+                              <td>
+                                <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
+                                  {{$ulasan['pesan']}}
+                                </p>
+                              </td> 
+                              <td>
+                                <p class="align-middle text-center" style="white-space: normal; max-width: 1000px;">
+                                  <span class="rating">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                      @if ($i <= $ulasan->rating)
+                                        <span class="star selected">&#9733;</span>
+                                      @else
+                                        <span class="star">&#9733;</span>
+                                      @endif
+                                    @endfor
+                                  </span>
+                                </p>
+                              </td>    
+                              <td class="align-middle text-center">
+                                <span class="text-secondary text-xs font-weight-bold">{{$ulasan['created_at']->format('l, d F Y H:i:s') }}</span>
+                              </td>
+                              <td class="align-middle text-center">
+                                <span class="text-secondary text-xs font-weight-bold">{{$ulasan['updated_at']->format('l, d F Y H:i:s') }}</span>
+                              </td>
+                              <td class="align-middle">
+                                <a href="{{"deleteU/".$ulasan['id']}}" class="btn btn-danger btn btn-primary btn-round" onclick="return confirm('Apakah Anda Yakin Mau Menghapus Data Ini?')">
+                                  <i class="fa fa-trash"></i>
+                                </a>
+                              </td>
+                            </tr>
+                          </tbody>
+                            @endforeach
+                        </table>
+
                       </div>
                     </div>
                   </div>
                 </div>
-  
-                <footer class="footer pt-3  ">
-                  <div class="container-fluid">
-                    <div class="row align-items-center justify-content-lg-between">
-                      <div class="col-lg-6 mb-lg-0 mb-4">
-                        <div class="copyright text-center text-sm text-muted text-lg-start">
-                          © <script>
-                            document.write(new Date().getFullYear())
-                          </script>,
-                          Template by <a title="CSS Templates" rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>,
-                          <a title="CSS Templates" rel="sponsored" href="https://themewagon.com/themes/free-bootstrap-4-html-5-blog-website-template-nextpage/" target="_blank">NextPage </a> and
-                          <a title="CSS Templates" rel="sponsored" href="https://www.creative-tim.com" target="_blank">Crative Tim </a> 
-                          Edited By <a title="CSS Templates" rel="sponsored" href="#" target="_blank">GSG Team</a></p>
-                        </div>
+              </div>
+
+
+              <footer class="footer pt-3  ">
+                <div class="container-fluid">
+                  <div class="row align-items-center justify-content-lg-between">
+                    <div class="col-lg-6 mb-lg-0 mb-4">
+                      <div class="copyright text-center text-sm text-muted text-lg-start">
+                        © <script>
+                          document.write(new Date().getFullYear())
+                        </script>,
+                        Template by <a title="CSS Templates" rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>,
+                        <a title="CSS Templates" rel="sponsored" href="https://themewagon.com/themes/free-bootstrap-4-html-5-blog-website-template-nextpage/" target="_blank">NextPage </a> and
+                        <a title="CSS Templates" rel="sponsored" href="https://www.creative-tim.com" target="_blank">Crative Tim </a> 
+                        Edited By <a title="CSS Templates" rel="sponsored" href="#" target="_blank">GSG Team</a></p>
                       </div>
                     </div>
                   </div>
-                </footer>
-              </div>
-              
-              </div>
+                </div>
+              </footer>
+            </div>
+            
             </div>
           </div>
         </div>
@@ -443,44 +486,134 @@
   <script src="../assets2/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/chartjs.min.js"></script>
+  <script>
+    var ctx1 = document.getElementById("chart-line").getContext("2d");
 
+    var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
 
+    gradientStroke1.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
+    gradientStroke1.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
+    gradientStroke1.addColorStop(0, 'rgba(94, 114, 228, 0)');
+    new Chart(ctx1, {
+      type: "line",
+      data: {
+        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        datasets: [{
+          label: "Mobile apps",
+          tension: 0.4,
+          borderWidth: 0,
+          pointRadius: 0,
+          borderColor: "#5e72e4",
+          backgroundColor: gradientStroke1,
+          borderWidth: 3,
+          fill: true,
+          data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
+          maxBarThickness: 6
+
+        }],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false,
+          }
+        },
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
+        scales: {
+          y: {
+            grid: {
+              drawBorder: false,
+              display: true,
+              drawOnChartArea: true,
+              drawTicks: false,
+              borderDash: [5, 5]
+            },
+            ticks: {
+              display: true,
+              padding: 10,
+              color: '#fbfbfb',
+              font: {
+                size: 11,
+                family: "Open Sans",
+                style: 'normal',
+                lineHeight: 2
+              },
+            }
+          },
+          x: {
+            grid: {
+              drawBorder: false,
+              display: false,
+              drawOnChartArea: false,
+              drawTicks: false,
+              borderDash: [5, 5]
+            },
+            ticks: {
+              display: true,
+              color: '#ccc',
+              padding: 20,
+              font: {
+                size: 11,
+                family: "Open Sans",
+                style: 'normal',
+                lineHeight: 2
+              },
+            }
+          },
+        },
+      },
+    });
+  </script>
+  <script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+  </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
 
-     <!-- MODAL LOGOUT -->
-     <script>
-      // JavaScript untuk modal logout
-      function openModal() {
-        const modal = document.getElementById('logout-modal');
-        modal.style.display = 'block';
+   <!-- MODAL LOGOUT -->
+   <script>
+    // JavaScript untuk modal logout
+    function openModal() {
+      const modal = document.getElementById('logout-modal');
+      modal.style.display = 'block';
+    }
+  
+    function closeModal() {
+      const modal = document.getElementById('logout-modal');
+      modal.style.display = 'none';
+    }
+  
+    function confirmLogout(confirmed) {
+      if (confirmed) {
+        // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
+        window.location.href = '/logout';
+      } else {
+        // Tutup modal jika pengguna memilih "No"
+        closeModal();
       }
-    
-      function closeModal() {
-        const modal = document.getElementById('logout-modal');
+    }
+  
+    // Tutup modal jika pengguna mengklik di luar modal
+    window.addEventListener('click', (event) => {
+      const modal = document.getElementById('logout-modal');
+      if (event.target == modal) {
         modal.style.display = 'none';
       }
-    
-      function confirmLogout(confirmed) {
-        if (confirmed) {
-          // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
-          window.location.href = '/logout';
-        } else {
-          // Tutup modal jika pengguna memilih "No"
-          closeModal();
-        }
-      }
-    
-      // Tutup modal jika pengguna mengklik di luar modal
-      window.addEventListener('click', (event) => {
-        const modal = document.getElementById('logout-modal');
-        if (event.target == modal) {
-          modal.style.display = 'none';
-        }
-      });
-    </script>
-</body>
+    });
+  </script>
 
+</body>
 </html>

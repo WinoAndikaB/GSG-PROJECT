@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href=".../assets2/img/lg1.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Komentar Video | GSG PROJECT
+    Komentar Artikel | GSG PROJECT
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -99,7 +99,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/artikelAdmin">
+          <a class="nav-link active" href="/artikelAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
             </div>
@@ -109,7 +109,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/videoAdmin">
+          <a class="nav-link " href="/videoAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-warning text-sm opacity-10"></i>
             </div>
@@ -159,7 +159,7 @@
       </ul>
     </div>
 
-  <div class="sidenav-footer mx-3 ">    
+  <div class="sidenav-footer mx-3 ">     
   </aside>
   <main class="main-content position-relative border-radius-lg ">
     <!-- Navbar -->
@@ -168,9 +168,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Komentar Video</li>
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Komentar Artikel</li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Komentar Video</h6>
+          <h6 class="font-weight-bolder text-white mb-0">Komentar Artikel</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -235,8 +235,8 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <a href="/videoAdmin" class="btn btn-primary">Video</i></a>
-              <h6>List Komentar Video Tersedia</h6>
+              <a href="/artikelAdmin" class="btn btn-primary">Artikel</i></a>
+              <h6>List Komentar Artikel Tersedia</h6>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">          
@@ -253,8 +253,8 @@
                             <thead>
                               <tr>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Video ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Video</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Artikel ID</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Artikel</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User ID</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama User</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pesan</th>
@@ -262,17 +262,17 @@
                                 <th class="text-secondary opacity-7"></th>
                               </tr>
                             </thead>
-                            @foreach ($komenarV as $item)
+                            @foreach ($komenarA as $item)
                             <tbody>
                               <tr>
                                 <td class="align-middle text-center">
                                   <p class="text-xs font-weight-bold mb-0">{{$item['id']}}</p>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['video']['id']}}</p>
+                                  <p class="text-xs font-weight-bold mb-0">{{$item['artikel_id']}}</p>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['video']['judulVideo']}}</p>
+                                  <p class="text-xs font-weight-bold mb-0">{{$item['artikel']['judulArtikel']}}</p>
                                 </td>
                                 <td class="align-middle text-center">
                                   <p class="text-xs font-weight-bold mb-0">{{$item['user_id']}}</p>
@@ -287,7 +287,7 @@
                                   <span class="badge badge-sm bg-gradient-success">{{ \Carbon\Carbon::parse($item['created_at'])->translatedFormat('l, j F Y') }}</span>
                                 </td>
                                 <td class="align-middle">
-                                  <a href="{{"deleteKomentarVA/".$item['id']}}" class="btn btn-danger btn btn-primary btn-round" onclick="return showConfirmation()">
+                                  <a href="{{"deleteKomentarAA/".$item['id']}}" class="btn btn-danger btn btn-primary btn-round" onclick="return showConfirmation()">
                                     <i class="fa fa-trash"></i>
                                   </a>
                                 </td>
@@ -297,7 +297,7 @@
 
                             <div class="d-flex justify-content-center">
                               <ul class="pagination">
-                                  @if ($komenarV->onFirstPage())
+                                  @if ($komenarA->onFirstPage())
                                       <li class="page-item disabled">
                                           <span class="page-link" aria-label="Previous">
                                               <span aria-hidden="true">&lsaquo;</span>
@@ -305,7 +305,7 @@
                                       </li>
                                   @else
                                       <li class="page-item">
-                                          <a class="page-link" href="{{ $komenarV->previousPageUrl() }}" rel="prev" aria-label="Previous">
+                                          <a class="page-link" href="{{ $komenarA->previousPageUrl() }}" rel="prev" aria-label="Previous">
                                               <span aria-hidden="true">&lsaquo;</span>
                                           </a>
                                       </li>
@@ -313,12 +313,12 @@
             
                                 <!-- Menampilkan halaman berapa -->
                                 <div class="text-center">
-                                    {{ $komenarV->currentPage() }} dari {{ $komenarV->lastPage() }}
+                                    {{ $komenarA->currentPage() }} dari {{ $komenarA->lastPage() }}
                                 </div>
                           
-                                  @if ($komenarV->hasMorePages())
+                                  @if ($komenarA->hasMorePages())
                                       <li class="page-item">
-                                          <a class="page-link" href="{{ $komenarV->nextPageUrl() }}" rel="next" aria-label="Next">
+                                          <a class="page-link" href="{{ $komenarA->nextPageUrl() }}" rel="next" aria-label="Next">
                                               <span aria-hidden="true">&rsaquo;</span>
                                           </a>
                                       </li>
