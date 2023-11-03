@@ -36,9 +36,11 @@ class LoginController extends Controller
             'email' => ['required', 'string', 'max:100', 'email'],
             'password' => ['required']
         ]);
-
+    
         if (Auth::attempt($credentials)){
             if(Auth::user()->role == 'admin'){
+                // Tandai bahwa popup telah ditampilkan
+                $request->session()->put('popup_shown', true);
                 $request->session()->regenerate();
                 return redirect()->intended('/dashboard');
             }
@@ -55,6 +57,7 @@ class LoginController extends Controller
             'email' => 'Email and Password invalid'
         ])->onlyInput('email');
     }
+    
 
     //[Login-Lupa Password] Halaman Lupa Password
     function lupaPassword(){
