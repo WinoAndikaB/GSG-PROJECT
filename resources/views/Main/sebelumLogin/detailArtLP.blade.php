@@ -238,7 +238,12 @@
             </div>            
         </div>
     </div>
-      <input type="hidden" name="artikel_id" value="{{ $article->id }}"> <!-- Ganti ini dengan sesuai data artikel -->
+
+    <br>
+
+    
+      <input type="hidden" name="artikel_id" value="{{ $article->id }}"> 
+      <label for="" style="font-size: 24px;"><strong>{{$totalKomentar}} Komentar</strong></label><br>
       <label for="pesan" style="font-size: 24px;">Beri Komentar:</label><br>
       <textarea name="pesan" id="pesan" placeholder="Berikan Tanggapan Anda..." style="width: 730px; height: 200px; border-radius: 10px;"></textarea><br>
       <div class="green-button">
@@ -247,7 +252,7 @@
   
       <br>
       @foreach ($komentarArtikels as $komentar)
-      <div class="card" style="max-width: 730px; margin-bottom: 10px;"> <!-- Tambahkan margin-bottom di sini -->
+      <div class="card" style="max-width: 730px; margin-bottom: 10px;">
           <div class="card-body" style="display: flex;">
               <div class="profil-foto" style="margin-right: 10px;">
                   <img src="{{ asset('fotoProfil/' . $komentar->user->fotoProfil) }}" alt="Foto Profil" style="border-radius: 50%; width: 50px; height: 50px;">

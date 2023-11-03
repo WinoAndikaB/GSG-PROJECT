@@ -95,8 +95,10 @@ class PenggunaController extends Controller
         $kategori = artikels::inRandomOrder()->take(10)->get();
     
         $komentarArtikels = komentar_artikel::where('artikel_id', $id)->latest()->paginate(6);
+
+        $totalKomentarArtikels = komentar_artikel::where('artikel_id', $id)->count();
     
-        return view('main.setelahLogin.detailArt', compact('article', 'box', 'tags', 'kategori', 'komentarArtikels'));
+        return view('main.setelahLogin.detailArt', compact('article', 'box', 'tags', 'kategori', 'komentarArtikels','totalKomentarArtikels'));
     }
 
     //[User-Detail Artikel] Menampilkan Komentar Pada Detail Artikel Ketika Di Klik
@@ -232,7 +234,9 @@ class PenggunaController extends Controller
 
         $komentarVideos = komentar_video::where('video_id', $id)->latest()->paginate(6);
         
-        return view('main.setelahLogin.detailVid', compact('video', 'boxVideo', 'tagsV', 'kategoriV', 'komentarVideos'));
+        $totalKomentarVideo = komentar_video::where('video_id', $id)->count();
+        
+        return view('main.setelahLogin.detailVid', compact('video', 'boxVideo', 'tagsV', 'kategoriV', 'komentarVideos', 'totalKomentarVideo'));
     }
 
     //[User-Detail Video] Komentar Video User

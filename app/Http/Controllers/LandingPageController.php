@@ -79,17 +79,19 @@ class LandingPageController extends Controller
     public function showDetailLPArtikel($id)
     {
         $article = artikels::findOrFail($id);
-
+    
         $box = artikels::inRandomOrder()->take(8)->get();
-
         $tags = artikels::inRandomOrder()->take(10)->get();
-
         $kategori = artikels::inRandomOrder()->take(10)->get();
-
+    
+        // Hitung jumlah komentar untuk artikel dengan ID tertentu
+        $totalKomentar = komentar_artikel::where('artikel_id', $id)->count();
+    
         $komentarArtikels = komentar_artikel::where('artikel_id', $id)->latest()->paginate(6);
     
-        return view('main.sebelumLogin.detailArtLP', compact('article', 'box', 'tags', 'kategori', 'komentarArtikels'));
+        return view('main.sebelumLogin.detailArtLP', compact('article', 'box', 'tags', 'kategori', 'komentarArtikels', 'totalKomentar'));
     }
+    
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -260,8 +262,10 @@ class LandingPageController extends Controller
         $kategoriV = Video::inRandomOrder()->take(10)->get();
 
         $komentarVideos = komentar_video::where('video_id', $id)->latest()->paginate(6);
+
+        $totalKomentarV = komentar_video::where('video_id', $id)->count();
         
-        return view('main.sebelumLogin.detailVidLP', compact('video', 'boxVideo', 'tagsV', 'kategoriV', 'komentarVideos'));
+        return view('main.sebelumLogin.detailVidLP', compact('video', 'boxVideo', 'tagsV', 'kategoriV', 'komentarVideos','totalKomentarV' ));
     }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
