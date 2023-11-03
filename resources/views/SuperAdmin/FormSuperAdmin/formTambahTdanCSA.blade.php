@@ -176,7 +176,7 @@
           </div>
           <ul class="navbar-nav  justify-content-end">
             <li class="nav-item d-flex align-items-center">
-              <a href="/profileAdmin" class="nav-link text-white font-weight-bold px-0">
+              <a href="/profileSA" class="nav-link text-white font-weight-bold px-0">
                   <i>
                       <?php
                       $fotoProfil = Auth::user()->fotoProfil;
@@ -234,7 +234,7 @@
           <div class="card mb-4">
             <div class="card-header pb-0">
               <h6>Tambah Terms & Condition</h6>
-              <form class="form" method="POST" action="{{ route('storeTdanCSA') }}">
+              <form class="form" method="POST" action="/formTambahTdanCSA/storeTdanCSA">
                 @csrf
                 <div class="row">
                   <div class="col-md-6">

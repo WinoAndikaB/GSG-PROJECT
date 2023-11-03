@@ -643,19 +643,13 @@ class SuperAdminController extends Controller
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
-    function storeTdanCSA(Request $req) {
-        $validatedData = $req->validate([
-            'judulsyarat' => 'required',
-            'deskripsisyarat' => 'required',
-        ]);
-    
-        syaratdanketentuans::create([
-            'judulsyarat' => $validatedData['judulsyarat'],
-            'deskripsisyarat' => $validatedData['deskripsisyarat'],
-        ]);
-    
-        return redirect('/syaratdanketentuanSA');
-    }
+    function storeTdanCSA(Request $req){
+            syaratdanketentuans::create([
+                'judulsyarat' => $req->judulsyarat,
+                'deskripsisyarat' => $req->deskripsisyarat,
+            ]);
+                 return redirect('/syaratdanketentuanSA');
+         }
 
      // [Syarat & Ketentuan] Form Edit T&C
     function formEditTdanCSA($id){

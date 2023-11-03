@@ -177,7 +177,7 @@
           </div>
           <ul class="navbar-nav  justify-content-end">
             <li class="nav-item d-flex align-items-center">
-              <a href="/profileAdmin" class="nav-link text-white font-weight-bold px-0">
+              <a href="/profileSA" class="nav-link text-white font-weight-bold px-0">
                   <i>
                       <?php
                       $fotoProfil = Auth::user()->fotoProfil;
@@ -235,7 +235,7 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <a href="/formTambahTdanC" class="btn btn-primary">+</i></a>
+              <a href="/formTambahTdanCSA" class="btn btn-primary">+</i></a>
               <h6>Terms  & Condition</h6>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
