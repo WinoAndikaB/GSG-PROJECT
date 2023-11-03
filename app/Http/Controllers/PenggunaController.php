@@ -53,29 +53,47 @@ class PenggunaController extends Controller
             });
         }
     
-            // Mengambil trending artikel secara random
-            $trending = artikels::inRandomOrder()->take(3)->get();
+             // Get trending articles randomly
+             $trending = artikels::whereNotIn('status' , ['Pending', 'Rejected'])
+                ->inRandomOrder()
+                ->take(3)
+                ->get();
+     
+ 
+             // Get the latest articles excluding "Pending" and "Rejected" articles
+             $latest = artikels::whereNotIn('status', ['Pending', 'Rejected'])
+                ->orderBy('created_at', 'desc')
+                ->take(8)
+                ->get();
 
-            // Mengambil artikel terbaru
-            $latest = artikels::orderBy('created_at', 'desc')->take(8)->get();
+             // Get what's new articles randomly excluding "Pending" and "Rejected" articles
+             $whatsnew = artikels::whereNotIn('status', ['Pending', 'Rejected'])
+                ->inRandomOrder()
+                ->take(5)
+                ->get();
+    
+                // Get a box of articles randomly excluding "Pending" and "Rejected" articles
+             $boxLong = artikels::whereNotIn('status', ['Pending', 'Rejected'])
+                ->inRandomOrder()
+                ->take(1)
+                ->get();
 
-            // Mengambil what's new artikel secara random
-            $whatsnew = artikels::inRandomOrder()->take(5)->get();
+             $box3 = artikels::whereNotIn('status', ['Pending', 'Rejected'])
+                 ->inRandomOrder()
+                 ->take(5)
+                 ->get();
 
-            // Mengambil boxLong artikel secara random
-            $boxLong = artikels::inRandomOrder()->take(1)->get();
+             $box2 = artikels::whereNotIn('status', ['Pending', 'Rejected'])
+                 ->inRandomOrder()
+                 ->take(2)
+                 ->get();
 
-            // Mengambil box3 artikel secara random
-            $box3 = artikels::inRandomOrder()->take(5)->get();
-          
-            // Mengambil box2 artikel secara random
-            $box2 = artikels::inRandomOrder()->take(2)->get();
+             $box = artikels::whereNotIn('status', ['Pending', 'Rejected'])
+                 ->inRandomOrder()
+                 ->take(8)
+                 ->get();
 
-            // Mengambil box artikel secara random
-            $box = artikels::inRandomOrder()->take(8)->get();
-
-            // Mengambil semua artikel
-            $semua = artikels::all();
+             $semua = artikels::whereNotIn('status', ['Pending', 'Rejected'])->get();
 
             // Mengambil tanggal hari ini
             $todayDate = date('l, d M Y');
@@ -193,34 +211,15 @@ class PenggunaController extends Controller
                 });
             }
 
-                    // Mengambil video trending secara random
-                    $trendingVideo = video::orderBy('created_at', 'desc')->paginate(3);
-        
-                      // Mengambil video terbaru
-                    $latestVideo = video::orderBy('created_at', 'desc')->take(8)->get();
-        
-                      // Mengambil video what's new secara random
-                    $whatsNewVideo = video::inRandomOrder()->take(5)->get();
-        
-                    // Mengambil video boxLong secara random
-                    $boxVideoLong = video::inRandomOrder()->take(1)->get();
-    
-                    // Mengambil video boxVideo3 secara random
-                    $boxVideo3 = video::inRandomOrder()->take(5)->get();
-    
-                    // Mengambil video boxVideo2 secara random
-                    $boxVideo2 = video::inRandomOrder()->take(2)->get();
-    
-                    // Mengambil video boxVideo secara random
-                    $boxVideo = video::inRandomOrder()->take(8)->get();
-        
-                    // Mengambil semua video
-                    $semuaVideo = video::all();
+                                
+        $semuaVideo = video::whereNotIn('statusVideo', ['Pending', 'Rejected'])
+            ->inRandomOrder()
+            ->get();
 
                     // Mengambil tanggal hari ini
                     $todayDate = date('l, d M Y');
     
-            return view('main.setelahLogin.video', compact('trendingVideo', 'latestVideo','whatsNewVideo','semuaVideo', 'boxVideo', 'boxVideo2', 'boxVideo3', 'boxVideoLong', 'todayDate'));
+            return view('main.setelahLogin.video', compact('semuaVideo', 'todayDate'));
         }
     
     //[User-Detail Video] Halaman Detail Video Ketika Di Klik

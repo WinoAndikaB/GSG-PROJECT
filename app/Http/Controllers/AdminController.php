@@ -193,9 +193,9 @@ class AdminController extends Controller
             'kategori' => 'required',
             'tags' => 'required',
             'deskripsi' => 'required',
-            'gambarArtikel' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Adjust the allowed file types and size
+            'gambarArtikel' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-    
+
         $article = new artikels;
         $article->judulArtikel = $request->input('judulArtikel');
         $article->penulis = $request->input('penulis');
@@ -203,22 +203,21 @@ class AdminController extends Controller
         $article->kategori = $request->input('kategori');
         $article->tags = $request->input('tags');
         $article->deskripsi = $request->input('deskripsi');
-    
+        $article->status = 'Pending';
+
         // Handle file upload
         if ($request->hasFile('gambarArtikel')) {
             $image = $request->file('gambarArtikel');
-    
             $filename = $image->getClientOriginalName();
             $image->move(public_path('gambarArtikel'), $filename);
-            
-            // Set the image file name in the database
             $article->gambarArtikel = $filename;
         }
-    
+
         $article->save();
-    
+
         return redirect('/artikelAdmin')->with('success', 'Article added successfully.');
-    }      
+    }
+    
 
     //[Admin-Artikel] Edit Data Artikel
     function tampilDataEditArtikel($id){
@@ -332,7 +331,7 @@ class AdminController extends Controller
             'kategoriVideo' => 'required',
             'tagsVideo' => 'required',
             'deskripsiVideo' => 'required',
-            'linkVideo' => 'required|url', // Ensure the link is a valid URL
+            'linkVideo' => 'required|url',
         ]);
     
         $videos = new Video;
@@ -342,7 +341,8 @@ class AdminController extends Controller
         $videos->kategoriVideo = $request->input('kategoriVideo');
         $videos->tagsVideo = $request->input('tagsVideo');
         $videos->deskripsiVideo = $request->input('deskripsiVideo');
-        $videos->linkVideo = $request->input('linkVideo'); // Store the original video link
+        $videos->linkVideo = $request->input('linkVideo'); 
+        $videos->statusVideo = 'Pending';
     
         $videoId = '';
     

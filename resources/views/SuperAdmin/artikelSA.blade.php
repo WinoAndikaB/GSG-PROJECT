@@ -315,7 +315,7 @@
                                   <span class="text-secondary text-xs font-weight-bold">{{$tbhartikel['updated_at']->format('l, d F Y H:i:s') }}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-success">Pending</span>
+                                  <span class="badge badge-sm bg-gradient-success">{{$tbhartikel['status']}}</span>
                                 </td>
                                 <td class="align-middle text-center">
                                   <span class="badge badge-sm bg-gradient-success">{{$tbhartikel['kategori']}}</span>
@@ -324,13 +324,22 @@
                                   <span class="badge badge-sm bg-gradient-success">{{$tbhartikel['tags']}}</span>
                                 </td>
                                 <td class="align-middle">
-                                  <a href="/formEditArtikelSA/{{ $tbhartikel->id}}" class="btn btn-warning btn btn-primary btn-round">
-                                    <i class="fa fa-pencil"></i>
+                                  <a href="/formEditArtikelSA/{{ $tbhartikel->id }}" class="btn btn-warning btn btn-primary btn-round">
+                                      <i class="fa fa-pencil"></i>
                                   </a>
-                                  <a href="{{"deleteArtikelSA/".$tbhartikel['id']}}" class="btn btn-danger btn btn-primary btn-round" onclick="return showConfirmation()">
-                                    <i class="fa fa-trash"></i>
+                                  <a href="{{ "deleteArtikelSA/".$tbhartikel->id }}" class="btn btn-danger btn btn-primary btn-round" onclick="return showConfirmation()">
+                                      <i class="fa fa-trash"></i>
                                   </a>
-                                </td>
+                                  @if ($tbhartikel->status === 'Pending')
+                                      <a href="{{ route('approveArticle', $tbhartikel->id) }}" class="btn btn-success btn btn-primary btn-round">
+                                          Approve
+                                      </a>
+                                      <a href="{{ route('rejectArticle', $tbhartikel->id) }}" class="btn btn-danger btn btn-primary btn-round">
+                                          Reject
+                                      </a>
+                                  @endif
+                              </td>
+                              
                               </tr>
                             </tbody>
                             @endforeach

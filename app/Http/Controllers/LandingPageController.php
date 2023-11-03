@@ -49,27 +49,47 @@ class LandingPageController extends Controller
     
             
                 // Get trending articles randomly
-                $trending = artikels::inRandomOrder()->take(3)->get();
+                $trending = artikels::whereNotIn('status' , ['Pending', 'Rejected'])
+                ->inRandomOrder()
+                ->take(3)
+                ->get();
+        
     
-                // Get the latest articles
-                $latest = artikels::orderBy('created_at', 'desc')->take(8)->get();
+                // Get the latest articles excluding "Pending" and "Rejected" articles
+                $latest = artikels::whereNotIn('status', ['Pending', 'Rejected'])
+                ->orderBy('created_at', 'desc')
+                ->take(8)
+                ->get();
+
+                // Get what's new articles randomly excluding "Pending" and "Rejected" articles
+                $whatsnew = artikels::whereNotIn('status', ['Pending', 'Rejected'])
+                ->inRandomOrder()
+                ->take(5)
+                ->get();
     
-                // Get what's new articles randomly
-                $whatsnew = artikels::inRandomOrder()->take(5)->get();
-    
-                // Get a box of articles randomly
-                $boxLong = artikels::inRandomOrder()->take(1)->get();
-    
-                // Get a box of articles randomly
-                $box3 = artikels::inRandomOrder()->take(5)->get();
-    
-                // Get a box of articles randomly
-                $box2 = artikels::inRandomOrder()->take(2)->get();
-    
-                // Get a box of articles randomly
-                $box = artikels::inRandomOrder()->take(8)->get();
-    
-                $semua = artikels::all();
+                   // Get a box of articles randomly excluding "Pending" and "Rejected" articles
+                $boxLong = artikels::whereNotIn('status', ['Pending', 'Rejected'])
+                ->inRandomOrder()
+                ->take(1)
+                ->get();
+
+                $box3 = artikels::whereNotIn('status', ['Pending', 'Rejected'])
+                    ->inRandomOrder()
+                    ->take(5)
+                    ->get();
+
+                $box2 = artikels::whereNotIn('status', ['Pending', 'Rejected'])
+                    ->inRandomOrder()
+                    ->take(2)
+                    ->get();
+
+                $box = artikels::whereNotIn('status', ['Pending', 'Rejected'])
+                    ->inRandomOrder()
+                    ->take(8)
+                    ->get();
+
+                $semua = artikels::whereNotIn('status', ['Pending', 'Rejected'])->get();
+
                 $todayDate = date('l, d M Y');
     
         return view('main.sebelumLogin.landingPage', compact('trending', 'latest','whatsnew','semua', 'box', 'box2', 'box3', 'boxLong', 'todayDate'));
@@ -107,10 +127,11 @@ class LandingPageController extends Controller
             $kategori = 'Anime';
         
             $kategoriAnime = artikels::where('kategori', $kategori)
+                                    ->whereNotIn('status', ['Pending', 'Rejected'])
                                     ->inRandomOrder()
                                     ->take(10)
                                     ->get();
-        
+                                
             return view('main.sebelumLogin.KategoriSL.kategoriAnime', compact('kategoriAnime'));
         }
 
@@ -118,6 +139,7 @@ class LandingPageController extends Controller
             $kategori = 'Anime';
         
             $kategoriAnimeV = video::where('kategoriVideo', $kategori)
+                                    ->whereNotIn('statusVideo', ['Pending', 'Rejected'])
                                     ->inRandomOrder()
                                     ->take(10)
                                     ->get();
@@ -129,6 +151,7 @@ class LandingPageController extends Controller
             $kategori = 'VTuber';
         
             $kategoriVTuber = artikels::where('kategori', $kategori)
+                                    ->whereNotIn('status', ['Pending', 'Rejected'])
                                     ->inRandomOrder()
                                     ->take(10)
                                     ->get();
@@ -141,6 +164,7 @@ class LandingPageController extends Controller
             $kategori = 'VTuber';
         
             $kategoriVtuberV = video::where('kategoriVideo', $kategori)
+                                    ->whereNotIn('statusVideo', ['Pending', 'Rejected'])
                                     ->inRandomOrder()
                                     ->take(10)
                                     ->get();
@@ -152,6 +176,7 @@ class LandingPageController extends Controller
             $kategori = 'Game';
         
             $kategoriGame = artikels::where('kategori', $kategori)
+                                    ->whereNotIn('status', ['Pending', 'Rejected'])
                                     ->inRandomOrder()
                                     ->take(10)
                                     ->get();
@@ -163,6 +188,7 @@ class LandingPageController extends Controller
             $kategori = 'Game';
         
             $kategoriGameV = video::where('kategoriVideo', $kategori)
+                                    ->whereNotIn('statusVideo', ['Pending', 'Rejected'])
                                     ->inRandomOrder()
                                     ->take(10)
                                     ->get();
@@ -228,28 +254,13 @@ class LandingPageController extends Controller
         }
     
             
-                // Get trending articles randomly
-                $trendingVideo = video::orderBy('created_at', 'desc')->paginate(3);
-    
-                // Get the latest articles
-                $latestVideo = video::orderBy('created_at', 'desc')->take(8)->get();
-    
-                // Get what's new articles randomly
-                $whatsNewVideo = video::inRandomOrder()->take(5)->get();
+        $semuaVideo = video::whereNotIn('statusVideo', ['Pending', 'Rejected'])
+            ->inRandomOrder()
+            ->get();
 
-                // Get a box of articles randomly
-                 $boxVideo3 = video::inRandomOrder()->take(5)->get();
+        $todayDate = date('l, d M Y');
 
-                // Get a box of articles randomly
-                $boxVideo2 = video::inRandomOrder()->take(2)->get();
-    
-                // Get a box of articles randomly
-                $boxVideo = video::inRandomOrder()->take(8)->get();
-    
-                $semuaVideo = video::all();
-                $todayDate = date('l, d M Y');
-
-        return view('main.sebelumLogin.landingPageVideo', compact('trendingVideo', 'latestVideo','whatsNewVideo','semuaVideo', 'boxVideo', 'boxVideo2', 'boxVideo3', 'todayDate'));
+        return view('main.sebelumLogin.landingPageVideo', compact('semuaVideo', 'todayDate'));
     }
 
     //[Landing Page] Halaman Detail Video Ketika Di Klik

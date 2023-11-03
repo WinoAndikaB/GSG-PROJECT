@@ -309,7 +309,7 @@
                                   <span class="text-secondary text-xs font-weight-bold">{{$item['updated_at']->format('l, d F Y H:i:s') }}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-success">Pending</span>
+                                  <span class="badge badge-sm bg-gradient-success">{{$item->statusVideo}}</span>
                                 </td>
                                 <td class="align-middle text-center">
                                   <span class="badge badge-sm bg-gradient-success">{{$item->kategoriVideo}}</span>

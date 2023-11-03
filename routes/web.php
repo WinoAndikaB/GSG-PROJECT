@@ -225,6 +225,9 @@ use Illuminate\Support\Facades\Route;
             //[SuperAdmin] Tambah Artikel
             Route::get('/artikelSA/createSA',  [SuperAdminController::class, 'createSA'])->name('createSA');
             Route::post('/artikelSA/storeSA',  [SuperAdminController::class, 'storeSA'])->name('storeSA');
+
+            Route::get('/approve-article/{id}',  [SuperAdminController::class, 'approveArticle'])->name('approveArticle');
+            Route::get('/reject-article/{id}',  [SuperAdminController::class, 'rejectArticle'])->name('rejectArticle');
     
             //[SuperAdmin] Delete Artikel
             Route::get('/deleteArtikelSA/{id}',[SuperAdminController::class,'deleteArtikelSA'])->name('deleteArtikelSA');
@@ -239,6 +242,9 @@ use Illuminate\Support\Facades\Route;
             //[SuperAdmin] Tabel Video
             Route::get('/videoSuperAdmin', [SuperAdminController::class, 'videoSuperAdmin'])->name('videoSuperAdmin');
             Route::get('/komentarVideoSA', [SuperAdminController::class, 'komentarVideoSA'])->name('komentarVideoSA');
+
+            Route::get('/approveVideo/{id}',  [SuperAdminController::class, 'approveVideo'])->name('approveVideo');
+            Route::get('/rejectVideo/{id}',  [SuperAdminController::class, 'rejectVideo'])->name('rejectVideo');
     
             //[SuperAdmin] Tambah Video Admin
             Route::get('/formTambahVideoSA', [SuperAdminController::class, 'formTambahVideoSA'])->name('formTambahVideoSA');

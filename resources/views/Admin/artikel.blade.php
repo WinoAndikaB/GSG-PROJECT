@@ -307,7 +307,7 @@
                                   <span class="text-secondary text-xs font-weight-bold">{{$tbhartikel['updated_at']->format('l, d F Y H:i:s') }}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-success">Pending</span>
+                                  <span class="badge badge-sm bg-gradient-success">{{$tbhartikel['status']}}</span>
                                 </td>
                                 <td class="align-middle text-center">
                                   <span class="badge badge-sm bg-gradient-success">{{$tbhartikel['kategori']}}</span>

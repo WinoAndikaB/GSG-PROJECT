@@ -317,7 +317,7 @@
                                   <span class="text-secondary text-xs font-weight-bold">{{$item['updated_at']->format('l, d F Y H:i:s') }}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-success">Pending</span>
+                                  <span class="badge badge-sm bg-gradient-success">{{$item->statusVideo}}</span>
                                 </td>
                                 <td class="align-middle text-center">
                                   <span class="badge badge-sm bg-gradient-success">{{$item->kategoriVideo}}</span>
@@ -332,6 +332,14 @@
                                   <a href="{{"/deleteVideoSA/".$item['id']}}" class="btn btn-danger btn btn-primary btn-round" onclick="return confirm('Apakah Anda Yakin Mau Menghapus Data Ini?')">
                                     <i class="fa fa-trash"></i>
                                   </a>
+                                  @if ($item->statusVideo === 'Pending')
+                                  <a href="{{ route('approveVideo', $item->id) }}" class="btn btn-success btn btn-primary btn-round">
+                                      Approve
+                                  </a>
+                                  <a href="{{ route('rejectVideo', $item->id) }}" class="btn btn-danger btn btn-primary btn-round">
+                                      Reject
+                                  </a>
+                                 @endif
                                 </td>
                               </tr>
                             </tbody>

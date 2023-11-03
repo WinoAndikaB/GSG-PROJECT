@@ -125,9 +125,33 @@ class SuperAdminController extends Controller
         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
+        $pendingArticles = artikels::where('status', 'Pending')->orderBy('created_at', 'desc')->paginate(5);
+        $publishedArticles = artikels::where('status', 'Published')->orderBy('created_at', 'desc')->paginate(5);
+
         return view('SuperAdmin.artikelSA', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
-        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'pendingArticles', 'publishedArticles'));
     }
+
+    public function approveArticle($id)
+    {
+        $article = artikels::find($id);
+        if ($article) {
+            $article->status = 'Published';
+            $article->save();
+            return redirect()->back()->with('success', 'Article approved and published.');
+        }
+    }
+
+    public function rejectArticle($id)
+    {
+        $article = artikels::find($id);
+        if ($article) {
+            $article->status = 'Rejected';
+            $article->save();
+            return redirect()->back()->with('success', 'Article rejected.');
+        }
+    }
+
 
     //[SuperAdmin-Artikel] Halaman Komentar Artikel
       function komentarArtikelSA(){
@@ -281,6 +305,26 @@ class SuperAdminController extends Controller
 
         return view('SuperAdmin.videoSA', compact('tableVideo', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
+    }
+
+    public function approveVideo($id)
+    {
+        $video = video::find($id);
+        if ($video) {
+            $video->statusVideo = 'Published';
+            $video->save();
+            return redirect()->back()->with('success', 'Article approved and published.');
+        }
+    }
+
+    public function rejectVideo($id)
+    {
+        $video = video::find($id);
+        if ($video) {
+            $video->statusVideo = 'Rejected';
+            $video->save();
+            return redirect()->back()->with('success', 'Article rejected.');
+        }
     }
 
     //[SuperAdmin-Artikel] Halaman Komentar Artikel
