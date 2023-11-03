@@ -253,19 +253,19 @@ use Illuminate\Support\Facades\Route;
     
             //[SuperAdmin] Tabel Video
             Route::get('/videoSuperAdmin', [SuperAdminController::class, 'videoSuperAdmin'])->name('videoSuperAdmin');
-            Route::get('/komentarVideo', [SuperAdminController::class, 'komentarVideo'])->name('komentarVideo');
+            Route::get('/komentarVideoSA', [SuperAdminController::class, 'komentarVideoSA'])->name('komentarVideoSA');
     
             //[SuperAdmin] Tambah Video Admin
-            Route::get('/formTambahVideo', [SuperAdminController::class, 'formTambahVideo'])->name('formTambahVideo');
-            Route::post('/formTambahVideo/storeVideo',  [SuperAdminController::class, 'storeVideo'])->name('storeVideo');
+            Route::get('/formTambahVideoSA', [SuperAdminController::class, 'formTambahVideoSA'])->name('formTambahVideoSA');
+            Route::post('/formTambahVideoSA/storeVideoSA',  [SuperAdminController::class, 'storeVideoSA'])->name('storeVideoSA');
     
             //[SuperAdmin] Edit Video
-            Route::get('/formEditVideo/{id}',[SuperAdminController::class,'formEditVideo'])->name('formEditVideo');
-            Route::post('/formEditVideo/updateVideo/{id}',[SuperAdminController::class,'updateVideo'])->name('updateVideo');
+            Route::get('/formEditVideoSA/{id}',[SuperAdminController::class,'formEditVideoSA'])->name('formEditVideoSA');
+            Route::post('/formEditVideoSA/updateVideoSA/{id}',[SuperAdminController::class,'updateVideoSA'])->name('updateVideoSA');
     
             //[SuperAdmin] Delete Pengguna
-            Route::get('/deleteV/{id}',[SuperAdminController::class,'deleteVideo'])->name('deleteVideo');
-            Route::get('/deleteKomentarVA/{id}',[SuperAdminController::class,'deleteKomentarVA'])->name('deleteKomentarVA');
+            Route::get('/deleteVideoSA/{id}',[SuperAdminController::class,'deleteVideoSA'])->name('deleteVideoSA');
+            Route::get('/deleteKomentarVideoSA/{id}',[SuperAdminController::class,'deleteKomentarVideoSA'])->name('deleteKomentarVideoSA');
     
         //[SuperAdmin] Tab Pengguna
     

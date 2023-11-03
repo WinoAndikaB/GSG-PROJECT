@@ -284,7 +284,7 @@ class SuperAdminController extends Controller
     }
 
     //[SuperAdmin-Artikel] Halaman Komentar Artikel
-    function komentarVideo(){
+    function komentarVideoSA(){
         $komenarV = komentar_video::orderBy('created_at', 'desc')->paginate(20);
 
          // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
@@ -304,7 +304,7 @@ class SuperAdminController extends Controller
     }    
 
     //[SuperAdmin-Video] Halaman Tambah Video
-    function formTambahVideo(){
+    function formTambahVideoSA(){
 
          // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
          $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
@@ -322,7 +322,7 @@ class SuperAdminController extends Controller
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }    
 
-    public function storeVideo(Request $request)
+    public function storeVideoSA(Request $request)
     {
         // Validate the request data
         $request->validate([
@@ -367,7 +367,7 @@ class SuperAdminController extends Controller
     
 
       //[SuperAdmin-Video] Halaman Edit Video
-      function formEditVideo($id){
+      function formEditVideoSA($id){
         $data = video::find($id);
 
          // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
@@ -382,11 +382,11 @@ class SuperAdminController extends Controller
          $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
          $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-        return view('SuperAdmin.FormSuperAdmin.formEditVideo', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        return view('SuperAdmin.FormSuperAdmin.formEditVideoSA', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }    
 
-    function updateVideo(Request $request, $id){
+    function updateVideoSA(Request $request, $id){
         $data = Video::find($id);
     
         $data->linkVideo = $request->input('linkVideo');
@@ -417,7 +417,7 @@ class SuperAdminController extends Controller
     }    
     
     //[SuperAdmin-Video] Delete Video
-    function deleteVideo($id){
+    function deleteVideoSA($id){
         $data=video::find($id);
         $data->delete();
         return redirect('/videoSuperAdmin');
@@ -425,10 +425,10 @@ class SuperAdminController extends Controller
 
        
     //[SuperAdmin-Video] Delete Komentar Video
-    function deleteKomentarVA($id){
+    function deleteKomentarVideoSA($id){
         $data=komentar_video::find($id);
         $data->delete();
-        return redirect('/komentarVideo');
+        return redirect('/komentarVideoSA');
     }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
