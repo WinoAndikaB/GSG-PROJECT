@@ -461,18 +461,6 @@ class AdminController extends Controller
          return view('admin.pengguna', compact('users', 'dataBaruUlasan', 'dataBaruUser', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 
          'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo'));
     }    
-    
-
-    //[Admin-Pengguna] Fungsi Like & Dislike
-    public function likes()
-    {
-        return $this->hasMany(Likes::class, 'user_id', 'id');
-    }
-
-    public function dislikes()
-    {
-        return $this->hasMany(Dislikes::class, 'user_id', 'id');
-    }
 
 
     //[Admin-Pengguna] Tambah Pengguna
@@ -504,13 +492,24 @@ class AdminController extends Controller
                  return redirect('pengguna');
          }
 
-    //[Admin-Pengguna] Delete Pengguna
-    function deleteUserTerdaftar($id)
-    {
-        $data=user::find($id);
-        $data->delete();
-        return redirect('pengguna');
+//[Admin-Pengguna] Delete Pengguna
+function deleteUserTerdaftar($id)
+{
+    $user = User::find($id);
+
+    if ($user) {
+        if ($user->role === 'superadmin') {
+            // Jika pengguna adalah superadmin, Anda dapat memberikan pesan kesalahan atau tindakan lain sesuai kebijakan aplikasi Anda.
+            return redirect('pengguna')->with('error', 'Anda tidak dapat menghapus superadmin.');
+        } else {
+            $user->delete();
+            return redirect('pengguna')->with('success', 'Pengguna berhasil dihapus.');
+        }
+    } else {
+        // Handle jika pengguna tidak ditemukan.
+        return redirect('pengguna')->with('error', 'Pengguna tidak ditemukan.');
     }
+}
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

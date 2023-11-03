@@ -408,9 +408,11 @@
                                 <span class="text-secondary text-xs font-weight-bold">{{$user['updated_at']->format('l, d F Y H:i:s') }}</span>
                               </td>
                               <td class="align-middle">
-                                <a href="{{"deleteP/".$user['id']}}" class="btn btn-danger btn btn-primary btn-round" onclick="return confirm('Apakah Anda Yakin Mau Menghapus Data Ini?')">
-                                  <i class="fa fa-trash"></i>
+                                @if($user->role !== 'superadmin')
+                                <a href="{{"deleteP/".$user->id}}" class="btn btn-danger btn btn-primary btn-round" onclick="return confirm('Apakah Anda Yakin Mau Menghapus Data Ini?')">
+                                    <i class="fa fa-trash"></i>
                                 </a>
+                            @endif                            
                               </td>
                             </tr>
                           </tbody>
