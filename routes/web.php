@@ -268,7 +268,7 @@ use Illuminate\Support\Facades\Route;
             Route::post('/registerSuperAdminSA',[SuperAdminController::class,'registerSuperAdminSA']);
     
             //[SuperAdmin] Delete Pengguna
-            Route::get('/deleteSA/{id}',[SuperAdminController::class,'deleteSA']);
+            Route::get('/deletePenggunaSA/{id}',[SuperAdminController::class,'deletePenggunaSA'])->name('deletePenggunaSA');
     
         //[SuperAdmin] Tab Ulasan
     

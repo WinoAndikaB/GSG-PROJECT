@@ -562,7 +562,7 @@ class SuperAdminController extends Controller
          }
 
     //[SuperAdmin-Pengguna] Delete Pengguna
-    function deleteSA($id)
+    function deletePenggunaSA($id)
     {
         $data=user::find($id);
         $data->delete();
