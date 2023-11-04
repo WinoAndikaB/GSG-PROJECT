@@ -21,7 +21,7 @@
   <link id="pagestyle" href="../assets2/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 
   <style>
-    .modal {
+    .modalLogout {
       display: none;
       position: fixed;
       z-index: 1;
@@ -33,7 +33,7 @@
       overflow: hidden; /* Tidak dapat di-scroll */
     }
 
-    .modal-content {
+    .modal-contentLogout {
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -50,7 +50,7 @@
       text-align: center;
     }
 
-    .close {
+    .closeLogout {
       color: #888;
       position: absolute;
       top: 10px;
@@ -60,7 +60,7 @@
       cursor: pointer;
     }
 
-    #confirm-button, #cancel-button {
+    #confirm-buttonLogout, #cancel-buttonLogout {
       padding: 10px 20px;
       margin: 25px;
       cursor: pointer;
@@ -277,10 +277,10 @@
     </nav>
     <!-- End Navbar -->
 
-      <!-- Modal Logout -->
-  <div id="logout-modal" class="modal">
-    <div class="modal-content">
-      <span class="close" id="close-button" onclick="closeModal()">&times;</span>
+    <!-- Modal Logout -->
+    <div id="logout-modal" class="modalLogout">
+    <div class="modal-contentLogout">
+      <span class="closeLogout" id="close-buttonLogout" onclick="closeModal()">&times;</span>
       <h2>Konfirmasi Logout</h2>
       <p>Apakah anda mau logout?</p>
       <div style="text-align: center;">
@@ -368,6 +368,7 @@
                               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Instagram</th>
                               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Facebook</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Role</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Role Action</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Upload</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Update</th>
                               <th class="text-secondary opacity-7"></th>
@@ -407,7 +408,18 @@
                                 <p class="align-middle text-center" style="white-space: normal; max-width: 1000px;">
                                   {{$user['role']}}
                                 </p>
-                              </td>  
+                              </td>
+                              <td>
+                                <p class="align-middle text-center" style="white-space: normal; max-width: 1000px;">
+                                    @if ($user->role == 'admin' && auth()->user()->role == 'superadmin')
+                                      <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#promoteModal{{$user->id}}">Promote</a>
+                                    @endif
+                                    @if ($user->role == 'superadmin' && auth()->user()->role == 'superadmin')
+                                        <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#demoteModal{{$user->id}}">Demote</a>
+                                    @endif
+                                </p>
+                            </td>
+
                               <td class="align-middle text-center">
                                 <span class="text-secondary text-xs font-weight-bold">{{$user['created_at']->format('l, d F Y H:i:s') }}</span>
                               </td>
@@ -429,6 +441,51 @@
                 </div>
               </div>
 
+              <!-- Promtoe Modal -->
+              @foreach ($users as $user)
+              <div class="modal fade" id="promoteModal{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="promoteModalLabel{{$user->id}}" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="promoteModalLabel{{$user->id}}">Promote User to Superadmin</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                              </button>
+                          </div>
+                          <div class="modal-body">
+                              <!-- Add form elements to confirm the promotion -->
+                              <p>Are you sure you want to promote this user to Superadmin?</p>
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                              <a href="{{ route('promoteUser', ['id' => $user->id]) }}" class="btn btn-primary">Promote</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <!-- Demote Modal -->
+              <div class="modal fade" id="demoteModal{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="demoteModalLabel{{$user->id}}" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="demoteModalLabel{{$user->id}}">Demote Superadmin to Admin</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                              </button>
+                          </div>
+                          <div class="modal-body">
+                              <!-- Add form elements to confirm the demotion -->
+                              <p>Are you sure you want to demote this Superadmin to Admin?</p>
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                              <a href="{{ route('demoteUser', ['id' => $user->id]) }}" class="btn btn-danger">Demote</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          @endforeach
 
               <footer class="footer pt-3  ">
                 <div class="container-fluid">
@@ -529,6 +586,17 @@
       </div>
     </div>
   </div>
+
+  <!-- Pastikan Anda memasukkan Bootstrap JavaScript -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+  $(document).ready(function() {
+      console.log("Document ready.");
+  });
+  </script>
+  
+
   <!--   Core JS Files   -->
   <script src="../assets2/js/core/popper.min.js"></script>
   <script src="../assets2/js/core/bootstrap.min.js"></script>

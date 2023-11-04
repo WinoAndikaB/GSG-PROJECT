@@ -507,7 +507,29 @@ class SuperAdminController extends Controller
     
          return view('SuperAdmin.penggunaSA', compact('users', 'dataBaruUlasan', 'dataBaruUser', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 
          'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo'));
-    }    
+    }  
+    
+    //[SuperAdmin-Pengguna] Promote-Demote Pengguna
+    public function promoteUser($id) {
+        $user = User::find($id);
+        if ($user && auth()->user()->role == 'superadmin') {
+            $user->role = 'superadmin';
+            $user->save();
+        } else {
+        }
+        return redirect()->back();
+    }
+    
+    public function demoteUser($id) {
+        $user = User::find($id);
+        if ($user && auth()->user()->role == 'superadmin') {
+            $user->role = 'admin';
+            $user->save();
+        } else {
+        }
+        return redirect()->back();
+    }
+    
     
 
     //[SuperAdmin-Pengguna] Tambah Pengguna
