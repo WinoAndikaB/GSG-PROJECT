@@ -176,7 +176,7 @@
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
             <li class="breadcrumb-item text-sm text-white active" aria-current="page">Pengguna</li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Form Register Admin</h6>
+          <h6 class="font-weight-bolder text-white mb-0">Form Register Super Admin</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -259,6 +259,13 @@
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
+                      <div class="form-group">
+                        <label for="" class="form-control-label">Role</label>
+                        <select class="form-control" id="role" name="role" required>
+                          <option value="superadmin">Superadmin</option>
+                          <option value="admin">Admin</option>
+                      </select>
+                      </div>
                       <div class="form-group">
                         <label for="" class="form-control-label">Username</label>
                         <input class="form-control" type="text" name="username" value="" required>

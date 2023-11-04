@@ -307,13 +307,18 @@
                                   <span class="text-secondary text-xs font-weight-bold">{{$tbhartikel['updated_at']->format('l, d F Y H:i:s') }}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-success">{{$tbhartikel['status']}}</span>
+                                  <span class="badge badge-sm status-badge 
+                                  {{$tbhartikel['status'] === 'Published' ? 'bg-gradient-success' : ''}}
+                                  {{$tbhartikel['status'] === 'Pending' ? 'bg-gradient-secondary' : ''}}
+                                  {{$tbhartikel['status'] === 'Rejected' ? 'bg-gradient-danger' : ''}}">
+                                  {{$tbhartikel['status']}}
+                                </span>   
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-success">{{$tbhartikel['kategori']}}</span>
+                                  <span class="badge badge-sm bg-gradient-info">{{$tbhartikel['kategori']}}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-success">{{$tbhartikel['tags']}}</span>
+                                  <span class="badge badge-sm bg-gradient-warning">{{$tbhartikel['tags']}}</span>
                                 </td>
                                 <td class="align-middle">
                                   <a href="/tampilDataEditArtikel/{{ $tbhartikel->id}}" class="btn btn-warning btn btn-primary btn-round">

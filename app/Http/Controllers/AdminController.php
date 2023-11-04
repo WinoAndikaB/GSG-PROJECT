@@ -463,35 +463,6 @@ class AdminController extends Controller
     }    
 
 
-    //[Admin-Pengguna] Tambah Pengguna
-    function formTambahUserAdm(){
-        // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
-         $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
- 
-         $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
- 
-         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
-
-        return view('admin.FormAdmin.formTambahUserAdm', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
-        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
-    }    
-
-    function registerAdmin(Request $req){
-            user::create([
-                'username' => $req->username,
-                 'name' => $req->name,
-                 'email' => $req->email,
-                 'password' => bcrypt($req->password),
-                 'role' => 'admin',
-            ]);
-                 return redirect('pengguna');
-         }
-
 //[Admin-Pengguna] Delete Pengguna
 function deleteUserTerdaftar($id)
 {

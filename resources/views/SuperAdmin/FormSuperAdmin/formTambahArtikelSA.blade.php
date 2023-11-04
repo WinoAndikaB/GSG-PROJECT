@@ -248,7 +248,8 @@
                 @csrf
                 <div class="form-group">
                   <label for="gambarArtikel">Gambar</label>
-                  <input type="file" class="form-control" id="gambarArtikel" name="gambarArtikel" required>
+                  <span for="gambarArtikel">Format Foto : .jpg, .jpeg, .png </span>
+                  <input type="file" class="form-control" id="gambarArtikel" name="gambarArtikel" required accept=".jpg, .jpeg, .png">
               </div>              
                 <div class="form-group">
                     <label for="judulArtikel">Judul Artikel</label>
@@ -264,7 +265,11 @@
               </div>
               <div class="form-group">
                 <label for="kategori">Kategori</label>
-                <input type="text" class="form-control" id="kategori" name="kategori" required>
+                <select class="form-control" id="kategori" name="kategori" required>
+                  <option value="Anime">Anime</option>
+                  <option value="Game">Game</option>
+                  <option value="VTuber">VTuber</option>
+              </select>
             </div>
             <div class="form-group">
               <label for="tags">Tags</label>

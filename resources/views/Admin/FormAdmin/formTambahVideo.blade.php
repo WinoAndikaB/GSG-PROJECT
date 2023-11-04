@@ -255,7 +255,11 @@
               </div>
               <div class="form-group">
                 <label for="kategoriVideo">Kategori</label>
-                <input type="text" class="form-control" id="kategoriVideo" name="kategoriVideo" >
+                <select class="form-control" id="kategoriVideo" name="kategoriVideo" required>
+                  <option value="Anime">Anime</option>
+                  <option value="Game">Game</option>
+                  <option value="VTuber">VTuber</option>
+              </select>
             </div>
             <div class="form-group">
               <label for="tagsVideo">Tags</label>

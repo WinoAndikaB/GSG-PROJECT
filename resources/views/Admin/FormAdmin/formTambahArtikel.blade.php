@@ -239,9 +239,10 @@
               <form action="{{ route('artikel.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
-                  <label for="gambarArtikel">Gambar</label>
-                  <input type="file" class="form-control" id="gambarArtikel" name="gambarArtikel" required>
-              </div>              
+                  <label for="gambarArtikel">Gambar</label><br>
+                  <span for="gambarArtikel">Format Foto : .jpg, .jpeg, .png </span>
+                  <input type="file" class="form-control" id="gambarArtikel" name="gambarArtikel" required accept=".jpg, .jpeg, .png">
+              </div>                           
                 <div class="form-group">
                     <label for="judulArtikel">Judul Artikel</label>
                     <input type="text" class="form-control" id="judulArtikel" name="judulArtikel" required>
@@ -256,7 +257,11 @@
               </div>
               <div class="form-group">
                 <label for="kategori">Kategori</label>
-                <input type="text" class="form-control" id="kategori" name="kategori" required>
+                <select class="form-control" id="kategori" name="kategori" required>
+                  <option value="Anime">Anime</option>
+                  <option value="Game">Game</option>
+                  <option value="VTuber">VTuber</option>
+              </select>
             </div>
             <div class="form-group">
               <label for="tags">Tags</label>

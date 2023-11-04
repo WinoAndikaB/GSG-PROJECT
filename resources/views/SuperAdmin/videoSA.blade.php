@@ -317,13 +317,18 @@
                                   <span class="text-secondary text-xs font-weight-bold">{{$item['updated_at']->format('l, d F Y H:i:s') }}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-success">{{$item->statusVideo}}</span>
+                                  <span class="badge badge-sm status-badge 
+                                  {{$item['statusVideo'] === 'Published' ? 'bg-gradient-success' : ''}}
+                                  {{$item['statusVideo'] === 'Pending' ? 'bg-gradient-secondary' : ''}}
+                                  {{$item['statusVideo'] === 'Rejected' ? 'bg-gradient-danger' : ''}}">
+                                  {{$item['statusVideo']}}
+                                </span> 
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-success">{{$item->kategoriVideo}}</span>
+                                  <span class="badge badge-sm bg-gradient-info">{{$item->kategoriVideo}}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-success">{{$item->tagsVideo}}</span>
+                                  <span class="badge badge-sm bg-gradient-warning">{{$item->tagsVideo}}</span>
                                 </td>
                                 <td class="align-middle">
                                   <a href="/formEditVideoSA/{{ $item->id}}" class="btn btn-warning btn btn-primary btn-round">

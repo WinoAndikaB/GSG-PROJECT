@@ -178,12 +178,8 @@ use Illuminate\Support\Facades\Route;
         //[Admin] Tabel Pengguna Like Dislike
         Route::get('/PenggunaLikeDislike', [AdminController::class, 'PenggunaLikeDislike'])->name('PenggunaLikeDislike');
 
-        //[Admin] Tambah User Admin
-        Route::get('/formTambahUserAdm', [AdminController::class, 'formTambahUserAdm'])->name('formTambahUserAdm');
-        Route::post('/registerAdmin',[AdminController::class,'registerAdmin']);
-
         //[Admin] Delete Pengguna
-        Route::get('/deleteP/{id}',[AdminController::class,'deleteUserTerdaftar']);
+        Route::get('/deleteP/{id}',[AdminController::class,'deleteUserTerdaftar'])->name('deleteUserTerdaftar');
 
     //[Admin] Tab Ulasan
 
@@ -223,9 +219,9 @@ use Illuminate\Support\Facades\Route;
             Route::get('/komentarArtikelSA', [SuperAdminController::class, 'komentarArtikelSA'])->name('komentarArtikelSA');
     
             //[SuperAdmin] Tambah Artikel
-            Route::get('/artikelSA/createSA',  [SuperAdminController::class, 'createSA'])->name('createSA');
-            Route::post('/artikelSA/storeSA',  [SuperAdminController::class, 'storeSA'])->name('storeSA');
-
+            Route::get('/artikelSA/createSA', [SuperAdminController::class, 'createSA'])->name('createSA');
+            Route::post('/artikelSA/storeSA', [SuperAdminController::class, 'storeSA'])->name('storeSA');
+            
             Route::get('/approve-article/{id}',  [SuperAdminController::class, 'approveArticle'])->name('approveArticle');
             Route::get('/reject-article/{id}',  [SuperAdminController::class, 'rejectArticle'])->name('rejectArticle');
     

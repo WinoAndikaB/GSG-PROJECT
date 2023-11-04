@@ -287,7 +287,6 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <a href="/formTambahUserAdm" class="btn btn-primary">Tambah User Admin</i></a>
               <h6>List User Terdaftar</h6>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
