@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href=".../assets2/img/lg1.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
     Ulasan | GSG PROJECT
@@ -42,51 +42,52 @@
         .filled-star {
           color: gold; /* Warna bintang yang diisi */
         }
-
-        .modal {
-          display: none;
-          position: fixed;
-          z-index: 1;
-          left: 0;
-          top: 0;
-          width: 100%;
-          height: 100%;
-          background-color: rgba(0, 0, 0, 0.5);
-          overflow: hidden; /* Tidak dapat di-scroll */
-        }
-
-        .modal-content {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          background-color: #fff;
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          padding: 20px;
-          border: 1px solid #888;
-          width: 40%;
-          height: 30%; /* Mengatur tinggi modal menjadi 60% */
-          text-align: center;
-        }
-
-        .close {
-          color: #888;
-          position: absolute;
-          top: 10px;
-          right: 10px;
-          font-size: 20px;
-          font-weight: bold;
-          cursor: pointer;
-        }
-
-        #confirm-button, #cancel-button {
-          padding: 10px 20px;
-          margin: 25px;
-          cursor: pointer;
-        }
+      </style>
+        <style>
+          .modalLogout {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            overflow: hidden; /* Tidak dapat di-scroll */
+          }
+      
+          .modal-contentLogout {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            border: 1px solid #888;
+            width: 40%;
+            height: 30%; /* Mengatur tinggi modal menjadi 60% */
+            text-align: center;
+          }
+      
+          .closeLogout {
+            color: #888;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+          }
+      
+          #confirm-buttonLogout, #cancel-buttonLogout {
+            padding: 10px 20px;
+            margin: 25px;
+            cursor: pointer;
+          }
       </style>
 
 </head>
@@ -246,19 +247,19 @@
     </nav>
     <!-- End Navbar -->
 
-      <!-- Modal Logout -->
-  <div id="logout-modal" class="modal">
-    <div class="modal-content">
-      <span class="close" id="close-button" onclick="closeModal()">&times;</span>
-      <h2>Konfirmasi Logout</h2>
-      <p>Apakah anda mau logout?</p>
-      <div style="text-align: center;">
-        <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
-        <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
+    <!-- Modal Logout -->
+    <div id="logout-modal" class="modalLogout">
+      <div class="modal-contentLogout">
+        <span class="closeLogout" id="close-buttonLogout" onclick="closeModal()">&times;</span>
+        <h2>Konfirmasi Logout</h2>
+        <p>Apakah anda mau logout?</p>
+        <div style="text-align: center;">
+          <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
+          <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
+        </div>
       </div>
     </div>
-  </div>
-    
+
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-12">
@@ -374,9 +375,9 @@
                                 <span class="text-secondary text-xs font-weight-bold">{{$ulasan['updated_at']->format('l, d F Y H:i:s') }}</span>
                               </td>
                               <td class="align-middle">
-                                <a href="{{"deleteUlasanSA/".$ulasan['id']}}" class="btn btn-danger btn btn-primary btn-round" onclick="return confirm('Apakah Anda Yakin Mau Menghapus Data Ini?')">
+                                <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteUlasanSA', ['id' => $ulasan['id']]) }}')">
                                   <i class="fa fa-trash"></i>
-                                </a>
+                              </a>
                               </td>
                             </tr>
                           </tbody>
@@ -387,6 +388,29 @@
                     </div>
                   </div>
                 </div>
+              </div>
+
+              <!--Modal Hapus Data -->
+              <div id="confirmation-modal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Konfirmasi Hapus Data</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Apakah Anda yakin ingin menghapus data ini?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                            <a id="delete-link" href="#" class="btn btn-danger">Hapus</a>
+                        </div>
+                    </div>
+                </div>
+              </div>
+              
+              <div id="success-notification" class="alert alert-success" style="display: none;">
+                Data berhasil dihapus.
               </div>
 
 
@@ -493,6 +517,40 @@
   <script src="../assets2/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/chartjs.min.js"></script>
+
+
+   <!-- Modal Delete -->
+   <script>
+    function showConfirmationModal(deleteUrl) {
+      $('#delete-link').attr('href', deleteUrl);
+      $('#confirmation-modal').modal('show');
+    }
+  
+    // Setelah data berhasil dihapus
+    function onDeleteSuccess() {
+      $('#confirmation-modal').modal('hide'); // Sembunyikan modal konfirmasi
+      $('#success-notification').fadeIn().delay(2000).fadeOut(); // Tampilkan notifikasi berhasil
+    }
+  
+    // Tambahkan event handler untuk tombol "Hapus"
+    $(document).ready(function() {
+      $('#delete-link').click(function() {
+        // Setelah tombol "Hapus" diklik, Anda bisa memicu penghapusan dengan mengunjungi URL yang telah diatur sebelumnya
+        window.location.href = $('#delete-link').attr('href');
+      });
+  
+      // Event handler untuk tombol "Batal"
+      $('#confirmation-modal .btn-default').click(function() {
+        $('#confirmation-modal').modal('hide');
+      });
+  
+      // Event handler untuk tombol close window (tanda "X")
+      $('.modal .close').click(function() {
+        $('#confirmation-modal').modal('hide');
+      });
+    });
+  </script>
+
   <script>
     var ctx1 = document.getElementById("chart-line").getContext("2d");
 
@@ -590,7 +648,7 @@
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
 
-   <!-- MODAL LOGOUT -->
+    <!-- Modal Logout -->
    <script>
     // JavaScript untuk modal logout
     function openModal() {
@@ -621,6 +679,7 @@
       }
     });
   </script>
+  
 
 </body>
 </html>

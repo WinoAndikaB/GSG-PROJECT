@@ -427,9 +427,9 @@
                                 <span class="text-secondary text-xs font-weight-bold">{{$user['updated_at']->format('l, d F Y H:i:s') }}</span>
                               </td>
                               <td class="align-middle">
-                                <a href="{{"deletePenggunaSA/".$user['id']}}" class="btn btn-danger btn btn-primary btn-round" onclick="return confirm('Apakah Anda Yakin Mau Menghapus Data Ini?')">
+                                <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deletePenggunaSA', ['id' => $user['id']]) }}')">
                                   <i class="fa fa-trash"></i>
-                                </a>
+                              </a>
                               </td>
                             </tr>
                           </tbody>
@@ -447,17 +447,17 @@
                   <div class="modal-dialog" role="document">
                       <div class="modal-content">
                           <div class="modal-header">
-                              <h5 class="modal-title" id="promoteModalLabel{{$user->id}}">Promote User to Superadmin</h5>
+                              <h5 class="modal-title" id="promoteModalLabel{{$user->id}}">Promote Admin ke Superadmin</h5>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                               </button>
                           </div>
                           <div class="modal-body">
                               <!-- Add form elements to confirm the promotion -->
-                              <p>Are you sure you want to promote this user to Superadmin?</p>
+                              <p>Apakah anda yakin mau Promote Admin ke Superadmin?</p>
                           </div>
                           <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                               <a href="{{ route('promoteUser', ['id' => $user->id]) }}" class="btn btn-primary">Promote</a>
                           </div>
                       </div>
@@ -469,23 +469,46 @@
                   <div class="modal-dialog" role="document">
                       <div class="modal-content">
                           <div class="modal-header">
-                              <h5 class="modal-title" id="demoteModalLabel{{$user->id}}">Demote Superadmin to Admin</h5>
+                              <h5 class="modal-title" id="demoteModalLabel{{$user->id}}">Demote Superadmin ke Admin</h5>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                               </button>
                           </div>
                           <div class="modal-body">
                               <!-- Add form elements to confirm the demotion -->
-                              <p>Are you sure you want to demote this Superadmin to Admin?</p>
+                              <p>>Apakah anda yakin mau Demote Superadmin ke Admin?</p>
                           </div>
                           <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                               <a href="{{ route('demoteUser', ['id' => $user->id]) }}" class="btn btn-danger">Demote</a>
                           </div>
                       </div>
                   </div>
               </div>
           @endforeach
+
+            <!--Modal Hapus Data -->
+          <div id="confirmation-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Konfirmasi Hapus Data</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Apakah Anda yakin ingin menghapus data ini?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                        <a id="delete-link" href="#" class="btn btn-danger">Hapus</a>
+                    </div>
+                </div>
+            </div>
+          </div>
+          
+          <div id="success-notification" class="alert alert-success" style="display: none;">
+            Data berhasil dihapus.
+          </div>
 
               <footer class="footer pt-3  ">
                 <div class="container-fluid">
@@ -604,6 +627,39 @@
   <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/chartjs.min.js"></script>
 
+  <!-- Modal Delete -->
+  <script>
+    function showConfirmationModal(deleteUrl) {
+      $('#delete-link').attr('href', deleteUrl);
+      $('#confirmation-modal').modal('show');
+    }
+  
+    // Setelah data berhasil dihapus
+    function onDeleteSuccess() {
+      $('#confirmation-modal').modal('hide'); // Sembunyikan modal konfirmasi
+      $('#success-notification').fadeIn().delay(2000).fadeOut(); // Tampilkan notifikasi berhasil
+    }
+  
+    // Tambahkan event handler untuk tombol "Hapus"
+    $(document).ready(function() {
+      $('#delete-link').click(function() {
+        // Setelah tombol "Hapus" diklik, Anda bisa memicu penghapusan dengan mengunjungi URL yang telah diatur sebelumnya
+        window.location.href = $('#delete-link').attr('href');
+      });
+  
+      // Event handler untuk tombol "Batal"
+      $('#confirmation-modal .btn-default').click(function() {
+        $('#confirmation-modal').modal('hide');
+      });
+  
+      // Event handler untuk tombol close window (tanda "X")
+      $('.modal .close').click(function() {
+        $('#confirmation-modal').modal('hide');
+      });
+    });
+  </script>
+  
+
   <!-- Filter Role -->
   <script>
     // Menangani klik pada filter role
@@ -717,6 +773,7 @@
       },
     });
   </script>
+  
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -731,7 +788,7 @@
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
 
-   <!-- MODAL LOGOUT -->
+   <!-- Modal Logout -->
    <script>
     // JavaScript untuk modal logout
     function openModal() {
@@ -762,5 +819,6 @@
       }
     });
   </script>
+  
 </body>
 </html>
