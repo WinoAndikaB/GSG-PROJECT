@@ -4,10 +4,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href=".../assets2/img/lg1.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Video | GSG PROJECT
+    Ulasan | GSG PROJECT
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -20,8 +20,12 @@
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets2/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 
+<!------------------------------------------------------------------------------------- CSS Area -------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- CSS Area -------------------------------------------------------------------------------------------->
+  
+<!-- Modal CSS-->
   <style>
-    .modal {
+    .modalLogout {
       display: none;
       position: fixed;
       z-index: 1;
@@ -33,7 +37,7 @@
       overflow: hidden; /* Tidak dapat di-scroll */
     }
 
-    .modal-content {
+    .modal-contentLogout {
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -50,7 +54,7 @@
       text-align: center;
     }
 
-    .close {
+    .closeLogout {
       color: #888;
       position: absolute;
       top: 10px;
@@ -60,14 +64,69 @@
       cursor: pointer;
     }
 
-    #confirm-button, #cancel-button {
+    #confirm-buttonLogout, #cancel-buttonLogout {
       padding: 10px 20px;
       margin: 25px;
       cursor: pointer;
     }
 </style>
-  
+<style>
+    /* CSS untuk dropdown */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+      margin: 10px;
+      text-align: center; /* Membuat dropdown menjadi pusat */
+    }
+
+    .dropbtn {
+      background-color: #5E72E4;
+      color: white;
+      padding: 16px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: background-color 0.3s;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #ffffff;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(255, 255, 255, 0.2);
+      z-index: 1;
+      border-radius: 10px;
+      text-align: left; /* Membuat teks dalam dropdown menjadi kiri */
+      border: 1px solid #ccc; /* Menambahkan garis pembatas ke seluruh dropdown */
+    }
+
+    .dropdown-content a {
+      color: #5E72E4;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      transition: color 0.3s;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #5E72E4;
+      color: #ffffff;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .dropdown:hover .dropbtn {
+      background-color: #5E72E4;
+    }
+</style>
 </head>
+
+<!------------------------------------------------------------------------------------- Body Area -------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- Body Area -------------------------------------------------------------------------------------------->
 
 <body class="g-sidenav-show   bg-gray-100">
   <div class="min-height-300 bg-primary position-absolute w-100"></div>
@@ -126,7 +185,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/penggunaSA">
+          <a class="nav-link" href="/penggunaSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-circle-08 text-warning text-sm opacity-10"></i>
             </div>
@@ -136,7 +195,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/ulasansSA">
+          <a class="nav-link" href="/ulasansSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-paper-diploma text-warning text-sm opacity-10"></i>
             </div>
@@ -165,8 +224,8 @@
         </li>
       </ul>
     </div>
-  
-  <div class="sidenav-footer mx-3 ">    
+
+  <div class="sidenav-footer mx-3 ">   
   </aside>
   <main class="main-content position-relative border-radius-lg ">
     <!-- Navbar -->
@@ -224,19 +283,6 @@
     </nav>
     <!-- End Navbar -->
 
-      <!-- Modal Logout -->
-  <div id="logout-modal" class="modal">
-    <div class="modal-content">
-      <span class="close" id="close-button" onclick="closeModal()">&times;</span>
-      <h2>Konfirmasi Logout</h2>
-      <p>Apakah anda mau logout?</p>
-      <div style="text-align: center;">
-        <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
-        <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
-      </div>
-    </div>
-  </div>
-    
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-12">
@@ -248,178 +294,220 @@
               <h6>List Video Tersedia</h6>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">          
+              <div class="table-responsive p-0">  
 
-              <div class="container-fluid py-4">
-                <div class="row">
-                  <div class="col-12">
-                    <div class="card mb-4">
-                      <div class="card-header pb-0">
-                      </div>
-                      <div class="card-body px-0 pt-0 pb-2 overflow: auto;"">
-                        <div class="table-responsive p-0">
-                          <table class="table align-items-center mb-0">
-                            <thead>
-                              <tr>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Video</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Uploader</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Link Video</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Judul Video</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Deskripsi Video</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Upload</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Update</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kategori</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tags</th>
-                                <th class="text-secondary opacity-7"></th>
-                              </tr>
-                            </thead>
-                            @foreach($tableVideo as $item)
-                            <tbody>
-                              <tr>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item->id}}</p>
-                                </td>
-                                <td >
-                                  <iframe width="340" height="190" src="{{$item->linkVideo}}" frameborder="0" allowfullscreen></iframe>
-                                </td>
-                                <td>
-                                    <div class="d-flex flex-column justify-content-center text-xs font-weight-bold mb-0">
-                                      <h6 class="mb-0 text-sm">{{$item->uploader}}</h6>
-                                      <p class="text-xs text-secondary mb-0">{{$item->email}}</p>
+                <div class="container-fluid py-4">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="card mb-4">
+                        <div class="card-header pb-0">
+                        </div>
+                        <div class="card-body px-0 pt-0 pb-2 overflow: auto;"">
+                          <div class="table-responsive p-0">
+                            <table class="table align-items-center mb-0">
+                              <thead>
+                                <tr>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Video</th>
+                                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Uploader</th>
+                                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Link Video</th>
+                                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Judul Video</th>
+                                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Deskripsi Video</th>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Upload</th>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Update</th>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kategori</th>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tags</th>
+                                  <th class="text-secondary opacity-7"></th>
+                                </tr>
+                              </thead>
+                              @foreach($tableVideo as $item)
+                              <tbody>
+                                <tr>
+                                  <td class="align-middle text-center">
+                                    <p class="text-xs font-weight-bold mb-0">{{$item->id}}</p>
+                                  </td>
+                                  <td >
+                                    <iframe width="340" height="190" src="{{$item->linkVideo}}" frameborder="0" allowfullscreen></iframe>
+                                  </td>
+                                  <td>
+                                      <div class="d-flex flex-column justify-content-center text-xs font-weight-bold mb-0">
+                                        <h6 class="mb-0 text-sm">{{$item->uploader}}</h6>
+                                        <p class="text-xs text-secondary mb-0">{{$item->email}}</p>
+                                      </div>
                                     </div>
+                                  </td>
+                                  <td >
+                                    <p class="text-xs font-weight-bold mb-0">{{$item->linkVideo}}</p>
+                                  </td>
+                                  <td>
+                                    <p class="text-xs font-weight-bold mb-0">{{$item->judulVideo}}</p>
+                                  </td>
+                                  <td style="text-align: justify;">
+                                    <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
+                                      <?php
+                                      $deskripsiVideo = strip_tags($item['deskripsiVideo']);
+                                      $words = str_word_count($deskripsiVideo, 2);
+                                      $first_100_words = implode(' ', array_slice($words, 0, 5));
+                                      echo $first_100_words;
+                                      if (str_word_count($deskripsiVideo) > 100) {
+                                        echo '...';
+                                      }
+                                      ?>
+                                    </p>
+                                  </td>
+                                  <td class="align-middle text-center">
+                                    <span class="text-secondary text-xs font-weight-bold">{{$item['created_at']->format('l, d F Y H:i:s') }}</span>
+                                  </td>
+                                  <td class="align-middle text-center">
+                                    <span class="text-secondary text-xs font-weight-bold">{{$item['updated_at']->format('l, d F Y H:i:s') }}</span>
+                                  </td>
+                                  <td class="align-middle text-center">
+                                    <span class="badge badge-sm status-badge 
+                                    {{$item['statusVideo'] === 'Published' ? 'bg-gradient-success' : ''}}
+                                    {{$item['statusVideo'] === 'Pending' ? 'bg-gradient-secondary' : ''}}
+                                    {{$item['statusVideo'] === 'Rejected' ? 'bg-gradient-danger' : ''}}">
+                                    {{$item['statusVideo']}}
+                                  </span> 
+                                  </td>
+                                  <td class="align-middle text-center">
+                                    <span class="badge badge-sm bg-gradient-info">{{$item->kategoriVideo}}</span>
+                                  </td>
+                                  <td class="align-middle text-center">
+                                    <span class="badge badge-sm bg-gradient-warning">{{$item->tagsVideo}}</span>
+                                  </td>
+                                  <td class="align-middle">
+                                    <a href="/formEditVideoSA/{{ $item->id}}" class="btn btn-warning btn btn-primary btn-round">
+                                      <i class="fa fa-pencil"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteVideoSA', ['id' => $item['id']]) }}')">
+                                      <i class="fa fa-trash"></i>
+                                  </a>
+                                    @if ($item->statusVideo === 'Pending')
+                                    <a href="{{ route('approveVideo', $item->id) }}" class="btn btn-success btn btn-primary btn-round">
+                                        Approve
+                                    </a>
+                                    <a href="{{ route('rejectVideo', $item->id) }}" class="btn btn-danger btn btn-primary btn-round">
+                                        Reject
+                                    </a>
+                                   @endif
+                                  </td>
+                                </tr>
+                              </tbody>
+                              @endforeach 
+                              
+                              <div class="d-flex justify-content-center">
+                                <ul class="pagination">
+                                    @if ($tableVideo->onFirstPage())
+                                        <li class="page-item disabled">
+                                            <span class="page-link" aria-label="Previous">
+                                                <span aria-hidden="true">&lsaquo;</span>
+                                            </span>
+                                        </li>
+                                    @else
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ $tableVideo->previousPageUrl() }}" rel="prev" aria-label="Previous">
+                                                <span aria-hidden="true">&lsaquo;</span>
+                                            </a>
+                                        </li>
+                                    @endif
+              
+                                  <!-- Menampilkan halaman berapa -->
+                                  <div class="text-center">
+                                      {{ $tableVideo->currentPage() }} dari {{ $tableVideo->lastPage() }}
                                   </div>
-                                </td>
-                                <td >
-                                  <p class="text-xs font-weight-bold mb-0">{{$item->linkVideo}}</p>
-                                </td>
-                                <td>
-                                  <p class="text-xs font-weight-bold mb-0">{{$item->judulVideo}}</p>
-                                </td>
-                                <td style="text-align: justify;">
-                                  <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
-                                    <?php
-                                    $deskripsiVideo = strip_tags($item['deskripsiVideo']);
-                                    $words = str_word_count($deskripsiVideo, 2);
-                                    $first_100_words = implode(' ', array_slice($words, 0, 5));
-                                    echo $first_100_words;
-                                    if (str_word_count($deskripsiVideo) > 100) {
-                                      echo '...';
-                                    }
-                                    ?>
-                                  </p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <span class="text-secondary text-xs font-weight-bold">{{$item['created_at']->format('l, d F Y H:i:s') }}</span>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <span class="text-secondary text-xs font-weight-bold">{{$item['updated_at']->format('l, d F Y H:i:s') }}</span>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <span class="badge badge-sm status-badge 
-                                  {{$item['statusVideo'] === 'Published' ? 'bg-gradient-success' : ''}}
-                                  {{$item['statusVideo'] === 'Pending' ? 'bg-gradient-secondary' : ''}}
-                                  {{$item['statusVideo'] === 'Rejected' ? 'bg-gradient-danger' : ''}}">
-                                  {{$item['statusVideo']}}
-                                </span> 
-                                </td>
-                                <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-info">{{$item->kategoriVideo}}</span>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-warning">{{$item->tagsVideo}}</span>
-                                </td>
-                                <td class="align-middle">
-                                  <a href="/formEditVideoSA/{{ $item->id}}" class="btn btn-warning btn btn-primary btn-round">
-                                    <i class="fa fa-pencil"></i>
-                                  </a>
-                                  <a href="{{"/deleteVideoSA/".$item['id']}}" class="btn btn-danger btn btn-primary btn-round" onclick="return confirm('Apakah Anda Yakin Mau Menghapus Data Ini?')">
-                                    <i class="fa fa-trash"></i>
-                                  </a>
-                                  @if ($item->statusVideo === 'Pending')
-                                  <a href="{{ route('approveVideo', $item->id) }}" class="btn btn-success btn btn-primary btn-round">
-                                      Approve
-                                  </a>
-                                  <a href="{{ route('rejectVideo', $item->id) }}" class="btn btn-danger btn btn-primary btn-round">
-                                      Reject
-                                  </a>
-                                 @endif
-                                </td>
-                              </tr>
-                            </tbody>
-                            @endforeach 
                             
-                            <div class="d-flex justify-content-center">
-                              <ul class="pagination">
-                                  @if ($tableVideo->onFirstPage())
-                                      <li class="page-item disabled">
-                                          <span class="page-link" aria-label="Previous">
-                                              <span aria-hidden="true">&lsaquo;</span>
-                                          </span>
-                                      </li>
-                                  @else
-                                      <li class="page-item">
-                                          <a class="page-link" href="{{ $tableVideo->previousPageUrl() }}" rel="prev" aria-label="Previous">
-                                              <span aria-hidden="true">&lsaquo;</span>
-                                          </a>
-                                      </li>
-                                  @endif
-            
-                                <!-- Menampilkan halaman berapa -->
-                                <div class="text-center">
-                                    {{ $tableVideo->currentPage() }} dari {{ $tableVideo->lastPage() }}
-                                </div>
-                          
-                                  @if ($tableVideo->hasMorePages())
-                                      <li class="page-item">
-                                          <a class="page-link" href="{{ $tableVideo->nextPageUrl() }}" rel="next" aria-label="Next">
-                                              <span aria-hidden="true">&rsaquo;</span>
-                                          </a>
-                                      </li>
-                                  @else
-                                      <li class="page-item disabled">
-                                          <span class="page-link" aria-label="Next">
-                                              <span aria-hidden="true">&rsaquo;</span>
-                                          </span>
-                                      </li>
-                                  @endif
-                              </ul>
+                                    @if ($tableVideo->hasMorePages())
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ $tableVideo->nextPageUrl() }}" rel="next" aria-label="Next">
+                                                <span aria-hidden="true">&rsaquo;</span>
+                                            </a>
+                                        </li>
+                                    @else
+                                        <li class="page-item disabled">
+                                            <span class="page-link" aria-label="Next">
+                                                <span aria-hidden="true">&rsaquo;</span>
+                                            </span>
+                                        </li>
+                                    @endif
+                                </ul>
+                            </div>
+                            
+                            </table>
                           </div>
-                          
-                          </table>
                         </div>
                       </div>
                     </div>
                   </div>
+<!------------------------------------------------------------------------------------- Modal Area -------------------------------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- Modal Area -------------------------------------------------------------------------------------------------------------------->
+
+
+          <!--Modal Hapus Data -->
+          <div id="confirmation-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Konfirmasi Hapus Data</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Apakah Anda yakin ingin menghapus data ini?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                        <a id="delete-link" href="#" class="btn btn-danger">Hapus</a>
+                    </div>
                 </div>
-  
-                <footer class="footer pt-3  ">
-                  <div class="container-fluid">
-                    <div class="row align-items-center justify-content-lg-between">
-                      <div class="col-lg-6 mb-lg-0 mb-4">
-                        <div class="copyright text-center text-sm text-muted text-lg-start">
-                          © <script>
-                            document.write(new Date().getFullYear())
-                          </script>,
-                          Template by <a title="CSS Templates" rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>,
-                          <a title="CSS Templates" rel="sponsored" href="https://themewagon.com/themes/free-bootstrap-4-html-5-blog-website-template-nextpage/" target="_blank">NextPage </a> and
-                          <a title="CSS Templates" rel="sponsored" href="https://www.creative-tim.com" target="_blank">Crative Tim </a> 
-                          Edited By <a title="CSS Templates" rel="sponsored" href="#" target="_blank">GSG Team</a></p>
-                        </div>
+            </div>
+          </div>
+
+          <div id="success-notification" class="alert alert-success" style="display: none;">
+            Data berhasil dihapus.
+          </div>
+
+          <!-- Modal Logout -->
+          <div id="logout-modal" class="modalLogout">
+            <div class="modal-contentLogout">
+              <span class="closeLogout" id="close-buttonLogout" onclick="closeModal()">&times;</span>
+              <h2>Konfirmasi Logout</h2>
+              <p>Apakah anda mau logout?</p>
+              <div style="text-align: center;">
+                <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
+                <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
+              </div>
+            </div>
+          </div>
+
+              <footer class="footer pt-3  ">
+                <div class="container-fluid">
+                  <div class="row align-items-center justify-content-lg-between">
+                    <div class="col-lg-6 mb-lg-0 mb-4">
+                      <div class="copyright text-center text-sm text-muted text-lg-start">
+                        © <script>
+                          document.write(new Date().getFullYear())
+                        </script>,
+                        Template by <a title="CSS Templates" rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>,
+                        <a title="CSS Templates" rel="sponsored" href="https://themewagon.com/themes/free-bootstrap-4-html-5-blog-website-template-nextpage/" target="_blank">NextPage </a> and
+                        <a title="CSS Templates" rel="sponsored" href="https://www.creative-tim.com" target="_blank">Crative Tim </a> 
+                        Edited By <a title="CSS Templates" rel="sponsored" href="#" target="_blank">GSG Team</a></p>
+                      </div>
                       </div>
                     </div>
                   </div>
                 </footer>
-              </div>
-              
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </main>
+  </div>
+</main>
+
+<!-------------------------------------------------------------------------------------Argon Feature Area -------------------------------------------------------------------------------------------------------------------->
+<!-------------------------------------------------------------------------------------Argon Feature Area -------------------------------------------------------------------------------------------------------------------->
+
   <div class="fixed-plugin">
     <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
       <i class="fa fa-cog py-2"> </i>
@@ -492,51 +580,216 @@
       </div>
     </div>
   </div>
-  <!--   Core JS Files   -->
-  <script src="../assets2/js/core/popper.min.js"></script>
-  <script src="../assets2/js/core/bootstrap.min.js"></script>
-  <script src="../assets2/js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
-  <script src="../assets2/js/plugins/chartjs.min.js"></script>
 
-  
+<!------------------------------------------------------------------------------------- JavaScript Area -------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- JavaScript Area -------------------------------------------------------------------------------------------->
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-  <!-- Github buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
+ <!--   Core JS Files   -->
+ <script src="../assets2/js/core/popper.min.js"></script>
+ <script src="../assets2/js/core/bootstrap.min.js"></script>
+ <script src="../assets2/js/plugins/perfect-scrollbar.min.js"></script>
+ <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
+ <script src="../assets2/js/plugins/chartjs.min.js"></script>
 
-   <!-- MODAL LOGOUT -->
-   <script>
-    // JavaScript untuk modal logout
-    function openModal() {
-      const modal = document.getElementById('logout-modal');
-      modal.style.display = 'block';
+<script>
+  $(document).ready(function() {
+      console.log("Document ready.");
+  });
+  </script>
+
+  <!-- Modal Delete -->
+  <script>
+    function showConfirmationModal(deleteUrl) {
+      $('#delete-link').attr('href', deleteUrl);
+      $('#confirmation-modal').modal('show');
     }
   
-    function closeModal() {
-      const modal = document.getElementById('logout-modal');
-      modal.style.display = 'none';
+    // Setelah data berhasil dihapus
+    function onDeleteSuccess() {
+      $('#confirmation-modal').modal('hide'); // Sembunyikan modal konfirmasi
+      $('#success-notification').fadeIn().delay(2000).fadeOut(); // Tampilkan notifikasi berhasil
     }
   
-    function confirmLogout(confirmed) {
-      if (confirmed) {
-        // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
-        window.location.href = '/logout';
-      } else {
-        // Tutup modal jika pengguna memilih "No"
-        closeModal();
-      }
-    }
+    // Tambahkan event handler untuk tombol "Hapus"
+    $(document).ready(function() {
+      $('#delete-link').click(function() {
+        // Setelah tombol "Hapus" diklik, Anda bisa memicu penghapusan dengan mengunjungi URL yang telah diatur sebelumnya
+        window.location.href = $('#delete-link').attr('href');
+      });
   
-    // Tutup modal jika pengguna mengklik di luar modal
-    window.addEventListener('click', (event) => {
-      const modal = document.getElementById('logout-modal');
-      if (event.target == modal) {
-        modal.style.display = 'none';
-      }
+      // Event handler untuk tombol "Batal"
+      $('#confirmation-modal .btn-default').click(function() {
+        $('#confirmation-modal').modal('hide');
+      });
+  
+      // Event handler untuk tombol close window (tanda "X")
+      $('.modal .close').click(function() {
+        $('#confirmation-modal').modal('hide');
+      });
     });
   </script>
-</body>
+
+  <!-- Filter Role -->
+  <script>
+    // Menangani klik pada filter role
+    document.querySelectorAll('.role-filter').forEach(function (element) {
+        element.addEventListener('click', function () {
+            var selectedRole = element.getAttribute('data-role');
+            // Redirect ke halaman dengan filter role
+            window.location.href = '{{ route("penggunaSA") }}?role=' + selectedRole;
+        });
+    });
+  </script>
+
+  <!-- Rating -->
+<script>
+  const stars = document.querySelectorAll('.star');
+  const ratingInput = document.getElementById('rating');
+
+  stars.forEach((star) => {
+    star.addEventListener('click', () => {
+      const ratingValue = parseInt(star.getAttribute('data-rating'));
+      ratingInput.value = ratingValue;
+      stars.forEach((s) => s.classList.remove('selected')); // Hapus kelas 'selected' dari semua bintang
+      for (let i = 0; i < ratingValue; i++) {
+        stars[i].classList.add('selected'); // Tambahkan kelas 'selected' pada bintang yang dipilih
+      }
+    });
+  });
+</script>
+
+  <script>
+    var ctx1 = document.getElementById("chart-line").getContext("2d");
+
+    var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke1.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
+    gradientStroke1.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
+    gradientStroke1.addColorStop(0, 'rgba(94, 114, 228, 0)');
+    new Chart(ctx1, {
+      type: "line",
+      data: {
+        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        datasets: [{
+          label: "Mobile apps",
+          tension: 0.4,
+          borderWidth: 0,
+          pointRadius: 0,
+          borderColor: "#5e72e4",
+          backgroundColor: gradientStroke1,
+          borderWidth: 3,
+          fill: true,
+          data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
+          maxBarThickness: 6
+
+        }],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false,
+          }
+        },
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
+        scales: {
+          y: {
+            grid: {
+              drawBorder: false,
+              display: true,
+              drawOnChartArea: true,
+              drawTicks: false,
+              borderDash: [5, 5]
+            },
+            ticks: {
+              display: true,
+              padding: 10,
+              color: '#fbfbfb',
+              font: {
+                size: 11,
+                family: "Open Sans",
+                style: 'normal',
+                lineHeight: 2
+              },
+            }
+          },
+          x: {
+            grid: {
+              drawBorder: false,
+              display: false,
+              drawOnChartArea: false,
+              drawTicks: false,
+              borderDash: [5, 5]
+            },
+            ticks: {
+              display: true,
+              color: '#ccc',
+              padding: 20,
+              font: {
+                size: 11,
+                family: "Open Sans",
+                style: 'normal',
+                lineHeight: 2
+              },
+            }
+          },
+        },
+      },
+    });
+    </script>
+
+    <script>
+      var win = navigator.platform.indexOf('Win') > -1;
+      if (win && document.querySelector('#sidenav-scrollbar')) {
+        var options = {
+          damping: '0.5'
+        }
+        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+      }
+    </script>
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
+
+    <!-- Modal Logout -->
+    <script>
+      // JavaScript untuk modal logout
+      function openModal() {
+        const modal = document.getElementById('logout-modal');
+        modal.style.display = 'block';
+      }
+    
+      function closeModal() {
+        const modal = document.getElementById('logout-modal');
+        modal.style.display = 'none';
+      }
+    
+      function confirmLogout(confirmed) {
+        if (confirmed) {
+          // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
+          window.location.href = '/logout';
+        } else {
+          // Tutup modal jika pengguna memilih "No"
+          closeModal();
+        }
+      }
+    
+      // Tutup modal jika pengguna mengklik di luar modal
+      window.addEventListener('click', (event) => {
+        const modal = document.getElementById('logout-modal');
+        if (event.target == modal) {
+          modal.style.display = 'none';
+        }
+      });
+    </script>
+    
+  </body>
 </html>

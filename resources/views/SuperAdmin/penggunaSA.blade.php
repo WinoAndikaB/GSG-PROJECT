@@ -20,6 +20,9 @@
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets2/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 
+<!------------------------------------------------------------------------------------- Style Area -------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- Style Area -------------------------------------------------------------------------------------------->
+
   <style>
     .modalLogout {
       display: none;
@@ -67,60 +70,62 @@
     }
 </style>
 <style>
-  /* CSS untuk dropdown */
-  .dropdown {
-    position: relative;
-    display: inline-block;
-    margin: 10px;
-    text-align: center; /* Membuat dropdown menjadi pusat */
-  }
+    /* CSS untuk dropdown */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+      margin: 10px;
+      text-align: center; /* Membuat dropdown menjadi pusat */
+    }
 
-  .dropbtn {
-    background-color: #5E72E4;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    border-radius: 10px;
-    transition: background-color 0.3s;
-  }
+    .dropbtn {
+      background-color: #5E72E4;
+      color: white;
+      padding: 16px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: background-color 0.3s;
+    }
 
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #ffffff;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(255, 255, 255, 0.2);
-    z-index: 1;
-    border-radius: 10px;
-    text-align: left; /* Membuat teks dalam dropdown menjadi kiri */
-    border: 1px solid #ccc; /* Menambahkan garis pembatas ke seluruh dropdown */
-  }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #ffffff;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(255, 255, 255, 0.2);
+      z-index: 1;
+      border-radius: 10px;
+      text-align: left; /* Membuat teks dalam dropdown menjadi kiri */
+      border: 1px solid #ccc; /* Menambahkan garis pembatas ke seluruh dropdown */
+    }
 
-  .dropdown-content a {
-    color: #5E72E4;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    transition: color 0.3s;
-  }
+    .dropdown-content a {
+      color: #5E72E4;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      transition: color 0.3s;
+    }
 
-  .dropdown-content a:hover {
-    background-color: #5E72E4;
-    color: #ffffff;
-  }
+    .dropdown-content a:hover {
+      background-color: #5E72E4;
+      color: #ffffff;
+    }
 
-  .dropdown:hover .dropdown-content {
-    display: block;
-  }
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
 
-  .dropdown:hover .dropbtn {
-    background-color: #5E72E4;
-  }
+    .dropdown:hover .dropbtn {
+      background-color: #5E72E4;
+    }
 </style>
-
 </head>
+
+<!------------------------------------------------------------------------------------- Body Area -------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- Body Area -------------------------------------------------------------------------------------------->
 
 <body class="g-sidenav-show   bg-gray-100">
   <div class="min-height-300 bg-primary position-absolute w-100"></div>
@@ -277,19 +282,6 @@
     </nav>
     <!-- End Navbar -->
 
-    <!-- Modal Logout -->
-    <div id="logout-modal" class="modalLogout">
-    <div class="modal-contentLogout">
-      <span class="closeLogout" id="close-buttonLogout" onclick="closeModal()">&times;</span>
-      <h2>Konfirmasi Logout</h2>
-      <p>Apakah anda mau logout?</p>
-      <div style="text-align: center;">
-        <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
-        <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
-      </div>
-    </div>
-  </div>
-
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-12">
@@ -356,8 +348,6 @@
                             </div>
                         </div>
                     </div>
-                    
-
 
                         <table class="table align-items-center mb-0">
                           <thead>
@@ -441,6 +431,9 @@
                 </div>
               </div>
 
+<!------------------------------------------------------------------------------------- Modal Area -------------------------------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- Modal Area -------------------------------------------------------------------------------------------------------------------->
+
               <!-- Promtoe Modal -->
               @foreach ($users as $user)
               <div class="modal fade" id="promoteModal{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="promoteModalLabel{{$user->id}}" aria-hidden="true">
@@ -487,7 +480,7 @@
               </div>
           @endforeach
 
-            <!--Modal Hapus Data -->
+          <!--Modal Hapus Data -->
           <div id="confirmation-modal" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -505,9 +498,22 @@
                 </div>
             </div>
           </div>
-          
+
           <div id="success-notification" class="alert alert-success" style="display: none;">
             Data berhasil dihapus.
+          </div>
+
+          <!-- Modal Logout -->
+          <div id="logout-modal" class="modalLogout">
+            <div class="modal-contentLogout">
+              <span class="closeLogout" id="close-buttonLogout" onclick="closeModal()">&times;</span>
+              <h2>Konfirmasi Logout</h2>
+              <p>Apakah anda mau logout?</p>
+              <div style="text-align: center;">
+                <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
+                <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
+              </div>
+            </div>
           </div>
 
               <footer class="footer pt-3  ">
@@ -523,12 +529,11 @@
                         <a title="CSS Templates" rel="sponsored" href="https://www.creative-tim.com" target="_blank">Crative Tim </a> 
                         Edited By <a title="CSS Templates" rel="sponsored" href="#" target="_blank">GSG Team</a></p>
                       </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </footer>
-            </div>
-            
+                </footer>
+              </div>
             </div>
           </div>
         </div>
@@ -536,6 +541,9 @@
     </div>
   </div>
 </main>
+
+<!-------------------------------------------------------------------------------------Argon Feature Area -------------------------------------------------------------------------------------------------------------------->
+<!-------------------------------------------------------------------------------------Argon Feature Area -------------------------------------------------------------------------------------------------------------------->
 
   <div class="fixed-plugin">
     <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
@@ -610,22 +618,24 @@
     </div>
   </div>
 
-  <!-- Pastikan Anda memasukkan Bootstrap JavaScript -->
+<!------------------------------------------------------------------------------------- JavaScript Area -------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- JavaScript Area -------------------------------------------------------------------------------------------->
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+ <!--   Core JS Files   -->
+ <script src="../assets2/js/core/popper.min.js"></script>
+ <script src="../assets2/js/core/bootstrap.min.js"></script>
+ <script src="../assets2/js/plugins/perfect-scrollbar.min.js"></script>
+ <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
+ <script src="../assets2/js/plugins/chartjs.min.js"></script>
+
 <script>
   $(document).ready(function() {
       console.log("Document ready.");
   });
   </script>
-  
-
-  <!--   Core JS Files   -->
-  <script src="../assets2/js/core/popper.min.js"></script>
-  <script src="../assets2/js/core/bootstrap.min.js"></script>
-  <script src="../assets2/js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
-  <script src="../assets2/js/plugins/chartjs.min.js"></script>
 
   <!-- Modal Delete -->
   <script>
@@ -658,7 +668,6 @@
       });
     });
   </script>
-  
 
   <!-- Filter Role -->
   <script>
@@ -670,8 +679,7 @@
             window.location.href = '{{ route("penggunaSA") }}?role=' + selectedRole;
         });
     });
-</script>
-
+  </script>
 
   <!-- Rating -->
 <script>
@@ -772,53 +780,53 @@
         },
       },
     });
-  </script>
-  
-  <script>
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-      var options = {
-        damping: '0.5'
-      }
-      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-    }
-  </script>
-  <!-- Github buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
+    </script>
 
-   <!-- Modal Logout -->
-   <script>
-    // JavaScript untuk modal logout
-    function openModal() {
-      const modal = document.getElementById('logout-modal');
-      modal.style.display = 'block';
-    }
-  
-    function closeModal() {
-      const modal = document.getElementById('logout-modal');
-      modal.style.display = 'none';
-    }
-  
-    function confirmLogout(confirmed) {
-      if (confirmed) {
-        // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
-        window.location.href = '/logout';
-      } else {
-        // Tutup modal jika pengguna memilih "No"
-        closeModal();
+    <script>
+      var win = navigator.platform.indexOf('Win') > -1;
+      if (win && document.querySelector('#sidenav-scrollbar')) {
+        var options = {
+          damping: '0.5'
+        }
+        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
       }
-    }
-  
-    // Tutup modal jika pengguna mengklik di luar modal
-    window.addEventListener('click', (event) => {
-      const modal = document.getElementById('logout-modal');
-      if (event.target == modal) {
+    </script>
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
+
+    <!-- Modal Logout -->
+    <script>
+      // JavaScript untuk modal logout
+      function openModal() {
+        const modal = document.getElementById('logout-modal');
+        modal.style.display = 'block';
+      }
+    
+      function closeModal() {
+        const modal = document.getElementById('logout-modal');
         modal.style.display = 'none';
       }
-    });
-  </script>
-  
-</body>
+    
+      function confirmLogout(confirmed) {
+        if (confirmed) {
+          // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
+          window.location.href = '/logout';
+        } else {
+          // Tutup modal jika pengguna memilih "No"
+          closeModal();
+        }
+      }
+    
+      // Tutup modal jika pengguna mengklik di luar modal
+      window.addEventListener('click', (event) => {
+        const modal = document.getElementById('logout-modal');
+        if (event.target == modal) {
+          modal.style.display = 'none';
+        }
+      });
+    </script>
+    
+  </body>
 </html>

@@ -20,77 +20,139 @@
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets2/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 
+<!------------------------------------------------------------------------------------- CSS Area -------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- CSS Area -------------------------------------------------------------------------------------------->
+
+<!-- Rating CSS-->
+<style>
+  .rating {
+    font-size: 20px;
+  }
+
+  .star {
+    color: gray; /* Mengatur warna bintang awalnya menjadi gray */
+    cursor: pointer;
+  }
+
+  .star.selected {
+    color: gold; /* Mengatur warna bintang yang dipilih menjadi gold */
+  }
+
+  .rating-container {
+      font-size: 20px; /* Atur ukuran teks rata-rata rating */
+      margin: 15px; /* Atur margin untuk jarak dari teks sekitarnya */
+    }
+
+    .filled-star {
+      color: gold; /* Warna bintang yang diisi */
+    }
+  </style>
+
+  
+<!-- Modal CSS-->
   <style>
-      .rating {
-        font-size: 20px;
-      }
+    .modalLogout {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      overflow: hidden; /* Tidak dapat di-scroll */
+    }
 
-      .star {
-        color: gray; /* Mengatur warna bintang awalnya menjadi gray */
-        cursor: pointer;
-      }
+    .modal-contentLogout {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #fff;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      border: 1px solid #888;
+      width: 40%;
+      height: 30%; /* Mengatur tinggi modal menjadi 60% */
+      text-align: center;
+    }
 
-      .star.selected {
-        color: gold; /* Mengatur warna bintang yang dipilih menjadi gold */
-      }
+    .closeLogout {
+      color: #888;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
 
-      .rating-container {
-          font-size: 20px; /* Atur ukuran teks rata-rata rating */
-          margin: 15px; /* Atur margin untuk jarak dari teks sekitarnya */
-        }
+    #confirm-buttonLogout, #cancel-buttonLogout {
+      padding: 10px 20px;
+      margin: 25px;
+      cursor: pointer;
+    }
+</style>
+<style>
+    /* CSS untuk dropdown */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+      margin: 10px;
+      text-align: center; /* Membuat dropdown menjadi pusat */
+    }
 
-        .filled-star {
-          color: gold; /* Warna bintang yang diisi */
-        }
-      </style>
-        <style>
-          .modalLogout {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            overflow: hidden; /* Tidak dapat di-scroll */
-          }
-      
-          .modal-contentLogout {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background-color: #fff;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 20px;
-            border: 1px solid #888;
-            width: 40%;
-            height: 30%; /* Mengatur tinggi modal menjadi 60% */
-            text-align: center;
-          }
-      
-          .closeLogout {
-            color: #888;
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 20px;
-            font-weight: bold;
-            cursor: pointer;
-          }
-      
-          #confirm-buttonLogout, #cancel-buttonLogout {
-            padding: 10px 20px;
-            margin: 25px;
-            cursor: pointer;
-          }
-      </style>
+    .dropbtn {
+      background-color: #5E72E4;
+      color: white;
+      padding: 16px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: background-color 0.3s;
+    }
 
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #ffffff;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(255, 255, 255, 0.2);
+      z-index: 1;
+      border-radius: 10px;
+      text-align: left; /* Membuat teks dalam dropdown menjadi kiri */
+      border: 1px solid #ccc; /* Menambahkan garis pembatas ke seluruh dropdown */
+    }
+
+    .dropdown-content a {
+      color: #5E72E4;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      transition: color 0.3s;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #5E72E4;
+      color: #ffffff;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .dropdown:hover .dropbtn {
+      background-color: #5E72E4;
+    }
+</style>
 </head>
+
+<!------------------------------------------------------------------------------------- Body Area -------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- Body Area -------------------------------------------------------------------------------------------->
 
 <body class="g-sidenav-show   bg-gray-100">
   <div class="min-height-300 bg-primary position-absolute w-100"></div>
@@ -149,7 +211,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/penggunaSA">
+          <a class="nav-link" href="/penggunaSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-circle-08 text-warning text-sm opacity-10"></i>
             </div>
@@ -189,7 +251,7 @@
       </ul>
     </div>
 
-  <div class="sidenav-footer mx-3 ">
+  <div class="sidenav-footer mx-3 ">   
   </aside>
   <main class="main-content position-relative border-radius-lg ">
     <!-- Navbar -->
@@ -200,7 +262,7 @@
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
             <li class="breadcrumb-item text-sm text-white active" aria-current="page">Ulasan</li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Ulasan</h6>
+          <h6 class="font-weight-bolder text-white mb-0">List Ulasan Tersedia</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -247,172 +309,174 @@
     </nav>
     <!-- End Navbar -->
 
-    <!-- Modal Logout -->
-    <div id="logout-modal" class="modalLogout">
-      <div class="modal-contentLogout">
-        <span class="closeLogout" id="close-buttonLogout" onclick="closeModal()">&times;</span>
-        <h2>Konfirmasi Logout</h2>
-        <p>Apakah anda mau logout?</p>
-        <div style="text-align: center;">
-          <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
-          <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
-        </div>
-      </div>
-    </div>
-
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <h6>List Ulasan</h6>
+              <h6>List Ulasan Tersedia</h6>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">             
+              <div class="table-responsive p-0">   
 
-              <div class="row">
-                <div class="col-12">
-                  <div class="card mb-4">
-                    <div class="card-header pb-0">
-                    </div>
-                    <div class="card-body px-0 pt-0 pb-2">
-                      <div class="rating-container">
-                    </div> 
+                <div class="row">
+                  <div class="col-12">
+                    <div class="card mb-4">
+                      <div class="card-header pb-0">
+                      </div>
+                      <div class="card-body px-0 pt-0 pb-2">
+                        <div class="rating-container">
+                      </div> 
+                      
+                      <div class="d-flex justify-content-center">
+                        <ul class="pagination">
+                            @if ($data1->onFirstPage())
+                                <li class="page-item disabled">
+                                    <span class="page-link" aria-label="Previous">
+                                        <span aria-hidden="true">&lsaquo;</span>
+                                    </span>
+                                </li>
+                            @else
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ $data1->previousPageUrl() }}" rel="prev" aria-label="Previous">
+                                        <span aria-hidden="true">&lsaquo;</span>
+                                    </a>
+                                </li>
+                            @endif
+      
+                          <!-- Menampilkan halaman berapa -->
+                          <div class="text-center">
+                              {{ $data1->currentPage() }} dari {{ $data1->lastPage() }}
+                          </div>
                     
-                    <div class="d-flex justify-content-center">
-                      <ul class="pagination">
-                          @if ($data1->onFirstPage())
-                              <li class="page-item disabled">
-                                  <span class="page-link" aria-label="Previous">
-                                      <span aria-hidden="true">&lsaquo;</span>
-                                  </span>
-                              </li>
-                          @else
-                              <li class="page-item">
-                                  <a class="page-link" href="{{ $data1->previousPageUrl() }}" rel="prev" aria-label="Previous">
-                                      <span aria-hidden="true">&lsaquo;</span>
-                                  </a>
-                              </li>
-                          @endif
-    
-                        <!-- Menampilkan halaman berapa -->
-                        <div class="text-center">
-                            {{ $data1->currentPage() }} dari {{ $data1->lastPage() }}
+                            @if ($data1->hasMorePages())
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ $data1->nextPageUrl() }}" rel="next" aria-label="Next">
+                                        <span aria-hidden="true">&rsaquo;</span>
+                                    </a>
+                                </li>
+                            @else
+                                <li class="page-item disabled">
+                                    <span class="page-link" aria-label="Next">
+                                        <span aria-hidden="true">&rsaquo;</span>
+                                    </span>
+                                </li>
+                            @endif
+                        </ul>
+                    </div>
+  
+                        <div class="table-responsive p-0">
+                          <table class="table align-items-center mb-0">
+                            <thead>
+                              <tr>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User ID</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pengguna</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pesan</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Rating</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Upload</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Update</th>
+                                <th class="text-secondary opacity-7"></th>
+                              </tr>
+                            </thead>
+                            @foreach ($data1 as $ulasan)
+                            <tbody>
+                              <tr>
+                                <td class="align-middle text-center">
+                                  <p>{{$ulasan['id']}}</p>
+                                </td>
+                                <td class="align-middle text-center">
+                                  <p class="text-xs font-weight-bold mb-0">{{$ulasan['user_id']}}</p>
+                                </td>
+                                <td>
+                                  <div class="d-flex px-2 py-1">
+                                    <div>
+                                      <img src="{{ asset('fotoProfil/' . $ulasan['fotoProfil']) }}" class="avatar avatar-sm me-3" alt="user1">
+                                    </div>
+                                    <div class="d-flex flex-column justify-content-center">
+                                      <h6 class="mb-0 text-sm">{{$ulasan['nama']}}</h6>
+                                      <p class="text-xs text-secondary mb-0">{{$ulasan['email']}}</p>
+                                    </div>
+                                  </div>
+                                </td>  
+                                <td>
+                                  <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
+                                    {{$ulasan['pesan']}}
+                                  </p>
+                                </td> 
+                                <td>
+                                  <p class="align-middle text-center" style="white-space: normal; max-width: 1000px;">
+                                    <span class="rating">
+                                      @for ($i = 1; $i <= 5; $i++)
+                                        @if ($i <= $ulasan->rating)
+                                          <span class="star selected">&#9733;</span>
+                                        @else
+                                          <span class="star">&#9733;</span>
+                                        @endif
+                                      @endfor
+                                    </span>
+                                  </p>
+                                </td>    
+                                <td class="align-middle text-center">
+                                  <span class="text-secondary text-xs font-weight-bold">{{$ulasan['created_at']->format('l, d F Y H:i:s') }}</span>
+                                </td>
+                                <td class="align-middle text-center">
+                                  <span class="text-secondary text-xs font-weight-bold">{{$ulasan['updated_at']->format('l, d F Y H:i:s') }}</span>
+                                </td>
+                                <td class="align-middle">
+                                  <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteUlasanSA', ['id' => $ulasan['id']]) }}')">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                                </td>
+                              </tr>
+                            </tbody>
+                              @endforeach
+                          </table>
+  
                         </div>
-                  
-                          @if ($data1->hasMorePages())
-                              <li class="page-item">
-                                  <a class="page-link" href="{{ $data1->nextPageUrl() }}" rel="next" aria-label="Next">
-                                      <span aria-hidden="true">&rsaquo;</span>
-                                  </a>
-                              </li>
-                          @else
-                              <li class="page-item disabled">
-                                  <span class="page-link" aria-label="Next">
-                                      <span aria-hidden="true">&rsaquo;</span>
-                                  </span>
-                              </li>
-                          @endif
-                      </ul>
-                  </div>
-
-                      <div class="table-responsive p-0">
-                        <table class="table align-items-center mb-0">
-                          <thead>
-                            <tr>
-                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
-                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User ID</th>
-                              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pengguna</th>
-                              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pesan</th>
-                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Rating</th>
-                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Upload</th>
-                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Update</th>
-                              <th class="text-secondary opacity-7"></th>
-                            </tr>
-                          </thead>
-                          @foreach ($data1 as $ulasan)
-                          <tbody>
-                            <tr>
-                              <td class="align-middle text-center">
-                                <p>{{$ulasan['id']}}</p>
-                              </td>
-                              <td class="align-middle text-center">
-                                <p class="text-xs font-weight-bold mb-0">{{$ulasan['user_id']}}</p>
-                              </td>
-                              <td>
-                                <div class="d-flex px-2 py-1">
-                                  <div>
-                                    <img src="{{ asset('fotoProfil/' . $ulasan['fotoProfil']) }}" class="avatar avatar-sm me-3" alt="user1">
-                                  </div>
-                                  <div class="d-flex flex-column justify-content-center">
-                                    <h6 class="mb-0 text-sm">{{$ulasan['nama']}}</h6>
-                                    <p class="text-xs text-secondary mb-0">{{$ulasan['email']}}</p>
-                                  </div>
-                                </div>
-                              </td>  
-                              <td>
-                                <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
-                                  {{$ulasan['pesan']}}
-                                </p>
-                              </td> 
-                              <td>
-                                <p class="align-middle text-center" style="white-space: normal; max-width: 1000px;">
-                                  <span class="rating">
-                                    @for ($i = 1; $i <= 5; $i++)
-                                      @if ($i <= $ulasan->rating)
-                                        <span class="star selected">&#9733;</span>
-                                      @else
-                                        <span class="star">&#9733;</span>
-                                      @endif
-                                    @endfor
-                                  </span>
-                                </p>
-                              </td>    
-                              <td class="align-middle text-center">
-                                <span class="text-secondary text-xs font-weight-bold">{{$ulasan['created_at']->format('l, d F Y H:i:s') }}</span>
-                              </td>
-                              <td class="align-middle text-center">
-                                <span class="text-secondary text-xs font-weight-bold">{{$ulasan['updated_at']->format('l, d F Y H:i:s') }}</span>
-                              </td>
-                              <td class="align-middle">
-                                <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteUlasanSA', ['id' => $ulasan['id']]) }}')">
-                                  <i class="fa fa-trash"></i>
-                              </a>
-                              </td>
-                            </tr>
-                          </tbody>
-                            @endforeach
-                        </table>
-
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+<!------------------------------------------------------------------------------------- Modal Area -------------------------------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- Modal Area -------------------------------------------------------------------------------------------------------------------->
 
-              <!--Modal Hapus Data -->
-              <div id="confirmation-modal" class="modal fade" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Konfirmasi Hapus Data</h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Apakah Anda yakin ingin menghapus data ini?</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-                            <a id="delete-link" href="#" class="btn btn-danger">Hapus</a>
-                        </div>
+
+          <!--Modal Hapus Data -->
+          <div id="confirmation-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Konfirmasi Hapus Data</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Apakah Anda yakin ingin menghapus data ini?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                        <a id="delete-link" href="#" class="btn btn-danger">Hapus</a>
                     </div>
                 </div>
-              </div>
-              
-              <div id="success-notification" class="alert alert-success" style="display: none;">
-                Data berhasil dihapus.
-              </div>
+            </div>
+          </div>
 
+          <div id="success-notification" class="alert alert-success" style="display: none;">
+            Data berhasil dihapus.
+          </div>
+
+          <!-- Modal Logout -->
+          <div id="logout-modal" class="modalLogout">
+            <div class="modal-contentLogout">
+              <span class="closeLogout" id="close-buttonLogout" onclick="closeModal()">&times;</span>
+              <h2>Konfirmasi Logout</h2>
+              <p>Apakah anda mau logout?</p>
+              <div style="text-align: center;">
+                <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
+                <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
+              </div>
+            </div>
+          </div>
 
               <footer class="footer pt-3  ">
                 <div class="container-fluid">
@@ -427,18 +491,22 @@
                         <a title="CSS Templates" rel="sponsored" href="https://www.creative-tim.com" target="_blank">Crative Tim </a> 
                         Edited By <a title="CSS Templates" rel="sponsored" href="#" target="_blank">GSG Team</a></p>
                       </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </footer>
-            </div>
-            
+                </footer>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </main>
+  </div>
+</main>
+
+<!-------------------------------------------------------------------------------------Argon Feature Area -------------------------------------------------------------------------------------------------------------------->
+<!-------------------------------------------------------------------------------------Argon Feature Area -------------------------------------------------------------------------------------------------------------------->
+
   <div class="fixed-plugin">
     <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
       <i class="fa fa-cog py-2"> </i>
@@ -511,16 +579,28 @@
       </div>
     </div>
   </div>
-  <!--   Core JS Files   -->
-  <script src="../assets2/js/core/popper.min.js"></script>
-  <script src="../assets2/js/core/bootstrap.min.js"></script>
-  <script src="../assets2/js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
-  <script src="../assets2/js/plugins/chartjs.min.js"></script>
 
+<!------------------------------------------------------------------------------------- JavaScript Area -------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- JavaScript Area -------------------------------------------------------------------------------------------->
 
-   <!-- Modal Delete -->
-   <script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+ <!--   Core JS Files   -->
+ <script src="../assets2/js/core/popper.min.js"></script>
+ <script src="../assets2/js/core/bootstrap.min.js"></script>
+ <script src="../assets2/js/plugins/perfect-scrollbar.min.js"></script>
+ <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
+ <script src="../assets2/js/plugins/chartjs.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+      console.log("Document ready.");
+  });
+  </script>
+
+  <!-- Modal Delete -->
+  <script>
     function showConfirmationModal(deleteUrl) {
       $('#delete-link').attr('href', deleteUrl);
       $('#confirmation-modal').modal('show');
@@ -550,6 +630,35 @@
       });
     });
   </script>
+
+  <!-- Filter Role -->
+  <script>
+    // Menangani klik pada filter role
+    document.querySelectorAll('.role-filter').forEach(function (element) {
+        element.addEventListener('click', function () {
+            var selectedRole = element.getAttribute('data-role');
+            // Redirect ke halaman dengan filter role
+            window.location.href = '{{ route("penggunaSA") }}?role=' + selectedRole;
+        });
+    });
+  </script>
+
+  <!-- Rating -->
+<script>
+  const stars = document.querySelectorAll('.star');
+  const ratingInput = document.getElementById('rating');
+
+  stars.forEach((star) => {
+    star.addEventListener('click', () => {
+      const ratingValue = parseInt(star.getAttribute('data-rating'));
+      ratingInput.value = ratingValue;
+      stars.forEach((s) => s.classList.remove('selected')); // Hapus kelas 'selected' dari semua bintang
+      for (let i = 0; i < ratingValue; i++) {
+        stars[i].classList.add('selected'); // Tambahkan kelas 'selected' pada bintang yang dipilih
+      }
+    });
+  });
+</script>
 
   <script>
     var ctx1 = document.getElementById("chart-line").getContext("2d");
@@ -633,53 +742,53 @@
         },
       },
     });
-  </script>
-  <script>
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-      var options = {
-        damping: '0.5'
+    </script>
+
+    <script>
+      var win = navigator.platform.indexOf('Win') > -1;
+      if (win && document.querySelector('#sidenav-scrollbar')) {
+        var options = {
+          damping: '0.5'
+        }
+        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
       }
-      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-    }
-  </script>
-  <!-- Github buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
+    </script>
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
 
     <!-- Modal Logout -->
-   <script>
-    // JavaScript untuk modal logout
-    function openModal() {
-      const modal = document.getElementById('logout-modal');
-      modal.style.display = 'block';
-    }
-  
-    function closeModal() {
-      const modal = document.getElementById('logout-modal');
-      modal.style.display = 'none';
-    }
-  
-    function confirmLogout(confirmed) {
-      if (confirmed) {
-        // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
-        window.location.href = '/logout';
-      } else {
-        // Tutup modal jika pengguna memilih "No"
-        closeModal();
+    <script>
+      // JavaScript untuk modal logout
+      function openModal() {
+        const modal = document.getElementById('logout-modal');
+        modal.style.display = 'block';
       }
-    }
-  
-    // Tutup modal jika pengguna mengklik di luar modal
-    window.addEventListener('click', (event) => {
-      const modal = document.getElementById('logout-modal');
-      if (event.target == modal) {
+    
+      function closeModal() {
+        const modal = document.getElementById('logout-modal');
         modal.style.display = 'none';
       }
-    });
-  </script>
-  
-
-</body>
+    
+      function confirmLogout(confirmed) {
+        if (confirmed) {
+          // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
+          window.location.href = '/logout';
+        } else {
+          // Tutup modal jika pengguna memilih "No"
+          closeModal();
+        }
+      }
+    
+      // Tutup modal jika pengguna mengklik di luar modal
+      window.addEventListener('click', (event) => {
+        const modal = document.getElementById('logout-modal');
+        if (event.target == modal) {
+          modal.style.display = 'none';
+        }
+      });
+    </script>
+    
+  </body>
 </html>
