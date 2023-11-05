@@ -179,7 +179,7 @@ use Illuminate\Support\Facades\Route;
         Route::get('/PenggunaLikeDislike', [AdminController::class, 'PenggunaLikeDislike'])->name('PenggunaLikeDislike');
 
         //[Admin] Delete Pengguna
-        Route::get('/deleteP/{id}',[AdminController::class,'deleteUserTerdaftar'])->name('deleteUserTerdaftar');
+        Route::get('/deletePenggunaA/{id}',[AdminController::class,'deletePenggunaA'])->name('deletePenggunaA');
 
     //[Admin] Tab Ulasan
 
@@ -187,7 +187,7 @@ use Illuminate\Support\Facades\Route;
         Route::get('/ulasans', [AdminController::class, 'ulasanAdmin'])->name('ulasanAdmin');
 
         //[Admin] Delete Ulasan
-        Route::get('/deleteU/{id}',[AdminController::class,'deleteUlasanA']);
+        Route::get('/deleteU/{id}',[AdminController::class,'deleteUlasanA'])->name('deleteUlasanA');
         });
     
      //[Admin] Tab Laporan User
