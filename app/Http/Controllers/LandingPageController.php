@@ -13,6 +13,20 @@ use App\Models\video;
 class LandingPageController extends Controller
 {
 
+    public function searchLP(Request $request) {
+        $searchTerm = $request->input('search');
+        
+        $artikels = artikels::where('judulArtikel', 'like', '%' . $searchTerm . '%')
+            ->orWhere('deskripsi', 'like', '%' . $searchTerm . '%')
+            ->get();
+    
+        $videos = video::where('judulVideo', 'like', '%' . $searchTerm . '%')
+            ->orWhere('deskripsiVideo', 'like', '%' . $searchTerm . '%')
+            ->get();
+    
+        return view('main.sebelumLogin.searchLP', compact('artikels', 'videos'));
+    }
+
     //[Landing Page] Halaman Home landing Page
     public function landingPage(Request $request)
     {

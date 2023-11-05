@@ -21,10 +21,11 @@
                           <li class="scroll-to-section"><a href="/ulasanLandingPage" class="text-center">Ulasan</a></li>
                           <li class="scroll-to-section"><a href="/abouts">Tentang</a></li>
                           <li>
-                            <form action="{{ route('landingPage') }}" method="GET" class="input-group">
+                            <form action="{{ route('searchLP') }}" method="GET" class="input-group">
                               <input type="text" name="search" class="form-control" placeholder="Cari Artikel..." aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ request('search') }}">
                               <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
                           </form>
+                          
                           </li>
                           <li><a href="/login">Login</a></li> 
                       </ul>        

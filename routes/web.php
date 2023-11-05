@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Route;
         Route::get('/', [LandingPageController::class, 'landingPage'])->name('landingPage');
         Route::get('/detailArtikelLP/{id}', [LandingPageController::class, 'showDetailLPArtikel'])->name('showDetailLPArtikel');
 
+        Route::get('/searchLP', [LandingPageController::class, 'searchLP'])->name('searchLP');
+
          //[Non-User] Tab Home landing Page Video
         Route::get('/landingPageVideo',[LandingPageController::class,'landingPageVideo'])->name('landingPageVideo');
         Route::get('/detailVideoLP/{id}', [LandingPageController::class, 'showDetailLPVideo'])->name('showDetailLPVideo');
@@ -66,6 +68,8 @@ use Illuminate\Support\Facades\Route;
 
     //[Admin] Membatasi Hak Akases Admin
     Route::middleware(['user'])->group(function () {
+
+        Route::get('/search', [PenggunaController::class, 'search'])->name('search');
 
         //[User] Tab Home
         Route::get('/home',[PenggunaController::class,'HomeSetelahLogin'])->name('HomeSetelahLogin');

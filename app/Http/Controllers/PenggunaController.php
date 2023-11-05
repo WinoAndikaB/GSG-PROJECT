@@ -20,6 +20,20 @@ use Illuminate\Support\Facades\Auth;
 class PenggunaController extends Controller
 {
 
+    public function search(Request $request) {
+        $searchTerm = $request->input('search');
+        
+        $artikels = artikels::where('judulArtikel', 'like', '%' . $searchTerm . '%')
+            ->orWhere('deskripsi', 'like', '%' . $searchTerm . '%')
+            ->get();
+    
+        $videos = video::where('judulVideo', 'like', '%' . $searchTerm . '%')
+            ->orWhere('deskripsiVideo', 'like', '%' . $searchTerm . '%')
+            ->get();
+    
+        return view('main.setelahLogin.search', compact('artikels', 'videos'));
+    }
+
     //[User-Home] Halaman Home
     function HomeSetelahLogin(Request $request){
         $search = $request->input('search');
