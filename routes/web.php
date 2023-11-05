@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Route;
         Route::get('/detailArtikelLP/{id}', [LandingPageController::class, 'showDetailLPArtikel'])->name('showDetailLPArtikel');
 
         Route::get('/searchLP', [LandingPageController::class, 'searchLP'])->name('searchLP');
+        Route::get('/searchLPV', [LandingPageController::class, 'searchLPV'])->name('searchLPV');
+
 
          //[Non-User] Tab Home landing Page Video
         Route::get('/landingPageVideo',[LandingPageController::class,'landingPageVideo'])->name('landingPageVideo');
@@ -70,6 +72,7 @@ use Illuminate\Support\Facades\Route;
     Route::middleware(['user'])->group(function () {
 
         Route::get('/search', [PenggunaController::class, 'search'])->name('search');
+        Route::get('/searchV', [PenggunaController::class, 'searchV'])->name('searchV');
 
         //[User] Tab Home
         Route::get('/home',[PenggunaController::class,'HomeSetelahLogin'])->name('HomeSetelahLogin');

@@ -13,6 +13,7 @@ use App\Models\video;
 class LandingPageController extends Controller
 {
 
+    //[Landing Page]  Search Artikel
     public function searchLP(Request $request) {
         $searchTerm = $request->input('search');
         
@@ -20,48 +21,24 @@ class LandingPageController extends Controller
             ->orWhere('deskripsi', 'like', '%' . $searchTerm . '%')
             ->get();
     
+        return view('main.sebelumLogin.searchLP', compact('artikels'));
+    }
+
+    //[Landing Page] Search Video
+    public function searchLPV(Request $request) {
+        $searchTerm = $request->input('searchLPV');
+        
         $videos = video::where('judulVideo', 'like', '%' . $searchTerm . '%')
             ->orWhere('deskripsiVideo', 'like', '%' . $searchTerm . '%')
             ->get();
     
-        return view('main.sebelumLogin.searchLP', compact('artikels', 'videos'));
+        return view('main.sebelumLogin.searchLPV', compact('videos'));
     }
 
     //[Landing Page] Halaman Home landing Page
     public function landingPage(Request $request)
     {
-        $search = $request->input('search');
-    
-        $query1 = artikels::query();
-        $query2 = artikels::query(); 
-        $query3 = artikels::query(); 
-        $query4 = artikels::query(); 
-    
-        if (!empty($search)) {
-            $query1->where(function($query) use ($search) {
-                $query->where('judulArtikel', 'LIKE', '%' . $search . '%')
-                      ->orWhere('penulis', 'LIKE', '%' . $search . '%')
-                      ->orWhere('deskripsi', 'LIKE', '%' . $search . '%');
-            });
-    
-            $query2->where(function($query) use ($search) {
-                $query->where('judulArtikel', 'LIKE', '%' . $search . '%')
-                      ->orWhere('penulis', 'LIKE', '%' . $search . '%')
-                      ->orWhere('deskripsi', 'LIKE', '%' . $search . '%');
-            });
-            $query3->where(function($query) use ($search) {
-                $query->where('judulArtikel', 'LIKE', '%' . $search . '%')
-                      ->orWhere('penulis', 'LIKE', '%' . $search . '%')
-                      ->orWhere('deskripsi', 'LIKE', '%' . $search . '%');
-            });
-            $query4->where(function($query) use ($search) {
-                $query->where('judulArtikel', 'LIKE', '%' . $search . '%')
-                      ->orWhere('penulis', 'LIKE', '%' . $search . '%')
-                      ->orWhere('deskripsi', 'LIKE', '%' . $search . '%');
-            });
-        }
-    
-            
+  
                 // Get trending articles randomly
                 $trending = artikels::whereNotIn('status' , ['Pending', 'Rejected'])
                 ->inRandomOrder()
@@ -235,38 +212,6 @@ class LandingPageController extends Controller
     //[Landing Page] Halaman Video landing Page
 
     function landingPageVideo(Request $request){
-
-        $search = $request->input('search');
-
-        $query1 = video::query();
-        $query2 = video::query(); 
-        $query3 = video::query(); 
-        $query4 = video::query(); 
-    
-        if (!empty($search)) {
-            $query1->where(function($query) use ($search) {
-                $query->where('judulVideo', 'LIKE', '%' . $search . '%')
-                      ->orWhere('uploader', 'LIKE', '%' . $search . '%')
-                      ->orWhere('deskripsiVideo', 'LIKE', '%' . $search . '%');
-            });
-    
-            $query2->where(function($query) use ($search) {
-                $query->where('judulVideo', 'LIKE', '%' . $search . '%')
-                      ->orWhere('uploader', 'LIKE', '%' . $search . '%')
-                      ->orWhere('deskripsiVideo', 'LIKE', '%' . $search . '%');
-            });
-            $query3->where(function($query) use ($search) {
-                $query->where('judulVideo', 'LIKE', '%' . $search . '%')
-                      ->orWhere('uploader', 'LIKE', '%' . $search . '%')
-                      ->orWhere('deskripsiVideo', 'LIKE', '%' . $search . '%');
-            });
-            $query4->where(function($query) use ($search) {
-                $query->where('judulVideo', 'LIKE', '%' . $search . '%')
-                      ->orWhere('uploader', 'LIKE', '%' . $search . '%')
-                      ->orWhere('deskripsiVideo', 'LIKE', '%' . $search . '%');
-            });
-        }
-    
             
         $semuaVideo = video::whereNotIn('statusVideo', ['Pending', 'Rejected'])
             ->inRandomOrder()

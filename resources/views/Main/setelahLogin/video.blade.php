@@ -68,8 +68,8 @@
                           <li class="scroll-to-section"><a href="/ulasan" class="text-center">Ulasan</a></li>
                           <li class="scroll-to-section"><a href="/about">Tentang</a></li>
                           <li>
-                            <form action="" method="GET" class="input-group">
-                              <input type="text" name="search" class="form-control" placeholder="Cari Video..." aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ request('search') }}">
+                            <form action="{{ route('searchV') }}" method="GET" class="input-group">
+                              <input type="text" name="searchV" class="form-control" placeholder="Cari Video..." aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ request('searchV') }}">
                               <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
                           </form>
                           </li>
