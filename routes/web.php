@@ -278,6 +278,24 @@ use Illuminate\Support\Facades\Route;
             //[SuperAdmin] Delete Pengguna
             Route::get('/deleteVideoSA/{id}',[SuperAdminController::class,'deleteVideoSA'])->name('deleteVideoSA');
             Route::get('/deleteKomentarVideoSA/{id}',[SuperAdminController::class,'deleteKomentarVideoSA'])->name('deleteKomentarVideoSA');
+
+         //[SuperAdmin] Tab Event
+
+            //[Admin] Tabel Event
+            Route::get('/eventKomAdSA', [SuperAdminController::class, 'eventKomAdSA'])->name('eventKomAdSA');
+            Route::get('/deleteEventSA/{id}',[SuperAdminController::class,'deleteEventSA'])->name('deleteEventSA');
+
+            //[Admin] Form Tambah Event
+            Route::get('/formTambahEventSA', [SuperAdminController::class, 'formTambahEventSA'])->name('formTambahEventSA');
+            Route::post('/formTambahEventSA/storeEventSA',  [SuperAdminController::class, 'storeEventSA'])->name('storeEventSA');
+
+            //[Admin] Form Edit Event
+            Route::get('/formEditEventSA/{id}',[SuperAdminController::class,'formEditEventSA'])->name('formEditEventSA');
+            Route::post('/formEditEventSA/updateEventSA/{id}',[SuperAdminController::class,'updateEventSA'])->name('updateEventSA');
+
+            //[Admin] Tabel Komentar Event
+            Route::get('/komentarEventSA', [SuperAdminController::class, 'komentarEventSA'])->name('komentarEventSA');
+            Route::get('/deleteKomentarEventSA/{id}',[SuperAdminController::class,'deleteKomentarEventSA'])->name('deleteKomentarEventSA');
     
         //[SuperAdmin] Tab Pengguna
     

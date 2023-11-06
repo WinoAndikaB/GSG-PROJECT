@@ -115,12 +115,22 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/videoSuperAdmin">
+          <a class="nav-link" href="/videoSuperAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-warning text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Video
               <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruVideo + $dataBaruKomentarVideo}}</span> 
+            </span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/eventKomAdSA">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-user-run text-warning text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Event 
+              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruEventKomunitas+$dataBaruKomentarEventKomunitas}}</span> 
             </span>
           </a>
         </li>

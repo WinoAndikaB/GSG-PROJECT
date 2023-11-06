@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Komentar Artikel | GSG PROJECT
+    Event Komunitas | GSG PROJECT
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -166,7 +166,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/artikelSuperAdmin">
+          <a class="nav-link " href="/artikelSuperAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
             </div>
@@ -186,7 +186,17 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/penggunaSA">
+          <a class="nav-link active" href="/eventKomAdSA">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-user-run text-warning text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Event 
+              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruEventKomunitas+$dataBaruKomentarEventKomunitas}}</span> 
+            </span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="/penggunaSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-circle-08 text-warning text-sm opacity-10"></i>
             </div>
@@ -196,7 +206,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/ulasansSA">
+          <a class="nav-link " href="/ulasansSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-paper-diploma text-warning text-sm opacity-10"></i>
             </div>
@@ -235,9 +245,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Komentar Artikel</li>
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Event Komunitas</li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Komentar Artikel</h6>
+          <h6 class="font-weight-bolder text-white mb-0">Event Komunitas</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -289,11 +299,15 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <a href="/artikelSuperAdmin" class="btn btn-primary">Artikel</i></a>
-              <h6>List Komentar Artikel Tersedia</h6>
+              <a href="/formTambahEventSA" class="btn btn-primary">Tambah Event</i></a>
+              <a href="/komentarEventSA" class="btn btn-success">Komentar Event</i>
+                + {{ $dataBaruKomentarEventKomunitas }}
+              </a>
+              <h6>List Event Tersedia</h6>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">    
+              <div class="table-responsive p-0">          
+
 
                 <div class="row">
                   <div class="col-12">
@@ -306,41 +320,48 @@
                             <thead>
                               <tr>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Artikel ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Artikel</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama User</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pesan</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama Event</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi Event</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Buat</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Update</th>
                                 <th class="text-secondary opacity-7"></th>
                               </tr>
                             </thead>
-                            @foreach ($komenarA as $item)
+                            @foreach ($event as $item)
                             <tbody>
                               <tr>
                                 <td class="align-middle text-center">
                                   <p class="text-xs font-weight-bold mb-0">{{$item['id']}}</p>
                                 </td>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['artikel_id']}}</p>
+                                <td>
+                                  <div class="d-flex px-2 py-1">
+                                    <div>
+                                      <img src="{{asset('fotoEvent/'.$item->fotoEvent)}}" class="avatar avatar-sm me-3" alt="user1">
+                                    </div>
+                                    <div class="d-flex flex-column justify-content-center">
+                                      <h6 class="mb-0 text-sm">{{$item['namaEvent']}}</h6>
+                                      <p class="text-xs text-secondary mb-0">{{$item['pembuatEvent']}}</p>
+                                    </div>
+                                  </div>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['artikel']['judulArtikel']}}</p>
+                                  <p class="text-xs font-weight-bold mb-0">{{$item['deskripsiEvent']}}</p>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['user_id']}}</p>
+                                  <span class="badge badge-sm bg-gradient-info">{{$item['status']}}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['user']['name']}}</p>
+                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item['created_at'])->translatedFormat('l, j F Y') }}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['pesan']}}</p>
+                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item['updated_at'])->translatedFormat('l, j F Y') }}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-success">{{ \Carbon\Carbon::parse($item['created_at'])->translatedFormat('l, j F Y') }}</span>
-                                </td>
-                                <td class="align-middle">
-                                  <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteKomentarSA', ['id' => $item['id']]) }}')">
+                                  <a href="/formEditEventSA/{{ $item->id}}" class="btn btn-warning btn btn-primary btn-round">
+                                    <i class="fa fa-pencil"></i>
+                                  </a>
+                                  <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteEventSA', ['id' => $item['id']]) }}')">
                                     <i class="fa fa-trash"></i>
                                 </a>
                                 </td>
@@ -350,7 +371,7 @@
 
                             <div class="d-flex justify-content-center">
                               <ul class="pagination">
-                                  @if ($komenarA->onFirstPage())
+                                  @if ($event->onFirstPage())
                                       <li class="page-item disabled">
                                           <span class="page-link" aria-label="Previous">
                                               <span aria-hidden="true">&lsaquo;</span>
@@ -358,7 +379,7 @@
                                       </li>
                                   @else
                                       <li class="page-item">
-                                          <a class="page-link" href="{{ $komenarA->previousPageUrl() }}" rel="prev" aria-label="Previous">
+                                          <a class="page-link" href="{{ $event->previousPageUrl() }}" rel="prev" aria-label="Previous">
                                               <span aria-hidden="true">&lsaquo;</span>
                                           </a>
                                       </li>
@@ -366,12 +387,12 @@
             
                                 <!-- Menampilkan halaman berapa -->
                                 <div class="text-center">
-                                    {{ $komenarA->currentPage() }} dari {{ $komenarA->lastPage() }}
+                                    {{ $event->currentPage() }} dari {{ $event->lastPage() }}
                                 </div>
                           
-                                  @if ($komenarA->hasMorePages())
+                                  @if ($event->hasMorePages())
                                       <li class="page-item">
-                                          <a class="page-link" href="{{ $komenarA->nextPageUrl() }}" rel="next" aria-label="Next">
+                                          <a class="page-link" href="{{ $event->nextPageUrl() }}" rel="next" aria-label="Next">
                                               <span aria-hidden="true">&rsaquo;</span>
                                           </a>
                                       </li>

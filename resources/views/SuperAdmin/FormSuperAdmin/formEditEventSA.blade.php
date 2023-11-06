@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Register Super Admin | GSG PROJECT
+    Form Edit Event | GSG PROJECT
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -15,6 +15,7 @@
   <link href="../assets2/css/nucleo-icons.css" rel="stylesheet" />
   <link href="../assets2/css/nucleo-svg.css" rel="stylesheet" />
   <!-- Font Awesome Icons -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <link href="../assets2/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
@@ -66,6 +67,26 @@
       cursor: pointer;
     }
 </style>
+
+  <script>
+    // Function to auto-adjust textarea height
+    function autoResizeTextarea() {
+        const textarea = document.getElementById("auto-resize-textarea");
+        textarea.style.height = "auto";
+        textarea.style.height = textarea.scrollHeight + "px";
+    }
+
+    // Attach the autoResizeTextarea function to the textarea's input event
+    $(document).ready(function() {
+        $("#auto-resize-textarea").on("input", function() {
+            autoResizeTextarea();
+        });
+
+        // Initialize the textarea's height when the page loads
+        autoResizeTextarea();
+    });
+</script>
+
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -115,7 +136,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/videoSuperAdmin">
+          <a class="nav-link " href="/videoSuperAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-warning text-sm opacity-10"></i>
             </div>
@@ -125,7 +146,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/eventKomAdSA">
+          <a class="nav-link active" href="/eventKomAdSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-user-run text-warning text-sm opacity-10"></i>
             </div>
@@ -135,7 +156,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/penggunaSA">
+          <a class="nav-link " href="/penggunaSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-circle-08 text-warning text-sm opacity-10"></i>
             </div>
@@ -184,16 +205,16 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Pengguna</li>
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Event</li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Form Register Super Admin</h6>
+          <h6 class="font-weight-bolder text-white mb-0"> Form Edit Event</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
           </div>
           <ul class="navbar-nav  justify-content-end">
             <li class="nav-item d-flex align-items-center">
-              <a href="/profileSA" class="nav-link text-white font-weight-bold px-0">
+              <a href="/profileAdmin" class="nav-link text-white font-weight-bold px-0">
                   <i>
                       <?php
                       $fotoProfil = Auth::user()->fotoProfil;
@@ -244,55 +265,37 @@
       </div>
     </div>
   </div>
-
-      <!-- Modal Logout -->
-  <div id="logout-modal" class="modal">
-    <div class="modal-content">
-      <span class="close" id="close-button" onclick="closeModal()">&times;</span>
-      <h2>Konfirmasi Logout</h2>
-      <p>Apakah anda mau logout?</p>
-      <div style="text-align: center;">
-        <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
-        <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
-      </div>
-    </div>
-  </div>
     
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <h6>Register User Admin</h6>
-              <form class="form" method="POST" action="registerSuperAdminSA">
-                @csrf
+              <h6>Form Edit Event</h6>
+              <form action="/formEditEventSA/updateEventSA/{{$data->id}}" method="POST" enctype="multipart/form-data">
+              @csrf
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
                       <div class="form-group">
-                        <label for="" class="form-control-label">Role</label>
-                        <select class="form-control" id="role" name="role" required>
-                          <option value="superadmin">Superadmin</option>
-                          <option value="admin">Admin</option>
-                      </select>
+                        <label for="" class="form-control-label">Foto</label>
+                        <input class="form-control" type="file" id="uploadFoto" name="fotoEvent" value="{{ $data->fotoEvent }} required">
+                        <br>
+                        <img src="{{asset('fotoEvent/'.$data->fotoEvent)}}" height="10%" width="50%" srcset="">
                       </div>
-                      <div class="form-group">
-                        <label for="" class="form-control-label">Username</label>
-                        <input class="form-control" type="text" name="username" value="" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="" class="form-control-label">Nama</label>
-                        <input class="form-control" type="text" name="name" value="" required>
-                      </div>
-                      <label for="" class="form-control-label">Email</label>
-                      <input class="form-control" type="email" name="email" value="" required>
+                      <label for="" class="form-control-label">Nama Event</label>
+                      <textarea class="form-control" type="textarea" name="judulArtikel" required>{{ $data->namaEvent }}</textarea>
                     </div>
                     <div class="form-group">
-                      <label for="" class="form-control-label">Password</label>
-                      <input class="form-control" type="password" name="password" value="" required>
+                      <label for="" class="form-control-label">Pembuat Event</label>
+                      <input class="form-control" type="text" name="penulis" value="{{ $data->pembuatEvent }}" required readonly>
                     </div>
-                    <button type="submit" class="btn btn-primary mt-3">Register</button>
-                    <a href="/penggunaSA" class="btn btn-info mt-3">Kembali</i></a>
+                    <div class="form-group">
+                      <label for="" class="form-control-label">Deskirpsi Event</label>
+                      <textarea class="form-control" type="text" name="deskripsi" id="editor">{{ $data->deskripsiEvent }}</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">Edit</button>
+                    <a href="/eventKomAdSA" class="btn btn-info mt-3">Kembali</i></a>
                   </div>
                 </div>
               </form>
@@ -321,7 +324,8 @@
       <footer class="footer pt-3  ">
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">
-
+            <div class="col-lg-6 mb-lg-0 mb-4">
+            </div>
           </div>
         </div>
       </footer>
@@ -405,237 +409,48 @@
   <script src="../assets2/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/chartjs.min.js"></script>
+
+  <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
   <script>
-    var ctx1 = document.getElementById("chart-line").getContext("2d");
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
 
-    var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
+ <!-- MODAL LOGOUT -->
+ <script>
+  // JavaScript untuk modal logout
+  function openModal() {
+    const modal = document.getElementById('logout-modal');
+    modal.style.display = 'block';
+  }
 
-    gradientStroke1.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
-    gradientStroke1.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
-    gradientStroke1.addColorStop(0, 'rgba(94, 114, 228, 0)');
-    new Chart(ctx1, {
-      type: "line",
-      data: {
-        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        datasets: [{
-          label: "Mobile apps",
-          tension: 0.4,
-          borderWidth: 0,
-          pointRadius: 0,
-          borderColor: "#5e72e4",
-          backgroundColor: gradientStroke1,
-          borderWidth: 3,
-          fill: true,
-          data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-          maxBarThickness: 6
+  function closeModal() {
+    const modal = document.getElementById('logout-modal');
+    modal.style.display = 'none';
+  }
 
-        }],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false,
-          }
-        },
-        interaction: {
-          intersect: false,
-          mode: 'index',
-        },
-        scales: {
-          y: {
-            grid: {
-              drawBorder: false,
-              display: true,
-              drawOnChartArea: true,
-              drawTicks: false,
-              borderDash: [5, 5]
-            },
-            ticks: {
-              display: true,
-              padding: 10,
-              color: '#fbfbfb',
-              font: {
-                size: 11,
-                family: "Open Sans",
-                style: 'normal',
-                lineHeight: 2
-              },
-            }
-          },
-          x: {
-            grid: {
-              drawBorder: false,
-              display: false,
-              drawOnChartArea: false,
-              drawTicks: false,
-              borderDash: [5, 5]
-            },
-            ticks: {
-              display: true,
-              color: '#ccc',
-              padding: 20,
-              font: {
-                size: 11,
-                family: "Open Sans",
-                style: 'normal',
-                lineHeight: 2
-              },
-            }
-          },
-        },
-      },
-    });
-  </script>
-  <script>
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-      var options = {
-        damping: '0.5'
-      }
-      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+  function confirmLogout(confirmed) {
+    if (confirmed) {
+      // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
+      window.location.href = '/logout';
+    } else {
+      // Tutup modal jika pengguna memilih "No"
+      closeModal();
     }
-  </script>
+  }
 
-  <!-- Github buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
-
-  <script>
-        var map;
-        var markers = [];
-        var routePolyline;
-
-        var maxClicks = 2; // Jumlah maksimum klik yang diinginkan
-        var clickCount = 0; // Jumlah klik saat ini
-
-        function initMap() {
-            // Initialize map
-            map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: -6.2088, lng: 106.8456 },
-                zoom: 12
-            });
-
-            // Add click event listener to the map
-            map.addListener('click', function(event) {
-                if (clickCount < maxClicks) {
-                    addMarker(event.latLng);
-                    clickCount++;
-                    if (clickCount === maxClicks) {
-                        // Terakhir kali klik, buat garis rute berdasarkan urutan titik yang diklik
-                        updateRoutePolyline();
-                    }
-                } else {
-                    // Jika melebihi jumlah maksimum klik, hapus titik terakhir dan buat garis rute baru
-                    markers.pop();
-                    removeRoutePolyline();
-                    updateRoutePolyline();
-                    clickCount--;
-                }
-            });
-            // Add click event listener to the reset button
-            var resetButton = document.getElementById('resetButton');
-            resetButton.addEventListener('click', function() {
-                resetMap();
-            });
-        }
-
-        function addMarker(latLng) {
-            var marker = new google.maps.Marker({
-                position: latLng,
-                map: map
-            });
-
-            markers.push(marker);
-        }
-
-        function updateRoutePolyline() {
-            if (routePolyline) {
-                routePolyline.setMap(null);
-            }
-
-            var routeCoordinates = [];
-            var bounds = new google.maps.LatLngBounds();
-
-            for (var i = 0; i < markers.length; i++) {
-                var position = markers[i].getPosition();
-                routeCoordinates.push(position);
-                bounds.extend(position);
-            }
-
-            if (clickCount === maxClicks) {
-                // Jika jumlah klik sama dengan jumlah maksimum, tambahkan garis dari titik keempat ke titik pertama
-                routeCoordinates.push(markers[0].getPosition());
-            }
-
-            routePolyline = new google.maps.Polyline({
-                path: routeCoordinates,
-                strokeColor: '#FF0000',
-                strokeOpacity: 1.0,
-                strokeWeight: 2,
-                map: map
-            });
-
-            map.fitBounds(bounds);
-        }
-
-        function removeRoutePolyline() {
-            if (routePolyline) {
-                routePolyline.setMap(null);
-            }
-        }
-
-      
-        // Mengambil nilai maxClicks dari input
-        // var maxClicksInput = document.getElementById('luas');
-        // maxClicksInput.addEventListener('input', function() {
-        //     maxClicks = parseInt(maxClicksInput.value);
-        //     resetMap();
-        // });
-
-        function resetMap() {
-            clickCount = 0;
-            removeRoutePolyline();
-            for (var i = 0; i < markers.length; i++) {
-                markers[i].setMap(null);
-            }
-            markers = [];
-        }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBau8YkGc472asE5eahYg0q-yNG9iYHAZs&callback=initMap" async defer></script>
-
-     <!-- MODAL LOGOUT -->
-   <script>
-    // JavaScript untuk modal logout
-    function openModal() {
-      const modal = document.getElementById('logout-modal');
-      modal.style.display = 'block';
-    }
-  
-    function closeModal() {
-      const modal = document.getElementById('logout-modal');
+  // Tutup modal jika pengguna mengklik di luar modal
+  window.addEventListener('click', (event) => {
+    const modal = document.getElementById('logout-modal');
+    if (event.target == modal) {
       modal.style.display = 'none';
     }
-  
-    function confirmLogout(confirmed) {
-      if (confirmed) {
-        // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
-        window.location.href = '/logout';
-      } else {
-        // Tutup modal jika pengguna memilih "No"
-        closeModal();
-      }
-    }
-  
-    // Tutup modal jika pengguna mengklik di luar modal
-    window.addEventListener('click', (event) => {
-      const modal = document.getElementById('logout-modal');
-      if (event.target == modal) {
-        modal.style.display = 'none';
-      }
-    });
-  </script>
+  });
+</script>
+
+ 
 </body>
 </html>

@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Pengguna | GSG PROJECT
+    Komentar Video | GSG PROJECT
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -20,9 +20,10 @@
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets2/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 
-<!------------------------------------------------------------------------------------- Style Area -------------------------------------------------------------------------------------------->
-<!------------------------------------------------------------------------------------- Style Area -------------------------------------------------------------------------------------------->
-
+<!------------------------------------------------------------------------------------- CSS Area -------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- CSS Area -------------------------------------------------------------------------------------------->
+  
+<!-- Modal CSS-->
   <style>
     .modalLogout {
       display: none;
@@ -148,7 +149,7 @@
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="/profileSA">
+          <a class="nav-link active" href="/profileSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-badge text-primary text-sm opacity-10"></i>
             </div>
@@ -174,7 +175,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/videoSuperAdmin">
+          <a class="nav-link active" href="/videoSuperAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-warning text-sm opacity-10"></i>
             </div>
@@ -194,7 +195,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/penggunaSA">
+          <a class="nav-link " href="/penggunaSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-circle-08 text-warning text-sm opacity-10"></i>
             </div>
@@ -243,9 +244,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Pengguna</li>
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Komentar Video</li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">List User Terdaftar</h6>
+          <h6 class="font-weight-bolder text-white mb-0">Komentar Video</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -297,198 +298,112 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <a href="/formTambahUserAdmSA" class="btn btn-primary">Tambah User Super Admin</i></a>
-              <h6>List User Terdaftar</h6>
+              <a href="/videoSuperAdmin" class="btn btn-primary">Video</i></a>
+              <h6>List Komentar Video Tersedia</h6>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">   
+              <div class="table-responsive p-0">          
 
-              <div class="row">
-                <div class="col-12">
-                  <div class="card mb-4">
-                    <div class="card-header pb-0">
-                    </div>
-                    <div class="card-body px-0 pt-0 pb-2">
-                      <div class="table-responsive p-0">
-                        
-                        <div class="d-flex justify-content-center">
-                          <ul class="pagination">
-                              @if ($users->onFirstPage())
-                                  <li class="page-item disabled">
-                                      <span class="page-link" aria-label="Previous">
-                                          <span aria-hidden="true">&lsaquo;</span>
-                                      </span>
-                                  </li>
-                              @else
-                                  <li class="page-item">
-                                      <a class="page-link" href="{{ $users->previousPageUrl() }}" rel="prev" aria-label="Previous">
-                                          <span aria-hidden="true">&lsaquo;</span>
-                                      </a>
-                                  </li>
-                              @endif
-        
-                            <!-- Menampilkan halaman berapa -->
-                            <div class="text-center">
-                                {{ $users->currentPage() }} dari {{ $users->lastPage() }}
-                            </div>
-                      
-                              @if ($users->hasMorePages())
-                                  <li class="page-item">
-                                      <a class="page-link" href="{{ $users->nextPageUrl() }}" rel="next" aria-label="Next">
-                                          <span aria-hidden="true">&rsaquo;</span>
-                                      </a>
-                                  </li>
-                              @else
-                                  <li class="page-item disabled">
-                                      <span class="page-link" aria-label="Next">
-                                          <span aria-hidden="true">&rsaquo;</span>
-                                      </span>
-                                  </li>
-                              @endif
-                          </ul>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="card mb-4">
+                      <div class="card-header pb-0">
                       </div>
-
-                      <div style="text-align: center;">
-                        <div class="dropdown" style="display: inline-block;">
-                            <button class="dropbtn" id="filterRoleBtn">Filter Role</button>
-                            <div class="dropdown-content">
-                                <a href="#" class="role-filter" data-role="User">User</a>
-                                <a href="#" class="role-filter" data-role="Admin">Admin</a>
-                                <a href="#" class="role-filter" data-role="SuperAdmin">SuperAdmin</a>
-                            </div>
-                        </div>
-                    </div>
-
-                        <table class="table align-items-center mb-0">
-                          <thead>
-                            <tr>
-                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
-                              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pengguna</th>
-                              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Alamat</th>
-                              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Instagram</th>
-                              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Facebook</th>
-                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Role</th>
-                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Role Action</th>
-                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Upload</th>
-                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Update</th>
-                              <th class="text-secondary opacity-7"></th>
-                            </tr>
-                          </thead>
-                          @foreach ($users as $user)
-                          <tbody>
-                            <tr>
-                              <td class="align-middle text-center">
-                                <p class="text-xs font-weight-bold mb-0">{{$user['id']}}</p>
-                              </td>
-                              <td>
-                                <div class="d-flex px-2 py-1">
-                                  <div>
-                                    <img src="{{ asset('fotoProfil/' . $user['fotoProfil']) }}" class="avatar avatar-sm me-3" alt="user1">
-                                  </div>
-                                  <div class="d-flex flex-column justify-content-center">
-                                    <h6 class="mb-0 text-sm">{{$user['name']}}</h6>
-                                    <p class="text-xs text-secondary mb-0">{{$user['email']}}</p>
-                                  </div>
-                                </div>
-                              </td>
-                              <td>
-                                <p class="text-xs font-weight-bold mb-0">{{$user['alamat']}}</p>
-                              </td>
-                              <td>
-                                <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
-                                  {{$user['instagram']}}
-                                </p>
-                              </td>   
-                              <td>
-                                <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
-                                  {{$user['facebook']}}
-                                </p>
-                              </td>   
-                              <td>
-                                <p class="align-middle text-center" style="white-space: normal; max-width: 1000px;">
-                                  {{$user['role']}}
-                                </p>
-                              </td>
-                              <td>
-                                <p class="align-middle text-center" style="white-space: normal; max-width: 1000px;">
-                                    @if ($user->role == 'admin' && auth()->user()->role == 'superadmin')
-                                      <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#promoteModal{{$user->id}}">Promote</a>
-                                    @endif
-                                    @if ($user->role == 'superadmin' && auth()->user()->role == 'superadmin')
-                                        <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#demoteModal{{$user->id}}">Demote</a>
-                                    @endif
-                                </p>
-                            </td>
-
-                              <td class="align-middle text-center">
-                                <span class="text-secondary text-xs font-weight-bold">{{$user['created_at']->format('l, d F Y H:i:s') }}</span>
-                              </td>
-                              <td class="align-middle text-center">
-                                <span class="text-secondary text-xs font-weight-bold">{{$user['updated_at']->format('l, d F Y H:i:s') }}</span>
-                              </td>
-                              <td class="align-middle">
-                                <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deletePenggunaSA', ['id' => $user['id']]) }}')">
-                                  <i class="fa fa-trash"></i>
-                              </a>
-                              </td>
-                            </tr>
-                          </tbody>
+                      <div class="card-body px-0 pt-0 pb-2">
+                        <div class="table-responsive p-0">
+                          <table class="table align-items-center mb-0">
+                            <thead>
+                              <tr>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Video ID</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Video</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User ID</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama User</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pesan</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal</th>
+                                <th class="text-secondary opacity-7"></th>
+                              </tr>
+                            </thead>
+                            @foreach ($komenarV as $item)
+                            <tbody>
+                              <tr>
+                                <td class="align-middle text-center">
+                                  <p class="text-xs font-weight-bold mb-0">{{$item['id']}}</p>
+                                </td>
+                                <td class="align-middle text-center">
+                                  <p class="text-xs font-weight-bold mb-0">{{$item['video']['id']}}</p>
+                                </td>
+                                <td class="align-middle text-center">
+                                  <p class="text-xs font-weight-bold mb-0">{{$item['video']['judulVideo']}}</p>
+                                </td>
+                                <td class="align-middle text-center">
+                                  <p class="text-xs font-weight-bold mb-0">{{$item['user_id']}}</p>
+                                </td>
+                                <td class="align-middle text-center">
+                                  <p class="text-xs font-weight-bold mb-0">{{$item['user']['name']}}</p>
+                                </td>
+                                <td class="align-middle text-center">
+                                  <p class="text-xs font-weight-bold mb-0">{{$item['pesan']}}</p>
+                                </td>
+                                <td class="align-middle text-center">
+                                  <span class="badge badge-sm bg-gradient-success">{{ \Carbon\Carbon::parse($item['created_at'])->translatedFormat('l, j F Y') }}</span>
+                                </td>
+                                <td class="align-middle">
+                                  <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteKomentarVideoSA', ['id' => $item['id']]) }}')">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                                </td>
+                              </tr>
+                            </tbody>
                             @endforeach
-                        </table>
+
+                            <div class="d-flex justify-content-center">
+                              <ul class="pagination">
+                                  @if ($komenarV->onFirstPage())
+                                      <li class="page-item disabled">
+                                          <span class="page-link" aria-label="Previous">
+                                              <span aria-hidden="true">&lsaquo;</span>
+                                          </span>
+                                      </li>
+                                  @else
+                                      <li class="page-item">
+                                          <a class="page-link" href="{{ $komenarV->previousPageUrl() }}" rel="prev" aria-label="Previous">
+                                              <span aria-hidden="true">&lsaquo;</span>
+                                          </a>
+                                      </li>
+                                  @endif
+            
+                                <!-- Menampilkan halaman berapa -->
+                                <div class="text-center">
+                                    {{ $komenarV->currentPage() }} dari {{ $komenarV->lastPage() }}
+                                </div>
+                          
+                                  @if ($komenarV->hasMorePages())
+                                      <li class="page-item">
+                                          <a class="page-link" href="{{ $komenarV->nextPageUrl() }}" rel="next" aria-label="Next">
+                                              <span aria-hidden="true">&rsaquo;</span>
+                                          </a>
+                                      </li>
+                                  @else
+                                      <li class="page-item disabled">
+                                          <span class="page-link" aria-label="Next">
+                                              <span aria-hidden="true">&rsaquo;</span>
+                                          </span>
+                                      </li>
+                                  @endif
+                              </ul>
+                          </div>
+
+                          </table>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-
+                
 <!------------------------------------------------------------------------------------- Modal Area -------------------------------------------------------------------------------------------------------------------->
 <!------------------------------------------------------------------------------------- Modal Area -------------------------------------------------------------------------------------------------------------------->
 
-              <!-- Promtoe Modal -->
-              @foreach ($users as $user)
-              <div class="modal fade" id="promoteModal{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="promoteModalLabel{{$user->id}}" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <h5 class="modal-title" id="promoteModalLabel{{$user->id}}">Promote Admin ke Superadmin</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                              </button>
-                          </div>
-                          <div class="modal-body">
-                              <!-- Add form elements to confirm the promotion -->
-                              <p>Apakah anda yakin mau Promote Admin ke Superadmin?</p>
-                          </div>
-                          <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                              <a href="{{ route('promoteUser', ['id' => $user->id]) }}" class="btn btn-primary">Promote</a>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-
-              <!-- Demote Modal -->
-              <div class="modal fade" id="demoteModal{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="demoteModalLabel{{$user->id}}" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <h5 class="modal-title" id="demoteModalLabel{{$user->id}}">Demote Superadmin ke Admin</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                              </button>
-                          </div>
-                          <div class="modal-body">
-                              <!-- Add form elements to confirm the demotion -->
-                              <p>Apakah anda yakin mau Demote Superadmin ke Admin?</p>
-                          </div>
-                          <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                              <a href="{{ route('demoteUser', ['id' => $user->id]) }}" class="btn btn-danger">Demote</a>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          @endforeach
 
           <!--Modal Hapus Data -->
           <div id="confirmation-modal" class="modal fade" role="dialog">
