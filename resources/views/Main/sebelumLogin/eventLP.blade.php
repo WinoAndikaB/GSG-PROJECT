@@ -109,7 +109,7 @@
                       <li class="scroll-to-section"><a href="/">Artikel</a></li>
                       <li class="scroll-to-section"><a href="/landingPageVideo">Video</a></li>
                       <li class="scroll-to-section"><a href="/kategoriLandingPage">Kategori</a></li>
-                      <li class="scroll-to-section"><a href="/event"  class="active">Event</a></li>
+                      <li class="scroll-to-section"><a href="/eventLandingPage"  class="active">Event</a></li>
                       <li class="scroll-to-section"><a href="/ulasanLandingPage">Ulasan</a></li>
                       <li class="scroll-to-section"><a href="/abouts">Tentang</a></li>
                       <li class="scroll-to-section"><a href="/login">Login</a></li>
@@ -163,7 +163,7 @@
                       <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
                           <h4 style="text-align: left" >{{ $item->namaEvent }} </h4>
                           <span class="d-flex"><b>{{ $item->pembuatEvent }}</b></span>
-                          <p>{!! substr(strip_tags($item->deskripsiEvent), 0, 400) . (strlen(strip_tags($item->content)) > 400 ? '...' : '') !!}</p>
+                          <p>{!! str_replace('<img', '<img style="max-width: 1152px; width: 100%; height: auto; display: block; margin: 0 auto;"', $item->deskripsiEvent) !!}</p>
                       </div>
                       <span style="text-align: right; color: rgba(165, 165, 165, 1);"><p>
                         @php

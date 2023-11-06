@@ -38,11 +38,11 @@ class LandingPageController extends Controller
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
      //[Landing Page]  Event Artikel
-     public function event(Request $request) {
+     public function eventLandingPage(Request $request) {
 
         $event = Event::whereNotIn('status', ['Pending', 'Rejected'])->get();
   
-        return view('main.sebelumLogin.Event', compact('event'));
+        return view('main.sebelumLogin.eventLP', compact('event'));
     }
 
     //[Landing Page] Detail Event

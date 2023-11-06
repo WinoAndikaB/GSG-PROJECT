@@ -75,7 +75,7 @@
                       <li class="scroll-to-section"><a href="/">Artikel</a></li>
                       <li class="scroll-to-section"><a href="/landingPageVideo">Video</a></li>
                       <li class="scroll-to-section"><a href="/kategoriLandingPage" class="active">Kategori</a></li>
-                      <li class="scroll-to-section"><a href="/event">Event</a></li>
+                      <li class="scroll-to-section"><a href="/eventLandingPage">Event</a></li>
                       <li class="scroll-to-section"><a href="/ulasanLandingPage">Ulasan</a></li>
                       <li class="scroll-to-section"><a href="/abouts">Tentang</a></li>
                       <li class="scroll-to-section"><a href="/login">Login</a></li>

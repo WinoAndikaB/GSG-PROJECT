@@ -24,8 +24,8 @@ use Illuminate\Support\Facades\Route;
         Route::get('/searchLPV', [LandingPageController::class, 'searchLPV'])->name('searchLPV');
 
         //[Non-User] Tab Event landing Page
-        Route::get('/event', [LandingPageController::class, 'event'])->name('event');
-        Route::get('/detailEvent/{id}', [LandingPageController::class, 'detailEvent'])->name('detailEvent');
+        Route::get('/eventLandingPage', [LandingPageController::class, 'eventLandingPage'])->name('eventLandingPage');
+        Route::get('/detailEventLP/{id}', [LandingPageController::class, 'detailEventLP'])->name('detailEventLP');
 
         //[Non-User] Tab Home landing Page Video
         Route::get('/landingPageVideo',[LandingPageController::class,'landingPageVideo'])->name('landingPageVideo');
