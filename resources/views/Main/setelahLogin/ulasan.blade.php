@@ -134,6 +134,7 @@
                     <li class="scroll-to-section"><a href="#about">Artikel</a></li>
                     <li class="scroll-to-section"><a href="/Video" class="text-center">Video</a></li>
                     <li class="scroll-to-section"><a href="/kategori">Kategori</a></li>
+                    <li class="scroll-to-section"><a href="/event">Event</a></li>
                     <li class="scroll-to-section"><a href="/ulasan" class="active">Ulasan</a></li>
                     <li class="scroll-to-section"><a href="/about">Tentang</a></li>
                     <li class="scroll-to-section">

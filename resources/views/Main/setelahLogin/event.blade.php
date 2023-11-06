@@ -13,7 +13,7 @@
     <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <title>Kategori Artikel Anime - GSG Project</title>
+    <title>Event - GSG Project</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -24,54 +24,10 @@
     <link rel="stylesheet" href="assets/css/owl.css">
     <link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css">
+    
     <style>
-      .modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        overflow: hidden; /* Tidak dapat di-scroll */
-      }
-    
-      .modal-content {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        background-color: #fff;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        padding: 20px;
-        border: 1px solid #888;
-        width: 20%;
-        height: 30%; /* Mengatur tinggi modal menjadi 60% */
-        text-align: center;
-      }
-    
-      .close {
-        color: #888;
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        font-size: 20px;
-        font-weight: bold;
-        cursor: pointer;
-      }
-    
-      #confirm-button, #cancel-button {
-        padding: 10px 20px;
-        margin: 25px;
-        cursor: pointer;
-      }
-
-            /* Style for the buttons */
-            .animated-button {
+      /* Style for the buttons */
+      .animated-button {
         padding: 10px 20px;
         background-color: #007bff;
         color: #fff;
@@ -82,23 +38,58 @@
         margin: 5px;
         font-size: 16px;
       }
-      
+
       .animated-button:hover {
         background-color: #0056b3;
       }
-      
+
       /* Additional styling for the second button */
       .animated-button:nth-of-type(2) {
         background-color: #ff6600;
       }
-      
+
       .animated-button:nth-of-type(2):hover {
         background-color: #ff4500;
       }
-      
-    </style>
-  </head>
 
+  </style>
+  <style>
+    /* Style untuk modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+  
+    .modal-content {
+      background-color: #fff;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+    }
+  
+    .close {
+      position: absolute;
+      right: 10px;
+      top: 5px;
+      font-size: 25px;
+      cursor: pointer;
+    }
+  
+    /* Style untuk judul dan informasi event */
+    h2 {
+      color: rgba(242, 100, 25, 1);
+    }
+  </style>
+
+</head>
 <body>
 
 
@@ -113,10 +104,10 @@
                     <li class="scroll-to-section"><a href="#trends">Trending</a></li>
                     <li class="scroll-to-section"><a href="#about">Artikel</a></li>
                     <li class="scroll-to-section"><a href="/Video" class="">Video</a></li>
-                    <li class="scroll-to-section"><a href="/kategori" class="active">Kategori</a></li>
-                    <li class="scroll-to-section"><a href="/event">Event</a></li>
+                    <li class="scroll-to-section"><a href="/kategori">Kategori</a></li>
+                    <li class="scroll-to-section"><a href="/event" class="active">Event</a></li>
                     <li class="scroll-to-section"><a href="/ulasan" class="text-center">Ulasan</a></li>
-                    <li class="scroll-to-section"><a href="/about" class="">Tentang</a></li>
+                    <li class="scroll-to-section"><a href="/about">Tentang</a></li>
                     <li class="scroll-to-section">
                       <a href="/profileUser" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center">
                         <div class="profile-picture" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
@@ -146,25 +137,12 @@
 </header>
   <!-- ***** Header Area End ***** -->
 
-       <!-- Modal Logout -->
-       <div id="logout-modal" class="modal">
-        <div class="modal-content">
-          <span class="close" id="close-button" onclick="closeModal()">&times;</span>
-          <h2>Konfirmasi Logout</h2>
-          <p>Apakah anda mau logout?</p>
-          <div style="text-align: center;">
-            <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
-            <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
-          </div>
-        </div>
-      </div>
-
   <div class="page-heading">
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
           <div class="header-text">
-            <h2>Kategori Anime</h2>
+            <h2>Event</h2>
             <div class="div-dec"></div>
           </div>
         </div>
@@ -182,24 +160,22 @@
           <div class="row">
             <div class="col-lg-6 offset-lg-3">
               <div class="section-heading">
-                <h6>Anime</h6>
-                <h4>List Artikel Anime</h4>
-                <a href="/kategoriAnimeLog" class="animated-button">Artikel</a>
-                <a href="/kategoriAnimeLogV" class="animated-button">Video</a>
+                <h6>Event</h6>
+                <h4>List Event Tersedia</h4><br>
               </div>
             </div>
             <div>
-              @foreach ($kategoriAnime as $item)
+              @foreach ($event as $item)
                   <div class="row" style="text-align: justify">
                       <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
                           <div class="d-flex justify-content-center">
-                              <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" style="max-width: 100%; height: auto; border-radius: 14px">
+                              <img src="{{ asset('fotoEvent/'.$item->fotoEvent) }}" style="max-width: 100%; height: auto; border-radius: 14px">
                           </div>
                       </div>
                       <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
-                          <h4 style="text-align: left" >{{ $item->judulArtikel }} </h4>
-                          <span class="d-flex"><b>{{ $item->penulis }}</b></span>
-                          <p>{!! substr(strip_tags($item->deskripsi), 0, 400) . (strlen(strip_tags($item->content)) > 400 ? '...' : '') !!}</p>
+                          <h4 style="text-align: left" >{{ $item->namaEvent }} </h4>
+                          <span class="d-flex"><b>{{ $item->pembuatEvent }}</b></span>
+                          <p>{!! str_replace('<img', '<img style="max-width: 1152px; width: 100%; height: auto; display: block; margin: 0 auto;"', $item->deskripsiEvent) !!}</p>
                       </div>
                       <span style="text-align: right; color: rgba(165, 165, 165, 1);"><p>
                         @php
@@ -222,48 +198,77 @@
                         }
                       @endphp
                       | 
-                          <a href="{{ route('detail.artikel', ['id' => $item->id]) }} style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a></p></span>
+                      <a href="#" class="showModalButton" data-toggle="modal" data-target="#exampleModalEvent{{$item->id}}" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a>
+
                   </div>
                   <hr>
-                  @endforeach
               </div>
           </div>
         </div>
       </section>
+
+     <!-- Modal -->
+      <div class="modal fade" id="exampleModalEvent{{$item->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content" style="width: 100%; max-width: 900px;">
+
+            <div class="modal-header">
+                <img src="{{ asset('assets2/img/lg1.png') }}" alt="Detail Event Icon" style="max-width: 30px; max-height: 30px; margin-right: 15px;">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Detail Event</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            
+
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-6 text-left">
+                  <p>Nama Event</p>
+                  <p>Nama Pembuat Event</p>
+                  <p>Tanggal Event</p>
+                  <p>Jam Event</p>
+                  <p>Lokasi Event</p>
+                  <p>Informasi Event Lebih Lanjut</p>
+                  <p>Tanggal Buat Event</p>
+                  <p>Tanggal Update Event</p>
+                </div>
+                <div class="col-md-6 text-right">
+                  <p>{{ $item->namaEvent}}</p>
+                  <p>{{ $item->pembuatEvent}}</p>
+                  <p>{{ date('d F Y', strtotime($item->tanggalEvent)) }}</p>
+                  <p>{{ date('H:i', strtotime($item->jamEvent)) }}</p>
+                  <p>{{ $item->lokasiEvent}}</p>
+                  <a href="{{$item->informasiLebihLanjut}}" target="_blank">{{$item->informasiLebihLanjut}}</a>
+                  <p>{{ strftime('%A, %d %B, %H.%M', strtotime($item->created_at)) }}</p>
+                  <p>{{ strftime('%A, %d %B, %H.%M', strtotime($item->updated_at)) }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div style="text-align: center; font-size: 10px; font-weight: normal;">
+              Copyright &copy; <a href="#" style="font-size: 10px; font-weight: normal;">gsgproject.com</a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      @endforeach
+
     
         
     </div>
 </div>
 
-<!-- MODAL LOGOUT -->
+<!-- Modal Detail Event -->
 <script>
-  // JavaScript untuk modal logout
-  function openModal() {
-    const modal = document.getElementById('logout-modal');
-    modal.style.display = 'block';
-  }
+    // Fungsi untuk menampilkan modal saat tombol diklik
+    document.getElementById('showModalButton{{$item->id}}').addEventListener('click', function() {
+    $('#exampleModalEvent{{$item->id}}').modal('show');
+  });
 
-  function closeModal() {
-    const modal = document.getElementById('logout-modal');
-    modal.style.display = 'none';
-  }
-
-  function confirmLogout(confirmed) {
-    if (confirmed) {
-      // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
-      window.location.href = '/logout';
-    } else {
-      // Tutup modal jika pengguna memilih "No"
-      closeModal();
-    }
-  }
-
-  // Tutup modal jika pengguna mengklik di luar modal
-  window.addEventListener('click', (event) => {
-    const modal = document.getElementById('logout-modal');
-    if (event.target == modal) {
-      modal.style.display = 'none';
-    }
+  // Fungsi untuk menutup modal saat tombol "X" diklik
+  $('#exampleModalEvent{{$item->id}} button.btn-close').on('click', function () {
+    $('#exampleModalEvent{{$item->id}}').modal('hide');
   });
 </script>
 

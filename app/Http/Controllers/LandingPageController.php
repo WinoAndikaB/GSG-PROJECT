@@ -59,7 +59,7 @@ class LandingPageController extends Controller
     
         $komentarEvent = komentar_event::where('event_id', $id)->latest()->paginate(6);
 
-        return view('main.sebelumLogin.detailEvent', compact('event', 'box', 'tags', 'kategori', 'komentarEvent', 'totalKomentarEvent'));
+        return view('main.sebelumLogin.detailEventLP', compact('event', 'box', 'tags', 'kategori', 'komentarEvent', 'totalKomentarEvent'));
     }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

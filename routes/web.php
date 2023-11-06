@@ -78,6 +78,10 @@ use Illuminate\Support\Facades\Route;
         Route::get('/search', [PenggunaController::class, 'search'])->name('search');
         Route::get('/searchV', [PenggunaController::class, 'searchV'])->name('searchV');
 
+        //[Non-User] Tab Event landing Page
+        Route::get('/event', [PenggunaController::class, 'event'])->name('event');
+        Route::get('/detailEvent/{id}', [PenggunaController::class, 'detailEvent'])->name('detailEvent');
+
         //[User] Tab Home
         Route::get('/home',[PenggunaController::class,'HomeSetelahLogin'])->name('HomeSetelahLogin');
         Route::get('/detailArtikel/{id}', [PenggunaController::class, 'showDetailArtikel'])->name('detail.artikel');
