@@ -18,6 +18,7 @@
                           <li class="scroll-to-section"><a href="#about">Artikel</a></li>
                           <li class="scroll-to-section"><a href="/landingPageVideo" class="text-center">Video</a></li>
                           <li class="scroll-to-section"><a href="/kategoriLandingPage">Kategori</a></li>
+                          <li class="scroll-to-section"><a href="/event">Event</a></li>
                           <li class="scroll-to-section"><a href="/ulasanLandingPage" class="text-center">Ulasan</a></li>
                           <li class="scroll-to-section"><a href="/abouts">Tentang</a></li>
                           <li>
@@ -25,7 +26,6 @@
                               <input type="text" name="search" class="form-control" placeholder="Cari Artikel..." aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ request('search') }}">
                               <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
                           </form>
-                          
                           </li>
                           <li><a href="/login">Login</a></li> 
                       </ul>        
@@ -38,6 +38,7 @@
       </div>
   </header>
 </div>
+
   <div class="banner-area banner-inner-1 bg-black" id="banner">
     <div class="banner-inner pt-5">
         <div class="container">

@@ -322,6 +322,8 @@
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama Event</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi Event</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Event</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jam Event</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Buat</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Update</th>
@@ -349,7 +351,18 @@
                                   <p class="text-xs font-weight-bold mb-0">{{$item['deskripsiEvent']}}</p>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-info">{{$item['status']}}</span>
+                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item['tanggalEvent'])->translatedFormat('l, j F Y') }}</span>
+                                </td>
+                                <td class="align-middle text-center">
+                                  <p class="text-xs font-weight-bold mb-0">{{$item['jamEvent']}}</p>
+                                </td>
+                                <td class="align-middle text-center">
+                                  <span class="badge badge-sm status-badge 
+                                  {{$item['status'] === 'Published' ? 'bg-gradient-success' : ''}}
+                                  {{$item['status'] === 'Pending' ? 'bg-gradient-secondary' : ''}}
+                                  {{$item['status'] === 'Rejected' ? 'bg-gradient-danger' : ''}}">
+                                  {{$item['status']}}
+                                </span>
                                 </td>
                                 <td class="align-middle text-center">
                                   <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item['created_at'])->translatedFormat('l, j F Y') }}</span>
@@ -364,6 +377,14 @@
                                   <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteEventSA', ['id' => $item['id']]) }}')">
                                     <i class="fa fa-trash"></i>
                                 </a>
+                                @if ($item->status === 'Pending')
+                                <a href="{{ route('approveEvent', $item->id) }}" class="btn btn-success btn btn-primary btn-round">
+                                    Approve
+                                </a>
+                                <a href="{{ route('rejectEvent', $item->id) }}" class="btn btn-danger btn btn-primary btn-round">
+                                    Reject
+                                </a>
+                            @endif
                                 </td>
                               </tr>
                             </tbody>

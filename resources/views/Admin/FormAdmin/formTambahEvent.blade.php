@@ -249,25 +249,40 @@
               <form action="{{ route('storeEvent') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
-                  <label for="gambarArtikel">Foto Event/label<br>
-                  <span for="gambarArtikel">Format Foto : .jpg, .jpeg, .png </span>
+                  <label for="fotoEvent">Foto Event</label>
                   <input type="file" class="form-control" id="fotoEvent" name="fotoEvent" required accept=".jpg, .jpeg, .png">
-              </div>    
+              </div>  
               <div class="form-group">
-                <label for="judulArtikel">Pembuat Event</label>
+                <label for="pembuatEvent">Pembuat Event</label>
                 <input type="text" class="form-control" id="pembuatEvent" name="pembuatEvent" required>
             </div>                       
                 <div class="form-group">
-                    <label for="judulArtikel">Nama Event</label>
+                    <label for="namaEvent">Nama Event</label>
                     <input type="text" class="form-control" id="namaEvent" name="namaEvent" required>
                 </div>
                 <div class="form-group">
-                  <label for="" class="form-control-label">Deskirpsi Event</label>
+                  <label for="deskripsiEvent" class="form-control-label">Deskirpsi Event</label>
                   <textarea class="form-control" type="text" name="deskripsiEvent" id="editor"></textarea>
                 </div>
+                <div class="form-group">
+                  <label for="tanggalEvent">Tanggal Event</label>
+                  <input type="date" class="form-control" id="tanggalEvent" name="tanggalEvent" required>
+              </div> 
+              <div class="form-group">
+                <label for="jamEvent">Jam Event</label>
+                <input type="time" class="form-control" id="jamEvent" name="jamEvent" required>
+            </div>                       
+                <div class="form-group">
+                  <label for="lokasiEvent">Lokasi Event</label>
+                  <input type="text" class="form-control" id="lokasiEvent" name="lokasiEvent" required>
+              </div>
+              <div class="form-group">
+                <label for="informasiLebihLanjut">Informasi Lebih Lanjut</label>
+                <input type="text" class="form-control" id="informasiLebihLanjut" name="informasiLebihLanjut" required>
+            </div>
                 <button type="submit" class="btn btn-primary mt-3">Tambah</button>
-                <a href="/eventKomAd" class="btn btn-info mt-3">Kembali</i></a>
-            </form>            
+                <a href="/eventKomAdSA" class="btn btn-info mt-3">Kembali</i></a>
+            </form>           
             <div class="card-body px-0 pt-12 pb-2">
               <div class="table-responsive p-0">
                 <div class="panel-header panel-header-sm">

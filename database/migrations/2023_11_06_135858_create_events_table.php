@@ -11,11 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('event_komunitass', function (Blueprint $table) {
+        Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->text('pembuatEvent');
             $table->text('namaEvent');
+            $table->text('pembuatEvent');
             $table->text('deskripsiEvent');
+            $table->date('tanggalEvent');
+            $table->time('jamEvent');
+            $table->text('lokasiEvent');
+            $table->text('informasiLebihLanjut');
             $table->text('status');
             $table->text('fotoEvent');
             $table->timestamps();
@@ -27,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('event_komunitass');
+        Schema::dropIfExists('events');
     }
 };

@@ -19,11 +19,15 @@ use Illuminate\Support\Facades\Route;
         Route::get('/', [LandingPageController::class, 'landingPage'])->name('landingPage');
         Route::get('/detailArtikelLP/{id}', [LandingPageController::class, 'showDetailLPArtikel'])->name('showDetailLPArtikel');
 
+        //[Non-User] Tab Home Search
         Route::get('/searchLP', [LandingPageController::class, 'searchLP'])->name('searchLP');
         Route::get('/searchLPV', [LandingPageController::class, 'searchLPV'])->name('searchLPV');
 
+        //[Non-User] Tab Event landing Page
+        Route::get('/event', [LandingPageController::class, 'event'])->name('event');
+        Route::get('/detailEvent/{id}', [LandingPageController::class, 'detailEvent'])->name('detailEvent');
 
-         //[Non-User] Tab Home landing Page Video
+        //[Non-User] Tab Home landing Page Video
         Route::get('/landingPageVideo',[LandingPageController::class,'landingPageVideo'])->name('landingPageVideo');
         Route::get('/detailVideoLP/{id}', [LandingPageController::class, 'showDetailLPVideo'])->name('showDetailLPVideo');
 
@@ -247,6 +251,7 @@ use Illuminate\Support\Facades\Route;
             Route::get('/artikelSA/createSA', [SuperAdminController::class, 'createSA'])->name('createSA');
             Route::post('/artikelSA/storeSA', [SuperAdminController::class, 'storeSA'])->name('storeSA');
             
+            //[SuperAdmin] Status Artikel
             Route::get('/approve-article/{id}',  [SuperAdminController::class, 'approveArticle'])->name('approveArticle');
             Route::get('/reject-article/{id}',  [SuperAdminController::class, 'rejectArticle'])->name('rejectArticle');
     
@@ -264,6 +269,7 @@ use Illuminate\Support\Facades\Route;
             Route::get('/videoSuperAdmin', [SuperAdminController::class, 'videoSuperAdmin'])->name('videoSuperAdmin');
             Route::get('/komentarVideoSA', [SuperAdminController::class, 'komentarVideoSA'])->name('komentarVideoSA');
 
+            //[SuperAdmin] Status Video
             Route::get('/approveVideo/{id}',  [SuperAdminController::class, 'approveVideo'])->name('approveVideo');
             Route::get('/rejectVideo/{id}',  [SuperAdminController::class, 'rejectVideo'])->name('rejectVideo');
     
@@ -284,6 +290,10 @@ use Illuminate\Support\Facades\Route;
             //[Admin] Tabel Event
             Route::get('/eventKomAdSA', [SuperAdminController::class, 'eventKomAdSA'])->name('eventKomAdSA');
             Route::get('/deleteEventSA/{id}',[SuperAdminController::class,'deleteEventSA'])->name('deleteEventSA');
+
+            //[SuperAdmin] Status Event
+            Route::get('/approveEvent/{id}',  [SuperAdminController::class, 'approveEvent'])->name('approveEvent');
+            Route::get('/rejectEvent/{id}',  [SuperAdminController::class, 'rejectEvent'])->name('rejectEvent');
 
             //[Admin] Form Tambah Event
             Route::get('/formTambahEventSA', [SuperAdminController::class, 'formTambahEventSA'])->name('formTambahEventSA');
