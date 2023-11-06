@@ -571,7 +571,7 @@ class SuperAdminController extends Controller
     function deleteEventSA($id){
         $data=EventKomunitas::find($id);
         $data->delete();
-        return redirect('/eventKomAd');
+        return redirect('/eventKomAdSA');
     }
 
      //[SuperAdmin-Event] Delete Komentar Artikel
@@ -630,7 +630,7 @@ class SuperAdminController extends Controller
 
         $event->save();
 
-        return redirect('/eventKomAd')->with('success', 'Article added successfully.');
+        return redirect('/eventKomAdSA')->with('success', 'Article added successfully.');
     }
     
 
@@ -673,7 +673,7 @@ class SuperAdminController extends Controller
 
         $data->save();
     
-        return redirect()->route('eventKomAd')->with('success','Data Berhasil di Update');
+        return redirect()->route('eventKomAdSA')->with('success','Data Berhasil di Update');
     }   
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
