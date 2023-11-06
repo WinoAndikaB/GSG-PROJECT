@@ -25,7 +25,6 @@ class PenggunaController extends Controller
             $searchTerm = $request->input('search');
             
             $artikels = artikels::where('judulArtikel', 'like', '%' . $searchTerm . '%')
-                ->orWhere('deskripsi', 'like', '%' . $searchTerm . '%')
                 ->get();
         
             return view('main.setelahLogin.search', compact('artikels'));
@@ -36,7 +35,6 @@ class PenggunaController extends Controller
             $searchTerm = $request->input('searchV');
             
             $videos = video::where('judulVideo', 'like', '%' . $searchTerm . '%')
-                ->orWhere('deskripsiVideo', 'like', '%' . $searchTerm . '%')
                 ->get();
         
             return view('main.setelahLogin.searchV', compact('videos'));

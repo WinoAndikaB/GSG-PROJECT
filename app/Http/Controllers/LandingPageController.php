@@ -18,7 +18,6 @@ class LandingPageController extends Controller
         $searchTerm = $request->input('search');
         
         $artikels = artikels::where('judulArtikel', 'like', '%' . $searchTerm . '%')
-            ->orWhere('deskripsi', 'like', '%' . $searchTerm . '%')
             ->get();
     
         return view('main.sebelumLogin.searchLP', compact('artikels'));
@@ -29,7 +28,6 @@ class LandingPageController extends Controller
         $searchTerm = $request->input('searchLPV');
         
         $videos = video::where('judulVideo', 'like', '%' . $searchTerm . '%')
-            ->orWhere('deskripsiVideo', 'like', '%' . $searchTerm . '%')
             ->get();
     
         return view('main.sebelumLogin.searchLPV', compact('videos'));

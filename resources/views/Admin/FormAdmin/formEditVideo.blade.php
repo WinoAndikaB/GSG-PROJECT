@@ -226,7 +226,11 @@
                   </div>
                   <div class="form-group">
                     <label for="" class="form-control-label">Kategori</label>
-                    <textarea class="form-control" type="text" name="kategoriVideo" required>{{ $data->kategoriVideo }}</textarea>
+                    <select class="form-control" id="kategoriVideo" name="kategoriVideo" required>
+                      <option value="Anime"{{ $data->kategoriVideo === 'Anime' ? ' selected' : '' }}>Anime</option>
+                      <option value="Game"{{ $data->kategoriVideo === 'Game' ? ' selected' : '' }}>Game</option>
+                      <option value="VTuber"{{ $data->kategoriVideo === 'VTuber' ? ' selected' : '' }}>VTuber</option>
+                  </select>                  
                   </div>
                   <div class="form-group">
                     <label for="" class="form-control-label">Tags</label>
