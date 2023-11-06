@@ -103,11 +103,17 @@
                     <li class="scroll-to-section"><a href="/">Home</a></li>
                     <li class="scroll-to-section"><a href="#trends">Trending</a></li>
                     <li class="scroll-to-section"><a href="#about">Artikel</a></li>
-                    <li class="scroll-to-section"><a href="/Video" class="">Video</a></li>
+                    <li class="scroll-to-section"><a href="/Video">Video</a></li>
                     <li class="scroll-to-section"><a href="/kategori">Kategori</a></li>
                     <li class="scroll-to-section"><a href="/event" class="active">Event</a></li>
-                    <li class="scroll-to-section"><a href="/ulasan" class="text-center">Ulasan</a></li>
+                    <li class="scroll-to-section"><a href="/ulasan">Ulasan</a></li>
                     <li class="scroll-to-section"><a href="/about">Tentang</a></li>
+                    <li>
+                      <form action="{{ route('searchE') }}" method="GET" class="input-group">
+                        <input type="text" name="searchE" class="form-control" placeholder="Cari Event..." aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ request('searchE') }}">
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
+                    </form>
+                    </li>
                     <li class="scroll-to-section">
                       <a href="/profileUser" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center">
                         <div class="profile-picture" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
@@ -202,58 +208,56 @@
 
                   </div>
                   <hr>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalEvent{{$item->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-lg">
+                        <div class="modal-content" style="width: 100%; max-width: 900px;">
+
+                          <div class="modal-header">
+                              <img src="{{ asset('assets2/img/lg1.png') }}" alt="Detail Event Icon" style="max-width: 30px; max-height: 30px; margin-right: 15px;">
+                              <h1 class="modal-title fs-5" id="exampleModalLabel">Detail Event</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          
+                          
+
+                          <div class="modal-body">
+                            <div class="row">
+                              <div class="col-md-6 text-left">
+                                <p>Nama Event</p>
+                                <p>Nama Pembuat Event</p>
+                                <p>Tanggal Event</p>
+                                <p>Jam Event</p>
+                                <p>Lokasi Event</p>
+                                <p>Informasi Event Lebih Lanjut</p>
+                                <p>Tanggal Buat Event</p>
+                                <p>Tanggal Update Event</p>
+                              </div>
+                              <div class="col-md-6 text-right">
+                                <p>{{ $item->namaEvent}}</p>
+                                <p>{{ $item->pembuatEvent}}</p>
+                                <p>{{ date('d F Y', strtotime($item->tanggalEvent)) }}</p>
+                                <p>{{ date('H:i', strtotime($item->jamEvent)) }}</p>
+                                <p>{{ $item->lokasiEvent}}</p>
+                                <a href="{{$item->informasiLebihLanjut}}" target="_blank">{{$item->informasiLebihLanjut}}</a>
+                                <p>{{ strftime('%A, %d %B, %H.%M', strtotime($item->created_at)) }}</p>
+                                <p>{{ strftime('%A, %d %B, %H.%M', strtotime($item->updated_at)) }}</p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div style="text-align: center; font-size: 10px; font-weight: normal;">
+                            Copyright &copy; <a href="#" style="font-size: 10px; font-weight: normal;">gsgproject.com</a>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                    @endforeach
               </div>
           </div>
         </div>
       </section>
-
-     <!-- Modal -->
-      <div class="modal fade" id="exampleModalEvent{{$item->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content" style="width: 100%; max-width: 900px;">
-
-            <div class="modal-header">
-                <img src="{{ asset('assets2/img/lg1.png') }}" alt="Detail Event Icon" style="max-width: 30px; max-height: 30px; margin-right: 15px;">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Detail Event</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            
-            
-
-            <div class="modal-body">
-              <div class="row">
-                <div class="col-md-6 text-left">
-                  <p>Nama Event</p>
-                  <p>Nama Pembuat Event</p>
-                  <p>Tanggal Event</p>
-                  <p>Jam Event</p>
-                  <p>Lokasi Event</p>
-                  <p>Informasi Event Lebih Lanjut</p>
-                  <p>Tanggal Buat Event</p>
-                  <p>Tanggal Update Event</p>
-                </div>
-                <div class="col-md-6 text-right">
-                  <p>{{ $item->namaEvent}}</p>
-                  <p>{{ $item->pembuatEvent}}</p>
-                  <p>{{ date('d F Y', strtotime($item->tanggalEvent)) }}</p>
-                  <p>{{ date('H:i', strtotime($item->jamEvent)) }}</p>
-                  <p>{{ $item->lokasiEvent}}</p>
-                  <a href="{{$item->informasiLebihLanjut}}" target="_blank">{{$item->informasiLebihLanjut}}</a>
-                  <p>{{ strftime('%A, %d %B, %H.%M', strtotime($item->created_at)) }}</p>
-                  <p>{{ strftime('%A, %d %B, %H.%M', strtotime($item->updated_at)) }}</p>
-                </div>
-              </div>
-            </div>
-
-            <div style="text-align: center; font-size: 10px; font-weight: normal;">
-              Copyright &copy; <a href="#" style="font-size: 10px; font-weight: normal;">gsgproject.com</a>
-            </div>
-
-          </div>
-        </div>
-      </div>
-      @endforeach
-
     
         
     </div>

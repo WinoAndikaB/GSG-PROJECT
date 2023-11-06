@@ -143,9 +143,15 @@
                       <li class="scroll-to-section"><a href="/">Artikel</a></li>
                       <li class="scroll-to-section"><a href="/landingPageVideo">Video</a></li>
                       <li class="scroll-to-section"><a href="/kategoriLandingPage">Kategori</a></li>
-                      <li class="scroll-to-section"><a href="/eventLandingPage">Event</a></li>
+                      <li class="scroll-to-section"><a href="/eventLandingPage" class="active">Event</a></li>
                       <li class="scroll-to-section"><a href="/ulasanLandingPage">Ulasan</a></li>
                       <li class="scroll-to-section"><a href="/abouts">Tentang</a></li>
+                      <li>
+                        <form action="{{ route('searchEvent') }}" method="GET" class="input-group">
+                          <input type="text" name="searchEvent" class="form-control" placeholder="Cari Artikel..." aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ request('searchEvent') }}">
+                          <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
+                      </form>
+                      </li>
                       <li class="scroll-to-section"><a href="/login">Login</a></li>
                     </ul>       
                     <a class='menu-trigger'>

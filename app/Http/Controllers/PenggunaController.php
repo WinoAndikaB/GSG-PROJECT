@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Auth;
 class PenggunaController extends Controller
 {
 
-        //[Landing Page]  Search Artikel
+        //[User]  Search Artikel
         public function search(Request $request) {
             $searchTerm = $request->input('search');
             
@@ -32,7 +32,7 @@ class PenggunaController extends Controller
             return view('main.setelahLogin.search', compact('artikels'));
         }
     
-        //[Landing Page] Search Video
+        //[User] Search Video
         public function searchV(Request $request) {
             $searchTerm = $request->input('searchV');
             
@@ -42,20 +42,21 @@ class PenggunaController extends Controller
             return view('main.setelahLogin.searchV', compact('videos'));
         }
 
-        //[Landing Page] Search Event
-        public function searchEvent(Request $request) {
-            $searchTerm = $request->input('searchEvent');
+        //[User] Search Event
+        public function searchE(Request $request) {
+            $searchTerm = $request->input('searchE');
             
-            $searchEvent = video::where('judulVideo', 'like', '%' . $searchTerm . '%')
+            $searchE = Event::where('namaEvent', 'like', '%' . $searchTerm . '%')
                 ->get();
         
-            return view('main.setelahLogin.searchEvent', compact('searchEvent'));
+            return view('main.setelahLogin.searchE', compact('searchE'));
         }
 
+
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-     //[Landing Page]  Event Artikel
+     //[User]  Event Artikel
      public function event(Request $request) {
 
         $event = Event::whereNotIn('status', ['Pending', 'Rejected'])->get();
@@ -63,7 +64,7 @@ class PenggunaController extends Controller
         return view('main.setelahLogin.event', compact('event'));
     }
 
-    //[Landing Page] Detail Event
+    //[User] Detail Event
     public function detailEvent(Request $request, $id) {
 
         $event = Event::findOrFail($id);

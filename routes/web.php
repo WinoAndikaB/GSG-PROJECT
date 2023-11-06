@@ -78,6 +78,7 @@ use Illuminate\Support\Facades\Route;
 
         Route::get('/search', [PenggunaController::class, 'search'])->name('search');
         Route::get('/searchV', [PenggunaController::class, 'searchV'])->name('searchV');
+        Route::get('/searchE', [PenggunaController::class, 'searchE'])->name('searchE');
 
         //[Non-User] Tab Event landing Page
         Route::get('/event', [PenggunaController::class, 'event'])->name('event');

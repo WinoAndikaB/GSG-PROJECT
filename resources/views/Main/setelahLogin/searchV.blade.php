@@ -100,8 +100,8 @@
                     <li class="scroll-to-section"><a href="/ulasan">Ulasan</a></li>
                     <li class="scroll-to-section"><a href="/about">Tentang</a></li>
                     <li>
-                      <form action="{{ route('search') }}" method="GET" class="input-group">
-                        <input type="text" name="search" class="form-control" placeholder="Cari Artikel..." aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ request('search') }}">
+                      <form action="{{ route('searchV') }}" method="GET" class="input-group">
+                        <input type="text" name="searchV" class="form-control" placeholder="Cari Artikel..." aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ request('searchV') }}">
                         <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
                     </form>
                     </li>
@@ -139,7 +139,7 @@
       <div class="row">
         <div class="col-lg-12">
           <div class="header-text">
-            <h2>Pencarian</h2>
+            <h2>Pencarian Video</h2>
             <div class="div-dec"></div>
           </div>
         </div>
@@ -161,8 +161,8 @@
           <div>
 
             <div class="search-container">
-              <form action="{{ route('searchLP') }}" method="GET" class="input-group">
-                <input type="text" name="search" class="form-control" placeholder="Cari..." value="{{ request('search') }}">
+              <form action="{{ route('searchV') }}" method="GET" class="input-group">
+                <input type="text" name="searchV" class="form-control" placeholder="Cari..." value="{{ request('searchV') }}">
                 <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
               </form>            
           </div>          
@@ -171,7 +171,7 @@
           <br>
           <br>
 
-          <h5>Hasil pencarian <b>"{{ request('searchLPV') }}"</b>, {{ $videos->count() }} hasil ditemukan</h5>
+          <h5>Hasil pencarian <b>"{{ request('searchV') }}"</b>, {{ $videos->count() }} hasil ditemukan</h5>
 
             <br>
             <br>
