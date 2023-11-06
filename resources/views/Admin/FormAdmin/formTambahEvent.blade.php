@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Form Tambah Video | GSG PROJECT
+    Form Tambah Event | GSG PROJECT
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -68,6 +68,7 @@
       cursor: pointer;
     }
 </style>
+
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -107,7 +108,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/artikelAdmin">
+          <a class="nav-link active" href="/artikelAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
             </div>
@@ -117,7 +118,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/videoAdmin">
+          <a class="nav-link " href="/videoAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-warning text-sm opacity-10"></i>
             </div>
@@ -127,12 +128,12 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/eventKomAd">
+          <a class="nav-link active" href="/eventKomAd">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-user-run text-warning text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Event 
-              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruEventKomunitas+$dataBaruKomentarEventKomunitas}}</span> 
+              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruEventKomunitas}}</span> 
             </span>
           </a>
         </li>
@@ -178,9 +179,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Video</li>
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Artikel</li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Form Tambah Video </h6>
+          <h6 class="font-weight-bolder text-white mb-0">Form Tambah Event</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -244,44 +245,28 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <h6>Tambah Video</h6>
-              <form action="{{ route('storeVideo') }}" method="POST" enctype="multipart/form-data">
+              <h6>Tambah Event</h6>
+              <form action="{{ route('storeEvent') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
-                  <label for="gambarArtikel">Link Video</label>
-                  <input type="text" class="form-control" id="linkVideo" name="linkVideo" >
-              </div>              
-                <div class="form-group">
-                    <label for="judulArtikel">Judul Video</label>
-                    <textarea class="form-control" type="textarea" name="judulVideo" ></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="penulis">Uploader</label>
-                    <input type="text" class="form-control" id="uploader" name="uploader" value="{{ Auth::user()->name}}" readonly>
-                </div>
-                <div class="form-group">
-                  <label for="email">Email</label>
-                  <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}" readonly>
-              </div>
+                  <label for="gambarArtikel">Foto Event/label<br>
+                  <span for="gambarArtikel">Format Foto : .jpg, .jpeg, .png </span>
+                  <input type="file" class="form-control" id="fotoEvent" name="fotoEvent" required accept=".jpg, .jpeg, .png">
+              </div>    
               <div class="form-group">
-                <label for="kategoriVideo">Kategori</label>
-                <select class="form-control" id="kategoriVideo" name="kategoriVideo" required>
-                  <option value="Anime">Anime</option>
-                  <option value="Game">Game</option>
-                  <option value="VTuber">VTuber</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="tagsVideo">Tags</label>
-              <input type="text" class="form-control" id="tagsVideo" name="tagsVideo" >
-          </div>
+                <label for="judulArtikel">Pembuat Event</label>
+                <input type="text" class="form-control" id="pembuatEvent" name="pembuatEvent" required>
+            </div>                       
                 <div class="form-group">
-                  <label for="" class="form-control-label">Deskirpsi Video</label>
-                  <textarea class="form-control" type="text" name="deskripsiVideo" id="editor" ></textarea>
+                    <label for="judulArtikel">Nama Event</label>
+                    <input type="text" class="form-control" id="namaEvent" name="namaEvent" required>
+                </div>
+                <div class="form-group">
+                  <label for="" class="form-control-label">Deskirpsi Event</label>
+                  <textarea class="form-control" type="text" name="deskripsiEvent" id="editor"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary mt-3">Tambah</button>
-
-                <a href="/videoAdmin" class="btn btn-info mt-3">Kembali</i></a>
+                <a href="/eventKomAd" class="btn btn-info mt-3">Kembali</i></a>
             </form>            
             <div class="card-body px-0 pt-12 pb-2">
               <div class="table-responsive p-0">
@@ -437,6 +422,5 @@
     }
   });
 </script>
-
     </body>
 </html>

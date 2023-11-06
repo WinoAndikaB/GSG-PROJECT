@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Video | GSG PROJECT
+    Event Komunitas | GSG PROJECT
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -22,8 +22,6 @@
 
 <!------------------------------------------------------------------------------------- CSS Area -------------------------------------------------------------------------------------------->
 <!------------------------------------------------------------------------------------- CSS Area -------------------------------------------------------------------------------------------->
-
-<!-- Rating CSS-->
 
   
 <!-- Modal CSS-->
@@ -168,7 +166,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/artikelAdmin">
+          <a class="nav-link" href="/artikelAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
             </div>
@@ -178,7 +176,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/videoAdmin">
+          <a class="nav-link" href="/videoAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-warning text-sm opacity-10"></i>
             </div>
@@ -188,7 +186,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/eventKomAd">
+          <a class="nav-link active" href="/eventKomAd">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-user-run text-warning text-sm opacity-10"></i>
             </div>
@@ -239,9 +237,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Video</li>
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Event Komunitas</li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Video</h6>
+          <h6 class="font-weight-bolder text-white mb-0">Event Komunitas</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -293,108 +291,79 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <a href="/formTambahVideo" class="btn btn-primary">Tambah Video</i></a>
-              <a href="/komentarVideo" class="btn btn-success">Komentar Video + {{ $dataBaruKomentarVideo}}
-              </i></a>
-              <h6>List Video Tersedia</h6>
+              <a href="/formTambahEvent" class="btn btn-primary">Tambah Event</i></a>
+              <a href="/komentarEvent" class="btn btn-success">Komentar Event</i>
+                + {{ $dataBaruKomentarEventKomunitas }}
+              </a>
+              <h6>List Event Tersedia</h6>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">      
+              <div class="table-responsive p-0">          
+
 
                 <div class="row">
                   <div class="col-12">
                     <div class="card mb-4">
                       <div class="card-header pb-0">
                       </div>
-                      <div class="card-body px-0 pt-0 pb-2 overflow: auto;"">
+                      <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
                           <table class="table align-items-center mb-0">
                             <thead>
                               <tr>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Video</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Uploader</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Link Video</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Judul Video</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Deskripsi Video</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Upload</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Update</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama Event</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi Event</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kategori</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tags</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Buat</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Update</th>
                                 <th class="text-secondary opacity-7"></th>
                               </tr>
                             </thead>
-                            @foreach($tableVideo as $item)
+                            @foreach ($event as $item)
                             <tbody>
                               <tr>
                                 <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item->id}}</p>
-                                </td>
-                                <td >
-                                  <iframe width="340" height="190" src="{{$item->linkVideo}}" frameborder="0" allowfullscreen></iframe>
+                                  <p class="text-xs font-weight-bold mb-0">{{$item['id']}}</p>
                                 </td>
                                 <td>
-                                    <div class="d-flex flex-column justify-content-center text-xs font-weight-bold mb-0">
-                                      <h6 class="mb-0 text-sm">{{$item->uploader}}</h6>
-                                      <p class="text-xs text-secondary mb-0">{{$item->email}}</p>
+                                  <div class="d-flex px-2 py-1">
+                                    <div>
+                                      <img src="{{asset('fotoEvent/'.$item->fotoEvent)}}" class="avatar avatar-sm me-3" alt="user1">
+                                    </div>
+                                    <div class="d-flex flex-column justify-content-center">
+                                      <h6 class="mb-0 text-sm">{{$item['namaEvent']}}</h6>
+                                      <p class="text-xs text-secondary mb-0">{{$item['pembuatEvent']}}</p>
                                     </div>
                                   </div>
                                 </td>
-                                <td >
-                                  <p class="text-xs font-weight-bold mb-0">{{$item->linkVideo}}</p>
-                                </td>
-                                <td>
-                                  <p class="text-xs font-weight-bold mb-0">{{$item->judulVideo}}</p>
-                                </td>
-                                <td style="text-align: justify;">
-                                  <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
-                                    <?php
-                                    $deskripsiVideo = strip_tags($item['deskripsiVideo']);
-                                    $words = str_word_count($deskripsiVideo, 2);
-                                    $first_100_words = implode(' ', array_slice($words, 0, 5));
-                                    echo $first_100_words;
-                                    if (str_word_count($deskripsiVideo) > 100) {
-                                      echo '...';
-                                    }
-                                    ?>
-                                  </p>
+                                <td class="align-middle text-center">
+                                  <p class="text-xs font-weight-bold mb-0">{{$item['deskripsiEvent']}}</p>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="text-secondary text-xs font-weight-bold">{{$item['created_at']->format('l, d F Y H:i:s') }}</span>
+                                  <span class="badge badge-sm bg-gradient-info">{{$item['status']}}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="text-secondary text-xs font-weight-bold">{{$item['updated_at']->format('l, d F Y H:i:s') }}</span>
+                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item['created_at'])->translatedFormat('l, j F Y') }}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="badge badge-sm status-badge 
-                                  {{$item['statusVideo'] === 'Published' ? 'bg-gradient-success' : ''}}
-                                  {{$item['statusVideo'] === 'Pending' ? 'bg-gradient-secondary' : ''}}
-                                  {{$item['statusVideo'] === 'Rejected' ? 'bg-gradient-danger' : ''}}">
-                                  {{$item['statusVideo']}}
-                                </span> 
+                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item['updated_at'])->translatedFormat('l, j F Y') }}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-info">{{$item->kategoriVideo}}</span>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-warning">{{$item->tagsVideo}}</span>
-                                </td>
-                                <td class="align-middle">
-                                  <a href="/formEditVideo/{{ $item->id}}" class="btn btn-warning btn btn-primary btn-round">
+                                  <a href="/formEditEvent/{{ $item->id}}" class="btn btn-warning btn btn-primary btn-round">
                                     <i class="fa fa-pencil"></i>
                                   </a>
-                                  <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteVideo', ['id' => $item['id']]) }}')">
+                                  <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteEvent', ['id' => $item['id']]) }}')">
                                     <i class="fa fa-trash"></i>
                                 </a>
                                 </td>
                               </tr>
                             </tbody>
-                            @endforeach 
-                            
+                            @endforeach
+
                             <div class="d-flex justify-content-center">
                               <ul class="pagination">
-                                  @if ($tableVideo->onFirstPage())
+                                  @if ($event->onFirstPage())
                                       <li class="page-item disabled">
                                           <span class="page-link" aria-label="Previous">
                                               <span aria-hidden="true">&lsaquo;</span>
@@ -402,7 +371,7 @@
                                       </li>
                                   @else
                                       <li class="page-item">
-                                          <a class="page-link" href="{{ $tableVideo->previousPageUrl() }}" rel="prev" aria-label="Previous">
+                                          <a class="page-link" href="{{ $event->previousPageUrl() }}" rel="prev" aria-label="Previous">
                                               <span aria-hidden="true">&lsaquo;</span>
                                           </a>
                                       </li>
@@ -410,12 +379,12 @@
             
                                 <!-- Menampilkan halaman berapa -->
                                 <div class="text-center">
-                                    {{ $tableVideo->currentPage() }} dari {{ $tableVideo->lastPage() }}
+                                    {{ $event->currentPage() }} dari {{ $event->lastPage() }}
                                 </div>
                           
-                                  @if ($tableVideo->hasMorePages())
+                                  @if ($event->hasMorePages())
                                       <li class="page-item">
-                                          <a class="page-link" href="{{ $tableVideo->nextPageUrl() }}" rel="next" aria-label="Next">
+                                          <a class="page-link" href="{{ $event->nextPageUrl() }}" rel="next" aria-label="Next">
                                               <span aria-hidden="true">&rsaquo;</span>
                                           </a>
                                       </li>
@@ -428,13 +397,14 @@
                                   @endif
                               </ul>
                           </div>
-                          
+
                           </table>
                         </div>
                       </div>
                     </div>
                   </div>
-                  
+                </div>
+
 <!------------------------------------------------------------------------------------- Modal Area -------------------------------------------------------------------------------------------------------------------->
 <!------------------------------------------------------------------------------------- Modal Area -------------------------------------------------------------------------------------------------------------------->
 

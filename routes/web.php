@@ -196,7 +196,25 @@ use Illuminate\Support\Facades\Route;
         //[Admin] Delete Ulasan
         Route::get('/deleteU/{id}',[AdminController::class,'deleteUlasanA'])->name('deleteUlasanA');
         });
-    
+
+    //[Admin] Tab Event
+
+        //[Admin] Tabel Event
+        Route::get('/eventKomAd', [AdminController::class, 'eventKomAd'])->name('eventKomAd');
+        Route::get('/deleteEvent/{id}',[AdminController::class,'deleteEvent'])->name('deleteEvent');
+
+         //[Admin] Form Tambah Event
+         Route::get('/formTambahEvent', [AdminController::class, 'formTambahEvent'])->name('formTambahEvent');
+         Route::post('/formTambahEvent/storeEvent',  [AdminController::class, 'storeEvent'])->name('storeEvent');
+
+        //[Admin] Form Edit Event
+        Route::get('/formEditEvent/{id}',[AdminController::class,'formEditEvent'])->name('formEditEvent');
+        Route::post('/formEditEvent/updateEvent/{id}',[AdminController::class,'updateEvent'])->name('updateEvent');
+
+        //[Admin] Tabel Komentar Event
+        Route::get('/komentarEvent', [AdminController::class, 'komentarEvent'])->name('komentarEvent');
+        Route::get('/deleteKomentarEvent/{id}',[AdminController::class,'deleteKomentarEvent'])->name('deleteKomentarEvent');
+        
      //[Admin] Tab Laporan User
 
         //[Admin] Tabel Laporan

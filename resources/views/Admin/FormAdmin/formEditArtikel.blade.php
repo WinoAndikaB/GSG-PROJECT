@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Profile | GSG PROJECT
+    Form Edit Artikel | GSG PROJECT
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -139,6 +139,16 @@
               <i class="ni ni-tv-2 text-warning text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Video</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/eventKomAd">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-user-run text-warning text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Event 
+              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruEventKomunitas+$dataBaruKomentarEventKomunitas}}</span> 
+            </span>
           </a>
         </li>
         <li class="nav-item">
