@@ -42,6 +42,16 @@ class PenggunaController extends Controller
             return view('main.setelahLogin.searchV', compact('videos'));
         }
 
+        //[Landing Page] Search Event
+        public function searchEvent(Request $request) {
+            $searchTerm = $request->input('searchEvent');
+            
+            $searchEvent = video::where('judulVideo', 'like', '%' . $searchTerm . '%')
+                ->get();
+        
+            return view('main.setelahLogin.searchEvent', compact('searchEvent'));
+        }
+
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

@@ -120,7 +120,7 @@
       <div class="row">
         <div class="col-lg-12">
           <div class="header-text">
-            <h2>Pencarian</h2>
+            <h2>Pencarian Video</h2>
             <div class="div-dec"></div>
           </div>
         </div>

@@ -34,6 +34,16 @@ class LandingPageController extends Controller
     
         return view('main.sebelumLogin.searchLPV', compact('videos'));
     }
+
+    //[Landing Page] Search Event
+    public function searchEvent(Request $request) {
+        $searchTerm = $request->input('searchEvent');
+        
+        $eventSeach = Event::where('namaEvent', 'like', '%' . $searchTerm . '%')
+            ->get();
+    
+        return view('main.sebelumLogin.searchEvent', compact('eventSeach'));
+    }
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

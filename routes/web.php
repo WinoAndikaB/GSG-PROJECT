@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
         //[Non-User] Tab Home Search
         Route::get('/searchLP', [LandingPageController::class, 'searchLP'])->name('searchLP');
         Route::get('/searchLPV', [LandingPageController::class, 'searchLPV'])->name('searchLPV');
+        Route::get('/searchEvent', [LandingPageController::class, 'searchEvent'])->name('searchEvent');
 
         //[Non-User] Tab Event landing Page
         Route::get('/eventLandingPage', [LandingPageController::class, 'eventLandingPage'])->name('eventLandingPage');
