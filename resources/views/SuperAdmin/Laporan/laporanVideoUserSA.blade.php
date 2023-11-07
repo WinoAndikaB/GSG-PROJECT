@@ -328,32 +328,14 @@
               <div class="row gx-4">
                 <div class="col-auto my-auto">
                   <div class="h-100">
+                    <a href="/laporanUserSA" class="btn btn-primary">Laporan Artikel</i></a>
+                    <a href="/laporanVideoUserSA" class="btn btn-success">Laporan Video</i></a>
                     <h5 class="mb-1">
                       List Laporan User
                     </h5>
                     <p class="mb-0 font-weight-bold text-sm">
                       Laporan Video
                     </p>
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
-                  <div class="nav-wrapper position-relative end-0">
-                    <ul class="nav nav-pills nav-fill p-1" role="tablist">
-                      <li class="nav-item">
-                        <a class="nav-link mb-0 px-0 py-1 active d-flex align-items-center justify-content-center " data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="true">
-                          <i class="ni ni-email-83"></i>
-                          {{-- <a href="/laporanUserSA" class="btn btn-primary">Laporan Artikel + {{ $dataBaruLaporanArtikel}}</a> --}}
-                          <span class="ms-2">Laporan Artikel + {{ $dataBaruLaporanArtikel}}</span>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center " data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="false">
-                          <i class="ni ni-email-83"></i>
-                          {{-- <a href="/laporanVideoUserSA" class="btn btn-primary">Laporan Video + {{ $dataBaruLaporanVideo}}</a> --}}
-                          <span class="ms-2">Laporan Video + {{ $dataBaruLaporanVideo}}</span>
-                        </a>
-                      </li>
-                    </ul>
                   </div>
                 </div>
               </div>
