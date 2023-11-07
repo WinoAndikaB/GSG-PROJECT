@@ -24,7 +24,11 @@
     <link rel="stylesheet" href="assets/css/owl.css">
     <link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css">
-    
+
+<!--------------------------------------------------------------------------- CSS Area --------------------------------------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------- CSS Area --------------------------------------------------------------------------------------------------------------->
+
+
     <style>
       .animated-button {
         padding: 10px 20px;
@@ -80,7 +84,59 @@
 
     </style>
 
+<!-- logout Modal CSS -->
+    <style>
+      .modalLogout {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        overflow: hidden; /* Tidak dapat di-scroll */
+      }
+  
+      .modal-contentLogout {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        border: 1px solid #888;
+        width: 40%;
+        height: 30%; /* Mengatur tinggi modal menjadi 60% */
+        text-align: center;
+      }
+  
+      .closeLogout {
+        color: #888;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+  
+      #confirm-buttonLogout, #cancel-buttonLogout {
+        padding: 10px 20px;
+        margin: 25px;
+        cursor: pointer;
+      }
+  </style>
+
   </head>
+
+<!--------------------------------------------------------------------------- Body Area --------------------------------------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------- Body Area --------------------------------------------------------------------------------------------------------------->
+
 <body>
 
 
@@ -125,7 +181,7 @@
                     </a>                        
                     </li>
                     <li class="scroll-to-section">
-                      <a href="/logout" class="d-sm-inline d-none text-white text-bold" id="logout-link" onclick="openModal()"> Logout</a>
+                      <a href="#" class="d-sm-inline d-none text-white text-bold" id="logout-link" onclick="openModal()"> Logout</a>
                     </li>
             </nav>
             </div>
@@ -139,7 +195,7 @@
       <div class="row">
         <div class="col-lg-12">
           <div class="header-text">
-            <h2>Pencarian</h2>
+            <h2>Pencarian Artikel</h2>
             <div class="div-dec"></div>
           </div>
         </div>
@@ -217,10 +273,59 @@
         </div>
       </div>
     </section>
-  
-      
   </div>
 </div>
+
+<!--------------------------------------------------------------------------- Modal Area --------------------------------------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------- Modal Area --------------------------------------------------------------------------------------------------------------->   
+
+          <!-- Modal Logout -->
+         <div id="logout-modal" class="modalLogout">
+          <div class="modal-contentLogout">
+            <span class="closeLogout" id="close-buttonLogout" onclick="closeModal()">&times;</span>
+            <h2>Konfirmasi Logout</h2>
+            <p>Apakah anda mau logout?</p>
+            <div style="text-align: center;">
+              <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
+              <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
+            </div>
+          </div>
+        </div>
+
+<!--------------------------------------------------------------------------- JavaScript Area --------------------------------------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------- JavaScript Area --------------------------------------------------------------------------------------------------------------->
+
+ <!-- Modal Logout -->
+ <script>
+  // JavaScript untuk modal logout
+  function openModal() {
+    const modal = document.getElementById('logout-modal');
+    modal.style.display = 'block';
+  }
+
+  function closeModal() {
+    const modal = document.getElementById('logout-modal');
+    modal.style.display = 'none';
+  }
+
+  function confirmLogout(confirmed) {
+    if (confirmed) {
+      // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
+      window.location.href = '/logout';
+    } else {
+      // Tutup modal jika pengguna memilih "No"
+      closeModal();
+    }
+  }
+
+  // Tutup modal jika pengguna mengklik di luar modal
+  window.addEventListener('click', (event) => {
+    const modal = document.getElementById('logout-modal');
+    if (event.target == modal) {
+      modal.style.display = 'none';
+    }
+  });
+</script>
 
   </body>
 </html>

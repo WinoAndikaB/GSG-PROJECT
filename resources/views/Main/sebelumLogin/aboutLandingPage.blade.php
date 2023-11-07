@@ -96,27 +96,39 @@ https://templatemo.com/tm-574-mexant
           <div class="accordions is-first-expanded">
             <article class="accordion">
               <div class="accordion-head">
-                  <span>Tujuan</span>
+                  <span>Selamat Datang</span>
                   <span class="icon">
                       <i class="icon fa fa-chevron-right"></i>
                   </span>
               </div>
               <div class="accordion-body">
                   <div class="content">
-                      <p>Tujuan terbentuknya website ini adalah memberikan artikel yang dapat dibaca oleh banyak orang.</p>
+                      <p>Selamat datang di GSG Project! Kami adalah sebuah platform hiburan yang didedikasikan untuk memberikan pengalaman hiburan yang tak terlupakan kepada para pengguna kami. Dengan kombinasi artikel informatif, video pendukung, dan informasi tentang event hiburan, GSG Project adalah destinasi utama bagi pecinta hiburan.</p>
                   </div>
               </div>
           </article>
           <article class="accordion">
             <div class="accordion-head">
-                <span>Kenapa Namanya GSG Project?</span>
+                <span>Tujuan?</span>
                 <span class="icon">
                     <i class="icon fa fa-chevron-right"></i>
                 </span>
             </div>
             <div class="accordion-body">
                 <div class="content">
-                    <p>Emang cuma kepikiran aja nama itu, gaada alasan tersendiri.</p>
+                    <p>
+                      <strong>1. Menghibur dan Memberikan Informasi: </strong><br>
+                      
+                      Kami berkomitmen untuk memberikan hiburan berkualitas dan informasi terbaru kepada pengguna kami. Melalui artikel-artikel yang menarik, video pendukung, dan informasi tentang event hiburan, kami bertujuan untuk menghibur dan memberikan wawasan kepada Anda.<br>
+                      <br>
+                      <strong>2. Mendukung Komunitas Hiburan</strong><br>
+                      
+                      GSG Project adalah tempat yang membantu mendukung komunitas pecinta hiburan. Kami ingin menciptakan ruang di mana Anda dapat berbagi minat dan mengejar passion Anda.<br>
+                      <br>
+                      <strong>3. Menginspirasi Kreativitas</strong><br>
+                      
+                      Kami ingin menginspirasi kreativitas dalam dunia hiburan. Baik Anda seorang pencipta konten, artis, atau penikmat seni, kami berharap GSG Project dapat menginspirasi dan memotivasi Anda untuk mengembangkan kreativitas Anda.<br>
+                    </p>
                 </div>
             </div>
           </article>
@@ -124,6 +136,58 @@ https://templatemo.com/tm-574-mexant
       </div>
     </div>
   </section>  
+
+  <section class="what-we-do">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-5">
+          <div class="left-content">
+            <h4>Kami Butuh Dukungan Anda</h4>
+            <p>GSG Project dikelola oleh tim yang bersemangat untuk memberikan pengalaman hiburan terbaik kepada Anda. Untuk terus berkembang dan menghadirkan konten yang lebih baik, kami mengandalkan dukungan dari komunitas kami. Jadi, mari bersama-sama menjadikan GSG Project sebagai sumber utama hiburan dan inspirasi Anda.
+
+              Terima kasih telah mengunjungi GSG Project. Kami berharap Anda menikmati waktu Anda di sini dan merasa terinspirasi oleh apa yang kami tawarkan.</p>
+            <div class="green-button">
+                <a href="contact-us.html">Temukan Lebih Lanjut</a>
+            </div>
+        </div>        
+        </div>
+        <div class="col-lg-6">
+          <div class="right-items">
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="item">
+                  <em>01</em>
+                  <h4>Jelajahi Konten Kami</h4>
+                  <p>Temukan beragam artikel menarik, video pendukung, dan informasi tentang event hiburan yang kami sediakan. Cari topik yang Anda minati dan mulailah menjelajah.</p>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="item">
+                  <em>02</em>
+                  <h4>Interaksi dan Berbagi</h4>
+                  <p>Setelah menemukan konten yang Anda nikmati, interaksilah dengan komunitas kami. Anda dapat memberikan komentar, berbagi artikel, dan terlibat dalam diskusi yang menarik.</p>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="item">
+                  <em>03</em>
+                  <h4>Terlibat dalam Event Hiburan</h4>
+                  <p>Jika Anda tertarik pada event hiburan tertentu, temukan informasi tentang event tersebut di GSG Project. Anda dapat membeli tiket atau mendapatkan detail lainnya untuk merencanakan partisipasi Anda.</p>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="item">
+                  <em>04</em>
+                  <h4> Beri Masukan</h4>
+                  <p>Kami selalu menghargai masukan dari pengguna kami. Jika Anda memiliki saran atau tanggapan, jangan ragu untuk menghubungi kami. Kami ingin memastikan GSG Project terus berkembang sesuai dengan kebutuhan dan minat Anda.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section class="simple-cta">
     <div class="container">
@@ -134,10 +198,10 @@ https://templatemo.com/tm-574-mexant
         <div class="col-lg-7">
           <div class="buttons">
             <div class="green-button">
-              <a href="/">Kembali</a>
+              <a href="/home">Kembali</a>
             </div>
             <div class="orange-button">
-              <a href="/ulasanLandingPage">Ulasan</a>
+              <a href="/ulasan">Ulasan</a>
             </div>
           </div>
         </div>
@@ -182,63 +246,13 @@ https://templatemo.com/tm-574-mexant
     </div>
   </section>
 
-  <section class="what-we-do">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-5">
-          <div class="left-content">
-            <h4>Please tell us about your idea and how you want it to be</h4>
-            <p>If you need more HTML templates, you can try visiting TooCSS blog and Tooplate websites. You can get many good templates on those websites.<br><br>Nulla non placerat neque, a gravida elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Morbi sed dolor condimentum tellus commodo volutpat non malesuada turpis.</p>
-            <div class="green-button">
-              <a href="contact-us.html">Discover More</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <div class="right-items">
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="item">
-                  <em>01</em>
-                  <h4>First Step</h4>
-                  <p>Pellentesque ipsum elit, congue a sapien laoreet, pellentesque ultricies risus.</p>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="item">
-                  <em>02</em>
-                  <h4>Second Step</h4>
-                  <p>Pellentesque ipsum elit, congue a sapien laoreet, pellentesque ultricies risus.</p>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="item">
-                  <em>03</em>
-                  <h4>Third Step</h4>
-                  <p>Pellentesque ipsum elit, congue a sapien laoreet, pellentesque ultricies risus.</p>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="item">
-                  <em>04</em>
-                  <h4>Fourth Step</h4>
-                  <p>Pellentesque ipsum elit, congue a sapien laoreet, pellentesque ultricies risus.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section class="testimonials" id="testimonials">
     <div class="container">
       <div class="row">
         <div class="col-lg-6 offset-lg-3">
           <div class="section-heading">
-            <h6>Web Dev</h6>
-            <h4>What They Say</h4>
+            <h6>Person</h6>
+            <h4>Person Involved</h4>
           </div>
         </div>
         <div class="col-lg-10 offset-lg-1">

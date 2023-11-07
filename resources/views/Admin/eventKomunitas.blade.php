@@ -341,7 +341,12 @@
                                   <p class="text-xs font-weight-bold mb-0">{{$item['deskripsiEvent']}}</p>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-info">{{$item['status']}}</span>
+                                  <span class="badge badge-sm status-badge 
+                                  {{$item['status'] === 'Published' ? 'bg-gradient-success' : ''}}
+                                  {{$item['status'] === 'Pending' ? 'bg-gradient-secondary' : ''}}
+                                  {{$item['status'] === 'Rejected' ? 'bg-gradient-danger' : ''}}">
+                                  {{$item['status']}}
+                                </span>
                                 </td>
                                 <td class="align-middle text-center">
                                   <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item['created_at'])->translatedFormat('l, j F Y') }}</span>
