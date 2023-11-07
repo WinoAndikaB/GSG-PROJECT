@@ -7,7 +7,6 @@ use App\Models\Dislikes;
 use App\Models\Event;
 use App\Models\EventKomunitas;
 use App\Models\komentar_artikel;
-use App\Models\komentar_event;
 use App\Models\komentar_video;
 use App\Models\Likes;
 use App\Models\syaratdanketentuans;
@@ -42,7 +41,6 @@ class SuperAdminController extends Controller
         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
         $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruKomentarEventKomunitas = komentar_event::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
         return view('SuperAdmin.profileSA', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 
         'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas', 'dataBaruKomentarEventKomunitas'));
@@ -102,7 +100,6 @@ class SuperAdminController extends Controller
         $kategoriVideo = Video::select('kategoriVideo', Video::raw('count(*) as total'))->groupBy('kategoriVideo')->get();
         
         $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruKomentarEventKomunitas = komentar_event::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
         //Rating
         $ratings = $data1->pluck('rating')->map(function ($rating) {
@@ -115,7 +112,7 @@ class SuperAdminController extends Controller
 
         return view('SuperAdmin.dashboardSA', compact('totalArtikel', 'totalUser', 'totalUlasan', 'averageRating', 'totalUlasan', 
         'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 
-        'dataBaruLaporanArtikel','dataBaruLaporanVideo','kategoriArtikel','kategoriVideo', 'dataBaruEventKomunitas', 'dataBaruKomentarEventKomunitas'));
+        'dataBaruLaporanArtikel','dataBaruLaporanVideo','kategoriArtikel','kategoriVideo', 'dataBaruEventKomunitas'));
     }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -138,13 +135,12 @@ class SuperAdminController extends Controller
         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
         $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruKomentarEventKomunitas = komentar_event::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
         $pendingArticles = artikels::where('status', 'Pending')->orderBy('created_at', 'desc')->paginate(5);
         $publishedArticles = artikels::where('status', 'Published')->orderBy('created_at', 'desc')->paginate(5);
 
         return view('SuperAdmin.artikelSA', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
-        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'pendingArticles', 'publishedArticles', 'dataBaruEventKomunitas', 'dataBaruKomentarEventKomunitas'));
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'pendingArticles', 'publishedArticles', 'dataBaruEventKomunitas'));
     }
 
     public function approveArticle($id)
@@ -185,10 +181,9 @@ class SuperAdminController extends Controller
          $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
          $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruKomentarEventKomunitas = komentar_event::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
         return view('SuperAdmin.komentarSA.komentarArtikelSA', compact('komenarA', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
-        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas', 'dataBaruKomentarEventKomunitas'));
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas'));
     }
 
     //[SuperAdmin-Artikel] Delete Data Artikel
@@ -222,10 +217,9 @@ class SuperAdminController extends Controller
          $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
          $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruKomentarEventKomunitas = komentar_event::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
         return view('SuperAdmin.FormSuperAdmin.formTambahArtikelSA', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
-        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas', 'dataBaruKomentarEventKomunitas'));
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas'));
     }
 
     public function storeSA(Request $request)
@@ -284,10 +278,9 @@ class SuperAdminController extends Controller
          $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
          $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruKomentarEventKomunitas = komentar_event::where('created_at', '>=',    Carbon::now()->subDay())->count();
          
         return view('SuperAdmin.FormSuperAdmin.formEditArtikelSA', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
-        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas', 'dataBaruKomentarEventKomunitas'));
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas'));
     }
 
     function updateArtikelSA(Request $request, $id){
@@ -330,10 +323,9 @@ class SuperAdminController extends Controller
          $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
          $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruKomentarEventKomunitas = komentar_event::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
         return view('SuperAdmin.videoSA', compact('tableVideo', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
-        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas', 'dataBaruKomentarEventKomunitas'));
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas'));
     }
 
     public function approveVideo($id)
@@ -373,10 +365,9 @@ class SuperAdminController extends Controller
          $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
          $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruKomentarEventKomunitas = komentar_event::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
         return view('SuperAdmin.komentarSA.komentarVideoSA', compact('komenarV', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
-        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas', 'dataBaruKomentarEventKomunitas'));
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas'));
     }    
 
     //[SuperAdmin-Video] Halaman Tambah Video
@@ -395,10 +386,9 @@ class SuperAdminController extends Controller
          $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
          $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruKomentarEventKomunitas = komentar_event::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
         return view('SuperAdmin.FormSuperAdmin.formTambahVideoSA', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel',
-'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas', 'dataBaruKomentarEventKomunitas'));
+'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas'));
     }    
 
     public function storeVideoSA(Request $request)
@@ -463,10 +453,9 @@ class SuperAdminController extends Controller
          $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
          $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruKomentarEventKomunitas = komentar_event::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
         return view('SuperAdmin.FormSuperAdmin.formEditVideoSA', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
-        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas', 'dataBaruKomentarEventKomunitas'));
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas'));
     }    
 
     function updateVideoSA(Request $request, $id){
@@ -535,13 +524,11 @@ class SuperAdminController extends Controller
         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
         $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruKomentarEventKomunitas = komentar_event::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
         $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruKomentarEventKomunitas = komentar_event::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
         return view('superAdmin.eventKomunitasSA', compact('event', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
-        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo','dataBaruEventKomunitas','dataBaruKomentarEventKomunitas'));
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo','dataBaruEventKomunitas'));
     }
 
     public function approveEvent($id)
@@ -562,30 +549,6 @@ class SuperAdminController extends Controller
             $event->save();
             return redirect()->back()->with('success', 'Event rejected.');
         }
-    }
-
-     //[SuperAdmin-Event] Halaman Komentar Artikel
-     function komentarEventSA(){
-        $komentarE = komentar_event::orderBy('created_at', 'desc')->paginate(20);
-
-         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
-         $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
- 
-         $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
- 
-         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
-
-         
-        $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruKomentarEventKomunitas = komentar_event::where('created_at', '>=',    Carbon::now()->subDay())->count();
-
-        return view('superAdmin.komentarSA.komentarEventSA', compact('komentarE', 'dataBaruUlasan', 'dataBaruUser', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 
-        'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo', 'dataBaruEventKomunitas','dataBaruKomentarEventKomunitas'));
     }
 
     //[SuperAdmin-Event] Delete Data Artikel
@@ -619,10 +582,9 @@ class SuperAdminController extends Controller
          $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
          $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruKomentarEventKomunitas = komentar_event::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
         return view('superAdmin.FormSuperAdmin.formTambahEventSA', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
-        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo','dataBaruEventKomunitas','dataBaruKomentarEventKomunitas'));
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo','dataBaruEventKomunitas'));
     }
 
     public function storeEventSA(Request $request)
@@ -680,10 +642,10 @@ class SuperAdminController extends Controller
          $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
          $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruKomentarEventKomunitas = komentar_event::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
          
         return view('superAdmin.FormSuperAdmin.formEditEventSA', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
-        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas','dataBaruKomentarEventKomunitas'));
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas'));
     }
 
     function updateEventSA(Request $request, $id){
@@ -733,11 +695,10 @@ class SuperAdminController extends Controller
          $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
          $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruKomentarEventKomunitas = komentar_event::where('created_at', '>=',    Carbon::now()->subDay())->count();
          
     
          return view('SuperAdmin.penggunaSA', compact('users', 'dataBaruUlasan', 'dataBaruUser', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 
-         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo', 'dataBaruEventKomunitas', 'dataBaruKomentarEventKomunitas'));
+         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo', 'dataBaruEventKomunitas'));
     }  
     
     //[SuperAdmin-Pengguna] Promote-Demote Pengguna
@@ -778,10 +739,9 @@ class SuperAdminController extends Controller
          $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
          $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruKomentarEventKomunitas = komentar_event::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
         return view('SuperAdmin.FormSuperAdmin.formTambahUserSA', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
-        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas', 'dataBaruKomentarEventKomunitas'));
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas'));
     }    
 
     function registerSuperAdminSA(Request $req){
@@ -834,10 +794,9 @@ class SuperAdminController extends Controller
         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
         $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruKomentarEventKomunitas = komentar_event::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
         return view('SuperAdmin.ulasansSA', compact('data1', 'averageRating', 'totalUlasan', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
-        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas', 'dataBaruKomentarEventKomunitas'));
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas'));
     }
 
     //[SuperAdmin-Ulasan] Delete Ulasan
@@ -868,10 +827,9 @@ class SuperAdminController extends Controller
         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
         $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruKomentarEventKomunitas = komentar_event::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
         return view('SuperAdmin.laporan.laporanUserSA', compact('laporanArtikelU', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
-        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas', 'dataBaruKomentarEventKomunitas'));
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas'));
     }
 
         
@@ -906,10 +864,9 @@ class SuperAdminController extends Controller
         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
         $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruKomentarEventKomunitas = komentar_event::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
         return view('SuperAdmin.laporan.laporanVideoUserSA', compact('laporanVideoUser', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
-        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas', 'dataBaruKomentarEventKomunitas'));
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas'));
     }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -933,10 +890,9 @@ class SuperAdminController extends Controller
         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
         $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruKomentarEventKomunitas = komentar_event::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
         return view('SuperAdmin.term&ConditionSA', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
-        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas', 'dataBaruKomentarEventKomunitas'));
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas'));
     }
 
     // [Syarat & Ketentuan] Form Tambah T&C
@@ -955,10 +911,9 @@ class SuperAdminController extends Controller
         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
         $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruKomentarEventKomunitas = komentar_event::where('created_at', '>=',    Carbon::now()->subDay())->count();
         
         return view('SuperAdmin.FormSuperAdmin.formTambahTdanCSA', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
-        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas', 'dataBaruKomentarEventKomunitas'));
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas'));
     }
 
     function storeTdanCSA(Request $req){
@@ -986,10 +941,9 @@ class SuperAdminController extends Controller
             $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
             $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
-            $dataBaruKomentarEventKomunitas = komentar_event::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
             return view('SuperAdmin.FormSuperAdmin.formEditTermOfConditionSA', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
-            'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas', 'dataBaruKomentarEventKomunitas'));
+            'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas'));
         }
     
     function updateTdanCSA(Request $request, $id){

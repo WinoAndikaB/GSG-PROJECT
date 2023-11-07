@@ -103,7 +103,7 @@
               <i class="ni ni-user-run text-warning text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Event 
-              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruEventKomunitas+$dataBaruKomentarEventKomunitas}}</span> 
+              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruEventKomunitas}}</span> 
             </span>
           </a>
         </li>

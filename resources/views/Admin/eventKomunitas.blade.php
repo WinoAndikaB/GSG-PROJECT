@@ -191,7 +191,7 @@
               <i class="ni ni-user-run text-warning text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Event 
-              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruEventKomunitas+$dataBaruKomentarEventKomunitas}}</span> 
+              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruEventKomunitas}}</span> 
             </span>
           </a>
         </li>
@@ -292,8 +292,6 @@
           <div class="card mb-4">
             <div class="card-header pb-0">
               <a href="/formTambahEvent" class="btn btn-primary">Tambah Event</i></a>
-              <a href="/komentarEvent" class="btn btn-success">Komentar Event</i>
-                + {{ $dataBaruKomentarEventKomunitas }}
               </a>
               <h6>List Event Tersedia</h6>
             </div>

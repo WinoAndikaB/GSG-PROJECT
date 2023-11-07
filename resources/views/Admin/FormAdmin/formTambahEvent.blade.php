@@ -281,7 +281,7 @@
                 <input type="text" class="form-control" id="informasiLebihLanjut" name="informasiLebihLanjut" required>
             </div>
                 <button type="submit" class="btn btn-primary mt-3">Tambah</button>
-                <a href="/eventKomAdSA" class="btn btn-info mt-3">Kembali</i></a>
+                <a href="/eventKomAd" class="btn btn-info mt-3">Kembali</i></a>
             </form>           
             <div class="card-body px-0 pt-12 pb-2">
               <div class="table-responsive p-0">
