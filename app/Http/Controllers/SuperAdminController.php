@@ -43,7 +43,7 @@ class SuperAdminController extends Controller
         $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
         return view('SuperAdmin.profileSA', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 
-        'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas', 'dataBaruKomentarEventKomunitas'));
+        'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas'));
     }  
   
     //[SuperAdmin-Profile] Edit Profil SuperAdmin
