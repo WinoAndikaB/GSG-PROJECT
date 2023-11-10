@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Event extends Model
 {
     protected $table = 'events';
-    protected $fillable = ['pembuatEvent', 'namaEvent', 'deskripsiEvent', 'tanggalEvent', 'jamEvent', 'lokasiEvent', 'informasiLebihLanjut', 'status', 'fotoEvent'];
+    protected $fillable = ['kodeEvent','pembuatEvent', 'namaEvent', 'deskripsiEvent', 'tanggalEvent', 'jamEvent', 'lokasiEvent', 'informasiLebihLanjut', 'status', 'fotoEvent'];
 
 }

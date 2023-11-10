@@ -318,6 +318,7 @@
                             <thead>
                               <tr>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kode Event</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama Event</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi Event</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Event</th>
@@ -333,6 +334,9 @@
                               <tr>
                                 <td class="align-middle text-center">
                                   <p class="text-xs font-weight-bold mb-0">{{$item['id']}}</p>
+                                </td>
+                                <td class="align-middle text-center">
+                                  <p class="text-xs font-weight-bold mb-0">{{$item['kodeEvent']}}</p>
                                 </td>
                                 <td>
                                   <div class="d-flex px-2 py-1">
