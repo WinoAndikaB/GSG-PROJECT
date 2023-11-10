@@ -10,7 +10,7 @@ class artikels extends Model
     use HasFactory;
     
     protected $fillable = [
-        'id', 'user_id', 'artikel_id', 'gambarArtikel', 'judulArtikel', 'penulis', 'email', 'deskripsi', 'status', 'kategori', 'tags'
+        'id','kodeArtikel', 'user_id', 'artikel_id', 'gambarArtikel', 'judulArtikel', 'penulis', 'email', 'deskripsi', 'status', 'kategori', 'tags'
     ];
 
     public function komentarArtikel()
