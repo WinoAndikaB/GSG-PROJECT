@@ -318,6 +318,7 @@
                               <thead>
                                 <tr>
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kode Video</th>
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Video</th>
                                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Uploader</th>
                                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Link Video</th>
@@ -336,6 +337,9 @@
                                 <tr>
                                   <td class="align-middle text-center">
                                     <p class="text-xs font-weight-bold mb-0">{{$item->id}}</p>
+                                  </td>
+                                  <td class="align-middle text-center">
+                                    <p class="text-xs font-weight-bold mb-0">{{$item->kodeVideo}}</p>
                                   </td>
                                   <td >
                                     <iframe width="340" height="190" src="{{$item->linkVideo}}" frameborder="0" allowfullscreen></iframe>

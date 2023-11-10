@@ -344,6 +344,7 @@
                             <thead>
                               <tr>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kode Artikel</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Penulis</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Judul Artikel</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi</th>
@@ -360,6 +361,9 @@
                               <tr>
                                 <td class="align-middle text-center">
                                   <p class="text-xs font-weight-bold mb-0">{{$tbhartikel['id']}}</p>
+                                </td>
+                                <td class="align-middle text-center">
+                                  <p class="text-xs font-weight-bold mb-0">{{$tbhartikel['kodeArtikel']}}</p>
                                 </td>
                                 <td>
                                   <div class="d-flex px-2 py-1">
