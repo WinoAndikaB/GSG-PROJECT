@@ -438,10 +438,10 @@
                                   </p>
                                 </td>    
                                 <td class="align-middle text-center">
-                                  <span class="text-secondary text-xs font-weight-bold">{{$ulasan['created_at']->format('l, d F Y H:i:s') }}</span>
+                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($ulasan['created_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="text-secondary text-xs font-weight-bold">{{$ulasan['updated_at']->format('l, d F Y H:i:s') }}</span>
+                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($ulasan['updated_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
                                 </td>
                                 <td class="align-middle">
                                   <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteUlasanSA', ['id' => $ulasan['id']]) }}')">

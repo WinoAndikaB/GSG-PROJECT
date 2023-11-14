@@ -386,8 +386,18 @@
                                     </div>
                                   </div>
                                 </td>
-                                <td>
-                                  <p class="text-xs font-weight-bold mb-0">{{$tbhartikel['judulArtikel']}}</p>
+                                <td class="align-middle text-center">
+                                  <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
+                                    <?php
+                                    $judulA = strip_tags($tbhartikel['judulArtikel']);
+                                    $words = str_word_count($judulA, 2);
+                                    $first_100_words = implode(' ', array_slice($words, 0, 5));
+                                    echo $first_100_words;
+                                    if (str_word_count($judulA) > 500) {
+                                      echo '...';
+                                    }
+                                    ?>
+                                  </p>
                                 </td>
                                 <td style="text-align: justify;">
                                   <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
@@ -403,10 +413,10 @@
                                   </p>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="text-secondary text-xs font-weight-bold">{{$tbhartikel['created_at']->format('l, d F Y H:i:s') }}</span>
+                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($tbhartikel['created_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="text-secondary text-xs font-weight-bold">{{$tbhartikel['updated_at']->format('l, d F Y H:i:s') }}</span>
+                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($tbhartikel['updated_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
                                 </td>
                                 <td class="align-middle text-center">
                                   <span class="badge badge-sm status-badge 

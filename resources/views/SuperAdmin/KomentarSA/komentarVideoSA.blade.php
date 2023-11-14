@@ -149,7 +149,7 @@
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" href="/profileSA">
+          <a class="nav-link" href="/profileSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-badge text-primary text-sm opacity-10"></i>
             </div>
@@ -356,7 +356,7 @@
                                   <p class="text-xs font-weight-bold mb-0">{{$item['pesan']}}</p>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-success">{{ \Carbon\Carbon::parse($item['created_at'])->translatedFormat('l, j F Y') }}</span>
+                                  <span class="badge badge-sm bg-gradient-success">{{ \Carbon\Carbon::parse($item['created_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
                                 </td>
                                 <td class="align-middle">
                                   <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteKomentarVideoSA', ['id' => $item['id']]) }}')">

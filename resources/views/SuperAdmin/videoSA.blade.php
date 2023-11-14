@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Ulasan | GSG PROJECT
+    Video | GSG PROJECT
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -123,6 +123,51 @@
       background-color: #5E72E4;
     }
 </style>
+
+<!-- Video PopUp -->
+<style>
+  .video-popup {
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .video-popup iframe {
+    width: 50%;
+    height: 50%;
+  }
+
+  .dark-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Sesuaikan kegelapan sesuai kebutuhan */
+    z-index: 999;
+    display: flex;
+    align-items: center; /* Menengahkan vertikal */
+    justify-content: center; /* Menengahkan horizontal */
+  }
+
+  /* Gaya tombol close */
+  .video-popup button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    font-size: 20px; /* Sesuaikan ukuran font sesuai kebutuhan */
+    color: #333; /* Sesuaikan warna sesuai kebutuhan */
+    border-radius: 50%; /* Membuat tombol close berbentuk lingkaran */
+  }
+</style>
+
+
+
+
 </head>
 
 <!------------------------------------------------------------------------------------- Body Area -------------------------------------------------------------------------------------------->
@@ -329,11 +374,10 @@
                                 <tr>
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kode Video</th>
-                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Video</th>
                                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Uploader</th>
-                                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Link Video</th>
-                                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Judul Video</th>
-                                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Deskripsi Video</th>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Link Video</th>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Judul Video</th>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi Video</th>
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Upload</th>
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Update</th>
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
@@ -351,9 +395,6 @@
                                   <td class="align-middle text-center">
                                     <p class="text-xs font-weight-bold mb-0">{{$item->kodeVideo}}</p>
                                   </td>
-                                  <td >
-                                    <iframe width="340" height="190" src="{{$item->linkVideo}}" frameborder="0" allowfullscreen></iframe>
-                                  </td>
                                   <td>
                                       <div class="d-flex flex-column justify-content-center text-xs font-weight-bold mb-0">
                                         <h6 class="mb-0 text-sm">{{$item->uploader}}</h6>
@@ -361,11 +402,21 @@
                                       </div>
                                     </div>
                                   </td>
-                                  <td >
+                                  <td id="videoContainer">
                                     <p class="text-xs font-weight-bold mb-0">{{$item->linkVideo}}</p>
-                                  </td>
-                                  <td>
-                                    <p class="text-xs font-weight-bold mb-0">{{$item->judulVideo}}</p>
+                                  </td>                                  
+                                  <td class="align-middle text-center">
+                                    <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
+                                      <?php
+                                      $judulV = strip_tags($item['judulVideo']);
+                                      $words = str_word_count($judulV, 2);
+                                      $first_100_words = implode(' ', array_slice($words, 0, 5));
+                                      echo $first_100_words;
+                                      if (str_word_count($judulV) > 500) {
+                                        echo '...';
+                                      }
+                                      ?>
+                                    </p>
                                   </td>
                                   <td style="text-align: justify;">
                                     <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
@@ -623,6 +674,59 @@
       console.log("Document ready.");
   });
   </script>
+
+  <!-- Video Popup -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+    // Temukan semua elemen <td>
+    var videoContainers = document.querySelectorAll("td");
+
+    // Tambahkan event listener untuk setiap elemen
+    videoContainers.forEach(function (videoContainer) {
+      videoContainer.addEventListener("click", function () {
+        // Ambil link video dari elemen p di dalam td
+        var videoLink = videoContainer.querySelector("p").innerText;
+
+        // Buat elemen iframe untuk video
+        var iframe = document.createElement("iframe");
+        iframe.width = "560"; // Sesuaikan lebar sesuai kebutuhan
+        iframe.height = "315"; // Sesuaikan tinggi sesuai kebutuhan
+        iframe.src = videoLink; // Gunakan link video yang diambil
+
+        // Buat elemen div sebagai kontainer pop-up
+        var popupContainer = document.createElement("div");
+        popupContainer.classList.add("video-popup");
+
+        var closeBtn = document.createElement("button");
+        closeBtn.innerHTML = "&times;"; // Gunakan karakter X sebagai ikon close
+        closeBtn.addEventListener("click", function () {
+          // Hapus popupContainer ketika tombol close diklik
+          document.body.removeChild(popupContainer);
+        });
+
+        popupContainer.appendChild(closeBtn);
+
+        // Tambahkan class untuk gaya latar belakang gelap
+        popupContainer.classList.add("dark-overlay");
+
+        // Tambahkan iframe ke dalam div
+        popupContainer.appendChild(iframe);
+
+        // Tambahkan div ke dalam body
+        document.body.appendChild(popupContainer);
+
+        // Menutup popup ketika latar belakang gelap di klik
+        popupContainer.addEventListener("click", function (event) {
+          if (event.target === popupContainer) {
+            document.body.removeChild(popupContainer);
+          }
+        });
+      });
+    });
+  });
+  </script>
+  
+  
 
   <!-- Modal Delete -->
   <script>

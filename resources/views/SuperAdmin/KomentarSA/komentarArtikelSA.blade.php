@@ -357,7 +357,7 @@
                                   <p class="text-xs font-weight-bold mb-0">{{$item['pesan']}}</p>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-success">{{ \Carbon\Carbon::parse($item['created_at'])->translatedFormat('l, j F Y') }}</span>
+                                  <span class="badge badge-sm bg-gradient-success">{{ \Carbon\Carbon::parse($item['created_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
                                 </td>
                                 <td class="align-middle">
                                   <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteKomentarSA', ['id' => $item['id']]) }}')">

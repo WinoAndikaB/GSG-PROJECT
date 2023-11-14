@@ -387,10 +387,10 @@
                                 </span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item['created_at'])->translatedFormat('l, j F Y') }}</span>
+                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item['created_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item['updated_at'])->translatedFormat('l, j F Y') }}</span>
+                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item['updated_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
                                 </td>
                                 <td class="align-middle text-center">
                                   <a href="/formEditEventSA/{{ $item->id}}" class="btn btn-warning btn btn-primary btn-round">
