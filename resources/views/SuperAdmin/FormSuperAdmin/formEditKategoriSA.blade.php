@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Profil | GSG PROJECT
+    Form Edit Kategori | GSG PROJECT
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -15,59 +15,78 @@
   <link href="../assets2/css/nucleo-icons.css" rel="stylesheet" />
   <link href="../assets2/css/nucleo-svg.css" rel="stylesheet" />
   <!-- Font Awesome Icons -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <link href="../assets2/css/nucleo-svg.css" rel="stylesheet" />
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets2/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 
   <style>
-      .modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        overflow: hidden; /* Tidak dapat di-scroll */
-      }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      overflow: hidden; /* Tidak dapat di-scroll */
+    }
 
-      .modal-content {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        background-color: #fff;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        padding: 20px;
-        border: 1px solid #888;
-        width: 40%;
-        height: 30%; /* Mengatur tinggi modal menjadi 60% */
-        text-align: center;
-      }
+    .modal-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #fff;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      border: 1px solid #888;
+      width: 40%;
+      height: 30%; /* Mengatur tinggi modal menjadi 60% */
+      text-align: center;
+    }
 
-      .close {
-        color: #888;
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        font-size: 20px;
-        font-weight: bold;
-        cursor: pointer;
-      }
+    .close {
+      color: #888;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
 
-      #confirm-button, #cancel-button {
-        padding: 10px 20px;
-        margin: 25px;
-        cursor: pointer;
-      }
+    #confirm-button, #cancel-button {
+      padding: 10px 20px;
+      margin: 25px;
+      cursor: pointer;
+    }
 </style>
+
+  <script>
+    // Function to auto-adjust textarea height
+    function autoResizeTextarea() {
+        const textarea = document.getElementById("auto-resize-textarea");
+        textarea.style.height = "auto";
+        textarea.style.height = textarea.scrollHeight + "px";
+    }
+
+    // Attach the autoResizeTextarea function to the textarea's input event
+    $(document).ready(function() {
+        $("#auto-resize-textarea").on("input", function() {
+            autoResizeTextarea();
+        });
+
+        // Initialize the textarea's height when the page loads
+        autoResizeTextarea();
+    });
+</script>
+
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -91,7 +110,7 @@
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" href="/profileSA">
+          <a class="nav-link" href="/profileSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-badge text-primary text-sm opacity-10"></i>
             </div>
@@ -107,7 +126,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/artikelSuperAdmin">
+          <a class="nav-link" href="/artikelSuperAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
             </div>
@@ -127,7 +146,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/kategoriTblSA">
+          <a class="nav-link active" href="/kategoriTblSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-world-2 text-warning text-sm opacity-10"></i>
             </div>
@@ -186,8 +205,8 @@
         </li>
       </ul>
     </div>
-
-  <div class="sidenav-footer mx-3 ">    
+    
+  <div class="sidenav-footer mx-3 ">       
   </aside>
   <main class="main-content position-relative border-radius-lg ">
     <!-- Navbar -->
@@ -196,9 +215,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Profil</li>
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Kategori</li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Profil</h6>
+          <h6 class="font-weight-bolder text-white mb-0">Form Edit Kategori </h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -244,179 +263,87 @@
     </nav>
     <!-- End Navbar -->
 
-    <!-- Modal Logout -->
-    <div id="logout-modal" class="modal">
-      <div class="modal-content">
-        <span class="close" id="close-button" onclick="closeModal()">&times;</span>
-        <h2>Konfirmasi Logout</h2>
-        <p>Apakah anda mau logout?</p>
-        <div style="text-align: center;">
-          <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
-          <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
-        </div>
+      <!-- Modal Logout -->
+  <div id="logout-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="close-button" onclick="closeModal()">&times;</span>
+      <h2>Konfirmasi Logout</h2>
+      <p>Apakah anda mau logout?</p>
+      <div style="text-align: center;">
+        <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
+        <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
       </div>
     </div>
-
-          <div class="container-fluid py-4">
-            <div class="row">
-              <div class="col-md-8">
-                <div class="card">
-                  <div class="card-header pb-0">
-                    <div class="d-flex align-items-center">
-                      <p class="mb-0">Edit Profile</p>
+  </div>
+    
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="card-header pb-0">
+              <h6>Form Edit Artikel</h6>
+              
+              <form action="/formEditKategoriSA/updateKategoriSA/{{$data->id}}" method="POST" enctype="multipart/form-data">
+              @csrf
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="" class="form-control-label">Foto</label>
+                      <input class="form-control" type="file" id="uploadFotoKategori" name="fotoKategori" value="{{ $data->fotoKategori }} required">
+                      <br>
+                      <img src="{{asset('fotoKategori/'.$data->fotoKategori)}}" height="10%" width="50%" srcset="">
                     </div>
+                    <div class="form-group">
+                      <label for="pembuat">Pembuat</label>
+                      <input type="text" class="form-control" id="pembuat" name="pembuat" value="{{ Auth::user()->name }}" readonly>
                   </div>
-                  <div class="card-body">
-                    <form method="POST" action="{{ route('updateSA', ['id' => Auth::user()->id]) }}" enctype="multipart/form-data">
-                      @csrf
-                      @method('PUT')
-                    <p class="text-uppercase text-sm">User Information</p>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="example-text-input" class="form-control-label">Role</label>
-                          <input class="form-control" type="email" disabled="" value="{{ Auth::user()->role }}" name="role">
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="example-text-input" class="form-control-label">Username</label>
-                          <input class="form-control" type="email" disabled="" value="{{ Auth::user()->username }}" name="username">
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="example-text-input" class="form-control-label">Email</label>
-                          <input class="form-control" type="email" disabled="" value="{{ Auth::user()->email }}" name="email">
-                        </div>
-                      </div>
+                  <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}" readonly>
+                 </div>
+                    <div class="form-group">
+                      <label for="" class="form-control-label">Kategori</label>
+                      <input class="form-control" type="text" name="kategori" value="{{ $data->kategori }}">
                     </div>
-                    <hr class="horizontal dark">
-                    <p class="text-uppercase text-sm">Contact Information</p>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group">
-                           <label for="fotoProfil" class="form-control-label">Foto Profil</label>
-                           <input class="form-control" type="file" name="fotoProfil">
-                        </div>
-                     </div>
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label for="example-text-input" class="form-control-label">Nama</label>
-                          <input class="form-control" type="text" value="{{ Auth::user()->name}}" name="name">
-                        </div>
-                      </div>
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label for="example-text-input" class="form-control-label">Alamat</label>
-                          <input class="form-control" type="text" value="{{ Auth::user()->alamat }}" name="alamat">
-                        </div>
-                      </div>
+                    <div class="form-group">
+                      <label for="" class="form-control-label">Deskirpsi Kategori</label>
+                      <textarea class="form-control" type="text" name="deskripsi" id="editor">{{ $data->deskripsiKategori }}</textarea>
                     </div>
-                    <hr class="horizontal dark">
-                    <p class="text-uppercase text-sm">About me</p>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label for="example-text-input" class="form-control-label">About me</label>
-                          <input class="form-control" type="text" value="{{ Auth::user()->aboutme }}" name="aboutme">
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="example-text-input" class="form-control-label">Instagram</label>
-                          <input class="form-control" type="text" value="{{ Auth::user()->instagram }}" name="instagram">
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="example-text-input" class="form-control-label">Facebook</label>
-                          <input class="form-control" type="text" value="{{ Auth::user()->facebook }}" name="facebook">
-                        </div>
-                      </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                  </form>
+                    <button type="submit" class="btn btn-primary mt-3">Edit</button>
+                    <a href="/kategoriTblSA" class="btn btn-info mt-3">Kembali</i></a>
                   </div>
                 </div>
-              </div>
-              <div class="col-md-4">
-                <div class="card card-profile">
-                  <img src="https://images6.alphacoders.com/132/1320318.png" alt="Image placeholder" class="card-img-top">
-                  <div class="row justify-content-center">
-                    <div class="col-4 col-lg-4 order-lg-2">
-                      <div class="mt-n4 mt-lg-n6 mb-4 mb-lg-0">
-                        <a href="javascript:;">
-                            <div style="width: 230px; height: 220px; border: 2px solid white; border-radius: 50%; overflow: hidden;">
-                                <img src="<?php
-                                    $fotoProfil = Auth::user()->fotoProfil;
-                                    if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
-                                        echo asset('fotoProfil/' . $fotoProfil);
-                                    } else {
-                                        echo asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999');
-                                    }
-                                ?>" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
-                            </div>
-                        </a>
-                    </div>                    
+              </form>
+
+            <div class="card-body px-0 pt-12 pb-2">
+              <div class="table-responsive p-0">
+                <div class="panel-header panel-header-sm">
+                </div>
+                <div class="content">
+                  <div class="row">
+                    <div class="col-md-12">
+                        <div class="card-body ">
+                          <div id="map" class="map"></div>
+                        </div>
                     </div>
-                  </div>
-                  <div class="card-header text-center border-0 pt-0 pt-lg-2 pb-4 pb-lg-3">
-                    <div class="d-flex justify-content-between">
-                      <a href="javascript:;" class="btn btn-sm btn-info mb-0 d-block d-lg-none"><i class="ni ni-collection"></i></a>
-                      <a href="javascript:;" class="btn btn-sm btn-dark float-right mb-0 d-block d-lg-none"><i class="ni ni-email-83"></i></a>
-                    </div>
-                  </div>
-                  <div class="card-body pt-0">
-                    <div class="text-center mt-4">
-                      <h5>
-                        {{ Auth::user()->name}}<span class="font-weight-light"></span>
-                      </h5>
-                      <div class="h6 font-weight-300">
-                        <i class="ni location_pin mr-2"></i>{{ Auth::user()->username }}
-                      </div>
-                      <div class="h6 mt-4">
-                        <i class="ni business_briefcase-24 mr-2"></i>{{ Auth::user()->alamat }}
-                      </div>
-                      <div>
-                        <i class="ni education_hat mr-2"></i>{{ Auth::user()->aboutme }}
-                      </div>
-                    </div>
-                    <br>
-                    <div class="button-container" style="display: flex; justify-content: center; align-items: center;">
-                      <a href="{{ Auth::user()->instagram }}" class="btn btn-info mb-0 d-none d-lg-block" style="margin-right: 10px;">
-                          <i class="fab fa-instagram"></i> Instagram
-                      </a>
-                      <a href="{{ Auth::user()->facebook }}" class="btn btn-dark mb-0 d-none d-lg-block">
-                          <i class="fab fa-facebook"></i> Facebook
-                      </a>
-                  </div>
-                  
-                  
-                                                                                   
                   </div>
                 </div>
               </div>
             </div>
-            <footer class="footer pt-3  ">
-              <div class="container-fluid">
-                <div class="row align-items-center justify-content-lg-between">
-                  <div class="col-lg-6 mb-lg-0 mb-4">
-                    <div class="copyright text-center text-sm text-muted text-lg-start">
-                      © <script>
-                        document.write(new Date().getFullYear())
-                      </script>,
-                      Template by <a title="CSS Templates" rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>,
-                      <a title="CSS Templates" rel="sponsored" href="https://themewagon.com/themes/free-bootstrap-4-html-5-blog-website-template-nextpage/" target="_blank">NextPage </a> and
-                      <a title="CSS Templates" rel="sponsored" href="https://www.creative-tim.com" target="_blank">Crative Tim </a> 
-                      Edited By <a title="CSS Templates" rel="sponsored" href="#" target="_blank">GSG Team</a></p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </footer>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
+      <footer class="footer pt-3  ">
+        <div class="container-fluid">
+          <div class="row align-items-center justify-content-lg-between">
+            <div class="col-lg-6 mb-lg-0 mb-4">
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   </main>
   <div class="fixed-plugin">
@@ -497,45 +424,48 @@
   <script src="../assets2/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/chartjs.min.js"></script>
- 
-  <!-- Github buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
 
   <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
+  <script>
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
 
-   <!-- MODAL LOGOUT -->
-   <script>
-    // JavaScript untuk modal logout
-    function openModal() {
-      const modal = document.getElementById('logout-modal');
-      modal.style.display = 'block';
+ <!-- MODAL LOGOUT -->
+ <script>
+  // JavaScript untuk modal logout
+  function openModal() {
+    const modal = document.getElementById('logout-modal');
+    modal.style.display = 'block';
+  }
+
+  function closeModal() {
+    const modal = document.getElementById('logout-modal');
+    modal.style.display = 'none';
+  }
+
+  function confirmLogout(confirmed) {
+    if (confirmed) {
+      // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
+      window.location.href = '/logout';
+    } else {
+      // Tutup modal jika pengguna memilih "No"
+      closeModal();
     }
-  
-    function closeModal() {
-      const modal = document.getElementById('logout-modal');
+  }
+
+  // Tutup modal jika pengguna mengklik di luar modal
+  window.addEventListener('click', (event) => {
+    const modal = document.getElementById('logout-modal');
+    if (event.target == modal) {
       modal.style.display = 'none';
     }
-  
-    function confirmLogout(confirmed) {
-      if (confirmed) {
-        // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
-        window.location.href = '/logout';
-      } else {
-        // Tutup modal jika pengguna memilih "No"
-        closeModal();
-      }
-    }
-  
-    // Tutup modal jika pengguna mengklik di luar modal
-    window.addEventListener('click', (event) => {
-      const modal = document.getElementById('logout-modal');
-      if (event.target == modal) {
-        modal.style.display = 'none';
-      }
-    });
-  </script>
+  });
+</script>
 
-    </body>
+ 
+</body>
 </html>

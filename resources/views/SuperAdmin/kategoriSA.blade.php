@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Event Komunitas | GSG PROJECT
+    Kategori | GSG PROJECT
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -186,7 +186,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/kategoriTblSA">
+          <a class="nav-link active" href="/kategoriTblSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-world-2 text-warning text-sm opacity-10"></i>
             </div>
@@ -196,7 +196,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/eventKomAdSA">
+          <a class="nav-link" href="/eventKomAdSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-user-run text-warning text-sm opacity-10"></i>
             </div>
@@ -255,9 +255,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Event Komunitas</li>
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Kategori</li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Event Komunitas</h6>
+          <h6 class="font-weight-bolder text-white mb-0">Kategori</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -309,9 +309,9 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <a href="/formTambahEventSA" class="btn btn-primary">Tambah Event</i></a>
+              <a href="/formTambahKategoriSA" class="btn btn-primary">Tambah Kategori</i></a>
               </a>
-              <h6>List Event Tersedia</h6>
+              <h6>List Kategori Tersedia</h6>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">          
@@ -328,85 +328,60 @@
                             <thead>
                               <tr>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kode Event</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama Event</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi Event</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Event</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jam Event</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kategori</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi Kategori</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Buat</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Update</th>
                                 <th class="text-secondary opacity-7"></th>
                               </tr>
                             </thead>
-                            @foreach ($event as $item)
+                            @foreach ($kategori as $item)
                             <tbody>
                               <tr>
                                 <td class="align-middle text-center">
                                   <p class="text-xs font-weight-bold mb-0">{{$item['id']}}</p>
                                 </td>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['kodeEvent']}}</p>
-                                </td>
                                 <td>
-                                  <div class="d-flex px-2 py-1">
-                                    <div>
-                                      <img src="{{asset('fotoEvent/'.$item->fotoEvent)}}" class="avatar avatar-sm me-3" alt="user1">
-                                    </div>
-                                    <div class="d-flex flex-column justify-content-center">
-                                      <h6 class="mb-0 text-sm">{{$item['namaEvent']}}</h6>
-                                      <p class="text-xs text-secondary mb-0">{{$item['pembuatEvent']}}</p>
-                                    </div>
+                                <div class="d-flex px-2 py-1">
+                                  <div>
+                                    <img src="{{asset('fotoKategori/'.$item->fotoKategori)}}" class="avatar avatar-sm me-3" alt="user1">
                                   </div>
+                                  <div class="d-flex flex-column justify-content-center">
+                                    <h6 class="mb-0 text-sm">{{$item['pembuat']}}</h6>
+                                    <p class="text-xs text-secondary mb-0">{{$item['email']}}</p>
+                                  </div>
+                                </div>
+                              </td>
+                                <td class="align-middle text-center">
+                                  <p class="text-xs font-weight-bold mb-0">{{$item['kategori']}}</p>
                                 </td>
                                 <td class="align-middle text-center">
                                   <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
                                     <?php
-                                    $deskripsiEvent = strip_tags($item['deskripsiEvent']);
-                                    $words = str_word_count($deskripsiEvent, 2);
+                                    $deskripsiKategori = strip_tags($item['deskripsiKategori']);
+                                    $words = str_word_count($deskripsiKategori, 2);
                                     $first_100_words = implode(' ', array_slice($words, 0, 5));
                                     echo $first_100_words;
-                                    if (str_word_count($deskripsiEvent) > 500) {
+                                    if (str_word_count($deskripsiKategori) > 500) {
                                       echo '...';
                                     }
                                     ?>
                                   </p>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item['tanggalEvent'])->translatedFormat('l, j F Y') }}</span>
+                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item['created_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['jamEvent']}}</p>
+                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item['created_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="badge badge-sm status-badge 
-                                  {{$item['status'] === 'Published' ? 'bg-gradient-success' : ''}}
-                                  {{$item['status'] === 'Pending' ? 'bg-gradient-secondary' : ''}}
-                                  {{$item['status'] === 'Rejected' ? 'bg-gradient-danger' : ''}}">
-                                  {{$item['status']}}
-                                </span>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item['created_at'])->translatedFormat('l, j F Y') }}</span>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item['updated_at'])->translatedFormat('l, j F Y') }}</span>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <a href="/formEditEventSA/{{ $item->id}}" class="btn btn-warning btn btn-primary btn-round">
+                                  <a href="/formEditKategoriSA/{{ $item->id}}" class="btn btn-warning btn btn-primary btn-round">
                                     <i class="fa fa-pencil"></i>
                                   </a>
-                                  <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteEventSA', ['id' => $item['id']]) }}')">
+                                  <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteKategoriSA', ['id' => $item['id']]) }}')">
                                     <i class="fa fa-trash"></i>
                                 </a>
-                                @if ($item->status === 'Pending')
-                                <a href="{{ route('approveEvent', $item->id) }}" class="btn btn-success btn btn-primary btn-round">
-                                    Approve
-                                </a>
-                                <a href="{{ route('rejectEvent', $item->id) }}" class="btn btn-danger btn btn-primary btn-round">
-                                    Reject
-                                </a>
-                            @endif
                                 </td>
                               </tr>
                             </tbody>
@@ -414,7 +389,7 @@
 
                             <div class="d-flex justify-content-center">
                               <ul class="pagination">
-                                  @if ($event->onFirstPage())
+                                  @if ($kategori->onFirstPage())
                                       <li class="page-item disabled">
                                           <span class="page-link" aria-label="Previous">
                                               <span aria-hidden="true">&lsaquo;</span>
@@ -422,7 +397,7 @@
                                       </li>
                                   @else
                                       <li class="page-item">
-                                          <a class="page-link" href="{{ $event->previousPageUrl() }}" rel="prev" aria-label="Previous">
+                                          <a class="page-link" href="{{ $kategori->previousPageUrl() }}" rel="prev" aria-label="Previous">
                                               <span aria-hidden="true">&lsaquo;</span>
                                           </a>
                                       </li>
@@ -430,12 +405,12 @@
             
                                 <!-- Menampilkan halaman berapa -->
                                 <div class="text-center">
-                                    {{ $event->currentPage() }} dari {{ $event->lastPage() }}
+                                    {{ $kategori->currentPage() }} dari {{ $kategori->lastPage() }}
                                 </div>
                           
-                                  @if ($event->hasMorePages())
+                                  @if ($kategori->hasMorePages())
                                       <li class="page-item">
-                                          <a class="page-link" href="{{ $event->nextPageUrl() }}" rel="next" aria-label="Next">
+                                          <a class="page-link" href="{{ $kategori->nextPageUrl() }}" rel="next" aria-label="Next">
                                               <span aria-hidden="true">&rsaquo;</span>
                                           </a>
                                       </li>

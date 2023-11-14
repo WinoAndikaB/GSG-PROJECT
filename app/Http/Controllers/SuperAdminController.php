@@ -13,6 +13,7 @@ use App\Models\syaratdanketentuans;
 use App\Models\ulasans;
 use App\Models\user;
 use App\Models\video;
+use App\Models\kategori;
 use App\Models\laporanArtikelUser;
 use App\Models\laporanKomentarArtikelUser;
 use App\Models\laporanKomentarVideoUser;
@@ -675,6 +676,143 @@ class SuperAdminController extends Controller
     
         return redirect()->route('eventKomAdSA')->with('success','Data Berhasil di Update');
     }   
+
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    //[SuperAdmin-Kategori]
+    function kategoriTblSA(){
+
+        $kategori = kategori::orderBy('created_at', 'desc')->paginate(10);
+
+        // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+        $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        return view('superAdmin.kategoriSA', compact('kategori', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo','dataBaruEventKomunitas'));
+    }
+
+    //[SuperAdmin-Kategori] Delete Data Kategori
+    function deleteKategoriSA($id){
+        $data=kategori::find($id);
+        $data->delete();
+        return redirect('/kategoriTblSA');
+    }
+
+
+    //[SuperAdmin-Kategori] Halaman Tambah Kategori
+    public function formTambahKategoriSA()
+    {
+         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+         $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+ 
+         $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+ 
+         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+         $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        return view('superAdmin.FormSuperAdmin.formTambahKategoriSA', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo','dataBaruEventKomunitas'));
+    }
+
+    public function storeKategorioSA(Request $request)
+    {
+        $request->validate([
+            'fotoKategori' => 'required',
+            'pembuat' => 'required',
+            'email' => 'required',
+            'kategori' => 'required',
+            'deskripsiKategori' => 'required',
+            'fotoKategori' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $ktgr = new kategori;
+
+        $ktgr->pembuat = $request->input('pembuat');
+        $ktgr->email = $request->input('email');
+        $ktgr->kategori = $request->input('kategori');
+        $ktgr->deskripsiKategori = $request->input('deskripsiKategori');
+
+        if ($request->hasFile('fotoKategori')) {
+            $image = $request->file('fotoKategori');
+            $filename = $image->getClientOriginalName();
+            $image->move(public_path('fotoKategori'), $filename);
+            $ktgr->fotoKategori = $filename;
+        }
+
+        $ktgr->save();
+
+        return redirect('/kategoriTblSA')->with('success', 'Article added successfully.');
+    }
+    
+
+    //[SuperAdmin-Kategori] Edit Data Kategori
+    function formEditKategoriSA($id){
+        $data = kategori::find($id);
+
+         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+         $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+ 
+         $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+ 
+         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+         $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+         
+        return view('superAdmin.FormSuperAdmin.formEditKategoriSA', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas'));
+    }
+
+    function updateKategoriSA(Request $request, $id){
+
+        $data = kategori::find($id);
+    
+        $data->pembuat = $request->input('pembuat');
+        $data->email = $request->input('email');
+        $data->kategori = $request->input('kategori');
+        $data->deskripsiKategori = $request->input('deskripsi');
+
+        if ($request->hasFile('fotoKategori')) {
+            $image = $request->file('fotoKategori');
+    
+            $filename = $image->getClientOriginalName();
+        
+            $image->move(public_path('fotoKategori'), $filename);
+        
+            $data->fotoKategori = $filename;
+        }
+    
+        $data->save();
+    
+        return redirect()->route('kategoriTblSA')->with('success','Data Berhasil di Update');
+    }   
+    
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
