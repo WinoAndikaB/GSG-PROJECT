@@ -9,21 +9,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/lg1.png">
-    <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets2/img/lg1.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('assets2/img/lg1.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <title>Kategori Anime - GSG Project</title>
-
+    @if($kategoriLandingPageA->isNotEmpty())
+    <title>{{ $kategoriLandingPageA->first()->kategori }} - GSG Project</title>
+    @else
+        <title>Tidak Ditemukan</title>
+    @endif
+    
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
+    <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    
     <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="assets/css/fontawesome.css">
-    <link rel="stylesheet" href="assets/css/templatemo-574-mexant.css">
-    <link rel="stylesheet" href="assets/css/owl.css">
-    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/templatemo-574-mexant.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/owl.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}">
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css">
+    
+    
     
     <style>
 /* Style for the buttons */
@@ -92,16 +98,21 @@
 
   <div class="page-heading">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="header-text">
-            <h2>Kategori Anime</h2>
-            <div class="div-dec"></div>
-          </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="header-text">
+                    @if($kategoriLandingPageA->isNotEmpty())
+                        <h2>Kategori {{ $kategoriLandingPageA->first()->kategori }}</h2>
+                        <div class="div-dec"></div>
+                    @else
+                        <h2>Tidak Ada Artikel Ditemukan Pada Ketegori Ini</h2>
+                    @endif
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
+
 
   <!-- ***** Main Banner Area End ***** -->
 
@@ -113,14 +124,13 @@
           <div class="row">
             <div class="col-lg-6 offset-lg-3">
               <div class="section-heading">
-                <h6>Anime</h6>
-                <h4>List Artikel Anime</h4><br>
-                <a href="/kategoriAnime" class="animated-button">Artikel</a>
-                <a href="/kategoriAnimeV" class="animated-button">Video</a>
+                <h6>{{ $kategoriLandingPageA->isNotEmpty() ? $kategoriLandingPageA->first()->kategori : 'Tidak Ditemukan' }}</h6>
+                <h4>List Kategori {{ $kategoriLandingPageA->isNotEmpty() ? $kategoriLandingPageA->first()->kategori : 'Tidak Ditemukan' }}</h4>
+                <br>
               </div>
             </div>
             <div>
-              @foreach ($kategoriAnime as $item)
+              @foreach ($kategoriLandingPageA as $item)
                   <div class="row" style="text-align: justify">
                       <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
                           <div class="d-flex justify-content-center">

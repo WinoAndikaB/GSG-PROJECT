@@ -9,53 +9,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/lg1.png">
-    <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets2/img/lg1.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('assets2/img/lg1.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <title>Kategori Game Video - GSG Project</title>
-
+    @if($kategoriLandingPageA->isNotEmpty())
+    <title>{{ $kategoriLandingPageA->first()->kategori }} - GSG Project</title>
+    @else
+        <title>Tidak Ditemukan</title>
+    @endif
+    
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
+    <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    
     <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="assets/css/fontawesome.css">
-    <link rel="stylesheet" href="assets/css/templatemo-574-mexant.css">
-    <link rel="stylesheet" href="assets/css/owl.css">
-    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/templatemo-574-mexant.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/owl.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}">
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css">
-
+    
+    
+    
     <style>
-      /* Style for the buttons */
-      .animated-button {
-        padding: 10px 20px;
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        transition: background-color 0.3s;
-        cursor: pointer;
-        margin: 5px;
-        font-size: 16px;
-      }
-      
-      .animated-button:hover {
-        background-color: #0056b3;
-      }
-      
-      /* Additional styling for the second button */
-      .animated-button:nth-of-type(2) {
-        background-color: #ff6600;
-      }
-      
-      .animated-button:nth-of-type(2):hover {
-        background-color: #ff4500;
-      }
-      
-          </style>
+/* Style for the buttons */
+.animated-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  cursor: pointer;
+  margin: 5px;
+  font-size: 16px;
+}
 
-  </head>
+.animated-button:hover {
+  background-color: #0056b3;
+}
 
+/* Additional styling for the second button */
+.animated-button:nth-of-type(2) {
+  background-color: #ff6600;
+}
+
+.animated-button:nth-of-type(2):hover {
+  background-color: #ff4500;
+}
+
+    </style>
+
+</head>
 <body>
 
 
@@ -93,51 +98,56 @@
 
   <div class="page-heading">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="header-text">
-            <h2>Kategori Game</h2>
-            <div class="div-dec"></div>
-          </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="header-text">
+                    @if($kategoriLandingPageA->isNotEmpty())
+                        <h2>Kategori {{ $kategoriLandingPageA->first()->kategori }}</h2>
+                        <div class="div-dec"></div>
+                    @else
+                        <h2>Tidak Ada Artikel Ditemukan Pada Ketegori Ini</h2>
+                    @endif
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
+
 
   <!-- ***** Main Banner Area End ***** -->
 
   <div class="pd-top-80 pd-bottom-50" id="grid">
     <div class="container">
 
-
       <section class="about-us" id="about">
         <div class="container">
           <div class="row">
             <div class="col-lg-6 offset-lg-3">
               <div class="section-heading">
-                <h6>Game</h6>
-                <h4>List Video Game</h4><br>
-                <a href="/kategoriGame" class="animated-button">Artikel</a>
-                <a href="/kategoriGameV" class="animated-button">Video</a>
+                <h6>{{ $kategoriLandingPageA->isNotEmpty() ? $kategoriLandingPageA->first()->kategori : 'Tidak Ditemukan' }}</h6>
+                <h4>List Kategori {{ $kategoriLandingPageA->isNotEmpty() ? $kategoriLandingPageA->first()->kategori : 'Tidak Ditemukan' }}</h4>
+                <br>
               </div>
             </div>
             <div>
-              @foreach ($kategoriGameV as $item)
+              @foreach ($kategoriLandingPageA as $item)
                   <div class="row" style="text-align: justify">
                       <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
-                        <iframe width="560" height="200" src="{{$item->linkVideo}}" frameborder="0" allowfullscreen></iframe>
+                          <div class="d-flex justify-content-center">
+                              <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" style="max-width: 100%; height: auto; border-radius: 14px">
+                          </div>
                       </div>
                       <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
-                          <h4 style="text-align: left" >{{ $item->judulVideo }} </h4>
-                          <span class="d-flex"><b>{{ $item->uploader }}</b></span>
-                          <p>{!! substr(strip_tags($item->deskripsiVideo), 0, 400) . (strlen(strip_tags($item->content)) > 400 ? '...' : '') !!}</p>
+                          <h4 style="text-align: left" >{{ $item->judulArtikel }} </h4>
+                          <span class="d-flex"><b>{{ $item->penulis }}</b></span>
+                          <p>{!! substr(strip_tags($item->deskripsi), 0, 400) . (strlen(strip_tags($item->content)) > 400 ? '...' : '') !!}</p>
                       </div>
                       <span style="text-align: right; color: rgba(165, 165, 165, 1);"><p>
                         @php
                         $ulasanCreatedAt = \Carbon\Carbon::parse($item['created_at']);
                         $sekarang = \Carbon\Carbon::now();
                         $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
-    
+      
                         if ($selisihWaktu < 60) {
                           echo $selisihWaktu . ' Menit Lalu';
                         } elseif ($selisihWaktu < 1440) {
@@ -153,7 +163,7 @@
                         }
                       @endphp
                       | 
-                          <a href="{{ route('showDetailLPVideo', ['id' => $item->id]) }}" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a></p></span>
+                          <a href="{{ route('showDetailLPArtikel', ['id' => $item->id]) }}" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a></p></span>
                   </div>
                   <hr>
                   @endforeach

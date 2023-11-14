@@ -47,19 +47,8 @@ use Illuminate\Support\Facades\Route;
 
         //[Non-User] Tab Kategori Landing Page
         Route::get('/kategoriLandingPage', [LandingPageController::class, 'kategoriLandingPage'])->name('kategoriLandingPage');
-        Route::get('/kategoriAnime', [LandingPageController::class, 'kategoriAnime'])->name('kategoriAnime');
-        Route::get('/kategoriAnimeV', [LandingPageController::class, 'kategoriAnimeV'])->name('kategoriAnimeV');
-
-        Route::get('/kategoriVTuber', [LandingPageController::class, 'kategoriVTuber'])->name('kategoriVTuber');
-        Route::get('/kategoriVTuberV', [LandingPageController::class, 'kategoriVTuberV'])->name('kategoriVTuberV');
-
-        Route::get('/kategoriGame', [LandingPageController::class, 'kategoriGame'])->name('kategoriGame');
-        Route::get('/kategoriGameV', [LandingPageController::class, 'kategoriGameV'])->name('kategoriGameV');
-
-        Route::get('/kategoriAnimeVideo', [LandingPageController::class, 'kategoriAnimeVideo'])->name('kategoriAnimeVideo');
-        Route::get('/kategoriVTuberVideo', [LandingPageController::class, 'kategoriVTuberVideo'])->name('kategoriVTuberVideo');
-        Route::get('/kategoriGameVideo', [LandingPageController::class, 'kategoriGameVideo'])->name('kategoriGameVideo');
-
+        Route::get('/kategoriLandingPageA/{kategori}', [LandingPageController::class, 'kategoriLandingPageA'])->name('kategoriLandingPageA');
+        Route::get('/kategoriLandingPageV/{kategori}', [LandingPageController::class, 'kategoriLandingPageV'])->name('kategoriLandingPageV');
 
 //------------------------------------------------------------- [Non-User] Tab About ---------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------- [Non-User] Tab About ---------------------------------------------------------------------------------------------------------
@@ -139,14 +128,8 @@ use Illuminate\Support\Facades\Route;
 //------------------------------------------------------------- [User] Tab Kategori ---------------------------------------------------------------------------------------------------------
 
         Route::get('/kategori', [PenggunaController::class, 'kategori'])->name('kategori');
-        Route::get('/kategoriAnimeLog', [PenggunaController::class, 'kategoriAnimeLog'])->name('kategoriAnimeLog');
-        Route::get('/kategoriAnimeLogV', [PenggunaController::class, 'kategoriAnimeLogV'])->name('kategoriAnimeLogV');
-
-        Route::get('/kategoriVTuberLog', [PenggunaController::class, 'kategoriVTuberLog'])->name('kategoriVTuberLog');
-        Route::get('/kategoriVTuberLogV', [PenggunaController::class, 'kategoriVTuberLogV'])->name('kategoriVTuberLogV');
-
-        Route::get('/kategoriGameLog', [PenggunaController::class, 'kategoriGameLog'])->name('kategoriGameLog');
-        Route::get('/kategoriGameLogV', [PenggunaController::class, 'kategoriGameLogV'])->name('kategoriGameLogV');
+        Route::get('/kategoriA/{kategori}', [PenggunaController::class, 'kategoriA'])->name('kategoriA');
+        Route::get('/kategoriV/{kategori}', [PenggunaController::class, 'kategoriV'])->name('kategoriV');
 
 //------------------------------------------------------------- [User] Tab Profil ---------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------- [User] Tab Profil ---------------------------------------------------------------------------------------------------------

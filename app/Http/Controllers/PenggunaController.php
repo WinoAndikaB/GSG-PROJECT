@@ -17,6 +17,7 @@ use App\Models\LaporanArtikelUser;
 use App\Models\LaporanUlasanUser;
 use App\Models\LaporanVideoUser;
 use Illuminate\Http\Request;
+use App\Models\kategori;
 use Illuminate\Support\Facades\Auth;
 
 class PenggunaController extends Controller
@@ -310,76 +311,35 @@ class PenggunaController extends Controller
 
     function kategori(){
 
-        return view('main.setelahLogin.Kategori.kategori');
+        $kategoriLogA = kategori::all();
+
+        return view('main.setelahLogin.Kategori.kategori', compact('kategoriLogA'));
     }
 
-        function kategoriAnimeLog(){
-            $kategori = 'Anime';
-        
-            $kategoriAnime = artikels::where('kategori', $kategori)
-                                    ->inRandomOrder()
-                                    ->take(10)
-                                    ->get();
-        
-            return view('main.setelahLogin.Kategori.kategoriAnimeLog', compact('kategoriAnime'));
-        }
+    function kategoriLandingPageA($kategori){
 
-        function kategoriAnimeLogV(){
-            $kategori = 'Anime';
-        
-            $kategoriAnimeLogV = video::where('kategoriVideo', $kategori)
-                                    ->inRandomOrder()
-                                    ->take(10)
-                                    ->get();
-        
-            return view('main.setelahLogin.Kategori.kategoriAnimeVideo', compact('kategoriAnimeLogV'));
-        }
+        $kategoriLandingPageA = artikels::where('kategori', $kategori)
+            ->whereNotIn('status', ['Pending', 'Rejected'])
+            ->inRandomOrder()
+            ->take(10)
+            ->get();
+    
+        return view('main.setelahLogin.Kategori.KategoriA', compact('kategoriA'));
+    }
+    
+    function kategoriLandingPageV($kategori){
 
-        function kategoriVTuberLog(){
-            $kategori = 'VTuber';
-        
-            $kategoriVTuber = artikels::where('kategori', $kategori)
-                                    ->inRandomOrder()
-                                    ->take(10)
-                                    ->get();
-        
-            return view('main.setelahLogin.Kategori.kategoriVTuberLog', compact('kategoriVTuber'));
-        }
+        $kategoriLandingPageV = video::where('kategoriVideo', $kategori)
+            ->whereNotIn('status', ['Pending', 'Rejected'])
+            ->inRandomOrder()
+            ->take(10)
+            ->get();
+    
+        return view('main.setelahLogin.Kategori.KategoriV', compact('kategoriV'));
+    }
 
-        function kategoriVTuberLogV(){
-            $kategori = 'VTuber';
-        
-            $kategoriVTuberLogV = video::where('kategoriVideo', $kategori)
-                                    ->inRandomOrder()
-                                    ->take(10)
-                                    ->get();
-        
-            return view('main.setelahLogin.Kategori.kategoriVTuberVideo', compact('kategoriVTuberLogV'));
-        }
-
-        function kategoriGameLog(){
-            $kategori = 'Game';
-        
-            $kategoriGame = artikels::where('kategori', $kategori)
-                                    ->inRandomOrder()
-                                    ->take(10)
-                                    ->get();
-        
-            return view('main.setelahLogin.Kategori.kategoriGameLog', compact('kategoriGame'));
-        }
 
         
-        function kategoriGameLogV(){
-            $kategori = 'Game';
-        
-            $kategoriGameLogV = video::where('kategoriVideo', $kategori)
-                                    ->inRandomOrder()
-                                    ->take(10)
-                                    ->get();
-        
-            return view('main.setelahLogin.Kategori.kategoriGameVideo', compact('kategoriGameLogV'));
-        }
-
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

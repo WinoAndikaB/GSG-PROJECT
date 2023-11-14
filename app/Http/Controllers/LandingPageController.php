@@ -11,6 +11,7 @@ use App\Models\komentar_video;
 use App\Models\syaratdanketentuans;
 use App\Models\ulasans;
 use App\Models\video;
+use App\Models\kategori;
 
 class LandingPageController extends Controller
 {
@@ -24,21 +25,6 @@ class LandingPageController extends Controller
     
         return view('main.sebelumLogin.searchLP', compact('artikels'));
     }
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-        //[Landing Page]  Search Artikel
-    public function ggg(Request $request) {
-        $searchTerm = $request->input('search');
-        
-        $artikels = artikels::where('judulArtikel', 'like', '%' . $searchTerm . '%')
-            ->get();
-    
-        return view('main.sebelumLogin.searchLP', compact('artikels'));
-    }
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 
     //[Landing Page] Search Video
     public function searchLPV(Request $request) {
@@ -145,6 +131,8 @@ class LandingPageController extends Controller
     public function showDetailLPArtikel($id)
     {
         $article = artikels::findOrFail($id);
+
+        $kategoriA = kategori::all();
     
         $box = artikels::inRandomOrder()->take(8)->get();
         $tags = artikels::inRandomOrder()->take(10)->get();
@@ -155,7 +143,7 @@ class LandingPageController extends Controller
     
         $komentarArtikels = komentar_artikel::where('artikel_id', $id)->latest()->paginate(6);
     
-        return view('main.sebelumLogin.detailArtLP', compact('article', 'box', 'tags', 'kategori', 'komentarArtikels', 'totalKomentar'));
+        return view('main.sebelumLogin.detailArtLP', compact('kategoriA','article', 'box', 'tags', 'kategori', 'komentarArtikels', 'totalKomentar'));
     }
     
 
@@ -166,81 +154,32 @@ class LandingPageController extends Controller
 
     function kategoriLandingPage(){
 
-        return view('main.sebelumLogin.KategoriSL.kategoriLandingPage');
+        $kategoriA = kategori::all();
+
+        return view('main.sebelumLogin.KategoriSL.kategoriLandingPage', compact('kategoriA'));
     }
 
-        function kategoriAnime(){
-            $kategori = 'Anime';
-        
-            $kategoriAnime = artikels::where('kategori', $kategori)
-                                    ->whereNotIn('status', ['Pending', 'Rejected'])
-                                    ->inRandomOrder()
-                                    ->take(10)
-                                    ->get();
-                                
-            return view('main.sebelumLogin.KategoriSL.kategoriAnime', compact('kategoriAnime'));
-        }
+    function kategoriLandingPageA($kategori){
 
-        function kategoriAnimeV(){
-            $kategori = 'Anime';
-        
-            $kategoriAnimeV = video::where('kategoriVideo', $kategori)
-                                    ->whereNotIn('statusVideo', ['Pending', 'Rejected'])
-                                    ->inRandomOrder()
-                                    ->take(10)
-                                    ->get();
-        
-            return view('main.sebelumLogin.KategoriSL.kategoriAnimeVideo', compact('kategoriAnimeV'));
-        }
+        $kategoriLandingPageA = artikels::where('kategori', $kategori)
+            ->whereNotIn('status', ['Pending', 'Rejected'])
+            ->inRandomOrder()
+            ->take(10)
+            ->get();
+    
+        return view('main.sebelumLogin.KategoriSL.kategoriLandingPageA', compact('kategoriLandingPageA'));
+    }
+    
+    function kategoriLandingPageV($kategori){
 
-        function kategoriVTuber(){
-            $kategori = 'VTuber';
-        
-            $kategoriVTuber = artikels::where('kategori', $kategori)
-                                    ->whereNotIn('status', ['Pending', 'Rejected'])
-                                    ->inRandomOrder()
-                                    ->take(10)
-                                    ->get();
-        
-            return view('main.sebelumLogin.KategoriSL.kategoriVTuber', compact('kategoriVTuber'));
-        }
-        
-
-        function kategoriVTuberV(){
-            $kategori = 'VTuber';
-        
-            $kategoriVtuberV = video::where('kategoriVideo', $kategori)
-                                    ->whereNotIn('statusVideo', ['Pending', 'Rejected'])
-                                    ->inRandomOrder()
-                                    ->take(10)
-                                    ->get();
-        
-            return view('main.sebelumLogin.KategoriSL.kategoriVTuberVideo', compact('kategoriVtuberV'));
-        }
-
-        function kategoriGame(){
-            $kategori = 'Game';
-        
-            $kategoriGame = artikels::where('kategori', $kategori)
-                                    ->whereNotIn('status', ['Pending', 'Rejected'])
-                                    ->inRandomOrder()
-                                    ->take(10)
-                                    ->get();
-        
-            return view('main.sebelumLogin.KategoriSL.kategoriGame', compact('kategoriGame'));
-        }
-
-        function kategoriGameV(){
-            $kategori = 'Game';
-        
-            $kategoriGameV = video::where('kategoriVideo', $kategori)
-                                    ->whereNotIn('statusVideo', ['Pending', 'Rejected'])
-                                    ->inRandomOrder()
-                                    ->take(10)
-                                    ->get();
-        
-            return view('main.sebelumLogin.KategoriSL.kategoriGameVideo', compact('kategoriGameV'));
-        }
+        $kategoriLandingPageV = video::where('kategoriVideo', $kategori)
+            ->whereNotIn('status', ['Pending', 'Rejected'])
+            ->inRandomOrder()
+            ->take(10)
+            ->get();
+    
+        return view('main.sebelumLogin.KategoriSL.kategoriLandingPageV', compact('kategoriLandingPageA'));
+    }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -282,15 +221,16 @@ class LandingPageController extends Controller
     {
         $video = Video::findOrFail($id);
 
+        $kategoriV = kategori::all();
+
         $boxVideo = Video::inRandomOrder()->take(10)->get();
         $tagsV = Video::inRandomOrder()->take(10)->get();
-        $kategoriV = Video::inRandomOrder()->take(10)->get();
 
         $komentarVideos = komentar_video::where('video_id', $id)->latest()->paginate(6);
 
         $totalKomentarV = komentar_video::where('video_id', $id)->count();
         
-        return view('main.sebelumLogin.detailVidLP', compact('video', 'boxVideo', 'tagsV', 'kategoriV', 'komentarVideos','totalKomentarV' ));
+        return view('main.sebelumLogin.detailVidLP', compact('kategoriV','video', 'boxVideo', 'tagsV', 'kategoriV', 'komentarVideos','totalKomentarV' ));
     }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -60,43 +60,31 @@
 
 
   <!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky" style="text-align: center;">
+  <header class="header-area header-sticky">
     <div class="container">
-        <div class="row align-items-center">
+        <div class="row">
             <div class="col-12">
-              <nav class="main-nav">
-                <ul class="nav">
-                    <li class="scroll-to-section"><a href="/">Home</a></li>
-                    <li class="scroll-to-section"><a href="#trends">Trending</a></li>
-                    <li class="scroll-to-section"><a href="#about">Artikel</a></li>
-                    <li class="scroll-to-section"><a href="/Video" class="">Video</a></li>
-                    <li class="scroll-to-section"><a href="/kategori" class="active">Kategori</a></li>
-                    <li class="scroll-to-section"><a href="/event">Event</a></li>
-                    <li class="scroll-to-section"><a href="/ulasan" class="text-center">Ulasan</a></li>
-                    <li class="scroll-to-section"><a href="/about" class="">Tentang</a></li>
-                    <li class="scroll-to-section">
-                      <a href="/profileUser" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center">
-                        <div class="profile-picture" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
-                            <?php
-                            $fotoProfil = Auth::user()->fotoProfil;
-                            if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
-                            ?>
-                            <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
-                            <?php
-                            } else {
-                            ?>
-                            <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
-                            <?php
-                            }
-                            ?>
-                        </div>
-                        <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
-                    </a>                        
-                    </li>
-                    <li class="scroll-to-section">
-                      <a href="#" class="d-sm-inline d-none text-white text-bold" id="logout-link" onclick="openModal()"> Logout</a>
-                    </li>
-            </nav>
+                <nav class="main-nav">
+                    <a href="/" class="logo">
+                        <img src="" alt="">
+                    </a>
+                    GSG<span>PROJECT</span>
+                    <ul class="nav">
+                      <li class="scroll-to-section"><a href="/" >Home</a></li>
+                      <li class="scroll-to-section"><a href="/">Trending</a></li>
+                      <li class="scroll-to-section"><a href="/">Artikel</a></li>
+                      <li class="scroll-to-section"><a href="/landingPageVideo">Video</a></li>
+                      <li class="scroll-to-section"><a href="/kategoriLandingPage" class="active">Kategori</a></li>
+                      <li class="scroll-to-section"><a href="/eventLandingPage">Event</a></li>
+                      <li class="scroll-to-section"><a href="/ulasanLandingPage">Ulasan</a></li>
+                      <li class="scroll-to-section"><a href="/abouts">Tentang</a></li>
+                      <li class="scroll-to-section"><a href="/login">Login</a></li>
+                    </ul>       
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
             </div>
         </div>
     </div>
@@ -129,12 +117,12 @@
               <div class="section-heading">
                 <h6>Anime</h6>
                 <h4>List Video Anime</h4><br>
-                <a href="/kategoriAnimeLog" class="animated-button">Artikel</a>
-                <a href="/kategoriAnimeLogV" class="animated-button">Video</a>
+                <a href="/kategoriAnime" class="animated-button">Artikel</a>
+                <a href="/kategoriAnimeV" class="animated-button">Video</a>
               </div>
             </div>
             <div>
-              @foreach ($kategoriAnimeLogV as $item)
+              @foreach ($kategoriAnimeV as $item)
                   <div class="row" style="text-align: justify">
                       <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
                         <iframe width="560" height="200" src="{{$item->linkVideo}}" frameborder="0" allowfullscreen></iframe>
@@ -165,7 +153,7 @@
                         }
                       @endphp
                       | 
-                          <a href="{{ route('showDetailVideo', ['id' => $item->id]) }}" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a></p></span>
+                          <a href="{{ route('showDetailLPVideo', ['id' => $item->id]) }}" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a></p></span>
                   </div>
                   <hr>
                   @endforeach

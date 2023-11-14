@@ -19,7 +19,7 @@
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.css') }}">
     <link rel="stylesheet" href="assets/css/templatemo-574-mexant.css">
     <link rel="stylesheet" href="assets/css/owl.css">
     <link rel="stylesheet" href="assets/css/animate.css">
@@ -93,81 +93,29 @@ https://templatemo.com/tm-574-mexant
 
       <div class="container">
         <div class="row">
+          @foreach ($kategoriA as $item)  
           <div class="col-lg-3 col-md-6">
             <div class="item">
               <div class="trending-post">
                 <div class="single-post-wrap style-overlay">
                   <div class="thumb">
-                    <img src="https://images3.alphacoders.com/133/1331008.png" alt="img" width="100%" height="200">
+                    <img src="{{ asset('fotoKategori/'.$item->fotoKategori) }}" alt="img" width="100%" height="200">
                   </div>
+                  
                   <div class="details">
-                    <h6 class="title"><a href="/kategoriAnime">Anime</a></h6>
+                    <h6 class="title">  
+                      <a href="{{ route('kategoriLandingPageA', ['kategori' => $item->kategori]) }}">{{ $item->kategori }}</a>                    
+                    </h6>
+
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-lg-3 col-md-6">
-            <div class="item">
-              <div class="trending-post">
-                <div class="single-post-wrap style-overlay">
-                  <div class="thumb">
-                    <img src="https://t3.ftcdn.net/jpg/04/66/29/50/360_F_466295095_7pE9mbUqZEjzHDHA2Jgt7EGnzNYibd8S.jpg" alt="img" width="100%" height="200">
-                  </div>
-                  <div class="details">
-                    <h6 class="title"><a href="/kategoriVTuber">Virtual YouTuber</a></h6>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>    
-          <div class="col-lg-3 col-md-6">
-            <div class="item">
-              <div class="trending-post">
-                <div class="single-post-wrap style-overlay">
-                  <div class="thumb">
-                    <img src="https://c4.wallpaperflare.com/wallpaper/943/336/946/point-blank-online-game-wallpaper-preview.jpg" alt="img">
-                  </div>
-                  <div class="details">
-                    <h6 class="title"><a href="/kategoriGame">Game</a></h6>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          {{-- <div class="col-lg-3 col-md-6">
-            <div class="item">
-              <div class="trending-post">
-                <div class="single-post-wrap style-overlay">
-                  <div class="thumb">
-                    <img src="https://s3.amazonaws.com/static.organiclead.com/Site-188d77f5-71db-4d99-84a6-4daef9a27c27/Blog_images/0ec1f71c_3137_46ff_b881_4b5982d72c74.jpg" alt="img">
-                  </div>
-                  <div class="details">
-                    <h6 class="title"><a href="#">Budaya</a></h6>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> --}}
-          {{-- <div class="col-lg-3 col-md-6">
-            <div class="item">
-              <div class="trending-post">
-                <div class="single-post-wrap style-overlay">
-                  <div class="thumb">
-                    <img src="https://i.pinimg.com/originals/19/a1/b2/19a1b216f31a5d18a054aef242ccacab.jpg" alt="img">
-                  </div>
-                  <div class="details">
-                    <h6 class="title"><a href="#">Seni</a></h6>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> --}}
+          @endforeach
         </div>
       </div>
       
-    
-        
     </div>
 </div>
 

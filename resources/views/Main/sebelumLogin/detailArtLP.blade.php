@@ -9,31 +9,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/lg1.png">
-    <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets2/img/lg1.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('assets2/img/lg1.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
+    
     <title>Detail Artikel - GSG Project</title>
-
+    
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-
+    
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/templatemo-574-mexant.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/owl.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}">
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css">
-
-    <link href="{{ asset('aset1/css/media_query.css')}}" rel="stylesheet" type="text/css"/>
-    <link href="{{ asset('aset1/css/bootstrap.css')}}" rel="stylesheet" type="text/css"/>
-    <link href="{{ asset('aset1/css/owl.carousel.css')}}" rel="stylesheet" type="text/css"/>
-    <link href="{{ asset('aset1/css/owl.theme.default.css')}}" rel="stylesheet" type="text/css"/>
+    
+    <link href="{{ asset('aset1/css/media_query.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('aset1/css/bootstrap.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('aset1/css/owl.carousel.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('aset1/css/owl.theme.default.css') }}" rel="stylesheet" type="text/css"/>
     <!-- Bootstrap CSS -->
-    <link href="{{ asset('aset1/css/style_1.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('aset1/css/style_1.css') }}" rel="stylesheet" type="text/css"/>
     <!-- Modernizr JS -->
-    <script src="{{ asset('aset1/js/modernizr-3.5.0.min.js')}}"></script>
-
+    <script src="{{ asset('aset1/js/modernizr-3.5.0.min.js') }}"></script>
+    
     <style>
       .modal {
         display: none;
@@ -194,10 +194,10 @@
           $uniqueCategories = [];
           @endphp
           
-          @foreach($kategori as $item)
+          @foreach($kategoriA as $item)
               @if (!in_array($item->kategori, $uniqueCategories))
                   <span class="fh5co_tags_all">
-                      <a href="{{ $item->kategori === 'Game' ? route('kategoriGame') : ($item->kategori === 'VTuber' ? route('kategoriVTuber') : route('kategoriAnime')) }}" class="fh5co_tagg">{{ $item->kategori }}</a>
+                      <a href="" class="fh5co_tagg">{{ $item->kategori }}</a>
                   </span>
                   @php
                   $uniqueCategories[] = $item->kategori;
@@ -346,34 +346,35 @@
 
   
   <!-- Bootstrap core JavaScript -->
-    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
-    <script src="{{ asset('assets/js/isotope.min.js') }}"></script>
-    <script src="{{ asset('assets/js/owl-carousel.js') }}"></script>
-
-    <script src="{{ asset('assets/js/tabs.js') }}"></script>
-    <script src="{{ asset('assets/js/swiper.js') }}"></script>
-    <script src="{{ asset('assets/js/custom.js') }}"></script>
-
-    <div class="gototop js-top">
-      <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
-    </div>
-    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
-    <!--<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+  <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+  <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  
+  <script src="{{ asset('assets/js/isotope.min.js') }}"></script>
+  <script src="{{ asset('assets/js/owl-carousel.js') }}"></script>
+  
+  <script src="{{ asset('assets/js/tabs.js') }}"></script>
+  <script src="{{ asset('assets/js/swiper.js') }}"></script>
+  <script src="{{ asset('assets/js/custom.js') }}"></script>
+  
+  <div class="gototop js-top">
+    <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
+  </div>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+  <!--<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
           integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
           crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
           integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
           crossorigin="anonymous"></script>
-
-    <!-- Parallax -->
-    <script src="{{ asset('aset1/js/jquery.stellar.min.js') }}"></script>
-    <!-- Main -->
-    <script src="{{ asset('aset1/js/main.js') }}"></script>
+  
+  <!-- Parallax -->
+  <script src="{{ asset('aset1/js/jquery.stellar.min.js') }}"></script>
+  <!-- Main -->
+  <script src="{{ asset('aset1/js/main.js') }}"></script>
+  
 
   </body>
 </html>
