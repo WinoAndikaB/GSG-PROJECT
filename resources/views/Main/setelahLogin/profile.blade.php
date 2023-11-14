@@ -203,16 +203,18 @@
                                     echo asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999');
                                 }
                             ?>" alt="User's Profile Picture">
-
+                            </a>
                             <br>
                             <br>
                             <br>
                             <h5 class="title">{{Auth::user()->name}}</h5>
                             <span>{{Auth::user()->username}}</span>
-                          </a>
-                          <p class="description">
-                            {{Auth::user()->email}}
-                          </p>
+                            <p class="description">
+                              {{Auth::user()->email}}
+                            </p>
+                            <hr>
+                            <span>Bergabung Sejak: <br> {{ \Carbon\Carbon::parse(Auth::user()->created_at)->format('d F, Y') }}</span>
+                            <hr>
                         </div>
                         <p class="description">
                           {{Auth::user()->aboutme}}

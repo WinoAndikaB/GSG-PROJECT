@@ -197,7 +197,7 @@
           @foreach($kategoriA as $item)
               @if (!in_array($item->kategori, $uniqueCategories))
                   <span class="fh5co_tags_all">
-                      <a href="" class="fh5co_tagg">{{ $item->kategori }}</a>
+                      <a href="{{ route('kategoriLandingPageA', ['kategori' => $item->kategori]) }}" class="fh5co_tagg">{{ $item->kategori }}</a>
                   </span>
                   @php
                   $uniqueCategories[] = $item->kategori;

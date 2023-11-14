@@ -13,8 +13,8 @@
     <link rel="icon" type="image/png" href="{{ asset('assets2/img/lg1.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    @if($kategoriLandingPageA->isNotEmpty())
-    <title>{{ $kategoriLandingPageA->first()->kategori }} - GSG Project</title>
+    @if($KategoriLogA->isNotEmpty())
+    <title>{{ $KategoriLogA->first()->kategori }} - GSG Project</title>
     @else
         <title>Tidak Ditemukan</title>
     @endif
@@ -32,64 +32,120 @@
     
     
     <style>
-/* Style for the buttons */
-.animated-button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  transition: background-color 0.3s;
-  cursor: pointer;
-  margin: 5px;
-  font-size: 16px;
-}
+    .animated-button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+      cursor: pointer;
+      margin: 5px;
+      font-size: 16px;
+    }
 
-.animated-button:hover {
-  background-color: #0056b3;
-}
+    .animated-button:hover {
+      background-color: #0056b3;
+    }
 
-/* Additional styling for the second button */
-.animated-button:nth-of-type(2) {
-  background-color: #ff6600;
-}
+    /* Additional styling for the second button */
+    .animated-button:nth-of-type(2) {
+      background-color: #ff6600;
+    }
 
-.animated-button:nth-of-type(2):hover {
-  background-color: #ff4500;
-}
-
+    .animated-button:nth-of-type(2):hover {
+      background-color: #ff4500;
+    }
     </style>
+    <style>
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        overflow: hidden; /* Tidak dapat di-scroll */
+      }
+  
+      .modal-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        border: 1px solid #888;
+        width: 20%;
+        height: 30%; /* Mengatur tinggi modal menjadi 60% */
+        text-align: center;
+      }
+  
+      .close {
+        color: #888;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+  
+      #confirm-button, #cancel-button {
+        padding: 10px 20px;
+        margin: 25px;
+        cursor: pointer;
+      }
+  </style>
 
 </head>
 <body>
 
 
   <!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky">
+  <header class="header-area header-sticky" style="text-align: center;">
     <div class="container">
-        <div class="row">
+        <div class="row align-items-center">
             <div class="col-12">
-                <nav class="main-nav">
-                    <a href="/" class="logo">
-                        <img src="" alt="">
-                    </a>
-                    GSG<span>PROJECT</span>
-                    <ul class="nav">
-                      <li class="scroll-to-section"><a href="/" >Home</a></li>
-                      <li class="scroll-to-section"><a href="/">Trending</a></li>
-                      <li class="scroll-to-section"><a href="/">Artikel</a></li>
-                      <li class="scroll-to-section"><a href="/landingPageVideo">Video</a></li>
-                      <li class="scroll-to-section"><a href="/kategoriLandingPage" class="active">Kategori</a></li>
-                      <li class="scroll-to-section"><a href="/eventLandingPage">Event</a></li>
-                      <li class="scroll-to-section"><a href="/ulasanLandingPage">Ulasan</a></li>
-                      <li class="scroll-to-section"><a href="/abouts">Tentang</a></li>
-                      <li class="scroll-to-section"><a href="/login">Login</a></li>
-                    </ul>       
-                    <a class='menu-trigger'>
-                        <span>Menu</span>
-                    </a>
-                    <!-- ***** Menu End ***** -->
-                </nav>
+              <nav class="main-nav">
+                <ul class="nav">
+                    <li class="scroll-to-section"><a href="/">Home</a></li>
+                    <li class="scroll-to-section"><a href="#trends">Trending</a></li>
+                    <li class="scroll-to-section"><a href="#about">Artikel</a></li>
+                    <li class="scroll-to-section"><a href="/Video" class="">Video</a></li>
+                    <li class="scroll-to-section"><a href="/kategori" class="active">Kategori</a></li>
+                    <li class="scroll-to-section"><a href="/event">Event</a></li>
+                    <li class="scroll-to-section"><a href="/ulasan" class="text-center">Ulasan</a></li>
+                    <li class="scroll-to-section"><a href="/about" class="">Tentang</a></li>
+                    <li class="scroll-to-section">
+                      <a href="/profileUser" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center">
+                        <div class="profile-picture" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
+                            <?php
+                            $fotoProfil = Auth::user()->fotoProfil;
+                            if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
+                            ?>
+                            <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                            <?php
+                            } else {
+                            ?>
+                            <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                            <?php
+                            }
+                            ?>
+                        </div>
+                        <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
+                    </a>                        
+                    </li>
+                    <li class="scroll-to-section">
+                      <a href="#" class="d-sm-inline d-none text-white text-bold" id="logout-link" onclick="openModal()"> Logout</a>
+                    </li>
+            </nav>
             </div>
         </div>
     </div>
@@ -101,8 +157,8 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="header-text">
-                    @if($kategoriLandingPageA->isNotEmpty())
-                        <h2>Kategori {{ $kategoriLandingPageA->first()->kategori }}</h2>
+                    @if($KategoriLogA->isNotEmpty())
+                        <h2>Kategori {{ $KategoriLogA->first()->kategori }}</h2>
                         <div class="div-dec"></div>
                     @else
                         <h2>Tidak Ada Artikel Ditemukan Pada Ketegori Ini</h2>
@@ -122,15 +178,8 @@
       <section class="about-us" id="about">
         <div class="container">
           <div class="row">
-            <div class="col-lg-6 offset-lg-3">
-              <div class="section-heading">
-                <h6>{{ $kategoriLandingPageA->isNotEmpty() ? $kategoriLandingPageA->first()->kategori : 'Tidak Ditemukan' }}</h6>
-                <h4>List Kategori {{ $kategoriLandingPageA->isNotEmpty() ? $kategoriLandingPageA->first()->kategori : 'Tidak Ditemukan' }}</h4>
-                <br>
-              </div>
-            </div>
             <div>
-              @foreach ($kategoriLandingPageA as $item)
+              @foreach ($KategoriLogA as $item)
                   <div class="row" style="text-align: justify">
                       <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
                           <div class="d-flex justify-content-center">
@@ -163,20 +212,62 @@
                         }
                       @endphp
                       | 
-                          <a href="{{ route('showDetailLPArtikel', ['id' => $item->id]) }}" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a></p></span>
+                          <a href="{{ route('detail.artikel', ['id' => $item->id]) }}" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a></p></span>
                   </div>
                   <hr>
                   @endforeach
               </div>
           </div>
         </div>
-      </section>
-    
-        
+      </section>  
     </div>
 </div>
 
+      <!-- Modal Logout -->
+      <div id="logout-modal" class="modal">
+        <div class="modal-content">
+          <span class="close" id="close-button" onclick="closeModal()">&times;</span>
+          <h2>Konfirmasi Logout</h2>
+          <p>Apakah anda mau logout?</p>
+          <div style="text-align: center;">
+            <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
+            <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
+          </div>
+        </div>
+      </div>
 
-  
+
+      <!--  logout Script -->
+      <script>
+        // JavaScript untuk modal logout
+        function openModal() {
+          const modal = document.getElementById('logout-modal');
+          modal.style.display = 'block';
+        }
+      
+        function closeModal() {
+          const modal = document.getElementById('logout-modal');
+          modal.style.display = 'none';
+        }
+      
+        function confirmLogout(confirmed) {
+          if (confirmed) {
+            // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
+            window.location.href = '/logout';
+          } else {
+            // Tutup modal jika pengguna memilih "No"
+            closeModal();
+          }
+        }
+      
+        // Tutup modal jika pengguna mengklik di luar modal
+        window.addEventListener('click', (event) => {
+          const modal = document.getElementById('logout-modal');
+          if (event.target == modal) {
+            modal.style.display = 'none';
+          }
+        });
+      </script>
+
   </body>
 </html>

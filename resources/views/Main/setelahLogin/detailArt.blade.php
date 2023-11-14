@@ -219,15 +219,15 @@
           @php
           $uniqueCategories = [];
           @endphp
-
-          @foreach($kategori as $item)
-            @if (!in_array($item->kategori, $uniqueCategories))
-                <span class="fh5co_tags_all">
-                    <a href="{{ $item->kategori === 'Game' ? route('kategoriGameLog') : ($item->kategori === 'VTuber' ? route('kategoriVTuberLog') : route('kategoriAnimeLog')) }}" class="fh5co_tagg">{{ $item->kategori }}</a>
-                </span>
-                @php
-                $uniqueCategories[] = $item->kategori;
-                @endphp
+          
+          @foreach($kategoriLogA as $item)
+              @if (!in_array($item->kategori, $uniqueCategories))
+                  <span class="fh5co_tags_all">
+                      <a href="{{ route('kategoriA', ['kategori' => $item->kategori]) }}" class="fh5co_tagg">{{ $item->kategori }}</a>
+                  </span>
+                  @php
+                  $uniqueCategories[] = $item->kategori;
+                  @endphp
               @endif
           @endforeach
 

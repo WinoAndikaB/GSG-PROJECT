@@ -243,8 +243,8 @@ class LandingPageController extends Controller
         $data1 = ulasans::orderBy('created_at', 'desc')->get();
 
         // Mengambil data ulasan secara acak
-        $query = ulasans::inRandomOrder();
-    
+        $query = ulasans::orderBy('created_at', 'desc')->get();
+
         //Rating
         $ratings = $data1->pluck('rating')->map(function ($rating) {
             return (int) $rating; // Mengonversi rating ke integer

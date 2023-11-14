@@ -220,13 +220,13 @@
         $uniqueCategories = [];
         @endphp
         
-        @foreach($kategoriV as $item)
-            @if (!in_array($item->kategoriVideo, $uniqueCategories))
+        @foreach($kategoriLogV as $item)
+            @if (!in_array($item->kategori, $uniqueCategories))
                 <span class="fh5co_tags_all">
-                    <a href="{{ $item->kategoriVideo === 'Game' ? route('kategoriGameLogV') : ($item->kategoriVideo === 'VTuber' ? route('kategoriVTuberLogV') : route('kategoriAnimeLogV')) }}" class="fh5co_tagg">{{ $item->kategoriVideo }}</a>
+                    <a href="" class="fh5co_tagg">{{ $item->kategori }}</a>
                 </span>
                 @php
-                $uniqueCategories[] = $item->kategoriVideo;
+                $uniqueCategories[] = $item->kategori;
                 @endphp
             @endif
         @endforeach

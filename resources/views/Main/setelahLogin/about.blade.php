@@ -166,7 +166,7 @@
               </div>
               <div class="accordion-body">
                   <div class="content">
-                      <p>Selamat datang di GSG Project! Kami adalah sebuah platform hiburan yang didedikasikan untuk memberikan pengalaman hiburan yang tak terlupakan kepada para pengguna kami. Dengan kombinasi artikel informatif, video pendukung, dan informasi tentang event hiburan, GSG Project adalah destinasi utama bagi pecinta hiburan.</p>
+                      <p>Selamat datang di GSG Project, ruang digital yang kami bentuk untuk menjadi sumber utama bagi mereka yang haus akan pengetahuan, inspirasi, dan hiburan berkualitas. Sebagai tim yang berkomitmen, kami percaya bahwa pembelajaran adalah proses sepanjang hayat, dan melalui GSG Project, kami ingin mempermudah perjalanan Anda dalam mengeksplorasi dunia informasi yang kaya dan beragam.</p>
                   </div>
               </div>
           </article>
@@ -180,17 +180,17 @@
             <div class="accordion-body">
                 <div class="content">
                     <p>
-                      <strong>1. Menghibur dan Memberikan Informasi: </strong><br>
+                      <strong>1. Memberikan Platform Berkualitas: </strong><br>
                       
-                      Kami berkomitmen untuk memberikan hiburan berkualitas dan informasi terbaru kepada pengguna kami. Melalui artikel-artikel yang menarik, video pendukung, dan informasi tentang event hiburan, kami bertujuan untuk menghibur dan memberikan wawasan kepada Anda.<br>
+                      Kami bertekad memberikan platform yang tidak hanya memfasilitasi upload artikel informatif tetapi juga menyajikan video pendukung berkualitas tinggi. Kami percaya bahwa kombinasi artikel dan video dapat menciptakan pengalaman pembelajaran yang lebih menyeluruh dan menarik.<br>
                       <br>
-                      <strong>2. Mendukung Komunitas Hiburan</strong><br>
+                      <strong>2. Menyediakan Beragam Kategori: </strong><br>
                       
-                      GSG Project adalah tempat yang membantu mendukung komunitas pecinta hiburan. Kami ingin menciptakan ruang di mana Anda dapat berbagi minat dan mengejar passion Anda.<br>
+                      GSG Project mencakup berbagai kategori agar setiap pengunjung dapat menemukan konten yang sesuai dengan minat dan kebutuhan mereka. Dari sains hingga seni, kami berusaha untuk merangkul keragaman pengetahuan.<br>
                       <br>
-                      <strong>3. Menginspirasi Kreativitas</strong><br>
+                      <strong>3. Menjadi Sumber Informasi Terpercaya:</strong><br>
                       
-                      Kami ingin menginspirasi kreativitas dalam dunia hiburan. Baik Anda seorang pencipta konten, artis, atau penikmat seni, kami berharap GSG Project dapat menginspirasi dan memotivasi Anda untuk mengembangkan kreativitas Anda.<br>
+                      Kami berkomitmen untuk menjadi sumber informasi yang terpercaya dan akurat. Setiap artikel yang diunggah melalui platform kami melalui proses kurasi yang ketat, memastikan bahwa pengguna mendapatkan informasi yang berkualitas.<br>
                     </p>
                 </div>
             </div>
@@ -206,9 +206,8 @@
         <div class="col-lg-5">
           <div class="left-content">
             <h4>Kami Butuh Dukungan Anda</h4>
-            <p>GSG Project dikelola oleh tim yang bersemangat untuk memberikan pengalaman hiburan terbaik kepada Anda. Untuk terus berkembang dan menghadirkan konten yang lebih baik, kami mengandalkan dukungan dari komunitas kami. Jadi, mari bersama-sama menjadikan GSG Project sebagai sumber utama hiburan dan inspirasi Anda.
-
-              Terima kasih telah mengunjungi GSG Project. Kami berharap Anda menikmati waktu Anda di sini dan merasa terinspirasi oleh apa yang kami tawarkan.</p>
+            <p>GSG Project adalah perwujudan semangat kami untuk membangun komunitas pembelajar yang dinamis dan berbagi. Kami berharap bahwa setiap langkah yang Anda ambil di dalam platform ini membawa Anda lebih dekat pada pemahaman yang lebih dalam, 
+              inspirasi yang tak terbatas, dan konektivitas dengan komunitas yang berpikiran serupa. Selamat mengeksplorasi dan bergabunglah dengan kami dalam perjalanan pengetahuan yang tak ada habisnya!</p>
             <div class="green-button">
                 <a href="contact-us.html">Temukan Lebih Lanjut</a>
             </div>
@@ -221,7 +220,7 @@
                 <div class="item">
                   <em>01</em>
                   <h4>Jelajahi Konten Kami</h4>
-                  <p>Temukan beragam artikel menarik, video pendukung, dan informasi tentang event hiburan yang kami sediakan. Cari topik yang Anda minati dan mulailah menjelajah.</p>
+                  <p>Temukan beragam artikel menarik, video pendukung, dan informasi yang kami sediakan. Cari topik yang Anda minati dan mulailah menjelajah.</p>
                 </div>
               </div>
               <div class="col-lg-6">
@@ -234,8 +233,8 @@
               <div class="col-lg-6">
                 <div class="item">
                   <em>03</em>
-                  <h4>Terlibat dalam Event Hiburan</h4>
-                  <p>Jika Anda tertarik pada event hiburan tertentu, temukan informasi tentang event tersebut di GSG Project. Anda dapat membeli tiket atau mendapatkan detail lainnya untuk merencanakan partisipasi Anda.</p>
+                  <h4>Manfaatkan Video Pendukung</h4>
+                  <p>Saksikan video pendukung yang tersedia untuk meningkatkan pemahaman Anda. Video dapat menjadi pelengkap yang sangat berharga untuk artikel dan memperkaya cara Anda menyerap informasi.</p>
                 </div>
               </div>
               <div class="col-lg-6">

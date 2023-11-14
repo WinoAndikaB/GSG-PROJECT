@@ -140,6 +140,7 @@ class PenggunaController extends Controller
     public function showDetailArtikel($id)
     {
         $article = artikels::findOrFail($id);
+        $kategoriLogA = kategori::all();
 
         $box = artikels::inRandomOrder()->take(8)->get();
 
@@ -151,7 +152,7 @@ class PenggunaController extends Controller
 
         $totalKomentarArtikels = komentar_artikel::where('artikel_id', $id)->count();
     
-        return view('main.setelahLogin.detailArt', compact('article', 'box', 'tags', 'kategori', 'komentarArtikels','totalKomentarArtikels'));
+        return view('main.setelahLogin.detailArt', compact('kategoriLogA','article', 'box', 'tags', 'kategori', 'komentarArtikels','totalKomentarArtikels'));
     }
 
     //[User-Detail Artikel] Menampilkan Komentar Pada Detail Artikel Ketika Di Klik
@@ -230,6 +231,8 @@ class PenggunaController extends Controller
     {
         $video = Video::findOrFail($id);
 
+        $kategoriLogV = kategori::all();
+
         $boxVideo = Video::inRandomOrder()->take(10)->get();
         $tagsV = Video::inRandomOrder()->take(10)->get();
         $kategoriV = Video::inRandomOrder()->take(10)->get();
@@ -238,7 +241,7 @@ class PenggunaController extends Controller
         
         $totalKomentarVideo = komentar_video::where('video_id', $id)->count();
         
-        return view('main.setelahLogin.detailVid', compact('video', 'boxVideo', 'tagsV', 'kategoriV', 'komentarVideos', 'totalKomentarVideo'));
+        return view('main.setelahLogin.detailVid', compact('kategoriLogV','video', 'boxVideo', 'tagsV', 'kategoriV', 'komentarVideos', 'totalKomentarVideo'));
     }
 
     //[User-Detail Video] Komentar Video User
@@ -316,26 +319,26 @@ class PenggunaController extends Controller
         return view('main.setelahLogin.Kategori.kategori', compact('kategoriLogA'));
     }
 
-    function kategoriLandingPageA($kategori){
+    function KategoriA($kategori){
 
-        $kategoriLandingPageA = artikels::where('kategori', $kategori)
+        $KategoriLogA = artikels::where('kategori', $kategori)
             ->whereNotIn('status', ['Pending', 'Rejected'])
             ->inRandomOrder()
             ->take(10)
             ->get();
     
-        return view('main.setelahLogin.Kategori.KategoriA', compact('kategoriA'));
+        return view('main.setelahLogin.Kategori.KategoriA', compact('KategoriLogA'));
     }
     
-    function kategoriLandingPageV($kategori){
+    function kategoriV($kategori){
 
-        $kategoriLandingPageV = video::where('kategoriVideo', $kategori)
+        $kategoriLogV = video::where('kategoriVideo', $kategori)
             ->whereNotIn('status', ['Pending', 'Rejected'])
             ->inRandomOrder()
             ->take(10)
             ->get();
     
-        return view('main.setelahLogin.Kategori.KategoriV', compact('kategoriV'));
+        return view('main.setelahLogin.Kategori.KategoriV', compact('kategoriLogV'));
     }
 
 
@@ -360,41 +363,29 @@ class PenggunaController extends Controller
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    //[User-Ulasan] Halaman Ulasan
-    function ulasan(Request $request){
-        // Mengambil data ulasan secara acak
-        $query = ulasans::inRandomOrder();
-    
-       //Filter
-        $filter = $request->input('filter'); 
+   //[User-Ulasan] Halaman Ulasan
+function ulasan(Request $request){
+         // Mengambil data ulasan dengan mengurutkannya berdasarkan created_at
+         $data1 = ulasans::orderBy('created_at', 'desc')->get();
 
-        if ($filter === 'newest') {
-            // Urutkan ulasan berdasarkan yang terbaru
-            $query->orderByRaw('created_at DESC');
-        } elseif ($filter === 'oldest') {
-            // Urutkan ulasan berdasarkan yang terlama
-            $query->orderByRaw('created_at ASC');
-        } elseif ($filter === 'mine') {
-            // Filter ulasan yang dimiliki oleh pengguna yang sedang login
-            $query->where('user_id', auth()->user()->id);
-        }
+         // Mengambil data ulasan secara acak
+         $query = ulasans::orderBy('created_at', 'desc')->get();
+ 
+         //Rating
+         $ratings = $data1->pluck('rating')->map(function ($rating) {
+             return (int) $rating; // Mengonversi rating ke integer
+         });
+         
+         $totalRatings = $ratings->sum();
+         $averageRating = $ratings->count() > 0 ? $totalRatings / $ratings->count() : 0;
+     
+         //Hitung Ulasan
+         $totalUlasan = ulasans::count();
+         
 
-        $data1 = $query->get();
-    
-        //Rating
-        $ratings = $data1->pluck('rating')->map(function ($rating) {
-            return (int) $rating; // Mengonversi rating ke integer
-        });
-    
-        $totalRatings = $ratings->sum();
-        $averageRating = $ratings->count() > 0 ? $totalRatings / $ratings->count() : 0;
-    
-        //Hitung Ulasan
-        $totalUlasan = ulasans::count();
-    
-        return view('main.setelahLogin.ulasan', compact('data1', 'averageRating', 'totalUlasan'));
-    }
-    
+    return view('main.setelahLogin.ulasan', compact('data1', 'averageRating', 'totalUlasan'));
+}
+
 
     //[User-Ulasan] Tambah Ulasan
     public function storeUlasan(Request $request)
