@@ -297,12 +297,20 @@
                       <textarea class="form-control" type="textarea" name="judulArtikel" required>{{ $data->judulArtikel }}</textarea>
                     </div>
                     <div class="form-group">
+                      <label for="" class="form-control-label">Email</label>
+                      <input class="form-control" type="text" name="email" value="{{ $data->email }}" required readonly>
+                    </div>
+                    <div class="form-group">
                       <label for="" class="form-control-label">Penulis</label>
                       <input class="form-control" type="text" name="penulis" value="{{ $data->penulis }}" required readonly>
                     </div>
                     <div class="form-group">
                       <label for="" class="form-control-label">Kategori</label>
-                      <textarea class="form-control" type="text" name="kategori" required>{{ $data->kategori }}</textarea>
+                      <select class="form-control" id="kategori" name="kategori" required>
+                        @foreach($kategoris as $item)
+                            <option value="{{ $item->kategori }}">{{ $item->kategori }}</option>
+                        @endforeach
+                    </select>
                     </div>
                     <div class="form-group">
                       <label for="" class="form-control-label">Tags</label>

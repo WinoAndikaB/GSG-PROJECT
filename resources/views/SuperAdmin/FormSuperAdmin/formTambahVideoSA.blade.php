@@ -284,9 +284,9 @@
               <div class="form-group">
                 <label for="kategoriVideo">Kategori</label>
                 <select class="form-control" id="kategoriVideo" name="kategoriVideo" required>
-                  <option value="Anime">Anime</option>
-                  <option value="Game">Game</option>
-                  <option value="VTuber">VTuber</option>
+                  @foreach($kategoriV as $item)
+                    <option value="{{ $item->kategori }}">{{ $item->kategori }}</option>
+                  @endforeach
               </select>
             </div>
             <div class="form-group">
