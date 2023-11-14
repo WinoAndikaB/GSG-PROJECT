@@ -237,6 +237,9 @@ class SuperAdminController extends Controller
         
     
         $article = new artikels;
+
+        $article->kodeArtikel = 'GSA' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
+
         $article->judulArtikel = $request->input('judulArtikel');
         $article->penulis = $request->input('penulis');
         $article->email = $request->input('email');
@@ -405,6 +408,9 @@ class SuperAdminController extends Controller
         ]);
     
         $videos = new Video;
+
+        $videos->kodeVideo = 'GSV' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
+
         $videos->judulVideo = $request->input('judulVideo');
         $videos->uploader = $request->input('uploader');
         $videos->email = $request->input('email');
@@ -602,6 +608,9 @@ class SuperAdminController extends Controller
         ]);
 
         $event = new Event;
+
+        $event->kodeEvent = 'GSE' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
+
         $event->pembuatEvent = $request->input('pembuatEvent');
         $event->namaEvent = $request->input('namaEvent');
         $event->deskripsiEvent = $request->input('deskripsiEvent');
