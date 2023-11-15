@@ -274,13 +274,13 @@
                     <textarea class="form-control" type="textarea" name="judulVideo" ></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="penulis">Uploader</label>
-                    <input type="text" class="form-control" id="uploader" name="uploader" value="{{ Auth::user()->name}}" readonly>
-                </div>
-                <div class="form-group">
                   <label for="email">Email</label>
                   <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}" readonly>
               </div>
+                <div class="form-group">
+                    <label for="penulis">Uploader</label>
+                    <input type="text" class="form-control" id="uploader" name="uploader" value="{{ Auth::user()->name}}" readonly>
+                </div>
               <div class="form-group">
                 <label for="kategoriVideo">Kategori</label>
                 <select class="form-control" id="kategoriVideo" name="kategoriVideo" required>

@@ -126,6 +126,46 @@
       background-color: #5E72E4;
     }
 </style>
+<!-- Video PopUp -->
+<style>
+  .video-popup {
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .video-popup iframe {
+    width: 50%;
+    height: 50%;
+  }
+
+  .dark-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Sesuaikan kegelapan sesuai kebutuhan */
+    z-index: 999;
+    display: flex;
+    align-items: center; /* Menengahkan vertikal */
+    justify-content: center; /* Menengahkan horizontal */
+  }
+
+  /* Gaya tombol close */
+  .video-popup button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    font-size: 20px; /* Sesuaikan ukuran font sesuai kebutuhan */
+    color: #333; /* Sesuaikan warna sesuai kebutuhan */
+    border-radius: 50%; /* Membuat tombol close berbentuk lingkaran */
+  }
+</style>
 </head>
 
 <!------------------------------------------------------------------------------------- Body Area -------------------------------------------------------------------------------------------->
@@ -301,135 +341,146 @@
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">      
 
-                <div class="row">
-                  <div class="col-12">
-                    <div class="card mb-4">
-                      <div class="card-header pb-0">
-                      </div>
-                      <div class="card-body px-0 pt-0 pb-2 overflow: auto;"">
-                        <div class="table-responsive p-0">
-                          <table class="table align-items-center mb-0">
-                            <thead>
-                              <tr>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Video</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Uploader</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Link Video</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Judul Video</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Deskripsi Video</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Upload</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Update</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kategori</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tags</th>
-                                <th class="text-secondary opacity-7"></th>
-                              </tr>
-                            </thead>
-                            @foreach($tableVideo as $item)
-                            <tbody>
-                              <tr>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item->id}}</p>
-                                </td>
-                                <td >
-                                  <iframe width="340" height="190" src="{{$item->linkVideo}}" frameborder="0" allowfullscreen></iframe>
-                                </td>
-                                <td>
-                                    <div class="d-flex flex-column justify-content-center text-xs font-weight-bold mb-0">
-                                      <h6 class="mb-0 text-sm">{{$item->uploader}}</h6>
-                                      <p class="text-xs text-secondary mb-0">{{$item->email}}</p>
+                <div class="container-fluid py-4">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="card mb-4">
+                        <div class="card-header pb-0">
+                        </div>
+                        <div class="card-body px-0 pt-0 pb-2 overflow: auto;"">
+                          <div class="table-responsive p-0">
+                            <table class="table align-items-center mb-0">
+                              <thead>
+                                <tr>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kode Video</th>
+                                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Uploader</th>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Link Video</th>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Judul Video</th>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi Video</th>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Upload</th>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Update</th>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kategori</th>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tags</th>
+                                  <th class="text-secondary opacity-7"></th>
+                                </tr>
+                              </thead>
+                              @foreach($tableVideo as $item)
+                              <tbody>
+                                <tr>
+                                  <td class="align-middle text-center">
+                                    <p class="text-xs font-weight-bold mb-0">{{$item->id}}</p>
+                                  </td>
+                                  <td class="align-middle text-center">
+                                    <p class="text-xs font-weight-bold mb-0">{{$item->kodeVideo}}</p>
+                                  </td>
+                                  <td>
+                                      <div class="d-flex flex-column justify-content-center text-xs font-weight-bold mb-0">
+                                        <h6 class="mb-0 text-sm">{{$item->uploader}}</h6>
+                                        <p class="text-xs text-secondary mb-0">{{$item->email}}</p>
+                                      </div>
                                     </div>
+                                  </td>
+                                  <td id="videoContainer">
+                                    <p class="text-xs font-weight-bold mb-0">{{$item->linkVideo}}</p>
+                                  </td>                                  
+                                  <td class="align-middle text-center">
+                                    <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
+                                      <?php
+                                      $judulV = strip_tags($item['judulVideo']);
+                                      $words = str_word_count($judulV, 2);
+                                      $first_100_words = implode(' ', array_slice($words, 0, 5));
+                                      echo $first_100_words;
+                                      if (str_word_count($judulV) > 500) {
+                                        echo '...';
+                                      }
+                                      ?>
+                                    </p>
+                                  </td>
+                                  <td style="text-align: justify;">
+                                    <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
+                                      <?php
+                                      $deskripsiVideo = strip_tags($item['deskripsiVideo']);
+                                      $words = str_word_count($deskripsiVideo, 2);
+                                      $first_100_words = implode(' ', array_slice($words, 0, 5));
+                                      echo $first_100_words;
+                                      if (str_word_count($deskripsiVideo) > 100) {
+                                        echo '...';
+                                      }
+                                      ?>
+                                    </p>
+                                  </td>
+                                  <td class="align-middle text-center">
+                                    <span class="text-secondary text-xs font-weight-bold">{{$item['created_at']->locale('id')->translatedFormat('l, d F Y H:i:s') }}</span>
+                                  </td>
+                                  <td class="align-middle text-center">
+                                    <span class="text-secondary text-xs font-weight-bold">{{$item['updated_at']->locale('id')->translatedFormat('l, d F Y H:i:s') }}</span>
+                                  </td>
+                                  <td class="align-middle text-center">
+                                    <span class="badge badge-sm status-badge 
+                                    {{$item['statusVideo'] === 'Published' ? 'bg-gradient-success' : ''}}
+                                    {{$item['statusVideo'] === 'Pending' ? 'bg-gradient-secondary' : ''}}
+                                    {{$item['statusVideo'] === 'Rejected' ? 'bg-gradient-danger' : ''}}">
+                                    {{$item['statusVideo']}}
+                                  </span> 
+                                  </td>
+                                  <td class="align-middle text-center">
+                                    <span class="badge badge-sm bg-gradient-info">{{$item->kategoriVideo}}</span>
+                                  </td>
+                                  <td class="align-middle text-center">
+                                    <span class="badge badge-sm bg-gradient-warning">{{$item->tagsVideo}}</span>
+                                  </td>
+                                  <td class="align-middle">
+                                    <a href="/formEditVideo/{{ $item->id}}" class="btn btn-warning btn btn-primary btn-round">
+                                      <i class="fa fa-pencil"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteVideoSA', ['id' => $item['id']]) }}')">
+                                      <i class="fa fa-trash"></i>
+                                  </td>
+                                </tr>
+                              </tbody>
+                              @endforeach 
+                              
+                              <div class="d-flex justify-content-center">
+                                <ul class="pagination">
+                                    @if ($tableVideo->onFirstPage())
+                                        <li class="page-item disabled">
+                                            <span class="page-link" aria-label="Previous">
+                                                <span aria-hidden="true">&lsaquo;</span>
+                                            </span>
+                                        </li>
+                                    @else
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ $tableVideo->previousPageUrl() }}" rel="prev" aria-label="Previous">
+                                                <span aria-hidden="true">&lsaquo;</span>
+                                            </a>
+                                        </li>
+                                    @endif
+              
+                                  <!-- Menampilkan halaman berapa -->
+                                  <div class="text-center">
+                                      {{ $tableVideo->currentPage() }} dari {{ $tableVideo->lastPage() }}
                                   </div>
-                                </td>
-                                <td >
-                                  <p class="text-xs font-weight-bold mb-0">{{$item->linkVideo}}</p>
-                                </td>
-                                <td>
-                                  <p class="text-xs font-weight-bold mb-0">{{$item->judulVideo}}</p>
-                                </td>
-                                <td style="text-align: justify;">
-                                  <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
-                                    <?php
-                                    $deskripsiVideo = strip_tags($item['deskripsiVideo']);
-                                    $words = str_word_count($deskripsiVideo, 2);
-                                    $first_100_words = implode(' ', array_slice($words, 0, 5));
-                                    echo $first_100_words;
-                                    if (str_word_count($deskripsiVideo) > 100) {
-                                      echo '...';
-                                    }
-                                    ?>
-                                  </p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <span class="text-secondary text-xs font-weight-bold">{{$item['created_at']->format('l, d F Y H:i:s') }}</span>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <span class="text-secondary text-xs font-weight-bold">{{$item['updated_at']->format('l, d F Y H:i:s') }}</span>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <span class="badge badge-sm status-badge 
-                                  {{$item['statusVideo'] === 'Published' ? 'bg-gradient-success' : ''}}
-                                  {{$item['statusVideo'] === 'Pending' ? 'bg-gradient-secondary' : ''}}
-                                  {{$item['statusVideo'] === 'Rejected' ? 'bg-gradient-danger' : ''}}">
-                                  {{$item['statusVideo']}}
-                                </span> 
-                                </td>
-                                <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-info">{{$item->kategoriVideo}}</span>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-warning">{{$item->tagsVideo}}</span>
-                                </td>
-                                <td class="align-middle">
-                                  <a href="/formEditVideo/{{ $item->id}}" class="btn btn-warning btn btn-primary btn-round">
-                                    <i class="fa fa-pencil"></i>
-                                  </a>
-                                  <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteVideo', ['id' => $item['id']]) }}')">
-                                    <i class="fa fa-trash"></i>
-                                </a>
-                                </td>
-                              </tr>
-                            </tbody>
-                            @endforeach 
                             
-                            <div class="d-flex justify-content-center">
-                              <ul class="pagination">
-                                  @if ($tableVideo->onFirstPage())
-                                      <li class="page-item disabled">
-                                          <span class="page-link" aria-label="Previous">
-                                              <span aria-hidden="true">&lsaquo;</span>
-                                          </span>
-                                      </li>
-                                  @else
-                                      <li class="page-item">
-                                          <a class="page-link" href="{{ $tableVideo->previousPageUrl() }}" rel="prev" aria-label="Previous">
-                                              <span aria-hidden="true">&lsaquo;</span>
-                                          </a>
-                                      </li>
-                                  @endif
-            
-                                <!-- Menampilkan halaman berapa -->
-                                <div class="text-center">
-                                    {{ $tableVideo->currentPage() }} dari {{ $tableVideo->lastPage() }}
-                                </div>
-                          
-                                  @if ($tableVideo->hasMorePages())
-                                      <li class="page-item">
-                                          <a class="page-link" href="{{ $tableVideo->nextPageUrl() }}" rel="next" aria-label="Next">
-                                              <span aria-hidden="true">&rsaquo;</span>
-                                          </a>
-                                      </li>
-                                  @else
-                                      <li class="page-item disabled">
-                                          <span class="page-link" aria-label="Next">
-                                              <span aria-hidden="true">&rsaquo;</span>
-                                          </span>
-                                      </li>
-                                  @endif
-                              </ul>
+                                    @if ($tableVideo->hasMorePages())
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ $tableVideo->nextPageUrl() }}" rel="next" aria-label="Next">
+                                                <span aria-hidden="true">&rsaquo;</span>
+                                            </a>
+                                        </li>
+                                    @else
+                                        <li class="page-item disabled">
+                                            <span class="page-link" aria-label="Next">
+                                                <span aria-hidden="true">&rsaquo;</span>
+                                            </span>
+                                        </li>
+                                    @endif
+                                </ul>
+                            </div>
+                            
+                            </table>
                           </div>
-                          
-                          </table>
                         </div>
                       </div>
                     </div>
@@ -593,6 +644,57 @@
 <script>
   $(document).ready(function() {
       console.log("Document ready.");
+  });
+  </script>
+
+  <!-- Video Popup -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+    // Temukan semua elemen <td>
+    var videoContainers = document.querySelectorAll("td");
+
+    // Tambahkan event listener untuk setiap elemen
+    videoContainers.forEach(function (videoContainer) {
+      videoContainer.addEventListener("click", function () {
+        // Ambil link video dari elemen p di dalam td
+        var videoLink = videoContainer.querySelector("p").innerText;
+
+        // Buat elemen iframe untuk video
+        var iframe = document.createElement("iframe");
+        iframe.width = "560"; // Sesuaikan lebar sesuai kebutuhan
+        iframe.height = "315"; // Sesuaikan tinggi sesuai kebutuhan
+        iframe.src = videoLink; // Gunakan link video yang diambil
+
+        // Buat elemen div sebagai kontainer pop-up
+        var popupContainer = document.createElement("div");
+        popupContainer.classList.add("video-popup");
+
+        var closeBtn = document.createElement("button");
+        closeBtn.innerHTML = "&times;"; // Gunakan karakter X sebagai ikon close
+        closeBtn.addEventListener("click", function () {
+          // Hapus popupContainer ketika tombol close diklik
+          document.body.removeChild(popupContainer);
+        });
+
+        popupContainer.appendChild(closeBtn);
+
+        // Tambahkan class untuk gaya latar belakang gelap
+        popupContainer.classList.add("dark-overlay");
+
+        // Tambahkan iframe ke dalam div
+        popupContainer.appendChild(iframe);
+
+        // Tambahkan div ke dalam body
+        document.body.appendChild(popupContainer);
+
+        // Menutup popup ketika latar belakang gelap di klik
+        popupContainer.addEventListener("click", function (event) {
+          if (event.target === popupContainer) {
+            document.body.removeChild(popupContainer);
+          }
+        });
+      });
+    });
   });
   </script>
 

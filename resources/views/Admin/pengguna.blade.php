@@ -404,10 +404,10 @@
                                   </p>
                                 </td>  
                                 <td class="align-middle text-center">
-                                  <span class="text-secondary text-xs font-weight-bold">{{$user['created_at']->format('l, d F Y H:i:s') }}</span>
+                                  <span class="text-secondary text-xs font-weight-bold">{{$user['created_at']->locale('id')->translatedFormat('l, d F Y H:i:s')  }}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="text-secondary text-xs font-weight-bold">{{$user['updated_at']->format('l, d F Y H:i:s') }}</span>
+                                  <span class="text-secondary text-xs font-weight-bold">{{$user['updated_at']->locale('id')->translatedFormat('l, d F Y H:i:s')  }}</span>
                                 </td>
                                 <td class="align-middle">
                                   @if($user->role !== 'superadmin')

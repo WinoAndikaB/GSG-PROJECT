@@ -310,8 +310,11 @@
                             <thead>
                               <tr>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kode Event</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama Event</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi Event</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Event</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jam Event</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Buat</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Update</th>
@@ -323,6 +326,9 @@
                               <tr>
                                 <td class="align-middle text-center">
                                   <p class="text-xs font-weight-bold mb-0">{{$item['id']}}</p>
+                                </td>
+                                <td class="align-middle text-center">
+                                  <p class="text-xs font-weight-bold mb-0">{{$item['kodeEvent']}}</p>
                                 </td>
                                 <td>
                                   <div class="d-flex px-2 py-1">
@@ -336,7 +342,23 @@
                                   </div>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['deskripsiEvent']}}</p>
+                                  <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
+                                    <?php
+                                    $deskripsiEvent = strip_tags($item['deskripsiEvent']);
+                                    $words = str_word_count($deskripsiEvent, 2);
+                                    $first_100_words = implode(' ', array_slice($words, 0, 5));
+                                    echo $first_100_words;
+                                    if (str_word_count($deskripsiEvent) > 500) {
+                                      echo '...';
+                                    }
+                                    ?>
+                                  </p>
+                                </td>
+                                <td class="align-middle text-center">
+                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item['tanggalEvent'])->locale('id')->translatedFormat('l, j F Y') }}</span>
+                                </td>
+                                <td class="align-middle text-center">
+                                  <p class="text-xs font-weight-bold mb-0">{{$item['jamEvent']}}</p>
                                 </td>
                                 <td class="align-middle text-center">
                                   <span class="badge badge-sm status-badge 
@@ -347,18 +369,26 @@
                                 </span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item['created_at'])->translatedFormat('l, j F Y') }}</span>
+                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item['created_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item['updated_at'])->translatedFormat('l, j F Y') }}</span>
+                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item['updated_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <a href="/formEditEvent/{{ $item->id}}" class="btn btn-warning btn btn-primary btn-round">
+                                  <a href="/formEditEventSA/{{ $item->id}}" class="btn btn-warning btn btn-primary btn-round">
                                     <i class="fa fa-pencil"></i>
                                   </a>
-                                  <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteEvent', ['id' => $item['id']]) }}')">
+                                  <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteEventSA', ['id' => $item['id']]) }}')">
                                     <i class="fa fa-trash"></i>
                                 </a>
+                                @if ($item->status === 'Pending')
+                                <a href="{{ route('approveEvent', $item->id) }}" class="btn btn-success btn btn-primary btn-round">
+                                    Approve
+                                </a>
+                                <a href="{{ route('rejectEvent', $item->id) }}" class="btn btn-danger btn btn-primary btn-round">
+                                    Reject
+                                </a>
+                            @endif
                                 </td>
                               </tr>
                             </tbody>

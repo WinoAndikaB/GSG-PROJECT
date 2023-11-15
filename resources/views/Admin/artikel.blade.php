@@ -291,7 +291,7 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <a href="/artikel/create" class="btn btn-primary">Tambah Artikel</i></a>
+              <a href="/formTambahArtikelA" class="btn btn-primary">Tambah Artikel</i></a>
               <a href="/komentarArtikel" class="btn btn-success">Komentar Artikel</i>
                 + {{ $dataBaruKomentarArtikel }}
               </a>
@@ -357,10 +357,10 @@
                                   </p>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="text-secondary text-xs font-weight-bold">{{$tbhartikel['created_at']->format('l, d F Y H:i:s') }}</span>
+                                  <span class="text-secondary text-xs font-weight-bold">{{$tbhartikel['created_at']->locale('id')->translatedFormat('l, d F Y H:i:s')  }}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="text-secondary text-xs font-weight-bold">{{$tbhartikel['updated_at']->format('l, d F Y H:i:s') }}</span>
+                                  <span class="text-secondary text-xs font-weight-bold">{{$tbhartikel['updated_at']->locale('id')->translatedFormat('l, d F Y H:i:s')  }}</span>
                                 </td>
                                 <td class="align-middle text-center">
                                   <span class="badge badge-sm status-badge 
@@ -377,7 +377,7 @@
                                   <span class="badge badge-sm bg-gradient-warning">{{$tbhartikel['tags']}}</span>
                                 </td>
                                 <td class="align-middle">
-                                  <a href="/tampilDataEditArtikel/{{ $tbhartikel->id}}" class="btn btn-warning btn btn-primary btn-round">
+                                  <a href="/formEditArtikelA/{{ $tbhartikel->id}}" class="btn btn-warning btn btn-primary btn-round">
                                     <i class="fa fa-pencil"></i>
                                   </a>
                                   <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteArtikel', ['id' => $tbhartikel['id']]) }}')">

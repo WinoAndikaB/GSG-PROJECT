@@ -371,6 +371,7 @@
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Video</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"">Laporan</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"">Alasan</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"">Tanggal Laporan</th>
                                 <th class="text-secondary opacity-7"></th>
                               </tr>
                             </thead>
@@ -397,6 +398,9 @@
                                   </td>
                                   <td class="align-middle text-center">
                                       <p class="text-xs font-weight-bold mb-0">{{$item['laporan']}}</p>
+                                  </td>
+                                  <td class="align-middle text-center">
+                                    <span class="text-secondary text-xs font-weight-bold">{{$item['created_at']->locale('id')->translatedFormat('l, d F Y H:i:s')  }}</span>
                                   </td>
                                   <td class="align-middle">
                                     <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteLaporanVideoSA', ['id' => $item['id']]) }}')">

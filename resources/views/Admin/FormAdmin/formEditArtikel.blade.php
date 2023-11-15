@@ -264,7 +264,7 @@
           <div class="card mb-4">
             <div class="card-header pb-0">
               <h6>Form Edit Artikel</h6>
-              <form action="/formEditArtikel/updateArtikel/{{$data->id}}" method="POST" enctype="multipart/form-data">
+              <form action="/formEditArtikelA/updateArtikelA/{{$data->id}}" method="POST" enctype="multipart/form-data">
               @csrf
                 <div class="row">
                   <div class="col-md-6">
@@ -279,15 +279,19 @@
                       <textarea class="form-control" type="textarea" name="judulArtikel" required>{{ $data->judulArtikel }}</textarea>
                     </div>
                     <div class="form-group">
+                      <label for="email">Email</label>
+                      <input type="email" class="form-control" id="email" name="email" value="{{ $data->email }}" readonly>
+                  </div>
+                    <div class="form-group">
                       <label for="" class="form-control-label">Penulis</label>
                       <input class="form-control" type="text" name="penulis" value="{{ $data->penulis }}" required readonly>
                     </div>
                     <div class="form-group">
                       <label for="" class="form-control-label">Kategori</label>
                       <select class="form-control" id="kategori" name="kategori" required>
-                        <option value="Anime"{{ $data->kategori === 'Anime' ? ' selected' : '' }}>Anime</option>
-                        <option value="Game"{{ $data->kategori === 'Game' ? ' selected' : '' }}>Game</option>
-                        <option value="VTuber"{{ $data->kategori === 'VTuber' ? ' selected' : '' }}>VTuber</option>
+                        @foreach($kategoris as $item)
+                            <option value="{{ $item->kategori }}">{{ $item->kategori }}</option>
+                        @endforeach
                     </select>
                     </div>
                     <div class="form-group">

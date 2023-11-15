@@ -276,13 +276,13 @@
                     <input type="text" class="form-control" id="judulArtikel" name="judulArtikel" required>
                 </div>
                 <div class="form-group">
-                    <label for="penulis">Penulis</label>
-                    <input type="text" class="form-control" id="penulis" name="penulis" value="{{ Auth::user()->name }}" readonly>
-                </div>
-                <div class="form-group">
                   <label for="email">Email</label>
                   <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}" readonly>
               </div>
+                <div class="form-group">
+                    <label for="penulis">Penulis</label>
+                    <input type="text" class="form-control" id="penulis" name="penulis" value="{{ Auth::user()->name }}" readonly>
+                </div>
               <div class="form-group">
                 <label for="kategori">Kategori</label>
                 <select class="form-control" id="kategori" name="kategori" required>

@@ -420,10 +420,10 @@
                               </p>
                             </td>    
                             <td class="align-middle text-center">
-                              <span class="text-secondary text-xs font-weight-bold">{{$ulasan['created_at']->format('l, d F Y H:i:s') }}</span>
+                              <span class="text-secondary text-xs font-weight-bold">{{$ulasan['created_at']->locale('id')->translatedFormat('l, d F Y H:i:s')  }}</span>
                             </td>
                             <td class="align-middle text-center">
-                              <span class="text-secondary text-xs font-weight-bold">{{$ulasan['updated_at']->format('l, d F Y H:i:s') }}</span>
+                              <span class="text-secondary text-xs font-weight-bold">{{$ulasan['updated_at']->locale('id')->translatedFormat('l, d F Y H:i:s')  }}</span>
                             </td>
                             <td class="align-middle">
                               <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteUlasanA', ['id' => $ulasan['id']]) }}')">

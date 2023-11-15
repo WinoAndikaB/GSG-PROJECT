@@ -13,6 +13,7 @@ use App\Models\syaratdanketentuans;
 use App\Models\ulasans;
 use App\Models\user;
 use App\Models\video;
+use App\Models\kategori;
 use App\Models\laporanArtikelUser;
 use App\Models\laporanKomentarArtikelUser;
 use App\Models\laporanKomentarVideoUser;
@@ -178,9 +179,11 @@ class AdminController extends Controller
 
 
     //[Admin-Artikel] Halaman Tambah Artikel
-    public function create()
+    public function formTambahArtikelA()
     {
          // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+
+         $kategoris = kategori::all();
          $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
          $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
          $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
@@ -194,11 +197,11 @@ class AdminController extends Controller
 
          $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-        return view('admin.FormAdmin.formTambahArtikel', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        return view('admin.FormAdmin.formTambahArtikel', compact('kategoris','dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas'));
     }
 
-    public function store(Request $request)
+    public function storeArtikelA(Request $request)
     {
         // Validate the request data
         $request->validate([
@@ -235,8 +238,9 @@ class AdminController extends Controller
     
 
     //[Admin-Artikel] Edit Data Artikel
-    function tampilDataEditArtikel($id){
+    function formEditArtikelA($id){
         $data = artikels::find($id);
+        $kategoris = kategori::all();
 
          // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
          $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
@@ -252,13 +256,20 @@ class AdminController extends Controller
 
          $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
          
-        return view('admin.FormAdmin.formEditArtikel', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        return view('admin.FormAdmin.formEditArtikel', compact('kategoris','data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo','dataBaruEventKomunitas'));
     }
 
-    function updateArtikel(Request $request, $id){
+    function updateArtikelA(Request $request, $id){
         $data = artikels::find($id);
     
+        $data->judulArtikel = $request->input('judulArtikel');
+        $data->email = $request->input('email');
+        $data->penulis = $request->input('penulis');
+        $data->kategori = $request->input('kategori');
+        $data->tags = $request->input('tags');
+        $data->deskripsi = $request->input('deskripsi');
+
         if ($request->hasFile('gambarArtikel')) {
             $image = $request->file('gambarArtikel');
     
@@ -267,9 +278,8 @@ class AdminController extends Controller
             $image->move(public_path('gambarArtikel'), $filename);
         
             $data->gambarArtikel = $filename;
-            $data->save();
         }
-
+    
         $data->save();
     
         return redirect()->route('artikel')->with('success','Data Berhasil di Update');
@@ -326,6 +336,8 @@ class AdminController extends Controller
     //[Admin-Video] Halaman Tambah Video
     function formTambahVideo(){
 
+        $kategoris = kategori::all();
+
          // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
          $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
          $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
@@ -340,13 +352,12 @@ class AdminController extends Controller
 
          $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-        return view('admin.FormAdmin.formTambahVideo', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        return view('admin.FormAdmin.formTambahVideo', compact('kategoris','dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas'));
     }    
 
     public function storeVideo(Request $request)
     {
-        // Validate the request data
         $request->validate([
             'judulVideo' => 'required',
             'uploader' => 'required',
@@ -354,17 +365,20 @@ class AdminController extends Controller
             'kategoriVideo' => 'required',
             'tagsVideo' => 'required',
             'deskripsiVideo' => 'required',
-            'linkVideo' => 'required|url',
+            'linkVideo' => 'required|url', // Ensure the link is a valid URL
         ]);
     
         $videos = new Video;
+
+        $videos->kodeVideo = 'GSV' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
+
         $videos->judulVideo = $request->input('judulVideo');
         $videos->uploader = $request->input('uploader');
         $videos->email = $request->input('email');
         $videos->kategoriVideo = $request->input('kategoriVideo');
         $videos->tagsVideo = $request->input('tagsVideo');
         $videos->deskripsiVideo = $request->input('deskripsiVideo');
-        $videos->linkVideo = $request->input('linkVideo'); 
+        $videos->linkVideo = $request->input('linkVideo');
         $videos->statusVideo = 'Pending';
     
         $videoId = '';
@@ -380,7 +394,7 @@ class AdminController extends Controller
             $embedUrl = "https://www.youtube.com/embed/$videoId";
             $videos->linkVideo = $embedUrl; // Update the link to the embedded video
         } else {
-            return redirect('/videoAdmin')->with('error', 'Invalid YouTube video link.');
+            return redirect('/videoSuperAdmin')->with('error', 'Invalid YouTube video link.');
         }
     
         $videos->save();
@@ -392,6 +406,7 @@ class AdminController extends Controller
       //[Admin-Video] Halaman Edit Video
       function formEditVideo($id){
         $data = video::find($id);
+        $kategoris = kategori::all();
 
          // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
          $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
@@ -407,7 +422,7 @@ class AdminController extends Controller
 
          $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-        return view('admin.FormAdmin.formEditVideo', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        return view('admin.FormAdmin.formEditVideo', compact('kategoris','data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas'));
     }    
 

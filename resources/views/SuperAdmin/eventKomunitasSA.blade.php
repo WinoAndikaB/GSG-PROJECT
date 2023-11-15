@@ -373,7 +373,7 @@
                                   </p>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item['tanggalEvent'])->translatedFormat('l, j F Y') }}</span>
+                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item['tanggalEvent'])->locale('id')->translatedFormat('l, j F Y') }}</span>
                                 </td>
                                 <td class="align-middle text-center">
                                   <p class="text-xs font-weight-bold mb-0">{{$item['jamEvent']}}</p>

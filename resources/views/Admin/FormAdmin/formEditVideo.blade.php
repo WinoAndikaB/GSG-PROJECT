@@ -62,7 +62,7 @@
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="/profileSA">
+          <a class="nav-link" href="/profileAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-badge text-primary text-sm opacity-10"></i>
             </div>
@@ -70,7 +70,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/dashboardSA">
+          <a class="nav-link" href="/dashboard">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
             </div>
@@ -78,7 +78,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/artikelSuperAdmin">
+          <a class="nav-link " href="/artikelAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
             </div>
@@ -88,7 +88,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/videoSuperAdmin">
+          <a class="nav-link active" href="/videoAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-warning text-sm opacity-10"></i>
             </div>
@@ -108,7 +108,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/penggunaSA">
+          <a class="nav-link " href="/pengguna">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-circle-08 text-warning text-sm opacity-10"></i>
             </div>
@@ -118,7 +118,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/ulasansSA">
+          <a class="nav-link" href="/ulasans">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-paper-diploma text-warning text-sm opacity-10"></i>
             </div>
@@ -128,7 +128,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/laporanUserSA">
+          <a class="nav-link " href="/laporanUser">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-sound-wave text-warning text-sm opacity-10"></i>
             </div>
@@ -216,45 +216,46 @@
           <div class="card mb-4">
             <div class="card-header pb-0">
               <h6>Form Edit Video</h6>
-              <form action="/formEditVideo/updateVideo/{{$data->id}}" method="POST" enctype="multipart/form-data">
-              @csrf
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
+
+              <form action="/formEditVideoA/updateVideoA/{{$data->id}}" method="POST" enctype="multipart/form-data">
+                @csrf
+                  <div class="row">
+                    <div class="col-md-6">
                       <div class="form-group">
-                        <label for="" class="form-control-label">Link Video</label>
-                        <input class="form-control" type="text" id="uploadGambar" name="linkVideo" value="{{ $data->linkVideo }}" required>
-                        <br>
-                        <iframe width="340" height="190" src="{{$data->linkVideo}}" frameborder="0" allowfullscreen></iframe>
+                        <div class="form-group">
+                          <label for="" class="form-control-label">Link Video</label>
+                          <input class="form-control" type="text" id="uploadGambar" name="linkVideo" value="{{ $data->linkVideo }}" required>
+                          <br>
+                          <iframe width="340" height="190" src="{{$data->linkVideo}}" frameborder="0" allowfullscreen></iframe>
+                      </div>
+                        <label for="" class="form-control-label">Judul Video</label>
+                        <textarea class="form-control" type="textarea" name="judulVideo" required>{{ $data->judulVideo }}</textarea>
+                      </div>
+                      <div class="form-group mt-3">
+                        <label for="" class="form-control-label">Uploader</label>
+                        <input class="form-control" type="text" name="uploader" value="{{ $data->uploader }}" disabled required>
                     </div>
-                      <label for="" class="form-control-label">Judul Video</label>
-                      <textarea class="form-control" type="textarea" name="judulVideo" required>{{ $data->judulVideo }}</textarea>
-                    </div>
-                    <div class="form-group mt-3">
-                      <label for="" class="form-control-label">Uploader</label>
-                      <input class="form-control" type="text" name="uploader" value="{{ $data->uploader }}" disabled required>
-                  </div>
-                  <div class="form-group">
-                    <label for="" class="form-control-label">Kategori</label>
-                    <select class="form-control" id="kategoriVideo" name="kategoriVideo" required>
-                      <option value="Anime"{{ $data->kategoriVideo === 'Anime' ? ' selected' : '' }}>Anime</option>
-                      <option value="Game"{{ $data->kategoriVideo === 'Game' ? ' selected' : '' }}>Game</option>
-                      <option value="VTuber"{{ $data->kategoriVideo === 'VTuber' ? ' selected' : '' }}>VTuber</option>
-                  </select>                  
-                  </div>
-                  <div class="form-group">
-                    <label for="" class="form-control-label">Tags</label>
-                    <textarea class="form-control" type="text" name="tagsVideo" required>{{ $data->tagsVideo}}</textarea>
-                  </div>
                     <div class="form-group">
-                      <label for="" class="form-control-label">Deskirpsi Video</label>
-                      <textarea class="form-control" type="text" name="deskripsiVideo" id="editor">{{ $data->deskripsiVideo }}</textarea>
+                      <label for="" class="form-control-label">Kategori</label>
+                      <select class="form-control" id="kategoriVideo" name="kategoriVideo" required>
+                        @foreach($kategoris as $item)
+                          <option value="{{ $item->kategori }}">{{ $item->kategori }}</option>
+                        @endforeach
+                    </select>
                     </div>
-                    <button type="submit" class="btn btn-primary mt-3">Edit</button>
-                    <a href="/videoAdmin" class="btn btn-info mt-3">Kembali</i></a>
+                    <div class="form-group">
+                      <label for="" class="form-control-label">Tags</label>
+                      <textarea class="form-control" type="text" name="tagsVideo" required>{{ $data->tagsVideo}}</textarea>
+                    </div>
+                      <div class="form-group">
+                        <label for="" class="form-control-label">Deskirpsi Video</label>
+                        <textarea class="form-control" type="text" name="deskripsiVideo" id="editor">{{ $data->deskripsiVideo }}</textarea>
+                      </div>
+                      <button type="submit" class="btn btn-primary mt-3">Edit</button>
+                      <a href="/videoAdmin" class="btn btn-info mt-3">Kembali</i></a>
+                    </div>
                   </div>
-                </div>
-              </form>
+                </form>
 
             <div class="card-body px-0 pt-12 pb-2">
               <div class="table-responsive p-0">

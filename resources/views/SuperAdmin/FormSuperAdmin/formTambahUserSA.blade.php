@@ -291,12 +291,13 @@
                         <input class="form-control" type="text" name="username" value="" required>
                       </div>
                       <div class="form-group">
+                        <label for="" class="form-control-label">Email</label>
+                        <input class="form-control" type="email" name="email" value="" required>
+                      </div>
+                      <div class="form-group">
                         <label for="" class="form-control-label">Nama</label>
                         <input class="form-control" type="text" name="name" value="" required>
                       </div>
-                      <label for="" class="form-control-label">Email</label>
-                      <input class="form-control" type="email" name="email" value="" required>
-                    </div>
                     <div class="form-group">
                       <label for="" class="form-control-label">Password</label>
                       <input class="form-control" type="password" name="password" value="" required>

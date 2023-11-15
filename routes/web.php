@@ -193,17 +193,16 @@ use Illuminate\Support\Facades\Route;
         Route::get('/komentarArtikel', [AdminController::class, 'komentarArtikel'])->name('komentarArtikel');
 
         //[Admin] Tambah Artikel
-        Route::get('/artikel/create',  [AdminController::class, 'create'])->name('artikel.create');
-        Route::post('/artikel/store',  [AdminController::class, 'store'])->name('artikel.store');
+        Route::get('/formTambahArtikelA',  [AdminController::class, 'formTambahArtikelA'])->name('formTambahArtikelA');
+        Route::post('/formTambahArtikelA/storeArtikelA',  [AdminController::class, 'storeArtikelA'])->name('storeArtikelA');
 
         //[Admin] Delete Artikel
         Route::get('/deleteA/{id}',[AdminController::class,'deleteArtikel'])->name('deleteArtikel');
         Route::get('/deleteKomentarAA/{id}',[AdminController::class,'deleteKomentarAA'])->name('deleteKomentarAA');
 
         //[Admin] Edit Artikel
-        Route::get('/tampilDataEditArtikel/{id}',[AdminController::class,'tampilDataEditArtikel']);
-        // Route::post('/updateDataIdArtikel/{id}',[AdminController::class,'updateDataIdArtikel']);
-        Route::post('/formEditArtikel/updateArtikel/{id}',[AdminController::class,'updateArtikel'])->name('updateArtikel');
+        Route::get('/formEditArtikelA/{id}',[AdminController::class,'formEditArtikelA'])->name('formEditArtikelA');     
+        Route::post('/formEditArtikelA/updateArtikelA/{id}',[AdminController::class,'updateArtikelA'])->name('updateArtikelA');
 
 //------------------------------------------------------------- [Admin] Tab Video ---------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------- [Admin] Tab Video ---------------------------------------------------------------------------------------------------------
@@ -218,11 +217,12 @@ use Illuminate\Support\Facades\Route;
 
         //[Admin] Edit Video
         Route::get('/formEditVideo/{id}',[AdminController::class,'formEditVideo'])->name('formEditVideo');
-        Route::post('/formEditVideo/updateVideo/{id}',[AdminController::class,'updateVideo'])->name('updateVideo');
+        Route::post('/formEditVideoA/updateVideoA/{id}',[AdminController::class,'updateVideo'])->name('updateVideo');
 
         //[Admin] Delete Pengguna
         Route::get('/deleteV/{id}',[AdminController::class,'deleteVideo'])->name('deleteVideo');
         Route::get('/deleteKomentarVA/{id}',[AdminController::class,'deleteKomentarVA'])->name('deleteKomentarVA');
+        
 
 //------------------------------------------------------------- [Admin] Tab Pengguna ---------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------- [Admin] Tab Pengguna ---------------------------------------------------------------------------------------------------------
