@@ -80,6 +80,37 @@
         cursor: pointer;
       }
   </style>
+  <!-- Modal Lapor Komentar -->
+  <style>
+    /* Tambahkan gaya CSS tambahan sesuai kebutuhan Anda */
+    .body-lapor-komentar {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+    .modal-lapor-komentar  {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        z-index: 1;
+    }
+
+    .modal-content-lapor-komentar  {
+        text-align: center;
+    }
+
+</style>
 
   </head>
   <body>
@@ -296,10 +327,14 @@
                       <a href="report_action.html">
                         <i class="fa fa-thumbs-down"></i> Dislike
                      </a>
-                     <a href="{{ route('deleteKomentarA', ['id' => $article->id]) }}"><i class="fas fa-trash"></i> Hapus</a>
-                     <a href="#" id="showModal" class="laporan-button">
+
+                     <a href="{{ route('deleteKomentarArtikel', ['id' => $komentar->id]) }}">
+                      <i class="fas fa-trash"></i>Hapus</a>
+          
+                     <a href="#" id="showModalLaporanKomen" class="">
                       <i class="fa fa-flag"></i> Laporkan
-                    </a>          
+                    </a>     
+
                   </div>
               </div>
           </div>
@@ -365,6 +400,7 @@
     </div>
   </section>
 
+  <!-- Modal Laporan Artikel -->
   <div id="modalLaporan" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1;">
     <div style="background-color: #ffffff; border-radius: 10px; text-align: center; padding: 20px; width: 600px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
       <span style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 20px;" id="closeLaporan">&times;</span>
@@ -385,6 +421,32 @@
         </div><br>
         <textarea id="reportTextLaporan" style="width: 100%; padding: 10px; font-size: 16px;" placeholder="Kenapa Anda melaporkan artikel ini?"></textarea><br>
         <button type="submit" class="submit-buttonLaporan" style="background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; padding: 10px 20px; font-size: 18px;">Kirim Laporan</button>
+      </form>
+      <div style="text-align: left; padding: 10px;">
+        <p style="font-size: 14px;">Artikel dan pengguna yang dilaporkan akan ditinjau oleh staf kami untuk menentukan apakah artikel dan pengguna tersebut melanggar Pedoman kami atau tidak. Akun akan dikenai sanksi jika melanggar Pedoman Komunitas, dan pelanggaran serius atau berulang dapat berakibat pada penghentian akun.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Laporan Komentar Artikel -->
+<div id="myModal" class="modal">
+  <div style="background-color: #ffffff; border-radius: 10px; text-align: center; padding: 20px; width: 600px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
+    <span style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 20px;" id="cancelReport">&times;</span>
+    <h2 style="color: #007bff; font-size: 24px;">Laporkan Komentar</h2>
+      <form action="#" method="post" id="laporanForm">
+        <div style="text-align: left;">
+            <label style="font-size: 16px;"><input type="radio" name="reason">Konten Komersial atau Spam</label><br>
+            <label style="font-size: 16px;"><input type="radio" name="reason">Materi Pornografi atau Seksual Vulgar</label><br>
+            <label style="font-size: 16px;"><input type="radio" name="reason">Pelanggaran Hak Anak</label><br>
+            <label style="font-size: 16px;"><input type="radio" name="reason">Pernyataan Kebencian dan Kekerasan</label><br>
+            <label style="font-size: 16px;"><input type="radio" name="reason">Mendukung Terorisme</label><br>
+            <label style="font-size: 16px;"><input type="radio" name="reason">Pelecehan dan Penindasan</label><br>
+            <label style="font-size: 16px;"><input type="radio" name="reason">Penggunaan Bunuh Diri atau Menyakiti Diri Sendiri</label><br>
+            <label style="font-size: 16px;"><input type="radio" name="reason">Misinformasi</label><br>
+          </div><br>
+          <br>
+          <button type="button" onclick="cancelReport()" style="background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; padding: 10px 20px; font-size: 18px;">Batal</button>
+          <button type="submit" class="submit-buttonLaporan" style="background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; padding: 10px 20px; font-size: 18px;">Kirim Laporan</button>
       </form>
       <div style="text-align: left; padding: 10px;">
         <p style="font-size: 14px;">Artikel dan pengguna yang dilaporkan akan ditinjau oleh staf kami untuk menentukan apakah artikel dan pengguna tersebut melanggar Pedoman kami atau tidak. Akun akan dikenai sanksi jika melanggar Pedoman Komunitas, dan pelanggaran serius atau berulang dapat berakibat pada penghentian akun.</p>
@@ -422,6 +484,25 @@
     <script src="{{ asset('aset1/js/jquery.stellar.min.js') }}"></script>
     <!-- Main -->
     <script src="{{ asset('aset1/js/main.js') }}"></script>
+
+      <!-- Modal Lapor Komentar Artikel -->
+    <script>
+      // Fungsi untuk menampilkan modal
+      document.getElementById('showModalLaporanKomen').addEventListener('click', function () {
+          document.getElementById('myModal').style.display = 'block';
+      });
+  
+      // Fungsi untuk membatalkan laporan dan menyembunyikan modal
+      function cancelReport() {
+          document.getElementById('myModal').style.display = 'none';
+      }
+  
+      // Fungsi untuk menangani pengiriman formulir (di sini Anda dapat menambahkan logika penyimpanan atau pengiriman data)
+      document.getElementById('laporanForm').addEventListener('submit', function (event) {
+          event.preventDefault();
+          cancelReport();
+      });
+  </script>
 
     <!-- MODAL LOGOUT -->
     <script>

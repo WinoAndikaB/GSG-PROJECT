@@ -111,7 +111,12 @@ use Illuminate\Support\Facades\Route;
 
         Route::get('/home',[PenggunaController::class,'HomeSetelahLogin'])->name('HomeSetelahLogin');
         Route::get('/detailArtikel/{id}', [PenggunaController::class, 'showDetailArtikel'])->name('detail.artikel');
+
         Route::post('/komentarArtikel', [PenggunaController::class, 'storeKomentarArtikel'])->name('storeKomentarArtikel');
+        Route::get('/likeKomentarArtikel/{id}', [PenggunaController::class, 'likeKomentarArtikel'])->name('likeKomentarArtikel');
+        Route::get('/dislikeKomentarArtikel/{id}', [PenggunaController::class, 'dislikeKomentarArtikel'])->name('dislikeKomentarArtikel');
+        Route::get('/deleteKomentarArtikel/{id}', [PenggunaController::class, 'deleteKomentarArtikel'])->name('deleteKomentarArtikel');     
+
         Route::post('/submit/report', [PenggunaController::class, 'storeLaporanArtikel'])->name('storeLaporanArtikel');
         Route::get('/deleteKomentarA/{id}',[PenggunaController::class,'deleteKomentarA'])->name('deleteKomentarA');
 
@@ -120,7 +125,12 @@ use Illuminate\Support\Facades\Route;
 
         Route::get('/Video',[PenggunaController::class,'Video'])->name('Video');
         Route::get('/detailVideo/{id}', [PenggunaController::class, 'showDetailVideo'])->name('showDetailVideo');
+
         Route::post('/komentarVideo', [PenggunaController::class, 'storeKomentarVideo'])->name('storeKomentarVideo');
+        Route::get('/likeKomentarVideo/{id}', [PenggunaController::class, 'likeKomentarVideo'])->name('likeKomentarVideo');
+        Route::get('/dislikeKomentarVideo/{id}', [PenggunaController::class, 'dislikeKomentarVideo'])->name('dislikeKomentarVideo');
+        Route::get('/deleteKomentarVideo/{id}', [PenggunaController::class, 'deleteKomentarVideo'])->name('deleteKomentarVideo');        
+
         Route::post('/submitV/reportV', [PenggunaController::class, 'storeLaporanVideo'])->name('storeLaporanVideo');
         Route::get('/deleteKomentarV/{id}', [PenggunaController::class, 'deleteKomentarV'])->name('deleteKomentarV');
 

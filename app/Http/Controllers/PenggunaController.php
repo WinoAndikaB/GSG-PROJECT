@@ -209,6 +209,27 @@ class PenggunaController extends Controller
         return response()->json(['message' => 'Laporan telah berhasil disimpan.']);
     }
 
+    
+        //[User-Video] Delete Komentar Video
+        public function deleteKomentarArtikel($id)
+        {
+            $comment = komentar_artikel::find($id);
+        
+            // Ensure comment is found
+            if (!$comment) {
+                return redirect()->route('detail.artikel', $id)->with('error', 'Comment not found');
+            }
+        
+            // Ensure the user trying to delete the comment is the owner
+            if (Auth::check() && $comment->user_id === Auth::user()->id) {
+                $comment->delete();
+                return redirect()->route('detail.artikel', $comment->artikel_id)->with('success', 'Comment successfully deleted');
+            } else {
+                $errorMessage = 'You are not allowed to delete this comment. <a href="' . route('detail.artikel', ['id' => $comment->artikel_id]) . '">Go back</a>';
+                return redirect()->route('detail.artikel', $comment->artikel_id)->with('error', $errorMessage);
+            }
+        }
+
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -306,6 +327,28 @@ class PenggunaController extends Controller
 
         return response()->json(['message' => 'Laporan telah berhasil disimpan.']);
     }
+
+        //[User-Video] Delete Komentar Video
+        public function deleteKomentarVideo($id)
+        {
+            $comment = komentar_video::find($id);
+        
+            // Ensure comment is found
+            if (!$comment) {
+                return redirect()->route('showDetailVideo', $id)->with('error', 'Comment not found');
+            }
+        
+            // Ensure the user trying to delete the comment is the owner
+            if (Auth::check() && $comment->user_id === Auth::user()->id) {
+                $comment->delete();
+                return redirect()->route('showDetailVideo', $comment->video_id)->with('success', 'Comment successfully deleted');
+            } else {
+                $errorMessage = 'You are not allowed to delete this comment. <a href="' . route('showDetailVideo', ['id' => $comment->video_id]) . '">Go back</a>';
+                return redirect()->route('showDetailVideo', $comment->video_id)->with('error', $errorMessage);
+            }
+        }
+        
+        
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -10,8 +10,7 @@ class komentar_video extends Model
     protected $fillable = [
         'pesan',
         'user_id',
-        'artikel_id',
-        // Tambahkan atribut lain sesuai dengan struktur tabel komentar
+        'video_id', // Corrected attribute name
     ];
 
     // Relasi ke pengguna
@@ -20,9 +19,10 @@ class komentar_video extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    // Relasi ke artikel
+    // Relasi ke video (assuming 'video' is the correct model name)
     public function video()
     {
-        return $this->belongsTo(video::class, 'video_id');
+        return $this->belongsTo(Video::class, 'video_id');
     }
 }
+

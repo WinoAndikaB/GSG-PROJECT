@@ -102,7 +102,7 @@
       <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html " target="_blank">
         <div class="d-flex px-2 py-1">
           <div>
-            <img src="{{ asset('assets/img/lg1.png') }}" class="avatar avatar-sm me-3" alt="user1" width="2" height="2">
+            <img src="{{ asset('assets/img/lg1.png') }}" class="avatar avatar-sm me-3 h-100" alt="user1">
           </div>
           <div class="d-flex flex-column justify-content-center">
             <h6 class="mb-0 text-sm">GSG PROJECT</h6>
