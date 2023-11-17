@@ -23,8 +23,11 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
+<!------------------------------------------------------------------------------------- CSS Area -------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- CSS Area -------------------------------------------------------------------------------------------->
 
   <style>
+    /* Rating Style */
       .rating {
         font-size: 24px;
       }
@@ -47,6 +50,7 @@
           color: gold; /* Warna bintang yang diisi */
         }
 
+      /* Modal Logout */
         .modal {
           display: none;
           position: fixed;
@@ -92,7 +96,78 @@
           cursor: pointer;
         }
   </style>
+  <style>
+/* Gaya untuk Modal */
+.modals {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  opacity: 0; /* Set initial opacity to 0 */
+  transition: opacity 0.3s ease; /* Add transition for opacity */
+}
+
+.modalKonten {
+  background-color: #fefefe;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 850px;
+  text-align: center;
+  opacity: 1; /* Set initial opacity to 1 */
+}
+
+
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Gaya untuk Tabel Pengguna */
+.user-table {
+  width: 100%;
+}
+
+.user-table td {
+  padding: 8px;
+  text-align: left;
+}
+
+/* Gaya untuk Judul Modal */
+.modal-title {
+  color: #3498db;
+  text-align: center;
+}
+
+/* Gaya untuk Garis Horizontal */
+.modal-hr {
+  border-top: 1px solid #3498db;
+}
+
+  </style>
+  
 </head>
+
+<!------------------------------------------------------------------------------------- SideBar Area -------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- SideBar Area -------------------------------------------------------------------------------------------->
+
 
 <body class="g-sidenav-show   bg-gray-100">
   <div class="min-height-300 bg-primary position-absolute w-100"></div>
@@ -211,6 +286,10 @@
       </ul>
     </div>
 
+<!------------------------------------------------------------------------------------- Body Area -------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- Body Area -------------------------------------------------------------------------------------------->
+
+
     <div class="sidenav-footer mx-3 ">
   </aside>
   <main class="main-content position-relative border-radius-lg ">
@@ -270,22 +349,7 @@
       </div>
     </div>
   </nav>
-  <!-- End Navbar -->
-
-  <!-- Modal Logout -->
-  <div id="logout-modal" class="modal">
-    <div class="modal-content">
-      <span class="close" id="close-button" onclick="closeModal()">&times;</span>
-      <h2>Konfirmasi Logout</h2>
-      <p>Apakah anda mau logout?</p>
-      <div style="text-align: center;">
-        <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
-        <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
-      </div>
-    </div>
-  </div>
-  
-  
+  <!-- End Navbar -->  
   
     <div class="container-fluid py-4">
       <div class="row">
@@ -319,11 +383,13 @@
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
+                    <a href="#" class="d-sm-inline d-none text-bold" id="detail-button">
                     <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Pengguna</p>
-                    <h5 class="font-weight-bolder">
-                      {{$totalUser}}
-                    </h5>
+                      <h5 class="font-weight-bolder">
+                          {{ $totalUser }}
+                      </h5>
                     <br>
+                  </a>
                     <p class="mb-0">
                       <span class="text-success text-sm font-weight-bolder">+{{ $dataBaruUser }}</span>
                       Data Baru Ditambahkan
@@ -390,53 +456,6 @@
                     <i class="ni ni-satisfied text-lg opacity-10" aria-hidden="true"></i>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-     
-
-          <div class="col-lg-5">
-            <div class="card card-carousel overflow-hidden h-100 p-0">
-              <div id="carouselExampleCaptions" class="carousel slide h-100" data-bs-ride="carousel">
-                <div class="carousel-inner border-radius-lg h-100">
-                  <div class="carousel-item h-100 active" style="background-image: url('../assets2/img/carousel-1.jpg');background-size: cover;">
-                    <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
-                      <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
-                        <i class="ni ni-camera-compact text-dark opacity-10"></i>
-                      </div>
-                      <h5 class="text-white mb-1">Get started with Argon</h5>
-                      <p>There’s nothing I really wanted to do in life that I wasn’t able to get good at.</p>
-                    </div>
-                  </div>
-                  <div class="carousel-item h-100" style="background-image: url('../assets2/img/carousel-2.jpg');background-size: cover;">
-                    <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
-                      <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
-                        <i class="ni ni-bulb-61 text-dark opacity-10"></i>
-                      </div>
-                      <h5 class="text-white mb-1">Faster way to create web pages</h5>
-                      <p>That’s my skill. I’m not really specifically talented at anything except for the ability to learn.</p>
-                    </div>
-                  </div>
-                  <div class="carousel-item h-100" style="background-image: url('../assets2/img/carousel-3.jpg');background-size: cover;">
-                    <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
-                      <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
-                        <i class="ni ni-trophy text-dark opacity-10"></i>
-                      </div>
-                      <h5 class="text-white mb-1">Share with us your design tips!</h5>
-                      <p>Don’t be afraid to be wrong because you can’t learn anything from a compliment.</p>
-                    </div>
-                  </div>
-                </div>
-                <button class="carousel-control-prev w-5 me-3" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next w-5 me-3" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Next</span>
-                </button>
               </div>
             </div>
           </div>
@@ -509,6 +528,55 @@
           </div>
         </div>
 
+<!------------------------------------------------------------------------------------- Argon Feature Area -------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- Argon Feature Area -------------------------------------------------------------------------------------------->
+
+
+          <div class="col-lg-5">
+            <div class="card card-carousel overflow-hidden h-100 p-0">
+              <div id="carouselExampleCaptions" class="carousel slide h-100" data-bs-ride="carousel">
+                <div class="carousel-inner border-radius-lg h-100">
+                  <div class="carousel-item h-100 active" style="background-image: url('../assets2/img/carousel-1.jpg');background-size: cover;">
+                    <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
+                      <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
+                        <i class="ni ni-camera-compact text-dark opacity-10"></i>
+                      </div>
+                      <h5 class="text-white mb-1">Get started with Argon</h5>
+                      <p>There’s nothing I really wanted to do in life that I wasn’t able to get good at.</p>
+                    </div>
+                  </div>
+                  <div class="carousel-item h-100" style="background-image: url('../assets2/img/carousel-2.jpg');background-size: cover;">
+                    <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
+                      <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
+                        <i class="ni ni-bulb-61 text-dark opacity-10"></i>
+                      </div>
+                      <h5 class="text-white mb-1">Faster way to create web pages</h5>
+                      <p>That’s my skill. I’m not really specifically talented at anything except for the ability to learn.</p>
+                    </div>
+                  </div>
+                  <div class="carousel-item h-100" style="background-image: url('../assets2/img/carousel-3.jpg');background-size: cover;">
+                    <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
+                      <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
+                        <i class="ni ni-trophy text-dark opacity-10"></i>
+                      </div>
+                      <h5 class="text-white mb-1">Share with us your design tips!</h5>
+                      <p>Don’t be afraid to be wrong because you can’t learn anything from a compliment.</p>
+                    </div>
+                  </div>
+                </div>
+                <button class="carousel-control-prev w-5 me-3" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next w-5 me-3" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <footer class="footer pt-3  ">
           <div class="container-fluid">
             <div class="row align-items-center justify-content-lg-between">
@@ -531,95 +599,97 @@
       </div>
   </main>
 
+<!------------------------------------------------------------------------------------- Modal Area -------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- Modal Area -------------------------------------------------------------------------------------------->
+
+    <!-- Modal Logout -->
+    <div id="logout-modal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="close-button" onclick="closeModal()">&times;</span>
+        <h2>Konfirmasi Logout</h2>
+        <p>Apakah anda mau logout?</p>
+        <div style="text-align: center;">
+          <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
+          <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Pengguna -->
+    <div id="pengguna-modal" class="modals">
+      <div class="modalKonten">
+        <span class="close" id="close-button" onclick="closeModal()">&times;</span>
+        <h2 class="modal-title">Detail Pengguna</h2>
+        <table class="user-table">
+          <tr>
+            <td>User</td>
+            <td>{{$userCount}}</td>
+          </tr>
+          <tr>
+            <td>Admin (Penulis)</td>
+            <td>{{$adminCount}}</td>
+          </tr>
+          <tr>
+            <td>SuperAdmin</td>
+            <td>{{$superadminCount}}</td>
+          </tr>
+          <tr>
+            <td colspan="2"><hr class="modal-hr"></td>
+          </tr>
+          <tr>
+            <td>Total Pengguna</td>
+            <td>{{$totalUser}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+<!------------------------------------------------------------------------------------- Javascript Area -------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- Javascript Area -------------------------------------------------------------------------------------------->
+
    <!--   Core JS Files   -->
    <script src="../assets2/js/core/popper.min.js"></script>
    <script src="../assets2/js/core/bootstrap.min.js"></script>
    <script src="../assets2/js/plugins/perfect-scrollbar.min.js"></script>
    <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
    <script src="../assets2/js/plugins/chartjs.min.js"></script>
+
+
+   <!-- Modal Detail Pengguna -->
    <script>
-     var ctx1 = document.getElementById("chart-line").getContext("2d");
- 
-     var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
- 
-     gradientStroke1.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
-     gradientStroke1.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
-     gradientStroke1.addColorStop(0, 'rgba(94, 114, 228, 0)');
-     new Chart(ctx1, {
-       type: "line",
-       data: {
-         labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-         datasets: [{
-           label: "Mobile apps",
-           tension: 0.4,
-           borderWidth: 0,
-           pointRadius: 0,
-           borderColor: "#5e72e4",
-           backgroundColor: gradientStroke1,
-           borderWidth: 3,
-           fill: true,
-           data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-           maxBarThickness: 6
- 
-         }],
-       },
-       options: {
-         responsive: true,
-         maintainAspectRatio: false,
-         plugins: {
-           legend: {
-             display: false,
-           }
-         },
-         interaction: {
-           intersect: false,
-           mode: 'index',
-         },
-         scales: {
-           y: {
-             grid: {
-               drawBorder: false,
-               display: true,
-               drawOnChartArea: true,
-               drawTicks: false,
-               borderDash: [5, 5]
-             },
-             ticks: {
-               display: true,
-               padding: 10,
-               color: '#fbfbfb',
-               font: {
-                 size: 11,
-                 family: "Open Sans",
-                 style: 'normal',
-                 lineHeight: 2
-               },
-             }
-           },
-           x: {
-             grid: {
-               drawBorder: false,
-               display: false,
-               drawOnChartArea: false,
-               drawTicks: false,
-               borderDash: [5, 5]
-             },
-             ticks: {
-               display: true,
-               color: '#ccc',
-               padding: 20,
-               font: {
-                 size: 11,
-                 family: "Open Sans",
-                 style: 'normal',
-                 lineHeight: 2
-               },
-             }
-           },
-         },
-       },
-     });
-   </script>
+    document.getElementById('detail-button').addEventListener('mouseenter', openModalPengguna);
+    document.getElementById('detail-button').addEventListener('mouseleave', closePenggunaModal);
+    document.getElementById('close-button').addEventListener('click', closePenggunaModal);
+  
+    function openModalPengguna() {
+      const modal = document.getElementById('pengguna-modal');
+      modal.style.display = 'flex';
+      setTimeout(() => {
+        modal.style.opacity = '1';
+      }, 10); // Use a small delay to ensure the display and opacity changes happen together
+    }
+  
+    function closePenggunaModal() {
+      const modal = document.getElementById('pengguna-modal');
+      modal.style.opacity = '0';
+      setTimeout(() => {
+        modal.style.display = 'none';
+      }, 300); // Use the same duration as the transition (0.3s) for a smooth effect
+    }
+  
+    // Close modal if the user clicks outside of it
+    window.addEventListener('click', (event) => {
+      const modal = document.getElementById('pengguna-modal');
+      if (event.target == modal) {
+        closePenggunaModal();
+      }
+    });
+  </script>
+  
+  
+  <!--   Modal Logout  -->
    <script>
      var win = navigator.platform.indexOf('Win') > -1;
      if (win && document.querySelector('#sidenav-scrollbar')) {

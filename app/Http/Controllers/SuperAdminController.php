@@ -85,6 +85,10 @@ class SuperAdminController extends Controller
         $totalUlasan = ulasans::count();
         $data1 = ulasans::all();
 
+        $superadminCount = User::where('role', 'superadmin')->count();
+        $adminCount = User::where('role', 'admin')->count();
+        $userCount = User::where('role', 'user')->count();
+
         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
         $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
         $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
@@ -111,7 +115,7 @@ class SuperAdminController extends Controller
         $averageRating = $ratings->count() > 0 ? $totalRatings / $ratings->count() : 0;
         
 
-        return view('SuperAdmin.dashboardSA', compact('totalArtikel', 'totalUser', 'totalUlasan', 'averageRating', 'totalUlasan', 
+        return view('SuperAdmin.dashboardSA', compact('superadminCount','adminCount','userCount','totalArtikel', 'totalUser', 'totalUlasan', 'averageRating', 'totalUlasan', 
         'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 
         'dataBaruLaporanArtikel','dataBaruLaporanVideo','kategoriArtikel','kategoriVideo', 'dataBaruEventKomunitas'));
     }
