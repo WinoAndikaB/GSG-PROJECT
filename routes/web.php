@@ -441,5 +441,3 @@ use Illuminate\Support\Facades\Route;
             //[SuperAdmin] Edit Syarat & Ketentuan
             Route::get('/formEditTdanCSA/{id}',[SuperAdminController::class,'formEditTdanCSA'])->name('formEditTdanCSA');
             Route::post('/formEditTdanCSA/updateTdanCSA/{id}',[SuperAdminController::class,'updateTdanCSA'])->name('updateTdanCSA');
-//------------------------------------------------------------- [SuperAdmin] Tab Syarat & Ketentuan ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [SuperAdmin] Tab Syarat & Ketentuan ---------------------------------------------------------------------------------------------------------
