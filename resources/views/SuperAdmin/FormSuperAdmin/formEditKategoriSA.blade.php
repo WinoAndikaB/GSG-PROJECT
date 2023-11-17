@@ -100,7 +100,7 @@
             <img src="{{ asset('assets/img/lg1.png') }}" class="avatar avatar-sm me-3" alt="user1" width="2" height="2">
           </div>
           <div class="d-flex flex-column justify-content-center">
-            <h6 class="mb-0 text-sm">GSG PROJECT</h6>
+            <h6 class="mb-0 text-sm">KataKey</h6>
             <p class="text-xs text-secondary mb-0">Halaman Super Admin</p>
           </div>
         </div>

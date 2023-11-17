@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Profil | GSG PROJECT
+    Profil | KataKey
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -72,7 +72,7 @@
 
 <body class="g-sidenav-show   bg-gray-100">
   <div class="min-height-300 bg-primary position-absolute w-100"></div>
-  <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main">
+  <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main" data-color="primary">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html " target="_blank">
@@ -81,7 +81,7 @@
             <img src="{{ asset('assets/img/lg1.png') }}" class="avatar avatar-sm me-3" alt="user1" width="2" height="2">
           </div>
           <div class="d-flex flex-column justify-content-center">
-            <h6 class="mb-0 text-sm">GSG PROJECT</h6>
+            <h6 class="mb-0 text-sm">KataKey</h6>
             <p class="text-xs text-secondary mb-0">Halaman Super Admin</p>
           </div>
         </div>

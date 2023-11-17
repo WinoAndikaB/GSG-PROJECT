@@ -436,7 +436,7 @@ use Illuminate\Support\Facades\Route;
             Route::post('/formTambahTdanCSA/storeTdanCSA',  [SuperAdminController::class, 'storeTdanCSA'])->name('storeTdanCSA');
 
             //[SuperAdmin] Delete Syarat & Ketentuan
-            Route::get('/deleteTdanCSA/{id}',[SuperAdminController::class,'deleteTdanCSA']);
+            Route::get('/deleteTdanCSA/{id}',[SuperAdminController::class,'deleteTdanCSA'])->name('deleteTdanCSA');
 
             //[SuperAdmin] Edit Syarat & Ketentuan
             Route::get('/formEditTdanCSA/{id}',[SuperAdminController::class,'formEditTdanCSA'])->name('formEditTdanCSA');

@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Tambah Term & Condition | GSG PROJECT
+    Tambah Term & Condition | KataKey
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -70,7 +70,7 @@
 
 <body class="g-sidenav-show   bg-gray-100">
   <div class="min-height-300 bg-primary position-absolute w-100"></div>
-  <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main">
+  <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main" data-color="primary">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html " target="_blank">
@@ -79,7 +79,7 @@
             <img src="{{ asset('assets/img/lg1.png') }}" class="avatar avatar-sm me-3" alt="user1" width="2" height="2">
           </div>
           <div class="d-flex flex-column justify-content-center">
-            <h6 class="mb-0 text-sm">GSG PROJECT</h6>
+            <h6 class="mb-0 text-sm">KataKey</h6>
             <p class="text-xs text-secondary mb-0">Halaman Super Admin</p>
           </div>
         </div>
@@ -194,9 +194,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Terms & Condition</li>
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Syarat Dan Ketentuan </li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Form Tambah Terms & Condition</h6>
+          <h6 class="font-weight-bolder text-white mb-0">Syarat Dan Ketentuan </h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -260,8 +260,9 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <h6>Tambah Terms & Condition</h6>
-              <form class="form" method="POST" action="/formTambahTdanCSA/storeTdanCSA">
+              <h6>Tambah Syarat Dan Ketentuan </h6>
+              
+              <form class="form" method="POST" action="{{ route('storeTdanCSA') }}">
                 @csrf
                 <div class="row">
                   <div class="col-md-6">
@@ -388,21 +389,15 @@
   <script src="../assets2/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/chartjs.min.js"></script>
+  
   <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
   <script>
-      ClassicEditor
-          .create( document.querySelector( '#editor' ), {
-              plugins: [ 'fontSize' ],
-              toolbar: [ 'heading', '|', 'fontSize', '|', 'bold', 'italic', 'link' ],
-              fontSize: {
-                  options: [12, 14, 16, 18, 24, 30, 36],
-                  supportAllValues: true
-              }
-          } )
-          .catch( error => {
-              console.error( error );
-          });
-  </script>
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
   
   <script>
     var ctx1 = document.getElementById("chart-line").getContext("2d");

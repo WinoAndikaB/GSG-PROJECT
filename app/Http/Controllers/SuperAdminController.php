@@ -1053,7 +1053,7 @@ class SuperAdminController extends Controller
 
         $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-        return view('SuperAdmin.term&ConditionSA', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        return view('SuperAdmin.syaratdanketentuanSA', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas'));
     }
 
@@ -1078,11 +1078,20 @@ class SuperAdminController extends Controller
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas'));
     }
 
-    function storeTdanCSA(Request $req){
-            syaratdanketentuans::create([
-                'judulsyarat' => $req->judulsyarat,
-                'deskripsisyarat' => $req->deskripsisyarat,
+    function storeTdanCSA(Request $request){
+
+            $request->validate([
+                'judulsyarat' => 'required',
+                'deskripsisyarat' => 'required',
             ]);
+    
+            $syarat = new syaratdanketentuans;
+    
+            $syarat->judulsyarat = $request->input('judulsyarat');
+            $syarat->deskripsisyarat = $request->input('deskripsisyarat');
+    
+            $syarat->save();
+
                  return redirect('/syaratdanketentuanSA');
          }
 
@@ -1109,10 +1118,12 @@ class SuperAdminController extends Controller
         }
     
     function updateTdanCSA(Request $request, $id){
+
             $data = syaratdanketentuans::find($id);
-        
+    
             $data->judulsyarat = $request->input('judulsyarat');
             $data->deskripsisyarat = $request->input('deskripsisyarat');
+    
             $data->save();
         
             return redirect()->route('syaratdanketentuanSA')->with('success','Data Berhasil di Update');
