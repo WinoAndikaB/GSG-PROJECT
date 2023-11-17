@@ -149,6 +149,17 @@
       background-color: #5E72E4;
     }
 </style>
+<style>
+  /* Tambahkan gaya CSS untuk popup detail */
+  .popup {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 15px;
+    z-index: 1;
+  }
+</style>
 </head>
 
 <!------------------------------------------------------------------------------------- Body Area -------------------------------------------------------------------------------------------->
@@ -399,7 +410,7 @@
                                     ?>
                                   </p>
                                 </td>
-                                <td style="text-align: justify;">
+                                <td class="popup-trigger" data-id="<?php echo $tbhartikel['id']; ?>" style="text-align: justify;">
                                   <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
                                     <?php
                                     $deskripsi = strip_tags($tbhartikel['deskripsi']);
@@ -657,6 +668,53 @@
   $(document).ready(function() {
       console.log("Document ready.");
   });
+  </script>
+
+  <!-- Modal Pop Up Detail Deskripsi Artikel -->
+  <script>
+    // Ambil semua elemen dengan class "popup-trigger"
+    var popupTriggers = document.querySelectorAll('.popup-trigger');
+  
+    // Tambahkan event listener untuk setiap elemen
+    popupTriggers.forEach(function(trigger) {
+      trigger.addEventListener('mouseover', function() {
+        // Panggil fungsi untuk menampilkan popup detail
+        showPopupDetail(trigger);
+      });
+  
+      trigger.addEventListener('mouseout', function() {
+        // Sembunyikan popup detail ketika mouse keluar dari sel
+        hidePopupDetail();
+      });
+    });
+  
+    function showPopupDetail(trigger) {
+  var id = trigger.getAttribute('data-id');
+
+  fetch('get_detail.php?id=' + id)
+    .then(response => response.json())
+    .then(data => {
+      var popupDetail = document.createElement('div');
+      popupDetail.className = 'popup';
+      popupDetail.innerHTML = 'ID: ' + data.id + '<br>' + 'Detail: ' + data.detail;
+
+      var rect = trigger.getBoundingClientRect();
+      popupDetail.style.top = rect.bottom + 'px';
+      popupDetail.style.left = rect.left + 'px';
+
+      document.body.appendChild(popupDetail);
+    })
+    .catch(error => console.error('Error fetching data:', error));
+}
+
+  
+    function hidePopupDetail() {
+      // Hapus semua elemen dengan class "popup"
+      var popups = document.querySelectorAll('.popup');
+      popups.forEach(function(popup) {
+        popup.parentNode.removeChild(popup);
+      });
+    }
   </script>
 
   <!-- Modal Delete -->

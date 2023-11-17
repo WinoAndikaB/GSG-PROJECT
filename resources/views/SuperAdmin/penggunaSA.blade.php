@@ -405,15 +405,17 @@
                                 <p class="text-xs font-weight-bold mb-0">{{$user['alamat']}}</p>
                               </td>
                               <td>
-                                <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
-                                  {{$user['instagram']}}
-                                </p>
-                              </td>   
-                              <td>
-                                <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
-                                  {{$user['facebook']}}
-                                </p>
-                              </td>   
+                                <a href="{{$user['instagram']}}" target="_blank" class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
+                                    {{$user['instagram']}}
+                                </a>
+                            </td>
+                            
+                            <td>
+                                <a href="{{$user['facebook']}}" target="_blank" class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
+                                    {{$user['facebook']}}
+                                </a>
+                            </td>
+                            
                               <td>
                                 <p class="align-middle text-center" style="white-space: normal; max-width: 1000px;">
                                   {{$user['role']}}
