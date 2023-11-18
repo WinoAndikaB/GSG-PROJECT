@@ -378,18 +378,16 @@
           </div>
         </div>
         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-          <div class="card">
+          <div class="card"  id="detail-button">
             <div class="card-body p-3">
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <a href="#" class="d-sm-inline d-none text-bold" id="detail-button">
                     <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Pengguna</p>
                       <h5 class="font-weight-bolder">
                           {{ $totalUser }}
                       </h5>
                     <br>
-                  </a>
                     <p class="mb-0">
                       <span class="text-success text-sm font-weight-bolder">+{{ $dataBaruUser }}</span>
                       Data Baru Ditambahkan
@@ -659,30 +657,69 @@
 
    <!-- Modal Detail Pengguna -->
    <script>
-    document.getElementById('detail-button').addEventListener('mouseenter', openModalPengguna);
-    document.getElementById('detail-button').addEventListener('mouseleave', closePenggunaModal);
+    var modal = document.getElementById('pengguna-modal');
+    var detailButton = document.getElementById('detail-button');
+  
+    detailButton.addEventListener('mouseenter', openModalPengguna);
+    detailButton.addEventListener('mouseleave', () => {
+      setTimeout(() => {
+        if (!isMouseOverModal() && !isMouseOverButton()) {
+          closePenggunaModal();
+        }
+      }, 300);
+    });
+  
+    modal.addEventListener('mouseenter', () => {
+      clearTimeout(modal.timeoutId); // Clear the timeout to prevent automatic close
+    });
+  
+    modal.addEventListener('mouseleave', () => {
+      setTimeout(() => {
+        if (!isMouseOverButton()) {
+          closePenggunaModal();
+        }
+      }, 300);
+    });
+  
     document.getElementById('close-button').addEventListener('click', closePenggunaModal);
   
     function openModalPengguna() {
-      const modal = document.getElementById('pengguna-modal');
       modal.style.display = 'flex';
       setTimeout(() => {
         modal.style.opacity = '1';
-      }, 10); // Use a small delay to ensure the display and opacity changes happen together
+      }, 10);
     }
   
     function closePenggunaModal() {
-      const modal = document.getElementById('pengguna-modal');
       modal.style.opacity = '0';
       setTimeout(() => {
         modal.style.display = 'none';
-      }, 300); // Use the same duration as the transition (0.3s) for a smooth effect
+      }, 300);
+    }
+  
+    function isMouseOverButton() {
+      var rect = detailButton.getBoundingClientRect();
+      return (
+        event.clientX >= rect.left &&
+        event.clientX <= rect.right &&
+        event.clientY >= rect.top &&
+        event.clientY <= rect.bottom
+      );
+    }
+  
+    function isMouseOverModal() {
+      var rect = modal.getBoundingClientRect();
+      return (
+        event.clientX >= rect.left &&
+        event.clientX <= rect.right &&
+        event.clientY >= rect.top &&
+        event.clientY <= rect.bottom
+      );
     }
   
     // Close modal if the user clicks outside of it
     window.addEventListener('click', (event) => {
-      const modal = document.getElementById('pengguna-modal');
-      if (event.target == modal) {
+      if (event.target == modal && !isMouseOverButton()) {
         closePenggunaModal();
       }
     });
