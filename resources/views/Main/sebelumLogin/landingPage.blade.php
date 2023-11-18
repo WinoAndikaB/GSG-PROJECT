@@ -3,16 +3,16 @@
 <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/lg1.png">
 <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
 
-<title>Landing Page - GSG Project</title>
+<title>Landing Page - Katakey</title>
 
 <body>
 <div class="page-heading">
-  <header class="header-area header-sticky">
+  <header class="header-area">
       <div class="container">
           <div class="row">
               <div class="col-12">
                   <nav class="main-nav">
-                      <ul class="nav">
+                      <ul class="nav">              
                           <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
                           <li class="scroll-to-section"><a href="#trends">Trending</a></li>
                           <li class="scroll-to-section"><a href="#about">Artikel</a></li>
@@ -75,7 +75,7 @@
                     <div class="banner-details mt-4 mt-lg-0">
                         <div class="post-meta-single">
                             <ul>
-                                <li><a class="tag-base tag-blue" href="#">GSG PROJECT</a></li>
+                                <li><a class="tag-base tag-blue" href="#">Katakey</a></li>
                                 <li class="date"><i class="fa fa-clock-o"></i>{{$todayDate}}</li>
                             </ul>
                         </div>

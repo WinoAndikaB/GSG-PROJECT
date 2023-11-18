@@ -137,7 +137,7 @@
         <div class="col-lg-12">
           <p>Copyright © 2022 Mexant Co., Ltd. All Rights Reserved. 
           
-          <br>Designed by <a title="CSS Templates" rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a> and <a title="CSS Templates" rel="sponsored" href="https://themewagon.com/themes/free-bootstrap-4-html-5-blog-website-template-nextpage/" target="_blank">NextPage </a> Edited By <a title="CSS Templates" rel="sponsored" href="#" target="_blank">GSG Team</a></p>
+          <br>Designed by <a title="CSS Templates" rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a> and <a title="CSS Templates" rel="sponsored" href="https://themewagon.com/themes/free-bootstrap-4-html-5-blog-website-template-nextpage/" target="_blank">NextPage </a> Edited By <a title="CSS Templates" rel="sponsored" href="#" target="_blank">Katakey Team</a></p>
         </div>
       </div>
     </div>

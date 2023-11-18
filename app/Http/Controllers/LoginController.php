@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Mail\ForgotPasswordMail;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class LoginController extends Controller
 {
@@ -64,10 +68,52 @@ class LoginController extends Controller
         return view('login.lupaPassword');
     }
 
-     //[Login-Reset Password] Halaman Reset Password
-     function resetPassword(){
-        return view('login.resetPassword');
+    function kirimEmail(Request $request){
+
+        $user = User::where('email', '=', $request->email)->first();
+        if (!empty($user)) {
+            $user->remember_token = str::random(40);
+            $user->save();
+
+            Mail::to($user->email)->send(new ForgotPasswordMail($user));
+
+            return view('login.lupaPassword');
     }
+    }
+// LoginController.php
+function resetPassword($token){
+    $user = User::where('remember_token', $token)->first();
+    
+    if (!empty($user)) {
+        return view('login.resetPassword', [
+            'title' => 'Konfirmasi Lupa Sandi',
+            'token' => $token, // Fix the array structure
+        ]);
+    } else {
+        abort(404);
+    }
+}
+
+function updatePassword(Request $request) {
+    $token = $request->input('token');
+    $user = User::where('remember_token', $token)->first();
+
+    if (!empty($user)) {
+        if ($request->input('password') == $request->input('konfirmasiPassword')) {
+            $user->password = Hash::make($request->input('password'));
+            $user->remember_token = Str::random(40);
+            $user->save();
+
+            return redirect()->route('login')->with('success', "Password berhasil direset.");
+        } else {
+            return redirect()->back()->with('error', "Password dan konfirmasi password tidak sesuai.");
+        }
+    } else {
+        abort(404);
+    }
+}
+
+
 
     //[Login-Logout] Logout User
         function logout(){

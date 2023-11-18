@@ -77,7 +77,10 @@ use Illuminate\Support\Facades\Route;
 
         //[Non-User] Tab Lupa Password User
         Route::get('/lupaPassword',[LoginController::class,'lupaPassword']);
-        Route::get('/resetPassword',[LoginController::class,'resetPassword']);
+        Route::post('/lupaPasswordpost',[LoginController::class,'kirimEmail']);
+        Route::get('/password/reset/{token}', [LoginController::class, 'resetPassword']);
+        Route::post('/updatePassword', [LoginController::class, 'updatePassword']);
+
 
         //[Non-User] Tab Register Logout
         Route::get('/logout', [LoginController::class, 'logout'])->name('logout');

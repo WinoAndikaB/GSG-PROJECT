@@ -150,14 +150,38 @@
     }
 </style>
 <style>
-  /* Tambahkan gaya CSS untuk popup detail */
-  .popup {
+  .popup-modal {
     display: none;
     position: absolute;
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
-    padding: 15px;
     z-index: 1;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 80%;
+    max-height: 80%;
+    overflow: auto;
+    padding: 20px;
+    text-align: justify;
+    border-radius: 8px;
+  }
+
+  .popup-modal p {
+    margin: 0;
+  }
+
+  .popup-trigger {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    text-align: justify;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px; /* Adjust the max-width as needed */
+  }
+
+  .popup-trigger:hover {
+    text-decoration: underline;
   }
 </style>
 </head>
@@ -669,51 +693,54 @@
       console.log("Document ready.");
   });
   </script>
+  
 
   <!-- Modal Pop Up Detail Deskripsi Artikel -->
   <script>
-    // Ambil semua elemen dengan class "popup-trigger"
-    var popupTriggers = document.querySelectorAll('.popup-trigger');
-  
-    // Tambahkan event listener untuk setiap elemen
-    popupTriggers.forEach(function(trigger) {
-      trigger.addEventListener('mouseover', function() {
-        // Panggil fungsi untuk menampilkan popup detail
-        showPopupDetail(trigger);
+    document.querySelectorAll('.popup-trigger').forEach(function (element) {
+      element.addEventListener('mouseenter', function () {
+        openPopup(element.dataset.id);
       });
   
-      trigger.addEventListener('mouseout', function() {
-        // Sembunyikan popup detail ketika mouse keluar dari sel
-        hidePopupDetail();
+      element.addEventListener('mouseleave', function () {
+        closePopup(element.dataset.id);
       });
     });
   
-    function showPopupDetail(trigger) {
-  var id = trigger.getAttribute('data-id');
-
-  fetch('get_detail.php?id=' + id)
-    .then(response => response.json())
-    .then(data => {
-      var popupDetail = document.createElement('div');
-      popupDetail.className = 'popup';
-      popupDetail.innerHTML = 'ID: ' + data.id + '<br>' + 'Detail: ' + data.detail;
-
-      var rect = trigger.getBoundingClientRect();
-      popupDetail.style.top = rect.bottom + 'px';
-      popupDetail.style.left = rect.left + 'px';
-
-      document.body.appendChild(popupDetail);
-    })
-    .catch(error => console.error('Error fetching data:', error));
-}
-
+    function openPopup(id) {
+      const popup = document.getElementById('popup-' + id);
+      if (!popup) {
+        const tdElement = document.querySelector('.popup-trigger[data-id="' + id + '"]');
+        const description = tdElement.querySelector('p').innerHTML;
   
-    function hidePopupDetail() {
-      // Hapus semua elemen dengan class "popup"
-      var popups = document.querySelectorAll('.popup');
-      popups.forEach(function(popup) {
-        popup.parentNode.removeChild(popup);
-      });
+        const popupContainer = document.createElement('div');
+        popupContainer.id = 'popup-' + id;
+        popupContainer.className = 'popup-modal';
+  
+        const popupContent = document.createElement('p');
+        popupContent.innerHTML = description;
+  
+        popupContainer.appendChild(popupContent);
+        document.body.appendChild(popupContainer);
+  
+        positionPopup(tdElement, popupContainer);
+      }
+  
+      document.getElementById('popup-' + id).style.display = 'block';
+    }
+  
+    function closePopup(id) {
+      const popup = document.getElementById('popup-' + id);
+      if (popup) {
+        popup.style.display = 'none';
+      }
+    }
+  
+    function positionPopup(triggerElement, popupElement) {
+      const rect = triggerElement.getBoundingClientRect();
+  
+      popupElement.style.top = rect.bottom + 'px';
+      popupElement.style.left = rect.left + 'px';
     }
   </script>
 

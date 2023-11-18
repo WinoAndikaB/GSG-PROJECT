@@ -50,7 +50,7 @@
   }
 </style>
 
-<title>Home - GSG Project</title>
+<title>Home - Katakey</title>
 
 <body>
 <div class="page-heading">
@@ -152,7 +152,7 @@
                     <div class="banner-details mt-4 mt-lg-0">
                         <div class="post-meta-single">
                             <ul>
-                                <li><a class="tag-base tag-blue" href="#">GSG PROJECT</a></li>
+                                <li><a class="tag-base tag-blue" href="#">Katakey</a></li>
                                 <li class="date"><i class="fa fa-clock-o"></i>{{$todayDate}}</li>
                             </ul>
                         </div>
