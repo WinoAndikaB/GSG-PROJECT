@@ -1,127 +1,73 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Pembayaran Berhasil</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>Reset Password Email</title>
   <style>
-    body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      min-height: 100vh;
-      margin: 0;
-      background-color: #fff;
-    }
-
-    .center {
-      text-align: center;
-    }
-
-    .header,
-    .footer {
-      background-color: #134BBA;
-      color: #fff;
-      padding: 10px 0;
-       height: 2px; 
-    }
-
-    .header img {
-      display: block;
-      margin: 0 auto;
-    }
-
-    .content {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #fff;
-    }
-
     .email-button {
       display: inline-block;
       padding: 10px 20px;
-      background-color: #4CAF50;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-    }
-
- .footer {
       background-color: #134BBA;
-      color: #fff;
-      padding: 10px 0;
-      height: 2px; 
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .text-center {
+      margin: 0 auto;
+      max-width: 600px;
       text-align: center;
-      height: 150px; /* Atur ketinggian footer sesuai kebutuhan */
+      border-bottom: 2px solid #ccc;
+      padding: 20px 0;
     }
 
-    .social-icons {
-        margin-top: 10px;
-    }
-
-    .social-icons a {
-        display: inline-block;
-        margin-right: 10px;
+    .footer {
+      padding: 20px 0;
     }
 
     .social-icons img {
-        width: 30px; /* Sesuaikan ukuran ikon sesuai kebutuhan */
-        height: 30px;
+      width: 30px; /* Adjust the size as needed */
+      margin: 0 5px; /* Adjust spacing between icons */
+      vertical-align: middle;
     }
   </style>
-
 </head>
 <body>
-  <div class="center">
-     <div class="header">
+  <!-- header with text-center class and border-bottom -->
+  <div class="text-center">
+    <img src="https://ci4.googleusercontent.com/proxy/6fEtvO8_XjTwD-Hdu0F6lI7wvSSFSNU4pOINu5tWMkMZwvtqnT3-KAxht3tZtx1DQfrI9nn37OC0cn9H2M-b7yCSEiJFpa6JquoLQsSK_KeRz83pENYdLM7EuFLUGMp9EaESXxwcH5mAEnj2gAr7lICKZcoVqB71kHNvpnMGExvD=s0-d-e1-ft#https://mobile.omni.bankmandiri.co.id/livin/customer/content/v1/image/5ebaf8c1-9696-417a-ab84-3c36c94af489.png" alt="livinbymandiri" style="max-width:156px; display: block; margin: 0 auto;">
   </div>
 
-  <br>
-
-  <div>
-    <img src="https://img.freepik.com/premium-vector/abstract-monogram-lk-kl-initial-letter-logo_649646-38.jpg" alt="livinbymandiri" style="max-width:156px" class="CToWUd" data-bit="iit">
-  </div>
-
-  <br>
-  <br>
-  
-      <div class="content center">
-
-        <h2>Reset Password Akun</h2>
-
-        <p>Ini adalah email verifikasi dari KataKey. Jika Anda ingin mengatur ulang kata sandi Anda, klik tombol di bawah ini:</p>
-
-        <br>
-
-        <div class="text-center">
-          <a class="email-button" href="{{ url('password/reset/' . $user->remember_token) }}">Verifikasi</a>
-        </div>
-        
-        <br>
-
-        <p>Jika Anda tidak meminta reset kata sandi, Anda bisa mengabaikan email ini. Terima kasih telah menggunakan website kami.</p>
-
-  </div>
-  
+  <div class="text-center">
+    <h2>Reset Password Akun</h2>
+    <p>Ini adalah email verifikasi dari KataKey. Jika Anda ingin mengatur ulang kata sandi Anda, klik tombol di bawah ini:</p>
     <br>
-    <br>
-
-
-          <div class="footer center" style="color: white; background-color: #134BBA; padding: 20px;">
-            <span>&copy; 2023 Katakey All rights reserved.</span>
-        
-            <div class="social-icons">
-              <a href="#" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" alt="Facebook"></a>
-              <a href="#" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" alt="Twitter"></a>
-              <a href="#" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" alt="Instagram"></a>
-          </div>
-        </div>
-        </div>
-      </div>
+    <div>
+      <a class="email-button" href="{{ url('password/reset/' . $user->remember_token) }}">Verifikasi</a>
     </div>
-    
+    <br>
+    <p>Jika Anda tidak meminta reset kata sandi, Anda bisa mengabaikan email ini. Terima kasih telah menggunakan website kami.</p>
   </div>
+
+  <!-- footer with borders -->
+  <div class="footer">
+    <br>
+    <p>&copy; 2023 Katakey All rights reserved.</p>
+    <div> 
+      <div class="social-icons">
+        <a href="https://www.facebook.com/" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/2023_Facebook_icon.svg/1024px-2023_Facebook_icon.svg.png" alt="Facebook Logo" style="width: 25px;">
+        </a>
+        <a href="https://www.instagram.com/" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/600px-Instagram_logo_2022.svg.png" alt="Instagram Logo" style="width: 25px;">
+        </a>
+        <a href="https://twitter.com/" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/X_logo_2023.svg/1134px-X_logo_2023.svg.png" alt="Twitter Logo" style="width: 25px;">
+        </a>
+    </div>    
+    </div>
+</div>
+ 
 </body>
 </html>

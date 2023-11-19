@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Lupa Password | GSG PROJECT
+    Lupa Password | Katakey
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -61,7 +61,7 @@
               <div class="position-relative h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden" style="background-image: url('https://img.freepik.com/premium-photo/interior-background-contemporary-shelves-wall-desktop-apartment-design-computer-living-generative-ai_163305-172176.jpg');
           background-size: cover;">
                 <span></span>
-                <h4 class="mt-5 text-white font-weight-bolder position-relative">"GSG PROJECT"</h4>
+                <h4 class="mt-5 text-white font-weight-bolder position-relative">"Katakey"</h4>
                 <p class="text-white position-relative">Website Focusing on Uploading Articles.</p>
               </div>
             </div>
