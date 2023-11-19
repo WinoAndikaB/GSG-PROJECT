@@ -667,11 +667,11 @@
   });
   </script>
 
-  <!-- Video Popup -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-    // Temukan semua elemen <td>
-    var videoContainers = document.querySelectorAll("td");
+ <!-- Video Popup -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Temukan semua elemen <td> dengan id videoContainer
+    var videoContainers = document.querySelectorAll("td#videoContainer");
 
     // Tambahkan event listener untuk setiap elemen
     videoContainers.forEach(function (videoContainer) {
@@ -716,7 +716,8 @@
       });
     });
   });
-  </script>
+</script>
+
   
   
 
