@@ -13,7 +13,7 @@
     <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <title>Event - GSG Project</title>
+    <title>Event - Katakey</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -292,7 +292,7 @@
                           </div>
 
                           <div style="text-align: center; font-size: 10px; font-weight: normal;">
-                            Copyright &copy; <a href="#" style="font-size: 10px; font-weight: normal;">gsgproject.com</a>
+                            Copyright &copy; <a href="#" style="font-size: 10px; font-weight: normal;">Katakey@gmail.com</a>
                           </div>
 
                         </div>

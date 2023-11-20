@@ -13,7 +13,7 @@
     <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <title>About - GSG Project</title>
+    <title>About - Katakey</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -166,7 +166,7 @@
               </div>
               <div class="accordion-body">
                   <div class="content">
-                      <p>Selamat datang di GSG Project, ruang digital yang kami bentuk untuk menjadi sumber utama bagi mereka yang haus akan pengetahuan, inspirasi, dan hiburan berkualitas. Sebagai tim yang berkomitmen, kami percaya bahwa pembelajaran adalah proses sepanjang hayat, dan melalui GSG Project, kami ingin mempermudah perjalanan Anda dalam mengeksplorasi dunia informasi yang kaya dan beragam.</p>
+                      <p>Selamat datang di Katakey, ruang digital yang kami bentuk untuk menjadi sumber utama bagi mereka yang haus akan pengetahuan, inspirasi, dan hiburan berkualitas. Sebagai tim yang berkomitmen, kami percaya bahwa pembelajaran adalah proses sepanjang hayat, dan melalui Katakey, kami ingin mempermudah perjalanan Anda dalam mengeksplorasi dunia informasi yang kaya dan beragam.</p>
                   </div>
               </div>
           </article>
@@ -186,7 +186,7 @@
                       <br>
                       <strong>2. Menyediakan Beragam Kategori: </strong><br>
                       
-                      GSG Project mencakup berbagai kategori agar setiap pengunjung dapat menemukan konten yang sesuai dengan minat dan kebutuhan mereka. Dari sains hingga seni, kami berusaha untuk merangkul keragaman pengetahuan.<br>
+                      Katakey mencakup berbagai kategori agar setiap pengunjung dapat menemukan konten yang sesuai dengan minat dan kebutuhan mereka. Dari sains hingga seni, kami berusaha untuk merangkul keragaman pengetahuan.<br>
                       <br>
                       <strong>3. Menjadi Sumber Informasi Terpercaya:</strong><br>
                       
@@ -206,7 +206,7 @@
         <div class="col-lg-5">
           <div class="left-content">
             <h4>Kami Butuh Dukungan Anda</h4>
-            <p>GSG Project adalah perwujudan semangat kami untuk membangun komunitas pembelajar yang dinamis dan berbagi. Kami berharap bahwa setiap langkah yang Anda ambil di dalam platform ini membawa Anda lebih dekat pada pemahaman yang lebih dalam, 
+            <p>Katakey adalah perwujudan semangat kami untuk membangun komunitas pembelajar yang dinamis dan berbagi. Kami berharap bahwa setiap langkah yang Anda ambil di dalam platform ini membawa Anda lebih dekat pada pemahaman yang lebih dalam, 
               inspirasi yang tak terbatas, dan konektivitas dengan komunitas yang berpikiran serupa. Selamat mengeksplorasi dan bergabunglah dengan kami dalam perjalanan pengetahuan yang tak ada habisnya!</p>
             <div class="green-button">
                 <a href="contact-us.html">Temukan Lebih Lanjut</a>
@@ -241,7 +241,7 @@
                 <div class="item">
                   <em>04</em>
                   <h4> Beri Masukan</h4>
-                  <p>Kami selalu menghargai masukan dari pengguna kami. Jika Anda memiliki saran atau tanggapan, jangan ragu untuk menghubungi kami. Kami ingin memastikan GSG Project terus berkembang sesuai dengan kebutuhan dan minat Anda.</p>
+                  <p>Kami selalu menghargai masukan dari pengguna kami. Jika Anda memiliki saran atau tanggapan, jangan ragu untuk menghubungi kami. Kami ingin memastikan Katakey terus berkembang sesuai dengan kebutuhan dan minat Anda.</p>
                 </div>
               </div>
             </div>
@@ -285,7 +285,7 @@
               <div class="info-item">
                 <i class="fa fa-envelope"></i>
                 <h4>Email Address</h4>
-                <a href="#">gsgproject@gmail.com</a>
+                <a href="#">Katakey@gmail.com</a>
               </div>
             </div>
             <div class="col-lg-4">

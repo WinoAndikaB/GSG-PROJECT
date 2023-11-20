@@ -36,7 +36,7 @@
 <body>
   <!-- header with text-center class and border-bottom -->
   <div class="text-center">
-    <img src="https://ci4.googleusercontent.com/proxy/6fEtvO8_XjTwD-Hdu0F6lI7wvSSFSNU4pOINu5tWMkMZwvtqnT3-KAxht3tZtx1DQfrI9nn37OC0cn9H2M-b7yCSEiJFpa6JquoLQsSK_KeRz83pENYdLM7EuFLUGMp9EaESXxwcH5mAEnj2gAr7lICKZcoVqB71kHNvpnMGExvD=s0-d-e1-ft#https://mobile.omni.bankmandiri.co.id/livin/customer/content/v1/image/5ebaf8c1-9696-417a-ab84-3c36c94af489.png" alt="livinbymandiri" style="max-width:156px; display: block; margin: 0 auto;">
+    <img src="https://i.imgur.com/Lsqvg6Q.png" alt="livinbymandiri" style="max-width:100px; display: block; margin: 0 auto;">
   </div>
 
   <div class="text-center">

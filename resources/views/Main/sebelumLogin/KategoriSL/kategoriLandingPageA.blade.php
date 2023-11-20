@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     @if($kategoriLandingPageA->isNotEmpty())
-    <title>{{ $kategoriLandingPageA->first()->kategori }} - GSG Project</title>
+    <title>{{ $kategoriLandingPageA->first()->kategori }} - Katakey</title>
     @else
         <title>Tidak Ditemukan</title>
     @endif
@@ -73,7 +73,7 @@
                     <a href="/" class="logo">
                         <img src="" alt="">
                     </a>
-                    GSG<span>PROJECT</span>
+                    <span>Katakey</span>
                     <ul class="nav">
                       <li class="scroll-to-section"><a href="/" >Home</a></li>
                       <li class="scroll-to-section"><a href="/">Trending</a></li>

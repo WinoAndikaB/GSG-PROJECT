@@ -50,7 +50,7 @@
   }
 </style>
 
-<title>Profil - GSG Project</title>
+<title>Profil - Katakey</title>
 
 <header class="header-area header-sticky" style="text-align: center;">
   <div class="container">
@@ -58,7 +58,7 @@
           <div class="col-12">
             <nav class="main-nav">
               <ul class="nav">
-                  <li class="scroll-to-section"><a href="/">Home</a></li>
+                  <li class="scroll-to-section"><a href="/home">Home</a></li>
                   <li class="scroll-to-section"><a href="#trends">Trending</a></li>
                   <li class="scroll-to-section"><a href="#about">Artikel</a></li>
                   <li class="scroll-to-section"><a href="/Video" class="">Video</a></li>
