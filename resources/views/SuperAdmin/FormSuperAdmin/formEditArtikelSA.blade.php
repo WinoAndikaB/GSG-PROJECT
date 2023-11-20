@@ -536,7 +536,7 @@ for (const word of forbiddenWordsDesc) {
 
 // Validasi penggunaan kata tidak pantas pada judul
 const judulInput = document.getElementById('judulArtikel');
-const forbiddenWordsJudul = ['judul_kata_terlarang']; // Gantilah dengan kata-kata yang dianggap tidak pantas pada judul
+const forbiddenWordsJudul = ['judul1','judul2','judul3','judul4','judul5','judul6','judul7','judul8','judul9','judul10']; // Gantilah dengan kata-kata yang dianggap tidak pantas pada judul
 const judulValue = judulInput.value.toLowerCase();
 for (const word of forbiddenWordsJudul) {
   if (judulValue.includes(word)) {
@@ -546,7 +546,7 @@ for (const word of forbiddenWordsJudul) {
 
 // Validasi penggunaan kata tidak pantas pada tags
 const tagsInput = document.getElementById('tags');
-const forbiddenWordsTags = ['tags_kata_terlarang']; // Gantilah dengan kata-kata yang dianggap tidak pantas pada tags
+const forbiddenWordsTags = ['tags1','tags2','tags3','tags4','tags5','tags6','tags7','tags8','tags9','tags10']; // Gantilah dengan kata-kata yang dianggap tidak pantas pada tags
 const tagsValue = tagsInput.value.toLowerCase();
 for (const word of forbiddenWordsTags) {
   if (tagsValue.includes(word)) {

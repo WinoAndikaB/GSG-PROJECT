@@ -20,6 +20,10 @@
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets2/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 
+  <!-- Detail Foto -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+
+
 <!------------------------------------------------------------------------------------- CSS Area -------------------------------------------------------------------------------------------->
 <!------------------------------------------------------------------------------------- CSS Area -------------------------------------------------------------------------------------------->
 
@@ -413,8 +417,10 @@
                                 <td>
                                   <div class="d-flex px-2 py-1">
                                     <div>
-                                      <img src="{{asset('gambarArtikel/'.$tbhartikel->gambarArtikel)}}" class="avatar avatar-sm me-3" alt="user1">
-                                    </div>
+                                      <a href="{{asset('gambarArtikel/'.$tbhartikel->gambarArtikel)}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                                          <img src="{{asset('gambarArtikel/'.$tbhartikel->gambarArtikel)}}" class="avatar avatar-sm me-3" alt="user1">
+                                      </a>
+                                  </div>                                  
                                     <div class="d-flex flex-column justify-content-center">
                                       <h6 class="mb-0 text-sm">{{$tbhartikel['penulis']}}</h6>
                                       <p class="text-xs text-secondary mb-0">{{$tbhartikel['email']}}</p>
@@ -687,6 +693,9 @@
  <script src="../assets2/js/plugins/perfect-scrollbar.min.js"></script>
  <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
  <script src="../assets2/js/plugins/chartjs.min.js"></script>
+ 
+   <!-- Detail Foto -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
 
 <script>
   $(document).ready(function() {
