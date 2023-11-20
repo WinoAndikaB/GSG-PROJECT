@@ -22,6 +22,18 @@
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets2/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 
+  <!-- Dynamic Tags -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+  <!-- Dynamic Tags -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- Dynamic Tags CSS and JS files -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+
   <style>
     .modal {
       display: none;
@@ -268,11 +280,11 @@
                 <div class="form-group">
                   <label for="gambarArtikel">Link Video</label>
                   <input type="text" class="form-control" id="linkVideo" name="linkVideo" >
-              </div>              
+                </div>              
                 <div class="form-group">
-                    <label for="judulArtikel">Judul Video</label>
-                    <textarea class="form-control" type="textarea" name="judulVideo" ></textarea>
-                </div>
+                  <label for="judulVideo">Judul Video</label>
+                  <input type="text" class="form-control" id="judulVideo" name="judulVideo" >
+                </div>   
                 <div class="form-group">
                   <label for="email">Email</label>
                   <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}" readonly>
@@ -291,8 +303,10 @@
             </div>
             <div class="form-group">
               <label for="tagsVideo">Tags</label>
-              <input type="text" class="form-control" id="tagsVideo" name="tagsVideo" >
-          </div>
+              <select class="form-control" id="tagsVideo" name="tagsVideo[]" multiple="multiple">
+                  <!-- Existing tags (if any) can be shown here -->
+              </select>
+          </div>          
                 <div class="form-group">
                   <label for="" class="form-control-label">Deskirpsi Video</label>
                   <textarea class="form-control" type="text" name="deskripsiVideo" id="editor" ></textarea>
@@ -414,6 +428,18 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
+
+<!-- Dynamic Tags -->
+<script>
+  $(document).ready(function () {
+      $('#tagsVideo').select2({
+          tags: true,
+          tokenSeparators: [',', ' '], // Allow comma or space to separate tags
+          placeholder: 'Choose tags',
+      });
+  });
+</script>
+
 
 <!--  CKEditor -->
 <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>

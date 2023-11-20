@@ -472,8 +472,12 @@
                                   <span class="badge badge-sm bg-gradient-info">{{$tbhartikel['kategori']}}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-warning">{{$tbhartikel['tags']}}</span>
-                                </td>
+                                  @if($tbhartikel['tags'])
+                                      @foreach(explode(',', $tbhartikel['tags']) as $tag)
+                                          <span class="badge badge-sm bg-gradient-warning">{{ $tag }}</span>
+                                      @endforeach
+                                  @endif
+                              </td>                              
                                 <td class="align-middle">
                                   <a href="/formEditArtikelSA/{{ $tbhartikel->id }}" class="btn btn-warning btn btn-primary btn-round">
                                       <i class="fa fa-pencil"></i>

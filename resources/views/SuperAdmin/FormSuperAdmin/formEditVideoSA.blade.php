@@ -20,24 +20,14 @@
   <link href="../assets2/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets2/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
-  <script>
-    // Function to auto-adjust textarea height
-    function autoResizeTextarea() {
-        const textarea = document.getElementById("auto-resize-textarea");
-        textarea.style.height = "auto";
-        textarea.style.height = textarea.scrollHeight + "px";
-    }
 
-    // Attach the autoResizeTextarea function to the textarea's input event
-    $(document).ready(function() {
-        $("#auto-resize-textarea").on("input", function() {
-            autoResizeTextarea();
-        });
+  <!-- Dynamic Tags -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-        // Initialize the textarea's height when the page loads
-        autoResizeTextarea();
-    });
-</script>
+  <!-- Dynamic Tags CSS and JS files -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+  
 
 </head>
 
@@ -234,44 +224,51 @@
           <div class="card mb-4">
             <div class="card-header pb-0">
               <h6>Form Edit Video</h6>
+
               <form action="/formEditVideoSA/updateVideoSA/{{$data->id}}" method="POST" enctype="multipart/form-data">
-              @csrf
-              <div class="form-group">
-                <label for="" class="form-control-label">Link Video</label>
-                <input class="form-control" type="text" id="uploadGambar" name="linkVideo" value="{{ $data->linkVideo }}" required>
-                <br>
-                <iframe width="340" height="190" src="{{$data->linkVideo}}" frameborder="0" allowfullscreen></iframe>
-            </div>    
+                @csrf
                 <div class="form-group">
-                    <label for="judulArtikel">Judul Video</label>
-                    <input type="text" class="form-control" type="textarea" name="judulVideo"" value="{{ $data->judulVideo }}" required>
+                  <label for="" class="form-control-label">Link Video</label>
+                  <input class="form-control" type="text" id="uploadGambar" name="linkVideo" value="{{ $data->linkVideo }}" required>
+                  <br>
+                  <iframe width="340" height="190" src="{{$data->linkVideo}}" frameborder="0" allowfullscreen></iframe>
+              </div>    
+                  <div class="form-group">
+                      <label for="judulArtikel">Judul Video</label>
+                      <input type="text" class="form-control" type="textarea" name="judulVideo"" value="{{ $data->judulVideo }}" required>
+                    </div>
+                      <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}" readonly>
+                </div>
+                  <div class="form-group">
+                      <label for="penulis">Penulis</label>
+                      <input type="text" class="form-control" id="penulis" name="penulis" value="{{ Auth::user()->name }}" readonly>
                   </div>
-                    <div class="form-group">
-                  <label for="email">Email</label>
-                  <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}" readonly>
-              </div>
-                <div class="form-group">
-                    <label for="penulis">Penulis</label>
-                    <input type="text" class="form-control" id="penulis" name="penulis" value="{{ Auth::user()->name }}" readonly>
+                  <div class="form-group">
+                    <label for="kategori">Kategori</label>
+                    <select class="form-control" id="kategori" name="kategori" required>
+                        @foreach($kategoris as $item)
+                            <option value="{{ $item->kategori }}" @if($item->kategori == $data->kategori) selected @endif>{{ $item->kategori }}</option>
+                        @endforeach
+                    </select>
                 </div>
-                <div class="form-group">
-                  <label for="kategori">Kategori</label>
-                  <select class="form-control" id="kategori" name="kategori" required>
-                      @foreach($kategoris as $item)
-                          <option value="{{ $item->kategori }}" @if($item->kategori == $data->kategori) selected @endif>{{ $item->kategori }}</option>
-                      @endforeach
-                  </select>
-              </div>
-            <div class="form-group">
-              <label for="tags">Tags</label>
-              <input type="text" class="form-control" id="tagsVideo" name="tagsVideo" value="{{ $data->tagsVideo }}" required>
-          </div>
-                <div class="form-group">
-                  <label for="" class="form-control-label">Deskirpsi</label>
-                  <textarea class="form-control" type="text" name="deskripsiVideo" id="editor">{{ $data->deskripsiVideo }}</textarea>
+                  <div class="form-group">
+                    <label for="tagsVideo">Tags</label>
+                    <select class="form-control" id="tagsVideo" name="tagsVideo[]" multiple="multiple">
+                        @if($data->tagsVideo)
+                            @foreach(explode(',', $data->tagsVideo) as $tag)
+                                <option value="{{ $tag }}" selected>{{ $tag }}</option>
+                            @endforeach
+                        @endif
+                    </select>
                 </div>
-                <button type="button" onclick="validateForm()" class="btn btn-primary mt-3">Edit</button>
-                <a href="/videoSuperAdmin" class="btn btn-info mt-3">Kembali</i></a>
+                  <div class="form-group">
+                    <label for="" class="form-control-label">Deskirpsi</label>
+                    <textarea class="form-control" type="text" name="deskripsiVideo" id="editor">{{ $data->deskripsiVideo }}</textarea>
+                  </div>
+                  <button type="button" onclick="validateForm()" class="btn btn-primary mt-3">Edit</button>
+                  <a href="/videoSuperAdmin" class="btn btn-info mt-3">Kembali</i></a>
               </form>
 
             <div class="card-body px-0 pt-12 pb-2">
@@ -383,6 +380,18 @@
   <script src="../assets2/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/chartjs.min.js"></script>
+
+<!--  Dynamic Tags Video -->
+  <script>
+    $(document).ready(function () {
+        $('#tagsVideo').select2({
+            tags: true,
+            tokenSeparators: [',', ' '], // Allow comma or space to separate tags
+            placeholder: 'Choose tags',
+        });
+    });
+</script>
+
 
 <!--  CKEditor -->
 <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>

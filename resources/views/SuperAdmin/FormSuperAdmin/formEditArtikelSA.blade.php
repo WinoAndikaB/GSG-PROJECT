@@ -21,6 +21,11 @@
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets2/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 
+  <!-- Dynamic Tags -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+
   <style>
     .modal {
       display: none;
@@ -289,61 +294,67 @@
 
 
               <form action="/formEditArtikelSA/updateArtikelSA/{{$data->id}}" method="POST" enctype="multipart/form-data">
-              @csrf
-              <div class="form-group">
-                <label for="gambarArtikel">Gambar</label>
-                <span for="gambarArtikel">Format Foto : .jpg, .jpeg, .png </span>
-                <input type="file" class="form-control" id="gambarArtikel" name="gambarArtikel">
-              </div> 
-              <div class="form-group">
-                <br>
-                <img src="{{asset('gambarArtikel/'.$data->gambarArtikel)}}" height=10%" width="15%" srcset="">
-              </div>             
-              <div class="form-group">
-                  <label for="judulArtikel">Judul Artikel</label>
-                  <input type="text" class="form-control" id="judulArtikel" name="judulArtikel" value="{{ $data->judulArtikel }}" required>
+                  @csrf
+                  <div class="form-group">
+                    <label for="gambarArtikel">Gambar</label>
+                    <span for="gambarArtikel">Format Foto : .jpg, .jpeg, .png </span>
+                    <input type="file" class="form-control" id="gambarArtikel" name="gambarArtikel">
+                  </div> 
+                  <div class="form-group">
+                    <br>
+                    <img src="{{asset('gambarArtikel/'.$data->gambarArtikel)}}" height=10%" width="15%" srcset="">
+                  </div>             
+                  <div class="form-group">
+                      <label for="judulArtikel">Judul Artikel</label>
+                      <input type="text" class="form-control" id="judulArtikel" name="judulArtikel" value="{{ $data->judulArtikel }}" required>
+                    </div>
+                      <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}" readonly>
                 </div>
                   <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}" readonly>
-            </div>
-              <div class="form-group">
-                  <label for="penulis">Penulis</label>
-                  <input type="text" class="form-control" id="penulis" name="penulis" value="{{ Auth::user()->name }}" readonly>
-              </div>
-              <div class="form-group">
-                <label for="kategori">Kategori</label>
-                <select class="form-control" id="kategori" name="kategori" required>
-                    @foreach($kategoris as $item)
-                        <option value="{{ $item->kategori }}" @if($item->kategori == $data->kategori) selected @endif>{{ $item->kategori }}</option>
-                    @endforeach
-                </select>
-            </div>
-            
-            
-            
-          <div class="form-group">
-            <label for="tags">Tags</label>
-            <input type="text" class="form-control" id="tags" name="tags" value="{{ $data->judulArtikel }}" required>
-        </div>
-              <div class="form-group">
-                <label for="" class="form-control-label">Deskirpsi</label>
-                <textarea class="form-control" type="text" name="deskripsi" id="editor">{{ $data->deskripsi }}</textarea>
-              </div>
-              <button type="button" onclick="validateForm()" class="btn btn-primary mt-3">Edit</button>
-              <a href="/artikelSuperAdmin" class="btn btn-info mt-3">Kembali</i></a>
+                      <label for="penulis">Penulis</label>
+                      <input type="text" class="form-control" id="penulis" name="penulis" value="{{ Auth::user()->name }}" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label for="kategori">Kategori</label>
+                    <select class="form-control" id="kategori" name="kategori" required>
+                        @foreach($kategoris as $item)
+                            <option value="{{ $item->kategori }}" @if($item->kategori == $data->kategori) selected @endif>{{ $item->kategori }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                  <div class="form-group">
+                    <label for="tags">Tags</label>
+                    <select class="form-control" id="tags" name="tags[]" multiple="multiple" required>
+                        @if($data->tags)
+                            @foreach(explode(',', $data->tags) as $tag)
+                                <option value="{{ $tag }}" selected>{{ $tag }}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
+              
+                  <div class="form-group">
+                    <label for="" class="form-control-label">Deskirpsi</label>
+                    <textarea class="form-control" type="text" name="deskripsi" id="editor">{{ $data->deskripsi }}</textarea>
+                  </div>
+                  <button type="button" onclick="validateForm()" class="btn btn-primary mt-3">Edit</button>
+                  <a href="/artikelSuperAdmin" class="btn btn-info mt-3">Kembali</i></a>
               </form>
 
-            <div class="card-body px-0 pt-12 pb-2">
-              <div class="table-responsive p-0">
-                <div class="panel-header panel-header-sm">
-                </div>
-                <div class="content">
-                  <div class="row">
-                    <div class="col-md-12">
-                        <div class="card-body ">
-                          <div id="map" class="map"></div>
-                        </div>
+              <div class="card-body px-0 pt-12 pb-2">
+                <div class="table-responsive p-0">
+                  <div class="panel-header panel-header-sm">
+                  </div>
+                  <div class="content">
+                    <div class="row">
+                      <div class="col-md-12">
+                          <div class="card-body ">
+                            <div id="map" class="map"></div>
+                          </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -353,7 +364,6 @@
         </div>
       </div>
     </div>
-  </div>
 
       <footer class="footer pt-3  ">
         <div class="container-fluid">
@@ -443,6 +453,18 @@
   <script src="../assets2/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/chartjs.min.js"></script>
+
+  <!-- Dynamic Tags -->
+  <script>
+    $(document).ready(function () {
+        $('#tags').select2({
+            tags: true,
+            tokenSeparators: [',', ' '], // Allow comma or space to separate tags
+            placeholder: 'Choose tags',
+        });
+    });
+</script>
+
 
  <!--  CKEditor -->
 <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>

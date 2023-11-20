@@ -441,7 +441,11 @@
                                     <span class="badge badge-sm bg-gradient-info">{{$item->kategoriVideo}}</span>
                                   </td>
                                   <td class="align-middle text-center">
-                                    <span class="badge badge-sm bg-gradient-warning">{{$item->tagsVideo}}</span>
+                                    @if($item['tagsVideo'])
+                                      @foreach(explode(',', $item['tagsVideo']) as $tag)
+                                          <span class="badge badge-sm bg-gradient-warning">{{ $tag }}</span>
+                                      @endforeach
+                                    @endif
                                   </td>
                                   <td class="align-middle">
                                     <a href="/formEditVideoSA/{{ $item->id}}" class="btn btn-warning btn btn-primary btn-round">

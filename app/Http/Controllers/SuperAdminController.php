@@ -241,27 +241,31 @@ class SuperAdminController extends Controller
             'deskripsi' => 'required',
             'gambarArtikel' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', 
         ]);
-        
     
         $article = new artikels;
-
-        $article->kodeArtikel = 'GSA' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
-
+    
+        $article->kodeArtikel = 'KKA' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
+    
         $article->judulArtikel = $request->input('judulArtikel');
         $article->penulis = $request->input('penulis');
         $article->email = $request->input('email');
         $article->kategori = $request->input('kategori');
-        $article->tags = $request->input('tags');
+        
+        // Convert array of tags to a string
+        $tags = $request->input('tags');
+        $tagsString = implode(',', $tags);
+        $article->tags = $tagsString;
+    
         $article->deskripsi = $request->input('deskripsi');
         $article->status = 'Pending';
     
         // Handle file upload
         if ($request->hasFile('gambarArtikel')) {
             $image = $request->file('gambarArtikel');
-        
+    
             $filename = $image->getClientOriginalName();
             $image->move(public_path('gambarArtikel'), $filename);
-        
+    
             // Set the image file name in the database
             $article->gambarArtikel = $filename;
         }        
@@ -269,8 +273,8 @@ class SuperAdminController extends Controller
         $article->save();
     
         return redirect('/artikelSuperAdmin')->with('success', 'Article added successfully.');
-    }      
-
+    }
+    
     //[SuperAdmin-Artikel] Edit Data Artikel
     function formEditArtikelSA($id){
         $data = artikels::find($id);
@@ -294,31 +298,34 @@ class SuperAdminController extends Controller
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas'));
     }
 
-    function updateArtikelSA(Request $request, $id){
-        
+    function updateArtikelSA(Request $request, $id)
+    {
         $data = artikels::find($id);
     
         $data->judulArtikel = $request->input('judulArtikel');
         $data->penulis = $request->input('penulis');
         $data->email = $request->input('email');
         $data->kategori = $request->input('kategori');
-        $data->tags = $request->input('tags');
+    
+        // Convert array of tags to a string
+        $tags = $request->input('tags');
+        $tagsString = implode(',', $tags);
+        $data->tags = $tagsString;
+    
         $data->deskripsi = $request->input('deskripsi');
-
+    
         if ($request->hasFile('gambarArtikel')) {
             $image = $request->file('gambarArtikel');
-    
             $filename = $image->getClientOriginalName();
-        
             $image->move(public_path('gambarArtikel'), $filename);
-        
             $data->gambarArtikel = $filename;
         }
     
         $data->save();
     
-        return redirect()->route('artikelSA')->with('success','Data Berhasil di Update');
-    }   
+        return redirect()->route('artikelSA')->with('success', 'Data Berhasil di Update');
+    }
+    
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -420,20 +427,24 @@ class SuperAdminController extends Controller
             'uploader' => 'required',
             'email' => 'required|email',
             'kategoriVideo' => 'required',
-            'tagsVideo' => 'required',
+            'tagsVideo' => 'required|array', // Ensure it's an array
             'deskripsiVideo' => 'required',
             'linkVideo' => 'required|url', // Ensure the link is a valid URL
         ]);
     
         $videos = new Video;
-
-        $videos->kodeVideo = 'GSV' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
-
+    
+        $videos->kodeVideo = 'KKV' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
+    
         $videos->judulVideo = $request->input('judulVideo');
         $videos->uploader = $request->input('uploader');
         $videos->email = $request->input('email');
         $videos->kategoriVideo = $request->input('kategoriVideo');
-        $videos->tagsVideo = $request->input('tagsVideo');
+    
+        // Convert array of tags to a string
+        $tagsVideo = implode(',', $request->input('tagsVideo'));
+        $videos->tagsVideo = $tagsVideo;
+    
         $videos->deskripsiVideo = $request->input('deskripsiVideo');
         $videos->linkVideo = $request->input('linkVideo');
         $videos->statusVideo = 'Pending';
@@ -458,6 +469,7 @@ class SuperAdminController extends Controller
     
         return redirect('/videoSuperAdmin')->with('success', 'Video added successfully.');
     }
+    
     
 
       //[SuperAdmin-Video] Halaman Edit Video
@@ -628,7 +640,7 @@ class SuperAdminController extends Controller
 
         $event = new Event;
 
-        $event->kodeEvent = 'GSE' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
+        $event->kodeEvent = 'KKE' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
 
         $event->pembuatEvent = $request->input('pembuatEvent');
         $event->namaEvent = $request->input('namaEvent');
