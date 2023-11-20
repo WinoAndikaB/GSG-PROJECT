@@ -65,6 +65,9 @@
         <a href="https://twitter.com/" target="_blank">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/X_logo_2023.svg/1134px-X_logo_2023.svg.png" alt="Twitter Logo" style="width: 25px;">
         </a>
+        <a href="https://gmail.com/" target="_blank">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/768px-Gmail_icon_%282020%29.svg.png" alt="Twitter Logo" style="width: 25px;">
+      </a>
     </div>    
     </div>
 </div>

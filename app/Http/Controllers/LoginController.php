@@ -77,8 +77,13 @@ class LoginController extends Controller
 
             Mail::to($user->email)->send(new ForgotPasswordMail($user));
 
-            return view('login.lupaPassword');
+            return view('login.cekEmail');
     }
+}
+
+    //[Login-Lupa Password] Halaman Lupa Password
+    function cekEmail(){
+        return view('login.cekEmail');
     }
 // LoginController.php
 function resetPassword($token){

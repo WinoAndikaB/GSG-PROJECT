@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets2/img/apple-icon.png') }}">
   <link rel="icon" type="image/png" href="{{ asset('assets2/img/lg1.png') }}">
   <title>
-    Reset Password | Katakey
+    Cek Email | Katakey
   </title>
   <!-- Fonts and icons -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -37,33 +37,27 @@
             <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
               <div class="card card-plain">
                 <div class="card-header pb-0 text-start">
-                  <h4 class="font-weight-bolder">Reset Kata Sandi</h4>
-                  <p class="mb-0">Masukkan Semua Ketentuan Yang Dibutuhkan</p>
-                </div>
-                <div class="card-body">
-                  
-              <form method="POST" action="{{ url('updatePassword') }}">
-                @csrf
-                <div class="mb-3">
-                    <input type="password" name="password" class="form-control" placeholder="Kata Sandi..." required>
-                </div>
-                <div class="mb-3">
-                    <input type="password" name="konfirmasiPassword" class="form-control" placeholder="Konfirmasi Kata Sandi..." required>
-                </div>
-                <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Atur Ulang Kata Sandinya</button>
-              </form>
+                  <h4 class="font-weight-bolder text-center">Cek Email Anda</h4>
+                  <p style="text-align: justify;">Email untuk reset kata sandi anda sudah kami kirimkan, silakan cek <strong>Email</strong> Anda.</p>
 
-
-                <br>
-                <div class="card-footer text-center pt-0 px-lg-2 px-1">
-                  <p class="mb-4 text-sm mx-auto">
-                    Sudah Ingat Kata Sandinya?
-                    <a href="/lupaPassword" class="text-primary text-gradient font-weight-bold">Kembali</a>
+                  <br>
+            
+                  <div class="text-center">
+                    <a href="https://www.facebook.com/" target="_blank">
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/768px-Gmail_icon_%282020%29.svg.png" alt="Facebook Logo" style="width: 80px;">
+                    </a>
+                  </div>
+                  <br>
+                  <p style="text-align: justify;">Jika anda tidak menerima Email, silakan cek <strong>Spam</strong> Folder</p>
+                  <br>
+                  <p class="text-center">
+                    <a href="/login" class="btn btn-lg btn-primary">Kembali ke Login</a>
                   </p>
-                </div>
+                  <br>
                 </div>
               </div>
             </div>
+                      
             <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
               <div class="position-relative h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden" style="background-image: url('https://img.freepik.com/premium-photo/interior-background-contemporary-shelves-wall-desktop-apartment-design-computer-living-generative-ai_163305-172176.jpg');
           background-size: cover;">

@@ -36,7 +36,7 @@
             <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
               <div class="card card-plain">
                 <div class="card-header pb-0 text-start">
-                  <h4 class="font-weight-bolder">Lupa Password</h4>
+                  <h4 class="font-weight-bolder">Lupa Kata Sandi</h4>
                   <p class="mb-0">Masukkan Email</p>
                 </div>
                 <div class="card-body">
@@ -50,7 +50,7 @@
                 <br>
                 <div class="card-footer text-center pt-0 px-lg-2 px-1">
                   <p class="mb-4 text-sm mx-auto">
-                    Sudah Ingat Passwordnya?
+                    Sudah Ingat Kata Sandinya?
                     <a href="/login" class="text-primary text-gradient font-weight-bold">Kembali</a>
                   </p>
                 </div>
