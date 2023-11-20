@@ -69,6 +69,29 @@
     }
 </style>
 
+<!-- Alert Standar Ketentuan -->
+<style>
+  #error-message {
+    display: none;
+    background-color: #dc3545; /* Warna latar belakang merah */
+    color: #fff; /* Warna teks putih */
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    animation: fadeIn 0.5s ease-in-out; /* Animasi fade-in selama 0.5 detik */
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+</style>
+
+
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -264,13 +287,16 @@
           <div class="card mb-4">
             <div class="card-header pb-0">
               <h6>Tambah Artikel</h6>
+
+              <div id="error-message" style="color: red; margin-bottom: 10px;"></div>
+
               <form action="{{ route('storeSA') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                   <label for="gambarArtikel">Gambar</label>
                   <span for="gambarArtikel">Format Foto : .jpg, .jpeg, .png </span>
-                  <input type="file" class="form-control" id="gambarArtikel" name="gambarArtikel" required accept=".jpg, .jpeg, .png">
-              </div>              
+                  <input type="file" class="form-control" id="gambarArtikel" name="gambarArtikel">
+                </div>              
                 <div class="form-group">
                     <label for="judulArtikel">Judul Artikel</label>
                     <input type="text" class="form-control" id="judulArtikel" name="judulArtikel" required>
@@ -299,7 +325,7 @@
                   <label for="" class="form-control-label">Deskirpsi</label>
                   <textarea class="form-control" type="text" name="deskripsi" id="editor"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary mt-3">Tambah</button>
+                <button type="button" onclick="validateForm()" class="btn btn-primary mt-3">Tambah</button>
                 <a href="/artikelSuperAdmin" class="btn btn-info mt-3">Kembali</i></a>
             </form>            
             <div class="card-body px-0 pt-12 pb-2">
@@ -416,13 +442,124 @@
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
 
-  <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
-  <script>
-    ClassicEditor
-        .create( document.querySelector( '#editor' ) )
-        .catch( error => {
-            console.error( error );
-        } );
+<!--  CKEditor -->
+<script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+<script>
+  CKEDITOR.replace('editor');
+
+  async function fetchBadWords(input) {
+    const apiKey = "O3A8ZvNyKn89WPtIBt4Kf0XccNCytF0T";
+    const apiUrl = "https://api.apilayer.com/bad_words?censor_character=";
+
+    const myHeaders = new Headers();
+    myHeaders.append("apikey", apiKey);
+
+    const requestOptions = {
+      method: 'POST',
+      redirect: 'follow',
+      headers: myHeaders,
+      body: input
+    };
+
+    try {
+      const response = await fetch(apiUrl + input, requestOptions);
+      if (!response.ok) {
+        throw new Error('Failed to fetch bad words');
+      }
+
+      const result = await response.text();
+      return result;
+    } catch (error) {
+      console.error('Error fetching bad words:', error);
+      return null;
+    }
+  }
+
+  async function validateForm() {
+    const errorMessageDiv = document.getElementById('error-message');
+    errorMessageDiv.innerHTML = ''; // Reset pesan kesalahan sebelum validasi
+
+    // Validasi penggunaan kata tidak pantas pada deskripsi
+    const deskripsiInput = CKEDITOR.instances.editor.getData();
+    const deskripsiValue = deskripsiInput.toLowerCase();
+
+    try {
+      console.log('Deskripsi sebelum validasi:', deskripsiValue);
+
+      const result = await fetchBadWords(deskripsiValue);
+      console.log('Respon dari API:', result);
+
+      if (result) {
+        errorMessageDiv.innerHTML += `<p class="text-white">${result}</p>`;
+      }
+    } catch (error) {
+      console.error('Error validating description:', error);
+    }
+
+    // Jika ada pesan kesalahan, tampilkan di bawah judul "Tambah Artikel"
+    if (errorMessageDiv.innerHTML !== '') {
+      errorMessageDiv.style.display = 'block';
+    } else {
+      // Jika semua validasi berhasil, formulir akan dikirimkan
+      document.querySelector('form').submit();
+    }
+  }
+</script>
+
+<!-- Standar Penulisan -->
+<script>
+  function validateForm() {
+    const errorMessageDiv = document.getElementById('error-message');
+    errorMessageDiv.innerHTML = ''; // Reset pesan kesalahan sebelum validasi
+
+    // Validasi kualitas foto
+    const gambarArtikelInput = document.getElementById('gambarArtikel');
+    if (gambarArtikelInput.files.length > 0) {
+      const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+      const fileName = gambarArtikelInput.value;
+      if (!allowedExtensions.exec(fileName)) {
+        errorMessageDiv.innerHTML += '<p class="text-white"><i class="fas fa-exclamation-triangle text-white"></i> Foto yang diupload tidak berkualitas. Format foto harus .jpg, .jpeg, atau .png.</p>';
+      }
+    }
+
+    // Validasi penggunaan kata tidak pantas pada deskripsi
+    const deskripsiInput = document.getElementById('editor');
+    const forbiddenWordsDesc = ['kata1', 'kata2', 'kata3']; // Gantilah dengan kata-kata yang dianggap tidak pantas pada deskripsi
+    const deskripsiValue = deskripsiInput.value.toLowerCase();
+    for (const word of forbiddenWordsDesc) {
+      if (deskripsiValue.includes(word)) {
+        errorMessageDiv.innerHTML += '<p class="text-white"><i class="fas fa-exclamation-triangle text-white"></i> Penggunaan kata pada deskripsi tidak pantas.</p>';
+      }
+    }
+
+    // Validasi penggunaan kata tidak pantas pada judul
+    const judulInput = document.getElementById('judulArtikel');
+    const forbiddenWordsJudul = ['judul_kata_terlarang']; // Gantilah dengan kata-kata yang dianggap tidak pantas pada judul
+    const judulValue = judulInput.value.toLowerCase();
+    for (const word of forbiddenWordsJudul) {
+      if (judulValue.includes(word)) {
+        errorMessageDiv.innerHTML += '<p class="text-white"><i class="fas fa-exclamation-triangle text-white"></i> Penggunaan kata pada judul tidak sesuai. Terdapat kata terlarang pada judul.</p>';
+      }
+    }
+
+    // Validasi penggunaan kata tidak pantas pada tags
+    const tagsInput = document.getElementById('tags');
+    const forbiddenWordsTags = ['tags_kata_terlarang']; // Gantilah dengan kata-kata yang dianggap tidak pantas pada tags
+    const tagsValue = tagsInput.value.toLowerCase();
+    for (const word of forbiddenWordsTags) {
+      if (tagsValue.includes(word)) {
+        errorMessageDiv.innerHTML += '<p class="text-white"><i class="fas fa-exclamation-triangle text-white"></i> Penggunaan kata pada tags tidak sesuai. Terdapat kata terlarang pada tags.</p>';
+      }
+    }
+
+    // Jika ada pesan kesalahan, tampilkan di bawah judul "Tambah Artikel"
+    if (errorMessageDiv.innerHTML !== '') {
+      errorMessageDiv.style.display = 'block';
+    } else {
+      // Jika semua validasi berhasil, formulir akan dikirimkan
+      document.querySelector('form').submit();
+    }
+  }
 </script>
 
  <!-- MODAL LOGOUT -->

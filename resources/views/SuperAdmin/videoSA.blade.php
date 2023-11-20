@@ -324,7 +324,7 @@
                       ?>
                   </i>
                   <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span> |
-                  <a href="#" class="d-sm-inline d-none text-white text-bold" id="logout-link" onclick="openModal()"> Logout</a>
+                  <a href="#" class="d-sm-inline d-none text-white text-bold" id="logout-link" onclick="openModal()" data-bs-toggle="tooltip" data-bs-placement="left" title="Search"> Logout</a>
               </a>
           </li>
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
