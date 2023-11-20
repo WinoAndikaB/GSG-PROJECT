@@ -518,39 +518,40 @@
       const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
       const fileName = gambarArtikelInput.value;
       if (!allowedExtensions.exec(fileName)) {
-        errorMessageDiv.innerHTML += '<p class="text-white"><i class="fas fa-exclamation-triangle text-white"></i> Foto yang diupload tidak berkualitas. Format foto harus .jpg, .jpeg, atau .png.</p>';
+        errorMessageDiv.innerHTML += '<p class="text-white"><i class="fas fa-exclamation-triangle text-white"></i> Format foto harus <strong>.jpg, .jpeg, atau .png.</strong></p>';
       }
     }
 
-    // Validasi penggunaan kata tidak pantas pada deskripsi
-    const deskripsiInput = document.getElementById('editor');
-    const forbiddenWordsDesc = ['kata1', 'kata2', 'kata3']; // Gantilah dengan kata-kata yang dianggap tidak pantas pada deskripsi
-    const deskripsiValue = deskripsiInput.value.toLowerCase();
-    for (const word of forbiddenWordsDesc) {
-      if (deskripsiValue.includes(word)) {
-        errorMessageDiv.innerHTML += '<p class="text-white"><i class="fas fa-exclamation-triangle text-white"></i> Penggunaan kata pada deskripsi tidak pantas.</p>';
-      }
-    }
+// Validasi penggunaan kata tidak pantas pada deskripsi
+const deskripsiInput = document.getElementById('editor');
+const forbiddenWordsDesc = ['kata1', 'kata2', 'kata3']; // Gantilah dengan kata-kata yang dianggap tidak pantas pada deskripsi
+const deskripsiValue = deskripsiInput.value.toLowerCase();
+for (const word of forbiddenWordsDesc) {
+  if (deskripsiValue.includes(word)) {
+    errorMessageDiv.innerHTML += `<p class="text-white"><i class="fas fa-exclamation-triangle text-white"></i> Penggunaan kata <strong>"${word}"</strong> pada deskripsi tidak sesuai karena mengandung unsur negatif.</p>`;
+  }
+}
 
-    // Validasi penggunaan kata tidak pantas pada judul
-    const judulInput = document.getElementById('judulArtikel');
-    const forbiddenWordsJudul = ['judul_kata_terlarang']; // Gantilah dengan kata-kata yang dianggap tidak pantas pada judul
-    const judulValue = judulInput.value.toLowerCase();
-    for (const word of forbiddenWordsJudul) {
-      if (judulValue.includes(word)) {
-        errorMessageDiv.innerHTML += '<p class="text-white"><i class="fas fa-exclamation-triangle text-white"></i> Penggunaan kata pada judul tidak sesuai. Terdapat kata terlarang pada judul.</p>';
-      }
-    }
+// Validasi penggunaan kata tidak pantas pada judul
+const judulInput = document.getElementById('judulArtikel');
+const forbiddenWordsJudul = ['judul_kata_terlarang']; // Gantilah dengan kata-kata yang dianggap tidak pantas pada judul
+const judulValue = judulInput.value.toLowerCase();
+for (const word of forbiddenWordsJudul) {
+  if (judulValue.includes(word)) {
+    errorMessageDiv.innerHTML += `<p class="text-white"><i class="fas fa-exclamation-triangle text-white"></i> Penggunaan kata <strong>"${word}"</strong> pada judul tidak sesuai karena mengandung unsur negatif.</p>`;
+  }
+}
 
-    // Validasi penggunaan kata tidak pantas pada tags
-    const tagsInput = document.getElementById('tags');
-    const forbiddenWordsTags = ['tags_kata_terlarang']; // Gantilah dengan kata-kata yang dianggap tidak pantas pada tags
-    const tagsValue = tagsInput.value.toLowerCase();
-    for (const word of forbiddenWordsTags) {
-      if (tagsValue.includes(word)) {
-        errorMessageDiv.innerHTML += '<p class="text-white"><i class="fas fa-exclamation-triangle text-white"></i> Penggunaan kata pada tags tidak sesuai. Terdapat kata terlarang pada tags.</p>';
-      }
-    }
+// Validasi penggunaan kata tidak pantas pada tags
+const tagsInput = document.getElementById('tags');
+const forbiddenWordsTags = ['tags_kata_terlarang']; // Gantilah dengan kata-kata yang dianggap tidak pantas pada tags
+const tagsValue = tagsInput.value.toLowerCase();
+for (const word of forbiddenWordsTags) {
+  if (tagsValue.includes(word)) {
+    errorMessageDiv.innerHTML += `<p class="text-white"><i class="fas fa-exclamation-triangle text-white"></i> Penggunaan kata <strong>"${word}"</strong> pada tags tidak sesuai karena mengandung unsur negatif.</p>`;
+  }
+}
+
 
     // Jika ada pesan kesalahan, tampilkan di bawah judul "Tambah Artikel"
     if (errorMessageDiv.innerHTML !== '') {

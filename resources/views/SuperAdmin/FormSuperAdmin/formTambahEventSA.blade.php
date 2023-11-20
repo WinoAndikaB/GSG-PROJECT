@@ -416,45 +416,69 @@
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
 
-  <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
-  <script>
-    ClassicEditor
-        .create( document.querySelector( '#editor' ) )
-        .catch( error => {
-            console.error( error );
-        } );
-</script>
+  <!--  CKEditor -->
+<script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+<script>
+  CKEDITOR.replace('editor');
 
- <!-- MODAL LOGOUT -->
- <script>
-  // JavaScript untuk modal logout
-  function openModal() {
-    const modal = document.getElementById('logout-modal');
-    modal.style.display = 'block';
+  async function fetchBadWords(input) {
+    const apiKey = "O3A8ZvNyKn89WPtIBt4Kf0XccNCytF0T";
+    const apiUrl = "https://api.apilayer.com/bad_words?censor_character=";
+
+    const myHeaders = new Headers();
+    myHeaders.append("apikey", apiKey);
+
+    const requestOptions = {
+      method: 'POST',
+      redirect: 'follow',
+      headers: myHeaders,
+      body: input
+    };
+
+    try {
+      const response = await fetch(apiUrl + input, requestOptions);
+      if (!response.ok) {
+        throw new Error('Failed to fetch bad words');
+      }
+
+      const result = await response.text();
+      return result;
+    } catch (error) {
+      console.error('Error fetching bad words:', error);
+      return null;
+    }
   }
 
-  function closeModal() {
-    const modal = document.getElementById('logout-modal');
-    modal.style.display = 'none';
-  }
+  async function validateForm() {
+    const errorMessageDiv = document.getElementById('error-message');
+    errorMessageDiv.innerHTML = ''; // Reset pesan kesalahan sebelum validasi
 
-  function confirmLogout(confirmed) {
-    if (confirmed) {
-      // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
-      window.location.href = '/logout';
+    // Validasi penggunaan kata tidak pantas pada deskripsi
+    const deskripsiInput = CKEDITOR.instances.editor.getData();
+    const deskripsiValue = deskripsiInput.toLowerCase();
+
+    try {
+      console.log('Deskripsi sebelum validasi:', deskripsiValue);
+
+      const result = await fetchBadWords(deskripsiValue);
+      console.log('Respon dari API:', result);
+
+      if (result) {
+        errorMessageDiv.innerHTML += `<p class="text-white">${result}</p>`;
+      }
+    } catch (error) {
+      console.error('Error validating description:', error);
+    }
+
+    // Jika ada pesan kesalahan, tampilkan di bawah judul "Tambah Artikel"
+    if (errorMessageDiv.innerHTML !== '') {
+      errorMessageDiv.style.display = 'block';
     } else {
-      // Tutup modal jika pengguna memilih "No"
-      closeModal();
+      // Jika semua validasi berhasil, formulir akan dikirimkan
+      document.querySelector('form').submit();
     }
   }
-
-  // Tutup modal jika pengguna mengklik di luar modal
-  window.addEventListener('click', (event) => {
-    const modal = document.getElementById('logout-modal');
-    if (event.target == modal) {
-      modal.style.display = 'none';
-    }
-  });
 </script>
+
     </body>
 </html>

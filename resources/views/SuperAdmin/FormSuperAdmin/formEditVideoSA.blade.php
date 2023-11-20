@@ -236,42 +236,42 @@
               <h6>Form Edit Video</h6>
               <form action="/formEditVideoSA/updateVideoSA/{{$data->id}}" method="POST" enctype="multipart/form-data">
               @csrf
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <div class="form-group">
-                        <label for="" class="form-control-label">Link Video</label>
-                        <input class="form-control" type="text" id="uploadGambar" name="linkVideo" value="{{ $data->linkVideo }}" required>
-                        <br>
-                        <iframe width="340" height="190" src="{{$data->linkVideo}}" frameborder="0" allowfullscreen></iframe>
-                    </div>
-                      <label for="" class="form-control-label">Judul Video</label>
-                      <textarea class="form-control" type="textarea" name="judulVideo" required>{{ $data->judulVideo }}</textarea>
-                    </div>
-                    <div class="form-group mt-3">
-                      <label for="" class="form-control-label">Uploader</label>
-                      <input class="form-control" type="text" name="uploader" value="{{ $data->uploader }}" disabled required>
+              <div class="form-group">
+                <label for="" class="form-control-label">Link Video</label>
+                <input class="form-control" type="text" id="uploadGambar" name="linkVideo" value="{{ $data->linkVideo }}" required>
+                <br>
+                <iframe width="340" height="190" src="{{$data->linkVideo}}" frameborder="0" allowfullscreen></iframe>
+            </div>    
+                <div class="form-group">
+                    <label for="judulArtikel">Judul Video</label>
+                    <input type="text" class="form-control" type="textarea" name="judulVideo"" value="{{ $data->judulVideo }}" required>
                   </div>
-                  <div class="form-group">
-                    <label for="" class="form-control-label">Kategori</label>
-                    <select class="form-control" id="kategoriVideo" name="kategoriVideo" required>
-                      @foreach($kategoriV as $item)
-                        <option value="{{ $item->kategori }}">{{ $item->kategori }}</option>
+                    <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}" readonly>
+              </div>
+                <div class="form-group">
+                    <label for="penulis">Penulis</label>
+                    <input type="text" class="form-control" id="penulis" name="penulis" value="{{ Auth::user()->name }}" readonly>
+                </div>
+                <div class="form-group">
+                  <label for="kategori">Kategori</label>
+                  <select class="form-control" id="kategori" name="kategori" required>
+                      @foreach($kategoris as $item)
+                          <option value="{{ $item->kategori }}" @if($item->kategori == $data->kategori) selected @endif>{{ $item->kategori }}</option>
                       @endforeach
                   </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="" class="form-control-label">Tags</label>
-                    <textarea class="form-control" type="text" name="tagsVideo" required>{{ $data->tagsVideo}}</textarea>
-                  </div>
-                    <div class="form-group">
-                      <label for="" class="form-control-label">Deskirpsi Video</label>
-                      <textarea class="form-control" type="text" name="deskripsiVideo" id="editor">{{ $data->deskripsiVideo }}</textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary mt-3">Edit</button>
-                    <a href="/videoSuperAdmin" class="btn btn-info mt-3">Kembali</i></a>
-                  </div>
+              </div>
+            <div class="form-group">
+              <label for="tags">Tags</label>
+              <input type="text" class="form-control" id="tagsVideo" name="tagsVideo" value="{{ $data->tagsVideo }}" required>
+          </div>
+                <div class="form-group">
+                  <label for="" class="form-control-label">Deskirpsi</label>
+                  <textarea class="form-control" type="text" name="deskripsiVideo" id="editor">{{ $data->deskripsiVideo }}</textarea>
                 </div>
+                <button type="button" onclick="validateForm()" class="btn btn-primary mt-3">Edit</button>
+                <a href="/videoSuperAdmin" class="btn btn-info mt-3">Kembali</i></a>
               </form>
 
             <div class="card-body px-0 pt-12 pb-2">
@@ -384,13 +384,68 @@
   <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/chartjs.min.js"></script>
 
-  <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
-  <script>
-    ClassicEditor
-        .create( document.querySelector( '#editor' ) )
-        .catch( error => {
-            console.error( error );
-        } );
+<!--  CKEditor -->
+<script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+<script>
+  CKEDITOR.replace('editor');
+
+  async function fetchBadWords(input) {
+    const apiKey = "O3A8ZvNyKn89WPtIBt4Kf0XccNCytF0T";
+    const apiUrl = "https://api.apilayer.com/bad_words?censor_character=";
+
+    const myHeaders = new Headers();
+    myHeaders.append("apikey", apiKey);
+
+    const requestOptions = {
+      method: 'POST',
+      redirect: 'follow',
+      headers: myHeaders,
+      body: input
+    };
+
+    try {
+      const response = await fetch(apiUrl + input, requestOptions);
+      if (!response.ok) {
+        throw new Error('Failed to fetch bad words');
+      }
+
+      const result = await response.text();
+      return result;
+    } catch (error) {
+      console.error('Error fetching bad words:', error);
+      return null;
+    }
+  }
+
+  async function validateForm() {
+    const errorMessageDiv = document.getElementById('error-message');
+    errorMessageDiv.innerHTML = ''; // Reset pesan kesalahan sebelum validasi
+
+    // Validasi penggunaan kata tidak pantas pada deskripsi
+    const deskripsiInput = CKEDITOR.instances.editor.getData();
+    const deskripsiValue = deskripsiInput.toLowerCase();
+
+    try {
+      console.log('Deskripsi sebelum validasi:', deskripsiValue);
+
+      const result = await fetchBadWords(deskripsiValue);
+      console.log('Respon dari API:', result);
+
+      if (result) {
+        errorMessageDiv.innerHTML += `<p class="text-white">${result}</p>`;
+      }
+    } catch (error) {
+      console.error('Error validating description:', error);
+    }
+
+    // Jika ada pesan kesalahan, tampilkan di bawah judul "Tambah Artikel"
+    if (errorMessageDiv.innerHTML !== '') {
+      errorMessageDiv.style.display = 'block';
+    } else {
+      // Jika semua validasi berhasil, formulir akan dikirimkan
+      document.querySelector('form').submit();
+    }
+  }
 </script>
 
  <!-- MODAL LOGOUT -->

@@ -463,8 +463,7 @@ class SuperAdminController extends Controller
       //[SuperAdmin-Video] Halaman Edit Video
       function formEditVideoSA($id){
         $data = video::find($id);
-
-        $kategoriV = kategori::all();
+        $kategoris = kategori::all();
 
          // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
          $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
@@ -480,7 +479,7 @@ class SuperAdminController extends Controller
 
          $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-        return view('SuperAdmin.FormSuperAdmin.formEditVideoSA', compact('data', 'kategoriV', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        return view('SuperAdmin.FormSuperAdmin.formEditVideoSA', compact('data', 'kategoris', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas'));
     }    
 

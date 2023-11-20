@@ -409,13 +409,68 @@
   <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/chartjs.min.js"></script>
 
-  <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
-  <script>
-    ClassicEditor
-        .create( document.querySelector( '#editor' ) )
-        .catch( error => {
-            console.error( error );
-        } );
+<!--  CKEditor -->
+<script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+<script>
+  CKEDITOR.replace('editor');
+
+  async function fetchBadWords(input) {
+    const apiKey = "O3A8ZvNyKn89WPtIBt4Kf0XccNCytF0T";
+    const apiUrl = "https://api.apilayer.com/bad_words?censor_character=";
+
+    const myHeaders = new Headers();
+    myHeaders.append("apikey", apiKey);
+
+    const requestOptions = {
+      method: 'POST',
+      redirect: 'follow',
+      headers: myHeaders,
+      body: input
+    };
+
+    try {
+      const response = await fetch(apiUrl + input, requestOptions);
+      if (!response.ok) {
+        throw new Error('Failed to fetch bad words');
+      }
+
+      const result = await response.text();
+      return result;
+    } catch (error) {
+      console.error('Error fetching bad words:', error);
+      return null;
+    }
+  }
+
+  async function validateForm() {
+    const errorMessageDiv = document.getElementById('error-message');
+    errorMessageDiv.innerHTML = ''; // Reset pesan kesalahan sebelum validasi
+
+    // Validasi penggunaan kata tidak pantas pada deskripsi
+    const deskripsiInput = CKEDITOR.instances.editor.getData();
+    const deskripsiValue = deskripsiInput.toLowerCase();
+
+    try {
+      console.log('Deskripsi sebelum validasi:', deskripsiValue);
+
+      const result = await fetchBadWords(deskripsiValue);
+      console.log('Respon dari API:', result);
+
+      if (result) {
+        errorMessageDiv.innerHTML += `<p class="text-white">${result}</p>`;
+      }
+    } catch (error) {
+      console.error('Error validating description:', error);
+    }
+
+    // Jika ada pesan kesalahan, tampilkan di bawah judul "Tambah Artikel"
+    if (errorMessageDiv.innerHTML !== '') {
+      errorMessageDiv.style.display = 'block';
+    } else {
+      // Jika semua validasi berhasil, formulir akan dikirimkan
+      document.querySelector('form').submit();
+    }
+  }
 </script>
 
  <!-- MODAL LOGOUT -->
