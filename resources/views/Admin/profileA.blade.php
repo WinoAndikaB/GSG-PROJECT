@@ -358,6 +358,9 @@
                       <div class="h6 font-weight-300">
                         <i class="ni location_pin mr-2"></i>{{ Auth::user()->username }}
                       </div>
+                      <hr>
+                      <span>Bergabung Sejak: <br> {{ \Carbon\Carbon::parse(Auth::user()->created_at)->format('d F, Y') }}</span>
+                      <hr>
                       <div class="h6 mt-4">
                         <i class="ni business_briefcase-24 mr-2"></i>{{ Auth::user()->alamat }}
                       </div>

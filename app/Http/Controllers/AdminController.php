@@ -120,8 +120,25 @@ class AdminController extends Controller
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //[Admin-Artikel] Halaman Tables Artikel
-    function artikel(){
-        $data = artikels::orderBy('created_at', 'desc')->paginate(5);
+    function artikel(Request $request){
+        // Get the search query from the request
+        $searchQuery = $request->input('search');
+
+        // Start building the query without applying pagination
+        $query = artikels::orderBy('created_at', 'desc');
+    
+        // If there is a search query, add the search conditions
+        if (!empty($searchQuery)) {
+            $query->where(function($q) use ($searchQuery) {
+                $q->where('judulArtikel', 'like', '%' . $searchQuery . '%')
+                    ->orWhere('penulis', 'like', '%' . $searchQuery . '%')
+                    ->orWhere('status', 'like', '%' . $searchQuery . '%')
+                    ->orWhere('kategori', 'like', '%' . $searchQuery . '%');
+            });
+        }
+    
+        // Now, paginate the results
+        $data = $query->paginate(15);
 
         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
         $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
@@ -312,9 +329,26 @@ class AdminController extends Controller
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //[Admin-Video] Halaman Tabel Video
-    function videoAdmin(){
+    function videoAdmin(Request $request){
 
-        $tableVideo = video::orderBy('created_at', 'desc')->paginate(4);
+        // Get the search query from the request
+        $searchQuery = $request->input('search');
+
+        // Start building the query without applying pagination
+        $query = video::orderBy('created_at', 'desc');
+    
+        // If there is a search query, add the search conditions
+        if (!empty($searchQuery)) {
+            $query->where(function($q) use ($searchQuery) {
+                $q->where('judulVideo', 'like', '%' . $searchQuery . '%')
+                    ->orWhere('uploader', 'like', '%' . $searchQuery . '%')
+                    ->orWhere('statusVideo', 'like', '%' . $searchQuery . '%')
+                    ->orWhere('kategoriVideo', 'like', '%' . $searchQuery . '%');
+            });
+        }
+    
+        // Now, paginate the results
+        $tableVideo = $query->paginate(15);
 
          // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
          $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();

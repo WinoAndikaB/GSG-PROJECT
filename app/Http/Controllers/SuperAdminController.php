@@ -124,8 +124,26 @@ class SuperAdminController extends Controller
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //[SuperAdmin-Artikel] Halaman Tables Artikel
-    function artikelSA(){
-        $data = artikels::orderBy('created_at', 'desc')->paginate(5);
+    function artikelSA(Request $request){
+     // Get the search query from the request
+     $searchQuery = $request->input('search');
+
+     // Start building the query without applying pagination
+     $query = artikels::orderBy('created_at', 'desc');
+ 
+     // If there is a search query, add the search conditions
+     if (!empty($searchQuery)) {
+         $query->where(function($q) use ($searchQuery) {
+             $q->where('judulArtikel', 'like', '%' . $searchQuery . '%')
+                 ->orWhere('penulis', 'like', '%' . $searchQuery . '%')
+                 ->orWhere('status', 'like', '%' . $searchQuery . '%')
+                 ->orWhere('kategori', 'like', '%' . $searchQuery . '%');
+         });
+     }
+ 
+     // Now, paginate the results
+     $data = $query->paginate(15);
+    
 
         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
         $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
@@ -193,16 +211,34 @@ class SuperAdminController extends Controller
 
     //[SuperAdmin-Artikel] Delete Data Artikel
     function deleteArtikelSA($id){
-        $data=artikels::find($id);
-        $data->delete();
-        return redirect('/artikelSuperAdmin');
+        // Find the article record with the given ID
+        $data = artikels::find($id);
+
+        // Check if the article record exists
+        if ($data) {
+            // If the article record exists, delete it
+            $data->delete();
+            return redirect('/artikelSuperAdmin')->with('success', 'Article deleted successfully');
+        } else {
+            // If the article record does not exist, redirect with an error message
+            return redirect('/artikelSuperAdmin')->with('error', 'Article not found');
+        }
     }
 
-     //[SuperAdmin-Artikel] Delete Komentar Artikel
-     function deleteKomentarSA($id){
-        $data=komentar_artikel::find($id);
-        $data->delete();
-        return redirect('/komentarArtikelSA');
+    //[SuperAdmin-Artikel] Delete Komentar Artikel
+    function deleteKomentarSA($id){
+        // Find the comment record with the given ID
+        $data = komentar_artikel::find($id);
+
+        // Check if the comment record exists
+        if ($data) {
+            // If the comment record exists, delete it
+            $data->delete();
+            return redirect('/komentarArtikelSA')->with('success', 'Comment deleted successfully');
+        } else {
+            // If the comment record does not exist, redirect with an error message
+            return redirect('/komentarArtikelSA')->with('error', 'Comment not found');
+        }
     }
 
 
@@ -332,9 +368,26 @@ class SuperAdminController extends Controller
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //[SuperAdmin-Video] Halaman Tabel Video
-    function videoSuperAdmin(){
+    function videoSuperAdmin(Request $request){
 
-        $tableVideo = video::orderBy('created_at', 'desc')->paginate(4);
+        // Get the search query from the request
+        $searchQuery = $request->input('search');
+
+        // Start building the query without applying pagination
+        $query = video::orderBy('created_at', 'desc');
+    
+        // If there is a search query, add the search conditions
+        if (!empty($searchQuery)) {
+            $query->where(function($q) use ($searchQuery) {
+                $q->where('judulVideo', 'like', '%' . $searchQuery . '%')
+                    ->orWhere('uploader', 'like', '%' . $searchQuery . '%')
+                    ->orWhere('statusVideo', 'like', '%' . $searchQuery . '%')
+                    ->orWhere('kategoriVideo', 'like', '%' . $searchQuery . '%');
+            });
+        }
+    
+        // Now, paginate the results
+        $tableVideo = $query->paginate(15);
 
          // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
          $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
@@ -527,18 +580,37 @@ class SuperAdminController extends Controller
     
     //[SuperAdmin-Video] Delete Video
     function deleteVideoSA($id){
-        $data=video::find($id);
-        $data->delete();
-        return redirect('/videoSuperAdmin');
+        // Find the record with the given ID
+        $data = video::find($id);
+
+        // Check if the record exists
+        if ($data) {
+            // If the record exists, delete it
+            $data->delete();
+            return redirect('/videoSuperAdmin')->with('success', 'Video deleted successfully');
+        } else {
+            // If the record does not exist, redirect with an error message
+            return redirect('/videoSuperAdmin')->with('error', 'Video not found');
+        }
     }
 
        
     //[SuperAdmin-Video] Delete Komentar Video
     function deleteKomentarVideoSA($id){
-        $data=komentar_video::find($id);
-        $data->delete();
-        return redirect('/komentarVideoSA');
+        // Find the comment record with the given ID
+        $data = komentar_video::find($id);
+
+        // Check if the comment record exists
+        if ($data) {
+            // If the comment record exists, delete it
+            $data->delete();
+            return redirect('/komentarVideoSA')->with('success', 'Comment deleted successfully');
+        } else {
+            // If the comment record does not exist, redirect with an error message
+            return redirect('/komentarVideoSA')->with('error', 'Comment not found');
+        }
     }
+
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -736,12 +808,21 @@ class SuperAdminController extends Controller
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo','dataBaruEventKomunitas'));
     }
 
-    //[SuperAdmin-Kategori] Delete Data Kategori
-    function deleteKategoriSA($id){
-        $data=kategori::find($id);
+//[SuperAdmin-Kategori] Delete Data Kategori
+function deleteKategoriSA($id){
+    // Find the record with the given ID
+    $data = kategori::find($id);
+
+    // Check if the record exists
+    if ($data) {
+        // If the record exists, delete it
         $data->delete();
-        return redirect('/kategoriTblSA');
+        return redirect('/kategoriTblSA')->with('success', 'Kategori deleted successfully');
+    } else {
+        // If the record does not exist, redirect with an error message
+        return redirect('/kategoriTblSA')->with('error', 'Kategori not found');
     }
+}
 
 
     //[SuperAdmin-Kategori] Halaman Tambah Kategori
@@ -1020,19 +1101,36 @@ class SuperAdminController extends Controller
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas'));
     }
 
-        
-    //[SuperAdmin-Laporan User] Delete Artikel User
+        //[SuperAdmin-Laporan User] Delete Artikel User
         function deleteLaporanArtikelSA($id){
-            $data1=laporanArtikelUser::find($id);
-            $data1->delete();
-            return redirect('/laporanUserSA');
+            // Find the reported article record with the given ID
+            $data = laporanArtikelUser::find($id);
+
+            // Check if the reported article record exists
+            if ($data) {
+                // If the reported article record exists, delete it
+                $data->delete();
+                return redirect('/laporanUserSA')->with('success', 'Reported article deleted successfully');
+            } else {
+                // If the reported article record does not exist, redirect with an error message
+                return redirect('/laporanUserSA')->with('error', 'Reported article not found');
+            }
         }
 
         //[SuperAdmin-Laporan User] Delete Artikel User
         function deleteLaporanVideoSA($id){
-            $data1=laporanVideoUser::find($id);
-            $data1->delete();
-            return redirect('/laporanVideoUserSA');
+            // Find the reported video record with the given ID
+            $data = laporanVideoUser::find($id);
+
+            // Check if the reported video record exists
+            if ($data) {
+                // If the reported video record exists, delete it
+                $data->delete();
+                return redirect('/laporanVideoUserSA')->with('success', 'Reported video deleted successfully');
+            } else {
+                // If the reported video record does not exist, redirect with an error message
+                return redirect('/laporanVideoUserSA')->with('error', 'Reported video not found');
+            }
         }
 
     function laporanVideoUserSA(){
@@ -1154,12 +1252,20 @@ class SuperAdminController extends Controller
         
             return redirect()->route('syaratdanketentuanSA')->with('success','Data Berhasil di Update');
         }  
-
     // [Syarat & Ketentuan] Delete T&C
     function deleteTdanCSA($id)
     {
-        $data=syaratdanketentuans::find($id);
-        $data->delete();
-        return redirect('/syaratdanketentuanSA');
+        // Find the T&C record with the given ID
+        $data = syaratdanketentuans::find($id);
+
+        // Check if the T&C record exists
+        if ($data) {
+            // If the T&C record exists, delete it
+            $data->delete();
+            return redirect('/syaratdanketentuanSA')->with('success', 'T&C deleted successfully');
+        } else {
+            // If the T&C record does not exist, redirect with an error message
+            return redirect('/syaratdanketentuanSA')->with('error', 'T&C not found');
+        }
     }
 }
