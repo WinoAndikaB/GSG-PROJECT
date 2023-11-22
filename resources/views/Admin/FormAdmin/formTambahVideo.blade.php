@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Form Tambah Video | GSG PROJECT
+    Form Tambah Video | KataKey
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -21,6 +21,18 @@
 
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets2/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+
+  <!-- Dynamic Tags -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+  <!-- Dynamic Tags -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- Dynamic Tags CSS and JS files -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
 
   <style>
     .modal {
@@ -81,7 +93,7 @@
             <img src="{{ asset('assets/img/lg1.png') }}" class="avatar avatar-sm me-3" alt="user1" width="2" height="2">
           </div>
           <div class="d-flex flex-column justify-content-center">
-            <h6 class="mb-0 text-sm">GSG PROJECT</h6>
+            <h6 class="mb-0 text-sm">KataKey</h6>
             <p class="text-xs text-secondary mb-0">Halaman Admin</p>
           </div>
         </div>
@@ -187,7 +199,7 @@
           </div>
           <ul class="navbar-nav  justify-content-end">
             <li class="nav-item d-flex align-items-center">
-              <a href="/profileAdmin" class="nav-link text-white font-weight-bold px-0">
+              <a href="/profileSA" class="nav-link text-white font-weight-bold px-0">
                   <i>
                       <?php
                       $fotoProfil = Auth::user()->fotoProfil;
@@ -250,11 +262,11 @@
                 <div class="form-group">
                   <label for="gambarArtikel">Link Video</label>
                   <input type="text" class="form-control" id="linkVideo" name="linkVideo" >
-              </div>              
+                </div>              
                 <div class="form-group">
-                    <label for="judulArtikel">Judul Video</label>
-                    <textarea class="form-control" type="textarea" name="judulVideo" ></textarea>
-                </div>
+                  <label for="judulVideo">Judul Video</label>
+                  <input type="text" class="form-control" id="judulVideo" name="judulVideo" >
+                </div>   
                 <div class="form-group">
                   <label for="email">Email</label>
                   <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}" readonly>
@@ -273,8 +285,10 @@
             </div>
             <div class="form-group">
               <label for="tagsVideo">Tags</label>
-              <input type="text" class="form-control" id="tagsVideo" name="tagsVideo" >
-          </div>
+              <select class="form-control" id="tagsVideo" name="tagsVideo[]" multiple="multiple">
+                  <!-- Existing tags (if any) can be shown here -->
+              </select>
+          </div>          
                 <div class="form-group">
                   <label for="" class="form-control-label">Deskirpsi Video</label>
                   <textarea class="form-control" type="text" name="deskripsiVideo" id="editor" ></textarea>
@@ -282,7 +296,9 @@
                 <button type="submit" class="btn btn-primary mt-3">Tambah</button>
 
                 <a href="/videoAdmin" class="btn btn-info mt-3">Kembali</i></a>
-            </form>            
+            </form>  
+            
+            
             <div class="card-body px-0 pt-12 pb-2">
               <div class="table-responsive p-0">
                 <div class="panel-header panel-header-sm">
@@ -397,15 +413,81 @@
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
 
-  <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
-  <script>
-    ClassicEditor
-        .create( document.querySelector( '#editor' ) )
-        .catch( error => {
-            console.error( error );
-        } );
+<!-- Dynamic Tags -->
+<script>
+  $(document).ready(function () {
+      $('#tagsVideo').select2({
+          tags: true,
+          tokenSeparators: [',', ' '], // Allow comma or space to separate tags
+          placeholder: 'Choose tags',
+      });
+  });
 </script>
 
+
+<!--  CKEditor -->
+<script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+<script>
+  CKEDITOR.replace('editor');
+
+  async function fetchBadWords(input) {
+    const apiKey = "O3A8ZvNyKn89WPtIBt4Kf0XccNCytF0T";
+    const apiUrl = "https://api.apilayer.com/bad_words?censor_character=";
+
+    const myHeaders = new Headers();
+    myHeaders.append("apikey", apiKey);
+
+    const requestOptions = {
+      method: 'POST',
+      redirect: 'follow',
+      headers: myHeaders,
+      body: input
+    };
+
+    try {
+      const response = await fetch(apiUrl + input, requestOptions);
+      if (!response.ok) {
+        throw new Error('Failed to fetch bad words');
+      }
+
+      const result = await response.text();
+      return result;
+    } catch (error) {
+      console.error('Error fetching bad words:', error);
+      return null;
+    }
+  }
+
+  async function validateForm() {
+    const errorMessageDiv = document.getElementById('error-message');
+    errorMessageDiv.innerHTML = ''; // Reset pesan kesalahan sebelum validasi
+
+    // Validasi penggunaan kata tidak pantas pada deskripsi
+    const deskripsiInput = CKEDITOR.instances.editor.getData();
+    const deskripsiValue = deskripsiInput.toLowerCase();
+
+    try {
+      console.log('Deskripsi sebelum validasi:', deskripsiValue);
+
+      const result = await fetchBadWords(deskripsiValue);
+      console.log('Respon dari API:', result);
+
+      if (result) {
+        errorMessageDiv.innerHTML += `<p class="text-white">${result}</p>`;
+      }
+    } catch (error) {
+      console.error('Error validating description:', error);
+    }
+
+    // Jika ada pesan kesalahan, tampilkan di bawah judul "Tambah Artikel"
+    if (errorMessageDiv.innerHTML !== '') {
+      errorMessageDiv.style.display = 'block';
+    } else {
+      // Jika semua validasi berhasil, formulir akan dikirimkan
+      document.querySelector('form').submit();
+    }
+  }
+</script>
  <!-- MODAL LOGOUT -->
  <script>
   // JavaScript untuk modal logout

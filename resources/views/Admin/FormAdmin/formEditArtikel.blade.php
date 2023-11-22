@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Form Edit Artikel | GSG PROJECT
+    Form Edit Artikel | KataKey
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -20,6 +20,11 @@
   <link href="../assets2/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets2/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+
+  <!-- Dynamic Tags -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
 
   <style>
     .modal {
@@ -67,25 +72,27 @@
       cursor: pointer;
     }
 </style>
+<!-- Alert Standar Ketentuan -->
+<style>
+  #error-message {
+    display: none;
+    background-color: #dc3545; /* Warna latar belakang merah */
+    color: #fff; /* Warna teks putih */
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    animation: fadeIn 0.5s ease-in-out; /* Animasi fade-in selama 0.5 detik */
+  }
 
-  <script>
-    // Function to auto-adjust textarea height
-    function autoResizeTextarea() {
-        const textarea = document.getElementById("auto-resize-textarea");
-        textarea.style.height = "auto";
-        textarea.style.height = textarea.scrollHeight + "px";
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
     }
-
-    // Attach the autoResizeTextarea function to the textarea's input event
-    $(document).ready(function() {
-        $("#auto-resize-textarea").on("input", function() {
-            autoResizeTextarea();
-        });
-
-        // Initialize the textarea's height when the page loads
-        autoResizeTextarea();
-    });
-</script>
+    to {
+      opacity: 1;
+    }
+  }
+</style>
 
 </head>
 
@@ -100,7 +107,7 @@
             <img src="{{ asset('assets/img/lg1.png') }}" class="avatar avatar-sm me-3" alt="user1" width="2" height="2">
           </div>
           <div class="d-flex flex-column justify-content-center">
-            <h6 class="mb-0 text-sm">GSG PROJECT</h6>
+            <h6 class="mb-0 text-sm">KataKey</h6>
             <p class="text-xs text-secondary mb-0">Halaman Admin</p>
           </div>
         </div>
@@ -187,8 +194,8 @@
         </li>
       </ul>
     </div>
-
-  <div class="sidenav-footer mx-3 ">  
+    
+  <div class="sidenav-footer mx-3 ">       
   </aside>
   <main class="main-content position-relative border-radius-lg ">
     <!-- Navbar -->
@@ -206,7 +213,7 @@
           </div>
           <ul class="navbar-nav  justify-content-end">
             <li class="nav-item d-flex align-items-center">
-              <a href="/profileAdmin" class="nav-link text-white font-weight-bold px-0">
+              <a href="/profileSA" class="nav-link text-white font-weight-bold px-0">
                   <i>
                       <?php
                       $fotoProfil = Auth::user()->fotoProfil;
@@ -264,60 +271,71 @@
           <div class="card mb-4">
             <div class="card-header pb-0">
               <h6>Form Edit Artikel</h6>
+
+              <div id="error-message" style="color: red; margin-bottom: 10px;"></div>
+
+
               <form action="/formEditArtikelA/updateArtikelA/{{$data->id}}" method="POST" enctype="multipart/form-data">
-              @csrf
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <div class="form-group">
-                        <label for="" class="form-control-label">Gambar</label>
-                        <input class="form-control" type="file" id="uploadGambar" name="gambarArtikel" value="{{ $data->gambarArtikel }} required">
-                        <br>
-                        <img src="{{asset('gambarArtikel/'.$data->gambarArtikel)}}" height="10%" width="50%" srcset="">
-                      </div>
-                      <label for="" class="form-control-label">Judul Artikel</label>
-                      <textarea class="form-control" type="textarea" name="judulArtikel" required>{{ $data->judulArtikel }}</textarea>
-                    </div>
-                    <div class="form-group">
-                      <label for="email">Email</label>
-                      <input type="email" class="form-control" id="email" name="email" value="{{ $data->email }}" readonly>
-                  </div>
-                    <div class="form-group">
-                      <label for="" class="form-control-label">Penulis</label>
-                      <input class="form-control" type="text" name="penulis" value="{{ $data->penulis }}" required readonly>
-                    </div>
-                    <div class="form-group">
-                      <label for="" class="form-control-label">Kategori</label>
-                      <select class="form-control" id="kategori" name="kategori" required>
+                @csrf
+                <div class="form-group">
+                    <label for="gambarArtikel">Gambar</label>
+                    <span for="gambarArtikel">Format Foto: .jpg, .jpeg, .png </span>
+                    <input type="file" class="form-control" id="gambarArtikel" name="gambarArtikel">
+                </div>
+                <div class="form-group">
+                    <br>
+                    <img src="{{ asset('gambarArtikel/'.$data->gambarArtikel) }}" height="10%" width="15%" alt="">
+                </div>
+                <div class="form-group">
+                    <label for="judulArtikel">Judul Artikel</label>
+                    <input type="text" class="form-control" id="judulArtikel" name="judulArtikel" value="{{ $data->judulArtikel }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="penulis">Penulis</label>
+                    <input type="text" class="form-control" id="penulis" name="penulis" value="{{ Auth::user()->name }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="kategori">Kategori</label>
+                    <select class="form-control" id="kategori" name="kategori" required>
                         @foreach($kategoris as $item)
-                            <option value="{{ $item->kategori }}">{{ $item->kategori }}</option>
+                            <option value="{{ $item->kategori }}" @if($item->kategori == $data->kategori) selected @endif>{{ $item->kategori }}</option>
                         @endforeach
                     </select>
-                    </div>
-                    <div class="form-group">
-                      <label for="" class="form-control-label">Tags</label>
-                      <textarea class="form-control" type="text" name="tags" required>{{ $data->tags }}</textarea>
-                    </div>
-                    <div class="form-group">
-                      <label for="" class="form-control-label">Deskirpsi</label>
-                      <textarea class="form-control" type="text" name="deskripsi" id="editor">{{ $data->deskripsi }}</textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary mt-3">Edit</button>
-                    <a href="/artikelAdmin" class="btn btn-info mt-3">Kembali</i></a>
-                  </div>
                 </div>
-              </form>
+                <div class="form-group">
+                    <label for="tags">Tags</label>
+                    <select class="form-control" id="tags" name="tags[]" multiple="multiple" required>
+                        @if($data->tags)
+                            @foreach(explode(',', $data->tags) as $tag)
+                                <option value="{{ $tag }}" selected>{{ $tag }}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="" class="form-control-label">Deskripsi</label>
+                    <textarea class="form-control" type="text" name="deskripsi" id="editor">{{ $data->deskripsi }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Edit</button>
+                <a href="/artikelAdmin" class="btn btn-info mt-3">Kembali</a>
+            </form>
+            
 
-            <div class="card-body px-0 pt-12 pb-2">
-              <div class="table-responsive p-0">
-                <div class="panel-header panel-header-sm">
-                </div>
-                <div class="content">
-                  <div class="row">
-                    <div class="col-md-12">
-                        <div class="card-body ">
-                          <div id="map" class="map"></div>
-                        </div>
+              <div class="card-body px-0 pt-12 pb-2">
+                <div class="table-responsive p-0">
+                  <div class="panel-header panel-header-sm">
+                  </div>
+                  <div class="content">
+                    <div class="row">
+                      <div class="col-md-12">
+                          <div class="card-body ">
+                            <div id="map" class="map"></div>
+                          </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -327,7 +345,6 @@
         </div>
       </div>
     </div>
-  </div>
 
       <footer class="footer pt-3  ">
         <div class="container-fluid">
@@ -418,14 +435,139 @@
   <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/chartjs.min.js"></script>
 
-  <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
+  <!-- Dynamic Tags -->
   <script>
-    ClassicEditor
-        .create( document.querySelector( '#editor' ) )
-        .catch( error => {
-            console.error( error );
-        } );
+    $(document).ready(function () {
+        $('#tags').select2({
+            tags: true,
+            tokenSeparators: [',', ' '], // Allow comma or space to separate tags
+            placeholder: 'Choose tags',
+        });
+    });
 </script>
+
+
+ <!--  CKEditor -->
+<script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+<script>
+  CKEDITOR.replace('editor');
+
+  async function fetchBadWords(input) {
+    const apiKey = "O3A8ZvNyKn89WPtIBt4Kf0XccNCytF0T";
+    const apiUrl = "https://api.apilayer.com/bad_words?censor_character=";
+
+    const myHeaders = new Headers();
+    myHeaders.append("apikey", apiKey);
+
+    const requestOptions = {
+      method: 'POST',
+      redirect: 'follow',
+      headers: myHeaders,
+      body: input
+    };
+
+    try {
+      const response = await fetch(apiUrl + input, requestOptions);
+      if (!response.ok) {
+        throw new Error('Failed to fetch bad words');
+      }
+
+      const result = await response.text();
+      return result;
+    } catch (error) {
+      console.error('Error fetching bad words:', error);
+      return null;
+    }
+  }
+
+  async function validateForm() {
+    const errorMessageDiv = document.getElementById('error-message');
+    errorMessageDiv.innerHTML = ''; // Reset pesan kesalahan sebelum validasi
+
+    // Validasi penggunaan kata tidak pantas pada deskripsi
+    const deskripsiInput = CKEDITOR.instances.editor.getData();
+    const deskripsiValue = deskripsiInput.toLowerCase();
+
+    try {
+      console.log('Deskripsi sebelum validasi:', deskripsiValue);
+
+      const result = await fetchBadWords(deskripsiValue);
+      console.log('Respon dari API:', result);
+
+      if (result) {
+        errorMessageDiv.innerHTML += `<p class="text-white">${result}</p>`;
+      }
+    } catch (error) {
+      console.error('Error validating description:', error);
+    }
+
+    // Jika ada pesan kesalahan, tampilkan di bawah judul "Tambah Artikel"
+    if (errorMessageDiv.innerHTML !== '') {
+      errorMessageDiv.style.display = 'block';
+    } else {
+      // Jika semua validasi berhasil, formulir akan dikirimkan
+      document.querySelector('form').submit();
+    }
+  }
+</script>
+
+<!-- Standar Penulisan -->
+<script>
+  function validateForm() {
+    const errorMessageDiv = document.getElementById('error-message');
+    errorMessageDiv.innerHTML = ''; // Reset pesan kesalahan sebelum validasi
+
+    // Validasi kualitas foto
+    const gambarArtikelInput = document.getElementById('gambarArtikel');
+    if (gambarArtikelInput.files.length > 0) {
+      const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+      const fileName = gambarArtikelInput.value;
+      if (!allowedExtensions.exec(fileName)) {
+        errorMessageDiv.innerHTML += '<p class="text-white"><i class="fas fa-exclamation-triangle text-white"></i> Format foto harus <strong>.jpg, .jpeg, atau .png.</strong></p>';
+      }
+    }
+
+// Validasi penggunaan kata tidak pantas pada deskripsi
+const deskripsiInput = document.getElementById('editor');
+const forbiddenWordsDesc = ['kata1', 'kata2', 'kata3']; // Gantilah dengan kata-kata yang dianggap tidak pantas pada deskripsi
+const deskripsiValue = deskripsiInput.value.toLowerCase();
+for (const word of forbiddenWordsDesc) {
+  if (deskripsiValue.includes(word)) {
+    errorMessageDiv.innerHTML += `<p class="text-white"><i class="fas fa-exclamation-triangle text-white"></i> Penggunaan kata <strong>"${word}"</strong> pada deskripsi tidak sesuai karena mengandung unsur negatif.</p>`;
+  }
+}
+
+// Validasi penggunaan kata tidak pantas pada judul
+const judulInput = document.getElementById('judulArtikel');
+const forbiddenWordsJudul = ['judul1','judul2','judul3','judul4','judul5','judul6','judul7','judul8','judul9','judul10']; // Gantilah dengan kata-kata yang dianggap tidak pantas pada judul
+const judulValue = judulInput.value.toLowerCase();
+for (const word of forbiddenWordsJudul) {
+  if (judulValue.includes(word)) {
+    errorMessageDiv.innerHTML += `<p class="text-white"><i class="fas fa-exclamation-triangle text-white"></i> Penggunaan kata <strong>"${word}"</strong> pada judul tidak sesuai karena mengandung unsur negatif.</p>`;
+  }
+}
+
+// Validasi penggunaan kata tidak pantas pada tags
+const tagsInput = document.getElementById('tags');
+const forbiddenWordsTags = ['tags1','tags2','tags3','tags4','tags5','tags6','tags7','tags8','tags9','tags10']; // Gantilah dengan kata-kata yang dianggap tidak pantas pada tags
+const tagsValue = tagsInput.value.toLowerCase();
+for (const word of forbiddenWordsTags) {
+  if (tagsValue.includes(word)) {
+    errorMessageDiv.innerHTML += `<p class="text-white"><i class="fas fa-exclamation-triangle text-white"></i> Penggunaan kata <strong>"${word}"</strong> pada tags tidak sesuai karena mengandung unsur negatif.</p>`;
+  }
+}
+
+
+    // Jika ada pesan kesalahan, tampilkan di bawah judul "Tambah Artikel"
+    if (errorMessageDiv.innerHTML !== '') {
+      errorMessageDiv.style.display = 'block';
+    } else {
+      // Jika semua validasi berhasil, formulir akan dikirimkan
+      document.querySelector('form').submit();
+    }
+  }
+</script>
+
 
  <!-- MODAL LOGOUT -->
  <script>

@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Event Komunitas | GSG PROJECT
+    Event | Katakey
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -140,7 +140,7 @@
             <img src="{{ asset('assets/img/lg1.png') }}" class="avatar avatar-sm me-3" alt="user1" width="2" height="2">
           </div>
           <div class="d-flex flex-column justify-content-center">
-            <h6 class="mb-0 text-sm">GSG PROJECT</h6>
+            <h6 class="mb-0 text-sm">KataKey</h6>
             <p class="text-xs text-secondary mb-0">Halaman Admin</p>
           </div>
         </div>
@@ -237,9 +237,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Event Komunitas</li>
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Event</li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Event Komunitas</h6>
+          <h6 class="font-weight-bolder text-white mb-0">Event</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -375,20 +375,12 @@
                                   <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item['updated_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <a href="/formEditEventSA/{{ $item->id}}" class="btn btn-warning btn btn-primary btn-round">
+                                  <a href="/formEditEvent/{{ $item->id}}" class="btn btn-warning btn btn-primary btn-round">
                                     <i class="fa fa-pencil"></i>
                                   </a>
-                                  <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteEventSA', ['id' => $item['id']]) }}')">
+                                  <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteEvent', ['id' => $item['id']]) }}')">
                                     <i class="fa fa-trash"></i>
                                 </a>
-                                @if ($item->status === 'Pending')
-                                <a href="{{ route('approveEvent', $item->id) }}" class="btn btn-success btn btn-primary btn-round">
-                                    Approve
-                                </a>
-                                <a href="{{ route('rejectEvent', $item->id) }}" class="btn btn-danger btn btn-primary btn-round">
-                                    Reject
-                                </a>
-                            @endif
                                 </td>
                               </tr>
                             </tbody>

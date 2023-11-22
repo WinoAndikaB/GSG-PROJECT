@@ -263,7 +263,15 @@
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-          </div>
+            <form action="{{ route('penggunaSA') }}" method="GET" class="d-flex">
+                @csrf
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-search" aria-hidden="true"></i></span>
+                    <input type="text" name="search" class="form-control" placeholder="Cari Pengguna..." value="{{ request('search') }}">
+                </div>
+                <button type="submit" class="btn btn-warning ms-2 btn-block">Cari</button>
+            </form>
+        </div>      
           <ul class="navbar-nav  justify-content-end">
             <li class="nav-item d-flex align-items-center">
               <a href="/profileSA" class="nav-link text-white font-weight-bold px-0">
@@ -325,6 +333,19 @@
                     <div class="card-body px-0 pt-0 pb-2">
                       <div class="table-responsive p-0">
                         
+                        <div style="text-align: center;">
+                          <div class="dropdown" style="display: inline-block;">
+                              <button class="dropbtn" id="filterRoleBtn">Filter Role</button>
+                              <div class="dropdown-content">
+                                  <a href="#" class="role-filter" data-role="User">User</a>
+                                  <a href="#" class="role-filter" data-role="Admin">Admin</a>
+                                  <a href="#" class="role-filter" data-role="SuperAdmin">SuperAdmin</a>
+                              </div>
+                          </div>
+                      </div>
+
+                      <br>
+                        
                         <div class="d-flex justify-content-center">
                           <ul class="pagination">
                               @if ($users->onFirstPage())
@@ -360,18 +381,7 @@
                                   </li>
                               @endif
                           </ul>
-                      </div>
-
-                      <div style="text-align: center;">
-                        <div class="dropdown" style="display: inline-block;">
-                            <button class="dropbtn" id="filterRoleBtn">Filter Role</button>
-                            <div class="dropdown-content">
-                                <a href="#" class="role-filter" data-role="User">User</a>
-                                <a href="#" class="role-filter" data-role="Admin">Admin</a>
-                                <a href="#" class="role-filter" data-role="SuperAdmin">SuperAdmin</a>
-                            </div>
-                        </div>
-                    </div>
+                      </div>  >
 
                         <table class="table align-items-center mb-0">
                           <thead>

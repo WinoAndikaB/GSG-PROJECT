@@ -164,18 +164,29 @@ class AdminController extends Controller
     }
 
     //[Admin-Artikel] Delete Data Artikel
-    function deleteArtikel($id){
-        $data=artikels::find($id);
-        $data->delete();
-        return redirect('/artikelAdmin');
-    }
+        function deleteArtikel($id){
+            $data=artikels::find($id);
+        
+            if ($data) {
+                $data->delete();
+                return redirect('/artikelAdmin');
+            } else {
+                return redirect('/artikelAdmin')->with('error', 'Video not found');
+            }
+        }
+        
 
      //[Admin-Artikel] Delete Komentar Artikel
-     function deleteKomentarAA($id){
-        $data=komentar_artikel::find($id);
-        $data->delete();
-        return redirect('/komentarArtikel');
-    }
+        function deleteKomentarAA($id){
+            $data=komentar_artikel::find($id);
+        
+            if ($data) {
+                $data->delete();
+                return redirect('/komentarArtikel');
+            } else {
+                return redirect('/komentarArtikel')->with('error', 'Komentar not found');
+            }
+        }
 
 
     //[Admin-Artikel] Halaman Tambah Artikel
@@ -211,27 +222,39 @@ class AdminController extends Controller
             'kategori' => 'required',
             'tags' => 'required',
             'deskripsi' => 'required',
-            'gambarArtikel' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'gambarArtikel' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', 
         ]);
-
+    
         $article = new artikels;
+    
+        $article->kodeArtikel = 'KKA' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
+    
         $article->judulArtikel = $request->input('judulArtikel');
         $article->penulis = $request->input('penulis');
         $article->email = $request->input('email');
         $article->kategori = $request->input('kategori');
-        $article->tags = $request->input('tags');
+        
+        // Convert array of tags to a string
+        $tags = $request->input('tags');
+        $tagsString = implode(',', $tags);
+        $article->tags = $tagsString;
+    
         $article->deskripsi = $request->input('deskripsi');
         $article->status = 'Pending';
-
+    
         // Handle file upload
         if ($request->hasFile('gambarArtikel')) {
             $image = $request->file('gambarArtikel');
+    
             $filename = $image->getClientOriginalName();
             $image->move(public_path('gambarArtikel'), $filename);
+    
+            // Set the image file name in the database
             $article->gambarArtikel = $filename;
-        }
-
+        }        
+    
         $article->save();
+    
 
         return redirect('/artikelAdmin')->with('success', 'Article added successfully.');
     }
@@ -358,46 +381,51 @@ class AdminController extends Controller
 
     public function storeVideo(Request $request)
     {
-        $request->validate([
-            'judulVideo' => 'required',
-            'uploader' => 'required',
-            'email' => 'required|email',
-            'kategoriVideo' => 'required',
-            'tagsVideo' => 'required',
-            'deskripsiVideo' => 'required',
-            'linkVideo' => 'required|url', // Ensure the link is a valid URL
-        ]);
-    
-        $videos = new Video;
+       // Validate the request data
+       $request->validate([
+        'judulVideo' => 'required',
+        'uploader' => 'required',
+        'email' => 'required|email',
+        'kategoriVideo' => 'required',
+        'tagsVideo' => 'required|array', // Ensure it's an array
+        'deskripsiVideo' => 'required',
+        'linkVideo' => 'required|url', // Ensure the link is a valid URL
+    ]);
 
-        $videos->kodeVideo = 'GSV' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
+    $videos = new Video;
 
-        $videos->judulVideo = $request->input('judulVideo');
-        $videos->uploader = $request->input('uploader');
-        $videos->email = $request->input('email');
-        $videos->kategoriVideo = $request->input('kategoriVideo');
-        $videos->tagsVideo = $request->input('tagsVideo');
-        $videos->deskripsiVideo = $request->input('deskripsiVideo');
-        $videos->linkVideo = $request->input('linkVideo');
-        $videos->statusVideo = 'Pending';
-    
-        $videoId = '';
-    
-        // Extract the video ID from the YouTube link
-        if (strpos($request->input('linkVideo'), 'youtube.com/watch?v=') !== false) {
-            $videoId = explode('v=', parse_url($request->input('linkVideo'), PHP_URL_QUERY))[1];
-        } elseif (strpos($request->input('linkVideo'), 'youtu.be/') !== false) {
-            $videoId = explode('/', parse_url($request->input('linkVideo'), PHP_URL_PATH))[1];
-        }
-    
-        if (!empty($videoId)) {
-            $embedUrl = "https://www.youtube.com/embed/$videoId";
-            $videos->linkVideo = $embedUrl; // Update the link to the embedded video
-        } else {
-            return redirect('/videoSuperAdmin')->with('error', 'Invalid YouTube video link.');
-        }
-    
-        $videos->save();
+    $videos->kodeVideo = 'KKV' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
+
+    $videos->judulVideo = $request->input('judulVideo');
+    $videos->uploader = $request->input('uploader');
+    $videos->email = $request->input('email');
+    $videos->kategoriVideo = $request->input('kategoriVideo');
+
+    // Convert array of tags to a string
+    $tagsVideo = implode(',', $request->input('tagsVideo'));
+    $videos->tagsVideo = $tagsVideo;
+
+    $videos->deskripsiVideo = $request->input('deskripsiVideo');
+    $videos->linkVideo = $request->input('linkVideo');
+    $videos->statusVideo = 'Pending';
+
+    $videoId = '';
+
+    // Extract the video ID from the YouTube link
+    if (strpos($request->input('linkVideo'), 'youtube.com/watch?v=') !== false) {
+        $videoId = explode('v=', parse_url($request->input('linkVideo'), PHP_URL_QUERY))[1];
+    } elseif (strpos($request->input('linkVideo'), 'youtu.be/') !== false) {
+        $videoId = explode('/', parse_url($request->input('linkVideo'), PHP_URL_PATH))[1];
+    }
+
+    if (!empty($videoId)) {
+        $embedUrl = "https://www.youtube.com/embed/$videoId";
+        $videos->linkVideo = $embedUrl; // Update the link to the embedded video
+    } else {
+        return redirect('/videoSuperAdmin')->with('error', 'Invalid YouTube video link.');
+    }
+
+    $videos->save();
     
         return redirect('/videoAdmin')->with('success', 'Video added successfully.');
     }
@@ -458,17 +486,28 @@ class AdminController extends Controller
     
     //[Admin-Video] Delete Video
     function deleteVideo($id){
-        $data=video::find($id);
-        $data->delete();
-        return redirect('/videoAdmin');
+        $data = video::find($id);
+    
+        if ($data) {
+            $data->delete();
+            return redirect('/videoAdmin');
+        } else {
+            return redirect('/videoAdmin')->with('error', 'Video not found');
+        }
     }
+    
 
        
     //[Admin-Video] Delete Komentar Video
     function deleteKomentarVA($id){
         $data=komentar_video::find($id);
-        $data->delete();
-        return redirect('/komentarVideo');
+    
+        if ($data) {
+            $data->delete();
+            return redirect('/komentarVideo');
+        } else {
+            return redirect('/komentarVideo')->with('error', 'Komentar not found');
+        }
     }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -476,14 +515,24 @@ class AdminController extends Controller
 
     //[Admin-Pengguna] Halaman Tabel Pengguna
     function listUserTerdaftar(Request $request){
-        $role = $request->input('role'); // Mendapatkan nilai filter role dari request
-        $users = user::orderBy('created_at', 'desc');
-    
+        $role = $request->input('role'); 
+        $searchQuery = $request->input('search'); 
+
+        $users = User::orderBy('created_at', 'desc');
+
         // Jika ada filter role, tambahkan kondisi where
         if (!empty($role)) {
             $users->where('role', $role);
         }
-    
+
+        // Jika ada query pencarian, tambahkan kondisi where untuk mencocokkan nama pengguna atau informasi lainnya
+        if (!empty($searchQuery)) {
+            $users->where(function($query) use ($searchQuery) {
+                $query->where('username', 'like', '%' . $searchQuery . '%')
+                    ->orWhere('email', 'like', '%' . $searchQuery . '%');
+            });
+        }
+
         $users = $users->paginate(10);
         
          // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
@@ -506,7 +555,7 @@ class AdminController extends Controller
 
 
 //[Admin-Pengguna] Delete Pengguna
-function deleteUserTerdaftar($id)
+function deletePenggunaA($id)
 {
     $user = User::find($id);
 
@@ -563,9 +612,14 @@ function deleteUserTerdaftar($id)
 
     //[Admin-Ulasan] Delete Ulasan
     function deleteUlasanA($id){
-        $data1=ulasans::find($id);
-        $data1->delete();
-        return redirect('ulasans');
+        $data=ulasans::find($id);
+    
+        if ($data) {
+            $data->delete();
+            return redirect('ulasans');
+        } else {
+            return redirect('ulasans')->with('error', 'Komentar not found');
+        }
     }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -597,16 +651,27 @@ function deleteUserTerdaftar($id)
     //[Admin-Event] Delete Data Artikel
     function deleteEvent($id){
         $data=Event::find($id);
-        $data->delete();
-        return redirect('/eventKomAd');
+    
+        if ($data) {
+            $data->delete();
+            return redirect('eventKomAd');
+        } else {
+            return redirect('eventKomAd')->with('error', 'Komentar not found');
+        }
     }
 
      //[Admin-Event] Delete Komentar Artikel
-     function deleteKomentarEvent($id){
+    function deleteKomentarEvent($id){
         $data=komentar_artikel::find($id);
-        $data->delete();
-        return redirect('/komentarArtikel');
+    
+        if ($data) {
+            $data->delete();
+            return redirect('komentarArtikel');
+        } else {
+            return redirect('komentarArtikel')->with('error', 'Komentar not found');
+        }
     }
+
 
 
     //[Admin-Event] Halaman Tambah Artikel
@@ -632,8 +697,8 @@ function deleteUserTerdaftar($id)
 
     public function storeEvent(Request $request)
     {
-        // Validate the request data
-        $request->validate([
+         // Validate the request data
+         $request->validate([
             'pembuatEvent' => 'required',
             'namaEvent' => 'required',
             'deskripsiEvent' => 'required',
@@ -645,6 +710,9 @@ function deleteUserTerdaftar($id)
         ]);
 
         $event = new Event;
+
+        $event->kodeEvent = 'KKE' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
+
         $event->pembuatEvent = $request->input('pembuatEvent');
         $event->namaEvent = $request->input('namaEvent');
         $event->deskripsiEvent = $request->input('deskripsiEvent');
@@ -773,98 +841,4 @@ function deleteUserTerdaftar($id)
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo',  'dataBaruEventKomunitas'));
     }
 
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-    // [Syarat & Ketentuan] Halaman Tabel 
-    public function syaratdanketentuan()
-    {
-        $data = syaratdanketentuans::all();
-
-        // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
-        $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
-
-        $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
-
-        $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
-
-        $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
-
-        return view('admin.term&Condition', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
-        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo',  'dataBaruEventKomunitas'));
-    }
-
-    // [Syarat & Ketentuan] Form Tambah T&C
-    function formTambahTdanC(){
-
-        // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
-        $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
-
-        $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
-
-        $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
-
-        $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        
-        return view('admin.FormAdmin.formTambahTdanC', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
-        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo',  'dataBaruEventKomunitas'));
-    }
-
-    function storeTdanC(Request $req){
-            syaratdanketentuans::create([
-                'judulsyarat' => $req->judulsyarat,
-                'deskripsisyarat' => $req->deskripsisyarat,
-            ]);
-                 return redirect('/syaratdanketentuan');
-         }
-
-     // [Syarat & Ketentuan] Form Edit T&C
-    function formEditTdanC($id){
-            $data = syaratdanketentuans::find($id);
-
-            // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
-            $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
-            $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
-            $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
-            $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
-    
-            $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
-            $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
-    
-            $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
-            $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
-
-            $dataBaruEventKomunitas = Event::where('created_at', '>=',    Carbon::now()->subDay())->count();
-
-            return view('admin.FormAdmin.formEditTermOfCondition', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
-            'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo',  'dataBaruEventKomunitas'));
-        }
-    
-    function updateTdanC(Request $request, $id){
-            $data = syaratdanketentuans::find($id);
-        
-            $data->judulsyarat = $request->input('judulsyarat');
-            $data->deskripsisyarat = $request->input('deskripsisyarat');
-            $data->save();
-        
-            return redirect()->route('syaratdanketentuan')->with('success','Data Berhasil di Update');
-        }  
-
-    // [Syarat & Ketentuan] Delete T&C
-    function deleteTdanC($id)
-    {
-        $data=syaratdanketentuans::find($id);
-        $data->delete();
-        return redirect('/syaratdanketentuan');
-    }
 }

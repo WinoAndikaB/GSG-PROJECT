@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Artikel | GSG PROJECT
+    Artikel | Katakey
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -20,8 +20,37 @@
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets2/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 
+  <!-- Detail Foto -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+
+
 <!------------------------------------------------------------------------------------- CSS Area -------------------------------------------------------------------------------------------->
 <!------------------------------------------------------------------------------------- CSS Area -------------------------------------------------------------------------------------------->
+
+<!-- Rating CSS-->
+<style>
+  .rating {
+    font-size: 20px;
+  }
+
+  .star {
+    color: gray; /* Mengatur warna bintang awalnya menjadi gray */
+    cursor: pointer;
+  }
+
+  .star.selected {
+    color: gold; /* Mengatur warna bintang yang dipilih menjadi gold */
+  }
+
+  .rating-container {
+      font-size: 20px; /* Atur ukuran teks rata-rata rating */
+      margin: 15px; /* Atur margin untuk jarak dari teks sekitarnya */
+    }
+
+    .filled-star {
+      color: gold; /* Warna bintang yang diisi */
+    }
+  </style>
 
   
 <!-- Modal CSS-->
@@ -124,6 +153,41 @@
       background-color: #5E72E4;
     }
 </style>
+<style>
+  .popup-modal {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 80%;
+    max-height: 80%;
+    overflow: auto;
+    padding: 20px;
+    text-align: justify;
+    border-radius: 8px;
+  }
+
+  .popup-modal p {
+    margin: 0;
+  }
+
+  .popup-trigger {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    text-align: justify;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px; /* Adjust the max-width as needed */
+  }
+
+  .popup-trigger:hover {
+    text-decoration: underline;
+  }
+</style>
 </head>
 
 <!------------------------------------------------------------------------------------- Body Area -------------------------------------------------------------------------------------------->
@@ -140,7 +204,7 @@
             <img src="{{ asset('assets/img/lg1.png') }}" class="avatar avatar-sm me-3" alt="user1" width="2" height="2">
           </div>
           <div class="d-flex flex-column justify-content-center">
-            <h6 class="mb-0 text-sm">GSG PROJECT</h6>
+            <h6 class="mb-0 text-sm">KataKey</h6>
             <p class="text-xs text-secondary mb-0">Halaman Admin</p>
           </div>
         </div>
@@ -176,7 +240,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/videoAdmin">
+          <a class="nav-link " href="/videoAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-warning text-sm opacity-10"></i>
             </div>
@@ -206,7 +270,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/ulasans">
+          <a class="nav-link " href="/ulasans">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-paper-diploma text-warning text-sm opacity-10"></i>
             </div>
@@ -227,6 +291,7 @@
         </li>
       </ul>
     </div>
+
 
   <div class="sidenav-footer mx-3 ">   
   </aside>
@@ -298,8 +363,7 @@
               <h6>List Artikel Tersedia</h6>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">          
-
+              <div class="table-responsive p-0">  
 
                 <div class="row">
                   <div class="col-12">
@@ -312,6 +376,7 @@
                             <thead>
                               <tr>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kode Artikel</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Penulis</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Judul Artikel</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi</th>
@@ -329,21 +394,36 @@
                                 <td class="align-middle text-center">
                                   <p class="text-xs font-weight-bold mb-0">{{$tbhartikel['id']}}</p>
                                 </td>
+                                <td class="align-middle text-center">
+                                  <p class="text-xs font-weight-bold mb-0">{{$tbhartikel['kodeArtikel']}}</p>
+                                </td>
                                 <td>
                                   <div class="d-flex px-2 py-1">
                                     <div>
-                                      <img src="{{asset('gambarArtikel/'.$tbhartikel->gambarArtikel)}}" class="avatar avatar-sm me-3" alt="user1">
-                                    </div>
+                                      <a href="{{asset('gambarArtikel/'.$tbhartikel->gambarArtikel)}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                                          <img src="{{asset('gambarArtikel/'.$tbhartikel->gambarArtikel)}}" class="avatar avatar-sm me-3" alt="user1">
+                                      </a>
+                                  </div>                                  
                                     <div class="d-flex flex-column justify-content-center">
                                       <h6 class="mb-0 text-sm">{{$tbhartikel['penulis']}}</h6>
                                       <p class="text-xs text-secondary mb-0">{{$tbhartikel['email']}}</p>
                                     </div>
                                   </div>
                                 </td>
-                                <td>
-                                  <p class="text-xs font-weight-bold mb-0">{{$tbhartikel['judulArtikel']}}</p>
+                                <td class="align-middle text-center">
+                                  <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
+                                    <?php
+                                    $judulA = strip_tags($tbhartikel['judulArtikel']);
+                                    $words = str_word_count($judulA, 2);
+                                    $first_100_words = implode(' ', array_slice($words, 0, 5));
+                                    echo $first_100_words;
+                                    if (str_word_count($judulA) > 500) {
+                                      echo '...';
+                                    }
+                                    ?>
+                                  </p>
                                 </td>
-                                <td style="text-align: justify;">
+                                <td class="popup-trigger" data-id="<?php echo $tbhartikel['id']; ?>" style="text-align: justify;">
                                   <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
                                     <?php
                                     $deskripsi = strip_tags($tbhartikel['deskripsi']);
@@ -357,10 +437,10 @@
                                   </p>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="text-secondary text-xs font-weight-bold">{{$tbhartikel['created_at']->locale('id')->translatedFormat('l, d F Y H:i:s')  }}</span>
+                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($tbhartikel['created_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="text-secondary text-xs font-weight-bold">{{$tbhartikel['updated_at']->locale('id')->translatedFormat('l, d F Y H:i:s')  }}</span>
+                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($tbhartikel['updated_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
                                 </td>
                                 <td class="align-middle text-center">
                                   <span class="badge badge-sm status-badge 
@@ -368,22 +448,28 @@
                                   {{$tbhartikel['status'] === 'Pending' ? 'bg-gradient-secondary' : ''}}
                                   {{$tbhartikel['status'] === 'Rejected' ? 'bg-gradient-danger' : ''}}">
                                   {{$tbhartikel['status']}}
-                                </span>   
+                                </span>
+                                                                                       
                                 </td>
                                 <td class="align-middle text-center">
                                   <span class="badge badge-sm bg-gradient-info">{{$tbhartikel['kategori']}}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-warning">{{$tbhartikel['tags']}}</span>
-                                </td>
+                                  @if($tbhartikel['tags'])
+                                  @foreach(explode(',', $tbhartikel['tags']) as $tag)
+                                      <span class="badge badge-sm bg-gradient-warning">{{ $tag }}</span>
+                                  @endforeach
+                              @endif
+                              </td>                              
                                 <td class="align-middle">
-                                  <a href="/formEditArtikelA/{{ $tbhartikel->id}}" class="btn btn-warning btn btn-primary btn-round">
-                                    <i class="fa fa-pencil"></i>
+                                  <a href="/formEditArtikelA/{{ $tbhartikel->id }}" class="btn btn-warning btn btn-primary btn-round">
+                                      <i class="fa fa-pencil"></i>
                                   </a>
                                   <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteArtikel', ['id' => $tbhartikel['id']]) }}')">
                                     <i class="fa fa-trash"></i>
                                 </a>
-                                </td>
+                              </td>
+                              
                               </tr>
                             </tbody>
                             @endforeach
@@ -431,7 +517,7 @@
                     </div>
                   </div>
                 </div>
-
+  
 <!------------------------------------------------------------------------------------- Modal Area -------------------------------------------------------------------------------------------------------------------->
 <!------------------------------------------------------------------------------------- Modal Area -------------------------------------------------------------------------------------------------------------------->
 
@@ -586,11 +672,64 @@
  <script src="../assets2/js/plugins/perfect-scrollbar.min.js"></script>
  <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
  <script src="../assets2/js/plugins/chartjs.min.js"></script>
+ 
+   <!-- Detail Foto -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
 
 <script>
   $(document).ready(function() {
       console.log("Document ready.");
   });
+  </script>
+  
+
+  <!-- Modal Pop Up Detail Deskripsi Artikel -->
+  <script>
+    document.querySelectorAll('.popup-trigger').forEach(function (element) {
+      element.addEventListener('mouseenter', function () {
+        openPopup(element.dataset.id);
+      });
+  
+      element.addEventListener('mouseleave', function () {
+        closePopup(element.dataset.id);
+      });
+    });
+  
+    function openPopup(id) {
+      const popup = document.getElementById('popup-' + id);
+      if (!popup) {
+        const tdElement = document.querySelector('.popup-trigger[data-id="' + id + '"]');
+        const description = tdElement.querySelector('p').innerHTML;
+  
+        const popupContainer = document.createElement('div');
+        popupContainer.id = 'popup-' + id;
+        popupContainer.className = 'popup-modal';
+  
+        const popupContent = document.createElement('p');
+        popupContent.innerHTML = description;
+  
+        popupContainer.appendChild(popupContent);
+        document.body.appendChild(popupContainer);
+  
+        positionPopup(tdElement, popupContainer);
+      }
+  
+      document.getElementById('popup-' + id).style.display = 'block';
+    }
+  
+    function closePopup(id) {
+      const popup = document.getElementById('popup-' + id);
+      if (popup) {
+        popup.style.display = 'none';
+      }
+    }
+  
+    function positionPopup(triggerElement, popupElement) {
+      const rect = triggerElement.getBoundingClientRect();
+  
+      popupElement.style.top = rect.bottom + 'px';
+      popupElement.style.left = rect.left + 'px';
+    }
   </script>
 
   <!-- Modal Delete -->

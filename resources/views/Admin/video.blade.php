@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Video | GSG PROJECT
+    Video | KataKey
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -22,9 +22,6 @@
 
 <!------------------------------------------------------------------------------------- CSS Area -------------------------------------------------------------------------------------------->
 <!------------------------------------------------------------------------------------- CSS Area -------------------------------------------------------------------------------------------->
-
-<!-- Rating CSS-->
-
   
 <!-- Modal CSS-->
   <style>
@@ -126,6 +123,7 @@
       background-color: #5E72E4;
     }
 </style>
+
 <!-- Video PopUp -->
 <style>
   .video-popup {
@@ -166,6 +164,10 @@
     border-radius: 50%; /* Membuat tombol close berbentuk lingkaran */
   }
 </style>
+
+
+
+
 </head>
 
 <!------------------------------------------------------------------------------------- Body Area -------------------------------------------------------------------------------------------->
@@ -182,7 +184,7 @@
             <img src="{{ asset('assets/img/lg1.png') }}" class="avatar avatar-sm me-3" alt="user1" width="2" height="2">
           </div>
           <div class="d-flex flex-column justify-content-center">
-            <h6 class="mb-0 text-sm">GSG PROJECT</h6>
+            <h6 class="mb-0 text-sm">KataKey</h6>
             <p class="text-xs text-secondary mb-0">Halaman Admin</p>
           </div>
         </div>
@@ -304,7 +306,7 @@
                       ?>
                   </i>
                   <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span> |
-                  <a href="#" class="d-sm-inline d-none text-white text-bold" id="logout-link" onclick="openModal()"> Logout</a>
+                  <a href="#" class="d-sm-inline d-none text-white text-bold" id="logout-link" onclick="openModal()" data-bs-toggle="tooltip" data-bs-placement="left" title="Search"> Logout</a>
               </a>
           </li>
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -339,7 +341,7 @@
               <h6>List Video Tersedia</h6>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">      
+              <div class="table-responsive p-0">  
 
                 <div class="container-fluid py-4">
                   <div class="row">
@@ -358,8 +360,6 @@
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Link Video</th>
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Judul Video</th>
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi Video</th>
-                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Upload</th>
-                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Update</th>
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kategori</th>
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tags</th>
@@ -412,12 +412,6 @@
                                     </p>
                                   </td>
                                   <td class="align-middle text-center">
-                                    <span class="text-secondary text-xs font-weight-bold">{{$item['created_at']->locale('id')->translatedFormat('l, d F Y H:i:s') }}</span>
-                                  </td>
-                                  <td class="align-middle text-center">
-                                    <span class="text-secondary text-xs font-weight-bold">{{$item['updated_at']->locale('id')->translatedFormat('l, d F Y H:i:s') }}</span>
-                                  </td>
-                                  <td class="align-middle text-center">
                                     <span class="badge badge-sm status-badge 
                                     {{$item['statusVideo'] === 'Published' ? 'bg-gradient-success' : ''}}
                                     {{$item['statusVideo'] === 'Pending' ? 'bg-gradient-secondary' : ''}}
@@ -429,14 +423,19 @@
                                     <span class="badge badge-sm bg-gradient-info">{{$item->kategoriVideo}}</span>
                                   </td>
                                   <td class="align-middle text-center">
-                                    <span class="badge badge-sm bg-gradient-warning">{{$item->tagsVideo}}</span>
+                                    @if($item['tagsVideo'])
+                                      @foreach(explode(',', $item['tagsVideo']) as $tag)
+                                          <span class="badge badge-sm bg-gradient-warning">{{ $tag }}</span>
+                                      @endforeach
+                                    @endif
                                   </td>
                                   <td class="align-middle">
                                     <a href="/formEditVideo/{{ $item->id}}" class="btn btn-warning btn btn-primary btn-round">
                                       <i class="fa fa-pencil"></i>
                                     </a>
-                                    <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteVideoSA', ['id' => $item['id']]) }}')">
+                                    <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteVideo', ['id' => $item['id']]) }}')">
                                       <i class="fa fa-trash"></i>
+                                  </a>
                                   </td>
                                 </tr>
                               </tbody>
@@ -485,7 +484,6 @@
                       </div>
                     </div>
                   </div>
-                  
 <!------------------------------------------------------------------------------------- Modal Area -------------------------------------------------------------------------------------------------------------------->
 <!------------------------------------------------------------------------------------- Modal Area -------------------------------------------------------------------------------------------------------------------->
 
@@ -647,11 +645,11 @@
   });
   </script>
 
-  <!-- Video Popup -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-    // Temukan semua elemen <td>
-    var videoContainers = document.querySelectorAll("td");
+ <!-- Video Popup -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Temukan semua elemen <td> dengan id videoContainer
+    var videoContainers = document.querySelectorAll("td#videoContainer");
 
     // Tambahkan event listener untuk setiap elemen
     videoContainers.forEach(function (videoContainer) {
@@ -696,7 +694,10 @@
       });
     });
   });
-  </script>
+</script>
+
+  
+  
 
   <!-- Modal Delete -->
   <script>

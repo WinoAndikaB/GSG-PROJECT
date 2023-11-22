@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Profile | GSG PROJECT
+    Form Edit Video | KataKey
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -20,24 +20,14 @@
   <link href="../assets2/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets2/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
-  <script>
-    // Function to auto-adjust textarea height
-    function autoResizeTextarea() {
-        const textarea = document.getElementById("auto-resize-textarea");
-        textarea.style.height = "auto";
-        textarea.style.height = textarea.scrollHeight + "px";
-    }
 
-    // Attach the autoResizeTextarea function to the textarea's input event
-    $(document).ready(function() {
-        $("#auto-resize-textarea").on("input", function() {
-            autoResizeTextarea();
-        });
+  <!-- Dynamic Tags -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-        // Initialize the textarea's height when the page loads
-        autoResizeTextarea();
-    });
-</script>
+  <!-- Dynamic Tags CSS and JS files -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+  
 
 </head>
 
@@ -52,7 +42,7 @@
             <img src="{{ asset('assets/img/lg1.png') }}" class="avatar avatar-sm me-3" alt="user1" width="2" height="2">
           </div>
           <div class="d-flex flex-column justify-content-center">
-            <h6 class="mb-0 text-sm">GSG PROJECT</h6>
+            <h6 class="mb-0 text-sm">KataKey</h6>
             <p class="text-xs text-secondary mb-0">Halaman Admin</p>
           </div>
         </div>
@@ -158,7 +148,7 @@
           </div>
           <ul class="navbar-nav  justify-content-end">
             <li class="nav-item d-flex align-items-center">
-              <a href="/profileAdmin" class="nav-link text-white font-weight-bold px-0">
+              <a href="/profileSA" class="nav-link text-white font-weight-bold px-0">
                   <i>
                       <?php
                       $fotoProfil = Auth::user()->fotoProfil;
@@ -219,43 +209,49 @@
 
               <form action="/formEditVideoA/updateVideoA/{{$data->id}}" method="POST" enctype="multipart/form-data">
                 @csrf
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <div class="form-group">
-                          <label for="" class="form-control-label">Link Video</label>
-                          <input class="form-control" type="text" id="uploadGambar" name="linkVideo" value="{{ $data->linkVideo }}" required>
-                          <br>
-                          <iframe width="340" height="190" src="{{$data->linkVideo}}" frameborder="0" allowfullscreen></iframe>
-                      </div>
-                        <label for="" class="form-control-label">Judul Video</label>
-                        <textarea class="form-control" type="textarea" name="judulVideo" required>{{ $data->judulVideo }}</textarea>
-                      </div>
-                      <div class="form-group mt-3">
-                        <label for="" class="form-control-label">Uploader</label>
-                        <input class="form-control" type="text" name="uploader" value="{{ $data->uploader }}" disabled required>
+                <div class="form-group">
+                  <label for="" class="form-control-label">Link Video</label>
+                  <input class="form-control" type="text" id="uploadGambar" name="linkVideo" value="{{ $data->linkVideo }}" required>
+                  <br>
+                  <iframe width="340" height="190" src="{{$data->linkVideo}}" frameborder="0" allowfullscreen></iframe>
+              </div>    
+                  <div class="form-group">
+                      <label for="judulArtikel">Judul Video</label>
+                      <input type="text" class="form-control" type="textarea" name="judulVideo"" value="{{ $data->judulVideo }}" required>
                     </div>
-                    <div class="form-group">
-                      <label for="" class="form-control-label">Kategori</label>
-                      <select class="form-control" id="kategoriVideo" name="kategoriVideo" required>
+                      <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}" readonly>
+                </div>
+                  <div class="form-group">
+                      <label for="penulis">Penulis</label>
+                      <input type="text" class="form-control" id="penulis" name="penulis" value="{{ Auth::user()->name }}" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label for="kategori">Kategori</label>
+                    <select class="form-control" id="kategori" name="kategori" required>
                         @foreach($kategoris as $item)
-                          <option value="{{ $item->kategori }}">{{ $item->kategori }}</option>
+                            <option value="{{ $item->kategori }}" @if($item->kategori == $data->kategori) selected @endif>{{ $item->kategori }}</option>
                         @endforeach
                     </select>
-                    </div>
-                    <div class="form-group">
-                      <label for="" class="form-control-label">Tags</label>
-                      <textarea class="form-control" type="text" name="tagsVideo" required>{{ $data->tagsVideo}}</textarea>
-                    </div>
-                      <div class="form-group">
-                        <label for="" class="form-control-label">Deskirpsi Video</label>
-                        <textarea class="form-control" type="text" name="deskripsiVideo" id="editor">{{ $data->deskripsiVideo }}</textarea>
-                      </div>
-                      <button type="submit" class="btn btn-primary mt-3">Edit</button>
-                      <a href="/videoAdmin" class="btn btn-info mt-3">Kembali</i></a>
-                    </div>
+                </div>
+                  <div class="form-group">
+                    <label for="tagsVideo">Tags</label>
+                    <select class="form-control" id="tagsVideo" name="tagsVideo[]" multiple="multiple">
+                        @if($data->tagsVideo)
+                            @foreach(explode(',', $data->tagsVideo) as $tag)
+                                <option value="{{ $tag }}" selected>{{ $tag }}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
+                  <div class="form-group">
+                    <label for="" class="form-control-label">Deskirpsi</label>
+                    <textarea class="form-control" type="text" name="deskripsiVideo" id="editor">{{ $data->deskripsiVideo }}</textarea>
                   </div>
-                </form>
+                  <button type="button" onclick="validateForm()" class="btn btn-primary mt-3">Edit</button>
+                  <a href="/videoAdmin" class="btn btn-info mt-3">Kembali</i></a>
+              </form>
 
             <div class="card-body px-0 pt-12 pb-2">
               <div class="table-responsive p-0">
@@ -367,13 +363,80 @@
   <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="../assets2/js/plugins/chartjs.min.js"></script>
 
-  <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
+<!--  Dynamic Tags Video -->
   <script>
-    ClassicEditor
-        .create( document.querySelector( '#editor' ) )
-        .catch( error => {
-            console.error( error );
-        } );
+    $(document).ready(function () {
+        $('#tagsVideo').select2({
+            tags: true,
+            tokenSeparators: [',', ' '], // Allow comma or space to separate tags
+            placeholder: 'Choose tags',
+        });
+    });
+</script>
+
+
+<!--  CKEditor -->
+<script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+<script>
+  CKEDITOR.replace('editor');
+
+  async function fetchBadWords(input) {
+    const apiKey = "O3A8ZvNyKn89WPtIBt4Kf0XccNCytF0T";
+    const apiUrl = "https://api.apilayer.com/bad_words?censor_character=";
+
+    const myHeaders = new Headers();
+    myHeaders.append("apikey", apiKey);
+
+    const requestOptions = {
+      method: 'POST',
+      redirect: 'follow',
+      headers: myHeaders,
+      body: input
+    };
+
+    try {
+      const response = await fetch(apiUrl + input, requestOptions);
+      if (!response.ok) {
+        throw new Error('Failed to fetch bad words');
+      }
+
+      const result = await response.text();
+      return result;
+    } catch (error) {
+      console.error('Error fetching bad words:', error);
+      return null;
+    }
+  }
+
+  async function validateForm() {
+    const errorMessageDiv = document.getElementById('error-message');
+    errorMessageDiv.innerHTML = ''; // Reset pesan kesalahan sebelum validasi
+
+    // Validasi penggunaan kata tidak pantas pada deskripsi
+    const deskripsiInput = CKEDITOR.instances.editor.getData();
+    const deskripsiValue = deskripsiInput.toLowerCase();
+
+    try {
+      console.log('Deskripsi sebelum validasi:', deskripsiValue);
+
+      const result = await fetchBadWords(deskripsiValue);
+      console.log('Respon dari API:', result);
+
+      if (result) {
+        errorMessageDiv.innerHTML += `<p class="text-white">${result}</p>`;
+      }
+    } catch (error) {
+      console.error('Error validating description:', error);
+    }
+
+    // Jika ada pesan kesalahan, tampilkan di bawah judul "Tambah Artikel"
+    if (errorMessageDiv.innerHTML !== '') {
+      errorMessageDiv.style.display = 'block';
+    } else {
+      // Jika semua validasi berhasil, formulir akan dikirimkan
+      document.querySelector('form').submit();
+    }
+  }
 </script>
 
  <!-- MODAL LOGOUT -->

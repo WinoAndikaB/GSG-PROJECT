@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Pengguna | GSG PROJECT
+    Pengguna | Katakey
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -140,7 +140,7 @@
             <img src="{{ asset('assets/img/lg1.png') }}" class="avatar avatar-sm me-3" alt="user1" width="2" height="2">
           </div>
           <div class="d-flex flex-column justify-content-center">
-            <h6 class="mb-0 text-sm">GSG PROJECT</h6>
+            <h6 class="mb-0 text-sm">KataKey</h6>
             <p class="text-xs text-secondary mb-0">Halaman Admin</p>
           </div>
         </div>
@@ -243,7 +243,16 @@
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-          </div>
+            <form action="{{ route('listUserTerdaftar') }}" method="GET" class="d-flex">
+                @csrf
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-search" aria-hidden="true"></i></span>
+                    <input type="text" name="search" class="form-control" placeholder="Cari Pengguna..." value="{{ request('search') }}">
+                </div>
+                <button type="submit" class="btn btn-warning ms-2 btn-block">Cari</button>
+            </form>
+        </div>
+        
           <ul class="navbar-nav  justify-content-end">
             <li class="nav-item d-flex align-items-center">
               <a href="/profileSA" class="nav-link text-white font-weight-bold px-0">
@@ -303,6 +312,19 @@
                       </div>
                       <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
+
+                          <div style="text-align: center;">
+                            <div class="dropdown" style="display: inline-block;">
+                                <button class="dropbtn" id="filterRoleBtn">Filter Role</button>
+                                <div class="dropdown-content">
+                                    <a href="#" class="role-filter" data-role="User">User</a>
+                                    <a href="#" class="role-filter" data-role="Admin">Admin</a>
+                                    <a href="#" class="role-filter" data-role="SuperAdmin">SuperAdmin</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
                           
                           <div class="d-flex justify-content-center">
                             <ul class="pagination">
@@ -339,20 +361,7 @@
                                     </li>
                                 @endif
                             </ul>
-                        </div>
-  
-                        <div style="text-align: center;">
-                          <div class="dropdown" style="display: inline-block;">
-                              <button class="dropbtn" id="filterRoleBtn">Filter Role</button>
-                              <div class="dropdown-content">
-                                  <a href="#" class="role-filter" data-role="User">User</a>
-                                  <a href="#" class="role-filter" data-role="Admin">Admin</a>
-                                  <a href="#" class="role-filter" data-role="SuperAdmin">SuperAdmin</a>
-                              </div>
-                          </div>
-                      </div>
-                      
-  
+                        </div>  
   
                           <table class="table align-items-center mb-0">
                             <thead>
@@ -411,10 +420,10 @@
                                 </td>
                                 <td class="align-middle">
                                   @if($user->role !== 'superadmin')
-                                  <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deletePenggunaA', ['id' => $user['id']]) }}')">
-                                    <i class="fa fa-trash"></i>
-                                </a>
-                              @endif                            
+                                    <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deletePenggunaA', ['id' => $user['id']]) }}')">
+                                      <i class="fa fa-trash"></i>
+                                    </a>
+                                  @endif                            
                                 </td>
                               </tr>
                             </tbody>

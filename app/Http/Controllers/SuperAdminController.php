@@ -850,11 +850,22 @@ class SuperAdminController extends Controller
     //[SuperAdmin-Pengguna] Halaman Tabel Pengguna
     function penggunaSA(Request $request){
         $role = $request->input('role'); // Mendapatkan nilai filter role dari request
-        $users = user::orderBy('created_at', 'desc');
+        $searchQuery = $request->input('search'); // Mendapatkan nilai query pencarian dari request
+    
+        $users = User::orderBy('created_at', 'desc');
     
         // Jika ada filter role, tambahkan kondisi where
         if (!empty($role)) {
             $users->where('role', $role);
+        }
+    
+        // Jika ada query pencarian, tambahkan kondisi where untuk mencocokkan nama pengguna atau informasi lainnya
+        if (!empty($searchQuery)) {
+            $users->where(function($query) use ($searchQuery) {
+                $query->where('username', 'like', '%' . $searchQuery . '%')
+                      ->orWhere('email', 'like', '%' . $searchQuery . '%');
+                // Add more fields as needed
+            });
         }
     
         $users = $users->paginate(10);
