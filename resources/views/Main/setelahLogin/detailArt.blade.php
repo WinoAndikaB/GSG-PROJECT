@@ -9,6 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
     <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/lg1.png">
     <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -33,6 +35,9 @@
     <link href="{{ asset('aset1/css/style_1.css')}}" rel="stylesheet" type="text/css"/>
     <!-- Modernizr JS -->
     <script src="{{ asset('aset1/js/modernizr-3.5.0.min.js')}}"></script>
+
+<!-------------------------------------------------------------------------------------- Style Area ------------------------------------------------------------------------------------------------------->
+<!-------------------------------------------------------------------------------------- Style Area ------------------------------------------------------------------------------------------------------->
 
     <style>
       .modal {
@@ -113,8 +118,11 @@
 </style>
 
   </head>
-  <body>
 
+<!-------------------------------------------------------------------------------------- Body Area ------------------------------------------------------------------------------------------------------->
+<!-------------------------------------------------------------------------------------- Body Area ------------------------------------------------------------------------------------------------------->
+ 
+<body>
   <header class="header-area header-sticky" style="text-align: center;">
     <div class="container">
         <div class="row align-items-center">
@@ -328,12 +336,17 @@
                         <i class="fa fa-thumbs-down"></i> Dislike
                      </a>
 
-                     <a href="{{ route('deleteKomentarArtikel', ['id' => $komentar->id]) }}">
-                      <i class="fas fa-trash"></i>Hapus</a>
-          
-                     <a href="#" id="showModalLaporanKomen" class="">
-                      <i class="fa fa-flag"></i> Laporkan
-                    </a>     
+                     @if(Auth::check() && Auth::user()->id == $komentar->user_id)
+                      <a href="{{ route('deleteKomentarArtikel', ['id' => $komentar->id]) }}">
+                          <i class="fas fa-trash"></i>Hapus
+                      </a>
+                     @endif
+                 
+                     @if(Auth::check() && Auth::user()->id != $komentar->user_id)
+                          <a href="#" class="showLaporanKomen" data-comment-id="{{ $komentar->id }}" data-nama-dilaporkan="{{ $komentar->user->name }}">
+                              <i class="fa fa-flag"></i> Laporkan
+                          </a>
+                      @endif
 
                   </div>
               </div>
@@ -400,7 +413,10 @@
     </div>
   </section>
 
-  <!-- Modal Laporan Artikel -->
+<!-------------------------------------------------------------------------------------- Modal Area ------------------------------------------------------------------------------------------------------->
+<!-------------------------------------------------------------------------------------- Modal Area ------------------------------------------------------------------------------------------------------->
+  
+<!-- Modal Laporan Artikel -->
   <div id="modalLaporan" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1;">
     <div style="background-color: #ffffff; border-radius: 10px; text-align: center; padding: 20px; width: 600px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
       <span style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 20px;" id="closeLaporan">&times;</span>
@@ -428,33 +444,45 @@
     </div>
   </div>
 
-  <!-- Modal Laporan Komentar Artikel -->
-<div id="myModal" class="modal">
+<!-- Modal Laporan Komentar Artikel -->
+<!-- Modal Laporan Komentar Artikel -->
+<div id="modalLaporKomen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1;">
   <div style="background-color: #ffffff; border-radius: 10px; text-align: center; padding: 20px; width: 600px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
-    <span style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 20px;" id="cancelReport">&times;</span>
-    <h2 style="color: #007bff; font-size: 24px;">Laporkan Komentar</h2>
-      <form action="#" method="post" id="laporanForm">
-        <div style="text-align: left;">
-            <label style="font-size: 16px;"><input type="radio" name="reason">Konten Komersial atau Spam</label><br>
-            <label style="font-size: 16px;"><input type="radio" name="reason">Materi Pornografi atau Seksual Vulgar</label><br>
-            <label style="font-size: 16px;"><input type="radio" name="reason">Pelanggaran Hak Anak</label><br>
-            <label style="font-size: 16px;"><input type="radio" name="reason">Pernyataan Kebencian dan Kekerasan</label><br>
-            <label style="font-size: 16px;"><input type="radio" name="reason">Mendukung Terorisme</label><br>
-            <label style="font-size: 16px;"><input type="radio" name="reason">Pelecehan dan Penindasan</label><br>
-            <label style="font-size: 16px;"><input type="radio" name="reason">Penggunaan Bunuh Diri atau Menyakiti Diri Sendiri</label><br>
-            <label style="font-size: 16px;"><input type="radio" name="reason">Misinformasi</label><br>
-          </div><br>
+      <span style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 20px;" id="tutupLaporanKomen">&times;</span>
+      <h2 style="color: #007bff; font-size: 24px;">Laporkan Komentar</h2>
+
+      <!-- Display information about the reported user -->
+      <p style="font-size: 14px;">User Yang Dilaporkan :<br> <span id="namaDilaporkan" style="font-size: 14px;"></span></p>
+
+      <form id="reportCommentForm" action="{{ route('storeLaporanKomentarArtikel') }}" method="POST">
+          @csrf
           <br>
-          <button type="button" onclick="cancelReport()" style="background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; padding: 10px 20px; font-size: 18px;">Batal</button>
-          <button type="submit" class="submit-buttonLaporan" style="background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; padding: 10px 20px; font-size: 18px;">Kirim Laporan</button>
+          <input type="hidden" name="user_id_pelapor" value="{{ Auth::user()->id }}">
+          <input type="hidden" name="artikel_id" value="{{ $komentar->artikel_id }}">
+          <input type="hidden" name="comment_id" id="comment_id_input" value="">
+
+          <div style="text-align: left;">
+              <label style="font-size: 16px;"><input type="radio" name="reason" value="Konten Komersial atau Spam"> Konten Komersial atau Spam</label><br>
+              <label style="font-size: 16px;"><input type="radio" name="reason" value="Materi Pornografi atau Seksual Vulgar"> Materi Pornografi atau Seksual Vulgar</label><br>
+          </div><br>
+
+          <textarea id="reportTextLaporanKomentar" style="width: 100%; padding: 10px; font-size: 16px;" placeholder="Kenapa Anda melaporkan komentar ini?" name="alasan"></textarea><br>
+
+          <input type="hidden" name="reason" id="reason_input" value="">
+          <input type="hidden" name="alasan" id="alasan_input" value="">
+
+          <button type="submit" class="submit-buttonLaporKomentar" style="background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; padding: 10px 20px; font-size: 18px;">Kirim Laporan</button>
       </form>
+
       <div style="text-align: left; padding: 10px;">
-        <p style="font-size: 14px;">Artikel dan pengguna yang dilaporkan akan ditinjau oleh staf kami untuk menentukan apakah artikel dan pengguna tersebut melanggar Pedoman kami atau tidak. Akun akan dikenai sanksi jika melanggar Pedoman Komunitas, dan pelanggaran serius atau berulang dapat berakibat pada penghentian akun.</p>
+          <p style="font-size: 14px;">Laporan Komentar Artikel dan pengguna yang dilaporkan akan ditinjau oleh staf kami untuk menentukan apakah artikel dan pengguna tersebut melanggar Pedoman kami atau tidak. Akun akan dikenai sanksi jika melanggar Pedoman Komunitas, dan pelanggaran serius atau berulang dapat berakibat pada penghentian akun.</p>
       </div>
-    </div>
   </div>
+</div>
   
-  <!-- Scripts -->
+<!-------------------------------------------------------------------------------------- JavaScript Area ------------------------------------------------------------------------------------------------------->
+<!-------------------------------------------------------------------------------------- JavaScript Area ------------------------------------------------------------------------------------------------------->
+
   <!-- Bootstrap core JavaScript -->
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -485,57 +513,47 @@
     <!-- Main -->
     <script src="{{ asset('aset1/js/main.js') }}"></script>
 
-      <!-- Modal Lapor Komentar Artikel -->
-    <script>
-      // Fungsi untuk menampilkan modal
-      document.getElementById('showModalLaporanKomen').addEventListener('click', function () {
-          document.getElementById('myModal').style.display = 'block';
-      });
-  
-      // Fungsi untuk membatalkan laporan dan menyembunyikan modal
-      function cancelReport() {
-          document.getElementById('myModal').style.display = 'none';
-      }
-  
-      // Fungsi untuk menangani pengiriman formulir (di sini Anda dapat menambahkan logika penyimpanan atau pengiriman data)
-      document.getElementById('laporanForm').addEventListener('submit', function (event) {
-          event.preventDefault();
-          cancelReport();
-      });
-  </script>
+ <!-- Add this line to include jQuery if not already included -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-    <!-- MODAL LOGOUT -->
-    <script>
-      // JavaScript untuk modal logout
-      function openModal() {
-        const modal = document.getElementById('logout-modal');
-        modal.style.display = 'block';
-      }
-    
-      function closeModal() {
-        const modal = document.getElementById('logout-modal');
-        modal.style.display = 'none';
-      }
-    
-      function confirmLogout(confirmed) {
-        if (confirmed) {
-          // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
-          window.location.href = '/logout';
-        } else {
-          // Tutup modal jika pengguna memilih "No"
-          closeModal();
-        }
-      }
-    
-      // Tutup modal jika pengguna mengklik di luar modal
-      window.addEventListener('click', (event) => {
-        const modal = document.getElementById('logout-modal');
-        if (event.target == modal) {
-          modal.style.display = 'none';
-        }
-      });
-    </script>
+    <!-- Modal Lapor Komentar Artikel -->
+  <!-- Your existing HTML for the modal goes here -->
 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.showLaporanKomen').on('click', function () {
+            var commentId = $(this).data('comment-id');
+            var namaDilaporkan = $(this).data('nama-dilaporkan');
+
+            $('#comment_id_input').val(commentId);
+            $('#namaDilaporkan').text(namaDilaporkan);
+            $('#modalLaporKomen').show();
+        });
+
+        $('#tutupLaporanKomen').on('click', function () {
+            $('#modalLaporKomen').hide();
+        });
+
+        $('.submit-buttonLaporKomentar').on('click', function (event) {
+            event.preventDefault();
+
+            var selectedReason = $('input[name="reason"]:checked').val();
+            var alasan = $('#reportTextLaporanKomentar').val();
+
+            $('#reason_input').val(selectedReason);
+            $('#alasan_input').val(alasan);
+
+            console.log('Selected Reason:', selectedReason);
+            console.log('Alasan:', alasan);
+
+            $('#reportCommentForm').submit();
+        });
+    });
+</script>
+
+
+    
     <!-- Laporkan Modal -->
     <script>
       // Get the modal and close button elements
@@ -598,6 +616,40 @@
       }
     });
   });
+    </script>
+
+    
+
+    <!-- MODAL LOGOUT -->
+    <script>
+      // JavaScript untuk modal logout
+      function openModal() {
+        const modal = document.getElementById('logout-modal');
+        modal.style.display = 'block';
+      }
+    
+      function closeModal() {
+        const modal = document.getElementById('logout-modal');
+        modal.style.display = 'none';
+      }
+    
+      function confirmLogout(confirmed) {
+        if (confirmed) {
+          // Redirect ke URL logout yang sesuai (ganti URL ini dengan URL logout sebenarnya)
+          window.location.href = '/logout';
+        } else {
+          // Tutup modal jika pengguna memilih "No"
+          closeModal();
+        }
+      }
+    
+      // Tutup modal jika pengguna mengklik di luar modal
+      window.addEventListener('click', (event) => {
+        const modal = document.getElementById('logout-modal');
+        if (event.target == modal) {
+          modal.style.display = 'none';
+        }
+      });
     </script>
     
   </body>

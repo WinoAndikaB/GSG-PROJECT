@@ -27,7 +27,9 @@ class user extends Authenticatable
         'instagram',
         'facebook',
         'aboutme',
-        'role'
+        'role',
+        'freeze',
+        'freeze_until',
     ];
 
     /**

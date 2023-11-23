@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Laporan User | KataKey
+    Laporan Komentar Artikel User | KataKey
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -231,7 +231,7 @@
               <i class="ni ni-sound-wave text-warning text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Laporan User 
-              <span class="text-success text-sm font-weight-bolder text-white">+ {{ $dataBaruLaporanArtikel + $dataBaruLaporanVideo + $LaporanKomentarArtikel}}</span> 
+              <span class="text-success text-sm font-weight-bolder text-white">+ </span> 
             </span>
           </a>
         </li>
@@ -255,9 +255,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Laporan Artikel</li>
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Laporan Komentar Artikel User</li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Laporan Artikel</h6>
+          <h6 class="font-weight-bolder text-white mb-0">Laporan Komentar Artikel User </h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -316,10 +316,10 @@
                     <a href="/laporanUserSA" class="btn btn-warning">Laporan Artikel + {{ $dataBaruLaporanArtikel}}</a> <a href="/laporanVideoUserSA" class="btn btn-warning">Laporan Video + {{$dataBaruLaporanVideo}}</a><br>
                     <a href="/laporanKomentarArtikelUserSA" class="btn btn-primary">Laporan Komentar Artikel + {{ $LaporanKomentarArtikel}}</a>
                     <h5 class="mb-1">
-                      List Laporan User
+                      List Laporan Komentar Artikel User
                     </h5>
                     <p class="mb-0 font-weight-bold text-sm">
-                      Laporan Artikel
+                      Laporan Komentar Artikel User
                     </p>
                   </div>
                 </div>
@@ -341,34 +341,50 @@
                             <thead>
                               <tr>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama User</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User ID Pelapor</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama User Pelapor</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User ID Dilaporkan</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama User Dilaporkan</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Artikel ID</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Artikel</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Komentar ID</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Isi Komentar</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"">Laporan</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"">Alasan</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"">Tanggal Laporan</th>
                                 <th class="text-secondary opacity-7"></th>
                               </tr>
                             </thead>
-                            @foreach ($laporanArtikelU as $item)
+                            @foreach ($laporanKomentarArtikelU as $item)
                             <tbody>
                                 <tr>
                                     <td class="align-middle text-center">
                                         <p class="text-xs font-weight-bold mb-0">{{$item['id']}}</p>
                                     </td>
                                     <td class="align-middle text-center">
-                                        <p class="text-xs font-weight-bold mb-0">{{$item['user_id']}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{$item['user_id_pelapor']}}</p>
                                     </td>
                                     <td class="align-middle text-center">
-                                        <p class="text-xs font-weight-bold mb-0">{{$item['user']['name']}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{$item['user']}}</p>
                                     </td>
+                                    <td class="align-middle text-center">
+                                      <p class="text-xs font-weight-bold mb-0">{{$item['user_id_dilaporkan']}}</p>
+                                  </td>
+                                  <td class="align-middle text-center">
+                                      <p class="text-xs font-weight-bold mb-0">{{$item['artikel']['judulArtikel']}}</p>
+                                  </td>
                                     <td class="align-middle text-center">
                                         <p class="text-xs font-weight-bold mb-0">{{$item['artikel_id']}}</p>
                                     </td>
                                     <td class="align-middle text-center">
                                         <p class="text-xs font-weight-bold mb-0">{{$item['artikel']['judulArtikel']}}</p>
                                     </td>
+                                    <td class="align-middle text-center">
+                                      <p class="text-xs font-weight-bold mb-0">{{$item['comment_id']}}</p>
+                                  </td>
+                                  <td class="align-middle text-center">
+                                      <p class="text-xs font-weight-bold mb-0">{{$item['artikel']['judulArtikel']}}</p>
+                                  </td>
                                     <td class="align-middle text-center">
                                         <p class="text-xs font-weight-bold mb-0">{{$item['alasan']}}</p>
                                     </td>
@@ -382,10 +398,15 @@
                                       <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteLaporanArtikelSA', ['id' => $item['id']]) }}')">
                                           <i class="fa fa-trash"></i>
                                       </a>
+
+                                      <a href="#" class="btn btn-warning btn-icon btn-round" data-toggle="modal" data-target="#freezeModal">
+                                        <i class="ni ni-lock-circle-open"></i>
+                                      </a>
                                     </td>
                                 </tr>
                             </tbody>
-                        @endforeach                        
+                        @endforeach   
+
                           </table>
                         </div>
                       </div>
@@ -553,6 +574,13 @@
       console.log("Document ready.");
   });
   </script>
+
+  <!--Modal Freeze -->
+<script>
+  function submitFreezeForm() {
+      document.getElementById('freezeForm').submit();
+  }
+</script>
 
   <!-- Modal Delete -->
   <script>

@@ -256,7 +256,7 @@
               <i class="ni ni-sound-wave text-warning text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Laporan User 
-              <span class="text-success text-sm font-weight-bolder text-white">+ {{ $dataBaruLaporanArtikel + $dataBaruLaporanVideo}}</span> 
+              <span class="text-success text-sm font-weight-bolder text-white">+ {{ $dataBaruLaporanArtikel + $dataBaruLaporanVideo + $LaporanKomentarArtikel}}</span> 
             </span>
           </a>
         </li>
@@ -338,8 +338,8 @@
               <div class="row gx-4">
                 <div class="col-auto my-auto">
                   <div class="h-100">
-                    <a href="/laporanUserSA" class="btn btn-primary">Laporan Artikel</i></a>
-                    <a href="/laporanVideoUserSA" class="btn btn-success">Laporan Video</i></a>
+                    <a href="/laporanUserSA" class="btn btn-warning">Laporan Artikel + {{ $dataBaruLaporanArtikel}}</a> <a href="/laporanVideoUserSA" class="btn btn-warning">Laporan Video + {{$dataBaruLaporanVideo}}</a><br>
+                    <a href="/laporanKomentarArtikelUserSA" class="btn btn-primary">Laporan Komentar Artikel + {{ $LaporanKomentarArtikel}}</a>
                     <h5 class="mb-1">
                       List Laporan User
                     </h5>

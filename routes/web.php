@@ -121,6 +121,7 @@ use Illuminate\Support\Facades\Route;
         Route::get('/deleteKomentarArtikel/{id}', [PenggunaController::class, 'deleteKomentarArtikel'])->name('deleteKomentarArtikel');     
 
         Route::post('/submit/report', [PenggunaController::class, 'storeLaporanArtikel'])->name('storeLaporanArtikel');
+        Route::post('/submit/reportKomentar', [PenggunaController::class, 'storeLaporanKomentarArtikel'])->name('storeLaporanKomentarArtikel');
         Route::get('/deleteKomentarA/{id}',[PenggunaController::class,'deleteKomentarA'])->name('deleteKomentarA');
 
 //------------------------------------------------------------- [User] Tab Video ---------------------------------------------------------------------------------------------------------
@@ -423,7 +424,13 @@ use Illuminate\Support\Facades\Route;
 
             //[SuperAdmin] Tabel Laporan
             Route::get('/laporanUserSA', [SuperAdminController::class, 'laporanUserSA'])->name('laporanUserSA');
+            Route::get('/laporanKomentarArtikelUserSA', [SuperAdminController::class, 'laporanKomentarArtikelUserSA'])->name('laporanKomentarArtikelUserSA');
+            Route::get('/admin/freeze/{id}', [SuperAdminController::class, 'showFreezeForm'])->name('admin.freeze.form');
+            Route::post('/admin/freeze/{id}', [SuperAdminController::class, 'freezeAccount'])->name('admin.freeze.account');
+
+
             Route::get('/laporanVideoUserSA', [SuperAdminController::class, 'laporanVideoUserSA'])->name('laporanVideoUserSA');
+            Route::get('/laporanKomentarVideoUserSA', [SuperAdminController::class, 'laporanKomentarVideoUserSA'])->name('laporanKomentarVideoUserSA');
     
             Route::get('/deleteLaporanArtikelSA/{id}',[SuperAdminController::class,'deleteLaporanArtikelSA'])->name('deleteLaporanArtikelSA');
             Route::get('/deleteLaporanVideoSA/{id}',[SuperAdminController::class,'deleteLaporanVideoSA'])->name('deleteLaporanVideoSA');

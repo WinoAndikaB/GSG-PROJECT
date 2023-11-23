@@ -15,6 +15,8 @@ use App\Models\komentar_event;
 use App\Models\komentar_video;
 use App\Models\LaporanArtikelUser;
 use App\Models\LaporanUlasanUser;
+use App\Models\LaporanKomentarArtikel;
+use Illuminate\Support\Facades\Log;
 use App\Models\LaporanVideoUser;
 use Illuminate\Http\Request;
 use App\Models\kategori;
@@ -173,6 +175,60 @@ class PenggunaController extends Controller
         // Redirect atau tampilkan pesan sukses
         return redirect()->back()->with('success', 'Komentar berhasil disimpan.');
     }
+
+
+    public function storeLaporanKomentarArtikel(Request $request)
+    {
+        try {
+            // Validate the request
+            $request->validate([
+                'user_id_pelapor' => 'required',
+                'artikel_id' => 'required',
+                'comment_id' => 'required',
+                'laporan' => 'required',
+                'alasan' => 'required',
+            ]);
+
+            // Find the user (pelapor)
+            $pelapor = User::find($request->user_id_pelapor);
+
+            if (!$pelapor) {
+                return response()->json(['error' => 'Pelapor not found'], 404);
+            }
+
+            // Find the comment to get the user_id_dilaporkan
+            $comment = KomentarArtikel::find($request->comment_id);
+
+            if (!$comment) {
+                return response()->json(['error' => 'Comment not found'], 404);
+            }
+
+            // Create a new instance of LaporanKomentarArtikel
+            $laporan = new LaporanKomentarArtikel([
+                'user_id_pelapor' => $pelapor->id,
+                'nama_pelapor' => $pelapor->name,
+                'user_id_dilaporkan' => $comment->user_id,
+                'nama_dilaporkan' => $comment->user->name,
+                'artikel_id' => $request->artikel_id,
+                'comment_id' => $request->comment_id,
+                'laporan' => $request->laporan,
+                'alasan' => $request->alasan,
+            ]);
+
+            // Save the data to the database
+            $laporan->save();
+
+            // Return a success response
+            return response()->json(['message' => 'Laporan Komentar telah berhasil disimpan.']);
+        } catch (\Exception $e) {
+            // Log the exception
+            \Log::error('Error saving data: ' . $e->getMessage());
+
+            // Return an error response
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+    
 
     //[User-Detail Artikel] Delete Komentar Video
     public function deleteKomentarA($id)

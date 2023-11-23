@@ -300,13 +300,19 @@
                   <a href="report_action.html">
                     <i class="fa fa-thumbs-down"></i> Dislike
                  </a>
-     
-                 <a href="{{ route('deleteKomentarVideo', ['id' => $komentar->id]) }}">
-                  <i class="fas fa-trash"></i>Hapus</a>
+
+                  @if(Auth::check() && Auth::user()->id == $komentar->user_id)
+                    <a href="{{ route('deleteKomentarVideo', ['id' => $komentar->id]) }}">
+                        <i class="fas fa-trash"></i>Hapus
+                    </a>
+                  @endif
       
-                 <a href="#" id="showModal" class="laporan-button">
-                  <i class="fa fa-flag"></i> Laporkan</a>  
                   
+                  @if(Auth::check() && Auth::user()->id != $komentar->user_id)
+                    <a href="#" id="showModal" class="laporan-button">
+                        <i class="fa fa-flag"></i> Laporkan
+                    </a>  
+                  @endif
               </div>
           </div>
       </div>
