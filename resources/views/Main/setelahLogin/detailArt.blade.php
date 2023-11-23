@@ -281,25 +281,15 @@
           @endforeach
 
           <div>
-            <div class="fh5co_heading fh5co_heading_border_bottom py-2 mb-4">Tags</div>
-        </div>
-        <div class="clearfix"></div>
-       
-        @php
-        $uniqueArtikel = [];
-        @endphp
+              <div class="fh5co_heading fh5co_heading_border_bottom py-2 mb-4">Tags</div>
+          </div>
 
-        @foreach($tags as $item)
-            @if (!in_array($item->tags, $uniqueArtikel))
-              <span class="fh5co_tags_all">
-                  <a href="#" class="fh5co_tagg">{{ $item->tags }}</a>
-              </span>
-              @php
-              $uniqueArtikel[] = $item->tags;
-              @endphp
-           @endif
-        @endforeach
-                    
+            <span class="fh5co_tags_all">
+                @foreach($tags as $tag)
+                    <a href="#" class="fh5co_tagg">{{ $tag->tags }}</a>
+                @endforeach
+            </span>
+             
             <div class="fh5co_heading fh5co_heading_border_bottom pt-3 py-2 mb-4">Most Popular</div>
             <div class="row pb-3">
                 @foreach($box as $item)
@@ -315,7 +305,6 @@
         </div>
     </div>
 
-    
     <span class="fh5co_tags_all"> Tags : 
       @foreach(explode(',', $article->tags) as $tag)
           <a href="#" class="fh5co_tagg">{{ $tag }}</a>
@@ -473,7 +462,7 @@
       <h2 style="color: #007bff; font-size: 24px;">Laporkan Komentar</h2>
 
       <!-- Display information about the reported user -->
-      <p style="font-size: 14px;">User Yang Dilaporkan :<br> <span id="namaDilaporkan" style="font-size: 14px;"></span></p>
+      <p style="font-size: 14px;">User Yang Dilaporkan :<br> <strong><span id="namaDilaporkan" style="font-size: 14px;"></span></strong></p>
 
       <form id="reportCommentForm" action="{{ route('storeLaporanKomentarArtikel') }}" method="POST">
         @csrf
