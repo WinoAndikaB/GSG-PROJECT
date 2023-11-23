@@ -365,13 +365,13 @@
                                         <p class="text-xs font-weight-bold mb-0">{{$item['user_id_pelapor']}}</p>
                                     </td>
                                     <td class="align-middle text-center">
-                                        <p class="text-xs font-weight-bold mb-0">{{$item['user']}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{$item['pelapor']['name']}}</p>
                                     </td>
                                     <td class="align-middle text-center">
                                       <p class="text-xs font-weight-bold mb-0">{{$item['user_id_dilaporkan']}}</p>
                                   </td>
                                   <td class="align-middle text-center">
-                                      <p class="text-xs font-weight-bold mb-0">{{$item['artikel']['judulArtikel']}}</p>
+                                      <p class="text-xs font-weight-bold mb-0">{{$item['dilaporkan']['name']}}</p>
                                   </td>
                                     <td class="align-middle text-center">
                                         <p class="text-xs font-weight-bold mb-0">{{$item['artikel_id']}}</p>
@@ -383,7 +383,7 @@
                                       <p class="text-xs font-weight-bold mb-0">{{$item['comment_id']}}</p>
                                   </td>
                                   <td class="align-middle text-center">
-                                      <p class="text-xs font-weight-bold mb-0">{{$item['artikel']['judulArtikel']}}</p>
+                                      <p class="text-xs font-weight-bold mb-0">{{$item['komentarA']['pesan']}}</p>
                                   </td>
                                     <td class="align-middle text-center">
                                         <p class="text-xs font-weight-bold mb-0">{{$item['alasan']}}</p>

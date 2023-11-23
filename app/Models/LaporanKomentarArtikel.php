@@ -25,16 +25,21 @@ class LaporanKomentarArtikel extends Model
     // Define relationships
     public function pelapor()
     {
-        return $this->belongsTo(User::class, 'user_id_pelapor');
+        return $this->belongsTo(user::class, 'user_id_pelapor');
     }
 
     public function dilaporkan()
     {
-        return $this->belongsTo(User::class, 'user_id_dilaporkan');
+        return $this->belongsTo(user::class, 'user_id_dilaporkan');
     }
 
     public function artikel()
     {
         return $this->belongsTo(artikels::class, 'artikel_id');
+    }
+
+    public function komentarA()
+    {
+        return $this->belongsTo(komentar_artikel::class, 'comment_id');
     }
 }

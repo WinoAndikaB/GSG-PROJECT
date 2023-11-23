@@ -90,13 +90,13 @@
             <div class="col-12">
               <nav class="main-nav">
                 <ul class="nav">
-                    <li class="scroll-to-section"><a href="/">Home</a></li>
-                    <li class="scroll-to-section"><a href="#about">Artikel</a></li>
-                    <li class="scroll-to-section"><a href="/Video" class="">Video</a></li>
+                    <li class="scroll-to-section"><a href="/home">Home</a></li>
+                    <li class="scroll-to-section"><a href="/home">Artikel</a></li>
+                    <li class="scroll-to-section"><a href="/Video" class="active">Video</a></li>
                     <li class="scroll-to-section"><a href="/kategori">Kategori</a></li>
                     <li class="scroll-to-section"><a href="/event">Event</a></li>
-                    <li class="scroll-to-section"><a href="/ulasan" class="text-center">Ulasan</a></li>
-                    <li class="scroll-to-section"><a href="/about" class="">Tentang</a></li>
+                    <li class="scroll-to-section"><a href="/ulasan">Ulasan</a></li>
+                    <li class="scroll-to-section"><a href="/about">Tentang</a></li>
                     <li class="scroll-to-section">
                       <a href="/profileUser" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center">
                         <div class="profile-picture" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
@@ -113,7 +113,20 @@
                             }
                             ?>
                         </div>
-                        <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
+
+                        <span class="d-sm-inline d-none">
+                          <?php
+                          $fullName = Auth::user()->name;
+                          $words = explode(' ', $fullName);
+                          
+                          // Ambil dua kata pertama dan dua kata terakhir dari nama pengguna
+                          $firstTwoWords = implode(' ', array_slice($words, 0, 1));
+                          $lastTwoWords = implode(' ', array_slice($words, -1, 2));
+                          
+                          echo $firstTwoWords . ' ' . $lastTwoWords;
+                          ?>
+                      </span>
+                      
                     </a>                        
                     </li>
                     <li class="scroll-to-section">
@@ -167,10 +180,6 @@
               <span class="fh5co_tags_all">
                 <a href="#" class="fh5co_tagg">{{ $video->kategoriVideo }}</a>
             </span>
-            <span class="fh5co_tags_all">
-              <a href="#" class="fh5co_tagg">{{ $video->tagsVideo }}</a>
-          </span>
-
           
           <br>
           <br>
@@ -267,6 +276,20 @@
             </div>            
         </div>
     </div>
+
+    @foreach(explode(',', $video->tagsVideo) as $tag)
+        <span class="fh5co_tags_all"> Tags :
+            <a href="#" class="fh5co_tagg">{{ $tag }}</a>
+        </span>
+    @endforeach
+
+    
+    <br>
+    <br>
+    <br>
+
+
+
     <form action="/komentarVideo" method="post">
       @csrf
       <input type="hidden" name="video_id" value="{{ $video->id }}"> 

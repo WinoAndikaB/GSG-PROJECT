@@ -60,9 +60,9 @@
             <div class="col-12">
               <nav class="main-nav">
                 <ul class="nav">
-                    <li class="scroll-to-section"><a href="/" class="active">Home</a></li>
-                    <li class="scroll-to-section"><a href="#trends">Trending</a></li>
-                    <li class="scroll-to-section"><a href="#about">Artikel</a></li>
+                    <li class="scroll-to-section"><a href="/home" class="active">Home</a></li>
+                    <li class="scroll-to-section"><a href="/home">Trending</a></li>
+                    <li class="scroll-to-section"><a href="/home">Artikel</a></li>
                     <li class="scroll-to-section"><a href="/Video" class="">Video</a></li>
                     <li class="scroll-to-section"><a href="/kategori">Kategori</a></li>
                     <li class="scroll-to-section"><a href="/event">Event</a></li>
@@ -90,7 +90,20 @@
                             }
                             ?>
                         </div>
-                        <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
+                        
+                        <span class="d-sm-inline d-none">
+                          <?php
+                          $fullName = Auth::user()->name;
+                          $words = explode(' ', $fullName);
+                          
+                          // Ambil dua kata pertama dan dua kata terakhir dari nama pengguna
+                          $firstTwoWords = implode(' ', array_slice($words, 0, 1));
+                          $lastTwoWords = implode(' ', array_slice($words, -1, 2));
+                          
+                          echo $firstTwoWords . ' ' . $lastTwoWords;
+                          ?>
+                      </span>
+                      
                     </a>                        
                     </li>
                     <li class="scroll-to-section">

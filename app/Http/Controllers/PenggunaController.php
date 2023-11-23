@@ -149,12 +149,15 @@ class PenggunaController extends Controller
         $tags = artikels::inRandomOrder()->take(10)->get();
 
         $kategori = artikels::inRandomOrder()->take(10)->get();
-    
+
         $komentarArtikels = komentar_artikel::where('artikel_id', $id)->latest()->paginate(6);
 
         $totalKomentarArtikels = komentar_artikel::where('artikel_id', $id)->count();
-    
-        return view('main.setelahLogin.detailArt', compact('kategoriLogA','article', 'box', 'tags', 'kategori', 'komentarArtikels','totalKomentarArtikels'));
+
+        // Retrieve the latest comment (if any) associated with the article
+        $komentar = komentar_artikel::where('artikel_id', $id)->latest()->first();
+
+        return view('main.setelahLogin.detailArt', compact('kategoriLogA', 'article', 'box', 'tags', 'kategori', 'komentarArtikels', 'totalKomentarArtikels', 'komentar'));
     }
 
     //[User-Detail Artikel] Menampilkan Komentar Pada Detail Artikel Ketika Di Klik
@@ -179,55 +182,33 @@ class PenggunaController extends Controller
 
     public function storeLaporanKomentarArtikel(Request $request)
     {
-        try {
-            // Validate the request
-            $request->validate([
-                'user_id_pelapor' => 'required',
-                'artikel_id' => 'required',
-                'comment_id' => 'required',
-                'laporan' => 'required',
-                'alasan' => 'required',
-            ]);
-
-            // Find the user (pelapor)
-            $pelapor = User::find($request->user_id_pelapor);
-
-            if (!$pelapor) {
-                return response()->json(['error' => 'Pelapor not found'], 404);
-            }
-
-            // Find the comment to get the user_id_dilaporkan
-            $comment = KomentarArtikel::find($request->comment_id);
-
-            if (!$comment) {
-                return response()->json(['error' => 'Comment not found'], 404);
-            }
-
-            // Create a new instance of LaporanKomentarArtikel
-            $laporan = new LaporanKomentarArtikel([
-                'user_id_pelapor' => $pelapor->id,
-                'nama_pelapor' => $pelapor->name,
-                'user_id_dilaporkan' => $comment->user_id,
-                'nama_dilaporkan' => $comment->user->name,
-                'artikel_id' => $request->artikel_id,
-                'comment_id' => $request->comment_id,
-                'laporan' => $request->laporan,
-                'alasan' => $request->alasan,
-            ]);
-
-            // Save the data to the database
-            $laporan->save();
-
-            // Return a success response
-            return response()->json(['message' => 'Laporan Komentar telah berhasil disimpan.']);
-        } catch (\Exception $e) {
-            // Log the exception
-            \Log::error('Error saving data: ' . $e->getMessage());
-
-            // Return an error response
-            return response()->json(['error' => 'Internal Server Error'], 500);
-        }
+        // Validate the request
+        $request->validate([
+            'user_id_pelapor' => 'required',
+            'comment_id' => 'required',
+            'laporan' => 'required',
+            'alasan' => 'required',
+        ]);
+    
+        // Create a new instance of LaporanKomentarArtikel
+        $laporan = new LaporanKomentarArtikel([
+            'user_id_pelapor' => $request->user_id_pelapor,
+            'nama_pelapor' => $request->nama_pelapor,
+            'user_id_dilaporkan' => $request->user_id_dilaporkan,
+            'nama_dilaporkan' => $request->nama_dilaporkan,
+            'artikel_id' => $request->artikel_id,
+            'comment_id' => $request->comment_id,
+            'laporan' => $request->laporan,
+            'alasan' => $request->alasan,
+        ]);
+    
+        // Save the data to the database
+        $laporan->save();
+    
+        // Return a success response
+        return response()->json(['success' => 'Laporan berhasil dikirim'], 200);
     }
+
     
 
     //[User-Detail Artikel] Delete Komentar Video
@@ -307,19 +288,20 @@ class PenggunaController extends Controller
     public function showDetailVideo($id)
     {
         $video = Video::findOrFail($id);
-
-        $kategoriLogV = kategori::all();
-
+    
+        $kategoriLogV = Kategori::all();
+    
         $boxVideo = Video::inRandomOrder()->take(10)->get();
         $tagsV = Video::inRandomOrder()->take(10)->get();
         $kategoriV = Video::inRandomOrder()->take(10)->get();
-
+    
         $komentarVideos = komentar_video::where('video_id', $id)->latest()->paginate(6);
         
         $totalKomentarVideo = komentar_video::where('video_id', $id)->count();
         
-        return view('main.setelahLogin.detailVid', compact('kategoriLogV','video', 'boxVideo', 'tagsV', 'kategoriV', 'komentarVideos', 'totalKomentarVideo'));
+        return view('main.setelahLogin.detailVid', compact('kategoriLogV', 'video', 'boxVideo', 'tagsV', 'kategoriV', 'komentarVideos', 'totalKomentarVideo'));
     }
+    
 
     //[User-Detail Video] Komentar Video User
     public function storeKomentarVideo(Request $request)

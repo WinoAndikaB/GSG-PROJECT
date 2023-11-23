@@ -38,31 +38,56 @@ https://templatemo.com/tm-574-mexant
 
 
   <!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky">
+  <header class="header-area header-sticky" style="text-align: center;">
     <div class="container">
-        <div class="row">
+        <div class="row align-items-center">
             <div class="col-12">
-                <nav class="main-nav">
-                    <a href="/" class="logo">
-                        <img src="" alt="">
-                    </a>
-                    <span>Katakey</span>
-                    <ul class="nav">
-                      <li class="scroll-to-section"><a href="/" >Home</a></li>
-                      <li class="scroll-to-section"><a href="/">Trending</a></li>
-                      <li class="scroll-to-section"><a href="/">Artikel</a></li>
-                      <li class="scroll-to-section"><a href="/landingPageVideo">Video</a></li>
-                      <li class="scroll-to-section"><a href="/kategori">Kategori</a></li>
-                      <li class="scroll-to-section"><a href="/event">Event</a></li>
-                      <li class="scroll-to-section"><a href="/ulasanLandingPage">Ulasan</a></li>
-                      <li class="scroll-to-section"><a href="/abouts" class="">Tentang</a></li>
-                      <li class="scroll-to-section"><a href="/login">Login</a></li>
-                    </ul>       
-                    <a class='menu-trigger'>
-                        <span>Menu</span>
-                    </a>
-                    <!-- ***** Menu End ***** -->
-                </nav>
+              <nav class="main-nav">
+                <ul class="nav">
+                    <li class="scroll-to-section"><a href="/home">Home</a></li>
+                    <li class="scroll-to-section"><a href="/home">Trending</a></li>
+                    <li class="scroll-to-section"><a href="/home">Artikel</a></li>
+                    <li class="scroll-to-section"><a href="/Video">Video</a></li>
+                    <li class="scroll-to-section"><a href="/kategori">Kategori</a></li>
+                    <li class="scroll-to-section"><a href="/event">Event</a></li>
+                    <li class="scroll-to-section"><a href="/ulasan">Ulasan</a></li>
+                    <li class="scroll-to-section"><a href="/about">Tentang</a></li>
+                    <li class="scroll-to-section">
+                      <a href="/profileUser" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center">
+                        <div class="profile-picture" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
+                            <?php
+                            $fotoProfil = Auth::user()->fotoProfil;
+                            if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
+                            ?>
+                            <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                            <?php
+                            } else {
+                            ?>
+                            <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                            <?php
+                            }
+                            ?>
+                        </div>
+
+                        <span class="d-sm-inline d-none">
+                          <?php
+                          $fullName = Auth::user()->name;
+                          $words = explode(' ', $fullName);
+                          
+                          // Ambil dua kata pertama dan dua kata terakhir dari nama pengguna
+                          $firstTwoWords = implode(' ', array_slice($words, 0, 1));
+                          $lastTwoWords = implode(' ', array_slice($words, -1, 2));
+                          
+                          echo $firstTwoWords . ' ' . $lastTwoWords;
+                          ?>
+                      </span>
+                      
+                    </a>                        
+                    </li>
+                    <li class="scroll-to-section">
+                      <a href="#" class="d-sm-inline d-none text-white text-bold" id="logout-link" onclick="openModal()"> Logout</a>
+                    </li>
+            </nav>
             </div>
         </div>
     </div>

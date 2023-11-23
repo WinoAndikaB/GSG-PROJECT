@@ -129,12 +129,12 @@
             <div class="col-12">
               <nav class="main-nav">
                 <ul class="nav">
-                    <li class="scroll-to-section"><a href="/">Home</a></li>
-                    <li class="scroll-to-section"><a href="#about">Artikel</a></li>
+                    <li class="scroll-to-section"><a href="/home">Home</a></li>
+                    <li class="scroll-to-section"><a href="/home" class="active">Artikel</a></li>
                     <li class="scroll-to-section"><a href="/Video" class="">Video</a></li>
                     <li class="scroll-to-section"><a href="/kategori">Kategori</a></li>
                     <li class="scroll-to-section"><a href="/event">Event</a></li>
-                    <li class="scroll-to-section"><a href="/ulasan" class="text-center">Ulasan</a></li>
+                    <li class="scroll-to-section"><a href="/ulasan">Ulasan</a></li>
                     <li class="scroll-to-section"><a href="/about" class="">Tentang</a></li>
                     <li class="scroll-to-section">
                       <a href="/profileUser" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center">
@@ -152,7 +152,20 @@
                             }
                             ?>
                         </div>
-                        <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
+                        
+                        <span class="d-sm-inline d-none">
+                          <?php
+                          $fullName = Auth::user()->name;
+                          $words = explode(' ', $fullName);
+                          
+                          // Ambil dua kata pertama dan dua kata terakhir dari nama pengguna
+                          $firstTwoWords = implode(' ', array_slice($words, 0, 1));
+                          $lastTwoWords = implode(' ', array_slice($words, -1, 2));
+                          
+                          echo $firstTwoWords . ' ' . $lastTwoWords;
+                          ?>
+                      </span>
+
                     </a>                        
                     </li>
                     <li class="scroll-to-section">
@@ -207,10 +220,7 @@
               <span class="fh5co_tags_all">
                 <a href="#" class="fh5co_tagg">{{ $article->kategori }}</a>
             </span>
-            <span class="fh5co_tags_all">
-              <a href="#" class="fh5co_tagg">{{ $article->tags }}</a>
-          </span>
-
+          
           <br>
           <br>
 
@@ -304,6 +314,18 @@
             </div>            
         </div>
     </div>
+
+    
+    <span class="fh5co_tags_all"> Tags : 
+      @foreach(explode(',', $article->tags) as $tag)
+          <a href="#" class="fh5co_tagg">{{ $tag }}</a>
+      @endforeach
+    </span>
+
+    <br>
+    <br>
+    <br>
+
     <form action="/komentarArtikel" method="post">
       @csrf
       <input type="hidden" name="artikel_id" value="{{ $article->id }}"> 
@@ -444,8 +466,7 @@
     </div>
   </div>
 
-<!-- Modal Laporan Komentar Artikel -->
-<!-- Modal Laporan Komentar Artikel -->
+<!-- Modal Lapor Komentar Artikel -->
 <div id="modalLaporKomen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1;">
   <div style="background-color: #ffffff; border-radius: 10px; text-align: center; padding: 20px; width: 600px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
       <span style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 20px;" id="tutupLaporanKomen">&times;</span>
@@ -455,21 +476,19 @@
       <p style="font-size: 14px;">User Yang Dilaporkan :<br> <span id="namaDilaporkan" style="font-size: 14px;"></span></p>
 
       <form id="reportCommentForm" action="{{ route('storeLaporanKomentarArtikel') }}" method="POST">
-          @csrf
+        @csrf
           <br>
-          <input type="hidden" name="user_id_pelapor" value="{{ Auth::user()->id }}">
-          <input type="hidden" name="artikel_id" value="{{ $komentar->artikel_id }}">
+          <input type="hidden" name="user_id_pelapor" id="user_id_pelapor_input" value="{{ Auth::user()->id }}">
+          <input type="hidden" name="artikel_id" id="artikel_id_input" value="{{ optional($komentar)->artikel_id }}">
           <input type="hidden" name="comment_id" id="comment_id_input" value="">
+          <input type="hidden" name="user_id_dilaporkan" id="user_id_dilaporkan_input" value="">
 
           <div style="text-align: left;">
-              <label style="font-size: 16px;"><input type="radio" name="reason" value="Konten Komersial atau Spam"> Konten Komersial atau Spam</label><br>
-              <label style="font-size: 16px;"><input type="radio" name="reason" value="Materi Pornografi atau Seksual Vulgar"> Materi Pornografi atau Seksual Vulgar</label><br>
+              <label style="font-size: 16px;"><input type="radio" name="reason" id="reason_input" value="Konten Komersial atau Spam"> Konten Komersial atau Spam</label><br>
+              <label style="font-size: 16px;"><input type="radio" name="reason" id="reason_input" value="Materi Pornografi atau Seksual Vulgar"> Materi Pornografi atau Seksual Vulgar</label><br>
           </div><br>
 
-          <textarea id="reportTextLaporanKomentar" style="width: 100%; padding: 10px; font-size: 16px;" placeholder="Kenapa Anda melaporkan komentar ini?" name="alasan"></textarea><br>
-
-          <input type="hidden" name="reason" id="reason_input" value="">
-          <input type="hidden" name="alasan" id="alasan_input" value="">
+          <textarea id="alasan_input" style="width: 100%; padding: 10px; font-size: 16px;" placeholder="Kenapa Anda melaporkan komentar ini?" name="alasan"></textarea><br>
 
           <button type="submit" class="submit-buttonLaporKomentar" style="background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; padding: 10px 20px; font-size: 18px;">Kirim Laporan</button>
       </form>
@@ -513,46 +532,84 @@
     <!-- Main -->
     <script src="{{ asset('aset1/js/main.js') }}"></script>
 
- <!-- Add this line to include jQuery if not already included -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- Add this line to include jQuery if not already included -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <!-- Modal Lapor Komentar Artikel -->
-  <!-- Your existing HTML for the modal goes here -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const modalLaporKomen = document.getElementById("modalLaporKomen");
+        const tutupLaporanKomen = document.getElementById("tutupLaporanKomen");
 
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('.showLaporanKomen').on('click', function () {
-            var commentId = $(this).data('comment-id');
-            var namaDilaporkan = $(this).data('nama-dilaporkan');
+        // Function to show the modal
+        function showLaporanModal(commentId, namaDilaporkan, userIdDilaporkan) {
+            document.getElementById("comment_id_input").value = commentId;
+            document.getElementById("namaDilaporkan").innerText = namaDilaporkan;
+            document.getElementById("user_id_dilaporkan_input").value = userIdDilaporkan;
+            modalLaporKomen.style.display = "block";
+        }
 
-            $('#comment_id_input').val(commentId);
-            $('#namaDilaporkan').text(namaDilaporkan);
-            $('#modalLaporKomen').show();
+        // Function to hide the modal
+        function hideLaporanModal() {
+            modalLaporKomen.style.display = "none";
+        }
+
+        // Show modal when the link is clicked
+        document.querySelectorAll(".showLaporanKomen").forEach(function (link) {
+            link.addEventListener("click", function (e) {
+                e.preventDefault();
+                const commentId = link.getAttribute("data-comment-id");
+                const namaDilaporkan = link.getAttribute("data-nama-dilaporkan");
+                const userIdDilaporkan = link.getAttribute("data-user-id-dilaporkan");
+                showLaporanModal(commentId, namaDilaporkan, userIdDilaporkan);
+            });
         });
 
-        $('#tutupLaporanKomen').on('click', function () {
-            $('#modalLaporKomen').hide();
+        // Hide modal when the close button is clicked
+        tutupLaporanKomen.addEventListener("click", function () {
+            hideLaporanModal();
         });
 
-        $('.submit-buttonLaporKomentar').on('click', function (event) {
-            event.preventDefault();
+        // Add an event listener for form submission
+        document.getElementById("reportCommentForm").addEventListener("submit", function (e) {
+            e.preventDefault();
 
-            var selectedReason = $('input[name="reason"]:checked').val();
-            var alasan = $('#reportTextLaporanKomentar').val();
+            const commentId = document.getElementById("comment_id_input").value;
+            const laporan = document.querySelector('input[name="reason"]:checked').value;
+            const alasan = document.getElementById("alasan_input").value;
 
-            $('#reason_input').val(selectedReason);
-            $('#alasan_input').val(alasan);
+            // Create FormData object and append the necessary data
+            const formData = new FormData();
+            formData.append('user_id_pelapor', document.getElementById("user_id_pelapor_input").value);
+            formData.append('user_id_dilaporkan', document.getElementById("user_id_dilaporkan_input").value);
+            formData.append('artikel_id', document.getElementById("artikel_id_input").value);
+            formData.append('comment_id', commentId);
+            formData.append('laporan', laporan);
+            formData.append('alasan', alasan);
 
-            console.log('Selected Reason:', selectedReason);
-            console.log('Alasan:', alasan);
-
-            $('#reportCommentForm').submit();
+            // Send an AJAX request to the server
+            fetch(this.action, {
+                method: this.method,
+                body: formData,
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data); // Check the response in the console
+                    // Optionally, you can close the modal or show a success message
+                    hideLaporanModal();
+                    alert('Laporan berhasil dikirim');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Optionally, you can show an error message
+                });
         });
     });
 </script>
-
-
+  
     
     <!-- Laporkan Modal -->
     <script>
