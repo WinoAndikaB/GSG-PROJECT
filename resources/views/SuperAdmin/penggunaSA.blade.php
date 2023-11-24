@@ -393,6 +393,8 @@
                               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Facebook</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Role</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Role Action</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Freeze</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Freeze Until</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Upload</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Update</th>
                               <th class="text-secondary opacity-7"></th>
@@ -418,7 +420,17 @@
                                 </div>
                               </td>
                               <td>
-                                <p class="text-xs font-weight-bold mb-0">{{$user['alamat']}}</p>
+                                <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
+                                  <?php
+                                  $alamat = strip_tags($user['alamat']);
+                                  $words = str_word_count($alamat, 2);
+                                  $first_100_words = implode(' ', array_slice($words, 0, 5));
+                                  echo $first_100_words;
+                                  if (str_word_count($alamat) > 100) {
+                                    echo '...';
+                                  }
+                                  ?>
+                                </p>
                               </td>
                               <td>
                                 <a href="{{$user['instagram']}}" target="_blank" class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
@@ -447,7 +459,16 @@
                                     @endif
                                 </p>
                             </td>
-
+                            <td>
+                              <p class="align-middle text-center" style="white-space: normal; max-width: 1000px;">
+                                {{$user['freeze']}}
+                              </p>
+                            </td>
+                            <td>
+                                <p class="align-middle text-center" style="white-space: normal; max-width: 1000px;">
+                                  {{$user['freeze_until']}}
+                                </p>
+                            </td>
                               <td class="align-middle text-center">
                                 <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($user['created_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
                               </td>

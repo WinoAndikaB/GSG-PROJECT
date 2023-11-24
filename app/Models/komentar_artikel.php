@@ -10,7 +10,6 @@ class komentar_artikel extends Model
         'pesan',
         'user_id',
         'artikel_id',
-        // Tambahkan atribut lain sesuai dengan struktur tabel komentar
     ];
 
     // Relasi ke pengguna

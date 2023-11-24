@@ -1,22 +1,18 @@
 <?php
 
+// User.php
+
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class user extends Authenticatable
+class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'username',
         'name',
@@ -28,27 +24,24 @@ class user extends Authenticatable
         'facebook',
         'aboutme',
         'role',
-        'freeze',
         'freeze_until',
+        'pesan_freeze',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // Assuming you have a different model, replace 'KomentarArtikel' with your actual model name
+    public function komentarArtikels()
+    {
+        return $this->hasMany(KomentarArtikel::class, 'user_id');
+    }
 }
+

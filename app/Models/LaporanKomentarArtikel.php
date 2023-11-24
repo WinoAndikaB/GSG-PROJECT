@@ -17,6 +17,8 @@ class LaporanKomentarArtikel extends Model
         'comment_id',
         'laporan',
         'alasan',
+        'freeze_until',
+        'pesan_freeze',
     ];
 
     // Define relationships

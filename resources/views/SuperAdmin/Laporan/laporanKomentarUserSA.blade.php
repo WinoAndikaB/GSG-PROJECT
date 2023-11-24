@@ -124,6 +124,72 @@
       background-color: #5E72E4;
     }
 </style>
+<style>
+  .modal-body {
+    display: flex;
+    align-items: center;
+  }
+
+  .profile-container {
+    margin-right: 20px;
+    text-align: center;
+  }
+
+  .profile-image {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+
+  /* Menentukan lebar maksimum untuk combobox */
+  #freezeDuration {
+    width: 250%;
+    max-width: 260px; /* Atur sesuai kebutuhan Anda */
+  }
+
+  /* Menentukan lebar maksimum untuk input teks */
+  #pesan {
+    width: 250%;
+    max-width: 260px; /* Atur sesuai kebutuhan Anda */
+  }
+</style>
+
+<style>
+  .popup-modal {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 80%;
+    max-height: 80%;
+    overflow: auto;
+    padding: 20px;
+    text-align: justify;
+    border-radius: 8px;
+  }
+
+  .popup-modal p {
+    margin: 0;
+  }
+
+  .popup-trigger {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    text-align: justify;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px; /* Adjust the max-width as needed */
+  }
+
+  .popup-trigger:hover {
+    text-decoration: underline;
+  }
+</style>
 </head>
 
 <!------------------------------------------------------------------------------------- Body Area -------------------------------------------------------------------------------------------->
@@ -376,15 +442,25 @@
                                     <td class="align-middle text-center">
                                         <p class="text-xs font-weight-bold mb-0">{{$item['artikel_id']}}</p>
                                     </td>
-                                    <td class="align-middle text-center">
-                                        <p class="text-xs font-weight-bold mb-0">{{$item['artikel']['judulArtikel']}}</p>
+                                    <td class="popup-trigger" data-id="<?php echo $item['id']; ?>" style="text-align: justify;">
+                                      <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
+                                        <?php
+                                        $judul = strip_tags($item['artikel']['judulArtikel']);
+                                        $words = str_word_count($judul, 2);
+                                        $first_100_words = implode(' ', array_slice($words, 0, 5));
+                                        echo $first_100_words;
+                                        if (str_word_count($judul) > 100) {
+                                          echo '...';
+                                        }
+                                        ?>
+                                      </p>
                                     </td>
                                     <td class="align-middle text-center">
-                                      <p class="text-xs font-weight-bold mb-0">{{$item['comment_id']}}</p>
-                                  </td>
-                                  <td class="align-middle text-center">
-                                      <p class="text-xs font-weight-bold mb-0">{{$item['komentarA']['pesan']}}</p>
-                                  </td>
+                                        <p class="text-xs font-weight-bold mb-0">{{$item['comment_id']}}</p>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <p class="text-xs font-weight-bold mb-0">{{$item['komentarA']['pesan']}}</p>
+                                    </td>
                                     <td class="align-middle text-center">
                                         <p class="text-xs font-weight-bold mb-0">{{$item['laporan']}}</p>
                                     </td>
@@ -399,11 +475,12 @@
                                           <i class="fa fa-trash"></i>
                                       </a>
 
-                                      <a href="#" class="btn btn-warning btn-icon btn-round" data-toggle="modal" data-target="#freezeModal">
-                                        <i class="ni ni-lock-circle-open"></i>
-                                      </a>
+                                      <a href="#" class="btn btn-warning btn-icon btn-round freeze-button" data-toggle="modal" data-target="#freezeModal{{ $item->id }} "data-comment-id="{{ $item->id }}">
+                                          <i class="ni ni-lock-circle-open"></i>
+                                        </a>
                                     </td>
                                 </tr>
+
                             </tbody>
                         @endforeach   
 
@@ -454,31 +531,58 @@
             </div>
           </div>
 
-              <footer class="footer pt-3  ">
-                <div class="container-fluid">
-                  <div class="row align-items-center justify-content-lg-between">
-                    <div class="col-lg-6 mb-lg-0 mb-4">
-                      <div class="copyright text-center text-sm text-muted text-lg-start">
-                        © <script>
-                          document.write(new Date().getFullYear())
-                        </script>,
-                        Template by <a title="CSS Templates" rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>,
-                        <a title="CSS Templates" rel="sponsored" href="https://themewagon.com/themes/free-bootstrap-4-html-5-blog-website-template-nextpage/" target="_blank">NextPage </a> and
-                        <a title="CSS Templates" rel="sponsored" href="https://www.creative-tim.com" target="_blank">Crative Tim </a> 
-                        Edited By <a title="CSS Templates" rel="sponsored" href="#" target="_blank">GSG Team</a></p>
+          <!-- Modal Freeze -->
+          @foreach ($laporanKomentarArtikelU as $item)
+              <div class="modal fade" id="freezeModal{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="freezeModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="freezeModalLabel">Freeze Akun</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                              </button>
+                          </div>
+                          <form id="freezeForm{{ $item->id }}" action="{{ route('freeze.user') }}" method="post">
+                              @csrf
+                              <div class="modal-body">
+                                <!-- Tambahkan foto profil di sebelah kiri -->
+                                <div class="profile-container">
+                                    @if ($item->komentarA && $item->komentarA->user)
+                                        <img src="{{ asset('fotoProfil/' . $item->komentarA->user->fotoProfil) }}" alt="Profile Image" class="profile-image">
+                                        <h5>{{ $item->komentarA->user->name }}</h5>
+                                        <span>{{ $item->komentarA->pesan }}</span>
+                                    @else
+                                        <p>User not found for this comment.</p>
+                                    @endif
+                                </div>
+
+                                  <div class="form-group">
+                                    <label for="freezeDuration{{ $item->id }}">Pilih Durasi Freeze:</label>
+                                    <select class="form-control freezeDuration" name="duration" id="freezeDuration{{ $item->id }}" data-comment-id="{{ $item->id }}" required>
+                                      <option value="1">1 Hari</option>
+                                      <option value="2">2 Hari</option>
+                                      <option value="7">1 Minggu</option>
+                                      <option value="30">1 Bulan</option>
+                                      <option value="0">Permanen</option>
+                                  </select>                     
+                                  
+                                      <!-- Input untuk user_id_dilaporkan dan pesan -->
+                                      <input type="hidden" name="comment_id" value="{{ $item->id }}">
+                                      <label for="pesanFreeze{{ $item->id }}">Masukkan pesan peringatan:</label>
+                                      <input type="text" class="form-control" name="message" id="pesanFreeze{{ $item->id }}" placeholder="Masukkan pesan peringatan" required>
+                                  </div>
+                              </div>
+                              <div class="modal-footer justify-content-center">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                  <button type="submit" class="btn btn-warning">Freeze</button>
+                              </div>
+                          </form>
                       </div>
-                      </div>
-                    </div>
                   </div>
-                </footer>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</main>
+          @endforeach
+
+
 
 <!-------------------------------------------------------------------------------------Argon Feature Area -------------------------------------------------------------------------------------------------------------------->
 <!-------------------------------------------------------------------------------------Argon Feature Area -------------------------------------------------------------------------------------------------------------------->
@@ -575,12 +679,126 @@
   });
   </script>
 
-  <!--Modal Freeze -->
+<!------------------------------------------------------------------------------------- Javascript Modal Freeze -------------------------------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- Javascript Modal Freeze -------------------------------------------------------------------------------------------------------------------->
+
 <script>
-  function submitFreezeForm() {
-      document.getElementById('freezeForm').submit();
+  $(document).ready(function () {
+      // Fungsi untuk menampilkan tanggal berdasarkan durasi yang dipilih
+      function updateDateRange(commentId) {
+          var duration = $('#freezeDuration' + commentId).val();
+
+          if (duration == 0) {
+              // Jika durasi permanen, tampilkan hanya tanggal sekarang
+              var currentDate = new Date();
+              var formattedStartDate = moment(currentDate).format('D MMMM YYYY');
+              $('#dateRangeLabel' + commentId).text('Carbon ' + formattedStartDate + ' - Permanen');
+          } else {
+              // Jika durasi bukan permanen, tambahkan durasi ke tanggal sekarang
+              var currentDate = new Date();
+              var endDate = new Date(currentDate.getTime() + (duration * 24 * 60 * 60 * 1000));
+
+              var formattedStartDate = moment(currentDate).format('D MMMM YYYY');
+              var formattedEndDate = moment(endDate).format('D MMMM YYYY');
+
+              $('#dateRangeLabel' + commentId).text('Carbon ' + formattedStartDate + ' - ' + formattedEndDate);
+          }
+      }
+
+      // Tambahkan event listener untuk perubahan pada combobox
+      $('.freezeDuration').on('change', function () {
+          var commentId = $(this).data('comment-id');
+          updateDateRange(commentId);
+      });
+
+      // Tambahkan event listener untuk membuka modal
+      $('.freeze-button').on('click', function () {
+          var commentId = $(this).data('comment-id');
+          updateDateRange(commentId);
+      });
+
+      // Tambahkan event listener untuk tombol "Freeze" di dalam modal
+      $('.modal').on('click', '.btn-warning', function () {
+          // Dapatkan ID komentar dari modal yang terkait
+          var commentId = $(this).closest('.modal').find('.freezeDuration').data('comment-id');
+          updateDateRange(commentId);
+      });
+
+      // Ensure each modal is hidden initially
+      $('.modal').on('hidden.bs.modal', function () {
+          $(this).find('form')[0].reset(); // Reset the form when the modal is hidden
+      });
+
+      // Panggil fungsi updateDateRange untuk menginisialisasi tanggal
+      $('.freezeDuration').each(function () {
+          var commentId = $(this).data('comment-id');
+          updateDateRange(commentId);
+      });
+  });
+</script>
+
+
+
+
+
+<!------------------------------------------------------------------------------------- Javascript Popup Judul Artikel  -------------------------------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- Javascript Popup Judul Artikel  -------------------------------------------------------------------------------------------------------------------->
+
+
+ <!-- Modal Pop Up Detail Deskripsi Artikel -->
+ <script>
+  document.querySelectorAll('.popup-trigger').forEach(function (element) {
+    element.addEventListener('mouseenter', function () {
+      openPopup(element.dataset.id);
+    });
+
+    element.addEventListener('mouseleave', function () {
+      closePopup(element.dataset.id);
+    });
+  });
+
+  function openPopup(id) {
+    const popup = document.getElementById('popup-' + id);
+    if (!popup) {
+      const tdElement = document.querySelector('.popup-trigger[data-id="' + id + '"]');
+      const description = tdElement.querySelector('p').innerHTML;
+
+      const popupContainer = document.createElement('div');
+      popupContainer.id = 'popup-' + id;
+      popupContainer.className = 'popup-modal';
+
+      const popupContent = document.createElement('p');
+      popupContent.innerHTML = description;
+
+      popupContainer.appendChild(popupContent);
+      document.body.appendChild(popupContainer);
+
+      positionPopup(tdElement, popupContainer);
+    }
+
+    document.getElementById('popup-' + id).style.display = 'block';
+  }
+
+  function closePopup(id) {
+    const popup = document.getElementById('popup-' + id);
+    if (popup) {
+      popup.style.display = 'none';
+    }
+  }
+
+  function positionPopup(triggerElement, popupElement) {
+    const rect = triggerElement.getBoundingClientRect();
+
+    popupElement.style.top = rect.bottom + 'px';
+    popupElement.style.left = rect.left + 'px';
   }
 </script>
+
+
+
+
+<!------------------------------------------------------------------------------------- Javascript Modal Delete -------------------------------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- Javascript Modal Delete -------------------------------------------------------------------------------------------------------------------->
 
   <!-- Modal Delete -->
   <script>
@@ -614,134 +832,9 @@
     });
   </script>
 
-  <!-- Filter Role -->
-  <script>
-    // Menangani klik pada filter role
-    document.querySelectorAll('.role-filter').forEach(function (element) {
-        element.addEventListener('click', function () {
-            var selectedRole = element.getAttribute('data-role');
-            // Redirect ke halaman dengan filter role
-            window.location.href = '{{ route("penggunaSA") }}?role=' + selectedRole;
-        });
-    });
-  </script>
+<!------------------------------------------------------------------------------------- Javascript Logout -------------------------------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- Javascript Logout  -------------------------------------------------------------------------------------------------------------------->
 
-  <!-- Rating -->
-<script>
-  const stars = document.querySelectorAll('.star');
-  const ratingInput = document.getElementById('rating');
-
-  stars.forEach((star) => {
-    star.addEventListener('click', () => {
-      const ratingValue = parseInt(star.getAttribute('data-rating'));
-      ratingInput.value = ratingValue;
-      stars.forEach((s) => s.classList.remove('selected')); // Hapus kelas 'selected' dari semua bintang
-      for (let i = 0; i < ratingValue; i++) {
-        stars[i].classList.add('selected'); // Tambahkan kelas 'selected' pada bintang yang dipilih
-      }
-    });
-  });
-</script>
-
-  <script>
-    var ctx1 = document.getElementById("chart-line").getContext("2d");
-
-    var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
-
-    gradientStroke1.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
-    gradientStroke1.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
-    gradientStroke1.addColorStop(0, 'rgba(94, 114, 228, 0)');
-    new Chart(ctx1, {
-      type: "line",
-      data: {
-        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        datasets: [{
-          label: "Mobile apps",
-          tension: 0.4,
-          borderWidth: 0,
-          pointRadius: 0,
-          borderColor: "#5e72e4",
-          backgroundColor: gradientStroke1,
-          borderWidth: 3,
-          fill: true,
-          data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-          maxBarThickness: 6
-
-        }],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false,
-          }
-        },
-        interaction: {
-          intersect: false,
-          mode: 'index',
-        },
-        scales: {
-          y: {
-            grid: {
-              drawBorder: false,
-              display: true,
-              drawOnChartArea: true,
-              drawTicks: false,
-              borderDash: [5, 5]
-            },
-            ticks: {
-              display: true,
-              padding: 10,
-              color: '#fbfbfb',
-              font: {
-                size: 11,
-                family: "Open Sans",
-                style: 'normal',
-                lineHeight: 2
-              },
-            }
-          },
-          x: {
-            grid: {
-              drawBorder: false,
-              display: false,
-              drawOnChartArea: false,
-              drawTicks: false,
-              borderDash: [5, 5]
-            },
-            ticks: {
-              display: true,
-              color: '#ccc',
-              padding: 20,
-              font: {
-                size: 11,
-                family: "Open Sans",
-                style: 'normal',
-                lineHeight: 2
-              },
-            }
-          },
-        },
-      },
-    });
-    </script>
-
-    <script>
-      var win = navigator.platform.indexOf('Win') > -1;
-      if (win && document.querySelector('#sidenav-scrollbar')) {
-        var options = {
-          damping: '0.5'
-        }
-        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-      }
-    </script>
-    <!-- Github buttons -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
-
-    <!-- Modal Logout -->
     <script>
       // JavaScript untuk modal logout
       function openModal() {

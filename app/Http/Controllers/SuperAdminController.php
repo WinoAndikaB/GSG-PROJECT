@@ -21,6 +21,7 @@ use App\Models\LaporanUlasanUser;
 use App\Models\LaporanVideoUser;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 
 class SuperAdminController extends Controller
@@ -1120,8 +1121,20 @@ function deleteKategoriSA($id){
 
         function laporanKomentarArtikelUserSA(){
 
-            $laporanKomentarArtikelU = LaporanKomentarArtikel::orderBy('created_at', 'desc')->paginate(10);
-    
+            $laporanKomentarArtikelU = LaporanKomentarArtikel::orderBy('created_at', 'desc')->paginate(30);
+
+            // Iterate through each laporanKomentarArtikel and fetch user_id
+            foreach ($laporanKomentarArtikelU as $laporan) {
+                // Step 1: Retrieve comment_id from LaporanKomentarArtikel model
+                $commentId = $laporan->comment_id;
+        
+                // Step 2: Use comment_id to get user_id from komentar_artikel model
+                $komentarArtikel = komentar_artikel::find($commentId);
+        
+                // Add user_id to the laporanKomentarArtikel object
+                $laporan->user_id_komentar_artikel = $komentarArtikel->user_id;
+            }
+        
             // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
             $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
             $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
@@ -1140,22 +1153,40 @@ function deleteKategoriSA($id){
             return view('SuperAdmin.laporan.laporanKomentarUserSA', compact('laporanKomentarArtikelU', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
             'dataBaruVideo', 'dataBaruKomentarVideo', 'LaporanKomentarArtikel', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas'));
         }
-
-        //[SuperAdmin-Laporan User] Delete Artikel User
-        function deleteLaporanVideoSA($id){
-            // Find the reported video record with the given ID
-            $data = laporanVideoUser::find($id);
-
-            // Check if the reported video record exists
-            if ($data) {
-                // If the reported video record exists, delete it
-                $data->delete();
-                return redirect('/laporanVideoUserSA')->with('success', 'Reported video deleted successfully');
-            } else {
-                // If the reported video record does not exist, redirect with an error message
-                return redirect('/laporanVideoUserSA')->with('error', 'Reported video not found');
+        
+        public function freezeUser(Request $request)
+        {
+            // Retrieve data from the request
+            $commentId = $request->input('comment_id');
+            $duration = $request->input('duration');
+            $message = $request->input('message');
+        
+            // Retrieve comment based on comment_id using the relationship
+            $komentar = komentar_artikel::find($commentId);
+        
+            // Check if the comment is not found
+            if (!$komentar) {
+                return redirect('/laporanKomentarArtikelUserSA')->with('error', 'Comment not found');
             }
+        
+            // Retrieve user_id from the comment relationship
+            $userId = $komentar->user ? $komentar->user->id : null;
+        
+            // Check if the user is not found for the comment
+            if (!$userId) {
+                return redirect('/laporanKomentarArtikelUserSA')->with('error', 'User not found for the comment');
+            }
+        
+            // Update the user record with freeze information
+            User::where('id', $userId)->update([
+                'freeze_until' => now()->addDays($duration),
+                'pesan_freeze' => $message,
+            ]);
+        
+            // Redirect with success message
+            return redirect('/laporanKomentarArtikelUserSA')->with('success', 'User frozen successfully');
         }
+        
 
     function laporanVideoUserSA(){
 
@@ -1179,6 +1210,23 @@ function deleteKategoriSA($id){
         return view('SuperAdmin.laporan.laporanVideoUserSA', compact('laporanVideoUser', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'LaporanKomentarArtikel', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'dataBaruEventKomunitas'));
     }
+
+            //[SuperAdmin-Laporan User] Delete Artikel User
+            function deleteLaporanVideoSA($id){
+                // Find the reported video record with the given ID
+                $data = laporanVideoUser::find($id);
+    
+                // Check if the reported video record exists
+                if ($data) {
+                    // If the reported video record exists, delete it
+                    $data->delete();
+                    return redirect('/laporanVideoUserSA')->with('success', 'Reported video deleted successfully');
+                } else {
+                    // If the reported video record does not exist, redirect with an error message
+                    return redirect('/laporanVideoUserSA')->with('error', 'Reported video not found');
+                }
+            }
+    
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
