@@ -354,9 +354,9 @@
                      @endif
                  
                      @if(Auth::check() && Auth::user()->id != $komentar->user_id)
-                          <a href="#" class="showLaporanKomen" data-comment-id="{{ $komentar->id }}" data-nama-dilaporkan="{{ $komentar->user->name }}">
-                              <i class="fa fa-flag"></i> Laporkan
-                          </a>
+                        <a href="#" class="showLaporanKomen" data-comment-id="{{ $komentar->id }}" data-nama-dilaporkan="{{ $komentar->user->name }}" data-user-id-dilaporkan="{{ $komentar->user->id }}">
+                            <i class="fa fa-flag"></i> Laporkan
+                        </a>
                       @endif
 
                   </div>
@@ -465,7 +465,6 @@
       <p style="font-size: 14px;">User Yang Dilaporkan :<br> <strong><span id="namaDilaporkan" style="font-size: 14px;"></span></strong></p>
 
       <form id="reportCommentForm" action="{{ route('storeLaporanKomentarArtikel') }}" method="POST">
-        @csrf
           <br>
           <input type="hidden" name="user_id_pelapor" id="user_id_pelapor_input" value="{{ Auth::user()->id }}">
           <input type="hidden" name="artikel_id" id="artikel_id_input" value="{{ optional($komentar)->artikel_id }}">
@@ -473,8 +472,13 @@
           <input type="hidden" name="user_id_dilaporkan" id="user_id_dilaporkan_input" value="">
 
           <div style="text-align: left;">
-              <label style="font-size: 16px;"><input type="radio" name="reason" id="reason_input" value="Konten Komersial atau Spam"> Konten Komersial atau Spam</label><br>
-              <label style="font-size: 16px;"><input type="radio" name="reason" id="reason_input" value="Materi Pornografi atau Seksual Vulgar"> Materi Pornografi atau Seksual Vulgar</label><br>
+            <label style="font-size: 16px;">
+              <input type="radio" name="reason" class="reason_input" value="Konten Komersial atau Spam"> Konten Komersial atau Spam
+           </label><br>
+           <label style="font-size: 16px;">
+              <input type="radio" name="reason" class="reason_input" value="Materi Pornografi atau Seksual Vulgar"> Materi Pornografi atau Seksual Vulgar
+           </label><br>
+           
           </div><br>
 
           <textarea id="alasan_input" style="width: 100%; padding: 10px; font-size: 16px;" placeholder="Kenapa Anda melaporkan komentar ini?" name="alasan"></textarea><br>
@@ -527,76 +531,85 @@
     <!-- Modal Lapor Komentar Artikel -->
     <script>
     document.addEventListener("DOMContentLoaded", function () {
-        const modalLaporKomen = document.getElementById("modalLaporKomen");
-        const tutupLaporanKomen = document.getElementById("tutupLaporanKomen");
+    const modalLaporKomen = document.getElementById("modalLaporKomen");
+    const tutupLaporanKomen = document.getElementById("tutupLaporanKomen");
+    const reportCommentForm = document.getElementById("reportCommentForm");
 
-        // Function to show the modal
-        function showLaporanModal(commentId, namaDilaporkan, userIdDilaporkan) {
-            document.getElementById("comment_id_input").value = commentId;
-            document.getElementById("namaDilaporkan").innerText = namaDilaporkan;
-            document.getElementById("user_id_dilaporkan_input").value = userIdDilaporkan;
-            modalLaporKomen.style.display = "block";
+    function showLaporanModal(commentId, namaDilaporkan, userIdDilaporkan) {
+        document.getElementById("comment_id_input").value = commentId;
+        document.getElementById("namaDilaporkan").innerText = namaDilaporkan;
+        document.getElementById("user_id_dilaporkan_input").value = userIdDilaporkan;
+        modalLaporKomen.style.display = "block";
+    }
+
+    function hideLaporanModal() {
+        modalLaporKomen.style.display = "none";
+    }
+
+    function showAlert(message) {
+    const alertModal = document.createElement("div");
+    alertModal.style.position = "fixed";
+    alertModal.style.top = "0";
+    alertModal.style.left = "0";
+    alertModal.style.width = "100%";
+    alertModal.style.height = "100%";
+    alertModal.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+    alertModal.style.display = "flex";
+    alertModal.style.justifyContent = "center";
+    alertModal.style.alignItems = "center";
+    alertModal.innerHTML = `<div style="background-color: #fff; padding: 20px; border-radius: 5px; text-align: center;">${message}<br><button onclick="closeAlert()">OK</button></div>`;
+    document.body.appendChild(alertModal);
+
+    }
+
+    function closeAlert() {
+        const alertModal = document.querySelector("#alertModal");
+        if (alertModal) {
+            alertModal.parentNode.removeChild(alertModal);
         }
+    }
 
-        // Function to hide the modal
-        function hideLaporanModal() {
-            modalLaporKomen.style.display = "none";
-        }
+    function submitForm() {
+      console.log('Submit button clicked');
 
-        // Show modal when the link is clicked
-        document.querySelectorAll(".showLaporanKomen").forEach(function (link) {
-            link.addEventListener("click", function (e) {
-                e.preventDefault();
-                const commentId = link.getAttribute("data-comment-id");
-                const namaDilaporkan = link.getAttribute("data-nama-dilaporkan");
-                const userIdDilaporkan = link.getAttribute("data-user-id-dilaporkan");
-                showLaporanModal(commentId, namaDilaporkan, userIdDilaporkan);
-            });
-        });
+      // Check if the required fields are filled
+      const alasanInput = document.getElementById("alasan_input").value.trim();
 
-        // Hide modal when the close button is clicked
-        tutupLaporanKomen.addEventListener("click", function () {
-            hideLaporanModal();
-        });
+      if (!alasanInput) {
+          console.log('Form Alert');
+          alert('Anda Belum Mengisi Formnya!');
+          return; // Do not proceed with submission
+      }
 
-        // Add an event listener for form submission
-        document.getElementById("reportCommentForm").addEventListener("submit", function (e) {
+        // Temporarily remove the AJAX part
+        console.log('Form submitted');
+        hideLaporanModal();
+        alert('Laporan berhasil dikirim');
+    }
+
+    // Show modal when the link is clicked
+    document.querySelectorAll(".showLaporanKomen").forEach(function (link) {
+        link.addEventListener("click", function (e) {
             e.preventDefault();
-
-            const commentId = document.getElementById("comment_id_input").value;
-            const laporan = document.querySelector('input[name="reason"]:checked').value;
-            const alasan = document.getElementById("alasan_input").value;
-
-            // Create FormData object and append the necessary data
-            const formData = new FormData();
-            formData.append('user_id_pelapor', document.getElementById("user_id_pelapor_input").value);
-            formData.append('user_id_dilaporkan', document.getElementById("user_id_dilaporkan_input").value);
-            formData.append('artikel_id', document.getElementById("artikel_id_input").value);
-            formData.append('comment_id', commentId);
-            formData.append('laporan', laporan);
-            formData.append('alasan', alasan);
-
-            // Send an AJAX request to the server
-            fetch(this.action, {
-                method: this.method,
-                body: formData,
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                }
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data); // Check the response in the console
-                    // Optionally, you can close the modal or show a success message
-                    hideLaporanModal();
-                    alert('Laporan berhasil dikirim');
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    // Optionally, you can show an error message
-                });
+            const commentId = link.getAttribute("data-comment-id");
+            const namaDilaporkan = link.getAttribute("data-nama-dilaporkan");
+            const userIdDilaporkan = link.getAttribute("data-user-id-dilaporkan");
+            showLaporanModal(commentId, namaDilaporkan, userIdDilaporkan);
         });
     });
+
+    // Hide modal when the close button is clicked
+    tutupLaporanKomen.addEventListener("click", function () {
+        hideLaporanModal();
+    });
+
+    // Add an event listener for form submission
+    reportCommentForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        submitForm();
+    });
+});
+
 </script>
   
     

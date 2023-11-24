@@ -142,9 +142,6 @@
               <span class="fh5co_tags_all">
                 <a href="#" class="fh5co_tagg">{{ $article->kategori }}</a>
             </span>
-            <span class="fh5co_tags_all">
-              <a href="#" class="fh5co_tagg">{{ $article->tags }}</a>
-          </span>
 
           <br>
           <br>
@@ -240,8 +237,15 @@
         </div>
     </div>
 
-    <br>
+    <span class="fh5co_tags_all"> Tags : 
+      @foreach(explode(',', $article->tags) as $tag)
+          <a href="#" class="fh5co_tagg">{{ $tag }}</a>
+      @endforeach
+    </span>
 
+    <br>
+    <br>
+    <br>
     
       <input type="hidden" name="artikel_id" value="{{ $article->id }}"> 
       <label for="" style="font-size: 24px;"><strong>{{$totalKomentar}} Komentar</strong></label><br>

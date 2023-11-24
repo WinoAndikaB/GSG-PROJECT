@@ -142,10 +142,6 @@
               <span class="fh5co_tags_all">
                 <a href="#" class="fh5co_tagg">{{ $video->kategoriVideo }}</a>
             </span>
-            <span class="fh5co_tags_all">
-              <a href="#" class="fh5co_tagg">{{ $video->tagsVideo }}</a>
-          </span>
-
           <br>
           <br>
 
@@ -181,6 +177,16 @@
               {!! str_replace('<img', '<img style="max-width: 1152px; width: 100%; height: auto; display: block; margin: 0 auto;"', $video->deskripsiVideo) !!}
             </div>
           </div>
+
+          @foreach(explode(',', $video->tagsVideo) as $tag)
+          <span class="fh5co_tags_all"> Tags :
+              <a href="#" class="fh5co_tagg">{{ $tag }}</a>
+          </span>
+      @endforeach
+      
+      <br>
+      <br>
+          
         </div>
 
 
@@ -240,6 +246,7 @@
             </div>            
         </div>
     </div>
+
       <input type="hidden" name="video_id" value="{{ $video->id }}"> 
       <label for="" style="font-size: 24px;"><strong>{{$totalKomentarV}} Komentar</strong></label><br>
       <label for="pesan" style="font-size: 24px;">Beri Komentar:</label><br>

@@ -216,6 +216,12 @@
               {!! str_replace('<img', '<img style="max-width: 1152px; width: 100%; height: auto; display: block; margin: 0 auto;"', $video->deskripsiVideo) !!}
             </div>
           </div>
+          
+          @foreach(explode(',', $video->tagsVideo) as $tag)
+          <span class="fh5co_tags_all"> Tags :
+              <a href="#" class="fh5co_tagg">{{ $tag }}</a>
+          </span>
+      @endforeach
         </div>
 
 
@@ -276,19 +282,6 @@
             </div>            
         </div>
     </div>
-
-    @foreach(explode(',', $video->tagsVideo) as $tag)
-        <span class="fh5co_tags_all"> Tags :
-            <a href="#" class="fh5co_tagg">{{ $tag }}</a>
-        </span>
-    @endforeach
-
-    
-    <br>
-    <br>
-    <br>
-
-
 
     <form action="/komentarVideo" method="post">
       @csrf
