@@ -394,10 +394,10 @@
                                       <p class="text-xs font-weight-bold mb-0">{{$item['video']['judulVideo']}}</p>
                                   </td>
                                   <td class="align-middle text-center">
-                                      <p class="text-xs font-weight-bold mb-0">{{$item['alasan']}}</p>
+                                      <p class="text-xs font-weight-bold mb-0">{{$item['laporan']}}</p>
                                   </td>
                                   <td class="align-middle text-center">
-                                      <p class="text-xs font-weight-bold mb-0">{{$item['laporan']}}</p>
+                                      <p class="text-xs font-weight-bold mb-0">{{$item['alasan']}}</p>
                                   </td>
                                   <td class="align-middle text-center">
                                     <span class="text-secondary text-xs font-weight-bold">{{$item['created_at']->locale('id')->translatedFormat('l, d F Y H:i:s')  }}</span>

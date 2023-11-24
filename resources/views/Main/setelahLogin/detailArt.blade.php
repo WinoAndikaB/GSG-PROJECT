@@ -472,13 +472,14 @@
           <input type="hidden" name="user_id_dilaporkan" id="user_id_dilaporkan_input" value="">
 
           <div style="text-align: left;">
-            <label style="font-size: 16px;">
-              <input type="radio" name="reason" class="reason_input" value="Konten Komersial atau Spam"> Konten Komersial atau Spam
-           </label><br>
-           <label style="font-size: 16px;">
-              <input type="radio" name="reason" class="reason_input" value="Materi Pornografi atau Seksual Vulgar"> Materi Pornografi atau Seksual Vulgar
-           </label><br>
-           
+            <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Konten Komersial atau Spam"> Konten Komersial atau Spam</label><br>
+            <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Materi Pornografi atau Seksual Vulgar"> Materi Pornografi atau Seksual Vulgar</label><br>     
+            <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Pelanggaran Hak Anak"> Pelanggaran Hak Anak</label><br>
+            <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Pernyataan Kebencian dan Kekerasan"> Pernyataan Kebencian dan Kekerasan</label><br>
+            <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Mendukung Terorisme"> Mendukung Terorisme</label><br>
+            <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Pelecehan dan Penindasan"> Pelecehan dan Penindasan</label><br>
+            <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Penggunaan Bunuh Diri atau Menyakiti Diri Sendiri"> Penggunaan Bunuh Diri atau Menyakiti Diri Sendiri</label><br>
+            <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Misinformasi"> Misinformasi</label><br>
           </div><br>
 
           <textarea id="alasan_input" style="width: 100%; padding: 10px; font-size: 16px;" placeholder="Kenapa Anda melaporkan komentar ini?" name="alasan"></textarea><br>
@@ -528,92 +529,99 @@
     <!-- Add this line to include jQuery if not already included -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+<!--------------------------------------------------------------------------------------- Javascript Laporkan Komentar Modal ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Laporkan Komentar Modal ------------------------------------------------------------------------------->
+
     <!-- Modal Lapor Komentar Artikel -->
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-    const modalLaporKomen = document.getElementById("modalLaporKomen");
-    const tutupLaporanKomen = document.getElementById("tutupLaporanKomen");
-    const reportCommentForm = document.getElementById("reportCommentForm");
-
-    function showLaporanModal(commentId, namaDilaporkan, userIdDilaporkan) {
-        document.getElementById("comment_id_input").value = commentId;
-        document.getElementById("namaDilaporkan").innerText = namaDilaporkan;
-        document.getElementById("user_id_dilaporkan_input").value = userIdDilaporkan;
-        modalLaporKomen.style.display = "block";
-    }
-
-    function hideLaporanModal() {
-        modalLaporKomen.style.display = "none";
-    }
-
-    function showAlert(message) {
-    const alertModal = document.createElement("div");
-    alertModal.style.position = "fixed";
-    alertModal.style.top = "0";
-    alertModal.style.left = "0";
-    alertModal.style.width = "100%";
-    alertModal.style.height = "100%";
-    alertModal.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
-    alertModal.style.display = "flex";
-    alertModal.style.justifyContent = "center";
-    alertModal.style.alignItems = "center";
-    alertModal.innerHTML = `<div style="background-color: #fff; padding: 20px; border-radius: 5px; text-align: center;">${message}<br><button onclick="closeAlert()">OK</button></div>`;
-    document.body.appendChild(alertModal);
-
-    }
-
-    function closeAlert() {
-        const alertModal = document.querySelector("#alertModal");
-        if (alertModal) {
-            alertModal.parentNode.removeChild(alertModal);
+      document.addEventListener("DOMContentLoaded", function () {
+        const modalLaporKomen = document.getElementById("modalLaporKomen");
+        const tutupLaporanKomen = document.getElementById("tutupLaporanKomen");
+        const reportCommentForm = document.getElementById("reportCommentForm");
+    
+        function showLaporanModal(commentId, namaDilaporkan, userIdDilaporkan) {
+          document.getElementById("comment_id_input").value = commentId;
+          document.getElementById("namaDilaporkan").innerText = namaDilaporkan;
+          document.getElementById("user_id_dilaporkan_input").value = userIdDilaporkan;
+          modalLaporKomen.style.display = "block";
         }
-    }
-
-    function submitForm() {
-      console.log('Submit button clicked');
-
-      // Check if the required fields are filled
-      const alasanInput = document.getElementById("alasan_input").value.trim();
-
-      if (!alasanInput) {
-          console.log('Form Alert');
-          alert('Anda Belum Mengisi Formnya!');
-          return; // Do not proceed with submission
-      }
-
-        // Temporarily remove the AJAX part
-        console.log('Form submitted');
-        hideLaporanModal();
-        alert('Laporan berhasil dikirim');
-    }
-
-    // Show modal when the link is clicked
-    document.querySelectorAll(".showLaporanKomen").forEach(function (link) {
-        link.addEventListener("click", function (e) {
+    
+        function hideLaporanModal() {
+          modalLaporKomen.style.display = "none";
+        }
+    
+        function submitForm() {
+          const formData = new FormData(reportCommentForm);
+    
+          // Mengambil nilai yang dipilih dari radio button
+          var selectedReason = document.querySelector('input[name="reasonKomen"]:checked');
+          if (!selectedReason) {
+            alert("Pilih alasan laporan terlebih dahulu.");
+            return;
+          }
+    
+          // Mengambil alasan laporan dan artikel_id dari elemen form
+          var alasan = document.getElementById("alasan_input").value; // Fix the ID here
+          var artikelId = {{ $article->id }}; // Ganti dengan nilai artikel_id yang sesuai
+    
+          // Kirim data laporan ke server melalui AJAX
+          $.ajax({
+            type: "POST",
+            url: "{{ route('storeLaporanKomentarArtikel') }}", // Use the named route
+            data: {
+              _token: "{{ csrf_token() }}",
+              user_id_pelapor: {{ Auth::user()->id }},
+              artikel_id: artikelId,
+              comment_id: formData.get('comment_id'), // Get comment_id from form data
+              laporan: selectedReason.value,
+              alasan: alasan,
+            },
+            success: function(response) {
+              // Tindakan setelah pengiriman berhasil
+              alert("Laporan telah dikirim!");
+              hideLaporanModal(); // Use the correct modal variable
+            },
+            error: function(xhr, status, error) {
+              var errorMessage = xhr.status + ': ' + xhr.statusText;
+              if (xhr.responseJSON && xhr.responseJSON.message) {
+                errorMessage = xhr.responseJSON.message;
+              }
+              alert("Terjadi kesalahan saat mengirim laporan: " + errorMessage);
+            }
+          });
+        }
+    
+        // Show modal when the link is clicked
+        document.querySelectorAll(".showLaporanKomen").forEach(function (link) {
+          link.addEventListener("click", function (e) {
             e.preventDefault();
             const commentId = link.getAttribute("data-comment-id");
             const namaDilaporkan = link.getAttribute("data-nama-dilaporkan");
             const userIdDilaporkan = link.getAttribute("data-user-id-dilaporkan");
             showLaporanModal(commentId, namaDilaporkan, userIdDilaporkan);
+          });
         });
-    });
-
-    // Hide modal when the close button is clicked
-    tutupLaporanKomen.addEventListener("click", function () {
-        hideLaporanModal();
-    });
-
-    // Add an event listener for form submission
-    reportCommentForm.addEventListener("submit", function (e) {
-        e.preventDefault();
-        submitForm();
-    });
-});
-
-</script>
+    
+        // Hide modal when the close button is clicked
+        tutupLaporanKomen.addEventListener("click", function () {
+          hideLaporanModal();
+        });
+    
+        // Add an event listener for form submission
+        reportCommentForm.addEventListener("submit", function (e) {
+          e.preventDefault(); // Prevent default form submission
+          // You can add some additional validation logic here if needed
+          submitForm();
+        });
+      });
+    </script>
+    
+    
   
     
-    <!-- Laporkan Modal -->
+<!--------------------------------------------------------------------------------------- Javascript Laporkan Modal ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Laporkan Modal ------------------------------------------------------------------------------->
+
     <script>
       // Get the modal and close button elements
       var modal = document.getElementById("modalLaporan");
@@ -661,8 +669,8 @@
         _token: "{{ csrf_token() }}",
         user_id: {{ Auth::user()->id }}, // Ganti dengan user_id yang sesuai
         artikel_id: artikelId,
-        laporan: alasan,
-        alasan: selectedReason.value,
+        laporan: selectedReason.value,
+        alasan: alasan,
       },
       success: function(response) {
         // Tindakan setelah pengiriman berhasil
@@ -677,7 +685,8 @@
   });
     </script>
 
-    
+<!--------------------------------------------------------------------------------------- Javascript Logout Modal ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Logout Modal ------------------------------------------------------------------------------->
 
     <!-- MODAL LOGOUT -->
     <script>

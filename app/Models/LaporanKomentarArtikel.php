@@ -13,9 +13,6 @@ class LaporanKomentarArtikel extends Model
 
     protected $fillable = [
         'user_id_pelapor',
-        'nama_pelapor',
-        'user_id_dilaporkan',
-        'nama_dilaporkan',
         'artikel_id',
         'comment_id',
         'laporan',
@@ -26,11 +23,6 @@ class LaporanKomentarArtikel extends Model
     public function pelapor()
     {
         return $this->belongsTo(user::class, 'user_id_pelapor');
-    }
-
-    public function dilaporkan()
-    {
-        return $this->belongsTo(user::class, 'user_id_dilaporkan');
     }
 
     public function artikel()

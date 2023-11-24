@@ -185,6 +185,7 @@ class PenggunaController extends Controller
         // Validate the request
         $request->validate([
             'user_id_pelapor' => 'required',
+            'artikel_id' => 'required',
             'comment_id' => 'required',
             'laporan' => 'required',
             'alasan' => 'required',
@@ -193,9 +194,6 @@ class PenggunaController extends Controller
         // Create a new instance of LaporanKomentarArtikel
         $laporan = new LaporanKomentarArtikel([
             'user_id_pelapor' => $request->user_id_pelapor,
-            'nama_pelapor' => $request->nama_pelapor,
-            'user_id_dilaporkan' => $request->user_id_dilaporkan,
-            'nama_dilaporkan' => $request->nama_dilaporkan,
             'artikel_id' => $request->artikel_id,
             'comment_id' => $request->comment_id,
             'laporan' => $request->laporan,

@@ -534,8 +534,8 @@
           _token: "{{ csrf_token() }}",
           user_id: {{ Auth::user()->id }}, // Ganti dengan user_id yang sesuai
           video_id: videoId,
-          laporan: alasan,
-          alasan: selectedReason.value,
+          laporan: selectedReason.value,
+          alasan: alasan,
         },
         success: function(response) {
           // Tindakan setelah pengiriman berhasil

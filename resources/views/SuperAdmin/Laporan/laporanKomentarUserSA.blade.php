@@ -368,10 +368,10 @@
                                         <p class="text-xs font-weight-bold mb-0">{{$item['pelapor']['name']}}</p>
                                     </td>
                                     <td class="align-middle text-center">
-                                      <p class="text-xs font-weight-bold mb-0">{{$item['user_id_dilaporkan']}}</p>
+                                      <p class="text-xs font-weight-bold mb-0">{{$item['komentarA']['user_id']}}</p>
                                   </td>
                                   <td class="align-middle text-center">
-                                      <p class="text-xs font-weight-bold mb-0">{{$item['dilaporkan']['name']}}</p>
+                                      <p class="text-xs font-weight-bold mb-0"> {{$item['komentarA']['user']['name']}}</p>
                                   </td>
                                     <td class="align-middle text-center">
                                         <p class="text-xs font-weight-bold mb-0">{{$item['artikel_id']}}</p>
@@ -386,10 +386,10 @@
                                       <p class="text-xs font-weight-bold mb-0">{{$item['komentarA']['pesan']}}</p>
                                   </td>
                                     <td class="align-middle text-center">
-                                        <p class="text-xs font-weight-bold mb-0">{{$item['alasan']}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{$item['laporan']}}</p>
                                     </td>
                                     <td class="align-middle text-center">
-                                        <p class="text-xs font-weight-bold mb-0">{{$item['laporan']}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{$item['alasan']}}</p>
                                     </td>
                                     <td class="align-middle text-center">
                                       <span class="text-secondary text-xs font-weight-bold">{{$item['created_at']->locale('id')->translatedFormat('l, d F Y H:i:s')  }}</span>
