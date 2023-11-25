@@ -682,60 +682,63 @@
 <!------------------------------------------------------------------------------------- Javascript Modal Freeze -------------------------------------------------------------------------------------------------------------------->
 <!------------------------------------------------------------------------------------- Javascript Modal Freeze -------------------------------------------------------------------------------------------------------------------->
 
+<!-- Include Moment.js library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
 <script>
-  $(document).ready(function () {
-      // Fungsi untuk menampilkan tanggal berdasarkan durasi yang dipilih
-      function updateDateRange(commentId) {
-          var duration = $('#freezeDuration' + commentId).val();
+    $(document).ready(function () {
+        // Function to update the date range based on the selected duration
+        function updateDateRange(commentId) {
+            var duration = $('#freezeDuration' + commentId).val();
 
-          if (duration == 0) {
-              // Jika durasi permanen, tampilkan hanya tanggal sekarang
-              var currentDate = new Date();
-              var formattedStartDate = moment(currentDate).format('D MMMM YYYY');
-              $('#dateRangeLabel' + commentId).text('Carbon ' + formattedStartDate + ' - Permanen');
-          } else {
-              // Jika durasi bukan permanen, tambahkan durasi ke tanggal sekarang
-              var currentDate = new Date();
-              var endDate = new Date(currentDate.getTime() + (duration * 24 * 60 * 60 * 1000));
+            if (duration == 0) {
+                // If the duration is permanent, display only the current date
+                var currentDate = moment().format('D MMMM YYYY');
+                $('#dateRangeLabel' + commentId).text('Carbon ' + currentDate + ' - Permanen');
+            } else {
+                // If the duration is not permanent, add the duration to the current date
+                var endDate = moment().add(duration, 'days').format('D MMMM YYYY');
+                var currentDate = moment().format('D MMMM YYYY');
 
-              var formattedStartDate = moment(currentDate).format('D MMMM YYYY');
-              var formattedEndDate = moment(endDate).format('D MMMM YYYY');
+                $('#dateRangeLabel' + commentId).text('Carbon ' + currentDate + ' - ' + endDate);
+            }
+        }
 
-              $('#dateRangeLabel' + commentId).text('Carbon ' + formattedStartDate + ' - ' + formattedEndDate);
-          }
-      }
+        // Add event listener for changes in the duration dropdown
+        $('.freezeDuration').on('change', function () {
+            var commentId = $(this).data('comment-id');
+            updateDateRange(commentId);
+        });
 
-      // Tambahkan event listener untuk perubahan pada combobox
-      $('.freezeDuration').on('change', function () {
-          var commentId = $(this).data('comment-id');
-          updateDateRange(commentId);
-      });
+        // Add event listener to open the modal
+        $('.freeze-button').on('click', function () {
+            var commentId = $(this).data('comment-id');
+            updateDateRange(commentId);
+        });
 
-      // Tambahkan event listener untuk membuka modal
-      $('.freeze-button').on('click', function () {
-          var commentId = $(this).data('comment-id');
-          updateDateRange(commentId);
-      });
+        // Add event listener for the "Freeze" button inside the modal
+        $('.modal').on('click', '.btn-warning', function () {
+            var commentId = $(this).closest('.modal').find('.freezeDuration').data('comment-id');
+            updateDateRange(commentId);
 
-      // Tambahkan event listener untuk tombol "Freeze" di dalam modal
-      $('.modal').on('click', '.btn-warning', function () {
-          // Dapatkan ID komentar dari modal yang terkait
-          var commentId = $(this).closest('.modal').find('.freezeDuration').data('comment-id');
-          updateDateRange(commentId);
-      });
+            // Set the value of the freezeBy field with the currently authenticated user
+            var authenticatedUser = "{{ auth()->user()->name }}"; // Adjust accordingly
+            $('#freezeBy' + commentId).val(authenticatedUser);
+        });
 
-      // Ensure each modal is hidden initially
-      $('.modal').on('hidden.bs.modal', function () {
-          $(this).find('form')[0].reset(); // Reset the form when the modal is hidden
-      });
+        // Ensure each modal is hidden initially
+        $('.modal').on('hidden.bs.modal', function () {
+            $(this).find('form')[0].reset(); // Reset the form when the modal is hidden
+        });
 
-      // Panggil fungsi updateDateRange untuk menginisialisasi tanggal
-      $('.freezeDuration').each(function () {
-          var commentId = $(this).data('comment-id');
-          updateDateRange(commentId);
-      });
-  });
+        // Call the updateDateRange function to initialize the date range
+        $('.freezeDuration').each(function () {
+            var commentId = $(this).data('comment-id');
+            updateDateRange(commentId);
+        });
+    });
 </script>
+
 
 
 

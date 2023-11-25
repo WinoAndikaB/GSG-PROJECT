@@ -26,6 +26,7 @@ class User extends Authenticatable
         'role',
         'freeze_until',
         'pesan_freeze',
+        'freezeBy',
     ];
 
     protected $hidden = [

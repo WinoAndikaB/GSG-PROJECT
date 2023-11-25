@@ -126,6 +126,31 @@
       background-color: #5E72E4;
     }
 </style>
+<style>
+  .profile-container {
+    margin-right: 20px;
+    text-align: center;
+  }
+
+  .profile-image {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+
+  /* Menentukan lebar maksimum untuk combobox */
+  #freezeDuration {
+    width: 250%;
+    max-width: 260px; /* Atur sesuai kebutuhan Anda */
+  }
+
+  /* Menentukan lebar maksimum untuk input teks */
+  #pesan {
+    width: 250%;
+    max-width: 260px; /* Atur sesuai kebutuhan Anda */
+  }
+</style>
 </head>
 
 <!------------------------------------------------------------------------------------- Body Area -------------------------------------------------------------------------------------------->
@@ -345,44 +370,7 @@
                       </div>
 
                       <br>
-                        
-                        <div class="d-flex justify-content-center">
-                          <ul class="pagination">
-                              @if ($users->onFirstPage())
-                                  <li class="page-item disabled">
-                                      <span class="page-link" aria-label="Previous">
-                                          <span aria-hidden="true">&lsaquo;</span>
-                                      </span>
-                                  </li>
-                              @else
-                                  <li class="page-item">
-                                      <a class="page-link" href="{{ $users->previousPageUrl() }}" rel="prev" aria-label="Previous">
-                                          <span aria-hidden="true">&lsaquo;</span>
-                                      </a>
-                                  </li>
-                              @endif
-        
-                            <!-- Menampilkan halaman berapa -->
-                            <div class="text-center">
-                                {{ $users->currentPage() }} dari {{ $users->lastPage() }}
-                            </div>
                       
-                              @if ($users->hasMorePages())
-                                  <li class="page-item">
-                                      <a class="page-link" href="{{ $users->nextPageUrl() }}" rel="next" aria-label="Next">
-                                          <span aria-hidden="true">&rsaquo;</span>
-                                      </a>
-                                  </li>
-                              @else
-                                  <li class="page-item disabled">
-                                      <span class="page-link" aria-label="Next">
-                                          <span aria-hidden="true">&rsaquo;</span>
-                                      </span>
-                                  </li>
-                              @endif
-                          </ul>
-                      </div>  >
-
                         <table class="table align-items-center mb-0">
                           <thead>
                             <tr>
@@ -393,8 +381,9 @@
                               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Facebook</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Role</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Role Action</th>
-                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Freeze</th>
-                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Freeze Until</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Freeze Sampai</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pesan Freeze</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Freeze Oleh</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Upload</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Update</th>
                               <th class="text-secondary opacity-7"></th>
@@ -461,14 +450,19 @@
                             </td>
                             <td>
                               <p class="align-middle text-center" style="white-space: normal; max-width: 1000px;">
-                                {{$user['freeze']}}
+                                {{$user['freeze_until']}}
                               </p>
                             </td>
                             <td>
                                 <p class="align-middle text-center" style="white-space: normal; max-width: 1000px;">
-                                  {{$user['freeze_until']}}
+                                  {{$user['pesan_freeze']}}
                                 </p>
                             </td>
+                            <td>
+                              <p class="align-middle text-center" style="white-space: normal; max-width: 1000px;">
+                                {{$user['freezeBy']}}
+                              </p>
+                          </td>
                               <td class="align-middle text-center">
                                 <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($user['created_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
                               </td>
@@ -478,6 +472,9 @@
                               <td class="align-middle">
                                 <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deletePenggunaSA', ['id' => $user['id']]) }}')">
                                   <i class="fa fa-trash"></i>
+                              </a>
+                              <a href="#" class="btn btn-warning btn-icon btn-round freeze-button"data-toggle="modal" data-target="#freezeModal{{ $user->id }}" data-comment-id="{{ $user->id }}" data-user-id="{{ $user->id }}">
+                                <i class="ni ni-lock-circle-open"></i>
                               </a>
                               </td>
                             </tr>
@@ -515,6 +512,69 @@
                       </div>
                   </div>
               </div>
+
+              <!-- Freeze-Unfreeze Modal -->
+              @foreach ($users as $user)
+              <div class="modal fade" id="freezeModal{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="freezeModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="freezeModalLabel">Freeze Akun</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>                            
+                          </div>
+                          <form id="freezeForm{{ $user->id }}" action="{{ route('freeze.pengguna') }}" method="post">
+                              @csrf
+                              <input type="hidden" name="user_id" value="{{ $user->id }}">
+          
+                              <div class="modal-body">
+                                  <div class="profile-container">
+                                      <img src="{{ asset('fotoProfil/' . $user->fotoProfil) }}" alt="Profile Image" class="profile-image">
+                                      <h5>{{ $user->name }}</h5>
+                                  </div>
+                                  
+                                  <div class="form-group">
+                                      <label for="freezeDuration{{ $user->id }}">Pilih Durasi Freeze:</label>
+                                      <select class="form-control freezeDuration" name="duration" id="freezeDuration{{ $user->id }}" required>
+                                        <option value="1">1 Hari</option>
+                                        <option value="2">2 Hari</option>
+                                        <option value="7">1 Minggu</option>
+                                        <option value="30">1 Bulan</option>
+                                        <option value="90">3 Bulan</option>
+                                        <option value="240">8 Bulan</option>
+                                        <option value="365">1 Tahun</option>
+                                        <option value="1825">5 Tahun</option>
+                                        <option value="3650">10 Tahun</option>
+                                    </select>
+                                    
+                                      <label for="pesanFreeze{{ $user->id }}">Masukkan pesan peringatan:</label>
+                                      <input type="text" class="form-control" name="message" id="pesanFreeze{{ $user->id }}" placeholder="Masukkan pesan peringatan" required>
+                                  </div>
+                              </div>
+          
+                              <div class="modal-footer justify-content-center">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                  <button type="submit" class="btn btn-warning freeze-submit-button" data-user-id="{{ $user->id }}">Freeze</button>
+                              </div>
+                          </form>
+          
+                          <!-- Unfreeze form -->
+                          <form id="unfreezeForm{{ $user->id }}" action="{{ route('unfreeze.pengguna') }}" method="post">
+                              @csrf
+                              <input type="hidden" name="user_id" value="{{ $user->id }}">
+                              <div class="modal-body">
+                                  <!-- Add any additional fields or information for unfreezing as needed -->
+                              </div>
+                              <div class="modal-footer justify-content-center">
+                                  <button type="button" class="btn btn-success unfreeze-button" data-user-id="{{ $user->id }}">Unfreeze</button>
+                              </div>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          @endforeach
+          
 
               <!-- Demote Modal -->
               <div class="modal fade" id="demoteModal{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="demoteModalLabel{{$user->id}}" aria-hidden="true">
@@ -700,7 +760,24 @@
   });
   </script>
 
-  <!-- Modal Delete -->
+  
+<script>
+  var win = navigator.platform.indexOf('Win') > -1;
+  if (win && document.querySelector('#sidenav-scrollbar')) {
+    var options = {
+      damping: '0.5'
+    }
+    Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+  }
+</script>
+<!-- Github buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+<script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
+
+<!------------------------------------------------------------------------------------- Modal Delete -------------------------------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- Modal Delete -------------------------------------------------------------------------------------------------------------------->
+
   <script>
     function showConfirmationModal(deleteUrl) {
       $('#delete-link').attr('href', deleteUrl);
@@ -732,7 +809,9 @@
     });
   </script>
 
-  <!-- Filter Role -->
+<!------------------------------------------------------------------------------------- Filter Role Area -------------------------------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- Filter Role Area -------------------------------------------------------------------------------------------------------------------->
+
   <script>
     // Menangani klik pada filter role
     document.querySelectorAll('.role-filter').forEach(function (element) {
@@ -744,122 +823,39 @@
     });
   </script>
 
-  <!-- Rating -->
-<script>
-  const stars = document.querySelectorAll('.star');
-  const ratingInput = document.getElementById('rating');
+<!------------------------------------------------------------------------------------- Modal Freeze Area -------------------------------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- Modal Freeze Area -------------------------------------------------------------------------------------------------------------------->
 
-  stars.forEach((star) => {
-    star.addEventListener('click', () => {
-      const ratingValue = parseInt(star.getAttribute('data-rating'));
-      ratingInput.value = ratingValue;
-      stars.forEach((s) => s.classList.remove('selected')); // Hapus kelas 'selected' dari semua bintang
-      for (let i = 0; i < ratingValue; i++) {
-        stars[i].classList.add('selected'); // Tambahkan kelas 'selected' pada bintang yang dipilih
-      }
-    });
+<script>
+  $(document).ready(function() {
+      // Show the modal when the Freeze button is clicked
+      $('.freeze-button').click(function() {
+          var userId = $(this).data('user-id');
+          $('#freezeModal' + userId).modal('hide');
+      });
+
+      // Submit the Freeze form when the Freeze button is clicked inside the modal
+      $('.freeze-submit-button').click(function() {
+          var userId = $(this).data('user-id');
+          $('#freezeForm' + userId).submit();
+      });
+
+      // Submit the Unfreeze form when the Unfreeze button is clicked inside the modal
+      $('.unfreeze-button').click(function() {
+          var userId = $(this).data('user-id');
+          $('#unfreezeForm' + userId).submit();
+      });
   });
 </script>
 
-  <script>
-    var ctx1 = document.getElementById("chart-line").getContext("2d");
 
-    var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
 
-    gradientStroke1.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
-    gradientStroke1.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
-    gradientStroke1.addColorStop(0, 'rgba(94, 114, 228, 0)');
-    new Chart(ctx1, {
-      type: "line",
-      data: {
-        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        datasets: [{
-          label: "Mobile apps",
-          tension: 0.4,
-          borderWidth: 0,
-          pointRadius: 0,
-          borderColor: "#5e72e4",
-          backgroundColor: gradientStroke1,
-          borderWidth: 3,
-          fill: true,
-          data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-          maxBarThickness: 6
 
-        }],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false,
-          }
-        },
-        interaction: {
-          intersect: false,
-          mode: 'index',
-        },
-        scales: {
-          y: {
-            grid: {
-              drawBorder: false,
-              display: true,
-              drawOnChartArea: true,
-              drawTicks: false,
-              borderDash: [5, 5]
-            },
-            ticks: {
-              display: true,
-              padding: 10,
-              color: '#fbfbfb',
-              font: {
-                size: 11,
-                family: "Open Sans",
-                style: 'normal',
-                lineHeight: 2
-              },
-            }
-          },
-          x: {
-            grid: {
-              drawBorder: false,
-              display: false,
-              drawOnChartArea: false,
-              drawTicks: false,
-              borderDash: [5, 5]
-            },
-            ticks: {
-              display: true,
-              color: '#ccc',
-              padding: 20,
-              font: {
-                size: 11,
-                family: "Open Sans",
-                style: 'normal',
-                lineHeight: 2
-              },
-            }
-          },
-        },
-      },
-    });
-    </script>
 
-    <script>
-      var win = navigator.platform.indexOf('Win') > -1;
-      if (win && document.querySelector('#sidenav-scrollbar')) {
-        var options = {
-          damping: '0.5'
-        }
-        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-      }
-    </script>
-    <!-- Github buttons -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
 
-    <!-- Modal Logout -->
+<!------------------------------------------------------------------------------------- Modal Logout Area -------------------------------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- Modal Logout Area -------------------------------------------------------------------------------------------------------------------->
+
     <script>
       // JavaScript untuk modal logout
       function openModal() {

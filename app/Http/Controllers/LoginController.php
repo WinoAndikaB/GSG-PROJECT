@@ -140,8 +140,6 @@ protected function getFreezeMessage($user)
     return "Your account is frozen for $formattedPeriod.\nReason: {$user->pesan_freeze}";
 }
 
-    
-
     //[Login-Lupa Password] Halaman Lupa Password
     function lupaPassword(){
         return view('login.lupaPassword');

@@ -14,8 +14,9 @@ class AddFreezeColumnsToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('freeze_until')->default(false);
-            $table->timestamp('pesan_freeze')->nullable();
+            $table->timestamp('freeze_until')->nullable();
+            $table->text('pesan_freeze');
+            $table->text('freezeBy');
         });
     }
 
@@ -29,6 +30,7 @@ class AddFreezeColumnsToUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('freeze_until');
             $table->dropColumn('pesan_freeze');
+            $table->dropColumn('freezeBy');
         });
     }
 }

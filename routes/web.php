@@ -399,6 +399,10 @@ use Illuminate\Support\Facades\Route;
             //[SuperAdmin] Tabel Pengguna
             Route::get('/penggunaSA', [SuperAdminController::class, 'penggunaSA'])->name('penggunaSA');
 
+            //[SuperAdmin] Freeze-Unfreeze Pengguna
+            Route::post('/freeze-pengguna', [SuperAdminController::class, 'freezePengguna'])->name('freeze.pengguna');
+            Route::post('/unfreeze-pengguna', [SuperAdminController::class, 'unfreezePengguna'])->name('unfreeze.pengguna');
+
             //[SuperAdmin] Promote-Demote Pengguna
             Route::get('/promote-user/{id}', [SuperAdminController::class, 'promoteUser'])->name('promoteUser');
             Route::get('/demote-user/{id}', [SuperAdminController::class, 'demoteUser'])->name('demoteUser');

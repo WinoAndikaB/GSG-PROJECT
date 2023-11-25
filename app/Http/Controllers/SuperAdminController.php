@@ -931,17 +931,17 @@ function deleteKategoriSA($id){
 
     //[SuperAdmin-Pengguna] Halaman Tabel Pengguna
     function penggunaSA(Request $request){
-        $role = $request->input('role'); // Mendapatkan nilai filter role dari request
-        $searchQuery = $request->input('search'); // Mendapatkan nilai query pencarian dari request
-    
+        $role = $request->input('role');
+        $searchQuery = $request->input('search');
+
         $users = User::orderBy('created_at', 'desc');
-    
-        // Jika ada filter role, tambahkan kondisi where
+
+        // If there's a role filter, add a where clause
         if (!empty($role)) {
             $users->where('role', $role);
         }
-    
-        // Jika ada query pencarian, tambahkan kondisi where untuk mencocokkan nama pengguna atau informasi lainnya
+
+        // If there's a search query, add a where clause to match username or email
         if (!empty($searchQuery)) {
             $users->where(function($query) use ($searchQuery) {
                 $query->where('username', 'like', '%' . $searchQuery . '%')
@@ -949,8 +949,9 @@ function deleteKategoriSA($id){
                 // Add more fields as needed
             });
         }
-    
-        $users = $users->paginate(10);
+
+        // Fetch the users and pass them to the view
+        $users = $users->get();
         
          // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
          $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
@@ -969,8 +970,49 @@ function deleteKategoriSA($id){
     
          return view('SuperAdmin.penggunaSA', compact('users', 'dataBaruUlasan', 'dataBaruUser', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 
          'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo', 'dataBaruEventKomunitas'));
-    }  
+    } 
     
+    public function freezePengguna(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'duration' => 'required|integer',
+            'message' => 'nullable|string',
+        ]);
+    
+        $user = User::find($request->input('user_id'));
+    
+        if (!$user) {
+            return redirect()->back()->with('error', 'User not found');
+        }
+    
+        // Set freeze-related fields based on the selected duration
+        $duration = $request->input('duration');
+    
+        if ($duration > 0) {
+            // Check if the duration is unlimited
+            if ($duration == -1) {
+                $user->freeze_until = null; // Set to null for unlimited
+                $user->freezeBy = null;
+            } else {
+                $user->freeze_until = now()->addDays($duration);
+                $user->freezeBy = Auth::user()->name; // Set freezeBy to the current authenticated user's name
+            }
+        } else {
+            // Permanen case: allow for unfreezing
+            $user->freeze_until = null;
+            $user->freezeBy = null;
+        }
+    
+        $user->pesan_freeze = $request->input('message');
+    
+        // Save the changes
+        $user->save();
+    
+        return redirect()->back()->with('success', 'User frozen successfully');
+    }
+
+
     //[SuperAdmin-Pengguna] Promote-Demote Pengguna
     public function promoteUser($id) {
         $user = User::find($id);
@@ -1177,10 +1219,14 @@ function deleteKategoriSA($id){
                 return redirect('/laporanKomentarArtikelUserSA')->with('error', 'User not found for the comment');
             }
         
+            // Get the currently authenticated user's name
+            $authenticatedUser = auth()->user()->name;
+        
             // Update the user record with freeze information
             User::where('id', $userId)->update([
                 'freeze_until' => now()->addDays($duration),
                 'pesan_freeze' => $message,
+                'freezeBy' => $authenticatedUser,
             ]);
         
             // Redirect with success message

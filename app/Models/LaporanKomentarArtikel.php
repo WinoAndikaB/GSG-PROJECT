@@ -19,6 +19,7 @@ class LaporanKomentarArtikel extends Model
         'alasan',
         'freeze_until',
         'pesan_freeze',
+        'freezeBy',
     ];
 
     // Define relationships
