@@ -1012,6 +1012,29 @@ function deleteKategoriSA($id){
         return redirect()->back()->with('success', 'User frozen successfully');
     }
 
+    public function unfreezePengguna(Request $request)
+    {
+        // Validate the request data
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+        ]);
+
+        $user = User::find($request->input('user_id'));
+
+        if (!$user) {
+            return redirect()->back()->with('error', 'User not found');
+        }
+
+        // Set freeze-related fields to their original state
+        $user->freeze_until = null;
+        $user->pesan_freeze = null;
+        $user->freezeBy = null;
+
+        // Save the changes
+        $user->save();
+
+        return redirect()->back()->with('success', 'User unfreeze successfully');
+    }
 
     //[SuperAdmin-Pengguna] Promote-Demote Pengguna
     public function promoteUser($id) {
