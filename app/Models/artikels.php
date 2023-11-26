@@ -17,4 +17,9 @@ class artikels extends Model
     {
         return $this->hasMany(komentar_artikel::class, 'artikel_id');
     }   
+
+    public function simpanArtikels()
+    {
+        return $this->hasMany(SimpanArtikel::class);
+    }
 }

@@ -44,5 +44,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(KomentarArtikel::class, 'user_id');
     }
+
+    public function simpanArtikels()
+    {
+        return $this->belongsToMany(Artikels::class, 'simpan_artikels');
+    }
 }
 

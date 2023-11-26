@@ -3,6 +3,7 @@
 <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/lg1.png">
 <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
 
+
 <style>
   .modal {
     display: none;
@@ -74,38 +75,43 @@
                         <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
                     </form>
                     </li>
-                    <li class="scroll-to-section">
-                      <a href="/profileUser" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center">
-                        <div class="profile-picture" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
-                            <?php
-                            $fotoProfil = Auth::user()->fotoProfil;
-                            if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
-                            ?>
-                            <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
-                            <?php
-                            } else {
-                            ?>
-                            <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
-                            <?php
-                            }
-                            ?>
-                        </div>
-                        
-                        <span class="d-sm-inline d-none">
-                          <?php
-                          $fullName = Auth::user()->name;
-                          $words = explode(' ', $fullName);
-                          
-                          // Ambil dua kata pertama dan dua kata terakhir dari nama pengguna
-                          $firstTwoWords = implode(' ', array_slice($words, 0, 1));
-                          $lastTwoWords = implode(' ', array_slice($words, -1, 2));
-                          
-                          echo $firstTwoWords . ' ' . $lastTwoWords;
-                          ?>
-                      </span>
-                      
-                    </a>                        
-                    </li>
+                    <li>
+                      <div class="dropdown">
+                          <a href="#" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center dropdown-toggle" role="button" id="savedArticlesDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <div class="profile-picture" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
+                                  <?php
+                                  $fotoProfil = Auth::user()->fotoProfil;
+                                  if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
+                                  ?>
+                                  <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                                  <?php
+                                  } else {
+                                  ?>
+                                  <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                                  <?php
+                                  }
+                                  ?>
+                              </div>
+                  
+                              <span class="d-sm-inline d-none">
+                                  <?php
+                                  $fullName = Auth::user()->name;
+                                  $words = explode(' ', $fullName);
+                  
+                                  // Ambil dua kata pertama dan dua kata terakhir dari nama pengguna
+                                  $firstTwoWords = implode(' ', array_slice($words, 0, 1));
+                                  $lastTwoWords = implode(' ', array_slice($words, -1, 2));
+                  
+                                  echo $firstTwoWords . ' ' . $lastTwoWords;
+                                  ?>
+                              </span>
+                          </a>
+                          <div class="dropdown-menu" aria-labelledby="savedArticlesDropdown">
+                              <a class="dropdown-item" href="/profileUser">Profil Anda</a>
+                              <a class="dropdown-item" href="/simpanArtikelView">Artikel Tersimpan</a>
+                          </div>
+                      </div>
+                  </li>                  
                     <li class="scroll-to-section">
                       <a href="#" class="d-sm-inline d-none text-white text-bold" id="logout-link" onclick="openModal()"> Logout</a>
                     </li>

@@ -150,7 +150,9 @@ use Illuminate\Support\Facades\Route;
 
         Route::get('/profileUser', [PenggunaController::class, 'profileUser'])->name('profileUser');
         Route::put('/profileUser/updateUser/{id}',[PenggunaController::class,'updateUser'])->name('updateUser');
-
+     
+        Route::get('/simpanArtikelView', [PenggunaController::class, 'simpanArtikelView'])->name('simpan.artikelView');
+        Route::post('/simpanArtikelData/{id}', [PenggunaController::class, 'simpanArtikelData'])->name('simpan.artikelData');
 //------------------------------------------------------------- [User] Tab About ---------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------- [User] Tab About ---------------------------------------------------------------------------------------------------------
 

@@ -16,6 +16,7 @@ use App\Models\komentar_video;
 use App\Models\LaporanArtikelUser;
 use App\Models\LaporanUlasanUser;
 use App\Models\LaporanKomentarArtikel;
+use App\Models\SimpanArtikel;
 use Illuminate\Support\Facades\Log;
 use App\Models\LaporanVideoUser;
 use Illuminate\Http\Request;
@@ -160,6 +161,34 @@ class PenggunaController extends Controller
         return view('main.setelahLogin.detailArt', compact('kategoriLogA', 'article', 'box', 'tags', 'kategori', 'komentarArtikels', 'totalKomentarArtikels', 'komentar'));
     }
 
+        //[User-Home] Simpan Artikel
+        public function simpanArtikelView()
+        {
+            // Get the authenticated user
+            $user = auth()->user();
+        
+            // Retrieve the saved articles for the user
+            $savedArtikels = $user->simpanArtikels;
+        
+            return view('main.setelahLogin.simpanArtikel', compact('savedArtikels'));
+        }
+        
+        public function simpanArtikelData(Request $request, $id)
+        {
+            // Validate the request
+            $request->validate([
+                'artikel_id' => 'required|exists:artikels,id',
+            ]);
+        
+            // Get the authenticated user
+            $user = auth()->user();
+        
+            // Attach the article to the user's saved articles
+            $user->simpanArtikels()->attach($request->artikel_id);
+        
+            return redirect()->back()->with('success', 'Artikel disimpan!');
+        }
+        
     //[User-Detail Artikel] Menampilkan Komentar Pada Detail Artikel Ketika Di Klik
     public function storeKomentarArtikel(Request $request)
     {
@@ -245,7 +274,7 @@ class PenggunaController extends Controller
     }
 
     
-        //[User-Video] Delete Komentar Video
+        //[User-Video] Delete Komentar Artikel
         public function deleteKomentarArtikel($id)
         {
             $comment = komentar_artikel::find($id);

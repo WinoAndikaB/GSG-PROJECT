@@ -11,17 +11,15 @@
     <meta name="author" content="">
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets2/img/lg1.png') }}">
     <link rel="icon" type="image/png" href="{{ asset('assets2/img/lg1.png') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
 
-    @if($KategoriLogA->isNotEmpty())
-    <title>{{ $KategoriLogA->first()->kategori }} - Katakey</title>
-    @else
-        <title>Tidak Ditemukan</title>
-    @endif
-    
+
+    <title>Artikel Tersimpan - Katakey</title>
+
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-    
+
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/templatemo-574-mexant.css') }}">
@@ -29,8 +27,9 @@
     <link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}">
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css">
     
-    
-    
+<!------------------------------------------------------------------------------------ Style Area ------------------------------------------------------------------------------------------------>
+<!------------------------------------------------------------------------------------ Style Area ------------------------------------------------------------------------------------------------>
+       
     <style>
     .animated-button {
       padding: 10px 20px;
@@ -105,9 +104,11 @@
   </style>
 
 </head>
+
+<!------------------------------------------------------------------------------------ Body Area ------------------------------------------------------------------------------------------------>
+<!------------------------------------------------------------------------------------ Body Area ------------------------------------------------------------------------------------------------>
+   
 <body>
-
-
   <!-- ***** Header Area Start ***** -->
   <header class="header-area header-sticky" style="text-align: center;">
     <div class="container">
@@ -119,7 +120,7 @@
                     <li class="scroll-to-section"><a href="/home">Trending</a></li>
                     <li class="scroll-to-section"><a href="/home">Artikel</a></li>
                     <li class="scroll-to-section"><a href="/Video">Video</a></li>
-                    <li class="scroll-to-section"><a href="/kategori" class="active">Kategori</a></li>
+                    <li class="scroll-to-section"><a href="/kategori">Kategori</a></li>
                     <li class="scroll-to-section"><a href="/event">Event</a></li>
                     <li class="scroll-to-section"><a href="/ulasan">Ulasan</a></li>
                     <li class="scroll-to-section"><a href="/about">Tentang</a></li>
@@ -175,18 +176,12 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="header-text">
-                    @if($KategoriLogA->isNotEmpty())
-                        <h2>Kategori {{ $KategoriLogA->first()->kategori }}</h2>
-                        <div class="div-dec"></div>
-                    @else
-                        <h2>Tidak Ada Artikel Ditemukan Pada Ketegori Ini</h2>
-                    @endif
+                    <h2>List Artikel Yang Tersimpan</h2>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 
   <!-- ***** Main Banner Area End ***** -->
 
@@ -197,7 +192,13 @@
         <div class="container">
           <div class="row">
             <div>
-              @foreach ($KategoriLogA as $item)
+              @if($savedArtikels->isEmpty())
+              <div class="text-center">
+                <h6 style="color: orange; font-Helvetica : Helvetica ;">No Articles Saved</h6>
+                <h4 style="font-Helvetica : 'Your Cool Font';">Tidak Ada Artikel Yang Tersimpan</h4>
+            </div>
+          @else
+          @foreach($savedArtikels as $item)
                   <div class="row" style="text-align: justify">
                       <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
                           <div class="d-flex justify-content-center">
@@ -205,7 +206,7 @@
                           </div>
                       </div>
                       <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
-                          <h4 style="text-align: left" >{{ $item->judulArtikel }} </h4>
+                          <h4 style="text-align: left" > </h4>
                           <span class="d-flex"><b>{{ $item->penulis }}</b></span>
                           <p>{!! substr(strip_tags($item->deskripsi), 0, 400) . (strlen(strip_tags($item->content)) > 400 ? '...' : '') !!}</p>
                       </div>
@@ -234,6 +235,7 @@
                   </div>
                   <hr>
                   @endforeach
+                  @endif
               </div>
           </div>
         </div>
@@ -241,6 +243,9 @@
     </div>
 </div>
 
+<!------------------------------------------------------------------------------------ Modal Area ------------------------------------------------------------------------------------------------>
+<!------------------------------------------------------------------------------------ Modal Area ------------------------------------------------------------------------------------------------>
+   
       <!-- Modal Logout -->
       <div id="logout-modal" class="modal">
         <div class="modal-content">
@@ -254,7 +259,9 @@
         </div>
       </div>
 
-
+<!------------------------------------------------------------------------------------ Javascript Area ------------------------------------------------------------------------------------------------>
+<!------------------------------------------------------------------------------------ Javascript Area ------------------------------------------------------------------------------------------------>
+   
       <!--  logout Script -->
       <script>
         // JavaScript untuk modal logout

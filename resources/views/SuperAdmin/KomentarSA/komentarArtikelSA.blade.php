@@ -335,7 +335,7 @@
                                 <th class="text-secondary opacity-7"></th>
                               </tr>
                             </thead>
-                            @foreach ($LaporanKomentarArtikel as $item)
+                            @foreach ($komenarA as $item)
                             <tbody>
                               <tr>
                                 <td class="align-middle text-center">
