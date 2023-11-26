@@ -189,9 +189,18 @@
           <br>
           <br>
 
-          <a href="#" id="showModal" class="laporan-button">
-            <i class="fa fa-flag"></i> Laporkan
-          </a>
+          <ul class="list-inline">
+                  <button type="submit"  style="background-color: orange; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+                    <i class="fa fa-plus" style="color: white;"></i> Simpan
+                </button>              
+              </form>
+            </li>
+            <li class="list-inline-item">
+              <a href="#" id="showModal" class="laporan-button">
+                <i class="fa fa-flag"></i> Laporkan
+            </a>
+          </li>        
+        </ul>
 
           </section>
           <span style="text-align: right">
@@ -318,22 +327,19 @@
                   <a href="like_action.html">
                       <i class="fa fa-thumbs-up"></i> Like
                   </a>
-                  <a href="report_action.html">
-                    <i class="fa fa-thumbs-down"></i> Dislike
-                 </a>
 
-                  @if(Auth::check() && Auth::user()->id == $komentar->user_id)
+                 @if(Auth::check() && Auth::user()->id == $komentar->user_id)
                     <a href="{{ route('deleteKomentarVideo', ['id' => $komentar->id]) }}">
                         <i class="fas fa-trash"></i>Hapus
                     </a>
                   @endif
       
-                  
                   @if(Auth::check() && Auth::user()->id != $komentar->user_id)
-                    <a href="#" id="showModal" class="laporan-button">
-                        <i class="fa fa-flag"></i> Laporkan
-                    </a>  
-                  @endif
+                  <a href="#" class="showLaporanKomen" data-comment-id="{{ $komentar->id }}" data-nama-dilaporkan="{{ $komentar->user->name }}" data-user-id-dilaporkan="{{ $komentar->user->id }}">
+                    <i class="fa fa-flag"></i> Laporkan
+                </a>
+                @endif
+      
               </div>
           </div>
       </div>

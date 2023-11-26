@@ -145,9 +145,19 @@
           <br>
           <br>
 
-          <a href="/login" class="">
-            <i class="fa fa-flag"></i> Laporkan
-          </a>
+          <ul class="list-inline">
+            <li class="list-inline-item">
+                  <a href="/login" style="background-color: orange; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+                    <i class="fa fa-plus" style="color: white;"></i> Simpan
+                  </a>              
+              </form>
+            </li>
+            <li class="list-inline-item">
+              <a href="/login" id="showModal" class="laporan-button">
+                <i class="fa fa-flag"></i> Laporkan
+            </a>
+          </li>        
+        </ul>
 
           </section>
           <span style="text-align: right">
@@ -271,16 +281,12 @@
                   {{ $komentar->pesan }}
               </p>
               <div style="align-items: right; margin-top: 2px; margin-bottom: 10px;">
-                  <a href="/login">
-                      <i class="fa fa-thumbs-up"></i> Like
-                  </a>
-                  <a href="/login">
-                    <i class="fa fa-thumbs-down"></i> Dislike
-                 </a>
-                 <a href="/login"><i class="fas fa-trash"></i> Hapus</a>
-                  <a href="/login">
-                      <i class="fa fa-flag"></i> Laporkan
-                  </a>
+                <a href="/login">
+                  <i class="fa fa-thumbs-up"></i> likes
+                </a>
+                <a href="/login">
+                    <i class="fa fa-flag"></i> Laporkan
+                </a>
               </div>
           </div>
       </div>
