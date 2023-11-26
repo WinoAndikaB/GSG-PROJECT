@@ -23,4 +23,9 @@ class komentar_artikel extends Model
     {
         return $this->belongsTo(Artikels::class, 'artikel_id');
     }
+
+    public function likes()
+    {
+        return $this->hasMany(LikeKomentarArtikel::class, 'komentar_id');
+    }
 }

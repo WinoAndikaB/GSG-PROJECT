@@ -229,23 +229,22 @@
           <br>
           <br>
           
-            <ul class="list-inline">
-              <li class="list-inline-item">
-                  <form action="{{ route('simpan.artikelData', $article->id) }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="artikel_id" value="{{ $article->id }}">
-                    <button type="submit" style="background-color: #ffffff; border: none; border-radius: 5px; cursor: pointer; padding: 10px 20px; font-size: 17px;">
-                      <i class="fa fa-heart" style="color: #ff0000;"></i> 
-                      <span style="color: #F5BC04;">Simpan</span>
-                    </button>
-                </form>
-              </li>
-              <li class="list-inline-item">
-                <a href="#" id="showModal" class="laporan-button">
-                  <i class="fa fa-flag"></i> Laporkan
-              </a>
-            </li>        
-          </ul>      
+        <ul class="list-inline">
+          <li class="list-inline-item">
+              <form action="{{ route('simpan.artikelData', $article->id) }}" method="POST">
+                @csrf
+                <input type="hidden" name="artikel_id" value="{{ $article->id }}">
+                <button type="submit"  style="background-color: orange; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+                  <i class="fa fa-plus" style="color: white;"></i> Simpan
+              </button>              
+            </form>
+          </li>
+          <li class="list-inline-item">
+            <a href="#" id="showModal" class="laporan-button">
+              <i class="fa fa-flag"></i> Laporkan
+          </a>
+        </li>        
+      </ul>
           
           </section>
           <span style="text-align: right">
@@ -359,12 +358,9 @@
                       {{ $komentar->pesan }}
                   </p>
                   <div style="align-items: right; margin-top: 2px; margin-bottom: 10px;">
-                      <a href="like_action.html">
-                          <i class="fa fa-thumbs-up"></i> Like
-                      </a>
-                      <a href="report_action.html">
-                        <i class="fa fa-thumbs-down"></i> Dislike
-                     </a>
+                    <a href="{{ route('likeKomentarArtikel', ['commentId' => $komentar->id]) }}">
+                      <i class="fa fa-thumbs-up"></i>  {{ $komentar->likes->count() }} likes
+                  </a>  
 
                      @if(Auth::check() && Auth::user()->id == $komentar->user_id)
                       <a href="{{ route('deleteKomentarArtikel', ['id' => $komentar->id]) }}">

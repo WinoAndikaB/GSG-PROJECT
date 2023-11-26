@@ -206,7 +206,7 @@
                           </div>
                       </div>
                       <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
-                          <h4 style="text-align: left" > </h4>
+                          <h4 style="text-align: left" >{{$item->judulArtikel}}</h4>
                           <span class="d-flex"><b>{{ $item->penulis }}</b></span>
                           <p>{!! substr(strip_tags($item->deskripsi), 0, 400) . (strlen(strip_tags($item->content)) > 400 ? '...' : '') !!}</p>
                       </div>

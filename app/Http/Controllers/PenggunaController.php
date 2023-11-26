@@ -11,6 +11,7 @@ use App\Models\ulasans;
 use App\Models\user;
 use App\Models\video;
 use App\Models\komentar_artikel;
+use App\Models\LikeKomentarArtikel;
 use App\Models\komentar_event;
 use App\Models\komentar_video;
 use App\Models\LaporanArtikelUser;
@@ -207,6 +208,7 @@ class PenggunaController extends Controller
         // Redirect atau tampilkan pesan sukses
         return redirect()->back()->with('success', 'Komentar berhasil disimpan.');
     }
+    
 
 
     public function storeLaporanKomentarArtikel(Request $request)
@@ -236,45 +238,21 @@ class PenggunaController extends Controller
         return response()->json(['success' => 'Laporan berhasil dikirim'], 200);
     }
 
-    
-
-    //[User-Detail Artikel] Delete Komentar Video
-    public function deleteKomentarA($id)
+    public function likeKomentarArtikel($komentar_id)
     {
-        $article = komentar_artikel::find($id);
-        if (!$article) {
-            return redirect('/detailArtikel/' . $id)->with('error', 'Komentar tidak ditemukan');
+        $user = auth()->user();
+        $komentar = komentar_artikel::find($komentar_id);
+    
+        // Check if the user has already liked the comment
+        if (!$komentar->likes()->where('user_id', $user->id)->exists()) {
+            $like = new LikeKomentarArtikel(['user_id' => $user->id]);
+            $komentar->likes()->save($like);
         }
-
-        $article->delete();
-        return redirect('/detailArtikel/' . $id)->with('success', 'Komentar berhasil dihapus');
-    }
-
-    public function storeLaporanArtikel(Request $request)
-    {
-        // Validasi data yang diterima dari form
-        $request->validate([
-            'user_id' => 'required',
-            'artikel_id' => 'required',
-            'laporan' => 'required',
-            'alasan' => 'required',
-        ]);
-
-        // Simpan data laporan ke dalam database
-        $laporan = new LaporanArtikelUser([
-            'user_id' => $request->user_id,
-            'artikel_id' => $request->artikel_id,
-            'laporan' => $request->laporan,
-            'alasan' => $request->alasan,
-        ]);
-
-        $laporan->save();
-
-        return response()->json(['message' => 'Laporan telah berhasil disimpan.']);
-    }
-
     
-        //[User-Video] Delete Komentar Artikel
+        return redirect()->back();
+    }    
+    
+        //[User-Artikel] Delete Komentar Artikel
         public function deleteKomentarArtikel($id)
         {
             $comment = komentar_artikel::find($id);

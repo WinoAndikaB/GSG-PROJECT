@@ -116,8 +116,7 @@ use Illuminate\Support\Facades\Route;
         Route::get('/detailArtikel/{id}', [PenggunaController::class, 'showDetailArtikel'])->name('detail.artikel');
 
         Route::post('/komentarArtikel', [PenggunaController::class, 'storeKomentarArtikel'])->name('storeKomentarArtikel');
-        Route::get('/likeKomentarArtikel/{id}', [PenggunaController::class, 'likeKomentarArtikel'])->name('likeKomentarArtikel');
-        Route::get('/dislikeKomentarArtikel/{id}', [PenggunaController::class, 'dislikeKomentarArtikel'])->name('dislikeKomentarArtikel');
+        Route::get('/likeKomentarArtikel/{commentId}', [PenggunaController::class, 'likeKomentarArtikel'])->name('likeKomentarArtikel');
         Route::get('/deleteKomentarArtikel/{id}', [PenggunaController::class, 'deleteKomentarArtikel'])->name('deleteKomentarArtikel');     
 
         Route::post('/submit/report', [PenggunaController::class, 'storeLaporanArtikel'])->name('storeLaporanArtikel');
