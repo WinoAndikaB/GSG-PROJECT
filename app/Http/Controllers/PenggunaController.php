@@ -184,11 +184,25 @@ class PenggunaController extends Controller
             // Get the authenticated user
             $user = auth()->user();
         
-            // Attach the article to the user's saved articles
-            $user->simpanArtikels()->attach($request->artikel_id);
+            // Create a new SimpanArtikel record for the user
+            $user->simpanArtikels()->create(['artikel_id' => $request->artikel_id]);
         
             return redirect()->back()->with('success', 'Artikel disimpan!');
         }
+        
+
+        public function deleteSimpanArt($id)
+        {
+            $data = SimpanArtikel::find($id);
+        
+            if ($data) {
+                $data->delete();
+                return redirect()->route('simpan.artikelView')->with('success', 'Article deleted successfully');
+            } else {
+                return redirect()->route('simpan.artikelView')->with('error', 'Article not found');
+            }
+        }
+        
         
     //[User-Detail Artikel] Menampilkan Komentar Pada Detail Artikel Ketika Di Klik
     public function storeKomentarArtikel(Request $request)

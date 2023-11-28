@@ -198,43 +198,47 @@
                 <h4 style="font-Helvetica : 'Your Cool Font';">Tidak Ada Artikel Yang Tersimpan</h4>
             </div>
           @else
-          @foreach($savedArtikels as $item)
-                  <div class="row" style="text-align: justify">
-                      <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
-                          <div class="d-flex justify-content-center">
-                              <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" style="max-width: 100%; height: auto; border-radius: 14px">
-                          </div>
+              @foreach($savedArtikels as $item)
+              <div class="row" style="text-align: justify">
+                  <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
+                      <div class="d-flex justify-content-center">
+                          <img src="{{ asset('gambarArtikel/'.$item->artikel->gambarArtikel) }}" style="max-width: 100%; height: auto; border-radius: 14px">
                       </div>
-                      <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
-                          <h4 style="text-align: left" >{{$item->judulArtikel}}</h4>
-                          <span class="d-flex"><b>{{ $item->penulis }}</b></span>
-                          <p>{!! substr(strip_tags($item->deskripsi), 0, 400) . (strlen(strip_tags($item->content)) > 400 ? '...' : '') !!}</p>
-                      </div>
-                      <span style="text-align: right; color: rgba(165, 165, 165, 1);"><p>
-                        @php
-                        $ulasanCreatedAt = \Carbon\Carbon::parse($item['created_at']);
-                        $sekarang = \Carbon\Carbon::now();
-                        $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
-      
-                        if ($selisihWaktu < 60) {
-                          echo $selisihWaktu . ' Menit Lalu';
-                        } elseif ($selisihWaktu < 1440) {
-                          echo floor($selisihWaktu / 60) . ' Jam Lalu';
-                        } elseif ($selisihWaktu < 10080) {
-                          echo floor($selisihWaktu / 1440) . ' Hari Lalu';
-                        } elseif ($selisihWaktu < 43200) {
-                          echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
-                        } elseif ($selisihWaktu < 525600) {
-                          echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
-                        } else {
-                          echo floor($selisihWaktu / 525600) . ' Tahun Lalu';
-                        }
-                      @endphp
-                      | 
-                          <a href="{{ route('detail.artikel', ['id' => $item->id]) }}" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a></p></span>
                   </div>
-                  <hr>
-                  @endforeach
+                  <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
+                      <a href="{{ route('detail.artikel', ['id' => $item->artikel->id]) }}" style="color: rgba(242, 100, 25, 1)">
+                          <h4 style="text-align: left">{{$item->artikel->judulArtikel}}</h4>
+                          <span class="d-flex"><b>{{ $item->artikel->penulis }}</b></span>
+                      </a>
+                      <p>{!! substr(strip_tags($item->artikel->deskripsi), 0, 400) . (strlen(strip_tags($item->artikel->content)) > 400 ? '...' : '') !!}</p>
+                  </div>
+                  <span style="text-align: right; color: rgba(165, 165, 165, 1);">
+                      <p>
+                          @php
+                          $ulasanCreatedAt = \Carbon\Carbon::parse($item->artikel['created_at']);
+                          $sekarang = \Carbon\Carbon::now();
+                          $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
+          
+                          if ($selisihWaktu < 60) {
+                              echo $selisihWaktu . ' Menit Lalu';
+                          } elseif ($selisihWaktu < 1440) {
+                              echo floor($selisihWaktu / 60) . ' Jam Lalu';
+                          } elseif ($selisihWaktu < 10080) {
+                              echo floor($selisihWaktu / 1440) . ' Hari Lalu';
+                          } elseif ($selisihWaktu < 43200) {
+                              echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
+                          } elseif ($selisihWaktu < 525600) {
+                              echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
+                          } else {
+                              echo floor($selisihWaktu / 525600) . ' Tahun Lalu';
+                          }
+                          @endphp
+                          <a href="{{ route('simpan.deleteArtikel', ['id' => $item->id]) }}"><i class="fas fa-trash"></i></a>
+                      </p>
+                  </span>
+              </div>
+              <hr>
+          @endforeach
                   @endif
               </div>
           </div>

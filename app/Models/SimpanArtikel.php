@@ -16,6 +16,7 @@ class SimpanArtikel extends Model
 
     public function artikel()
     {
-        return $this->belongsTo(artikels::class);
+        return $this->belongsTo(Artikels::class, 'artikel_id');
     }
+    
 }

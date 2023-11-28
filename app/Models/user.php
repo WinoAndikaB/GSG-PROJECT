@@ -14,19 +14,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
-        'username',
-        'name',
-        'fotoProfil',
-        'email',
-        'password',
-        'alamat',
-        'instagram',
-        'facebook',
-        'aboutme',
-        'role',
-        'freeze_until',
-        'pesan_freeze',
-        'freezeBy',
+        'username','name','fotoProfil','email','password','alamat','instagram','facebook','aboutme','role','freeze_until','pesan_freeze','freezeBy',
     ];
 
     protected $hidden = [
@@ -39,15 +27,15 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    // Assuming you have a different model, replace 'KomentarArtikel' with your actual model name
     public function komentarArtikels()
     {
         return $this->hasMany(KomentarArtikel::class, 'user_id');
     }
 
+    // Change this to use hasMany instead of belongsToMany
     public function simpanArtikels()
     {
-        return $this->belongsToMany(Artikels::class, 'simpan_artikels');
+        return $this->hasMany(SimpanArtikel::class, 'user_id');
     }
 }
 

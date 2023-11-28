@@ -20,6 +20,6 @@ class artikels extends Model
 
     public function simpanArtikels()
     {
-        return $this->hasMany(SimpanArtikel::class);
+        return $this->hasMany(SimpanArtikel::class, 'artikel_id');
     }
 }
