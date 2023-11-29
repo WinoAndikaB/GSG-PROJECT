@@ -228,23 +228,36 @@
           
           <br>
           <br>
+
+            @if(session('success'))
+              <div class="alert alert-success">
+                  {{ session('success') }}
+              </div>
+            @elseif(session('info'))
+              <div class="alert alert-info">
+                  {{ session('info') }}
+              </div>
+            @endif
+        
+          <br>
           
-        <ul class="list-inline">
-          <li class="list-inline-item">
-              <form action="{{ route('simpan.artikelData', $article->id) }}" method="POST">
-                @csrf
-                <input type="hidden" name="artikel_id" value="{{ $article->id }}">
-                <button type="submit"  style="background-color: orange; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
-                  <i class="fa fa-plus" style="color: white;"></i> Simpan
-              </button>              
-            </form>
-          </li>
-          <li class="list-inline-item">
-            <a href="#" id="showModal" class="laporan-button">
-              <i class="fa fa-flag"></i> Laporkan
-          </a>
-        </li>        
-      </ul>
+            <ul class="list-inline">
+              <li class="list-inline-item">
+                <form action="{{ route('simpan.artikelData', $article->id) }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="artikel_id" value="{{ $article->id }}">
+                    <button type="submit" style="background-color: orange; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+                        <i class="fa fa-plus" style="color: white;"></i> Simpan
+                    </button>
+                </form>
+            </li>
+            
+              <li class="list-inline-item">
+                <a href="#" id="showModal" class="laporan-button">
+                  <i class="fa fa-flag"></i> Laporkan
+              </a>
+            </li>        
+          </ul>
           
           </section>
           <span style="text-align: right">

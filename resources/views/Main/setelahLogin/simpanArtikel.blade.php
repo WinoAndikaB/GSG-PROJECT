@@ -192,6 +192,21 @@
         <div class="container">
           <div class="row">
             <div>
+
+              <br>
+
+              @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+              @elseif(session('info'))
+                <div class="alert alert-info">
+                    {{ session('info') }}
+                </div>
+              @endif
+          
+            <br>
+            
               @if($savedArtikels->isEmpty())
               <div class="text-center">
                 <h6 style="color: orange; font-Helvetica : Helvetica ;">No Articles Saved</h6>

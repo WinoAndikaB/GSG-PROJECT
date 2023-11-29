@@ -184,12 +184,17 @@ class PenggunaController extends Controller
             // Get the authenticated user
             $user = auth()->user();
         
-            // Create a new SimpanArtikel record for the user
-            $user->simpanArtikels()->create(['artikel_id' => $request->artikel_id]);
+            // Check if the user has already saved the article
+            if ($user->simpanArtikels()->where('artikel_id', $request->artikel_id)->doesntExist()) {
+                // If not, create a new SimpanArtikel record for the user
+                $user->simpanArtikels()->create(['artikel_id' => $request->artikel_id]);
         
-            return redirect()->back()->with('success', 'Artikel disimpan!');
-        }
+                return redirect()->back()->with('success', 'Artikel disimpan!');
+            }
         
+            // Article is already saved, you can handle this case as needed
+            return redirect()->back()->with('info', 'Artikel sudah disimpan sebelumnya.');
+        } 
 
         public function deleteSimpanArt($id)
         {
@@ -197,9 +202,9 @@ class PenggunaController extends Controller
         
             if ($data) {
                 $data->delete();
-                return redirect()->route('simpan.artikelView')->with('success', 'Article deleted successfully');
+                return redirect()->route('simpan.artikelView')->with('success', 'Article Berhasil Dihapus');
             } else {
-                return redirect()->route('simpan.artikelView')->with('error', 'Article not found');
+                return redirect()->route('simpan.artikelView')->with('error', 'Article Tidak Ditemukan');
             }
         }
         
@@ -220,10 +225,8 @@ class PenggunaController extends Controller
             ]);
 
         // Redirect atau tampilkan pesan sukses
-        return redirect()->back()->with('success', 'Komentar berhasil disimpan.');
+        return redirect()->back();
     }
-    
-
 
     public function storeLaporanKomentarArtikel(Request $request)
     {
@@ -279,7 +282,7 @@ class PenggunaController extends Controller
             // Ensure the user trying to delete the comment is the owner
             if (Auth::check() && $comment->user_id === Auth::user()->id) {
                 $comment->delete();
-                return redirect()->route('detail.artikel', $comment->artikel_id)->with('success', 'Comment successfully deleted');
+                return redirect()->route('detail.artikel', $comment->artikel_id);
             } else {
                 $errorMessage = 'You are not allowed to delete this comment. <a href="' . route('detail.artikel', ['id' => $comment->artikel_id]) . '">Go back</a>';
                 return redirect()->route('detail.artikel', $comment->artikel_id)->with('error', $errorMessage);
