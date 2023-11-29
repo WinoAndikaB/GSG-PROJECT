@@ -155,9 +155,10 @@
                               </span>
                           </a>
                           <div class="dropdown-menu" aria-labelledby="savedArticlesDropdown">
-                              <a class="dropdown-item" href="/profileUser">Profil Anda</a>
-                              <a class="dropdown-item" href="/simpanArtikelView">Artikel Tersimpan</a>
-                          </div>
+                            <a class="dropdown-item" href="/profileUser">Profil Anda</a>
+                            <a class="dropdown-item" href="/simpanArtikelView">Artikel Tersimpan</a>
+                            <a class="dropdown-item" href="/simpanVideoView">Video Tersimpan</a>
+                        </div>
                       </div>
                   </li>           
                     <li class="scroll-to-section">

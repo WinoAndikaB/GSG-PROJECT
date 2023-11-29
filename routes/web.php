@@ -123,6 +123,10 @@ use Illuminate\Support\Facades\Route;
         Route::post('/submit/reportKomentar', [PenggunaController::class, 'storeLaporanKomentarArtikel'])->name('storeLaporanKomentarArtikel');
         Route::get('/deleteKomentarA/{id}',[PenggunaController::class,'deleteKomentarA'])->name('deleteKomentarA');
 
+        Route::get('/simpanArtikelView', [PenggunaController::class, 'simpanArtikelView'])->name('simpan.artikelView');
+        Route::post('/simpanArtikelData/{id}', [PenggunaController::class, 'simpanArtikelData'])->name('simpan.artikelData');
+        Route::get('/deleteSimpanArt/{id}', [PenggunaController::class, 'deleteSimpanArt'])->name('simpan.deleteArtikel');
+
 //------------------------------------------------------------- [User] Tab Video ---------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------- [User] Tab Video ---------------------------------------------------------------------------------------------------------
 
@@ -130,12 +134,15 @@ use Illuminate\Support\Facades\Route;
         Route::get('/detailVideo/{id}', [PenggunaController::class, 'showDetailVideo'])->name('showDetailVideo');
 
         Route::post('/komentarVideo', [PenggunaController::class, 'storeKomentarVideo'])->name('storeKomentarVideo');
-        Route::get('/likeKomentarVideo/{id}', [PenggunaController::class, 'likeKomentarVideo'])->name('likeKomentarVideo');
-        Route::get('/dislikeKomentarVideo/{id}', [PenggunaController::class, 'dislikeKomentarVideo'])->name('dislikeKomentarVideo');
-        Route::get('/deleteKomentarVideo/{id}', [PenggunaController::class, 'deleteKomentarVideo'])->name('deleteKomentarVideo');        
+        Route::get('/likeKomentarVideo/{commentId}', [PenggunaController::class, 'likeKomentarVideo'])->name('likeKomentarVideo'); 
 
         Route::post('/submitV/reportV', [PenggunaController::class, 'storeLaporanVideo'])->name('storeLaporanVideo');
-        Route::get('/deleteKomentarV/{id}', [PenggunaController::class, 'deleteKomentarV'])->name('deleteKomentarV');
+        Route::post('/submit/reportKomentarV', [PenggunaController::class, 'storeLaporanKomentarVideo'])->name('storeLaporanKomentarVideo');
+        Route::get('/deleteKomentarV/{id}', [PenggunaController::class, 'deleteKomentarV'])->name('deleteKomentarVideo');
+
+        Route::get('/simpanVideoView', [PenggunaController::class, 'simpanVideoView'])->name('simpan.videoView');
+        Route::post('/simpanVideoData/{videoId}', [PenggunaController::class, 'simpanVideoData'])->name('simpan.videoData')->middleware('auth'); 
+        Route::get('/deleteSimpanVid/{id}', [PenggunaController::class, 'deleteSimpanVid'])->name('simpan.deleteVideo');
 
 //------------------------------------------------------------- [User] Tab Kategori ---------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------- [User] Tab Kategori ---------------------------------------------------------------------------------------------------------
@@ -150,9 +157,6 @@ use Illuminate\Support\Facades\Route;
         Route::get('/profileUser', [PenggunaController::class, 'profileUser'])->name('profileUser');
         Route::put('/profileUser/updateUser/{id}',[PenggunaController::class,'updateUser'])->name('updateUser');
      
-        Route::get('/simpanArtikelView', [PenggunaController::class, 'simpanArtikelView'])->name('simpan.artikelView');
-        Route::get('/deleteSimpanArt/{id}', [PenggunaController::class, 'deleteSimpanArt'])->name('simpan.deleteArtikel');
-        Route::post('/simpanArtikelData/{id}', [PenggunaController::class, 'simpanArtikelData'])->name('simpan.artikelData');
 //------------------------------------------------------------- [User] Tab About ---------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------- [User] Tab About ---------------------------------------------------------------------------------------------------------
 

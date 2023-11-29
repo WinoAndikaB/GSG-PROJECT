@@ -18,5 +18,4 @@ class SimpanArtikel extends Model
     {
         return $this->belongsTo(Artikels::class, 'artikel_id');
     }
-    
 }

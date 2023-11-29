@@ -37,5 +37,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(SimpanArtikel::class, 'user_id');
     }
+
+    public function simpanVideos()
+    {
+        return $this->hasMany(SimpanVideo::class, 'user_id');
+    }
 }
 

@@ -131,6 +131,7 @@
                           <div class="dropdown-menu" aria-labelledby="savedArticlesDropdown">
                               <a class="dropdown-item" href="/profileUser">Profil Anda</a>
                               <a class="dropdown-item" href="/simpanArtikelView">Artikel Tersimpan</a>
+                              <a class="dropdown-item" href="/simpanVideoView">Video Tersimpan</a>
                           </div>
                       </div>
                   </li>           
@@ -186,15 +187,31 @@
                 <a href="#" class="fh5co_tagg">{{ $video->kategoriVideo }}</a>
             </span>
           
-          <br>
-          <br>
+            <br>
+            <br>
+  
+              @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+              @elseif(session('info'))
+                <div class="alert alert-info">
+                    {{ session('info') }}
+                </div>
+              @endif
+          
+            <br>
 
           <ul class="list-inline">
-                  <button type="submit"  style="background-color: orange; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
-                    <i class="fa fa-plus" style="color: white;"></i> Simpan
-                </button>              
+            <li class="list-inline-item">
+              <form action="{{ route('simpan.videoData', ['videoId' => $video->id]) }}" method="POST">
+                @csrf
+                  <input type="hidden" name="video_id" value="{{ $video->id }}">
+                  <button type="submit" style="background-color: orange; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+                      <i class="fa fa-plus" style="color: white;"></i> Simpan
+                  </button>
               </form>
-            </li>
+          </li>          
             <li class="list-inline-item">
               <a href="#" id="showModal" class="laporan-button">
                 <i class="fa fa-flag"></i> Laporkan
