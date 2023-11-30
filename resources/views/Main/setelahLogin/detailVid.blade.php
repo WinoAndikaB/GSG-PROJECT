@@ -178,28 +178,60 @@
         <div class="col-md-8 animate-box" data-animate-effect="fadeInRight">
           <section>
               <h1 style="color: rgba(47, 72, 88, 1);">{{ $video->judulVideo }}</h1><br>
-              <p style="color: rgba(242, 100, 25, 1);">{{ $video->uploader}} <br>
-                  Dibuat: <span style="color: rgba(165, 165, 165, 1);">{{ \Carbon\Carbon::parse($video['created_at'])->format('l, d M Y H.i') }}</span><br>
-                  Diperbarui: <span style="color: rgba(165, 165, 165, 1);">{{ \Carbon\Carbon::parse($video['updated_at'])->format('l, d M Y H.i') }}</span>
-              </p>
+              
+          <div class="simple-profile-container" style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+            <a href="/profilPenulis" style="text-decoration: none; color: inherit;">
+                <div class="simple-profile-picture" style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #3498db;">
+                    <?php
+                    $fotoProfil = Auth::user()->fotoProfil;
+                    if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
+                    ?>
+                        <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                    <?php
+                    } else {
+                    ?>
+                        <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                    <?php
+                    }
+                    ?>
+                </div>
+            </a>
+        
+            <div class="simple-profile-details" style="flex: 1;">
+                <a href="/profilPenulis" style="text-decoration: none; color: inherit;">
+                    <span class="simple-profile-name" style="color: #2c3e50; font-weight: bold; font-size: 1.2em; display: block; margin-bottom: 4px;">
+                        {{ $video->uploader }}
+                    </span>
+                </a>
+        
+                <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;">Uploader</span>
+            </div>
+        
+              <a href="/profilPenulis" style="text-decoration: none; color: inherit;">
+                  <div class="simple-follow-button" style="background-color: #3498db; padding: 8px 16px; border-radius: 20px; cursor: pointer;">
+                      <span style="color: #fff; font-weight: bold; font-size: 1em; display: block;">Follow</span>
+                  </div>
+              </a>
+          </div>
 
-              <span class="fh5co_tags_all">
-                <a href="#" class="fh5co_tagg">{{ $video->kategoriVideo }}</a>
+         <hr>
+            
+            <div class="float-right" style="margin-top: 10px;">
+                <ul>
+                    <li>
+                        Dibuat: <span style="color: rgba(165, 165, 165, 1);">{{ \Carbon\Carbon::parse($video['created_at'])->format('l, d M Y H.i') }}</span><br>
+                    </li>
+                    <li>
+                        Diperbarui: <span style="color: rgba(165, 165, 165, 1);">{{ \Carbon\Carbon::parse($video['updated_at'])->format('l, d M Y H.i') }}</span>
+                    </li>
+                </ul>
+            </div>
+
+            <span class="fh5co_tags_all">
+              <a href="#" class="fh5co_tagg">{{ $video->kategoriVideo }}</a>
             </span>
           
             <br>
-            <br>
-  
-              @if(session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-              @elseif(session('info'))
-                <div class="alert alert-info">
-                    {{ session('info') }}
-                </div>
-              @endif
-          
             <br>
 
           <ul class="list-inline">
@@ -218,6 +250,18 @@
             </a>
           </li>        
         </ul>
+
+        @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+      @elseif(session('info'))
+        <div class="alert alert-info">
+            {{ session('info') }}
+        </div>
+      @endif
+  
+    <br>
 
           </section>
           <span style="text-align: right">

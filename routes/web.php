@@ -156,6 +156,8 @@ use Illuminate\Support\Facades\Route;
 
         Route::get('/profileUser', [PenggunaController::class, 'profileUser'])->name('profileUser');
         Route::put('/profileUser/updateUser/{id}',[PenggunaController::class,'updateUser'])->name('updateUser');
+
+        Route::get('/profilPenulis', [PenggunaController::class, 'profilPenulis'])->name('profilPenulis');
      
 //------------------------------------------------------------- [User] Tab About ---------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------- [User] Tab About ---------------------------------------------------------------------------------------------------------

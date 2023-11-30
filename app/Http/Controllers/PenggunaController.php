@@ -666,6 +666,12 @@ function ulasan(Request $request){
     {
         return view('main.setelahLogin.profile');
     }  
+
+        //[User-Profil] Halaman Profil
+  public function profilPenulis()
+  {
+      return view('main.setelahLogin.profilePenulis');
+  }  
     
 
       //[User-Profil] Edit Profil

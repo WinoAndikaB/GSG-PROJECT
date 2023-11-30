@@ -183,20 +183,6 @@
     </div>
 </header>
 
-      <!-- Modal Logout -->
-      <div id="logout-modal" class="modal">
-        <div class="modal-content">
-          <span class="close" id="close-button" onclick="closeModal()">&times;</span>
-          <h2>Konfirmasi Logout</h2>
-          <p>Apakah anda mau logout?</p>
-          <div style="text-align: center;">
-            <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
-            <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
-          </div>
-        </div>
-      </div>
-
-
   <div class="page-heading">
     <div class="container">
       <div class="row">
@@ -215,32 +201,61 @@
       <div class="row">
       
         <div class="col-md-8 animate-box" data-animate-effect="fadeInRight">
-          <section>
-            
+          <section>        
               <h1 style="color: rgba(47, 72, 88, 1);">{{ $article->judulArtikel }}</h1><br>
-              <p style="color: rgba(242, 100, 25, 1);">{{ $article->penulis}} <br>
-                  Dibuat: <span style="color: rgba(165, 165, 165, 1);">{{ \Carbon\Carbon::parse($article['created_at'])->format('l, d M Y H.i') }}</span><br>
-                  Diperbarui: <span style="color: rgba(165, 165, 165, 1);">{{ \Carbon\Carbon::parse($article['updated_at'])->format('l, d M Y H.i') }}</span>
-              </p>
-              
-              <span class="fh5co_tags_all">
-                <a href="#" class="fh5co_tagg">{{ $article->kategori }}</a>
-            </span>
-          
-          <br>
-          <br>
+     <div class="simple-profile-container" style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+    <a href="/profilPenulis" style="text-decoration: none; color: inherit;">
+        <div class="simple-profile-picture" style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #3498db;">
+            <?php
+            $fotoProfil = Auth::user()->fotoProfil;
+            if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
+            ?>
+                <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+            <?php
+            } else {
+            ?>
+                <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+            <?php
+            }
+            ?>
+        </div>
+    </a>
 
-            @if(session('success'))
-              <div class="alert alert-success">
-                  {{ session('success') }}
-              </div>
-            @elseif(session('info'))
-              <div class="alert alert-info">
-                  {{ session('info') }}
-              </div>
-            @endif
-        
-          <br>
+    <div class="simple-profile-details" style="flex: 1;">
+        <a href="/profilPenulis" style="text-decoration: none; color: inherit;">
+            <span class="simple-profile-name" style="color: #2c3e50; font-weight: bold; font-size: 1.2em; display: block; margin-bottom: 4px;">
+                {{ $article->penulis }}
+            </span>
+        </a>
+
+        <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;">Penulis</span>
+    </div>
+
+      <a href="/profilPenulis" style="text-decoration: none; color: inherit;">
+          <div class="simple-follow-button" style="background-color: #3498db; padding: 8px 16px; border-radius: 20px; cursor: pointer;">
+              <span style="color: #fff; font-weight: bold; font-size: 1em; display: block;">Follow</span>
+          </div>
+      </a>
+  </div>
+
+            
+            <hr>
+            
+            <div class="float-right" style="margin-top: 10px;">
+                <ul>
+                    <li>
+                        Dibuat: <span style="color: rgba(165, 165, 165, 1);">{{ \Carbon\Carbon::parse($article['created_at'])->format('l, d M Y H.i') }}</span><br>
+                    </li>
+                    <li>
+                        Diperbarui: <span style="color: rgba(165, 165, 165, 1);">{{ \Carbon\Carbon::parse($article['updated_at'])->format('l, d M Y H.i') }}</span>
+                    </li>
+                </ul>
+            </div>
+
+          
+          <span class="fh5co_tags_all">
+            <a href="#" class="fh5co_tagg">{{ $article->kategori }}</a>
+          </span>
           
             <ul class="list-inline">
               <li class="list-inline-item">
@@ -259,6 +274,16 @@
               </a>
             </li>        
           </ul>
+
+          @if(session('success'))
+          <div class="alert alert-success">
+              {{ session('success') }}
+          </div>
+          @elseif(session('info'))
+            <div class="alert alert-info">
+                {{ session('info') }}
+            </div>
+          @endif
           
           </section>
           <span style="text-align: right">
@@ -278,8 +303,6 @@
                   </a>
               </p>
           </span>
-
-          <br>
           
           <img src="{{ asset('gambarArtikel/' . $article->gambarArtikel) }}" class="main-image" style="max-width: 100%; height: auto; margin-bottom: 20px;">
 
@@ -455,71 +478,84 @@
 <!-------------------------------------------------------------------------------------- Modal Area ------------------------------------------------------------------------------------------------------->
 <!-------------------------------------------------------------------------------------- Modal Area ------------------------------------------------------------------------------------------------------->
   
-<!-- Modal Laporan Artikel -->
-  <div id="modalLaporan" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1;">
-    <div style="background-color: #ffffff; border-radius: 10px; text-align: center; padding: 20px; width: 600px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
-      <span style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 20px;" id="closeLaporan">&times;</span>
-      <h2 style="color: #007bff; font-size: 24px;">Laporkan Artikel</h2>
-      <form id="reportForm">
-        <div style="text-align: left;">
-          <label style="font-size: 16px;"><input type="radio" name="reason" value="Konten Seksual"> Konten Seksual</label><br>
-          <label style="font-size: 16px;"><input type="radio" name="reason" value="Konten kekerasan atau menjijikkan"> Konten kekerasan atau menjijikkan</label><br>
-          <label style="font-size: 16px;"><input type="radio" name="reason" value="Konten kebencian atau pelecehan"> Konten kebencian atau pelecehan</label><br>
-          <label style="font-size: 16px;"><input type="radio" name="reason" value="Pelecehan atau penindasan"> Pelecehan atau penindasan</label><br>
-          <label style="font-size: 16px;"><input type="radio" name="reason" value="Tindakan merugikan atau berbahaya"> Tindakan merugikan atau berbahaya</label><br>
-          <label style="font-size: 16px;"><input type="radio" name="reason" value="Misinformasi"> Misinformasi</label><br>
-          <label style="font-size: 16px;"><input type="radio" name="reason" value="Pelecehan terhadap anak"> Pelecehan terhadap anak</label><br>
-          <label style="font-size: 16px;"><input type="radio" name="reason" value="Mendukung terorisme"> Mendukung terorisme</label><br>
-          <label style="font-size: 16px;"><input type="radio" name="reason" value="Spam atau menyesatkan"> Spam atau menyesatkan</label><br>
-          <label style="font-size: 16px;"><input type="radio" name="reason" value="Masalah hukum"> Masalah hukum</label><br>
-          <label style="font-size: 16px;"><input type="radio" name="reason" value="Teks bermasalah"> Teks bermasalah</label><br>
-        </div><br>
-        <textarea id="reportTextLaporan" style="width: 100%; padding: 10px; font-size: 16px;" placeholder="Kenapa Anda melaporkan artikel ini?"></textarea><br>
-        <button type="submit" class="submit-buttonLaporan" style="background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; padding: 10px 20px; font-size: 18px;">Kirim Laporan</button>
-      </form>
-      <div style="text-align: left; padding: 10px;">
-        <p style="font-size: 14px;">Artikel dan pengguna yang dilaporkan akan ditinjau oleh staf kami untuk menentukan apakah artikel dan pengguna tersebut melanggar Pedoman kami atau tidak. Akun akan dikenai sanksi jika melanggar Pedoman Komunitas, dan pelanggaran serius atau berulang dapat berakibat pada penghentian akun.</p>
+    <!-- Modal Laporan Artikel -->
+      <div id="modalLaporan" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1;">
+        <div style="background-color: #ffffff; border-radius: 10px; text-align: center; padding: 20px; width: 600px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
+          <span style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 20px;" id="closeLaporan">&times;</span>
+          <h2 style="color: #007bff; font-size: 24px;">Laporkan Artikel</h2>
+          <form id="reportForm">
+            <div style="text-align: left;">
+              <label style="font-size: 16px;"><input type="radio" name="reason" value="Konten Seksual"> Konten Seksual</label><br>
+              <label style="font-size: 16px;"><input type="radio" name="reason" value="Konten kekerasan atau menjijikkan"> Konten kekerasan atau menjijikkan</label><br>
+              <label style="font-size: 16px;"><input type="radio" name="reason" value="Konten kebencian atau pelecehan"> Konten kebencian atau pelecehan</label><br>
+              <label style="font-size: 16px;"><input type="radio" name="reason" value="Pelecehan atau penindasan"> Pelecehan atau penindasan</label><br>
+              <label style="font-size: 16px;"><input type="radio" name="reason" value="Tindakan merugikan atau berbahaya"> Tindakan merugikan atau berbahaya</label><br>
+              <label style="font-size: 16px;"><input type="radio" name="reason" value="Misinformasi"> Misinformasi</label><br>
+              <label style="font-size: 16px;"><input type="radio" name="reason" value="Pelecehan terhadap anak"> Pelecehan terhadap anak</label><br>
+              <label style="font-size: 16px;"><input type="radio" name="reason" value="Mendukung terorisme"> Mendukung terorisme</label><br>
+              <label style="font-size: 16px;"><input type="radio" name="reason" value="Spam atau menyesatkan"> Spam atau menyesatkan</label><br>
+              <label style="font-size: 16px;"><input type="radio" name="reason" value="Masalah hukum"> Masalah hukum</label><br>
+              <label style="font-size: 16px;"><input type="radio" name="reason" value="Teks bermasalah"> Teks bermasalah</label><br>
+            </div><br>
+            <textarea id="reportTextLaporan" style="width: 100%; padding: 10px; font-size: 16px;" placeholder="Kenapa Anda melaporkan artikel ini?"></textarea><br>
+            <button type="submit" class="submit-buttonLaporan" style="background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; padding: 10px 20px; font-size: 18px;">Kirim Laporan</button>
+          </form>
+          <div style="text-align: left; padding: 10px;">
+            <p style="font-size: 14px;">Artikel dan pengguna yang dilaporkan akan ditinjau oleh staf kami untuk menentukan apakah artikel dan pengguna tersebut melanggar Pedoman kami atau tidak. Akun akan dikenai sanksi jika melanggar Pedoman Komunitas, dan pelanggaran serius atau berulang dapat berakibat pada penghentian akun.</p>
+          </div>
+        </div>
+      </div>
+
+    <!-- Modal Lapor Komentar Artikel -->
+    <div id="modalLaporKomen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1;">
+      <div style="background-color: #ffffff; border-radius: 10px; text-align: center; padding: 20px; width: 600px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
+          <span style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 20px;" id="tutupLaporanKomen">&times;</span>
+          <h2 style="color: #007bff; font-size: 24px;">Laporkan Komentar</h2>
+
+          <!-- Display information about the reported user -->
+          <p style="font-size: 14px;">User Yang Dilaporkan :<br> <strong><span id="namaDilaporkan" style="font-size: 14px;"></span></strong></p>
+
+          <form id="reportCommentForm" action="{{ route('storeLaporanKomentarArtikel') }}" method="POST">
+              <br>
+              <input type="hidden" name="user_id_pelapor" id="user_id_pelapor_input" value="{{ Auth::user()->id }}">
+              <input type="hidden" name="artikel_id" id="artikel_id_input" value="{{ optional($komentar)->artikel_id }}">
+              <input type="hidden" name="comment_id" id="comment_id_input" value="">
+              <input type="hidden" name="user_id_dilaporkan" id="user_id_dilaporkan_input" value="">
+
+              <div style="text-align: left;">
+                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Konten Komersial atau Spam"> Konten Komersial atau Spam</label><br>
+                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Materi Pornografi atau Seksual Vulgar"> Materi Pornografi atau Seksual Vulgar</label><br>     
+                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Pelanggaran Hak Anak"> Pelanggaran Hak Anak</label><br>
+                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Pernyataan Kebencian dan Kekerasan"> Pernyataan Kebencian dan Kekerasan</label><br>
+                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Mendukung Terorisme"> Mendukung Terorisme</label><br>
+                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Pelecehan dan Penindasan"> Pelecehan dan Penindasan</label><br>
+                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Penggunaan Bunuh Diri atau Menyakiti Diri Sendiri"> Penggunaan Bunuh Diri atau Menyakiti Diri Sendiri</label><br>
+                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Misinformasi"> Misinformasi</label><br>
+              </div><br>
+
+              <textarea id="alasan_input" style="width: 100%; padding: 10px; font-size: 16px;" placeholder="Kenapa Anda melaporkan komentar ini?" name="alasan"></textarea><br>
+
+              <button type="submit" class="submit-buttonLaporKomentar" style="background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; padding: 10px 20px; font-size: 18px;">Kirim Laporan</button>
+          </form>
+
+          <div style="text-align: left; padding: 10px;">
+              <p style="font-size: 14px;">Laporan Komentar Artikel dan pengguna yang dilaporkan akan ditinjau oleh staf kami untuk menentukan apakah artikel dan pengguna tersebut melanggar Pedoman kami atau tidak. Akun akan dikenai sanksi jika melanggar Pedoman Komunitas, dan pelanggaran serius atau berulang dapat berakibat pada penghentian akun.</p>
+          </div>
       </div>
     </div>
-  </div>
 
-<!-- Modal Lapor Komentar Artikel -->
-<div id="modalLaporKomen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1;">
-  <div style="background-color: #ffffff; border-radius: 10px; text-align: center; padding: 20px; width: 600px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
-      <span style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 20px;" id="tutupLaporanKomen">&times;</span>
-      <h2 style="color: #007bff; font-size: 24px;">Laporkan Komentar</h2>
-
-      <!-- Display information about the reported user -->
-      <p style="font-size: 14px;">User Yang Dilaporkan :<br> <strong><span id="namaDilaporkan" style="font-size: 14px;"></span></strong></p>
-
-      <form id="reportCommentForm" action="{{ route('storeLaporanKomentarArtikel') }}" method="POST">
-          <br>
-          <input type="hidden" name="user_id_pelapor" id="user_id_pelapor_input" value="{{ Auth::user()->id }}">
-          <input type="hidden" name="artikel_id" id="artikel_id_input" value="{{ optional($komentar)->artikel_id }}">
-          <input type="hidden" name="comment_id" id="comment_id_input" value="">
-          <input type="hidden" name="user_id_dilaporkan" id="user_id_dilaporkan_input" value="">
-
-          <div style="text-align: left;">
-            <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Konten Komersial atau Spam"> Konten Komersial atau Spam</label><br>
-            <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Materi Pornografi atau Seksual Vulgar"> Materi Pornografi atau Seksual Vulgar</label><br>     
-            <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Pelanggaran Hak Anak"> Pelanggaran Hak Anak</label><br>
-            <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Pernyataan Kebencian dan Kekerasan"> Pernyataan Kebencian dan Kekerasan</label><br>
-            <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Mendukung Terorisme"> Mendukung Terorisme</label><br>
-            <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Pelecehan dan Penindasan"> Pelecehan dan Penindasan</label><br>
-            <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Penggunaan Bunuh Diri atau Menyakiti Diri Sendiri"> Penggunaan Bunuh Diri atau Menyakiti Diri Sendiri</label><br>
-            <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Misinformasi"> Misinformasi</label><br>
-          </div><br>
-
-          <textarea id="alasan_input" style="width: 100%; padding: 10px; font-size: 16px;" placeholder="Kenapa Anda melaporkan komentar ini?" name="alasan"></textarea><br>
-
-          <button type="submit" class="submit-buttonLaporKomentar" style="background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; padding: 10px 20px; font-size: 18px;">Kirim Laporan</button>
-      </form>
-
-      <div style="text-align: left; padding: 10px;">
-          <p style="font-size: 14px;">Laporan Komentar Artikel dan pengguna yang dilaporkan akan ditinjau oleh staf kami untuk menentukan apakah artikel dan pengguna tersebut melanggar Pedoman kami atau tidak. Akun akan dikenai sanksi jika melanggar Pedoman Komunitas, dan pelanggaran serius atau berulang dapat berakibat pada penghentian akun.</p>
+      <!-- Modal Logout -->
+      <div id="logout-modal" class="modal">
+        <div class="modal-content">
+          <span class="close" id="close-button" onclick="closeModal()">&times;</span>
+          <h2>Konfirmasi Logout</h2>
+          <p>Apakah anda mau logout?</p>
+          <div style="text-align: center;">
+            <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
+            <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
+          </div>
+        </div>
       </div>
-  </div>
-</div>
   
 <!-------------------------------------------------------------------------------------- JavaScript Area ------------------------------------------------------------------------------------------------------->
 <!-------------------------------------------------------------------------------------- JavaScript Area ------------------------------------------------------------------------------------------------------->
