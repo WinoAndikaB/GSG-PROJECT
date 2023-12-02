@@ -134,30 +134,67 @@
         <div class="col-md-8 animate-box" data-animate-effect="fadeInRight">
           <section>
               <h1 style="color: rgba(47, 72, 88, 1);">{{ $video->judulVideo }}</h1><br>
-              <p style="color: rgba(242, 100, 25, 1);">{{ $video->uploader}} <br>
-                  Dibuat: <span style="color: rgba(165, 165, 165, 1);">{{ \Carbon\Carbon::parse($video['created_at'])->format('l, d M Y H.i') }}</span><br>
-                  Diperbarui: <span style="color: rgba(165, 165, 165, 1);">{{ \Carbon\Carbon::parse($video['updated_at'])->format('l, d M Y H.i') }}</span>
-              </p>
 
-              <span class="fh5co_tags_all">
-                <a href="#" class="fh5co_tagg">{{ $video->kategoriVideo }}</a>
-            </span>
+              <div class="simple-profile-container" style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+                <a href="/login" style="text-decoration: none; color: inherit;">
+                    <div class="simple-profile-picture" style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #3498db;">
+                    </div>
+                </a>
+            
+                <div class="simple-profile-details" style="flex: 1;">
+                    <a href="/login" style="text-decoration: none; color: inherit;">
+                        <span class="simple-profile-name" style="color: #2c3e50; font-weight: bold; font-size: 1.2em; display: block; margin-bottom: 4px;">
+                            {{ $video->uploader }}
+                        </span>
+                    </a>
+            
+                    <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;">Uploader</span>
+                </div>
+            
+                  <a href="/login" style="text-decoration: none; color: inherit;">
+                      <div class="simple-follow-button" style="background-color: #3498db; padding: 8px 16px; border-radius: 20px; cursor: pointer;">
+                          <span style="color: #fff; font-weight: bold; font-size: 1em; display: block;">Follow</span>
+                      </div>
+                  </a>
+              </div>
+    
+             <hr>
+            
+             
+             <div class="float-right" style="margin-top: 10px;">
+              <ul>
+                  <li>
+                      Dibuat: <span style="color: rgba(165, 165, 165, 1);">{{ \Carbon\Carbon::parse($video['created_at'])->format('l, d M Y H.i') }}</span><br>
+                  </li>
+                  <li>
+                      Diperbarui: <span style="color: rgba(165, 165, 165, 1);">{{ \Carbon\Carbon::parse($video['updated_at'])->format('l, d M Y H.i') }}</span>
+                  </li>
+              </ul>
+          </div>
+
+          <span class="fh5co_tags_all">
+            <a href="#" class="fh5co_tagg">{{ $video->kategoriVideo }}</a>
+          </span>
+        
           <br>
           <br>
 
-          <ul class="list-inline">
-            <li class="list-inline-item">
-                  <a href="/login" style="background-color: orange; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+        <ul class="list-inline">
+          <li class="list-inline-item">
+            <form action="/login" method="POST">
+              @csrf
+                <input type="hidden" name="video_id" value="{{ $video->id }}">
+                <button type="submit" style="background-color: orange; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
                     <i class="fa fa-plus" style="color: white;"></i> Simpan
-                  </a>              
-              </form>
-            </li>
-            <li class="list-inline-item">
-              <a href="/login" id="showModal" class="laporan-button">
-                <i class="fa fa-flag"></i> Laporkan
-            </a>
-          </li>        
-        </ul>
+                </button>
+            </form>
+        </li>          
+          <li class="list-inline-item">
+            <a href="/login" id="showModal" class="laporan-button">
+              <i class="fa fa-flag"></i> Laporkan
+          </a>
+        </li>        
+      </ul>
 
           </section>
           <span style="text-align: right">

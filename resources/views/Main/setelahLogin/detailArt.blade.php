@@ -203,23 +203,23 @@
         <div class="col-md-8 animate-box" data-animate-effect="fadeInRight">
           <section>        
               <h1 style="color: rgba(47, 72, 88, 1);">{{ $article->judulArtikel }}</h1><br>
-     <div class="simple-profile-container" style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
-    <a href="/profilPenulis" style="text-decoration: none; color: inherit;">
-        <div class="simple-profile-picture" style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #3498db;">
-            <?php
-            $fotoProfil = Auth::user()->fotoProfil;
-            if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
-            ?>
-                <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
-            <?php
-            } else {
-            ?>
-                <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
-            <?php
-            }
-            ?>
-        </div>
-    </a>
+            <div class="simple-profile-container" style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+            <a href="/profilPenulis" style="text-decoration: none; color: inherit;">
+                <div class="simple-profile-picture" style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #3498db;">
+                    <?php
+                    $fotoProfil = Auth::user()->fotoProfil;
+                    if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
+                    ?>
+                        <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                    <?php
+                    } else {
+                    ?>
+                        <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                    <?php
+                    }
+                    ?>
+                </div>
+            </a>
 
     <div class="simple-profile-details" style="flex: 1;">
         <a href="/profilPenulis" style="text-decoration: none; color: inherit;">
