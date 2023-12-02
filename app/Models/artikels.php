@@ -13,6 +13,11 @@ class artikels extends Model
         'id','kodeArtikel', 'user_id', 'artikel_id', 'gambarArtikel', 'judulArtikel', 'penulis', 'email', 'deskripsi', 'status', 'kategori', 'tags'
     ];
 
+    public function users()
+    {
+        return $this->hasMany(User::class, 'id');
+    }   
+
     public function komentarArtikel()
     {
         return $this->hasMany(komentar_artikel::class, 'artikel_id');
