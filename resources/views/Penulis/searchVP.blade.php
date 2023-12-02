@@ -144,16 +144,16 @@
             <div class="col-12">
               <nav class="main-nav">
                 <ul class="nav">
-                    <li class="scroll-to-section"><a href="/home">Home</a></li>
-                    <li class="scroll-to-section"><a href="/home">Trending</a></li>
-                    <li class="scroll-to-section"><a href="/home">Artikel</a></li>
-                    <li class="scroll-to-section"><a href="/Video" class="active">Video</a></li>
-                    <li class="scroll-to-section"><a href="/kategori">Kategori</a></li>
-                    <li class="scroll-to-section"><a href="/event">Event</a></li>
-                    <li class="scroll-to-section"><a href="/ulasan">Ulasan</a></li>
-                    <li class="scroll-to-section"><a href="/about">Tentang</a></li>
+                    <li class="scroll-to-section"><a href="/homeP">Home</a></li>
+                    <li class="scroll-to-section"><a href="/homeP">Trending</a></li>
+                    <li class="scroll-to-section"><a href="/homeP">Artikel</a></li>
+                    <li class="scroll-to-section"><a href="/VideoP" class="active">Video</a></li>
+                    <li class="scroll-to-section"><a href="/kategoriP">Kategori</a></li>
+                    <li class="scroll-to-section"><a href="/eventP">Event</a></li>
+                    <li class="scroll-to-section"><a href="/ulasanP">Ulasan</a></li>
+                    <li class="scroll-to-section"><a href="/aboutP">Tentang</a></li>
                     <li>
-                      <form action="{{ route('searchV') }}" method="GET" class="input-group">
+                      <form action="{{ route('searchVP') }}" method="GET" class="input-group">
                         <input type="text" name="searchV" class="form-control" placeholder="Cari Artikel..." aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ request('searchV') }}">
                         <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
                     </form>
@@ -190,9 +190,9 @@
                               </span>
                           </a>
                           <div class="dropdown-menu" aria-labelledby="savedArticlesDropdown">
-                            <a class="dropdown-item" href="/profileUser">Profil Anda</a>
-                            <a class="dropdown-item" href="/simpanArtikelView">Artikel Tersimpan</a>
-                            <a class="dropdown-item" href="/simpanVideoView">Video Tersimpan</a>
+                            <a class="dropdown-item" href="/profileP">Profil Anda</a>
+                            <a class="dropdown-item" href="/simpanArtikelViewP">Artikel Tersimpan</a>
+                            <a class="dropdown-item" href="/simpanVideoViewP">Video Tersimpan</a>
                         </div>
                       </div>
                   </li>           
@@ -234,7 +234,7 @@
           <div>
 
             <div class="search-container">
-              <form action="{{ route('searchV') }}" method="GET" class="input-group">
+              <form action="{{ route('searchVP') }}" method="GET" class="input-group">
                 <input type="text" name="searchV" class="form-control" placeholder="Cari..." value="{{ request('searchV') }}">
                 <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
               </form>            
@@ -280,7 +280,7 @@
                         }
                       @endphp
                       | 
-                          <a href="{{ route('showDetailVideo', ['id' => $item->id]) }}" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a></p></span>
+                          <a href="{{ route('showDetailVideoP', ['id' => $item->id]) }}" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a></p></span>
                   </div>
                   <hr>
                   @endforeach

@@ -87,6 +87,11 @@ protected function handleAuthenticatedUser(Request $request)
         return redirect()->intended('/home');
     }
 
+    if ($user->role == 'penulis') {
+        $request->session()->regenerate();
+        return redirect()->intended('/homeP');
+    }
+
     if ($user->role == 'superadmin') {
         $request->session()->regenerate();
         return redirect()->intended('/dashboardSA');

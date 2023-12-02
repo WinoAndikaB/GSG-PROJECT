@@ -98,9 +98,9 @@
                             </span>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="savedArticlesDropdown">
-                          <a class="dropdown-item" href="/profileUser">Profil Anda</a>
-                          <a class="dropdown-item" href="/simpanArtikelView">Artikel Tersimpan</a>
-                          <a class="dropdown-item" href="/simpanVideoView">Video Tersimpan</a>
+                          <a class="dropdown-item" href="/profileP">Profil Anda</a>
+                          <a class="dropdown-item" href="/simpanArtikelViewP">Artikel Tersimpan</a>
+                          <a class="dropdown-item" href="/simpanVideoViewP">Video Tersimpan</a>
                       </div>
                     </div>
                 </li>           
@@ -202,7 +202,7 @@
                             </div>
         
                               <button type="submit" class="btn btn-primary">Simpan</button>
-                              <a href="/home" class="btn btn-info">Kembali</a>
+                              <a href="/homeP" class="btn btn-info">Kembali</a>
                               </form>
                           </div>
                       </div>

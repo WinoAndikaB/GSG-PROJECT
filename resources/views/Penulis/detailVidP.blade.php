@@ -90,13 +90,13 @@
             <div class="col-12">
               <nav class="main-nav">
                 <ul class="nav">
-                    <li class="scroll-to-section"><a href="/home">Home</a></li>
-                    <li class="scroll-to-section"><a href="/home">Artikel</a></li>
-                    <li class="scroll-to-section"><a href="/Video" class="active">Video</a></li>
-                    <li class="scroll-to-section"><a href="/kategori">Kategori</a></li>
-                    <li class="scroll-to-section"><a href="/event">Event</a></li>
-                    <li class="scroll-to-section"><a href="/ulasan">Ulasan</a></li>
-                    <li class="scroll-to-section"><a href="/about">Tentang</a></li>
+                    <li class="scroll-to-section"><a href="/homeP">Home</a></li>
+                    <li class="scroll-to-section"><a href="/homeP">Artikel</a></li>
+                    <li class="scroll-to-section"><a href="/VideoP" class="active">Video</a></li>
+                    <li class="scroll-to-section"><a href="/kategoriP">Kategori</a></li>
+                    <li class="scroll-to-section"><a href="/eventP">Event</a></li>
+                    <li class="scroll-to-section"><a href="/ulasanP">Ulasan</a></li>
+                    <li class="scroll-to-section"><a href="/aboutP">Tentang</a></li>
                     <li>
                       <div class="dropdown">
                           <a href="#" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center dropdown-toggle" role="button" id="savedArticlesDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -129,9 +129,9 @@
                               </span>
                           </a>
                           <div class="dropdown-menu" aria-labelledby="savedArticlesDropdown">
-                              <a class="dropdown-item" href="/profileUser">Profil Anda</a>
-                              <a class="dropdown-item" href="/simpanArtikelView">Artikel Tersimpan</a>
-                              <a class="dropdown-item" href="/simpanVideoView">Video Tersimpan</a>
+                              <a class="dropdown-item" href="/profileUserP">Profil Anda</a>
+                              <a class="dropdown-item" href="/simpanArtikelViewP">Artikel Tersimpan</a>
+                              <a class="dropdown-item" href="/simpanVideoViewP">Video Tersimpan</a>
                           </div>
                       </div>
                   </li>           

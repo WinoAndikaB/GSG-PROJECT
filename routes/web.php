@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\PenulisController;
 use App\Http\Controllers\SuperAdminController;
 use Illuminate\Support\Facades\Route;
 
@@ -188,6 +189,197 @@ use Illuminate\Support\Facades\Route;
             //[User] Tab Edit Ulasan
             Route::post('/simpanEditUlasan/{id}', [PenggunaController::class, 'simpanEditUlasan'])->name('simpanEditUlasan');
     });
+
+
+//------------------------------------------------------------- [Halaman User] ---------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------- [Halaman User] ---------------------------------------------------------------------------------------------------------------
+
+    //[Admin] Membatasi Hak Akases Admin
+    Route::middleware(['user'])->group(function () {
+
+//------------------------------------------------------------- [User] Tab Search ---------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------- [User] Tab Search ---------------------------------------------------------------------------------------------------------
+
+        //Pencarian Artikel
+        Route::get('/search', [PenggunaController::class, 'search'])->name('search');
+
+        //Pencarian Video
+        Route::get('/searchV', [PenggunaController::class, 'searchV'])->name('searchV');
+
+        //Pencarian Event
+        Route::get('/searchE', [PenggunaController::class, 'searchE'])->name('searchE');
+
+//------------------------------------------------------------- [User] Tab Event ---------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------- [User] Tab Event ---------------------------------------------------------------------------------------------------------
+
+        Route::get('/event', [PenggunaController::class, 'event'])->name('event');
+        Route::get('/detailEvent/{id}', [PenggunaController::class, 'detailEvent'])->name('detailEvent');
+        
+//------------------------------------------------------------- [User] Tab Home ---------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------- [User] Tab Home ---------------------------------------------------------------------------------------------------------
+
+        Route::get('/home',[PenggunaController::class,'HomeSetelahLogin'])->name('HomeSetelahLogin');
+        Route::get('/detailArtikel/{id}', [PenggunaController::class, 'showDetailArtikel'])->name('detail.artikel');
+
+        Route::post('/komentarArtikel', [PenggunaController::class, 'storeKomentarArtikel'])->name('storeKomentarArtikel');
+        Route::get('/likeKomentarArtikel/{commentId}', [PenggunaController::class, 'likeKomentarArtikel'])->name('likeKomentarArtikel');
+        Route::get('/deleteKomentarArtikel/{id}', [PenggunaController::class, 'deleteKomentarArtikel'])->name('deleteKomentarArtikel');     
+
+        Route::post('/submit/report', [PenggunaController::class, 'storeLaporanArtikel'])->name('storeLaporanArtikel');
+        Route::post('/submit/reportKomentar', [PenggunaController::class, 'storeLaporanKomentarArtikel'])->name('storeLaporanKomentarArtikel');
+        Route::get('/deleteKomentarA/{id}',[PenggunaController::class,'deleteKomentarA'])->name('deleteKomentarA');
+
+        Route::get('/simpanArtikelView', [PenggunaController::class, 'simpanArtikelView'])->name('simpan.artikelView');
+        Route::post('/simpanArtikelData/{id}', [PenggunaController::class, 'simpanArtikelData'])->name('simpan.artikelData');
+        Route::get('/deleteSimpanArt/{id}', [PenggunaController::class, 'deleteSimpanArt'])->name('simpan.deleteArtikel');
+
+//------------------------------------------------------------- [User] Tab Video ---------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------- [User] Tab Video ---------------------------------------------------------------------------------------------------------
+
+        Route::get('/Video',[PenggunaController::class,'Video'])->name('Video');
+        Route::get('/detailVideo/{id}', [PenggunaController::class, 'showDetailVideo'])->name('showDetailVideo');
+
+        Route::post('/komentarVideo', [PenggunaController::class, 'storeKomentarVideo'])->name('storeKomentarVideo');
+        Route::get('/likeKomentarVideo/{commentId}', [PenggunaController::class, 'likeKomentarVideo'])->name('likeKomentarVideo'); 
+
+        Route::post('/submitV/reportV', [PenggunaController::class, 'storeLaporanVideo'])->name('storeLaporanVideo');
+        Route::post('/submit/reportKomentarV', [PenggunaController::class, 'storeLaporanKomentarVideo'])->name('storeLaporanKomentarVideo');
+        Route::get('/deleteKomentarV/{id}', [PenggunaController::class, 'deleteKomentarV'])->name('deleteKomentarVideo');
+
+        Route::get('/simpanVideoView', [PenggunaController::class, 'simpanVideoView'])->name('simpan.videoView');
+        Route::post('/simpanVideoData/{videoId}', [PenggunaController::class, 'simpanVideoData'])->name('simpan.videoData')->middleware('auth'); 
+        Route::get('/deleteSimpanVid/{id}', [PenggunaController::class, 'deleteSimpanVid'])->name('simpan.deleteVideo');
+
+//------------------------------------------------------------- [User] Tab Kategori ---------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------- [User] Tab Kategori ---------------------------------------------------------------------------------------------------------
+
+        Route::get('/kategori', [PenggunaController::class, 'kategori'])->name('kategori');
+        Route::get('/kategoriA/{kategori}', [PenggunaController::class, 'kategoriA'])->name('kategoriA');
+        Route::get('/kategoriV/{kategori}', [PenggunaController::class, 'kategoriV'])->name('kategoriV');
+
+//------------------------------------------------------------- [User] Tab Profil ---------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------- [User] Tab Profil ---------------------------------------------------------------------------------------------------------
+
+        Route::get('/profileUser', [PenggunaController::class, 'profileUser'])->name('profileUser');
+        Route::put('/profileUser/updateUser/{id}',[PenggunaController::class,'updateUser'])->name('updateUser');
+
+        Route::get('/profilPenulis', [PenggunaController::class, 'profilPenulis'])->name('profilPenulis');
+     
+//------------------------------------------------------------- [User] Tab About ---------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------- [User] Tab About ---------------------------------------------------------------------------------------------------------
+
+        Route::get('/about', [PenggunaController::class, 'about'])->name('about');
+
+//------------------------------------------------------------- [User] Tab Syarat & Ketentuan ---------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------- [User] Tab Syarat & Ketentuan ---------------------------------------------------------------------------------------------------------
+
+        Route::get('/syaratKetentuanA', [PenggunaController::class, 'syaratKetentuanA'])->name('syaratKetentuanA');
+
+//------------------------------------------------------------- [User] Tab Ulasan ---------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------- [User] Tab Ulasan ---------------------------------------------------------------------------------------------------------
+
+            //[User] Tab Halaman Ulasan
+            Route::get('/ulasan', [PenggunaController::class, 'ulasan'])->name('ulasan');
+
+            //[User] Tab Tambah Ulasan
+            Route::post('/storeUlasan',[PenggunaController::class,'storeUlasan']);
+
+            //[User] Tab Delete Ulasan
+            Route::get('/deleteUlasan/{id}', [PenggunaController::class, 'deleteUlasan'])->name('deleteUlasan');
+
+            //[User] Tab Like & Dislike Ulasan
+            Route::get('/likeUlasan/{id}', [PenggunaController::class, 'likeUlasan'])->name('likeUlasan');
+            Route::get('/dislikeUlasan/{id}', [PenggunaController::class, 'dislikeUlasan'])->name('dislikeUlasan');
+
+            //[User] Tab Edit Ulasan
+            Route::post('/simpanEditUlasan/{id}', [PenggunaController::class, 'simpanEditUlasan'])->name('simpanEditUlasan');
+    });
+
+//------------------------------------------------------------- [Halaman Penulis] ---------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------- [Halaman Penulis] ---------------------------------------------------------------------------------------------------------------
+
+    //[Penulis] Membatasi Hak Akases Admin
+    Route::middleware(['penulis'])->group(function () {
+
+
+                //Pencarian 
+                Route::get('/searchP', [PenulisController::class, 'searchP'])->name('searchP');
+                Route::get('/searchVP', [PenulisController::class, 'searchVP'])->name('searchVP');
+                Route::get('/searchEP', [PenulisController::class, 'searchEP'])->name('searchEP');
+        
+                // Event 
+                Route::get('/eventP', [PenulisController::class, 'eventP'])->name('eventP');
+                Route::get('/detailEventP/{id}', [PenulisController::class, 'detailEventP'])->name('detailEventP');
+                
+                // Home 
+                Route::get('/homeP',[PenulisController::class,'HomePenulis'])->name('HomePenulis');
+                Route::get('/detailArtikelP/{id}', [PenulisController::class, 'showDetailArtikelP'])->name('detail.artikelP');
+        
+                Route::post('/komentarArtikelP', [PenulisController::class, 'storeKomentarArtikelP'])->name('storeKomentarArtikelP');
+                Route::get('/likeKomentarArtikelP/{commentId}', [PenulisController::class, 'likeKomentarArtikelP'])->name('likeKomentarArtikelP');
+                Route::get('/deleteKomentarArtikelP/{id}', [PenulisController::class, 'deleteKomentarArtikelP'])->name('deleteKomentarArtikelP');     
+        
+                Route::post('/submitP/reportP', [PenulisController::class, 'storeLaporanArtikelP'])->name('storeLaporanArtikelP');
+                Route::post('/submitP/reportKomentaP', [PenulisController::class, 'storeLaporanKomentarArtikelP'])->name('storeLaporanKomentarArtikelP');
+                Route::get('/deleteKomentarAP/{id}',[PenulisController::class,'deleteKomentarAP'])->name('deleteKomentarAP');
+        
+                Route::get('/simpanArtikelViewP', [PenulisController::class, 'simpanArtikelViewP'])->name('simpan.artikelViewP');
+                Route::post('/simpanArtikelDataP/{id}', [PenulisController::class, 'simpanArtikelDataP'])->name('simpan.artikelDataP');
+                Route::get('/deleteSimpanArtP/{id}', [PenulisController::class, 'deleteSimpanArtP'])->name('simpan.deleteArtikelP');
+        
+                // Video 
+                Route::get('/VideoP',[PenulisController::class,'VideoP'])->name('VideoP');
+                Route::get('/detailVideoP/{id}', [PenulisController::class, 'showDetailVideoP'])->name('showDetailVideoP');
+        
+                Route::post('/komentarVideoP', [PenulisController::class, 'storeKomentarVideoP'])->name('storeKomentarVideoP');
+                Route::get('/likeKomentarVideoP/{commentId}', [PenulisController::class, 'likeKomentarVideoP'])->name('likeKomentarVideoP'); 
+        
+                Route::post('/submitVP/reportVP', [PenulisController::class, 'storeLaporanVideoP'])->name('storeLaporanVideoP');
+                Route::post('/submitP/reportKomentarVP', [PenulisController::class, 'storeLaporanKomentarVideoP'])->name('storeLaporanKomentarVideoP');
+                Route::get('/deleteKomentarVP/{id}', [PenulisController::class, 'deleteKomentarVP'])->name('deleteKomentarVideoP');
+        
+                Route::get('/simpanVideoViewP', [PenulisController::class, 'simpanVideoViewP'])->name('simpan.videoViewP');
+                Route::post('/simpanVideoDataP/{videoId}', [PenulisController::class, 'simpanVideoDataP'])->name('simpan.videoDataP')->middleware('auth'); 
+                Route::get('/deleteSimpanVidP/{id}', [PenulisController::class, 'deleteSimpanVidP'])->name('simpan.deleteVideoP');
+        
+                // Kategori 
+                Route::get('/kategoriP', [PenulisController::class, 'kategoriP'])->name('kategoriP');
+                Route::get('/kategoriAP/{kategori}', [PenulisController::class, 'kategoriAP'])->name('kategoriAP');
+                Route::get('/kategoriVP/{kategori}', [PenulisController::class, 'kategoriVP'])->name('kategoriVP');
+        
+                // Profile 
+                Route::get('/profileP', [PenulisController::class, 'profileP'])->name('profileP');
+                Route::put('/profileP/updateUser/{id}',[PenulisController::class,'updateP'])->name('updateP');
+        
+                Route::get('/profilPenulisP', [PenulisController::class, 'profilPenulisP'])->name('profilPenulisP');
+             
+   // Event 
+                Route::get('/aboutP', [PenulisController::class, 'aboutP'])->name('aboutP');
+        
+        //------------------------------------------------------------- [Penulis] Tab Syarat & Ketentuan ---------------------------------------------------------------------------------------------------------
+        //------------------------------------------------------------- [Penulis] Tab Syarat & Ketentuan ---------------------------------------------------------------------------------------------------------
+        
+                Route::get('/syaratKetentuanAP', [PenulisController::class, 'syaratKetentuanAP'])->name('syaratKetentuanAP');
+        
+        //------------------------------------------------------------- [Penulis] Tab Ulasan ---------------------------------------------------------------------------------------------------------
+        //------------------------------------------------------------- [Penulis] Tab Ulasan ---------------------------------------------------------------------------------------------------------
+        
+                    //[User] Tab Halaman Ulasan
+                    Route::get('/ulasanP', [PenulisController::class, 'ulasanP'])->name('ulasanP');
+        
+                    //[User] Tab Tambah Ulasan
+                    Route::post('/storeUlasanP',[PenulisController::class,'storeUlasanP']);
+        
+                    //[User] Tab Delete Ulasan
+                    Route::get('/deleteUlasanP/{id}', [PenulisController::class, 'deleteUlasanP'])->name('deleteUlasanP');
+        
+                    //[User] Tab Like & Dislike Ulasan
+                    Route::get('/likeUlasanP/{id}', [PenulisController::class, 'likeUlasanP'])->name('likeUlasanP');
+                    Route::get('/dislikeUlasanP/{id}', [PenulisController::class, 'dislikeUlasanP'])->name('dislikeUlasanP');
+        
+                    //[User] Tab Edit Ulasan
+                    Route::post('/simpanEditUlasanP/{id}', [PenulisController::class, 'simpanEditUlasanP'])->name('simpanEditUlasanP');
+            });
 
 //------------------------------------------------------------- [Halaman Admin] ---------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------- [Halaman Admin] ---------------------------------------------------------------------------------------------------------------

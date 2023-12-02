@@ -61,16 +61,16 @@
             <div class="col-12">
               <nav class="main-nav">
                 <ul class="nav">
-                    <li class="scroll-to-section"><a href="/home" class="active">Home</a></li>
-                    <li class="scroll-to-section"><a href="/home">Trending</a></li>
-                    <li class="scroll-to-section"><a href="/home">Artikel</a></li>
-                    <li class="scroll-to-section"><a href="/Video" class="">Video</a></li>
-                    <li class="scroll-to-section"><a href="/kategori">Kategori</a></li>
-                    <li class="scroll-to-section"><a href="/event">Event</a></li>
-                    <li class="scroll-to-section"><a href="/ulasan" class="text-center">Ulasan</a></li>
-                    <li class="scroll-to-section"><a href="/about">Tentang</a></li>
+                    <li class="scroll-to-section"><a href="/homeP" class="active">Home</a></li>
+                    <li class="scroll-to-section"><a href="/homeP">Trending</a></li>
+                    <li class="scroll-to-section"><a href="/homeP">Artikel</a></li>
+                    <li class="scroll-to-section"><a href="/VideoP" class="">Video</a></li>
+                    <li class="scroll-to-section"><a href="/kategoriP">Kategori</a></li>
+                    <li class="scroll-to-section"><a href="/eventP">Event</a></li>
+                    <li class="scroll-to-section"><a href="/ulasanP" class="text-center">Ulasan</a></li>
+                    <li class="scroll-to-section"><a href="/aboutP">Tentang</a></li>
                     <li>
-                      <form action="{{ route('search') }}" method="GET" class="input-group">
+                      <form action="{{ route('searchP') }}" method="GET" class="input-group">
                         <input type="text" name="search" class="form-control" placeholder="Cari Artikel..." aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ request('search') }}">
                         <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
                     </form>
@@ -107,9 +107,9 @@
                               </span>
                           </a>
                           <div class="dropdown-menu" aria-labelledby="savedArticlesDropdown">
-                            <a class="dropdown-item" href="/profileUser">Profil Anda</a>
-                            <a class="dropdown-item" href="/simpanArtikelView">Artikel Tersimpan</a>
-                            <a class="dropdown-item" href="/simpanVideoView">Video Tersimpan</a>
+                            <a class="dropdown-item" href="/profileP">Profil Anda</a>
+                            <a class="dropdown-item" href="/simpanArtikelViewP">Artikel Tersimpan</a>
+                            <a class="dropdown-item" href="/simpanVideoViewP">Video Tersimpan</a>
                         </div>
                       </div>
                   </li>                  
@@ -176,9 +176,10 @@
                                 <li class="date"><i class="fa fa-clock-o"></i>{{$todayDate}}</li>
                             </ul>
                         </div>
-                        <h2>Provide you a qualified articles and informative articles from a lot sources.</h2>
+                        <h2>Provide you a qualified articles and informative articles from a lot sources.
+                        </h2>
                         <p></p>
-                        <a class="btn btn-blue" href="/about">About Us</a>
+                        <a class="btn btn-blue" href="/aboutP">About Us</a>
                     </div>
                 </div>
             </div>
@@ -227,7 +228,7 @@
                                           @endphp
                                         </p>
                                       </div>
-                                      <h6 class="title"><a href="{{ route('detail.artikel', ['id' => $item->id]) }}">{{$item->judulArtikel}}</a></h6>
+                                      <h6 class="title"><a href="{{ route('detail.artikelP', ['id' => $item->id]) }}">{{$item->judulArtikel}}</a></h6>
                                   </div>
                               </div>
                           </div>
@@ -276,7 +277,7 @@
                                                 </li>
                                               </ul>
                                           </div>
-                                          <h6 class="title"><a href="{{ route('detail.artikel', ['id' => $item->id]) }}">{{$item->judulArtikel}}</a></h6>
+                                          <h6 class="title"><a href="{{ route('detail.artikelP', ['id' => $item->id]) }}">{{$item->judulArtikel}}</a></h6>
                                       </div>
                                   </div>
                               </div>
@@ -526,7 +527,7 @@
                               @endphp
                             </p>
                         </div>
-                        <h6 class="title"><a href="{{ route('detail.artikel', ['id' => $item->id]) }}">{{ $item->judulArtikel }}</a></h6>
+                        <h6 class="title"><a href="{{ route('detail.artikelP', ['id' => $item->id]) }}">{{ $item->judulArtikel }}</a></h6>
                     </div>
                 </div>
             </div>

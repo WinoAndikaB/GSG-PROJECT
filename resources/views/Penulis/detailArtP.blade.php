@@ -168,9 +168,9 @@
                               </span>
                           </a>
                           <div class="dropdown-menu" aria-labelledby="savedArticlesDropdown">
-                            <a class="dropdown-item" href="/profileUser">Profil Anda</a>
-                            <a class="dropdown-item" href="/simpanArtikelView">Artikel Tersimpan</a>
-                            <a class="dropdown-item" href="/simpanVideoView">Video Tersimpan</a>
+                            <a class="dropdown-item" href="/profileP">Profil Anda</a>
+                            <a class="dropdown-item" href="/simpanArtikelViewP">Artikel Tersimpan</a>
+                            <a class="dropdown-item" href="/simpanVideoViewP">Video Tersimpan</a>
                         </div>
                       </div>
                   </li>           
@@ -248,7 +248,7 @@
           
             <ul class="list-inline">
               <li class="list-inline-item">
-                <form action="{{ route('simpan.artikelData', $article->id) }}" method="POST">
+                <form action="{{ route('simpan.artikelDataP', $article->id) }}" method="POST">
                     @csrf
                     <input type="hidden" name="artikel_id" value="{{ $article->id }}">
                     <button type="submit" style="background-color: orange; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
@@ -359,7 +359,7 @@
     <br>
     <br>
 
-    <form action="/komentarArtikel" method="post">
+    <form action="/komentarArtikelP" method="post">
       @csrf
       <input type="hidden" name="artikel_id" value="{{ $article->id }}"> 
       <label for="" style="font-size: 24px;"><strong>{{$totalKomentarArtikels}} Komentar</strong></label><br>
@@ -384,12 +384,12 @@
                       {{ $komentar->pesan }}
                   </p>
                   <div style="align-items: right; margin-top: 2px; margin-bottom: 10px;">
-                    <a href="{{ route('likeKomentarArtikel', ['commentId' => $komentar->id]) }}">
+                    <a href="{{ route('likeKomentarArtikelP', ['commentId' => $komentar->id]) }}">
                       <i class="fa fa-thumbs-up"></i>  {{ $komentar->likes->count() }} likes
                   </a>  
 
                      @if(Auth::check() && Auth::user()->id == $komentar->user_id)
-                      <a href="{{ route('deleteKomentarArtikel', ['id' => $komentar->id]) }}">
+                      <a href="{{ route('deleteKomentarArtikelP', ['id' => $komentar->id]) }}">
                           <i class="fas fa-trash"></i>Hapus
                       </a>
                      @endif
@@ -453,10 +453,10 @@
           <div class="text-center">
             <div class="buttons" style="display: flex; justify-content: center; gap: 10px;">
                 <div class="green-button">
-                    <a href="/home">Kembali</a>
+                    <a href="/homeP">Kembali</a>
                 </div>
                 <div class="orange-button">
-                    <a href="/ulasan">Ulasan</a>
+                    <a href="/ulasanP">Ulasan</a>
                 </div>
             </div>
         </div>
