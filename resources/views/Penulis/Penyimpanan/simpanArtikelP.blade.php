@@ -15,7 +15,7 @@
         rel="stylesheet">
 
 
-    <title>Video Tersimpan - Katakey</title>
+    <title>Artikel Tersimpan - Katakey</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -116,14 +116,14 @@
             <div class="col-12">
               <nav class="main-nav">
                 <ul class="nav">
-                    <li class="scroll-to-section"><a href="/homeP">Home</a></li>
-                    <li class="scroll-to-section"><a href="/homeP">Trending</a></li>
-                    <li class="scroll-to-section"><a href="/homeP">Artikel</a></li>
-                    <li class="scroll-to-section"><a href="/VideoP" class="active">Video</a></li>
-                    <li class="scroll-to-section"><a href="/kategoriP">Kategori</a></li>
-                    <li class="scroll-to-section"><a href="/eventP">Event</a></li>
-                    <li class="scroll-to-section"><a href="/ulasanP">Ulasan</a></li>
-                    <li class="scroll-to-section"><a href="/aboutP">Tentang</a></li>
+                    <li class="scroll-to-section"><a href="/home">Home</a></li>
+                    <li class="scroll-to-section"><a href="/home">Trending</a></li>
+                    <li class="scroll-to-section"><a href="/home" class="active">Artikel</a></li>
+                    <li class="scroll-to-section"><a href="/Video">Video</a></li>
+                    <li class="scroll-to-section"><a href="/kategori">Kategori</a></li>
+                    <li class="scroll-to-section"><a href="/event">Event</a></li>
+                    <li class="scroll-to-section"><a href="/ulasan">Ulasan</a></li>
+                    <li class="scroll-to-section"><a href="/about">Tentang</a></li>
                     <li>
                       <div class="dropdown">
                           <a href="#" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center dropdown-toggle" role="button" id="savedArticlesDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -182,7 +182,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="header-text">
-                    <h2>List Video Yang Tersimpan</h2>
+                    <h2>List Artikel Yang Tersimpan</h2>
                 </div>
             </div>
         </div>
@@ -213,39 +213,54 @@
           
             <br>
             
-            @if($savedVideos->isEmpty())
-            <div class="text-center">
-                <h6 style="color: orange; font-Helvetica: Helvetica;">No Videos Saved</h6>
-                <h4 style="font-Helvetica: 'Your Cool Font';">Tidak Ada Video Yang Tersimpan</h4>
+              @if($savedArtikels->isEmpty())
+              <div class="text-center">
+                <h6 style="color: orange; font-Helvetica : Helvetica ;">No Articles Saved</h6>
+                <h4 style="font-Helvetica : 'Your Cool Font';">Tidak Ada Artikel Yang Tersimpan</h4>
             </div>
-        @else
-            @foreach($savedVideos as $item)
-                <div class="row" style="text-align: justify">
-                    <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
-                        <div class="d-flex justify-content-center">
-                            <iframe width="560" height="200" src="{{ $item->video->linkVideo }}" frameborder="0" allowfullscreen></iframe>
-                        </div>
-                    </div>
-                    <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
-                        <a href="{{ route('showDetailVideo', ['id' => $item->video->id]) }}" style="color: rgba(242, 100, 25, 1)">
-                            <h4 style="text-align: left">{{ $item->video->judulVideo }}</h4>
-                            <span class="d-flex"><b>{{ $item->video->uploader }}</b></span>
-                        </a>
-                        <p>{!! substr(strip_tags($item->video->deskripsiVideo), 0, 400) . (strlen(strip_tags($item->video->deskripsiVideo)) > 400 ? '...' : '') !!}</p>
-                    </div>
-                    <span style="text-align: right; color: rgba(165, 165, 165, 1);">
-                        <p>
-                            @php
-                            // ... (your time calculation logic)
-                            @endphp
-                            <a href="{{ route('simpan.deleteVideo', ['id' => $item->id]) }}"><i class="fas fa-trash"></i></a>
-                        </p>
-                    </span>
-                </div>
-                <hr>
-            @endforeach
-        @endif
-        
+          @else
+              @foreach($savedArtikels as $item)
+              <div class="row" style="text-align: justify">
+                  <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
+                      <div class="d-flex justify-content-center">
+                          <img src="{{ asset('gambarArtikel/'.$item->artikel->gambarArtikel) }}" style="max-width: 100%; height: auto; border-radius: 14px">
+                      </div>
+                  </div>
+                  <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
+                      <a href="{{ route('detail.artikel', ['id' => $item->artikel->id]) }}" style="color: rgba(242, 100, 25, 1)">
+                          <h4 style="text-align: left">{{$item->artikel->judulArtikel}}</h4>
+                          <span class="d-flex"><b>{{ $item->artikel->penulis }}</b></span>
+                      </a>
+                      <p>{!! substr(strip_tags($item->artikel->deskripsi), 0, 400) . (strlen(strip_tags($item->artikel->content)) > 400 ? '...' : '') !!}</p>
+                  </div>
+                  <span style="text-align: right; color: rgba(165, 165, 165, 1);">
+                      <p>
+                          @php
+                          $ulasanCreatedAt = \Carbon\Carbon::parse($item->artikel['created_at']);
+                          $sekarang = \Carbon\Carbon::now();
+                          $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
+          
+                          if ($selisihWaktu < 60) {
+                              echo $selisihWaktu . ' Menit Lalu';
+                          } elseif ($selisihWaktu < 1440) {
+                              echo floor($selisihWaktu / 60) . ' Jam Lalu';
+                          } elseif ($selisihWaktu < 10080) {
+                              echo floor($selisihWaktu / 1440) . ' Hari Lalu';
+                          } elseif ($selisihWaktu < 43200) {
+                              echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
+                          } elseif ($selisihWaktu < 525600) {
+                              echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
+                          } else {
+                              echo floor($selisihWaktu / 525600) . ' Tahun Lalu';
+                          }
+                          @endphp
+                          <a href="{{ route('simpan.deleteArtikelP', ['id' => $item->id]) }}"><i class="fas fa-trash"></i></a>
+                      </p>
+                  </span>
+              </div>
+              <hr>
+          @endforeach
+                  @endif
               </div>
           </div>
         </div>

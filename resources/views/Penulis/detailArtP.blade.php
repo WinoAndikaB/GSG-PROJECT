@@ -209,14 +209,14 @@
           <section>        
               <h1 style="color: rgba(47, 72, 88, 1);">{{ $article->judulArtikel }}</h1><br>
             <div class="simple-profile-container" style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
-            <a href="/profilPenulis" style="text-decoration: none; color: inherit;">
+            <a href="/profilPenulisP" style="text-decoration: none; color: inherit;">
                 <div class="simple-profile-picture" style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #3498db;">
         
                 </div>
             </a>
 
     <div class="simple-profile-details" style="flex: 1;">
-        <a href="/profilPenulis" style="text-decoration: none; color: inherit;">
+        <a href="/profilPenulisP" style="text-decoration: none; color: inherit;">
             <span class="simple-profile-name" style="color: #2c3e50; font-weight: bold; font-size: 1.2em; display: block; margin-bottom: 4px;">
                 {{ $article->penulis }}
             </span>
@@ -225,7 +225,7 @@
         <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;">Penulis</span>
     </div>
 
-      <a href="/profilPenulis" style="text-decoration: none; color: inherit;">
+      <a href="/profilPenulisP" style="text-decoration: none; color: inherit;">
           <div class="simple-follow-button" style="background-color: #3498db; padding: 8px 16px; border-radius: 20px; cursor: pointer;">
               <span style="color: #fff; font-weight: bold; font-size: 1em; display: block;">Follow</span>
           </div>

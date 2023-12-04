@@ -185,7 +185,7 @@
               <h1 style="color: rgba(47, 72, 88, 1);">{{ $video->judulVideo }}</h1><br>
               
           <div class="simple-profile-container" style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
-            <a href="/profilPenulis" style="text-decoration: none; color: inherit;">
+            <a href="/profilPenulisP" style="text-decoration: none; color: inherit;">
                 <div class="simple-profile-picture" style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #3498db;">
                     <?php
                     $fotoProfil = Auth::user()->fotoProfil;
@@ -203,7 +203,7 @@
             </a>
         
             <div class="simple-profile-details" style="flex: 1;">
-                <a href="/profilPenulis" style="text-decoration: none; color: inherit;">
+                <a href="/profilPenulisP" style="text-decoration: none; color: inherit;">
                     <span class="simple-profile-name" style="color: #2c3e50; font-weight: bold; font-size: 1.2em; display: block; margin-bottom: 4px;">
                         {{ $video->uploader }}
                     </span>
@@ -212,7 +212,7 @@
                 <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;">Uploader</span>
             </div>
         
-              <a href="/profilPenulis" style="text-decoration: none; color: inherit;">
+              <a href="/profilPenulisP" style="text-decoration: none; color: inherit;">
                   <div class="simple-follow-button" style="background-color: #3498db; padding: 8px 16px; border-radius: 20px; cursor: pointer;">
                       <span style="color: #fff; font-weight: bold; font-size: 1em; display: block;">Follow</span>
                   </div>
@@ -241,7 +241,7 @@
 
           <ul class="list-inline">
             <li class="list-inline-item">
-              <form action="{{ route('simpan.videoData', ['videoId' => $video->id]) }}" method="POST">
+              <form action="{{ route('simpan.videoDataP', ['videoId' => $video->id]) }}" method="POST">
                 @csrf
                   <input type="hidden" name="video_id" value="{{ $video->id }}">
                   <button type="submit" style="background-color: orange; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">

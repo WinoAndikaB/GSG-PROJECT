@@ -34,7 +34,7 @@ class PenulisController extends Controller
         $artikels = artikels::where('judulArtikel', 'like', '%' . $searchTerm . '%')
             ->get();
     
-        return view('Penulis.searchP', compact('artikels'));
+        return view('Penulis.Pencarian.searchP', compact('artikels'));
     }
 
     //[User] Search Video
@@ -44,7 +44,7 @@ class PenulisController extends Controller
         $videos = video::where('judulVideo', 'like', '%' . $searchTerm . '%')
             ->get();
     
-        return view('Penulis.searchVP', compact('videos'));
+        return view('Penulis.Pencarian.searchVP', compact('videos'));
     }
 
     //[User] Search Event
@@ -54,7 +54,7 @@ class PenulisController extends Controller
         $searchE = Event::where('namaEvent', 'like', '%' . $searchTerm . '%')
             ->get();
     
-        return view('Penulis.searchEP', compact('searchE'));
+        return view('Penulis.Pencarian.searchEP', compact('searchE'));
     }
 
 
@@ -171,7 +171,7 @@ public function showDetailArtikelP($id)
         // Retrieve the saved articles for the user
         $savedArtikels = $user->simpanArtikels;
     
-        return view('Penulis.simpanArtikelP', compact('savedArtikels'));
+        return view('Penulis.Penyimpanan.simpanArtikelP', compact('savedArtikels'));
     }
     
     public function simpanArtikelDataP(Request $request, $id)
@@ -330,7 +330,7 @@ public function showDetailVideoP($id)
        $user = auth()->user();
        $savedVideos = $user->simpanVideos;
    
-       return view('Penulis.simpanVideoP', compact('savedVideos'));
+       return view('Penulis.Penyimpanan.simpanVideoP', compact('savedVideos'));
    }
    
    

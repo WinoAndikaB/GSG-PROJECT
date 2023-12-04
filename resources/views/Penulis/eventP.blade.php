@@ -161,7 +161,7 @@
                     <li class="scroll-to-section"><a href="/ulasanP">Ulasan</a></li>
                     <li class="scroll-to-section"><a href="/aboutP">Tentang</a></li>
                     <li>
-                      <form action="{{ route('searchE') }}" method="GET" class="input-group">
+                      <form action="{{ route('searchEP') }}" method="GET" class="input-group">
                         <input type="text" name="searchE" class="form-control" placeholder="Cari Event..." aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ request('searchE') }}">
                         <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
                     </form>
