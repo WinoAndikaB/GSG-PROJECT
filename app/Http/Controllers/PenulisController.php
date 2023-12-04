@@ -658,46 +658,93 @@ public function deleteUlasanP($id)
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-//[User-Profil] Halaman Profil
-public function profileP()
-{
-    return view('Penulis.profileP');
-}  
+    public function profileP()
+    {
+        return view('Penulis.profileP');
+    } 
+    
+    public function updateUserP(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->update([
+            'name' => $request->input('name'),
+            'alamat' => $request->input('alamat'),
+            'instagram' => $request->input('instagram'),
+            'facebook' => $request->input('facebook'),
+            'aboutme' => $request->input('aboutme'),
+        ]);
+    
+        // Handle Upload Foto
+        if ($request->hasFile('fotoProfil')) {
+            $image = $request->file('fotoProfil');
+    
+            // Membuat Nama File Foto
+            $filename = 'fotoProfil.' . $user->name . ' ' . $user->username . '.' . $image->getClientOriginalExtension();
+    
+            // Menyimpan Foto Sesuai Direktori
+            $image->move(public_path('fotoProfil'), $filename);
+    
+            // Update Nama File Foto
+            $user->fotoProfil = $filename;
+            $user->save();
+        }
+    
+        return redirect('/profileP');
+    }
 
-    //[User-Profil] Halaman Profil
-public function profilPenulisP()
-{
-  return view('Penulis.profilePenulisP');
-}  
+    public function profilPenulisP()
+    {
+    return view('Penulis.profilePenulisP');
+    }  
+
+    public function berhentiPenulis()
+    {
+        return view('Penulis.berhentiPenulis');
+    }  
 
 
-  //[User-Profil] Edit Profil
-  public function updateUserP(Request $request, $id)
-  {
-      $user = User::findOrFail($id);
-      $user->update([
-          'name' => $request->input('name'),
-          'alamat' => $request->input('alamat'),
-          'instagram' => $request->input('instagram'),
-          'facebook' => $request->input('facebook'),
-          'aboutme' => $request->input('aboutme'),
-      ]);
-  
-      // Handle Upload Foto
-      if ($request->hasFile('fotoProfil')) {
-          $image = $request->file('fotoProfil');
-  
-          // Membuat Nama File Foto
-          $filename = 'fotoProfil.' . $user->name . ' ' . $user->username . '.' . $image->getClientOriginalExtension();
-  
-          // Menyimpan Foto Sesuai Direktori
-          $image->move(public_path('fotoProfil'), $filename);
-  
-          // Update Nama File Foto
-          $user->fotoProfil = $filename;
-          $user->save();
-      }
-  
-      return redirect('/profileP');
-  }
+
+    public function daftarArtikelP()
+    {
+        return view('Penulis.TambahArtikel.daftarArtikelP');
+    }  
+
+    public function formTambahArtikelP()
+    {
+        $kategoris = kategori::all();
+
+        return view('Penulis.TambahArtikel.formTambahArtikelP', compact('kategoris'));
+    }  
+
+    public function komentarArtikelP()
+    {
+        return view('Penulis.TambahArtikel.komentarArtikelP');
+    }  
+
+    public function laporanArtikelP()
+    {
+        return view('Penulis.TambahArtikel.laporanArtikelP');
+    }  
+
+
+
+    public function daftarVideoP()
+    {
+        return view('Penulis.TambahVideo.daftarVideoP');
+    }  
+
+    public function formTambahVideoP()
+    {
+        return view('Penulis.TambahVideo.formTambahVideoP');
+    }  
+
+    public function komentarVideoP()
+    {
+        return view('Penulis.TambahVideo.komentarVideoP');
+    }  
+
+    public function laporanVideoP()
+    {
+        return view('Penulis.TambahVideo.laporanVideoP');
+    }  
 }

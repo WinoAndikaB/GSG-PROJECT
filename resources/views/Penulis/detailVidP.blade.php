@@ -363,7 +363,7 @@
         </div>
     </div>
 
-    <form action="/komentarVideo" method="post">
+    <form action="/komentarVideoP" method="post">
       @csrf
       <input type="hidden" name="video_id" value="{{ $video->id }}"> 
       <label for="" style="font-size: 24px;"><strong>{{$totalKomentarVideo}} Komentar</strong></label><br>
@@ -395,7 +395,7 @@
                   </a>
 
                  @if(Auth::check() && Auth::user()->id == $komentar->user_id)
-                    <a href="{{ route('deleteKomentarVideo', ['id' => $komentar->id]) }}">
+                    <a href="{{ route('deleteKomentarVideoP', ['id' => $komentar->id]) }}">
                         <i class="fas fa-trash"></i>Hapus
                     </a>
                   @endif
@@ -461,10 +461,10 @@
           <div class="text-center">
             <div class="buttons" style="display: flex; justify-content: center; gap: 10px;">
                 <div class="green-button">
-                    <a href="/home">Kembali</a>
+                    <a href="/homeP">Kembali</a>
                 </div>
                 <div class="orange-button">
-                    <a href="/ulasan">Ulasan</a>
+                    <a href="/ulasanP">Ulasan</a>
                 </div>
             </div>
         </div>

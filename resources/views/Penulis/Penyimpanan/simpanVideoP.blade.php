@@ -227,7 +227,7 @@
                         </div>
                     </div>
                     <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
-                        <a href="{{ route('showDetailVideo', ['id' => $item->video->id]) }}" style="color: rgba(242, 100, 25, 1)">
+                        <a href="{{ route('showDetailVideoP', ['id' => $item->video->id]) }}" style="color: rgba(242, 100, 25, 1)">
                             <h4 style="text-align: left">{{ $item->video->judulVideo }}</h4>
                             <span class="d-flex"><b>{{ $item->video->uploader }}</b></span>
                         </a>

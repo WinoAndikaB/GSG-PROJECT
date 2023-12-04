@@ -15,7 +15,7 @@ class Video extends Model
 
     public function komentarVideo()
     {
-        return $this->hasMany(KomentarVideo::class, 'video_id');
+        return $this->hasMany(komentar_video::class, 'video_id');
     }
 
     public function simpanVideos()

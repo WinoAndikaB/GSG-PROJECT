@@ -9,294 +9,154 @@ use App\Http\Controllers\SuperAdminController;
 use Illuminate\Support\Facades\Route;
 
 
+        
+//------------------------------------------------------------- [Halaman Login] ---------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------- [Halaman Login] ---------------------------------------------------------------------------------------------------------------
+
+                Route::get('/login',[LoginController::class,'log']);
+                Route::post('/login',[LoginController::class,'login'])->name('login');
+
+                //[Non-User] Tab Register User
+                Route::get('/register',[LoginController::class,'register']);
+                Route::post('/registerUser',[LoginController::class,'registerUser']);
+
+                //[Non-User] Tab Lupa Password User
+                Route::get('/lupaPassword',[LoginController::class,'lupaPassword']);
+                Route::post('/lupaPasswordpost',[LoginController::class,'kirimEmail']);
+                Route::get('/password/reset/{token}', [LoginController::class, 'resetPassword']);
+                Route::post('/updatePassword', [LoginController::class, 'updatePassword']);
+
+
+                //[Non-User] Tab Register Logout
+                Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 //------------------------------------------------------------- [Halaman Non-User] ---------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------- [Halaman Non-User] ---------------------------------------------------------------------------------------------------------------
 
-        //[Non-User] Tab Home landing Page
-        Route::get('/', [LandingPageController::class, 'landingPage'])->name('landingPage');
-        Route::get('/detailArtikelLP/{id}', [LandingPageController::class, 'showDetailLPArtikel'])->name('showDetailLPArtikel');
+                //[Non-User] Tab Home landing Page
+                Route::get('/', [LandingPageController::class, 'landingPage'])->name('landingPage');
+                Route::get('/detailArtikelLP/{id}', [LandingPageController::class, 'showDetailLPArtikel'])->name('showDetailLPArtikel');
 
-//------------------------------------------------------------- [Non-User] Tab Search ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [Non-User] Tab Search ---------------------------------------------------------------------------------------------------------
+                //[Non-User] Pencarian Video
+                Route::get('/searchLP', [LandingPageController::class, 'searchLP'])->name('searchLP');
 
-        //Pencarian Video
-        Route::get('/searchLP', [LandingPageController::class, 'searchLP'])->name('searchLP');
+                //[Non-User] Pencarian Video
+                Route::get('/searchLPV', [LandingPageController::class, 'searchLPV'])->name('searchLPV');
 
-        //Pencarian Video
-        Route::get('/searchLPV', [LandingPageController::class, 'searchLPV'])->name('searchLPV');
+                //[Non-User] Pencarian Event
+                Route::get('/searchEvent', [LandingPageController::class, 'searchEvent'])->name('searchEvent');
 
-        //Pencarian Event
-        Route::get('/searchEvent', [LandingPageController::class, 'searchEvent'])->name('searchEvent');
+                //[Non-User] Tab Event landing Page
+                Route::get('/eventLandingPage', [LandingPageController::class, 'eventLandingPage'])->name('eventLandingPage');
+                Route::get('/detailEventLP/{id}', [LandingPageController::class, 'detailEventLP'])->name('detailEventLP');
 
-//------------------------------------------------------------- [Non-User] Tab Search ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [Non-User] Tab Search ---------------------------------------------------------------------------------------------------------
+                //[Non-User] Tab Home landing Page Video
+                Route::get('/landingPageVideo',[LandingPageController::class,'landingPageVideo'])->name('landingPageVideo');
+                Route::get('/detailVideoLP/{id}', [LandingPageController::class, 'showDetailLPVideo'])->name('showDetailLPVideo');
 
-        //[Non-User] Tab Event landing Page
-        Route::get('/eventLandingPage', [LandingPageController::class, 'eventLandingPage'])->name('eventLandingPage');
-        Route::get('/detailEventLP/{id}', [LandingPageController::class, 'detailEventLP'])->name('detailEventLP');
+                //[Non-User] Tab Kategori Landing Page
+                Route::get('/kategoriLandingPage', [LandingPageController::class, 'kategoriLandingPage'])->name('kategoriLandingPage');
+                Route::get('/kategoriLandingPageA/{kategori}', [LandingPageController::class, 'kategoriLandingPageA'])->name('kategoriLandingPageA');
+                Route::get('/kategoriLandingPageV/{kategori}', [LandingPageController::class, 'kategoriLandingPageV'])->name('kategoriLandingPageV');
 
-//------------------------------------------------------------- [Non-User] Tab Video ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [Non-User] Tab Video ---------------------------------------------------------------------------------------------------------
+                //[Non-User] Tab About Landing Page
+                Route::get('/abouts', [LandingPageController::class, 'aboutLandingPage'])->name('aboutLandingPage');
+             
+                //[Non-User] Tab Ulasan Landing Page
+                Route::get('/ulasanLandingPage', [LandingPageController::class, 'ulasanLandingPage'])->name('ulasanLandingPage');              
+                
+                //[Non-User] Tab Syarat & Ketentuan Landing Page
+                Route::get('/syaratKetentuanLP', [LandingPageController::class, 'syaratKetentuanLP'])->name('syaratKetentuanLP');
 
-        //[Non-User] Tab Home landing Page Video
-        Route::get('/landingPageVideo',[LandingPageController::class,'landingPageVideo'])->name('landingPageVideo');
-        Route::get('/detailVideoLP/{id}', [LandingPageController::class, 'showDetailLPVideo'])->name('showDetailLPVideo');
+//----------------------------------------------------------------------------------- [Halaman Non-User] ---------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------- [Halaman Non-User] ---------------------------------------------------------------------------------------------------------------
 
-//------------------------------------------------------------- [Non-User] Tab Kategori ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [Non-User] Tab Kategori ---------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------- [Halaman Pengguna] ---------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------- [Halaman Pengguna] ---------------------------------------------------------------------------------------------------------------
 
-        //[Non-User] Tab Kategori Landing Page
-        Route::get('/kategoriLandingPage', [LandingPageController::class, 'kategoriLandingPage'])->name('kategoriLandingPage');
-        Route::get('/kategoriLandingPageA/{kategori}', [LandingPageController::class, 'kategoriLandingPageA'])->name('kategoriLandingPageA');
-        Route::get('/kategoriLandingPageV/{kategori}', [LandingPageController::class, 'kategoriLandingPageV'])->name('kategoriLandingPageV');
-
-//------------------------------------------------------------- [Non-User] Tab About ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [Non-User] Tab About ---------------------------------------------------------------------------------------------------------
-
-        Route::get('/abouts', [LandingPageController::class, 'aboutLandingPage'])->name('aboutLandingPage');
-
-//------------------------------------------------------------- [Non-User] Tab Ulasan ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [Non-User] Tab Ulasan ---------------------------------------------------------------------------------------------------------
-
-        Route::get('/ulasanLandingPage', [LandingPageController::class, 'ulasanLandingPage'])->name('ulasanLandingPage');
-        
-//------------------------------------------------------------- [Non-User] Tab Syarat & Ketentuan ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [Non-User] Tab Syarat & Ketentuan ---------------------------------------------------------------------------------------------------------
-
-        Route::get('/syaratKetentuanLP', [LandingPageController::class, 'syaratKetentuanLP'])->name('syaratKetentuanLP');
-
-//------------------------------------------------------------- [Non-User] Tab Login ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [Non-User] Tab Login ---------------------------------------------------------------------------------------------------------
-
-        Route::get('/login',[LoginController::class,'log']);
-        Route::post('/login',[LoginController::class,'login'])->name('login');
-
-        //[Non-User] Tab Register User
-        Route::get('/register',[LoginController::class,'register']);
-        Route::post('/registerUser',[LoginController::class,'registerUser']);
-
-        //[Non-User] Tab Lupa Password User
-        Route::get('/lupaPassword',[LoginController::class,'lupaPassword']);
-        Route::post('/lupaPasswordpost',[LoginController::class,'kirimEmail']);
-        Route::get('/password/reset/{token}', [LoginController::class, 'resetPassword']);
-        Route::post('/updatePassword', [LoginController::class, 'updatePassword']);
-
-
-        //[Non-User] Tab Register Logout
-        Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-
-//------------------------------------------------------------- [Halaman User] ---------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [Halaman User] ---------------------------------------------------------------------------------------------------------------
-
-    //[Admin] Membatasi Hak Akases Admin
+    //[Pengguna] Membatasi Hak Akases Admin
     Route::middleware(['user'])->group(function () {
 
-//------------------------------------------------------------- [User] Tab Search ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [User] Tab Search ---------------------------------------------------------------------------------------------------------
+                //[Pengguna] Pencarian Artikel
+                Route::get('/search', [PenggunaController::class, 'search'])->name('search');
 
-        //Pencarian Artikel
-        Route::get('/search', [PenggunaController::class, 'search'])->name('search');
+                //[Pengguna] Pencarian Video
+                Route::get('/searchV', [PenggunaController::class, 'searchV'])->name('searchV');
 
-        //Pencarian Video
-        Route::get('/searchV', [PenggunaController::class, 'searchV'])->name('searchV');
+                //[Pengguna] Pencarian Event
+                Route::get('/searchE', [PenggunaController::class, 'searchE'])->name('searchE');
 
-        //Pencarian Event
-        Route::get('/searchE', [PenggunaController::class, 'searchE'])->name('searchE');
+                 //[Pengguna] Home
+                Route::get('/home',[PenggunaController::class,'HomeSetelahLogin'])->name('HomeSetelahLogin');
+                Route::get('/detailArtikel/{id}', [PenggunaController::class, 'showDetailArtikel'])->name('detail.artikel');
 
-//------------------------------------------------------------- [User] Tab Event ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [User] Tab Event ---------------------------------------------------------------------------------------------------------
+                //[Pengguna] Artikel
+                Route::post('/komentarArtikel', [PenggunaController::class, 'storeKomentarArtikel'])->name('storeKomentarArtikel');
+                Route::get('/likeKomentarArtikel/{commentId}', [PenggunaController::class, 'likeKomentarArtikel'])->name('likeKomentarArtikel');
+                Route::get('/deleteKomentarArtikel/{id}', [PenggunaController::class, 'deleteKomentarArtikel'])->name('deleteKomentarArtikel');     
 
-        Route::get('/event', [PenggunaController::class, 'event'])->name('event');
-        Route::get('/detailEvent/{id}', [PenggunaController::class, 'detailEvent'])->name('detailEvent');
+                Route::post('/submit/report', [PenggunaController::class, 'storeLaporanArtikel'])->name('storeLaporanArtikel');
+                Route::post('/submit/reportKomentar', [PenggunaController::class, 'storeLaporanKomentarArtikel'])->name('storeLaporanKomentarArtikel');
+                Route::get('/deleteKomentarA/{id}',[PenggunaController::class,'deleteKomentarA'])->name('deleteKomentarA');
+
+                Route::get('/simpanArtikelView', [PenggunaController::class, 'simpanArtikelView'])->name('simpan.artikelView');
+                Route::post('/simpanArtikelData/{id}', [PenggunaController::class, 'simpanArtikelData'])->name('simpan.artikelData');
+                Route::get('/deleteSimpanArt/{id}', [PenggunaController::class, 'deleteSimpanArt'])->name('simpan.deleteArtikel');
+
+
+                //[Pengguna] Video
+                Route::get('/Video',[PenggunaController::class,'Video'])->name('Video');
+                Route::get('/detailVideo/{id}', [PenggunaController::class, 'showDetailVideo'])->name('showDetailVideo');
+
+                Route::post('/komentarVideo', [PenggunaController::class, 'storeKomentarVideo'])->name('storeKomentarVideo');
+                Route::get('/likeKomentarVideo/{commentId}', [PenggunaController::class, 'likeKomentarVideo'])->name('likeKomentarVideo'); 
+
+                Route::post('/submitV/reportV', [PenggunaController::class, 'storeLaporanVideo'])->name('storeLaporanVideo');
+                Route::post('/submit/reportKomentarV', [PenggunaController::class, 'storeLaporanKomentarVideo'])->name('storeLaporanKomentarVideo');
+                Route::get('/deleteKomentarV/{id}', [PenggunaController::class, 'deleteKomentarV'])->name('deleteKomentarVideo');
+
+                Route::get('/simpanVideoView', [PenggunaController::class, 'simpanVideoView'])->name('simpan.videoView');
+                Route::post('/simpanVideoData/{videoId}', [PenggunaController::class, 'simpanVideoData'])->name('simpan.videoData')->middleware('auth'); 
+                Route::get('/deleteSimpanVid/{id}', [PenggunaController::class, 'deleteSimpanVid'])->name('simpan.deleteVideo');
+
+                 //[Pengguna] kategori
+                Route::get('/kategori', [PenggunaController::class, 'kategori'])->name('kategori');
+                Route::get('/kategoriA/{kategori}', [PenggunaController::class, 'kategoriA'])->name('kategoriA');
+                Route::get('/kategoriV/{kategori}', [PenggunaController::class, 'kategoriV'])->name('kategoriV');
+
+                //[Pengguna] Event
+                Route::get('/event', [PenggunaController::class, 'event'])->name('event');
+                Route::get('/detailEvent/{id}', [PenggunaController::class, 'detailEvent'])->name('detailEvent');
+
+                //[Pengguna] Tab Halaman Ulasan
+                Route::get('/ulasan', [PenggunaController::class, 'ulasan'])->name('ulasan');
+                Route::post('/storeUlasan',[PenggunaController::class,'storeUlasan']);
+                Route::get('/deleteUlasan/{id}', [PenggunaController::class, 'deleteUlasan'])->name('deleteUlasan');
+                Route::get('/likeUlasan/{id}', [PenggunaController::class, 'likeUlasan'])->name('likeUlasan');
+                Route::get('/dislikeUlasan/{id}', [PenggunaController::class, 'dislikeUlasan'])->name('dislikeUlasan');
+                Route::post('/simpanEditUlasan/{id}', [PenggunaController::class, 'simpanEditUlasan'])->name('simpanEditUlasan');
+                });
+                
+                
+                //[Pengguna] About
+                Route::get('/about', [PenggunaController::class, 'about'])->name('about');
+
+
+                 //[Pengguna] Profil
+                Route::get('/profileUser', [PenggunaController::class, 'profileUser'])->name('profileUser');
+                Route::put('/profileUser/updateUser/{id}',[PenggunaController::class,'updateUser'])->name('updateUser');
+                Route::get('/profilPenulis', [PenggunaController::class, 'profilPenulis'])->name('profilPenulis');
         
-//------------------------------------------------------------- [User] Tab Home ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [User] Tab Home ---------------------------------------------------------------------------------------------------------
 
-        Route::get('/home',[PenggunaController::class,'HomeSetelahLogin'])->name('HomeSetelahLogin');
-        Route::get('/detailArtikel/{id}', [PenggunaController::class, 'showDetailArtikel'])->name('detail.artikel');
+                //[Pengguna] Syarat & Ketentuan
+                Route::get('/syaratKetentuanA', [PenggunaController::class, 'syaratKetentuanA'])->name('syaratKetentuanA');
 
-        Route::post('/komentarArtikel', [PenggunaController::class, 'storeKomentarArtikel'])->name('storeKomentarArtikel');
-        Route::get('/likeKomentarArtikel/{commentId}', [PenggunaController::class, 'likeKomentarArtikel'])->name('likeKomentarArtikel');
-        Route::get('/deleteKomentarArtikel/{id}', [PenggunaController::class, 'deleteKomentarArtikel'])->name('deleteKomentarArtikel');     
-
-        Route::post('/submit/report', [PenggunaController::class, 'storeLaporanArtikel'])->name('storeLaporanArtikel');
-        Route::post('/submit/reportKomentar', [PenggunaController::class, 'storeLaporanKomentarArtikel'])->name('storeLaporanKomentarArtikel');
-        Route::get('/deleteKomentarA/{id}',[PenggunaController::class,'deleteKomentarA'])->name('deleteKomentarA');
-
-        Route::get('/simpanArtikelView', [PenggunaController::class, 'simpanArtikelView'])->name('simpan.artikelView');
-        Route::post('/simpanArtikelData/{id}', [PenggunaController::class, 'simpanArtikelData'])->name('simpan.artikelData');
-        Route::get('/deleteSimpanArt/{id}', [PenggunaController::class, 'deleteSimpanArt'])->name('simpan.deleteArtikel');
-
-//------------------------------------------------------------- [User] Tab Video ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [User] Tab Video ---------------------------------------------------------------------------------------------------------
-
-        Route::get('/Video',[PenggunaController::class,'Video'])->name('Video');
-        Route::get('/detailVideo/{id}', [PenggunaController::class, 'showDetailVideo'])->name('showDetailVideo');
-
-        Route::post('/komentarVideo', [PenggunaController::class, 'storeKomentarVideo'])->name('storeKomentarVideo');
-        Route::get('/likeKomentarVideo/{commentId}', [PenggunaController::class, 'likeKomentarVideo'])->name('likeKomentarVideo'); 
-
-        Route::post('/submitV/reportV', [PenggunaController::class, 'storeLaporanVideo'])->name('storeLaporanVideo');
-        Route::post('/submit/reportKomentarV', [PenggunaController::class, 'storeLaporanKomentarVideo'])->name('storeLaporanKomentarVideo');
-        Route::get('/deleteKomentarV/{id}', [PenggunaController::class, 'deleteKomentarV'])->name('deleteKomentarVideo');
-
-        Route::get('/simpanVideoView', [PenggunaController::class, 'simpanVideoView'])->name('simpan.videoView');
-        Route::post('/simpanVideoData/{videoId}', [PenggunaController::class, 'simpanVideoData'])->name('simpan.videoData')->middleware('auth'); 
-        Route::get('/deleteSimpanVid/{id}', [PenggunaController::class, 'deleteSimpanVid'])->name('simpan.deleteVideo');
-
-//------------------------------------------------------------- [User] Tab Kategori ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [User] Tab Kategori ---------------------------------------------------------------------------------------------------------
-
-        Route::get('/kategori', [PenggunaController::class, 'kategori'])->name('kategori');
-        Route::get('/kategoriA/{kategori}', [PenggunaController::class, 'kategoriA'])->name('kategoriA');
-        Route::get('/kategoriV/{kategori}', [PenggunaController::class, 'kategoriV'])->name('kategoriV');
-
-//------------------------------------------------------------- [User] Tab Profil ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [User] Tab Profil ---------------------------------------------------------------------------------------------------------
-
-        Route::get('/profileUser', [PenggunaController::class, 'profileUser'])->name('profileUser');
-        Route::put('/profileUser/updateUser/{id}',[PenggunaController::class,'updateUser'])->name('updateUser');
-
-        Route::get('/profilPenulis', [PenggunaController::class, 'profilPenulis'])->name('profilPenulis');
-     
-//------------------------------------------------------------- [User] Tab About ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [User] Tab About ---------------------------------------------------------------------------------------------------------
-
-        Route::get('/about', [PenggunaController::class, 'about'])->name('about');
-
-//------------------------------------------------------------- [User] Tab Syarat & Ketentuan ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [User] Tab Syarat & Ketentuan ---------------------------------------------------------------------------------------------------------
-
-        Route::get('/syaratKetentuanA', [PenggunaController::class, 'syaratKetentuanA'])->name('syaratKetentuanA');
-
-//------------------------------------------------------------- [User] Tab Ulasan ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [User] Tab Ulasan ---------------------------------------------------------------------------------------------------------
-
-            //[User] Tab Halaman Ulasan
-            Route::get('/ulasan', [PenggunaController::class, 'ulasan'])->name('ulasan');
-
-            //[User] Tab Tambah Ulasan
-            Route::post('/storeUlasan',[PenggunaController::class,'storeUlasan']);
-
-            //[User] Tab Delete Ulasan
-            Route::get('/deleteUlasan/{id}', [PenggunaController::class, 'deleteUlasan'])->name('deleteUlasan');
-
-            //[User] Tab Like & Dislike Ulasan
-            Route::get('/likeUlasan/{id}', [PenggunaController::class, 'likeUlasan'])->name('likeUlasan');
-            Route::get('/dislikeUlasan/{id}', [PenggunaController::class, 'dislikeUlasan'])->name('dislikeUlasan');
-
-            //[User] Tab Edit Ulasan
-            Route::post('/simpanEditUlasan/{id}', [PenggunaController::class, 'simpanEditUlasan'])->name('simpanEditUlasan');
-    });
-
-
-//------------------------------------------------------------- [Halaman User] ---------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [Halaman User] ---------------------------------------------------------------------------------------------------------------
-
-    //[Admin] Membatasi Hak Akases Admin
-    Route::middleware(['user'])->group(function () {
-
-//------------------------------------------------------------- [User] Tab Search ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [User] Tab Search ---------------------------------------------------------------------------------------------------------
-
-        //Pencarian Artikel
-        Route::get('/search', [PenggunaController::class, 'search'])->name('search');
-
-        //Pencarian Video
-        Route::get('/searchV', [PenggunaController::class, 'searchV'])->name('searchV');
-
-        //Pencarian Event
-        Route::get('/searchE', [PenggunaController::class, 'searchE'])->name('searchE');
-
-//------------------------------------------------------------- [User] Tab Event ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [User] Tab Event ---------------------------------------------------------------------------------------------------------
-
-        Route::get('/event', [PenggunaController::class, 'event'])->name('event');
-        Route::get('/detailEvent/{id}', [PenggunaController::class, 'detailEvent'])->name('detailEvent');
         
-//------------------------------------------------------------- [User] Tab Home ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [User] Tab Home ---------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------- [End Halaman Pengguna] ---------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------- [End Halaman Pengguna] ---------------------------------------------------------------------------------------------------------------
 
-        Route::get('/home',[PenggunaController::class,'HomeSetelahLogin'])->name('HomeSetelahLogin');
-        Route::get('/detailArtikel/{id}', [PenggunaController::class, 'showDetailArtikel'])->name('detail.artikel');
-
-        Route::post('/komentarArtikel', [PenggunaController::class, 'storeKomentarArtikel'])->name('storeKomentarArtikel');
-        Route::get('/likeKomentarArtikel/{commentId}', [PenggunaController::class, 'likeKomentarArtikel'])->name('likeKomentarArtikel');
-        Route::get('/deleteKomentarArtikel/{id}', [PenggunaController::class, 'deleteKomentarArtikel'])->name('deleteKomentarArtikel');     
-
-        Route::post('/submit/report', [PenggunaController::class, 'storeLaporanArtikel'])->name('storeLaporanArtikel');
-        Route::post('/submit/reportKomentar', [PenggunaController::class, 'storeLaporanKomentarArtikel'])->name('storeLaporanKomentarArtikel');
-        Route::get('/deleteKomentarA/{id}',[PenggunaController::class,'deleteKomentarA'])->name('deleteKomentarA');
-
-        Route::get('/simpanArtikelView', [PenggunaController::class, 'simpanArtikelView'])->name('simpan.artikelView');
-        Route::post('/simpanArtikelData/{id}', [PenggunaController::class, 'simpanArtikelData'])->name('simpan.artikelData');
-        Route::get('/deleteSimpanArt/{id}', [PenggunaController::class, 'deleteSimpanArt'])->name('simpan.deleteArtikel');
-
-//------------------------------------------------------------- [User] Tab Video ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [User] Tab Video ---------------------------------------------------------------------------------------------------------
-
-        Route::get('/Video',[PenggunaController::class,'Video'])->name('Video');
-        Route::get('/detailVideo/{id}', [PenggunaController::class, 'showDetailVideo'])->name('showDetailVideo');
-
-        Route::post('/komentarVideo', [PenggunaController::class, 'storeKomentarVideo'])->name('storeKomentarVideo');
-        Route::get('/likeKomentarVideo/{commentId}', [PenggunaController::class, 'likeKomentarVideo'])->name('likeKomentarVideo'); 
-
-        Route::post('/submitV/reportV', [PenggunaController::class, 'storeLaporanVideo'])->name('storeLaporanVideo');
-        Route::post('/submit/reportKomentarV', [PenggunaController::class, 'storeLaporanKomentarVideo'])->name('storeLaporanKomentarVideo');
-        Route::get('/deleteKomentarV/{id}', [PenggunaController::class, 'deleteKomentarV'])->name('deleteKomentarVideo');
-
-        Route::get('/simpanVideoView', [PenggunaController::class, 'simpanVideoView'])->name('simpan.videoView');
-        Route::post('/simpanVideoData/{videoId}', [PenggunaController::class, 'simpanVideoData'])->name('simpan.videoData')->middleware('auth'); 
-        Route::get('/deleteSimpanVid/{id}', [PenggunaController::class, 'deleteSimpanVid'])->name('simpan.deleteVideo');
-
-//------------------------------------------------------------- [User] Tab Kategori ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [User] Tab Kategori ---------------------------------------------------------------------------------------------------------
-
-        Route::get('/kategori', [PenggunaController::class, 'kategori'])->name('kategori');
-        Route::get('/kategoriA/{kategori}', [PenggunaController::class, 'kategoriA'])->name('kategoriA');
-        Route::get('/kategoriV/{kategori}', [PenggunaController::class, 'kategoriV'])->name('kategoriV');
-
-//------------------------------------------------------------- [User] Tab Profil ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [User] Tab Profil ---------------------------------------------------------------------------------------------------------
-
-        Route::get('/profileUser', [PenggunaController::class, 'profileUser'])->name('profileUser');
-        Route::put('/profileUser/updateUser/{id}',[PenggunaController::class,'updateUser'])->name('updateUser');
-
-        Route::get('/profilPenulis', [PenggunaController::class, 'profilPenulis'])->name('profilPenulis');
-     
-//------------------------------------------------------------- [User] Tab About ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [User] Tab About ---------------------------------------------------------------------------------------------------------
-
-        Route::get('/about', [PenggunaController::class, 'about'])->name('about');
-
-//------------------------------------------------------------- [User] Tab Syarat & Ketentuan ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [User] Tab Syarat & Ketentuan ---------------------------------------------------------------------------------------------------------
-
-        Route::get('/syaratKetentuanA', [PenggunaController::class, 'syaratKetentuanA'])->name('syaratKetentuanA');
-
-//------------------------------------------------------------- [User] Tab Ulasan ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [User] Tab Ulasan ---------------------------------------------------------------------------------------------------------
-
-            //[User] Tab Halaman Ulasan
-            Route::get('/ulasan', [PenggunaController::class, 'ulasan'])->name('ulasan');
-
-            //[User] Tab Tambah Ulasan
-            Route::post('/storeUlasan',[PenggunaController::class,'storeUlasan']);
-
-            //[User] Tab Delete Ulasan
-            Route::get('/deleteUlasan/{id}', [PenggunaController::class, 'deleteUlasan'])->name('deleteUlasan');
-
-            //[User] Tab Like & Dislike Ulasan
-            Route::get('/likeUlasan/{id}', [PenggunaController::class, 'likeUlasan'])->name('likeUlasan');
-            Route::get('/dislikeUlasan/{id}', [PenggunaController::class, 'dislikeUlasan'])->name('dislikeUlasan');
-
-            //[User] Tab Edit Ulasan
-            Route::post('/simpanEditUlasan/{id}', [PenggunaController::class, 'simpanEditUlasan'])->name('simpanEditUlasan');
-    });
-
-//------------------------------------------------------------- [Halaman Penulis] ---------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [Halaman Penulis] ---------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------- [Halaman Penulis] ---------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------- [Halaman Penulis] ---------------------------------------------------------------------------------------------------------------
 
     //[Penulis] Membatasi Hak Akases Admin
     Route::middleware(['penulis'])->group(function () {
@@ -361,141 +221,140 @@ use Illuminate\Support\Facades\Route;
                 // Profile 
                 Route::get('/profileP', [PenulisController::class, 'profileP'])->name('profileP');
                 Route::put('/profileP/updateUser/{id}',[PenulisController::class,'updateP'])->name('updateP');
-                Route::get('/profilPenulisP', [PenulisController::class, 'profilPenulisP'])->name('profilPenulisP'); 
+                Route::get('/profilPenulisP', [PenulisController::class, 'profilPenulisP'])->name('profilPenulisP');
+                Route::get('/berhentiPenulis', [PenulisController::class, 'berhentiPenulis'])->name('berhentiPenulis');  
+
+                Route::get('/daftarArtikelP', [PenulisController::class, 'daftarArtikelP'])->name('daftarArtikelP'); 
+                Route::get('/formTambahArtikelP', [PenulisController::class, 'formTambahArtikelP'])->name('formTambahArtikelP'); 
+                Route::get('/komentarArtikelP', [PenulisController::class, 'komentarArtikelP'])->name('komentarArtikelP'); 
+                Route::get('/laporanArtikelP', [PenulisController::class, 'laporanArtikelP'])->name('laporanArtikelP');
+                
+                Route::get('/daftarVideoP', [PenulisController::class, 'daftarVideoP'])->name('daftarVideoP'); 
+                Route::get('/formTambahVideoP', [PenulisController::class, 'formTambahVideoP'])->name('formTambahVideoP'); 
+                Route::get('/komentarVideoP', [PenulisController::class, 'komentarVideoP'])->name('komentarVideoP'); 
+                Route::get('/laporanVideoP', [PenulisController::class, 'laporanVideoP'])->name('laporanVideoP'); 
 
                 // Syarat & Ketentuan 
                 Route::get('/syaratKetentuanAP', [PenulisController::class, 'syaratKetentuanAP'])->name('syaratKetentuanAP');
+
+//----------------------------------------------------------------------------------- [End Halaman Penulis] ---------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------- [End Halaman Penulis] ---------------------------------------------------------------------------------------------------------------
         
-//------------------------------------------------------------- [Halaman Admin] ---------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [Halaman Admin] ---------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------- [Halaman Admin] ---------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------- [Halaman Admin] ---------------------------------------------------------------------------------------------------------------
 
 
     //[Admin] Membatasi Hak Akases Admin
     Route::middleware(['admin'])->group(function () {
 
-//------------------------------------------------------------- [Admin] Tab Dashboard ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [Admin] Tab Dashboard ---------------------------------------------------------------------------------------------------------
+                //[Admin] Tabel Dashboard
+                Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
-        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+                //[Admin] Tabel Profil
+                Route::get('/profileAdmin', [AdminController::class, 'profileAdmin'])->name('profileAdmin');
+                Route::put('/profileAdmin/updateAdmin/{id}',[AdminController::class,'updateAdmin'])->name('updateAdmin');
 
-//------------------------------------------------------------- [Admin] Tab Profil ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [Admin] Tab Profil ---------------------------------------------------------------------------------------------------------
+                //[Admin] Tabel Artikel
+                Route::get('/artikelAdmin', [AdminController::class, 'artikel'])->name('artikel');
+                Route::get('/komentarArtikel', [AdminController::class, 'komentarArtikel'])->name('komentarArtikel');
 
-        Route::get('/profileAdmin', [AdminController::class, 'profileAdmin'])->name('profileAdmin');
-        Route::put('/profileAdmin/updateAdmin/{id}',[AdminController::class,'updateAdmin'])->name('updateAdmin');
+                //[Admin] Tambah Artikel
+                Route::get('/formTambahArtikelA',  [AdminController::class, 'formTambahArtikelA'])->name('formTambahArtikelA');
+                Route::post('/formTambahArtikelA/storeArtikelA',  [AdminController::class, 'storeArtikelA'])->name('storeArtikelA');
 
-//------------------------------------------------------------- [Admin] Tab Artikel ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [Admin] Tab Artikel ---------------------------------------------------------------------------------------------------------
+                //[Admin] Delete Artikel
+                Route::get('/deleteA/{id}',[AdminController::class,'deleteArtikel'])->name('deleteArtikel');
+                Route::get('/deleteKomentarAA/{id}',[AdminController::class,'deleteKomentarAA'])->name('deleteKomentarAA');
 
-        //[Admin] Tabel Artikel
-        Route::get('/artikelAdmin', [AdminController::class, 'artikel'])->name('artikel');
-        Route::get('/komentarArtikel', [AdminController::class, 'komentarArtikel'])->name('komentarArtikel');
-
-        //[Admin] Tambah Artikel
-        Route::get('/formTambahArtikelA',  [AdminController::class, 'formTambahArtikelA'])->name('formTambahArtikelA');
-        Route::post('/formTambahArtikelA/storeArtikelA',  [AdminController::class, 'storeArtikelA'])->name('storeArtikelA');
-
-        //[Admin] Delete Artikel
-        Route::get('/deleteA/{id}',[AdminController::class,'deleteArtikel'])->name('deleteArtikel');
-        Route::get('/deleteKomentarAA/{id}',[AdminController::class,'deleteKomentarAA'])->name('deleteKomentarAA');
-
-        //[Admin] Edit Artikel
-        Route::get('/formEditArtikelA/{id}',[AdminController::class,'formEditArtikelA'])->name('formEditArtikelA');     
-        Route::post('/formEditArtikelA/updateArtikelA/{id}',[AdminController::class,'updateArtikelA'])->name('updateArtikelA');
-
-//------------------------------------------------------------- [Admin] Tab Video ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [Admin] Tab Video ---------------------------------------------------------------------------------------------------------
-
-        //[Admin] Tabel Video
-        Route::get('/videoAdmin', [AdminController::class, 'videoAdmin'])->name('videoAdmin');
-        Route::get('/komentarVideo', [AdminController::class, 'komentarVideo'])->name('komentarVideo');
-
-        //[Admin] Tambah Video Admin
-        Route::get('/formTambahVideo', [AdminController::class, 'formTambahVideo'])->name('formTambahVideo');
-        Route::post('/formTambahVideo/storeVideo',  [AdminController::class, 'storeVideo'])->name('storeVideo');
-
-        //[Admin] Edit Video
-        Route::get('/formEditVideo/{id}',[AdminController::class,'formEditVideo'])->name('formEditVideo');
-        Route::post('/formEditVideoA/updateVideoA/{id}',[AdminController::class,'updateVideo'])->name('updateVideo');
-
-        //[Admin] Delete Pengguna
-        Route::get('/deleteV/{id}',[AdminController::class,'deleteVideo'])->name('deleteVideo');
-        Route::get('/deleteKomentarVA/{id}',[AdminController::class,'deleteKomentarVA'])->name('deleteKomentarVA');
-        
-
-//------------------------------------------------------------- [Admin] Tab Pengguna ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [Admin] Tab Pengguna ---------------------------------------------------------------------------------------------------------
-
-        //[Admin] Tabel Pengguna
-        Route::get('/pengguna', [AdminController::class, 'listUserTerdaftar'])->name('listUserTerdaftar');
-
-        //[Admin] Tabel Pengguna Like Dislike
-        Route::get('/PenggunaLikeDislike', [AdminController::class, 'PenggunaLikeDislike'])->name('PenggunaLikeDislike');
-
-        //[Admin] Delete Pengguna
-        Route::get('/deletePenggunaA/{id}',[AdminController::class,'deletePenggunaA'])->name('deletePenggunaA');
-
-//------------------------------------------------------------- [Admin] Tab Ulasan ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [Admin] Tab Ulasan ---------------------------------------------------------------------------------------------------------
-
-        //[Admin] Tabel Ulasan
-        Route::get('/ulasans', [AdminController::class, 'ulasanAdmin'])->name('ulasanAdmin');
-
-        //[Admin] Delete Ulasan
-        Route::get('/deleteU/{id}',[AdminController::class,'deleteUlasanA'])->name('deleteUlasanA');
-        });
-
-//------------------------------------------------------------- [Admin] Tab Event ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [Admin] Tab Event ---------------------------------------------------------------------------------------------------------
-
-        //[Admin] Tabel Event
-        Route::get('/eventKomAd', [AdminController::class, 'eventKomAd'])->name('eventKomAd');
-        Route::get('/deleteEvent/{id}',[AdminController::class,'deleteEvent'])->name('deleteEvent');
-
-         //[Admin] Form Tambah Event
-         Route::get('/formTambahEvent', [AdminController::class, 'formTambahEvent'])->name('formTambahEvent');
-         Route::post('/formTambahEvent/storeEvent',  [AdminController::class, 'storeEvent'])->name('storeEvent');
-
-        //[Admin] Form Edit Event
-        Route::get('/formEditEvent/{id}',[AdminController::class,'formEditEvent'])->name('formEditEvent');
-        Route::post('/formEditEvent/updateEvent/{id}',[AdminController::class,'updateEvent'])->name('updateEvent');
-
-        //[Admin] Tabel Komentar Event
-        Route::get('/komentarEvent', [AdminController::class, 'komentarEvent'])->name('komentarEvent');
-        Route::get('/deleteKomentarEvent/{id}',[AdminController::class,'deleteKomentarEvent'])->name('deleteKomentarEvent');
-        
-//------------------------------------------------------------- [Admin] Tab Laporan User ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [Admin] Tab Laporan User ---------------------------------------------------------------------------------------------------------
-
-        //[Admin] Tabel Laporan
-        Route::get('/laporanUser', [AdminController::class, 'laporanUser'])->name('laporanUser');
-        Route::get('/laporanVideoUser', [AdminController::class, 'laporanVideoUser'])->name('laporanVideoUser');
-        Route::get('/laporanUlasanUser', [AdminController::class, 'laporanUlasanUser'])->name('laporanUlasanUser');
-
-        Route::get('/deleteLaporanUA/{id}',[AdminController::class,'deleteLaporanUA'])->name('deleteLaporanUA');
-        Route::get('/deleteLaporanVA/{id}',[AdminController::class,'deleteLaporanVA'])->name('deleteLaporanVA');
+                //[Admin] Edit Artikel
+                Route::get('/formEditArtikelA/{id}',[AdminController::class,'formEditArtikelA'])->name('formEditArtikelA');     
+                Route::post('/formEditArtikelA/updateArtikelA/{id}',[AdminController::class,'updateArtikelA'])->name('updateArtikelA');
 
 
-//------------------------------------------------------------- [Halaman SuperAdmin] ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [Halaman SuperAdmin] ---------------------------------------------------------------------------------------------------------
+
+                //[Admin] Tabel Video
+                Route::get('/videoAdmin', [AdminController::class, 'videoAdmin'])->name('videoAdmin');
+                Route::get('/komentarVideo', [AdminController::class, 'komentarVideo'])->name('komentarVideo');
+
+                //[Admin] Tambah Video Admin
+                Route::get('/formTambahVideo', [AdminController::class, 'formTambahVideo'])->name('formTambahVideo');
+                Route::post('/formTambahVideo/storeVideo',  [AdminController::class, 'storeVideo'])->name('storeVideo');
+
+                //[Admin] Edit Video
+                Route::get('/formEditVideo/{id}',[AdminController::class,'formEditVideo'])->name('formEditVideo');
+                Route::post('/formEditVideoA/updateVideoA/{id}',[AdminController::class,'updateVideo'])->name('updateVideo');
+
+                //[Admin] Delete Pengguna
+                Route::get('/deleteV/{id}',[AdminController::class,'deleteVideo'])->name('deleteVideo');
+                Route::get('/deleteKomentarVA/{id}',[AdminController::class,'deleteKomentarVA'])->name('deleteKomentarVA');
+                
+
+
+                //[Admin] Tabel Pengguna
+                Route::get('/pengguna', [AdminController::class, 'listUserTerdaftar'])->name('listUserTerdaftar');
+
+                //[Admin] Tabel Pengguna Like Dislike
+                Route::get('/PenggunaLikeDislike', [AdminController::class, 'PenggunaLikeDislike'])->name('PenggunaLikeDislike');
+
+                //[Admin] Delete Pengguna
+                Route::get('/deletePenggunaA/{id}',[AdminController::class,'deletePenggunaA'])->name('deletePenggunaA');
+
+
+
+                //[Admin] Tabel Ulasan
+                Route::get('/ulasans', [AdminController::class, 'ulasanAdmin'])->name('ulasanAdmin');
+
+                //[Admin] Delete Ulasan
+                Route::get('/deleteU/{id}',[AdminController::class,'deleteUlasanA'])->name('deleteUlasanA');
+                });
+
+
+
+                //[Admin] Tabel Event
+                Route::get('/eventKomAd', [AdminController::class, 'eventKomAd'])->name('eventKomAd');
+                Route::get('/deleteEvent/{id}',[AdminController::class,'deleteEvent'])->name('deleteEvent');
+
+                //[Admin] Form Tambah Event
+                Route::get('/formTambahEvent', [AdminController::class, 'formTambahEvent'])->name('formTambahEvent');
+                Route::post('/formTambahEvent/storeEvent',  [AdminController::class, 'storeEvent'])->name('storeEvent');
+
+                //[Admin] Form Edit Event
+                Route::get('/formEditEvent/{id}',[AdminController::class,'formEditEvent'])->name('formEditEvent');
+                Route::post('/formEditEvent/updateEvent/{id}',[AdminController::class,'updateEvent'])->name('updateEvent');
+
+                //[Admin] Tabel Komentar Event
+                Route::get('/komentarEvent', [AdminController::class, 'komentarEvent'])->name('komentarEvent');
+                Route::get('/deleteKomentarEvent/{id}',[AdminController::class,'deleteKomentarEvent'])->name('deleteKomentarEvent');
+                
+
+
+                //[Admin] Tabel Laporan
+                Route::get('/laporanUser', [AdminController::class, 'laporanUser'])->name('laporanUser');
+                Route::get('/laporanVideoUser', [AdminController::class, 'laporanVideoUser'])->name('laporanVideoUser');
+                Route::get('/laporanUlasanUser', [AdminController::class, 'laporanUlasanUser'])->name('laporanUlasanUser');
+
+                Route::get('/deleteLaporanUA/{id}',[AdminController::class,'deleteLaporanUA'])->name('deleteLaporanUA');
+                Route::get('/deleteLaporanVA/{id}',[AdminController::class,'deleteLaporanVA'])->name('deleteLaporanVA');
+
+//----------------------------------------------------------------------------------- [End Halaman Admin] ---------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------- [End Halaman Admin] ---------------------------------------------------------------------------------------------------------------
+
+//----------------------------------------------------------------------------------- [Halaman SuperAdmin] ---------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------- [Halaman SuperAdmin] ---------------------------------------------------------------------------------------------------------------
 
     //[SuperAdmin] Membatasi Hak Akases SuperAdmin
     Route::middleware(['superadmin'])->group(function () {
 
-//------------------------------------------------------------- [SuperAdmin] Tab Dashboard ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [SuperAdmin] Tab Dashboard ---------------------------------------------------------------------------------------------------------
-
+    
+            //[SuperAdmin] Dashboard
             Route::get('/dashboardSA', [SuperAdminController::class, 'dashboardSA'])->name('dashboardSA');
     
-//------------------------------------------------------------- [SuperAdmin] Tab Profil ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [SuperAdmin] Tab Profil ---------------------------------------------------------------------------------------------------------
-
+          
+            //[SuperAdmin] Profil
             Route::get('/profileSA', [SuperAdminController::class, 'profileSA'])->name('profileSA');
             Route::put('/profileSA/updateSA/{id}',[SuperAdminController::class,'updateSA'])->name('updateSA');
     
-//------------------------------------------------------------- [SuperAdmin] Tab Artikel ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [SuperAdmin] Tab Artikel ---------------------------------------------------------------------------------------------------------
-    
+
             //[SuperAdmin] Tabel Artikel
             Route::get('/artikelSuperAdmin', [SuperAdminController::class, 'artikelSA'])->name('artikelSA');
             Route::get('/komentarArtikelSA', [SuperAdminController::class, 'komentarArtikelSA'])->name('komentarArtikelSA');
@@ -516,9 +375,8 @@ use Illuminate\Support\Facades\Route;
             Route::get('/formEditArtikelSA/{id}',[SuperAdminController::class,'formEditArtikelSA'])->name('formEditArtikelSA');
             Route::post('/formEditArtikelSA/updateArtikelSA/{id}', [SuperAdminController::class, 'updateArtikelSA'])->name('updateArtikelSA');
     
-//------------------------------------------------------------- [SuperAdmin] Tab Video ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [SuperAdmin] Tab Video ---------------------------------------------------------------------------------------------------------
-    
+
+            
             //[SuperAdmin] Tabel Video
             Route::get('/videoSuperAdmin', [SuperAdminController::class, 'videoSuperAdmin'])->name('videoSuperAdmin');
             Route::get('/komentarVideoSA', [SuperAdminController::class, 'komentarVideoSA'])->name('komentarVideoSA');
@@ -539,9 +397,8 @@ use Illuminate\Support\Facades\Route;
             Route::get('/deleteVideoSA/{id}',[SuperAdminController::class,'deleteVideoSA'])->name('deleteVideoSA');
             Route::get('/deleteKomentarVideoSA/{id}',[SuperAdminController::class,'deleteKomentarVideoSA'])->name('deleteKomentarVideoSA');
 
-//------------------------------------------------------------- [SuperAdmin] Tab Kategori ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [SuperAdmin] Tab Kategori ---------------------------------------------------------------------------------------------------------
 
+            //[SuperAdmin] Halaman Kategori
             Route::get('/kategoriTblSA', [SuperAdminController::class, 'kategoriTblSA'])->name('kategoriTblSA');
     
             //[SuperAdmin] Tambah Kategori
@@ -555,8 +412,7 @@ use Illuminate\Support\Facades\Route;
             //[SuperAdmin] Delete Kategori
             Route::get('/deleteKategoriSA/{id}',[SuperAdminController::class,'deleteKategoriSA'])->name('deleteKategoriSA');
 
-//------------------------------------------------------------- [SuperAdmin] Tab Event ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [SuperAdmin] Tab Event ---------------------------------------------------------------------------------------------------------
+
 
             //[Admin] Tabel Event
             Route::get('/eventKomAdSA', [SuperAdminController::class, 'eventKomAdSA'])->name('eventKomAdSA');
@@ -578,9 +434,8 @@ use Illuminate\Support\Facades\Route;
             Route::get('/komentarEventSA', [SuperAdminController::class, 'komentarEventSA'])->name('komentarEventSA');
             Route::get('/deleteKomentarEventSA/{id}',[SuperAdminController::class,'deleteKomentarEventSA'])->name('deleteKomentarEventSA');
     
-//------------------------------------------------------------- [SuperAdmin] Tab Pengguna ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [SuperAdmin] Tab Pengguna ---------------------------------------------------------------------------------------------------------
-    
+
+            
             //[SuperAdmin] Tabel Pengguna
             Route::get('/penggunaSA', [SuperAdminController::class, 'penggunaSA'])->name('penggunaSA');
 
@@ -608,22 +463,22 @@ use Illuminate\Support\Facades\Route;
             Route::get('/deleteUlasanSA/{id}',[SuperAdminController::class,'deleteUlasanSA'])->name('deleteUlasanSA');
             });
         
-//------------------------------------------------------------- [SuperAdmin] Tab Laporan User ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [SuperAdmin] Tab Laporan User ---------------------------------------------------------------------------------------------------------
+
 
             //[SuperAdmin] Tabel Laporan
             Route::get('/laporanUserSA', [SuperAdminController::class, 'laporanUserSA'])->name('laporanUserSA');
             Route::get('/laporanKomentarArtikelUserSA', [SuperAdminController::class, 'laporanKomentarArtikelUserSA'])->name('laporanKomentarArtikelUserSA');
             Route::post('/freeze-user', [SuperAdminController::class, 'freezeUser'])->name('freeze.user');
-
+   
+            //[SuperAdmin] Tabel Laporan 
             Route::get('/laporanVideoUserSA', [SuperAdminController::class, 'laporanVideoUserSA'])->name('laporanVideoUserSA');
             Route::get('/laporanKomentarVideoUserSA', [SuperAdminController::class, 'laporanKomentarVideoUserSA'])->name('laporanKomentarVideoUserSA');
     
+            //[SuperAdmin] Hapus Laporan
             Route::get('/deleteLaporanArtikelSA/{id}',[SuperAdminController::class,'deleteLaporanArtikelSA'])->name('deleteLaporanArtikelSA');
             Route::get('/deleteLaporanVideoSA/{id}',[SuperAdminController::class,'deleteLaporanVideoSA'])->name('deleteLaporanVideoSA');
 
-//------------------------------------------------------------- [SuperAdmin] Tab Syarat & Ketentuan ---------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------- [SuperAdmin] Tab Syarat & Ketentuan ---------------------------------------------------------------------------------------------------------
+
 
             //[SuperAdmin] Tabel Syarat & Ketentuan
             Route::get('/syaratdanketentuanSA',[SuperAdminController::class,'syaratdanketentuanSA'])->name('syaratdanketentuanSA');
@@ -638,3 +493,8 @@ use Illuminate\Support\Facades\Route;
             //[SuperAdmin] Edit Syarat & Ketentuan
             Route::get('/formEditTdanCSA/{id}',[SuperAdminController::class,'formEditTdanCSA'])->name('formEditTdanCSA');
             Route::post('/formEditTdanCSA/updateTdanCSA/{id}',[SuperAdminController::class,'updateTdanCSA'])->name('updateTdanCSA');
+
+
+//----------------------------------------------------------------------------------- [End Halaman SuperAdmin] ---------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------- [End Halaman SuperAdmin] ---------------------------------------------------------------------------------------------------------------
+           

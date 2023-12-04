@@ -76,6 +76,13 @@
       color: #3498db;
   }
 
+  .header-name {
+      font-size: 2em;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #000000;
+  }
+
   .about-section {
       margin-bottom: 20px;
       color: #555;
@@ -205,53 +212,131 @@
 
 <br>
 
-<div class="profile-container text-center">
-  <div style="width: 120px; height: 120px; overflow: hidden; border-radius: 50%; margin: 0 auto;">
-    <img style="width: 100%; height: 100%; object-fit: cover;" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHByb2ZpbGV8ZW58MHx8MHx8fDA%3D" alt="Foto Profil">
-</div>
-
-  <div class="profile-name text-center">
-      {{ Auth::user()->name }}
-  </div>
-
-  <div>
-      <span style="margin-right: 10px;"><b>20</b> Artikel</span>
-      <span style="margin-right: 10px;"><b>100</b> Followers</span>
-      <span><b>500</b> Likes</span>
-  </div>
-
+<div class="section">
   <br>
-
-  <div class="social-media-links text-center">
-      <a href="#" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
-      <a href="#" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-      <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-  </div>
-
-  <div class="about-section text-center">
-      <p>{{ Auth::user()->aboutme }}</p>
-  </div>
-
-  <div style="display: flex; justify-content: center; margin-bottom: 20px;">
-    <span style="margin-right: 10px; cursor: pointer;" onclick="showContent('articles')">Artikel</span>
-    <span style="margin-right: 10px; cursor: pointer;" onclick="showContent('videos')">Video</span>
-</div>
-
-<div class="articles-section" style="overflow: hidden;">
-    <div class="article-container" style="display: flex; transition: transform 0.5s ease-in-out;">
-        <div class="article-card" id="articles"> <!-- Change 'articles' here -->
-            <h4>Judul Artikel</h4>
-            <p>Ditulis Tanggal: 1 Januari 2023</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+          <div class="card">
+          <br>
+                <div>
+                  <div style="width: 120px; height: 120px; overflow: hidden; border-radius: 50%; margin: 0 auto;">
+                      <img style="width: 100%; height: 100%; object-fit: cover;" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHByb2ZpbGV8ZW58MHx8MHx8fDA%3D" alt="Foto Profil">
+                  </div>
+                
+                  <div class="profile-name text-center">
+                      {{ Auth::user()->name }}
+                  </div>
+                
+                  <div class="text-center">
+                      <span style="margin-right: 10px;"><b>20</b> Artikel</span>
+                      <span style="margin-right: 10px;"><b>100</b> Followers</span>
+                      <span><b>500</b> Likes</span>
+                  </div>
+                
+                  <br>
+                
+                  <div class="social-media-links text-center">
+                      <a href="#" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+                      <a href="#" target="_blank" title="Facebook"><i class="fab fa-twitter"></i></a>
+                      <a href="#" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                      <a href="#" target="_blank" title="Facebook"><i class="fab fa-youtube"></i></a>
+                      <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                  </div>
+                
+                  <div class="about-section text-center">
+                      <p>{{ Auth::user()->aboutme }}</p>
+                  </div>
+              
+                </div>
+              </div>
+            </div>
+    
+            <div class="col-md-4">
+              <div class="card card-user" style="border: 2px solid #00bcd4; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <div class="card-header" style="background: linear-gradient(45deg, #0f4c75, #3282b8); color: #fff; text-align: center; border-radius: 10px 10px 0 0; padding: 15px;">
+                  <h5 style="margin-bottom: 0; font-size: 1.5em; color: #fff;"> Daftar Artikel </h5>
+                </div>
+                <div class="card-body">
+                  <div class="row" style="text-align: justify">
+                    <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
+                      <div class="d-flex justify-content-center">
+                        <img src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-scenery-free-photo.jpg?w=2210&quality=70" style="max-width: 100%; height: auto; border-radius: 14px;">
+                      </div>
+                    </div>
+                    <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
+                      <a href="#" style="color: #d47500;">
+                        <h4 class="header-name" style="text-align: left; font-size: 1.2em;">📖 Judul Artikel 1</h4>
+                        <span class="d-flex"><b>01 November 2023</b></span>
+                      </a>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row" style="text-align: justify">
+                    <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
+                      <div class="d-flex justify-content-center">
+                        <img src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-scenery-free-photo.jpg?w=2210&quality=70" style="max-width: 100%; height: auto; border-radius: 14px;">
+                      </div>
+                    </div>
+                    <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
+                      <a href="#" style="color: #d47500;">
+                        <h4 class="header-name" style="text-align: left; font-size: 1.2em;">📖 Judul Artikel 1</h4>
+                        <span class="d-flex"><b>01 November 2023</b></span>
+                      </a>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    </div>
+                  </div>
+                  <hr>
+                </div>
+              </div>
+            </div>
+            
+          
+            <div class="col-md-4">
+              <div class="card card-user" style="border: 2px solid #00bcd4; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <div class="card-header" style="background: linear-gradient(45deg, #0f4c75, #3282b8); color: #fff; text-align: center; border-radius: 10px 10px 0 0; padding: 15px;">
+                  <h5 style="margin-bottom: 0; font-size: 1.5em; color: #fff;"> Daftar Video </h5>
+                </div>
+                <div class="card-body">
+                  <div class="row" style="text-align: justify">
+                    <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
+                      <div class="d-flex justify-content-center">
+                        <img src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-scenery-free-photo.jpg?w=2210&quality=70" style="max-width: 100%; height: auto; border-radius: 14px;">
+                      </div>
+                    </div>
+                    <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
+                      <a href="#" style="color: #d47500;">
+                        <h4 class="header-name" style="text-align: left; font-size: 1.2em;">📖 Judul Video 1</h4>
+                        <span class="d-flex"><b>05 November 2023</b></span>
+                      </a>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row" style="text-align: justify">
+                    <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
+                      <div class="d-flex justify-content-center">
+                        <img src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-nature-scenery-free-photo.jpg?w=2210&quality=70" style="max-width: 100%; height: auto; border-radius: 14px;">
+                      </div>
+                    </div>
+                    <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
+                      <a href="#" style="color: #d47500;">
+                        <h4 class="header-name" style="text-align: left; font-size: 1.2em;">📖 Judul Video 1</h4>
+                        <span class="d-flex"><b>05 November 2023</b></span>
+                      </a>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    </div>
+                  </div>
+                  <hr>
+                </div>
+              </div>
+            </div>
+            
+              
+            </div>
+          </div>
         </div>
-        <div class="video-card" id="videos" style="display: none;"> <!-- Change 'video1' to 'videos' -->
-            <h4>Judul Video</h4>
-            <p>Ditulis Tanggal: 5 Januari 2023</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        </div>
-    </div>
-</div>
-</div>
 
 <!----------------------------------------------------------------------------------- Modal Area -------------------------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------------- Modal Area -------------------------------------------------------------------------------------------->

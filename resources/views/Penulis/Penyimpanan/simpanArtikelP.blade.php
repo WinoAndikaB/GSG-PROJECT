@@ -227,7 +227,7 @@
                       </div>
                   </div>
                   <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
-                      <a href="{{ route('detail.artikel', ['id' => $item->artikel->id]) }}" style="color: rgba(242, 100, 25, 1)">
+                      <a href="{{ route('detail.artikelP', ['id' => $item->artikel->id]) }}" style="color: rgba(242, 100, 25, 1)">
                           <h4 style="text-align: left">{{$item->artikel->judulArtikel}}</h4>
                           <span class="d-flex"><b>{{ $item->artikel->penulis }}</b></span>
                       </a>

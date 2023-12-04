@@ -50,6 +50,85 @@
   }
 </style>
 
+<style>
+  body {
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+  }
+
+  .profile-container {
+      max-width: 800px; /* Adjust the max-width to your desired size */
+      margin: auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+  }
+
+  .profile-name {
+      font-size: 2em;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #3498db;
+  }
+
+  .header-name {
+      font-size: 2em;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #000000;
+  }
+
+  .about-section {
+      margin-bottom: 20px;
+      color: #555;
+  }
+
+  .social-media-links {
+      margin-bottom: 20px;
+      color: #555;
+  }
+
+  .social-media-links a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #3498db;
+      transition: color 0.3s ease;
+  }
+
+  .followers-likes {
+      font-size: 1.2em;
+      color: #555;
+      margin-bottom: 20px;
+  }
+
+  .articles-section {
+      text-align: left;
+  }
+
+  .article-card {
+      margin-bottom: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+      transition: transform 0.3s ease;
+  }
+
+  .article-card:hover {
+      transform: scale(1.02);
+  }
+
+  .fab {
+      font-size: 1.5em;
+      margin-right: 5px;
+  }
+</style>
+
 <title>Profil - Katakey</title>
 
 <header class="header-area header-sticky" style="text-align: center;">
@@ -151,19 +230,19 @@
       <div class="container">
         <div class="row">
           <div class="col-md-8">
-              <div class="card">
-                  <div class="card-header">
-                      <h5 class="title">Edit Profile Penulis</h5>
-                  </div>
-                  <div class="card-body">
+            <div class="card card-user" style="border: 2px solid #00bcd4; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+              <div class="card-header" style="background: linear-gradient(45deg, #0f4c75, #3282b8); color: #fff; text-align: center; border-radius: 10px 10px 0 0; padding: 15px;">
+                <h5 style="margin-bottom: 0; font-size: 1.5em; color: #fff;"> Edit Profil User </h5>
+              </div>
+              <div class="card-body">
                     <form method="POST" action="{{ route('updateUser', ['id' => Auth::user()->id]) }}" enctype="multipart/form-data">
                       @csrf
                       @method('PUT')
 
                       <div class="text-center">
-                      <a href="/daftarArtikelPenulis" class="btn btn-info">Tulis Artikel</a>
-                      <a href="/daftarVideoPenulis" class="btn btn-primary">Buat Video</a>
-                      <a href="/berhentiPenulis" class="btn btn-danger">Berhenti Menjadi Penulis?</a>
+                        <a href="/daftarArtikelP" class="btn btn-info">Artikel Anda</a>
+                        <a href="/daftarVideoP" class="btn btn-primary">Video Anda</a>
+                        <a href="/berhentiPenulis" class="btn btn-danger">Berhenti Menjadi Penulis?</a>
                       </div>
 
                       <hr>
@@ -223,47 +302,56 @@
                   </div>
         
                   <div class="col-md-4">
-                    <div class="card card-user">
-                      <div class="card-body text-center">
-                        <div class="author">
-                          <a href="/profileUser">
-                            <img src="
-                            <?php
+                    <div class="card">
+                    <br>
+                          <div>
+                            <div style="width: 120px; height: 120px; overflow: hidden; border-radius: 50%; margin: 0 auto;">
+                                <img style="width: 100%; height: 100%; object-fit: cover;" src="
+                                <?php
                                 $fotoProfil = Auth::user()->fotoProfil;
                                 if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
                                     echo asset('fotoProfil/' . $fotoProfil);
                                 } else {
                                     echo asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999');
                                 }
-                            ?>" alt="User's Profile Picture">
-                            </a>
+                            ?>" alt="Foto Profil">
+                            </div>
+                          
+                            <div class="profile-name text-center">
+                                {{ Auth::user()->name }}
+                            </div>
+                          
+                            <div class="text-center">
+                                <span style="margin-right: 10px;"><b>20</b> Artikel</span>
+                                <span style="margin-right: 10px;"><b>2</b> Video</span>
+                                <span style="margin-right: 10px;"><b>100</b> Followers</span>
+                                <span><b>500</b> Likes</span>
+                            </div>
+                          
                             <br>
-                            <br>
-                            <br>
-                            <h5 class="title">{{Auth::user()->name}}</h5>
-                            <span>{{Auth::user()->role}}</span>
-                            <p class="description">
-                              {{Auth::user()->email}}
-                            </p>
+                          
+                            <div class="social-media-links text-center">
+                                <a href="#" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+                                <a href="#" target="_blank" title="Facebook"><i class="fab fa-twitter"></i></a>
+                                <a href="#" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                                <a href="#" target="_blank" title="Facebook"><i class="fab fa-youtube"></i></a>
+                                <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            </div>
                             <hr>
-                            <span>Bergabung Sejak: <br> {{ \Carbon\Carbon::parse(Auth::user()->created_at)->format('d F, Y') }}</span>
+                              <div class="social-media-links text-center"><b>Bergabung Sejak:</b>
+                                <p>{{ \Carbon\Carbon::parse(Auth::user()->created_at)->format('F j, Y') }}</p>
+                              </div> 
+
                             <hr>
+                          
+                            <div class="about-section text-center">
+                                <p>{{ Auth::user()->aboutme }}</p>
+                            </div>
+                        
+                          </div>
                         </div>
-                        <p class="description">
-                          {{Auth::user()->aboutme}}
-                        </p>
                       </div>
-                      <hr>
-                      <div class="button-container text-center">
-                        <a href="{{Auth::user()->facebook}}" class="btn btn-neutral btn-icon btn-round btn-lg">
-                          <i class="fab fa-facebook-f"></i> Facebook
-                        </a>
-                        <a href="{{Auth::user()->instagram}}" class="btn btn-neutral btn-icon btn-round btn-lg">
-                          <i class="fab fa-instagram"></i> Instagram
-                        </a>
-                      </div>
-                    </div>
-                  </div>
+                      
                 </div>
               </div>
             </div>
