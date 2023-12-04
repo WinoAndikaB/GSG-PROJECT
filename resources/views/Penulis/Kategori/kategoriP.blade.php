@@ -123,9 +123,14 @@
                             </span>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="savedArticlesDropdown">
-                          <a class="dropdown-item" href="/profileUserP">Profil Anda</a>
-                          <a class="dropdown-item" href="/simpanArtikelViewP">Artikel Tersimpan</a>
-                          <a class="dropdown-item" href="/simpanVideoViewP">Video Tersimpan</a>
+                          <center>
+                            <a class="dropdown-item" href="#" style="background-color: lightblue; display: block; text-align: center;">
+                                {{ Auth::user()->role }}
+                            </a>
+                            <a class="dropdown-item" href="/profileP">Profil Anda</a>
+                            <a class="dropdown-item" href="/simpanArtikelViewP">Artikel Tersimpan</a>
+                            <a class="dropdown-item" href="/simpanVideoViewP">Video Tersimpan</a>
+                          </center>
                       </div>
                     </div>
                 </li>           
@@ -187,7 +192,7 @@
                   
                   <div class="details">
                     <h6 class="title">  
-                      <a href="{{ route('kategoriA', ['kategori' => $item->kategori]) }}">{{ $item->kategori }}</a>                    
+                      <a href="{{ route('kategoriAP', ['kategori' => $item->kategori]) }}">{{ $item->kategori }}</a>                    
                     </h6>
 
                   </div>

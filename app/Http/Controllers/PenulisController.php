@@ -465,7 +465,7 @@ function kategoriP(){
 
     $kategoriLogA = kategori::all();
 
-    return view('Penulis.kategoriP', compact('kategoriLogA'));
+    return view('Penulis.Kategori.kategoriP', compact('kategoriLogA'));
 }
 
 function KategoriAP($kategori){
@@ -476,7 +476,7 @@ function KategoriAP($kategori){
         ->take(10)
         ->get();
 
-    return view('Penulis.KategoriAP', compact('KategoriLogA'));
+    return view('Penulis.Kategori.KategoriAP', compact('KategoriLogA'));
 }
 
 function kategoriVP($kategori){
@@ -487,7 +487,7 @@ function kategoriVP($kategori){
         ->take(10)
         ->get();
 
-    return view('Penulis.KategoriVP', compact('kategoriLogV'));
+    return view('Penulis.Kategori.KategoriVP', compact('kategoriLogV'));
 }
     
 //------------------------------------------------------------------------------------------------------------------ About Area ------------------------------------------------------------------------------------------------------------------------------------

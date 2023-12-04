@@ -53,75 +53,80 @@
 
 <title>Home - Katakey</title>
 
-<body>
-<div class="page-heading">
-<header class="header-area header-sticky" style="text-align: center;">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-12">
-              <nav class="main-nav">
-                <ul class="nav">
-                    <li class="scroll-to-section"><a href="/homeP" class="active">Home</a></li>
-                    <li class="scroll-to-section"><a href="/homeP">Trending</a></li>
-                    <li class="scroll-to-section"><a href="/homeP">Artikel</a></li>
-                    <li class="scroll-to-section"><a href="/VideoP" class="">Video</a></li>
-                    <li class="scroll-to-section"><a href="/kategoriP">Kategori</a></li>
-                    <li class="scroll-to-section"><a href="/eventP">Event</a></li>
-                    <li class="scroll-to-section"><a href="/ulasanP" class="text-center">Ulasan</a></li>
-                    <li class="scroll-to-section"><a href="/aboutP">Tentang</a></li>
-                    <li>
-                      <form action="{{ route('searchP') }}" method="GET" class="input-group">
-                        <input type="text" name="search" class="form-control" placeholder="Cari Artikel..." aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ request('search') }}">
-                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
-                    </form>
-                    </li>
-                    <li>
-                      <div class="dropdown">
-                          <a href="#" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center dropdown-toggle" role="button" id="savedArticlesDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <div class="profile-picture" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
-                                  <?php
-                                  $fotoProfil = Auth::user()->fotoProfil;
-                                  if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
-                                  ?>
-                                  <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
-                                  <?php
-                                  } else {
-                                  ?>
-                                  <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
-                                  <?php
-                                  }
-                                  ?>
-                              </div>
-                  
-                              <span class="d-sm-inline d-none">
-                                  <?php
-                                  $fullName = Auth::user()->name;
-                                  $words = explode(' ', $fullName);
-                  
-                                  // Ambil dua kata pertama dan dua kata terakhir dari nama pengguna
-                                  $firstTwoWords = implode(' ', array_slice($words, 0, 1));
-                                  $lastTwoWords = implode(' ', array_slice($words, -1, 2));
-                  
-                                  echo $firstTwoWords . ' ' . $lastTwoWords;
-                                  ?>
-                              </span>
-                          </a>
-                          <div class="dropdown-menu" aria-labelledby="savedArticlesDropdown">
-                            <a class="dropdown-item" href="/profileP">Profil Anda</a>
-                            <a class="dropdown-item" href="/simpanArtikelViewP">Artikel Tersimpan</a>
-                            <a class="dropdown-item" href="/simpanVideoViewP">Video Tersimpan</a>
-                        </div>
-                      </div>
-                  </li>                  
-                    <li class="scroll-to-section">
-                      <a href="#" class="d-sm-inline d-none text-white text-bold" id="logout-link" onclick="openModal()"> Logout</a>
-                    </li>
-            </nav>
+    <body>
+    <div class="page-heading">
+    <header class="header-area header-sticky" style="text-align: center;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12">
+                  <nav class="main-nav">
+                    <ul class="nav">
+                        <li class="scroll-to-section"><a href="/homeP" class="active">Home</a></li>
+                        <li class="scroll-to-section"><a href="/homeP">Trending</a></li>
+                        <li class="scroll-to-section"><a href="/homeP">Artikel</a></li>
+                        <li class="scroll-to-section"><a href="/VideoP" class="">Video</a></li>
+                        <li class="scroll-to-section"><a href="/kategoriP">Kategori</a></li>
+                        <li class="scroll-to-section"><a href="/eventP">Event</a></li>
+                        <li class="scroll-to-section"><a href="/ulasanP" class="text-center">Ulasan</a></li>
+                        <li class="scroll-to-section"><a href="/aboutP">Tentang</a></li>
+                        <li>
+                          <form action="{{ route('searchP') }}" method="GET" class="input-group">
+                            <input type="text" name="search" class="form-control" placeholder="Cari Artikel..." aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ request('search') }}">
+                            <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
+                        </form>
+                        </li>
+                        <li>
+                          <div class="dropdown">
+                              <a href="#" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center dropdown-toggle" role="button" id="savedArticlesDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  <div class="profile-picture" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
+                                      <?php
+                                      $fotoProfil = Auth::user()->fotoProfil;
+                                      if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
+                                      ?>
+                                      <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                                      <?php
+                                      } else {
+                                      ?>
+                                      <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                                      <?php
+                                      }
+                                      ?>
+                                  </div>
+                      
+                                  <span class="d-sm-inline d-none">
+                                      <?php
+                                      $fullName = Auth::user()->name;
+                                      $words = explode(' ', $fullName);
+                      
+                                      // Ambil dua kata pertama dan dua kata terakhir dari nama pengguna
+                                      $firstTwoWords = implode(' ', array_slice($words, 0, 1));
+                                      $lastTwoWords = implode(' ', array_slice($words, -1, 2));
+                      
+                                      echo $firstTwoWords . ' ' . $lastTwoWords;
+                                      ?>
+                                  </span>
+                              </a>
+                              <div class="dropdown-menu" aria-labelledby="savedArticlesDropdown">
+                                <center>
+                                  <a class="dropdown-item" href="#" style="background-color: lightblue; display: block; text-align: center;">
+                                      {{ Auth::user()->role }}
+                                  </a>
+                                  <a class="dropdown-item" href="/profileP">Profil Anda</a>
+                                  <a class="dropdown-item" href="/simpanArtikelViewP">Artikel Tersimpan</a>
+                                  <a class="dropdown-item" href="/simpanVideoViewP">Video Tersimpan</a>
+                                </center>
+                            </div>
+                          </div>
+                      </li>                  
+                        <li class="scroll-to-section">
+                          <a href="#" class="d-sm-inline d-none text-white text-bold" id="logout-link" onclick="openModal()"> Logout</a>
+                        </li>
+                </nav>
+                </div>
             </div>
         </div>
+    </header>
     </div>
-</header>
-</div>
 
       <!-- Modal Logout -->
       <div id="logout-modal" class="modal">
@@ -301,7 +306,7 @@
                             <div class="details">
                                 <div class="post-meta-single mb-4 pt-1">
                                     <ul>
-                                        <li><a class="tag-base tag-blue" href="{{ route('detail.artikel', ['id' => $item->id]) }}">{{$item->penulis}}</a></li>
+                                        <li><a class="tag-base tag-blue" href="{{ route('detail.artikelP', ['id' => $item->id]) }}">{{$item->penulis}}</a></li>
                                         <li><i class="fa fa-clock-o"></i>
                                             @php
                                             $ulasanCreatedAt = \Carbon\Carbon::parse($item['created_at']);
@@ -326,7 +331,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <h6 class="title"><a href="{{ route('detail.artikel', ['id' => $item->id]) }}">{{$item->judulArtikel}}</a></h6>
+                                <h6 class="title"><a href="{{ route('detail.artikelP', ['id' => $item->id]) }}">{{$item->judulArtikel}}</a></h6>
                                 <p>{{ \Illuminate\Support\Str::limit($item->deskripsi, 350) }}</p>
                             </div>
                         </div>
@@ -384,7 +389,7 @@
                       <p class="btn-date"><i class="fa fa-clock-o"></i>{{$item->created_at}}</p>
                   </div>
                   <div class="details">
-                      <h6 class="title"><a href="{{ route('detail.artikel', ['id' => $item->id]) }}">{{$item->judulArtikel}}</a></h6>
+                      <h6 class="title"><a href="{{ route('detail.artikelP', ['id' => $item->id]) }}">{{$item->judulArtikel}}</a></h6>
                   </div>
               </div>
               <div class="single-post-wrap">
@@ -393,7 +398,7 @@
                       <p class="btn-date"><i class="fa fa-clock-o"></i>{{$item->created_at}}</p>
                   </div>
                   <div class="details">
-                      <h6 class="title"><a href="{{ route('detail.artikel', ['id' => $item->id]) }}">{{$item->judulArtikel}}</a></h6>
+                      <h6 class="title"><a href="{{ route('detail.artikelP', ['id' => $item->id]) }}">{{$item->judulArtikel}}</a></h6>
                   </div>
               </div>
           </div>
@@ -419,7 +424,7 @@
                                                   <li><i class="fa fa-clock-o"></i>{{$item->created_at}}</li>
                                               </ul>
                                           </div>
-                                          <h6 class="title"><a href="{{ route('detail.artikel', ['id' => $item->id]) }}">{{$item->judulArtikel}}</a></h6>
+                                          <h6 class="title"><a href="{{ route('detail.artikelP', ['id' => $item->id]) }}">{{$item->judulArtikel}}</a></h6>
                                       </div>
                                   </div>
                               </div>
@@ -477,7 +482,7 @@
 
                   @endphp
                   | 
-                      <a href="{{ route('detail.artikel', ['id' => $item->id]) }}" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a></p></span>
+                      <a href="{{ route('detail.artikelP', ['id' => $item->id]) }}" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a></p></span>
               </div>
               <hr>
               @endforeach
@@ -500,7 +505,7 @@
                 <div class="single-post-wrap style-overlay">
                     <div class="thumb">
                         <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" alt="img" width="500" height="250">
-                        <a class="tag-base tag-purple" href="{{ route('detail.artikel', ['id' => $item->id]) }}">{{ $item->penulis }}</a>
+                        <a class="tag-base tag-purple" href="{{ route('detail.artikelP', ['id' => $item->id]) }}">{{ $item->penulis }}</a>
                     </div>
                     <div class="details">
                         <div class="post-meta-single">

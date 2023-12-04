@@ -148,12 +148,17 @@
           <div class="col-md-8">
               <div class="card">
                   <div class="card-header">
-                      <h5 class="title">Edit Profile</h5>
+                      <h5 class="title">Edit Profile Pengguna</h5>
                   </div>
                   <div class="card-body">
                     <form method="POST" action="{{ route('updateUser', ['id' => Auth::user()->id]) }}" enctype="multipart/form-data">
                       @csrf
                       @method('PUT')
+
+                      <div class="text-right">
+                        <a href="#" class="btn btn-info">Daftar Menjadi Penulis</a>
+                        </div>
+
                             <div class="form-group">
                                 <label>Role</label>
                                 <input type="text" class="form-control" disabled="" name="role" value="{{ Auth::user()->role }}">

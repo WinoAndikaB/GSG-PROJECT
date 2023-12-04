@@ -121,66 +121,72 @@
 
 <body>
 
-  <header class="header-area header-sticky" style="text-align: center;">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-12">
-              <nav class="main-nav">
-                <ul class="nav">
-                    <li class="scroll-to-section"><a href="/home">Home</a></li>
-                    <li class="scroll-to-section"><a href="/home">Trending</a></li>
-                    <li class="scroll-to-section"><a href="/home">Artikel</a></li>
-                    <li class="scroll-to-section"><a href="/Video">Video</a></li>
-                    <li class="scroll-to-section"><a href="/kategori">Kategori</a></li>
-                    <li class="scroll-to-section"><a href="/event">Event</a></li>
-                    <li class="scroll-to-section"><a href="/ulasan" class="active">Ulasan</a></li>
-                    <li class="scroll-to-section"><a href="/about">Tentang</a></li>
-                    <li>
-                      <div class="dropdown">
-                          <a href="#" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center dropdown-toggle" role="button" id="savedArticlesDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <div class="profile-picture" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
-                                  <?php
-                                  $fotoProfil = Auth::user()->fotoProfil;
-                                  if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
-                                  ?>
-                                  <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
-                                  <?php
-                                  } else {
-                                  ?>
-                                  <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
-                                  <?php
-                                  }
-                                  ?>
-                              </div>
-                  
-                              <span class="d-sm-inline d-none">
-                                  <?php
-                                  $fullName = Auth::user()->name;
-                                  $words = explode(' ', $fullName);
-                  
-                                  // Ambil dua kata pertama dan dua kata terakhir dari nama pengguna
-                                  $firstTwoWords = implode(' ', array_slice($words, 0, 1));
-                                  $lastTwoWords = implode(' ', array_slice($words, -1, 2));
-                  
-                                  echo $firstTwoWords . ' ' . $lastTwoWords;
-                                  ?>
-                              </span>
-                          </a>
-                          <div class="dropdown-menu" aria-labelledby="savedArticlesDropdown">
-                            <a class="dropdown-item" href="/profileUser">Profil Anda</a>
-                            <a class="dropdown-item" href="/simpanArtikelView">Artikel Tersimpan</a>
-                            <a class="dropdown-item" href="/simpanVideoView">Video Tersimpan</a>
+      <header class="header-area header-sticky" style="text-align: center;">
+        <div class="container">
+          <div class="row align-items-center">
+              <div class="col-12">
+                <nav class="main-nav">
+                  <ul class="nav">
+                      <li class="scroll-to-section"><a href="/homeP">Home</a></li>
+                      <li class="scroll-to-section"><a href="/homeP">Trending</a></li>
+                      <li class="scroll-to-section"><a href="/homeP">Artikel</a></li>
+                      <li class="scroll-to-section"><a href="/VideoP">Video</a></li>
+                      <li class="scroll-to-section"><a href="/kategoriP">Kategori</a></li>
+                      <li class="scroll-to-section"><a href="/eventP">Event</a></li>
+                      <li class="scroll-to-section"><a href="/ulasanP" class="active">Ulasan</a></li>
+                      <li class="scroll-to-section"><a href="/aboutP">Tentang</a></li>
+                      <li>
+                        <div class="dropdown">
+                            <a href="#" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center dropdown-toggle" role="button" id="savedArticlesDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <div class="profile-picture" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
+                                    <?php
+                                    $fotoProfil = Auth::user()->fotoProfil;
+                                    if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
+                                    ?>
+                                    <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                                    <?php
+                                    } else {
+                                    ?>
+                                    <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                    
+                                <span class="d-sm-inline d-none">
+                                    <?php
+                                    $fullName = Auth::user()->name;
+                                    $words = explode(' ', $fullName);
+                    
+                                    // Ambil dua kata pertama dan dua kata terakhir dari nama pengguna
+                                    $firstTwoWords = implode(' ', array_slice($words, 0, 1));
+                                    $lastTwoWords = implode(' ', array_slice($words, -1, 2));
+                    
+                                    echo $firstTwoWords . ' ' . $lastTwoWords;
+                                    ?>
+                                </span>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="savedArticlesDropdown">
+                              <center>
+                                <a class="dropdown-item" href="#" style="background-color: lightblue; display: block; text-align: center;">
+                                    {{ Auth::user()->role }}
+                                </a>
+                                <a class="dropdown-item" href="/profileP">Profil Anda</a>
+                                <a class="dropdown-item" href="/simpanArtikelViewP">Artikel Tersimpan</a>
+                                <a class="dropdown-item" href="/simpanVideoViewP">Video Tersimpan</a>
+                              </center>
+                          </div>
                         </div>
-                      </div>
-                  </li>           
-                    <li class="scroll-to-section">
-                      <a href="#" class="d-sm-inline d-none text-white text-bold" id="logout-link" onclick="openModal()"> Logout</a>
+                    </li>           
+                      <li class="scroll-to-section">
+                        <a href="#" class="d-sm-inline d-none text-white text-bold" id="logout-link" onclick="openModal()"> Logout</a>
                     </li>
-            </nav>
-            </div>
-        </div>
-    </div>
-</header>
+                </nav>
+              </div>
+          </div>
+      </div>
+    </header>
+
       <!-- Modal Logout -->
       <div id="logout-modal" class="modal">
         <div class="modal-content">

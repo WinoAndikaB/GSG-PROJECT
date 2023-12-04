@@ -118,7 +118,7 @@
                 <ul class="nav">
                     <li class="scroll-to-section"><a href="/home">Home</a></li>
                     <li class="scroll-to-section"><a href="/home">Trending</a></li>
-                    <li class="scroll-to-section"><a href="/home">Artikel</a></li>
+                    <li class="scroll-to-section"><a href="/home" class="active">Artikel</a></li>
                     <li class="scroll-to-section"><a href="/Video">Video</a></li>
                     <li class="scroll-to-section"><a href="/kategori">Kategori</a></li>
                     <li class="scroll-to-section"><a href="/event">Event</a></li>
@@ -156,9 +156,14 @@
                               </span>
                           </a>
                           <div class="dropdown-menu" aria-labelledby="savedArticlesDropdown">
-                            <a class="dropdown-item" href="/profileUser">Profil Anda</a>
-                            <a class="dropdown-item" href="/simpanArtikelView">Artikel Tersimpan</a>
-                            <a class="dropdown-item" href="/simpanVideoView">Video Tersimpan</a>
+                            <center>
+                              <a class="dropdown-item" href="#" style="background-color: lightblue; display: block; text-align: center;">
+                                  {{ Auth::user()->role }}
+                              </a>
+                              <a class="dropdown-item" href="/profileP">Profil Anda</a>
+                              <a class="dropdown-item" href="/simpanArtikelViewP">Artikel Tersimpan</a>
+                              <a class="dropdown-item" href="/simpanVideoViewP">Video Tersimpan</a>
+                            </center>
                         </div>
                       </div>
                   </li>           

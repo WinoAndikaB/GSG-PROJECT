@@ -186,14 +186,14 @@
             <div class="col-12">
               <nav class="main-nav">
                 <ul class="nav">
-                    <li class="scroll-to-section"><a href="/home">Home</a></li>
-                    <li class="scroll-to-section"><a href="/home">Trending</a></li>
-                    <li class="scroll-to-section"><a href="/home">Artikel</a></li>
-                    <li class="scroll-to-section"><a href="/Video">Video</a></li>
-                    <li class="scroll-to-section"><a href="/kategori">Kategori</a></li>
-                    <li class="scroll-to-section"><a href="/event" class="active">Event</a></li>
-                    <li class="scroll-to-section"><a href="/ulasan">Ulasan</a></li>
-                    <li class="scroll-to-section"><a href="/about">Tentang</a></li>
+                    <li class="scroll-to-section"><a href="/homeP">Home</a></li>
+                    <li class="scroll-to-section"><a href="/homeP">Trending</a></li>
+                    <li class="scroll-to-section"><a href="/homeP">Artikel</a></li>
+                    <li class="scroll-to-section"><a href="/VideoP">Video</a></li>
+                    <li class="scroll-to-section"><a href="/kategoriP">Kategori</a></li>
+                    <li class="scroll-to-section"><a href="/eventP" class="active">Event</a></li>
+                    <li class="scroll-to-section"><a href="/ulasanP">Ulasan</a></li>
+                    <li class="scroll-to-section"><a href="/aboutP">Tentang</a></li>
                     <li>
                       <form action="{{ route('searchE') }}" method="GET" class="input-group">
                         <input type="text" name="searchE" class="form-control" placeholder="Cari Event..." aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ request('searchE') }}">
@@ -232,9 +232,14 @@
                               </span>
                           </a>
                           <div class="dropdown-menu" aria-labelledby="savedArticlesDropdown">
-                            <a class="dropdown-item" href="/profileUser">Profil Anda</a>
-                            <a class="dropdown-item" href="/simpanArtikelView">Artikel Tersimpan</a>
-                            <a class="dropdown-item" href="/simpanVideoView">Video Tersimpan</a>
+                            <center>
+                              <a class="dropdown-item" href="#" style="background-color: lightblue; display: block; text-align: center;">
+                                  {{ Auth::user()->role }}
+                              </a>
+                              <a class="dropdown-item" href="/profileP">Profil Anda</a>
+                              <a class="dropdown-item" href="/simpanArtikelViewP">Artikel Tersimpan</a>
+                              <a class="dropdown-item" href="/simpanVideoViewP">Video Tersimpan</a>
+                            </center>
                         </div>
                       </div>
                   </li>           

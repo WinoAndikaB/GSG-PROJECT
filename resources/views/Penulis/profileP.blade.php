@@ -98,9 +98,14 @@
                             </span>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="savedArticlesDropdown">
-                          <a class="dropdown-item" href="/profileP">Profil Anda</a>
-                          <a class="dropdown-item" href="/simpanArtikelViewP">Artikel Tersimpan</a>
-                          <a class="dropdown-item" href="/simpanVideoViewP">Video Tersimpan</a>
+                          <center>
+                            <a class="dropdown-item" href="#" style="background-color: lightblue; display: block; text-align: center;">
+                                {{ Auth::user()->role }}
+                            </a>
+                            <a class="dropdown-item" href="/profileP">Profil Anda</a>
+                            <a class="dropdown-item" href="/simpanArtikelViewP">Artikel Tersimpan</a>
+                            <a class="dropdown-item" href="/simpanVideoViewP">Video Tersimpan</a>
+                          </center>
                       </div>
                     </div>
                 </li>           
@@ -148,12 +153,19 @@
           <div class="col-md-8">
               <div class="card">
                   <div class="card-header">
-                      <h5 class="title">Edit Profile</h5>
+                      <h5 class="title">Edit Profile Penulis</h5>
                   </div>
                   <div class="card-body">
                     <form method="POST" action="{{ route('updateUser', ['id' => Auth::user()->id]) }}" enctype="multipart/form-data">
                       @csrf
                       @method('PUT')
+
+                      <div class="text-right">
+                      <a href="/homeP" class="btn btn-info">Tulis Artikel</a>
+                      </div>
+
+                      <br>
+                      <br>
                             <div class="form-group">
                                 <label>Role</label>
                                 <input type="text" class="form-control" disabled="" name="role" value="{{ Auth::user()->role }}">
@@ -227,7 +239,7 @@
                             <br>
                             <br>
                             <h5 class="title">{{Auth::user()->name}}</h5>
-                            <span>{{Auth::user()->username}}</span>
+                            <span>{{Auth::user()->role}}</span>
                             <p class="description">
                               {{Auth::user()->email}}
                             </p>
