@@ -4,7 +4,6 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PenggunaController;
-use App\Http\Controllers\PenulisController;
 use App\Http\Controllers\SuperAdminController;
 use Illuminate\Support\Facades\Route;
 
@@ -155,91 +154,7 @@ use Illuminate\Support\Facades\Route;
 //----------------------------------------------------------------------------------- [End Halaman Pengguna] ---------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------- [End Halaman Pengguna] ---------------------------------------------------------------------------------------------------------------
 
-//----------------------------------------------------------------------------------- [Halaman Penulis] ---------------------------------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------- [Halaman Penulis] ---------------------------------------------------------------------------------------------------------------
 
-    //[Penulis] Membatasi Hak Akases Admin
-    Route::middleware(['penulis'])->group(function () {
-
-                //Pencarian 
-                Route::get('/searchP', [PenulisController::class, 'searchP'])->name('searchP');
-                Route::get('/searchVP', [PenulisController::class, 'searchVP'])->name('searchVP');
-                Route::get('/searchEP', [PenulisController::class, 'searchEP'])->name('searchEP');
-        
-                // Home 
-                Route::get('/homeP',[PenulisController::class,'HomePenulis'])->name('HomePenulis');
-                Route::get('/detailArtikelP/{id}', [PenulisController::class, 'showDetailArtikelP'])->name('detail.artikelP');
-        
-                Route::post('/komentarArtikelP', [PenulisController::class, 'storeKomentarArtikelP'])->name('storeKomentarArtikelP');
-                Route::get('/likeKomentarArtikelP/{commentId}', [PenulisController::class, 'likeKomentarArtikelP'])->name('likeKomentarArtikelP');
-                Route::get('/deleteKomentarArtikelP/{id}', [PenulisController::class, 'deleteKomentarArtikelP'])->name('deleteKomentarArtikelP');     
-        
-                Route::post('/submitP/reportP', [PenulisController::class, 'storeLaporanArtikelP'])->name('storeLaporanArtikelP');
-                Route::post('/submitP/reportKomentaP', [PenulisController::class, 'storeLaporanKomentarArtikelP'])->name('storeLaporanKomentarArtikelP');
-                Route::get('/deleteKomentarAP/{id}',[PenulisController::class,'deleteKomentarAP'])->name('deleteKomentarAP');
-        
-                Route::get('/simpanArtikelViewP', [PenulisController::class, 'simpanArtikelViewP'])->name('simpan.artikelViewP');
-                Route::post('/simpanArtikelDataP/{id}', [PenulisController::class, 'simpanArtikelDataP'])->name('simpan.artikelDataP');
-                Route::get('/deleteSimpanArtP/{id}', [PenulisController::class, 'deleteSimpanArtP'])->name('simpan.deleteArtikelP');
-                
-                // Video 
-                Route::get('/VideoP',[PenulisController::class,'VideoP'])->name('VideoP');
-                Route::get('/detailVideoP/{id}', [PenulisController::class, 'showDetailVideoP'])->name('showDetailVideoP');
-        
-                Route::post('/komentarVideoP', [PenulisController::class, 'storeKomentarVideoP'])->name('storeKomentarVideoP');
-                Route::get('/likeKomentarVideoP/{commentId}', [PenulisController::class, 'likeKomentarVideoP'])->name('likeKomentarVideoP'); 
-        
-                Route::post('/submitVP/reportVP', [PenulisController::class, 'storeLaporanVideoP'])->name('storeLaporanVideoP');
-                Route::post('/submitP/reportKomentarVP', [PenulisController::class, 'storeLaporanKomentarVideoP'])->name('storeLaporanKomentarVideoP');
-                Route::get('/deleteKomentarVP/{id}', [PenulisController::class, 'deleteKomentarVP'])->name('deleteKomentarVideoP');
-        
-                Route::get('/simpanVideoViewP', [PenulisController::class, 'simpanVideoViewP'])->name('simpan.videoViewP');
-                Route::post('/simpanVideoDataP/{videoId}', [PenulisController::class, 'simpanVideoDataP'])->name('simpan.videoDataP')->middleware('auth'); 
-                Route::get('/deleteSimpanVidP/{id}', [PenulisController::class, 'deleteSimpanVidP'])->name('simpan.deleteVideoP');
-        
-                // Kategori 
-                Route::get('/kategoriP', [PenulisController::class, 'kategoriP'])->name('kategoriP');
-                Route::get('/kategoriAP/{kategori}', [PenulisController::class, 'kategoriAP'])->name('kategoriAP');
-                Route::get('/kategoriVP/{kategori}', [PenulisController::class, 'kategoriVP'])->name('kategoriVP');
-
-                // Event 
-                Route::get('/eventP', [PenulisController::class, 'eventP'])->name('eventP');
-                Route::get('/detailEventP/{id}', [PenulisController::class, 'detailEventP'])->name('detailEventP');  
-                
-                 // Ulasan 
-                 Route::get('/ulasanP', [PenulisController::class, 'ulasanP'])->name('ulasanP');
-                 Route::post('/storeUlasanP',[PenulisController::class,'storeUlasanP']);
-                 Route::get('/deleteUlasanP/{id}', [PenulisController::class, 'deleteUlasanP'])->name('deleteUlasanP');
-                 Route::get('/likeUlasanP/{id}', [PenulisController::class, 'likeUlasanP'])->name('likeUlasanP');
-                 Route::get('/dislikeUlasanP/{id}', [PenulisController::class, 'dislikeUlasanP'])->name('dislikeUlasanP');
-                 Route::post('/simpanEditUlasanP/{id}', [PenulisController::class, 'simpanEditUlasanP'])->name('simpanEditUlasanP');
-                 }); 
-             
-                // About 
-                Route::get('/aboutP', [PenulisController::class, 'aboutP'])->name('aboutP');
-
-                // Profile 
-                Route::get('/profileP', [PenulisController::class, 'profileP'])->name('profileP');
-                Route::put('/profileP/updateUser/{id}',[PenulisController::class,'updateP'])->name('updateP');
-                Route::get('/profilPenulisP', [PenulisController::class, 'profilPenulisP'])->name('profilPenulisP');
-                Route::get('/berhentiPenulis', [PenulisController::class, 'berhentiPenulis'])->name('berhentiPenulis');  
-
-                Route::get('/daftarArtikelP', [PenulisController::class, 'daftarArtikelP'])->name('daftarArtikelP'); 
-                Route::get('/formTambahArtikelP', [PenulisController::class, 'formTambahArtikelP'])->name('formTambahArtikelP'); 
-                Route::get('/komentarArtikelP', [PenulisController::class, 'komentarArtikelP'])->name('komentarArtikelP'); 
-                Route::get('/laporanArtikelP', [PenulisController::class, 'laporanArtikelP'])->name('laporanArtikelP');
-                
-                Route::get('/daftarVideoP', [PenulisController::class, 'daftarVideoP'])->name('daftarVideoP'); 
-                Route::get('/formTambahVideoP', [PenulisController::class, 'formTambahVideoP'])->name('formTambahVideoP'); 
-                Route::get('/komentarVideoP', [PenulisController::class, 'komentarVideoP'])->name('komentarVideoP'); 
-                Route::get('/laporanVideoP', [PenulisController::class, 'laporanVideoP'])->name('laporanVideoP'); 
-
-                // Syarat & Ketentuan 
-                Route::get('/syaratKetentuanAP', [PenulisController::class, 'syaratKetentuanAP'])->name('syaratKetentuanAP');
-
-//----------------------------------------------------------------------------------- [End Halaman Penulis] ---------------------------------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------- [End Halaman Penulis] ---------------------------------------------------------------------------------------------------------------
-        
 //----------------------------------------------------------------------------------- [Halaman Admin] ---------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------- [Halaman Admin] ---------------------------------------------------------------------------------------------------------------
 
