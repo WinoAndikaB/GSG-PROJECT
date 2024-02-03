@@ -515,6 +515,29 @@
                   </div>
               </div>
 
+              <!-- Demote Modal -->
+                            <div class="modal fade" id="demoteModal{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="demoteModalLabel{{$user->id}}" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                      <div class="modal-header">
+                                          <h5 class="modal-title" id="demoteModalLabel{{$user->id}}">Demote Superadmin ke Admin</h5>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                          </button>
+                                      </div>
+                                      <div class="modal-body">
+                                          <!-- Add form elements to confirm the demotion -->
+                                          <p>Apakah anda yakin mau Demote Superadmin ke Admin?</p>
+                                      </div>
+                                      <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                          <a href="{{ route('demoteUser', ['id' => $user->id]) }}" class="btn btn-danger">Demote</a>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      @endforeach
+
               <!-- Freeze-Unfreeze Modal -->
               @foreach ($users as $user)
               <div class="modal fade" id="freezeModal{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="freezeModalLabel" aria-hidden="true">
@@ -572,30 +595,6 @@
                                   <button type="button" class="btn btn-success unfreeze-button" data-user-id="{{ $user->id }}">Unfreeze</button>
                               </div>
                           </form>
-                      </div>
-                  </div>
-              </div>
-          @endforeach
-          
-
-              <!-- Demote Modal -->
-              <div class="modal fade" id="demoteModal{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="demoteModalLabel{{$user->id}}" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <h5 class="modal-title" id="demoteModalLabel{{$user->id}}">Demote Superadmin ke Admin</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                              </button>
-                          </div>
-                          <div class="modal-body">
-                              <!-- Add form elements to confirm the demotion -->
-                              <p>Apakah anda yakin mau Demote Superadmin ke Admin?</p>
-                          </div>
-                          <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                              <a href="{{ route('demoteUser', ['id' => $user->id]) }}" class="btn btn-danger">Demote</a>
-                          </div>
                       </div>
                   </div>
               </div>

@@ -67,6 +67,13 @@
         margin: 25px;
         cursor: pointer;
       }
+
+      .profile-name {
+      font-size: 2em;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #3498db;
+  }
 </style>
 </head>
 
@@ -294,65 +301,54 @@
                 </div>
               </div>
               <div class="col-md-4">
-                <div class="card card-profile">
-                  <img src="https://images6.alphacoders.com/132/1320318.png" alt="Image placeholder" class="card-img-top">
-                  <div class="row justify-content-center">
-                    <div class="col-4 col-lg-4 order-lg-2">
-                      <div class="mt-n4 mt-lg-n6 mb-4 mb-lg-0">
-                        <a href="javascript:;">
-                            <div style="width: 230px; height: 220px; border: 2px solid white; border-radius: 50%; overflow: hidden;">
-                                <img src="<?php
-                                    $fotoProfil = Auth::user()->fotoProfil;
-                                    if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
-                                        echo asset('fotoProfil/' . $fotoProfil);
-                                    } else {
-                                        echo asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999');
-                                    }
-                                ?>" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
-                            </div>
-                        </a>
-                    </div>                    
-                    </div>
-                  </div>
-                  <div class="card-header text-center border-0 pt-0 pt-lg-2 pb-4 pb-lg-3">
-                    <div class="d-flex justify-content-between">
-                      <a href="javascript:;" class="btn btn-sm btn-info mb-0 d-block d-lg-none"><i class="ni ni-collection"></i></a>
-                      <a href="javascript:;" class="btn btn-sm btn-dark float-right mb-0 d-block d-lg-none"><i class="ni ni-email-83"></i></a>
-                    </div>
-                  </div>
-                  <div class="card-body pt-0">
-                    <div class="text-center mt-4">
-                      <h5>
-                        {{ Auth::user()->name}}<span class="font-weight-light"></span>
-                      </h5>
-                      <div class="h6 font-weight-300">
-                        <i class="ni location_pin mr-2"></i>{{ Auth::user()->username }}
+                <div class="card">
+                <br>
+                  <div>
+                    <div class="row justify-content-center">
+                      <div class="col-2 col-lg-4 order-lg-2">
+                          <a href="javascript:;">
+                              <div style="width: 230px; height: 220px; border: 2px solid white; border-radius: 50%; overflow: hidden;">
+                                  <img src="<?php
+                                      $fotoProfil = Auth::user()->fotoProfil;
+                                      if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
+                                          echo asset('fotoProfil/' . $fotoProfil);
+                                      } else {
+                                          echo asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999');
+                                      }
+                                  ?>" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                              </div>
+                          </a>
                       </div>
+                    </div>
+
+                        <div class="profile-name text-center">
+                            {{ Auth::user()->name }}
+                        </div>
+                      
+                        <div class="text-center">
+                            <span style="font-size: 20px; margin-right: 10px;"><b>20</b> Artikel</span>
+                            <span style="font-size: 20px; margin-right: 10px;"><b>25</b> Video</span>
+                            <span style="font-size: 20px; margin-right: 10px;"><b>100</b> Followers</span>
+                        </div>
+                      
+                        <br>
+                      
+                        <div class="text-center">
+                          <a href="{{ Auth::user()->facebook }}" target="_blank" title="Facebook" style="font-size: 40px; margin-right: 10px;"><i class="fab fa-facebook"></i></a>
+                          <a href="{{ Auth::user()->instagram }}" target="_blank" title="Instagram" style="font-size: 40px; margin-right: 10px;"><i class="fab fa-instagram"></i></a>
+                      </div>
+                      
                       <hr>
-                      <span>Bergabung Sejak: <br> {{ \Carbon\Carbon::parse(Auth::user()->created_at)->format('d F, Y') }}</span>
-                      <hr>
-                      <div class="h6 mt-4">
-                        <i class="ni business_briefcase-24 mr-2"></i>{{ Auth::user()->alamat }}
-                      </div>
-                      <div>
-                        <i class="ni education_hat mr-2"></i>{{ Auth::user()->aboutme }}
-                      </div>
+      
+                      <div class="about-section text-center" style="margin-left: 20px; margin-right: 20px;">
+                        <p>{{ Auth::user()->aboutme }}</p>
                     </div>
-                    <br>
-                    <div class="button-container" style="display: flex; justify-content: center; align-items: center;">
-                      <a href="{{ Auth::user()->instagram }}" class="btn btn-info mb-0 d-none d-lg-block" style="margin-right: 10px;">
-                          <i class="fab fa-instagram"></i> Instagram
-                      </a>
-                      <a href="{{ Auth::user()->facebook }}" class="btn btn-dark mb-0 d-none d-lg-block">
-                          <i class="fab fa-facebook"></i> Facebook
-                      </a>
-                  </div>
-                  
-                  
-                                                                                   
-                  </div>
+                    
+                    
+                    
+                      </div>
+                   </div>
                 </div>
-              </div>
             </div>
             <footer class="footer pt-3  ">
               <div class="container-fluid">

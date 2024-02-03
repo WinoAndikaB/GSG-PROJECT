@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\artikels;
 use App\Models\Dislikes;
-use App\Models\Event;
 use App\Models\Likes;
 use App\Models\syaratdanketentuans;
 use App\Models\ulasans;
@@ -12,7 +11,6 @@ use App\Models\user;
 use App\Models\video;
 use App\Models\komentar_artikel;
 use App\Models\LikeKomentarArtikel;
-use App\Models\komentar_event;
 use App\Models\komentar_video;
 use App\Models\LaporanArtikelUser;
 use App\Models\LaporanUlasanUser;
@@ -48,47 +46,10 @@ class PenggunaController extends Controller
             return view('main.setelahLogin.searchV', compact('videos'));
         }
 
-        //[User] Search Event
-        public function searchE(Request $request) {
-            $searchTerm = $request->input('searchE');
-            
-            $searchE = Event::where('namaEvent', 'like', '%' . $searchTerm . '%')
-                ->get();
-        
-            return view('main.setelahLogin.searchE', compact('searchE'));
-        }
-
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-     //[User]  Event Artikel
-     public function event(Request $request) {
-
-        $event = Event::whereNotIn('status', ['Pending', 'Rejected'])->get();
-  
-        return view('main.setelahLogin.event', compact('event'));
-    }
-
-    //[User] Detail Event
-    public function detailEvent(Request $request, $id) {
-
-        $event = Event::findOrFail($id);
-    
-        $box = Event::inRandomOrder()->take(8)->get();
-        $tags = Event::inRandomOrder()->take(10)->get();
-        $kategori = Event::inRandomOrder()->take(10)->get();
-    
-        // Hitung jumlah komentar untuk artikel dengan ID tertentu
-        $totalKomentarEvent = komentar_event::where('event_id', $id)->count();
-    
-        $komentarEvent = komentar_event::where('event_id', $id)->latest()->paginate(6);
-
-        return view('main.setelahLogin.detailEvent', compact('event', 'box', 'tags', 'kategori', 'komentarEvent', 'totalKomentarEvent'));
-    }
-
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //[User-Home] Halaman Home
     function HomeSetelahLogin(Request $request){

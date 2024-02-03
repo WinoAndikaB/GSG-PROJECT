@@ -216,8 +216,8 @@
                 
                   <div class="text-center">
                       <span style="margin-right: 10px;"><b>20</b> Artikel</span>
+                      <span style="margin-right: 10px;"><b>25</b> Video</span>
                       <span style="margin-right: 10px;"><b>100</b> Followers</span>
-                      <span><b>500</b> Likes</span>
                   </div>
                 
                   <br>
@@ -229,7 +229,13 @@
                       <a href="#" target="_blank" title="Facebook"><i class="fab fa-youtube"></i></a>
                       <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
                   </div>
-                
+
+                <div class="social-media-links text-center">
+                    <a href="#" class="btn btn-info" style="color: white; font-weight: bold;">Follow</a>
+                </div>
+
+                <hr>
+
                   <div class="about-section text-center">
                       <p>{{ Auth::user()->aboutme }}</p>
                   </div>
