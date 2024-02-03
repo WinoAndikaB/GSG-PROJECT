@@ -177,36 +177,6 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/eventKomAd">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-user-run text-warning text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Event 
-              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruEventKomunitas}}</span> 
-            </span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="/pengguna">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-circle-08 text-warning text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Pengguna
-              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruUser}}</span> 
-            </span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="/ulasans">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-paper-diploma text-warning text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Ulasan 
-              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruUlasan}}</span> 
-            </span>
-          </a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link " href="/laporanUser">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-sound-wave text-warning text-sm opacity-10"></i>
@@ -296,18 +266,20 @@
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                      <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Ulasan</p>
-                      <h5 class="font-weight-bolder">{{$totalUlasan}}</h5>
-                      <br>
-                      <p class="mb-0">
-                          <span class="text-success text-sm font-weight-bolder">+{{ $dataBaruUlasan }}</span>
-                          Data Baru Ditambahkan
-                      </p>
+                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Video</p>
+                    <h5 class="font-weight-bolder">
+                      {{$totalVideo}}
+                    </h5>
+                    <br>
+                    <p class="mb-0">
+                      <span class="text-success text-sm font-weight-bolder">+{{ $dataBaruVideo }}</span>
+                      Data Baru Ditambahkan
+                    </p>
                   </div>
-              </div>
+                </div>
                 <div class="col-4 text-end">
-                  <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
-                    <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                  <div class="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle">
+                    <i class="ni ni-tv-2 text-lg opacity-10" aria-hidden="true"></i>
                   </div>
                 </div>
               </div>
@@ -320,20 +292,20 @@
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Pengguna</p>
+                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Laporan Video</p>
                     <h5 class="font-weight-bolder">
-                      {{$totalUser}}
+                      {{$totalLaporanVideo}}
                     </h5>
                     <br>
                     <p class="mb-0">
-                      <span class="text-success text-sm font-weight-bolder">+{{ $dataBaruUser }}</span>
+                      <span class="text-success text-sm font-weight-bolder">+{{ $dataBaruLaporanArtikel }}</span>
                       Data Baru Ditambahkan
                     </p>
                   </div>
                 </div>
                 <div class="col-4 text-end">
                   <div class="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle">
-                    <i class="ni ni-single-02 text-lg opacity-10" aria-hidden="true"></i>
+                    <i class="ni ni-tv-2 text-lg opacity-10" aria-hidden="true"></i>
                   </div>
                 </div>
               </div>
@@ -357,44 +329,38 @@
                 </div>
                 <div class="col-4 text-end">
                     <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
-                        <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                        <i class="ni ni-collection text-lg opacity-10" aria-hidden="true"></i>
                     </div>
                 </div>
             </div>            
             </div>
           </div>
         </div>
-        <div class="col-xl-3 col-sm-6">
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
           <div class="card">
             <div class="card-body p-3">
               <div class="row">
                 <div class="col-8">
-                  <div class="numbers">
-                      <p class="text-sm mb-0 text-uppercase font-weight-bold">Rating Website</p>
-                      <h5 class="font-weight-bolder">
-                          @php
-                              $averageRating = round($averageRating, 1);
-                          @endphp
-                          @for ($i = 1; $i <= 5; $i++)
-                              @if ($i <= $averageRating)
-                                  <i class="fas fa-star filled-star"></i>
-                              @else
-                                  <i class="fas fa-star"></i>
-                              @endif
-                          @endfor
-                          <p>{{ number_format($averageRating, 1) }} | {{$totalUlasan}} Ulasan</p>
-                      </h5>
-                  </div>
-              </div>              
-                <div class="col-4 text-end">
-                  <div class="icon icon-shape bg-gradient-warning shadow-warning text-center rounded-circle">
-                    <i class="ni ni-satisfied text-lg opacity-10" aria-hidden="true"></i>
-                  </div>
+                    <div class="numbers">
+                        <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Laporan Artikel</p>
+                        <h5 class="font-weight-bolder">{{$totalLaporanArtikel}}</h5>
+                        <br>
+                        <p class="mb-0">
+                            <span class="text-success text-sm font-weight-bolder">+{{ $dataBaruLaporanArtikel }}</span>
+                            Data Baru Ditambahkan
+                        </p>
+                    </div>
                 </div>
-              </div>
+                <div class="col-4 text-end">
+                    <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
+                        <i class="ni ni-collection text-lg opacity-10" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>            
             </div>
           </div>
         </div>
+
 
      
 
