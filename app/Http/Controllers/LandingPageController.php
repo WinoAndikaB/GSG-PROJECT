@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\artikels;
-use App\Models\Event;
 use App\Models\komentar_artikel;
-use App\Models\komentar_event;
 use App\Models\komentar_video;
 use App\Models\syaratdanketentuans;
 use App\Models\ulasans;
@@ -34,43 +32,6 @@ class LandingPageController extends Controller
             ->get();
     
         return view('main.sebelumLogin.searchLPV', compact('videos'));
-    }
-
-    //[Landing Page] Search Event
-    public function searchEvent(Request $request) {
-        $searchTerm = $request->input('searchEvent');
-        
-        $eventSeach = Event::where('namaEvent', 'like', '%' . $searchTerm . '%')
-            ->get();
-    
-        return view('main.sebelumLogin.searchEvent', compact('eventSeach'));
-    }
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-     //[Landing Page]  Event Artikel
-     public function eventLandingPage(Request $request) {
-
-        $event = Event::whereNotIn('status', ['Pending', 'Rejected'])->get();
-  
-        return view('main.sebelumLogin.eventLP', compact('event'));
-    }
-
-    //[Landing Page] Detail Event
-    public function detailEvent(Request $request, $id) {
-
-        $event = Event::findOrFail($id);
-    
-        $box = Event::inRandomOrder()->take(8)->get();
-        $tags = Event::inRandomOrder()->take(10)->get();
-        $kategori = Event::inRandomOrder()->take(10)->get();
-    
-        // Hitung jumlah komentar untuk artikel dengan ID tertentu
-        $totalKomentarEvent = komentar_event::where('event_id', $id)->count();
-    
-        $komentarEvent = komentar_event::where('event_id', $id)->latest()->paginate(6);
-
-        return view('main.sebelumLogin.detailEventLP', compact('event', 'box', 'tags', 'kategori', 'komentarEvent', 'totalKomentarEvent'));
     }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

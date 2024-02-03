@@ -45,11 +45,9 @@ https://templatemo.com/tm-574-mexant
               <nav class="main-nav">
                 <ul class="nav">
                     <li class="scroll-to-section"><a href="/home">Home</a></li>
-                    <li class="scroll-to-section"><a href="/home">Trending</a></li>
                     <li class="scroll-to-section"><a href="/home">Artikel</a></li>
                     <li class="scroll-to-section"><a href="/Video">Video</a></li>
                     <li class="scroll-to-section"><a href="/kategori">Kategori</a></li>
-                    <li class="scroll-to-section"><a href="/event">Event</a></li>
                     <li class="scroll-to-section"><a href="/ulasan">Ulasan</a></li>
                     <li class="scroll-to-section"><a href="/about">Tentang</a></li>
                     <li>

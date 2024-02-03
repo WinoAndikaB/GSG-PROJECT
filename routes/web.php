@@ -42,13 +42,6 @@ use Illuminate\Support\Facades\Route;
                 //[Non-User] Pencarian Video
                 Route::get('/searchLPV', [LandingPageController::class, 'searchLPV'])->name('searchLPV');
 
-                //[Non-User] Pencarian Event
-                Route::get('/searchEvent', [LandingPageController::class, 'searchEvent'])->name('searchEvent');
-
-                //[Non-User] Tab Event landing Page
-                Route::get('/eventLandingPage', [LandingPageController::class, 'eventLandingPage'])->name('eventLandingPage');
-                Route::get('/detailEventLP/{id}', [LandingPageController::class, 'detailEventLP'])->name('detailEventLP');
-
                 //[Non-User] Tab Home landing Page Video
                 Route::get('/landingPageVideo',[LandingPageController::class,'landingPageVideo'])->name('landingPageVideo');
                 Route::get('/detailVideoLP/{id}', [LandingPageController::class, 'showDetailLPVideo'])->name('showDetailLPVideo');
@@ -202,46 +195,6 @@ use Illuminate\Support\Facades\Route;
                 //[Admin] Delete Pengguna
                 Route::get('/deleteV/{id}',[AdminController::class,'deleteVideo'])->name('deleteVideo');
                 Route::get('/deleteKomentarVA/{id}',[AdminController::class,'deleteKomentarVA'])->name('deleteKomentarVA');
-                
-
-
-                //[Admin] Tabel Pengguna
-                Route::get('/pengguna', [AdminController::class, 'listUserTerdaftar'])->name('listUserTerdaftar');
-
-                //[Admin] Tabel Pengguna Like Dislike
-                Route::get('/PenggunaLikeDislike', [AdminController::class, 'PenggunaLikeDislike'])->name('PenggunaLikeDislike');
-
-                //[Admin] Delete Pengguna
-                Route::get('/deletePenggunaA/{id}',[AdminController::class,'deletePenggunaA'])->name('deletePenggunaA');
-
-
-
-                //[Admin] Tabel Ulasan
-                Route::get('/ulasans', [AdminController::class, 'ulasanAdmin'])->name('ulasanAdmin');
-
-                //[Admin] Delete Ulasan
-                Route::get('/deleteU/{id}',[AdminController::class,'deleteUlasanA'])->name('deleteUlasanA');
-                });
-
-
-
-                //[Admin] Tabel Event
-                Route::get('/eventKomAd', [AdminController::class, 'eventKomAd'])->name('eventKomAd');
-                Route::get('/deleteEvent/{id}',[AdminController::class,'deleteEvent'])->name('deleteEvent');
-
-                //[Admin] Form Tambah Event
-                Route::get('/formTambahEvent', [AdminController::class, 'formTambahEvent'])->name('formTambahEvent');
-                Route::post('/formTambahEvent/storeEvent',  [AdminController::class, 'storeEvent'])->name('storeEvent');
-
-                //[Admin] Form Edit Event
-                Route::get('/formEditEvent/{id}',[AdminController::class,'formEditEvent'])->name('formEditEvent');
-                Route::post('/formEditEvent/updateEvent/{id}',[AdminController::class,'updateEvent'])->name('updateEvent');
-
-                //[Admin] Tabel Komentar Event
-                Route::get('/komentarEvent', [AdminController::class, 'komentarEvent'])->name('komentarEvent');
-                Route::get('/deleteKomentarEvent/{id}',[AdminController::class,'deleteKomentarEvent'])->name('deleteKomentarEvent');
-                
-
 
                 //[Admin] Tabel Laporan
                 Route::get('/laporanUser', [AdminController::class, 'laporanUser'])->name('laporanUser');
@@ -250,6 +203,8 @@ use Illuminate\Support\Facades\Route;
 
                 Route::get('/deleteLaporanUA/{id}',[AdminController::class,'deleteLaporanUA'])->name('deleteLaporanUA');
                 Route::get('/deleteLaporanVA/{id}',[AdminController::class,'deleteLaporanVA'])->name('deleteLaporanVA');
+
+            });
 
 //----------------------------------------------------------------------------------- [End Halaman Admin] ---------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------- [End Halaman Admin] ---------------------------------------------------------------------------------------------------------------

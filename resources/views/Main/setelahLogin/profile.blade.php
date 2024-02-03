@@ -59,11 +59,9 @@
             <nav class="main-nav">
               <ul class="nav">
                   <li class="scroll-to-section"><a href="/home">Home</a></li>
-                  <li class="scroll-to-section"><a href="/home">Trending</a></li>
                   <li class="scroll-to-section"><a href="/home">Artikel</a></li>
                   <li class="scroll-to-section"><a href="/Video">Video</a></li>
                   <li class="scroll-to-section"><a href="/kategori">Kategori</a></li>
-                  <li class="scroll-to-section"><a href="/event">Event</a></li>
                   <li class="scroll-to-section"><a href="/ulasan">Ulasan</a></li>
                   <li class="scroll-to-section"><a href="/about">Tentang</a></li>
                   <li>
@@ -154,10 +152,6 @@
                     <form method="POST" action="{{ route('updateUser', ['id' => Auth::user()->id]) }}" enctype="multipart/form-data">
                       @csrf
                       @method('PUT')
-
-                      <div class="text-right">
-                        <a href="#" class="btn btn-info">Daftar Menjadi Penulis</a>
-                        </div>
 
                             <div class="form-group">
                                 <label>Role</label>

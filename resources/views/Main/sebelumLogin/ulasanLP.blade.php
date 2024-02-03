@@ -93,11 +93,9 @@
                     <span>Katakey</span>
                     <ul class="nav">
                       <li class="scroll-to-section"><a href="/" >Home</a></li>
-                      <li class="scroll-to-section"><a href="/">Trending</a></li>
                       <li class="scroll-to-section"><a href="/">Artikel</a></li>
                       <li class="scroll-to-section"><a href="/landingPageVideo" class="text-center">Video</a></li>
                       <li class="scroll-to-section"><a href="/kategoriLandingPage">Kategori</a></li>
-                      <li class="scroll-to-section"><a href="/eventLandingPage">Event</a></li>
                       <li class="scroll-to-section"><a href="/ulasanLandingPage" class="active">Ulasan</a></li>
                       <li class="scroll-to-section"><a href="/abouts">Tentang</a></li>
                       <li class="scroll-to-section"><a href="/login">Login</a></li>
