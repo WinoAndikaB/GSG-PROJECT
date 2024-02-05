@@ -338,7 +338,9 @@
                           <a href="{{ Auth::user()->instagram }}" target="_blank" title="Instagram" style="font-size: 40px; margin-right: 10px;"><i class="fab fa-instagram"></i></a>
                       </div>
                       
-                      <hr>
+                      <div class="text-center">
+                      <span>Bergabung Sejak: <br> {{ \Carbon\Carbon::parse(Auth::user()->created_at)->format('d F, Y') }}</span>
+                      <div><br>
       
                       <div class="about-section text-center" style="margin-left: 20px; margin-right: 20px;">
                         <p>{{ Auth::user()->aboutme }}</p>
@@ -361,7 +363,7 @@
                       Template by <a title="CSS Templates" rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>,
                       <a title="CSS Templates" rel="sponsored" href="https://themewagon.com/themes/free-bootstrap-4-html-5-blog-website-template-nextpage/" target="_blank">NextPage </a> and
                       <a title="CSS Templates" rel="sponsored" href="https://www.creative-tim.com" target="_blank">Crative Tim </a> 
-                      Edited By <a title="CSS Templates" rel="sponsored" href="#" target="_blank">GSG Team</a></p>
+                      Edited By <a title="CSS Templates" rel="sponsored" href="#" target="_blank">KataKey Team</a></p>
                     </div>
                   </div>
                 </div>

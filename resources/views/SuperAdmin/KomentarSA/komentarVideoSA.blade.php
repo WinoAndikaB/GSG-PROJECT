@@ -195,16 +195,6 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/eventKomAdSA">
-            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-user-run text-warning text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Event 
-              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruEventKomunitas}}</span> 
-            </span>
-          </a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link " href="/penggunaSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-circle-08 text-warning text-sm opacity-10"></i>
@@ -462,7 +452,7 @@
                         Template by <a title="CSS Templates" rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>,
                         <a title="CSS Templates" rel="sponsored" href="https://themewagon.com/themes/free-bootstrap-4-html-5-blog-website-template-nextpage/" target="_blank">NextPage </a> and
                         <a title="CSS Templates" rel="sponsored" href="https://www.creative-tim.com" target="_blank">Crative Tim </a> 
-                        Edited By <a title="CSS Templates" rel="sponsored" href="#" target="_blank">GSG Team</a></p>
+                        Edited By <a title="CSS Templates" rel="sponsored" href="#" target="_blank">Katakey Team</a></p>
                       </div>
                       </div>
                     </div>

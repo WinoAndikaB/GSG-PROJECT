@@ -75,9 +75,6 @@ use Illuminate\Support\Facades\Route;
                 //[Pengguna] Pencarian Video
                 Route::get('/searchV', [PenggunaController::class, 'searchV'])->name('searchV');
 
-                //[Pengguna] Pencarian Event
-                Route::get('/searchE', [PenggunaController::class, 'searchE'])->name('searchE');
-
                  //[Pengguna] Home
                 Route::get('/home',[PenggunaController::class,'HomeSetelahLogin'])->name('HomeSetelahLogin');
                 Route::get('/detailArtikel/{id}', [PenggunaController::class, 'showDetailArtikel'])->name('detail.artikel');
@@ -115,10 +112,6 @@ use Illuminate\Support\Facades\Route;
                 Route::get('/kategori', [PenggunaController::class, 'kategori'])->name('kategori');
                 Route::get('/kategoriA/{kategori}', [PenggunaController::class, 'kategoriA'])->name('kategoriA');
                 Route::get('/kategoriV/{kategori}', [PenggunaController::class, 'kategoriV'])->name('kategoriV');
-
-                //[Pengguna] Event
-                Route::get('/event', [PenggunaController::class, 'event'])->name('event');
-                Route::get('/detailEvent/{id}', [PenggunaController::class, 'detailEvent'])->name('detailEvent');
 
                 //[Pengguna] Tab Halaman Ulasan
                 Route::get('/ulasan', [PenggunaController::class, 'ulasan'])->name('ulasan');
@@ -281,30 +274,6 @@ use Illuminate\Support\Facades\Route;
     
             //[SuperAdmin] Delete Kategori
             Route::get('/deleteKategoriSA/{id}',[SuperAdminController::class,'deleteKategoriSA'])->name('deleteKategoriSA');
-
-
-
-            //[Admin] Tabel Event
-            Route::get('/eventKomAdSA', [SuperAdminController::class, 'eventKomAdSA'])->name('eventKomAdSA');
-            Route::get('/deleteEventSA/{id}',[SuperAdminController::class,'deleteEventSA'])->name('deleteEventSA');
-
-            //[SuperAdmin] Status Event
-            Route::get('/approveEvent/{id}',  [SuperAdminController::class, 'approveEvent'])->name('approveEvent');
-            Route::get('/rejectEvent/{id}',  [SuperAdminController::class, 'rejectEvent'])->name('rejectEvent');
-
-            //[Admin] Form Tambah Event
-            Route::get('/formTambahEventSA', [SuperAdminController::class, 'formTambahEventSA'])->name('formTambahEventSA');
-            Route::post('/formTambahEventSA/storeEventSA',  [SuperAdminController::class, 'storeEventSA'])->name('storeEventSA');
-
-            //[Admin] Form Edit Event
-            Route::get('/formEditEventSA/{id}',[SuperAdminController::class,'formEditEventSA'])->name('formEditEventSA');
-            Route::post('/formEditEventSA/updateEventSA/{id}',[SuperAdminController::class,'updateEventSA'])->name('updateEventSA');
-
-            //[Admin] Tabel Komentar Event
-            Route::get('/komentarEventSA', [SuperAdminController::class, 'komentarEventSA'])->name('komentarEventSA');
-            Route::get('/deleteKomentarEventSA/{id}',[SuperAdminController::class,'deleteKomentarEventSA'])->name('deleteKomentarEventSA');
-    
-
             
             //[SuperAdmin] Tabel Pengguna
             Route::get('/penggunaSA', [SuperAdminController::class, 'penggunaSA'])->name('penggunaSA');
@@ -332,8 +301,6 @@ use Illuminate\Support\Facades\Route;
             //[SuperAdmin] Delete Ulasan
             Route::get('/deleteUlasanSA/{id}',[SuperAdminController::class,'deleteUlasanSA'])->name('deleteUlasanSA');
             });
-        
-
 
             //[SuperAdmin] Tabel Laporan
             Route::get('/laporanUserSA', [SuperAdminController::class, 'laporanUserSA'])->name('laporanUserSA');
