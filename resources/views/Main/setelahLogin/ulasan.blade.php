@@ -393,52 +393,65 @@
             
             <!-- ID "pesan-{{ $item->id }}" digunakan untuk menggantikan pesan di tempat -->
             <p id="pesan-{{ $item->id }}">“{{ $item->pesan }}”</p>
-          </div>
-          <div class="col-lg-3 col-md-6">
-            <div class="d-flex flex-column">
+
+            <div style="text-align: right;">
               @if ($item->user_id == auth()->user()->id)
-                  <a href="#" id="edit-{{ $item->id }}"><i class="fas fa-edit"></i></a>
+                  <a href="#" id="edit-{{ $item->id }}" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
+                      <i class="fas fa-edit" style="font-size: 20px;"></i>
+                  </a>
               @endif
-                <div class="interaction-icons text-center d-flex justify-content-center">
-                  @if ($item->likes->contains('user_id', Auth::id()))
-                      <span class="icon-button liked"><i class="fas fa-thumbs-up"></i></span>
-                  @else
-                      <a href="{{ route('likeUlasan', ['id' => $item->id]) }}" class="icon-button"><i class="fas fa-thumbs-up"></i></a>
-                  @endif
+          </div>
+          
+          </div>
+        
+
+          <br>
+          <div id="edit-pesan-{{ $item->id }}" style="display: none; width: 138%; text-align: right;">
+              <textarea id="edit-pesan-text-{{ $item->id }}" style="width: 100%;">{{ $item->pesan }}</textarea>
+              <button id="simpan-edit-{{ $item->id }}" style="background: none; border: none; cursor: pointer;">
+                  <i class="fas fa-save"></i>
+              </button>
+              <button id="tutup-edit-{{ $item->id }}" style="background: none; border: none; cursor: pointer;">
+                  <i class="fas fa-times"></i>
+              </button>
+          </div>    
+
+        <div class="" style="max-width: 730px; margin-bottom: 10px;">
+        <div style="flex: 1;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px;">
+              <div style="display: flex; align-items: center;">
+
+                <a href="{{ route('likeUlasan', ['id' => $item->id]) }}" id="likeButton_{{ $item->id }}" onclick="likeButtonClicked({{ $item->id }})" style="text-decoration: none; color: #333; display: inline-block; padding: 8px 15px; border: 2px solid #4CAF50; border-radius: 20px; background-color: #fff; transition: all 0.3s ease; margin-right: 10px;">
+                  <i id="thumbIcon_like_{{ $item->id }}" class="fa-regular fa-thumbs-up" style="color: #4CAF50; margin-right: 5px;"></i>  
+                  <span id="likeCount_{{ $item->id }}" style="font-size: medium; margin-left: 5px;">{{ $item->likes->count() }} likes</span>
+              </a>
               
-                  @if ($item->dislikes->contains('user_id', Auth::id()))
-                      <span class="icon-button disliked"><i class="fas fa-thumbs-down"></i></span>
-                  @else
-                      <a href="{{ route('dislikeUlasan', ['id' => $item->id]) }}"><i class="fas fa-thumbs-down"></i></a>
-                  @endif
+              <a href="{{ route('dislikeUlasan', ['id' => $item->id]) }}" id="dislikeButton_{{ $item->id }}" onclick="dislikeButtonClicked({{ $item->id }})" style="text-decoration: none; color: #333; display: inline-block; padding: 8px 15px; border: 2px solid #FF0000; border-radius: 20px; background-color: #fff; transition: all 0.3s ease; margin-right: 10px;">
+                  <i id="thumbIcon_dislike_{{ $item->id }}" class="fa-regular fa-thumbs-down" style="color: #FF0000; margin-right: 5px;"></i>  
+                  <span id="dislikeCount_{{ $item->id }}" style="font-size: medium; margin-left: 5px;">{{ $item->dislikes->count() }} Dislike</span>
+              </a>
               
+
                   @if (auth()->check() && $item->user_id === auth()->user()->id)
-                      <a href="{{ route('deleteUlasan', ['id' => $item->id]) }}"><i class="fas fa-trash"></i></a>
+                  <a href="{{ route('deleteUlasan', ['id' => $item->id]) }}" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
+                      <i class="fas fa-trash" style="font-size: large;"></i> Hapus
+                  </a>
                   @endif
               </div>
-            </div>
-        </div>
-        
-          <div class="col-lg-4 col-md-10">
-            <!-- Kolom 4: Textarea untuk Edit Pesan -->
-            <span class="likes-count">{{ $item->likes->count() }} Likes</span>
-            <span class="dislikes-count">{{ $item->dislikes->count() }} Dislikes</span>
+          </div>
+      </div>
 
-            <div id="edit-pesan-{{ $item->id }}" style="display: none; width: 150%; text-align: right;">
-                <textarea id="edit-pesan-text-{{ $item->id }}" style="width: 155%;">{{ $item->pesan }}</textarea>
-                <button id="simpan-edit-{{ $item->id }}" style="background: none; border: none; cursor: pointer;">
-                    <i class="fas fa-save"></i>
-                </button>
-                <button id="tutup-edit-{{ $item->id }}" style="background: none; border: none; cursor: pointer;">
-                    <i class="fas fa-times"></i> <!-- Ikon close (X) -->
-                </button>
-            </div>    
-        </div>        
+    </div>
+      
+      
         </div>
       @endforeach
     </div>
     
-  
+      
+<!--------------------------------------------------------------------------------------- Javascript Area ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Area ------------------------------------------------------------------------------->
+
   <!-- Filter Komen Ulansan -->
     <script>
       function filterComments(filter) {
@@ -446,7 +459,9 @@
       }
       </script>
     
-  <!-- Edit Ulansan -->
+<!--------------------------------------------------------------------------------------- Javascript Edit ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Edit ------------------------------------------------------------------------------->
+
   <script>
     @foreach ($data1 as $item)
       document.getElementById('edit-{{ $item->id }}').addEventListener('click', function (e) {
@@ -492,7 +507,9 @@
     @endforeach
 </script>
 
-<!-- Rating -->
+<!--------------------------------------------------------------------------------------- Javascript Rating ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Rating ------------------------------------------------------------------------------->
+
 <script>
   const stars = document.querySelectorAll('.star');
   const ratingInput = document.getElementById('rating');
@@ -508,7 +525,10 @@
     });
   });
 </script>
-<!-- MODAL LOGOUT -->
+
+<!--------------------------------------------------------------------------------------- Javascript Modal Logout ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Modal Logout ------------------------------------------------------------------------------->
+
      <script>
       // JavaScript untuk modal logout
       function openModal() {
@@ -539,6 +559,11 @@
         }
       });
     </script>
+
+<!--------------------------------------------------------------------------------------- Javascript Like & Dislike ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Like & Dislike  ------------------------------------------------------------------------------->
+
+
     
 </body>
 </html>

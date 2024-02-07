@@ -315,14 +315,22 @@
               <p class="card-text" style="text-align: justify;">
                   {{ $komentar->pesan }}
               </p>
-              <div style="align-items: right; margin-top: 2px; margin-bottom: 10px;">
-                <a href="/login">
-                  <i class="fa fa-thumbs-up"></i> likes
-                </a>
-                <a href="/login">
-                    <i class="fa fa-flag"></i> Laporkan
-                </a>
-              </div>
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px;">
+                <div style="display: flex; align-items: center;">
+                    <a href="/login" style="text-decoration: none; color: #333; display: inline-block; padding: 8px 15px; border: 2px solid #4CAF50; border-radius: 20px; background-color: #fff; transition: all 0.3s ease;" >
+                        <i class="fas fa-thumbs-up" style="color: #4CAF50; font-size: 15px;"></i>  
+                        <span style="font-size: 16px; margin-left: 5px;">Like</span>
+                    </a>
+        
+                  </div>
+                  <div>
+        
+                        <a href="/login" class="showLaporanKomen" data-comment-id="" data-nama-dilaporkan="" data-user-id-dilaporkan="" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
+                            <i class="fas fa-flag" style="font-size: 15px;"></i> Laporkan
+                        </a>
+        
+                </div>
+            </div>
           </div>
       </div>
   </div>

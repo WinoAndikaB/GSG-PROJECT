@@ -11,6 +11,7 @@ use App\Models\user;
 use App\Models\video;
 use App\Models\komentar_artikel;
 use App\Models\LikeKomentarArtikel;
+use App\Models\likeKomentarVideo;
 use App\Models\komentar_video;
 use App\Models\LaporanArtikelUser;
 use App\Models\LaporanUlasanUser;
@@ -223,13 +224,22 @@ class PenggunaController extends Controller
         $komentar = komentar_artikel::find($komentar_id);
     
         // Check if the user has already liked the comment
-        if (!$komentar->likes()->where('user_id', $user->id)->exists()) {
+        if ($komentar->likes()->where('user_id', $user->id)->exists()) {
+            // If the user has already liked, delete the like
+            $komentar->likes()->where('user_id', $user->id)->delete();
+        } else {
+            // If the user has not liked, add the like
             $like = new LikeKomentarArtikel(['user_id' => $user->id]);
             $komentar->likes()->save($like);
         }
     
-        return redirect()->back();
-    }    
+        // Construct the URL based on the provided route
+        $url = route('detail.artikel', ['id' => $komentar->artikel_id]);
+    
+        // Redirect back to the article detail page
+        return redirect()->to($url);
+    }
+    
     
         //[User-Artikel] Delete Komentar Artikel
         public function deleteKomentarArtikel($id)
@@ -249,6 +259,25 @@ class PenggunaController extends Controller
                 $errorMessage = 'You are not allowed to delete this comment. <a href="' . route('detail.artikel', ['id' => $comment->artikel_id]) . '">Go back</a>';
                 return redirect()->route('detail.artikel', $comment->artikel_id)->with('error', $errorMessage);
             }
+        }
+
+        //[User-Artikel] Edit komentar
+        public function simpanEditKomentarArtikel(Request $request, $id) {
+            $komentar = komentar_artikel::find($id);
+        
+            if (!$komentar) {
+                return response()->json(['error' => 'Komentar tidak ditemukan'], 404);
+            }
+        
+            // Periksa apakah pengguna saat ini adalah pemilik komentar
+            if ($komentar->user_id !== auth()->user()->id) {
+                return response()->json(['error' => 'Anda tidak memiliki izin untuk mengedit komentar ini'], 403);
+            }
+        
+            $komentar->pesan = $request->input('pesan');
+            $komentar->save();
+        
+            return response()->json(['message' => 'Pesan komentar berhasil diperbarui']);
         }
 
 
@@ -415,6 +444,33 @@ class PenggunaController extends Controller
                 return redirect()->route('showDetailVideo', $comment->video_id)->with('error', $errorMessage);
             }
         }
+
+        //[User-Video] Like Komentar Video
+        public function likeKomentarVideo($commentId)
+        {
+            $user = Auth::user();
+            
+            $komentar = komentar_video::find($commentId);
+            
+            if (!$komentar) {
+                return redirect()->back()->with('error', 'Comment not found.');
+            }
+            
+            // Check if the user has already liked the comment
+            if ($komentar->likes()->where('user_id', $user->id)->exists()) {
+                // If the user has already liked, delete the like
+                $komentar->likes()->where('user_id', $user->id)->delete();
+            } else {
+                $like = new LikeKomentarVideo(['user_id' => $user->id]);
+                $komentar->likes()->save($like);
+            }
+            
+            $url = route('showDetailVideo', ['id' => $komentar->video_id]);
+            
+
+            return redirect()->to($url);
+        }
+        
         
         
 

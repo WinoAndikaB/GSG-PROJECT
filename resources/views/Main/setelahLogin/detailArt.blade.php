@@ -257,7 +257,7 @@
             </li>
             
               <li class="list-inline-item">
-                <a href="#" id="showModal" class="laporan-button">
+                <a href="#" id="showModal" class="laporan-button" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
                   <i class="fa fa-flag"></i> Laporkan
               </a>
             </li>        
@@ -376,30 +376,57 @@
               <div class="profil-foto" style="margin-right: 10px;">
                   <img src="{{ asset('fotoProfil/' . $komentar->user->fotoProfil) }}" alt="Foto Profil" style="border-radius: 50%; width: 50px; height: 50px;">
               </div>
-              <div style="flex: 1;">
-                  <h5 class="card-title">{{ $komentar->user->name }}</h5>
-                  <p>{{ $komentar->created_at->format('d F Y') }} | {{ $komentar->created_at->diffForHumans() }}</p>
-                  <p class="card-text" style="text-align: justify;">
-                      {{ $komentar->pesan }}
-                  </p>
-                  <div style="align-items: right; margin-top: 2px; margin-bottom: 10px;">
-                    <a href="{{ route('likeKomentarArtikel', ['commentId' => $komentar->id]) }}">
-                      <i class="fa fa-thumbs-up"></i>  {{ $komentar->likes->count() }} likes
-                  </a>  
 
-                     @if(Auth::check() && Auth::user()->id == $komentar->user_id)
-                      <a href="{{ route('deleteKomentarArtikel', ['id' => $komentar->id]) }}">
-                          <i class="fas fa-trash"></i>Hapus
-                      </a>
-                     @endif
-                 
-                     @if(Auth::check() && Auth::user()->id != $komentar->user_id)
-                        <a href="#" class="showLaporanKomen" data-comment-id="{{ $komentar->id }}" data-nama-dilaporkan="{{ $komentar->user->name }}" data-user-id-dilaporkan="{{ $komentar->user->id }}">
-                            <i class="fa fa-flag"></i> Laporkan
-                        </a>
-                      @endif
-                  </div>
+              <div style="flex: 1;">
+                <h5 class="card-title">{{ $komentar->user->name }}</h5>
+                <p>{{ $komentar->created_at->format('d F Y') }} | {{ $komentar->created_at->diffForHumans() }}</p>
+                <p class="card-text" style="text-align: justify;">
+                    {{ $komentar->pesan }}
+                </p>
+
+                <div id="edit-pesan-{{ $komentar->id }}" style="display: none; width: 100%; text-align: right;">
+                  <textarea id="edit-pesan-text-{{ $komentar->id }}" style="width: 100%;">{{ $komentar->pesan }}</textarea>
+                  <button id="simpan-edit-{{ $komentar->id }}" style="background: none; border: none; cursor: pointer;">
+                      <i class="fas fa-save"></i>
+                  </button>
+                  <button id="tutup-edit-{{ $komentar->id }}" style="background: none; border: none; cursor: pointer;">
+                      <i class="fas fa-times"></i>
+                  </button>
               </div>
+
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px;">
+                    <div style="display: flex; align-items: center;">
+
+                <a href="javascript:void(0);" id="likeButton{{ $komentar->id }}" style="text-decoration: none; color: #333; display: inline-block; padding: 8px 15px; border: 2px solid #4CAF50; border-radius: 20px; background-color: #fff; transition: all 0.3s ease;" onclick="toggleLike('{{ $komentar->id }}')">
+                    <i id="thumbIcon{{ $komentar->id }}" class="{{ $komentar->likes->contains('user_id', Auth::id()) ? 'fa' : 'fa-regular' }} fa-thumbs-up" style="color: #4CAF50; margin-right: 5px;"></i>  
+                    <span id="likeCount{{ $komentar->id }}" style="font-size: medium; margin-left: 5px;">{{ $komentar->likes->count() }} likes</span>
+                </a>                
+                 
+                        @if(Auth::check() && Auth::user()->id == $komentar->user_id)
+                            <a href="{{ route('deleteKomentarArtikel', ['id' => $komentar->id]) }}" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
+                                <i class="fas fa-trash" style="font-size: large;"></i> Hapus
+                            </a>
+                        @endif
+
+               
+                    </div>
+                    
+                    <div>
+                        @if(Auth::check() && Auth::user()->id != $komentar->user_id)
+                            <a href="#" class="showLaporanKomen" data-comment-id="{{ $komentar->id }}" data-nama-dilaporkan="{{ $komentar->user->name }}" data-user-id-dilaporkan="{{ $komentar->user->id }}" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
+                                <i class="fas fa-flag" style="font-size: large;"></i> Laporkan
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            @if(Auth::check() && Auth::user()->id == $komentar->user_id)    
+            <a href="#" id="edit-{{ $komentar->id }}" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
+                <i class="fas fa-edit" style="font-size: 20px;"></i>
+            </a>
+        @endif
+
           </div>
       </div>
       @endforeach
@@ -771,6 +798,83 @@
         }
       });
     </script>
+
+<!--------------------------------------------------------------------------------------- Javascript Edit Komentar ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Edit Komentar ------------------------------------------------------------------------------->
+
+<script>
+  @foreach ($komentarArtikels as $item)
+      document.getElementById('edit-{{ $item->id }}').addEventListener('click', function (e) {
+          e.preventDefault();
+          document.getElementById('edit-pesan-{{ $item->id }}').style.display = 'block';
+      });
+  
+      document.getElementById('simpan-edit-{{ $item->id }}').addEventListener('click', function (e) {
+          e.preventDefault();
+          const editedText = document.getElementById('edit-pesan-text-{{ $item->id }}').value;
+  
+          fetch("{{ route('simpanEditKomentarArtikel', ['id' => $item->id]) }}", {
+              method: "POST",
+              body: JSON.stringify({ pesan: editedText }),
+              headers: {
+                  "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                  "Content-Type": "application/json"
+              }
+          })
+          .then(response => response.json())
+          .then(data => {
+              const pesanElement = document.getElementById('pesan-{{ $item->id }}');
+              pesanElement.innerText = '“' + editedText + '”';
+  
+              document.getElementById('edit-pesan-{{ $item->id }}').style.display = 'none';
+          })
+          .catch(error => {
+              console.error(error);
+          });
+      });
+  
+      document.getElementById('tutup-edit-{{ $item->id }}').addEventListener('click', function (e) {
+          e.preventDefault();
+          document.getElementById('edit-pesan-{{ $item->id }}').style.display = 'none';
+      });
+  @endforeach
+  </script>
+<!--------------------------------------------------------------------------------------- Javascript Like ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Like ------------------------------------------------------------------------------->
+
+<script>
+  function toggleLike(commentId) {
+      var button = document.getElementById('likeButton' + commentId);
+      var icon = document.getElementById('thumbIcon' + commentId);
+      var likeCount = document.getElementById('likeCount' + commentId);
+
+      // Toggle class untuk mengubah ikon
+      icon.classList.toggle('fa');
+      icon.classList.toggle('fa-regular');
+
+      // Mengambil nilai jumlah like dari teks
+      var likeText = likeCount.textContent.trim();
+      var currentLikes = parseInt(likeText.split(' ')[0]); // Ambil bagian angka dari teks
+      var newLikes = currentLikes + (icon.classList.contains('fa') ? 1 : -1); // Tambah atau kurangi like sesuai dengan perubahan ikon
+
+      // Mengupdate teks jumlah like
+      likeCount.textContent = newLikes + ' likes';
+
+      // Mengirim permintaan ke server untuk menambah atau menghapus like
+      fetch('/likeKomentarArtikel/' + commentId, {
+          method: 'POST', // POST atau DELETE sesuai dengan kebutuhan Anda
+          headers: {
+              'X-CSRF-TOKEN': '{{ csrf_token() }}'
+          }
+      })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok.');
+          }
+      })
+      .catch(error => console.error('Error:', error));
+  }
+</script>
     
   </body>
 </html>

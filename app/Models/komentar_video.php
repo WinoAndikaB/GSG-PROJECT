@@ -24,5 +24,10 @@ class komentar_video extends Model
     {
         return $this->belongsTo(Video::class, 'video_id');
     }
+
+    public function likes()
+    {
+        return $this->hasMany(LikeKomentarVideo::class, 'komentar_id');
+    }
 }
 

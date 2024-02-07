@@ -244,7 +244,7 @@
               </form>
           </li>          
             <li class="list-inline-item">
-              <a href="#" id="showModal" class="laporan-button">
+              <a href="#" id="showModal" class="laporan-button" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
                 <i class="fa fa-flag"></i> Laporkan
             </a>
           </li>        
@@ -377,31 +377,43 @@
           <div class="profil-foto" style="margin-right: 10px;">
               <img src="{{ asset('fotoProfil/' . $komentar->user->fotoProfil) }}" alt="Foto Profil" style="border-radius: 50%; width: 50px; height: 50px;">
           </div>
-          <div style="flex: 1;">
-              <h5 class="card-title">{{ $komentar->user->name }}</h5>
-              <p>{{ $komentar->created_at->format('d F Y') }} | {{ $komentar->created_at->diffForHumans() }}</p>
-              <p class="card-text" style="text-align: justify;">
-                  {{ $komentar->pesan }}
-              </p>
-              <div style="align-items: right; margin-top: 2px; margin-bottom: 10px;">
-                  <a href="like_action.html">
-                      <i class="fa fa-thumbs-up"></i> Like
-                  </a>
 
-                 @if(Auth::check() && Auth::user()->id == $komentar->user_id)
-                    <a href="{{ route('deleteKomentarVideo', ['id' => $komentar->id]) }}">
-                        <i class="fas fa-trash"></i>Hapus
-                    </a>
-                  @endif
-      
-                  @if(Auth::check() && Auth::user()->id != $komentar->user_id)
-                  <a href="#" class="showLaporanKomen" data-comment-id="{{ $komentar->id }}" data-nama-dilaporkan="{{ $komentar->user->name }}" data-user-id-dilaporkan="{{ $komentar->user->id }}">
-                    <i class="fa fa-flag"></i> Laporkan
+          <div style="flex: 1;">
+            <h5 class="card-title">{{ $komentar->user->name }}</h5>
+            <p>{{ $komentar->created_at->format('d F Y') }} | {{ $komentar->created_at->diffForHumans() }}</p>
+            <p class="card-text" style="text-align: justify;">
+                {{ $komentar->pesan }}
+            </p>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px;">
+                <div style="display: flex; align-items: center;">
+
+                  <a href="javascript:void(0);" id="likeButton{{ $komentar->id }}" style="text-decoration: none; color: #333; display: inline-block; padding: 8px 15px; border: 2px solid #4CAF50; border-radius: 20px; background-color: #fff; transition: all 0.3s ease;" onclick="toggleLike('{{ $komentar->id }}')">
+                    <i id="thumbIcon{{ $komentar->id }}" class="{{ $komentar->likes->contains('user_id', Auth::id()) ? 'fa' : 'fa-regular' }} fa-thumbs-up {{ $komentar->likes->contains('user_id', Auth::id()) ? 'fas' : 'far' }}" style="color: #4CAF50; margin-right: 5px;"></i>  
+                    <span id="likeCount{{ $komentar->id }}" style="font-size: medium; margin-left: 5px;">{{ $komentar->likes->count() }} likes</span>
                 </a>
-                @endif
-      
-              </div>
-          </div>
+                
+                
+              
+                    @if(Auth::check() && Auth::user()->id == $komentar->user_id)
+                        <a href="{{ route('deleteKomentarVideo', ['id' => $komentar->id]) }}" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
+                            <i class="fas fa-trash" style="font-size: 15px;"></i> Hapus
+                        </a>
+                    @endif
+
+                  </div>
+                  <div>
+
+                    @if(Auth::check() && Auth::user()->id != $komentar->user_id)
+                        <a href="#" class="showLaporanKomen" data-comment-id="{{ $komentar->id }}" data-nama-dilaporkan="{{ $komentar->user->name }}" data-user-id-dilaporkan="{{ $komentar->user->id }}" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
+                            <i class="fas fa-flag" style="font-size: 15px;"></i> Laporkan
+                        </a>
+                    @endif
+                </div>
+            </div>
+        </div>
+        
+        
+          
       </div>
   </div>
   @endforeach
@@ -620,6 +632,55 @@
       });
     });
       </script>
+
+<!--------------------------------------------------------------------------------------- Javascript Like ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Like ------------------------------------------------------------------------------->
+
+<script>
+  function toggleLike(commentId) {
+      var button = document.getElementById('likeButton' + commentId);
+      var icon = document.getElementById('thumbIcon' + commentId);
+      var likeCount = document.getElementById('likeCount' + commentId);
+  
+      // Toggle class untuk mengubah ikon
+      if (icon.classList.contains('fa')) {
+          icon.classList.remove('fa');
+          icon.classList.remove('fas');
+          icon.classList.add('fa-regular');
+          icon.classList.add('far');
+      } else {
+          icon.classList.remove('fa-regular');
+          icon.classList.remove('far');
+          icon.classList.add('fa');
+          icon.classList.add('fas');
+      }
+  
+      // Mengambil nilai jumlah like dari teks
+      var likeText = likeCount.textContent.trim();
+      var currentLikes = parseInt(likeText.split(' ')[0]); // Ambil bagian angka dari teks
+      var newLikes = currentLikes + (icon.classList.contains('fa') ? 1 : -1); // Tambah atau kurangi like sesuai dengan perubahan ikon
+  
+      // Mengupdate teks jumlah like
+      likeCount.textContent = newLikes + ' likes';
+  
+      // Mengirim permintaan ke server untuk menambah atau menghapus like
+      fetch('/likeKomentarVideo/' + commentId, {
+          method: 'POST', // POST atau DELETE sesuai dengan kebutuhan Anda
+          headers: {
+              'X-CSRF-TOKEN': '{{ csrf_token() }}'
+          }
+      })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok.');
+          }
+      })
+      .catch(error => console.error('Error:', error));
+  }
+  </script>
+
+
+
      
   </body>
 </html>

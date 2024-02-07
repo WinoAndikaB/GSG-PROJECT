@@ -81,12 +81,13 @@ use Illuminate\Support\Facades\Route;
 
                 //[Pengguna] Artikel
                 Route::post('/komentarArtikel', [PenggunaController::class, 'storeKomentarArtikel'])->name('storeKomentarArtikel');
-                Route::get('/likeKomentarArtikel/{commentId}', [PenggunaController::class, 'likeKomentarArtikel'])->name('likeKomentarArtikel');
+                Route::post('/likeKomentarArtikel/{commentId}', [PenggunaController::class, 'likeKomentarArtikel'])->name('likeKomentarArtikel');
                 Route::get('/deleteKomentarArtikel/{id}', [PenggunaController::class, 'deleteKomentarArtikel'])->name('deleteKomentarArtikel');     
 
                 Route::post('/submit/report', [PenggunaController::class, 'storeLaporanArtikel'])->name('storeLaporanArtikel');
                 Route::post('/submit/reportKomentar', [PenggunaController::class, 'storeLaporanKomentarArtikel'])->name('storeLaporanKomentarArtikel');
                 Route::get('/deleteKomentarA/{id}',[PenggunaController::class,'deleteKomentarA'])->name('deleteKomentarA');
+                Route::post('/simpanEditKomentarArtikel/{id}', [PenggunaController::class, 'simpanEditKomentarArtikel'])->name('simpanEditKomentarArtikel');
 
                 Route::get('/simpanArtikelView', [PenggunaController::class, 'simpanArtikelView'])->name('simpan.artikelView');
                 Route::post('/simpanArtikelData/{id}', [PenggunaController::class, 'simpanArtikelData'])->name('simpan.artikelData');
@@ -98,7 +99,7 @@ use Illuminate\Support\Facades\Route;
                 Route::get('/detailVideo/{id}', [PenggunaController::class, 'showDetailVideo'])->name('showDetailVideo');
 
                 Route::post('/komentarVideo', [PenggunaController::class, 'storeKomentarVideo'])->name('storeKomentarVideo');
-                Route::get('/likeKomentarVideo/{commentId}', [PenggunaController::class, 'likeKomentarVideo'])->name('likeKomentarVideo'); 
+                Route::post('/likeKomentarVideo/{commentId}', [PenggunaController::class, 'likeKomentarVideo'])->name('likeKomentarVideo');
 
                 Route::post('/submitV/reportV', [PenggunaController::class, 'storeLaporanVideo'])->name('storeLaporanVideo');
                 Route::post('/submit/reportKomentarV', [PenggunaController::class, 'storeLaporanKomentarVideo'])->name('storeLaporanKomentarVideo');

@@ -205,33 +205,27 @@
             <!-- ID "pesan-{{ $item->id }}" digunakan untuk menggantikan pesan di tempat -->
             <p id="pesan-{{ $item->id }}">“{{ $item->pesan }}”</p>
           </div>
-          <div class="col-lg-3 col-md-6">
-            <!-- Kolom 3: Ikon Edit dan Ikon Lainnya -->
-            <div class="d-flex flex-column">
-              <div class="interaction-icons text-center">
-                      <a href="/login" class="icon-button"><i class="fas fa-thumbs-up"></i></a>
-                      <a href="/login"><i class="fas fa-thumbs-down"></i></a>
-                      <a href="/login"><i class="fas fa-reply"></i></a>
-                      <a href="/login"><i class="fas fa-trash"></i></a>
+
+          <div class="" style="max-width: 730px; margin-bottom: 10px;">
+            <div style="flex: 1;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px;">
+                  <div style="display: flex; align-items: center;">
+    
+                      <a href="/login" style="text-decoration: none; color: #333; display: inline-block; padding: 8px 15px; border: 2px solid #4CAF50; border-radius: 20px; background-color: #fff; transition: all 0.3s ease; margin-right: 10px;">
+                          <i id="thumbIcon" class="fa-regular fa-thumbs-up" style="color: #4CAF50; margin-right: 5px;"></i>  
+                          <span id="likeCount" style="font-size: medium; margin-left: 5px;">{{ $item->likes->count() }} likes</span>
+                      </a>
+          
+                      <a href="/login" style="text-decoration: none; color: #333; display: inline-block; padding: 8px 15px; border: 2px solid #FF0000; border-radius: 20px; background-color: #fff; transition: all 0.3s ease; margin-right: 10px;">
+                          <i id="thumbIcon" class="fa-regular fa-thumbs-down" style="color: #FF0000; margin-right: 5px;"></i>  
+                          <span id="dislikeCount" style="font-size: medium; margin-left: 5px;">{{ $item->dislikes->count() }} Dislike</span>
+                      </a>
+
+                  </div>
               </div>
           </div>
-          
-          </div>
-          <div class="col-lg-4 col-md-10">
-            <!-- Kolom 4: Textarea untuk Edit Pesan -->
-            <span class="likes-count">{{ $item->likes->count() }} Likes</span>
-            <span class="dislikes-count">{{ $item->dislikes->count() }} Dislikes</span>
+        </div>
 
-            <div id="edit-pesan-{{ $item->id }}" style="display: none; width: 150%; text-align: right;">
-                <textarea id="edit-pesan-text-{{ $item->id }}" style="width: 155%;">{{ $item->pesan }}</textarea>
-                <button id="simpan-edit-{{ $item->id }}" style="background: none; border: none; cursor: pointer;">
-                    <i class="fas fa-save"></i>
-                </button>
-                <button id="tutup-edit-{{ $item->id }}" style="background: none; border: none; cursor: pointer;">
-                    <i class="fas fa-times"></i> <!-- Ikon close (X) -->
-                </button>
-            </div>    
-        </div>        
         </div>
       @endforeach
     </div>        
