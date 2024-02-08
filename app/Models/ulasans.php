@@ -21,4 +21,14 @@ class ulasans extends Model
             return $this->hasMany(Dislikes::class, 'ulasan_id');
         }
 
+        public function userHasLiked($user)
+        {
+            return $this->likes->contains('user_id', $user->id);
+        }
+    
+        public function userHasDisliked($user)
+        {
+            return $this->dislikes->contains('user_id', $user->id);
+        }
+
 }

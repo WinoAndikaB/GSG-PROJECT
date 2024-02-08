@@ -421,15 +421,25 @@
           <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px;">
               <div style="display: flex; align-items: center;">
 
-                <a href="{{ route('likeUlasan', ['id' => $item->id]) }}" id="likeButton_{{ $item->id }}" onclick="likeButtonClicked({{ $item->id }})" style="text-decoration: none; color: #333; display: inline-block; padding: 8px 15px; border: 2px solid #4CAF50; border-radius: 20px; background-color: #fff; transition: all 0.3s ease; margin-right: 10px;">
-                  <i id="thumbIcon_like_{{ $item->id }}" class="fa-regular fa-thumbs-up" style="color: #4CAF50; margin-right: 5px;"></i>  
-                  <span id="likeCount_{{ $item->id }}" style="font-size: medium; margin-left: 5px;">{{ $item->likes->count() }} likes</span>
+                <a id="likeButton" href="{{ route('likeUlasan', ['id' => $item->id]) }}" style="text-decoration: none; color: #333; display: inline-block; padding: 8px 15px; border: 2px solid #4CAF50; border-radius: 20px; background-color: #fff; transition: all 0.3s ease; margin-right: 10px;">
+                  @if (Auth::check() && $item->userHasLiked(Auth::user()))
+                      <i class="fa fa-thumbs-up" style="color: #4CAF50; margin-right: 5px;"></i>
+                  @else
+                      <i class="fa-regular fa-thumbs-down" style="color: #4CAF50; margin-right: 5px;"></i>
+                  @endif
+                  <span id="likeCount" style="font-size: medium; margin-left: 5px;">{{ $item->likes->count() }} likes</span>
               </a>
               
-              <a href="{{ route('dislikeUlasan', ['id' => $item->id]) }}" id="dislikeButton_{{ $item->id }}" onclick="dislikeButtonClicked({{ $item->id }})" style="text-decoration: none; color: #333; display: inline-block; padding: 8px 15px; border: 2px solid #FF0000; border-radius: 20px; background-color: #fff; transition: all 0.3s ease; margin-right: 10px;">
-                  <i id="thumbIcon_dislike_{{ $item->id }}" class="fa-regular fa-thumbs-down" style="color: #FF0000; margin-right: 5px;"></i>  
-                  <span id="dislikeCount_{{ $item->id }}" style="font-size: medium; margin-left: 5px;">{{ $item->dislikes->count() }} Dislike</span>
+              <a id="dislikeButton" href="{{ route('dislikeUlasan', ['id' => $item->id]) }}" style="text-decoration: none; color: #333; display: inline-block; padding: 8px 15px; border: 2px solid #FF0000; border-radius: 20px; background-color: #fff; transition: all 0.3s ease; margin-right: 10px;">
+                  @if (Auth::check() && $item->userHasDisliked(Auth::user()))
+                      <i class="fa fa-thumbs-up" style="color: #FF0000; margin-right: 5px;"></i>
+                  @else
+                      <i class="fa-regular fa-thumbs-down" style="color: #FF0000; margin-right: 5px;"></i>
+                  @endif
+                  <span id="dislikeCount" style="font-size: medium; margin-left: 5px;">{{ $item->dislikes->count() }} Dislike</span>
               </a>
+              
+              
               
 
                   @if (auth()->check() && $item->user_id === auth()->user()->id)
@@ -562,6 +572,7 @@
 
 <!--------------------------------------------------------------------------------------- Javascript Like & Dislike ------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------------- Javascript Like & Dislike  ------------------------------------------------------------------------------->
+
 
 
     
