@@ -143,20 +143,6 @@
     </div>
 </header>
 
-      <!-- Modal Logout -->
-      <div id="logout-modal" class="modal">
-        <div class="modal-content">
-          <span class="close" id="close-button" onclick="closeModal()">&times;</span>
-          <h2>Konfirmasi Logout</h2>
-          <p>Apakah anda mau logout?</p>
-          <div style="text-align: center;">
-            <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
-            <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
-          </div>
-        </div>
-      </div>
-
-
   <div class="page-heading">
     <div class="container">
       <div class="row">
@@ -310,9 +296,9 @@
         @endphp
         
         @foreach($kategoriLogV as $item)
-            @if (!in_array($item->kategori, $uniqueCategories))
+                @if (!in_array($item->kategori, $uniqueCategories))
                 <span class="fh5co_tags_all">
-                    <a href="" class="fh5co_tagg">{{ $item->kategori }}</a>
+                    <a href="{{ route('kategoriV', ['kategori' => $item->kategori]) }}" class="fh5co_tagg">{{ $item->kategori }}</a>
                 </span>
                 @php
                 $uniqueCategories[] = $item->kategori;
@@ -381,9 +367,21 @@
           <div style="flex: 1;">
             <h5 class="card-title">{{ $komentar->user->name }}</h5>
             <p>{{ $komentar->created_at->format('d F Y') }} | {{ $komentar->created_at->diffForHumans() }}</p>
-            <p class="card-text" style="text-align: justify;">
+            <p class="card-text" id="pesan-{{ $komentar->id }}" style="text-align: justify;">
                 {{ $komentar->pesan }}
             </p>
+
+            <div id="edit-pesan-{{ $komentar->id }}" style="display: none; width: 100%; text-align: right;">
+              <textarea id="edit-pesan-text-{{ $komentar->id }}" style="width: 100%;">{{ $komentar->pesan }}</textarea>
+              <button class="simpan-edit-button" data-id="{{ $komentar->id }}" data-user-id="{{ $komentar->user_id }}" style="background: none; border: none; cursor: pointer;">
+                  <i class="fas fa-save"></i> Simpan
+              </button>                               
+              
+              <button class="tutup-edit-button" data-id="{{ $komentar->id }}" style="background: none; border: none; cursor: pointer;">
+                  <i class="fas fa-times"></i> Tutup
+              </button>
+          </div>
+
             <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px;">
                 <div style="display: flex; align-items: center;">
 
@@ -392,8 +390,6 @@
                     <span id="likeCount{{ $komentar->id }}" style="font-size: medium; margin-left: 5px;">{{ $komentar->likes->count() }} likes</span>
                 </a>
                 
-                
-              
                     @if(Auth::check() && Auth::user()->id == $komentar->user_id)
                         <a href="{{ route('deleteKomentarVideo', ['id' => $komentar->id]) }}" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
                             <i class="fas fa-trash" style="font-size: 15px;"></i> Hapus
@@ -411,6 +407,12 @@
                 </div>
             </div>
         </div>
+
+        @if(Auth::check() && Auth::user()->id == $komentar->user_id)    
+        <a href="#" class="edit-button" data-id="{{ $komentar->id }}" data-user-id="{{ $komentar->user_id }}" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
+            <i class="fas fa-edit" style="font-size: 20px;"></i> Edit
+        </a>
+    @endif
         
         
           
@@ -477,7 +479,10 @@
       </div>
     </div>
   </section>
-
+<!-------------------------------------------------------------------------------------- Modal Area ------------------------------------------------------------------------------------------------------->
+<!-------------------------------------------------------------------------------------- Modal Area ------------------------------------------------------------------------------------------------------->
+  
+    <!-- Modal Laporan Video -->
   <div id="modalLaporan" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1;">
     <div style="background-color: #ffffff; border-radius: 10px; text-align: center; padding: 20px; width: 600px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
       <span style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 20px;" id="closeLaporan">&times;</span>
@@ -496,7 +501,7 @@
           <label style="font-size: 16px;"><input type="radio" name="reason" value="Masalah hukum"> Masalah hukum</label><br>
           <label style="font-size: 16px;"><input type="radio" name="reason" value="Teks bermasalah"> Teks bermasalah</label><br>
         </div><br>
-        <textarea id="reportTextLaporan" style="width: 100%; padding: 10px; font-size: 16px;" placeholder="Kenapa Anda melaporkan artikel ini?"></textarea><br>
+        <textarea id="reportTextLaporan" style="width: 100%; padding: 10px; font-size: 16px;" placeholder="Kenapa Anda melaporkan Video ini?"></textarea><br>
         <button type="submit" class="submit-buttonLaporan" style="background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; padding: 10px 20px; font-size: 18px;">Kirim Laporan</button>
       </form>
       <div style="text-align: left; padding: 10px;">
@@ -505,8 +510,61 @@
     </div>
   </div>
 
-  <!-- Scripts -->
-  <!-- Bootstrap core JavaScript -->
+     <!-- Modal Laporan Komentar Video -->
+     <div id="modalLaporKomen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1;">
+      <div style="background-color: #ffffff; border-radius: 10px; text-align: center; padding: 20px; width: 600px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
+          <span style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 20px;" id="tutupLaporanKomen">&times;</span>
+          <h2 style="color: #007bff; font-size: 24px;">Laporkan Komentar</h2>
+
+          <!-- Display information about the reported user -->
+          <p style="font-size: 14px;">User Yang Dilaporkan :<br> <strong><span id="namaDilaporkan" style="font-size: 14px;"></span></strong></p>
+
+          <form id="reportCommentForm" action="{{ route('storeLaporanKomentarVideo') }}" method="POST">
+              <br>
+              <input type="hidden" name="user_id_pelapor" id="user_id_pelapor_input" value="{{ Auth::user()->id }}">
+              <input type="hidden" name="video_id" id="video_id_input" value="{{ optional($komentar)->video_id }}">
+              <input type="hidden" name="comment_id" id="comment_id_input" value="">
+              <input type="hidden" name="user_id_dilaporkan" id="user_id_dilaporkan_input" value="">
+
+              <div style="text-align: left;">
+                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Konten Komersial atau Spam"> Konten Komersial atau Spam</label><br>
+                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Materi Pornografi atau Seksual Vulgar"> Materi Pornografi atau Seksual Vulgar</label><br>     
+                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Pelanggaran Hak Anak"> Pelanggaran Hak Anak</label><br>
+                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Pernyataan Kebencian dan Kekerasan"> Pernyataan Kebencian dan Kekerasan</label><br>
+                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Mendukung Terorisme"> Mendukung Terorisme</label><br>
+                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Pelecehan dan Penindasan"> Pelecehan dan Penindasan</label><br>
+                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Penggunaan Bunuh Diri atau Menyakiti Diri Sendiri"> Penggunaan Bunuh Diri atau Menyakiti Diri Sendiri</label><br>
+                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Misinformasi"> Misinformasi</label><br>
+              </div><br>
+
+              <textarea id="alasan_input" style="width: 100%; padding: 10px; font-size: 16px;" placeholder="Kenapa Anda melaporkan komentar ini?" name="alasan"></textarea><br>
+
+              <button type="submit" class="submit-buttonLaporKomentar" style="background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; padding: 10px 20px; font-size: 18px;">Kirim Laporan</button>
+          </form>
+
+          <div style="text-align: left; padding: 10px;">
+              <p style="font-size: 14px;">Laporan Komentar Video dan pengguna yang dilaporkan akan ditinjau oleh staf kami untuk menentukan apakah video dan pengguna tersebut melanggar Pedoman kami atau tidak. Akun akan dikenai sanksi jika melanggar Pedoman Komunitas, dan pelanggaran serius atau berulang dapat berakibat pada penghentian akun.</p>
+          </div>
+      </div>
+    </div>
+
+          <!-- Modal Logout -->
+          <div id="logout-modal" class="modal">
+            <div class="modal-content">
+              <span class="close" id="close-button" onclick="closeModal()">&times;</span>
+              <h2>Konfirmasi Logout</h2>
+              <p>Apakah anda mau logout?</p>
+              <div style="text-align: center;">
+                <button style="width: 120px;" class="btn btn-primary" id="confirm-logout-button" onclick="confirmLogout(true)">Ya</button>
+                <button style="width: 120px;" class="btn btn-danger" id="cancel-logout-button" onclick="confirmLogout(false)">Tidak</button>
+              </div>
+            </div>
+          </div>
+
+
+<!--------------------------------------------------------------------------------------- Javascript Area  ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Area  ------------------------------------------------------------------------------->
+ 
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
@@ -536,7 +594,157 @@
     <!-- Main -->
     <script src="{{ asset('aset1/js/main.js') }}"></script>
 
-    <!-- MODAL LOGOUT -->
+<!--------------------------------------------------------------------------------------- Javascript Laporkan Komentar Modal ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Laporkan Komentar Modal ------------------------------------------------------------------------------->
+
+    <!-- Modal Lapor Komentar Artikel -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const modalLaporKomen = document.getElementById("modalLaporKomen");
+        const tutupLaporanKomen = document.getElementById("tutupLaporanKomen");
+        const reportCommentForm = document.getElementById("reportCommentForm");
+    
+        function showLaporanModal(commentId, namaDilaporkan, userIdDilaporkan) {
+          document.getElementById("comment_id_input").value = commentId;
+          document.getElementById("namaDilaporkan").innerText = namaDilaporkan;
+          document.getElementById("user_id_dilaporkan_input").value = userIdDilaporkan;
+          modalLaporKomen.style.display = "block";
+        }
+    
+        function hideLaporanModal() {
+          modalLaporKomen.style.display = "none";
+        }
+    
+        function submitForm() {
+          const formData = new FormData(reportCommentForm);
+    
+          // Mengambil nilai yang dipilih dari radio button
+          var selectedReason = document.querySelector('input[name="reasonKomen"]:checked');
+          if (!selectedReason) {
+            alert("Pilih alasan laporan terlebih dahulu.");
+            return;
+          }
+    
+          // Mengambil alasan laporan dan artikel_id dari elemen form
+          var alasan = document.getElementById("alasan_input").value; // Fix the ID here
+          var artikelId = {{ $video->id }}; // Ganti dengan nilai artikel_id yang sesuai
+    
+          // Kirim data laporan ke server melalui AJAX
+          $.ajax({
+            type: "POST",
+            url: "{{ route('storeLaporanKomentarVideo') }}", // Use the named route
+            data: {
+              _token: "{{ csrf_token() }}",
+              user_id_pelapor: {{ Auth::user()->id }},
+              artikel_id: artikelId,
+              comment_id: formData.get('comment_id'), // Get comment_id from form data
+              laporan: selectedReason.value,
+              alasan: alasan,
+            },
+            success: function(response) {
+              // Tindakan setelah pengiriman berhasil
+              alert("Laporan telah dikirim!");
+              hideLaporanModal(); // Use the correct modal variable
+            },
+            error: function(xhr, status, error) {
+              var errorMessage = xhr.status + ': ' + xhr.statusText;
+              if (xhr.responseJSON && xhr.responseJSON.message) {
+                errorMessage = xhr.responseJSON.message;
+              }
+              alert("Terjadi kesalahan saat mengirim laporan: " + errorMessage);
+            }
+          });
+        }
+    
+        // Show modal when the link is clicked
+        document.querySelectorAll(".showLaporanKomen").forEach(function (link) {
+          link.addEventListener("click", function (e) {
+            e.preventDefault();
+            const commentId = link.getAttribute("data-comment-id");
+            const namaDilaporkan = link.getAttribute("data-nama-dilaporkan");
+            const userIdDilaporkan = link.getAttribute("data-user-id-dilaporkan");
+            showLaporanModal(commentId, namaDilaporkan, userIdDilaporkan);
+          });
+        });
+    
+        // Hide modal when the close button is clicked
+        tutupLaporanKomen.addEventListener("click", function () {
+          hideLaporanModal();
+        });
+    
+        // Add an event listener for form submission
+        reportCommentForm.addEventListener("submit", function (e) {
+          e.preventDefault(); // Prevent default form submission
+          // You can add some additional validation logic here if needed
+          submitForm();
+        });
+      });
+    </script>
+
+<!--------------------------------------------------------------------------------------- Javascript EdiT Komentar  ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript EdiT Komentar  ------------------------------------------------------------------------------->
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      const editButtons = document.querySelectorAll('.edit-button');
+      
+      editButtons.forEach(button => {
+          button.addEventListener('click', function (e) {
+              e.preventDefault();
+              const komentarId = this.getAttribute('data-id');
+              const userId = this.getAttribute('data-user-id');
+              const editPesanDiv = document.getElementById('edit-pesan-' + komentarId);
+              editPesanDiv.style.display = 'block';
+          });
+      });
+      
+      // Tambahkan event listener untuk tombol simpan edit
+      const simpanEditButtons = document.querySelectorAll('.simpan-edit-button');
+      
+      simpanEditButtons.forEach(button => {
+          button.addEventListener('click', function (e) {
+              e.preventDefault();
+              const komentarId = this.getAttribute('data-id');
+              const userId = this.getAttribute('data-user-id');
+              const editedText = document.getElementById('edit-pesan-text-' + komentarId).value;
+  
+              fetch("{{ url('/simpanEditKomentarVideo') }}/" + komentarId + "/" + userId, {
+                  method: "POST",
+                  body: JSON.stringify({ pesan: editedText }),
+                  headers: {
+                      "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                      "Content-Type": "application/json"
+                  }
+              })
+              .then(response => response.json())
+              .then(data => {
+                  const pesanElement = document.getElementById('pesan-' + komentarId);
+                  pesanElement.innerText = editedText;
+  
+                  document.getElementById('edit-pesan-' + komentarId).style.display = 'none';
+              })
+              .catch(error => {
+                  console.error(error);
+              });
+          });
+      });
+      
+      // Tambahkan event listener untuk tombol tutup edit
+      const tutupEditButtons = document.querySelectorAll('.tutup-edit-button');
+      
+      tutupEditButtons.forEach(button => {
+          button.addEventListener('click', function (e) {
+              e.preventDefault();
+              const komentarId = this.getAttribute('data-id');
+              document.getElementById('edit-pesan-' + komentarId).style.display = 'none';
+          });
+      });
+  });
+  </script>
+
+<!--------------------------------------------------------------------------------------- Javascript Modal Logout ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Modal Logout ------------------------------------------------------------------------------->
+
     <script>
       // JavaScript untuk modal logout
       function openModal() {
@@ -568,7 +776,9 @@
       });
     </script>
 
-       <!-- Laporkan Modal -->
+<!--------------------------------------------------------------------------------------- Javascript Lapor Modal ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Lapor Modal ------------------------------------------------------------------------------->
+
        <script>
         // Get the modal and close button elements
         var modal = document.getElementById("modalLaporan");
@@ -604,7 +814,7 @@
         return;
       }
       
-      // Mengambil alasan laporan dan artikel_id dari elemen form
+      // Mengambil alasan laporan dan video dari elemen form
       var alasan = document.getElementById("reportTextLaporan").value;
       var videoId = {{ $video->id }};
 
@@ -632,6 +842,7 @@
       });
     });
       </script>
+
 
 <!--------------------------------------------------------------------------------------- Javascript Like ------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------------- Javascript Like ------------------------------------------------------------------------------->

@@ -380,20 +380,21 @@
               <div style="flex: 1;">
                 <h5 class="card-title">{{ $komentar->user->name }}</h5>
                 <p>{{ $komentar->created_at->format('d F Y') }} | {{ $komentar->created_at->diffForHumans() }}</p>
-                <p class="card-text" style="text-align: justify;">
-                    {{ $komentar->pesan }}
-                </p>
+                <p class="card-text" id="pesan-{{ $komentar->id }}" style="text-align: justify;">
+                  {{ $komentar->pesan }}
+              </p>
 
                 <div id="edit-pesan-{{ $komentar->id }}" style="display: none; width: 100%; text-align: right;">
                   <textarea id="edit-pesan-text-{{ $komentar->id }}" style="width: 100%;">{{ $komentar->pesan }}</textarea>
-                  <button id="simpan-edit-{{ $komentar->id }}" style="background: none; border: none; cursor: pointer;">
-                      <i class="fas fa-save"></i>
-                  </button>
-                  <button id="tutup-edit-{{ $komentar->id }}" style="background: none; border: none; cursor: pointer;">
-                      <i class="fas fa-times"></i>
+                  <button class="simpan-edit-button" data-id="{{ $komentar->id }}" data-user-id="{{ $komentar->user_id }}" style="background: none; border: none; cursor: pointer;">
+                      <i class="fas fa-save"></i> Simpan
+                  </button>                               
+                  
+                  <button class="tutup-edit-button" data-id="{{ $komentar->id }}" style="background: none; border: none; cursor: pointer;">
+                      <i class="fas fa-times"></i> Tutup
                   </button>
               </div>
-
+              
                 <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px;">
                     <div style="display: flex; align-items: center;">
 
@@ -422,8 +423,8 @@
             </div>
 
             @if(Auth::check() && Auth::user()->id == $komentar->user_id)    
-            <a href="#" id="edit-{{ $komentar->id }}" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
-                <i class="fas fa-edit" style="font-size: 20px;"></i>
+            <a href="#" class="edit-button" data-id="{{ $komentar->id }}" data-user-id="{{ $komentar->user_id }}" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
+                <i class="fas fa-edit" style="font-size: 20px;"></i> Edit
             </a>
         @endif
 
@@ -803,42 +804,64 @@
 <!--------------------------------------------------------------------------------------- Javascript Edit Komentar ------------------------------------------------------------------------------->
 
 <script>
-  @foreach ($komentarArtikels as $item)
-      document.getElementById('edit-{{ $item->id }}').addEventListener('click', function (e) {
-          e.preventDefault();
-          document.getElementById('edit-pesan-{{ $item->id }}').style.display = 'block';
-      });
-  
-      document.getElementById('simpan-edit-{{ $item->id }}').addEventListener('click', function (e) {
-          e.preventDefault();
-          const editedText = document.getElementById('edit-pesan-text-{{ $item->id }}').value;
-  
-          fetch("{{ route('simpanEditKomentarArtikel', ['id' => $item->id]) }}", {
-              method: "POST",
-              body: JSON.stringify({ pesan: editedText }),
-              headers: {
-                  "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                  "Content-Type": "application/json"
-              }
-          })
-          .then(response => response.json())
-          .then(data => {
-              const pesanElement = document.getElementById('pesan-{{ $item->id }}');
-              pesanElement.innerText = '“' + editedText + '”';
-  
-              document.getElementById('edit-pesan-{{ $item->id }}').style.display = 'none';
-          })
-          .catch(error => {
-              console.error(error);
+  document.addEventListener('DOMContentLoaded', function () {
+      const editButtons = document.querySelectorAll('.edit-button');
+      
+      editButtons.forEach(button => {
+          button.addEventListener('click', function (e) {
+              e.preventDefault();
+              const komentarId = this.getAttribute('data-id');
+              const userId = this.getAttribute('data-user-id');
+              const editPesanDiv = document.getElementById('edit-pesan-' + komentarId);
+              editPesanDiv.style.display = 'block';
           });
       });
+      
+      // Tambahkan event listener untuk tombol simpan edit
+      const simpanEditButtons = document.querySelectorAll('.simpan-edit-button');
+      
+      simpanEditButtons.forEach(button => {
+          button.addEventListener('click', function (e) {
+              e.preventDefault();
+              const komentarId = this.getAttribute('data-id');
+              const userId = this.getAttribute('data-user-id');
+              const editedText = document.getElementById('edit-pesan-text-' + komentarId).value;
   
-      document.getElementById('tutup-edit-{{ $item->id }}').addEventListener('click', function (e) {
-          e.preventDefault();
-          document.getElementById('edit-pesan-{{ $item->id }}').style.display = 'none';
+              fetch("{{ url('/simpanEditKomentarArtikel') }}/" + komentarId + "/" + userId, {
+                  method: "POST",
+                  body: JSON.stringify({ pesan: editedText }),
+                  headers: {
+                      "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                      "Content-Type": "application/json"
+                  }
+              })
+              .then(response => response.json())
+              .then(data => {
+                  const pesanElement = document.getElementById('pesan-' + komentarId);
+                  pesanElement.innerText = editedText;
+  
+                  document.getElementById('edit-pesan-' + komentarId).style.display = 'none';
+              })
+              .catch(error => {
+                  console.error(error);
+              });
+          });
       });
-  @endforeach
+      
+      // Tambahkan event listener untuk tombol tutup edit
+      const tutupEditButtons = document.querySelectorAll('.tutup-edit-button');
+      
+      tutupEditButtons.forEach(button => {
+          button.addEventListener('click', function (e) {
+              e.preventDefault();
+              const komentarId = this.getAttribute('data-id');
+              document.getElementById('edit-pesan-' + komentarId).style.display = 'none';
+          });
+      });
+  });
   </script>
+  
+  
 <!--------------------------------------------------------------------------------------- Javascript Like ------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------------- Javascript Like ------------------------------------------------------------------------------->
 

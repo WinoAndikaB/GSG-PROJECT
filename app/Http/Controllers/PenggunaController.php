@@ -261,22 +261,21 @@ class PenggunaController extends Controller
             }
         }
 
-        //[User-Artikel] Edit komentar
+        //[User-Artikel] Edit komentar Artikel
         public function simpanEditKomentarArtikel(Request $request, $id) {
             $komentar = komentar_artikel::find($id);
-        
+            
             if (!$komentar) {
                 return response()->json(['error' => 'Komentar tidak ditemukan'], 404);
             }
-        
-            // Periksa apakah pengguna saat ini adalah pemilik komentar
-            if ($komentar->user_id !== auth()->user()->id) {
+    
+            if ($request->user()->id !== $komentar->user_id) {
                 return response()->json(['error' => 'Anda tidak memiliki izin untuk mengedit komentar ini'], 403);
             }
-        
+    
             $komentar->pesan = $request->input('pesan');
             $komentar->save();
-        
+    
             return response()->json(['message' => 'Pesan komentar berhasil diperbarui']);
         }
 
@@ -387,19 +386,7 @@ class PenggunaController extends Controller
         $video->komentarVideo()->save($komentar);
     
         // Redirect atau tampilkan pesan sukses
-        return redirect()->back()->with('success', 'Komentar berhasil disimpan.');
-    }
-
-    //[User-Ulasan] Delete Komentar Video
-    public function deleteKomentarV($id)
-    {
-        $video = komentar_video::find($id);
-        if (!$video) {
-            return redirect('/detailVideo/' . $id)->with('error', 'Komentar tidak ditemukan');
-        }
-
-        $video->delete();
-        return redirect('/detailVideo/' . $id)->with('success', 'Komentar berhasil dihapus');
+        return redirect()->back();
     }
 
     public function storeLaporanVideo(Request $request)
@@ -429,21 +416,24 @@ class PenggunaController extends Controller
         public function deleteKomentarVideo($id)
         {
             $comment = komentar_video::find($id);
-        
+            
             // Ensure comment is found
             if (!$comment) {
-                return redirect()->route('showDetailVideo', $id)->with('error', 'Comment not found');
+                return redirect()->back();
             }
-        
+            
             // Ensure the user trying to delete the comment is the owner
             if (Auth::check() && $comment->user_id === Auth::user()->id) {
+                $videoId = $comment->video_id;
                 $comment->delete();
-                return redirect()->route('showDetailVideo', $comment->video_id)->with('success', 'Comment successfully deleted');
+                return redirect()->route('showDetailVideo', ['id' => $videoId]);
             } else {
                 $errorMessage = 'You are not allowed to delete this comment. <a href="' . route('showDetailVideo', ['id' => $comment->video_id]) . '">Go back</a>';
-                return redirect()->route('showDetailVideo', $comment->video_id)->with('error', $errorMessage);
+                return redirect()->route('showDetailVideo', ['id' => $comment->video_id])->with('error', $errorMessage);
             }
         }
+        
+        
 
         //[User-Video] Like Komentar Video
         public function likeKomentarVideo($commentId)
@@ -470,6 +460,24 @@ class PenggunaController extends Controller
 
             return redirect()->to($url);
         }
+
+               //[User-Video] Edit komentar Video
+               public function simpanEditKomentarVideo(Request $request, $id) {
+                $komentar = komentar_video::find($id);
+                
+                if (!$komentar) {
+                    return response()->json(['error' => 'Komentar tidak ditemukan'], 404);
+                }
+        
+                if ($request->user()->id !== $komentar->user_id) {
+                    return response()->json(['error' => 'Anda tidak memiliki izin untuk mengedit komentar ini'], 403);
+                }
+        
+                $komentar->pesan = $request->input('pesan');
+                $komentar->save();
+        
+                return response()->json(['message' => 'Pesan komentar berhasil diperbarui']);
+            }
         
         
         
@@ -500,7 +508,7 @@ class PenggunaController extends Controller
     function kategoriV($kategori){
 
         $kategoriLogV = video::where('kategoriVideo', $kategori)
-            ->whereNotIn('status', ['Pending', 'Rejected'])
+            ->whereNotIn('statusVideo', ['Pending', 'Rejected'])
             ->inRandomOrder()
             ->take(10)
             ->get();
