@@ -134,12 +134,12 @@ class LandingPageController extends Controller
     function kategoriLandingPageV($kategori){
 
         $kategoriLandingPageV = video::where('kategoriVideo', $kategori)
-            ->whereNotIn('status', ['Pending', 'Rejected'])
+            ->whereNotIn('statusVideo', ['Pending', 'Rejected'])
             ->inRandomOrder()
             ->take(10)
             ->get();
     
-        return view('main.sebelumLogin.KategoriSL.kategoriLandingPageV', compact('kategoriLandingPageA'));
+        return view('main.sebelumLogin.KategoriSL.kategoriLandingPageV', compact('kategoriLandingPageV'));
     }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
