@@ -254,51 +254,55 @@ class SuperAdminController extends Controller
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
-    public function storeSA(Request $request)
-    {
-        // Validate the request data
-        $request->validate([
-            'judulArtikel' => 'required',
-            'penulis' => 'required',
-            'email' => 'required|email',
-            'kategori' => 'required',
-            'tags' => 'required',
-            'deskripsi' => 'required',
-            'gambarArtikel' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', 
-        ]);
+ public function storeSA(Request $request)
+{
+    // Validate the request data
+    $request->validate([
+        'judulArtikel' => 'required',
+        'penulis' => 'required',
+        'email' => 'required|email',
+        'kategori' => 'required',
+        'tags' => 'required',
+        'deskripsi' => 'required',
+        'gambarArtikel' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', 
+    ]);
+
+    // Assuming 'user_id' is coming from an authenticated user
+    $user_id = auth()->id(); // Adjust this according to your authentication mechanism
+
+    $article = new artikels;
+
+    $article->kodeArtikel = 'KKA' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
+
+    $article->judulArtikel = $request->input('judulArtikel');
+    $article->penulis = $request->input('penulis');
+    $article->email = $request->input('email');
+    $article->kategori = $request->input('kategori');
     
-        $article = new artikels;
-    
-        $article->kodeArtikel = 'KKA' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
-    
-        $article->judulArtikel = $request->input('judulArtikel');
-        $article->penulis = $request->input('penulis');
-        $article->email = $request->input('email');
-        $article->kategori = $request->input('kategori');
-        
-        // Convert array of tags to a string
-        $tags = $request->input('tags');
-        $tagsString = implode(',', $tags);
-        $article->tags = $tagsString;
-    
-        $article->deskripsi = $request->input('deskripsi');
-        $article->status = 'Pending';
-    
-        // Handle file upload
-        if ($request->hasFile('gambarArtikel')) {
-            $image = $request->file('gambarArtikel');
-    
-            $filename = $image->getClientOriginalName();
-            $image->move(public_path('gambarArtikel'), $filename);
-    
-            // Set the image file name in the database
-            $article->gambarArtikel = $filename;
-        }        
-    
-        $article->save();
-    
-        return redirect('/artikelSuperAdmin')->with('success', 'Article added successfully.');
-    }
+    // Convert array of tags to a string
+    $tags = $request->input('tags');
+    $tagsString = implode(',', $tags);
+    $article->tags = $tagsString;
+
+    $article->deskripsi = $request->input('deskripsi');
+    $article->status = 'Pending';
+    $article->user_id = $user_id; // Set the user_id
+
+    // Handle file upload
+    if ($request->hasFile('gambarArtikel')) {
+        $image = $request->file('gambarArtikel');
+
+        $filename = $image->getClientOriginalName();
+        $image->move(public_path('gambarArtikel'), $filename);
+
+        // Set the image file name in the database
+        $article->gambarArtikel = $filename;
+    }        
+
+    $article->save();
+
+    return redirect('/artikelSuperAdmin')->with('success', 'Article added successfully.');
+}
     
     //[SuperAdmin-Artikel] Edit Data Artikel
     function formEditArtikelSA($id){
@@ -465,6 +469,9 @@ class SuperAdminController extends Controller
             'linkVideo' => 'required|url', 
         ]);
     
+        // Assuming 'user_id' is coming from an authenticated user
+        $user_id = auth()->id(); // Adjust this according to your authentication mechanism
+    
         $videos = new Video;
     
         $videos->kodeVideo = 'KKV' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
@@ -479,8 +486,8 @@ class SuperAdminController extends Controller
         $videos->tagsVideo = $tagsVideo;
     
         $videos->deskripsiVideo = $request->input('deskripsiVideo');
-        $videos->linkVideo = $request->input('linkVideo');
         $videos->statusVideo = 'Pending';
+        $videos->user_id = $user_id; // Set the user_id
     
         $videoId = '';
     
@@ -501,10 +508,8 @@ class SuperAdminController extends Controller
         $videos->save();
     
         return redirect('/videoSuperAdmin')->with('success', 'Video added successfully.');
-    }
+    }    
     
-    
-
       //[SuperAdmin-Video] Halaman Edit Video
       function formEditVideoSA($id){
         $data = video::find($id);

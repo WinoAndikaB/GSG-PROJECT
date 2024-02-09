@@ -289,6 +289,15 @@
                                 <th class="text-secondary opacity-7"></th>
                               </tr>
                             </thead>
+                            @if($laporanVideoUser->isEmpty())
+                            <tbody>
+                                <tr>
+                                    <td colspan="12" class="align-middle text-center">
+                                        <p class="text-xs font-weight-bold mb-0">Data Kosong / Belum Terisi</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        @else
                             @foreach ($laporanVideoUser as $item)
                             <tbody>
                               <tr>
@@ -324,6 +333,7 @@
                               </tr>
                           </tbody>
                             @endforeach
+                            @endif    
                           </table>
                         </div>
                       </div>

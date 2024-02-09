@@ -522,7 +522,7 @@
           <form id="reportCommentForm" action="{{ route('storeLaporanKomentarVideo') }}" method="POST">
               <br>
               <input type="hidden" name="user_id_pelapor" id="user_id_pelapor_input" value="{{ Auth::user()->id }}">
-              <input type="hidden" name="video_id" id="video_id_input" value="{{ optional($komentar)->video_id }}">
+              <input type="hidden" name="video_id" id="video_id_input" value="">
               <input type="hidden" name="comment_id" id="comment_id_input" value="">
               <input type="hidden" name="user_id_dilaporkan" id="user_id_dilaporkan_input" value="">
 

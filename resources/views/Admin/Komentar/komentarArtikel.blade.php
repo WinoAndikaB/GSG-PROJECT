@@ -287,7 +287,16 @@
                                 <th class="text-secondary opacity-7"></th>
                               </tr>
                             </thead>
-                            @foreach ($komenarA as $item)
+                            @if($komentarA->isEmpty())
+                            <tbody>
+                                <tr>
+                                    <td colspan="12" class="align-middle text-center">
+                                        <p class="text-xs font-weight-bold mb-0">Data Kosong / Belum Terisi</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        @else
+                            @foreach ($komentarA as $item)
                             <tbody>
                               <tr>
                                 <td class="align-middle text-center">
@@ -319,10 +328,11 @@
                               </tr>
                             </tbody>
                             @endforeach
+                            @endif
 
                             <div class="d-flex justify-content-center">
                               <ul class="pagination">
-                                  @if ($komenarA->onFirstPage())
+                                  @if ($komentarA->onFirstPage())
                                       <li class="page-item disabled">
                                           <span class="page-link" aria-label="Previous">
                                               <span aria-hidden="true">&lsaquo;</span>
@@ -330,7 +340,7 @@
                                       </li>
                                   @else
                                       <li class="page-item">
-                                          <a class="page-link" href="{{ $komenarA->previousPageUrl() }}" rel="prev" aria-label="Previous">
+                                          <a class="page-link" href="{{ $komentarA->previousPageUrl() }}" rel="prev" aria-label="Previous">
                                               <span aria-hidden="true">&lsaquo;</span>
                                           </a>
                                       </li>
@@ -338,12 +348,12 @@
             
                                 <!-- Menampilkan halaman berapa -->
                                 <div class="text-center">
-                                    {{ $komenarA->currentPage() }} dari {{ $komenarA->lastPage() }}
+                                    {{ $komentarA->currentPage() }} dari {{ $komentarA->lastPage() }}
                                 </div>
                           
-                                  @if ($komenarA->hasMorePages())
+                                  @if ($komentarA->hasMorePages())
                                       <li class="page-item">
-                                          <a class="page-link" href="{{ $komenarA->nextPageUrl() }}" rel="next" aria-label="Next">
+                                          <a class="page-link" href="{{ $komentarA->nextPageUrl() }}" rel="next" aria-label="Next">
                                               <span aria-hidden="true">&rsaquo;</span>
                                           </a>
                                       </li>

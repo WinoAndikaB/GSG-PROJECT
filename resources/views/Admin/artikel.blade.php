@@ -366,7 +366,16 @@
                                 <th class="text-secondary opacity-7"></th>
                               </tr>
                             </thead>
-                            @foreach ($data as $tbhartikel)
+                            @if($data->isEmpty())
+                                <tbody>
+                                    <tr>
+                                        <td colspan="12" class="align-middle text-center">
+                                            <p class="text-xs font-weight-bold mb-0">Data Kosong / Belum Terisi</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            @else
+                          @foreach ($data as $tbhartikel)
                             <tbody>
                               <tr>
                                 <td class="align-middle text-center">
@@ -451,6 +460,7 @@
                               </tr>
                             </tbody>
                             @endforeach
+                            @endif
 
                             <div class="d-flex justify-content-center">
                               <ul class="pagination">

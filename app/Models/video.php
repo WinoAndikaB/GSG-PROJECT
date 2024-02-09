@@ -10,8 +10,13 @@ class Video extends Model
     use HasFactory;
 
     protected $fillable = [
-        'kodeVideo', 'linkVideo', 'judulVideo', 'uploader', 'email', 'deskripsiVideo', 'statusVideo', 'kategoriVideo', 'tagsVideo'
+        'kodeVideo','user_id', 'linkVideo', 'judulVideo', 'uploader', 'email', 'deskripsiVideo', 'statusVideo', 'kategoriVideo', 'tagsVideo'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    } 
 
     public function komentarVideo()
     {

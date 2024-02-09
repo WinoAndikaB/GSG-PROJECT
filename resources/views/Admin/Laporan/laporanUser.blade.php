@@ -289,6 +289,15 @@
                                 <th class="text-secondary opacity-7"></th>
                               </tr>
                             </thead>
+                            @if($laporanArtikelU->isEmpty())
+                            <tbody>
+                                <tr>
+                                    <td colspan="12" class="align-middle text-center">
+                                        <p class="text-xs font-weight-bold mb-0">Data Kosong / Belum Terisi</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        @else
                             @foreach ($laporanArtikelU as $item)
                             <tbody>
                                 <tr>
@@ -323,7 +332,8 @@
                                     </td>
                                 </tr>
                             </tbody>
-                        @endforeach                        
+                        @endforeach 
+                        @endif                       
                           </table>
                         </div>
                       </div>

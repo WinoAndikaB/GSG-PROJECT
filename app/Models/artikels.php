@@ -10,12 +10,13 @@ class artikels extends Model
     use HasFactory;
     
     protected $fillable = [
-        'id','kodeArtikel', 'user_id', 'artikel_id', 'gambarArtikel', 'judulArtikel', 'penulis', 'email', 'deskripsi', 'status', 'kategori', 'tags'
+        'kodeArtikel', 'user_id', 'artikel_id', 'gambarArtikel', 'judulArtikel', 'penulis', 'email', 'deskripsi', 'status', 'kategori', 'tags'
     ];
 
-    public function users()
+    // Define the relationship with the User model
+    public function user()
     {
-        return $this->hasMany(User::class, 'id');
+        return $this->belongsTo(User::class, 'user_id');
     }   
 
     public function komentarArtikel()

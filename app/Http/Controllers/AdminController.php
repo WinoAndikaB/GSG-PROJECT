@@ -98,55 +98,65 @@ class AdminController extends Controller
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //[Admin-Artikel] Halaman Tables Artikel
-    function artikel(Request $request){
-        // Get the search query from the request
-        $searchQuery = $request->input('search');
+function artikel(Request $request){
+    $userId = Auth::id(); // Get the authenticated user's ID
 
-        // Start building the query without applying pagination
-        $query = artikels::orderBy('created_at', 'desc');
-    
-        // If there is a search query, add the search conditions
-        if (!empty($searchQuery)) {
-            $query->where(function($q) use ($searchQuery) {
-                $q->where('judulArtikel', 'like', '%' . $searchQuery . '%')
-                    ->orWhere('penulis', 'like', '%' . $searchQuery . '%')
-                    ->orWhere('status', 'like', '%' . $searchQuery . '%')
-                    ->orWhere('kategori', 'like', '%' . $searchQuery . '%');
-            });
-        }
-    
-        // Now, paginate the results
-        $data = $query->paginate(15);
+    // Get the search query from the request
+    $searchQuery = $request->input('search');
 
-        // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
-        $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+    // Start building the query without applying pagination
+    $query = artikels::where('user_id', $userId)->orderBy('created_at', 'desc');
 
-        $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
-
-        $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
-
-        return view('admin.artikel', compact('data','dataBaruArtikel', 'dataBaruKomentarArtikel', 
-        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
+    // If there is a search query, add the search conditions
+    if (!empty($searchQuery)) {
+        $query->where(function($q) use ($searchQuery) {
+            $q->where('judulArtikel', 'like', '%' . $searchQuery . '%')
+                ->orWhere('penulis', 'like', '%' . $searchQuery . '%')
+                ->orWhere('status', 'like', '%' . $searchQuery . '%')
+                ->orWhere('kategori', 'like', '%' . $searchQuery . '%');
+        });
     }
 
+    // Now, paginate the results
+    $data = $query->paginate(15);
+
+    // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+    $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+    $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+    $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+    $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+    $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+    $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+    return view('admin.artikel', compact('data','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+    'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
+}
+
+
     //[Admin-Artikel] Halaman Komentar Artikel
-      function komentarArtikel(){
-        $komenarA = komentar_artikel::orderBy('created_at', 'desc')->paginate(20);
-
-         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
-         $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
- 
-         $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
- 
-         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
-
-        return view('admin.komentar.komentarArtikel', compact('komenarA','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+    function komentarArtikel(){
+        // Dapatkan ID pengguna yang sedang login
+        $userId = Auth::id();
+    
+        // Dapatkan artikel yang dibuat oleh pengguna itu sendiri
+        $artikels = artikels::where('user_id', $userId)->pluck('id');
+    
+        // Ambil semua komentar yang terkait dengan artikel-artikel tersebut
+        $komentarA = komentar_artikel::whereIn('artikel_id', $artikels)->orderBy('created_at', 'desc')->paginate(20);
+    
+        // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+        $dataBaruArtikel = artikels::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=', Carbon::now()->subDay())->count();
+    
+        $dataBaruVideo = video::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruKomentarVideo = komentar_video::where('created_at', '>=', Carbon::now()->subDay())->count();
+    
+        $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=', Carbon::now()->subDay())->count();
+    
+        return view('admin.komentar.komentarArtikel', compact('komentarA','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
@@ -209,15 +219,20 @@ class AdminController extends Controller
             'gambarArtikel' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', 
         ]);
     
+        // Get the currently authenticated user
+        $user = Auth::user();
+        $userId = $user->id; // Get the user_id
+    
         $article = new artikels;
     
         $article->kodeArtikel = 'KKA' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
+        $article->user_id = $userId; // Assign the user_id
     
         $article->judulArtikel = $request->input('judulArtikel');
         $article->penulis = $request->input('penulis');
         $article->email = $request->input('email');
         $article->kategori = $request->input('kategori');
-        
+    
         // Convert array of tags to a string
         $tags = $request->input('tags');
         $tagsString = implode(',', $tags);
@@ -239,7 +254,6 @@ class AdminController extends Controller
     
         $article->save();
     
-
         return redirect('/artikelAdmin')->with('success', 'Article added successfully.');
     }
     
@@ -292,13 +306,16 @@ class AdminController extends Controller
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //[Admin-Video] Halaman Tabel Video
-    function videoAdmin(Request $request){
 
+    function videoAdmin(Request $request){
+        // Get the ID of the authenticated user
+        $userId = Auth::id();
+    
         // Get the search query from the request
         $searchQuery = $request->input('search');
-
+    
         // Start building the query without applying pagination
-        $query = video::orderBy('created_at', 'desc');
+        $query = video::where('user_id', $userId)->orderBy('created_at', 'desc');
     
         // If there is a search query, add the search conditions
         if (!empty($searchQuery)) {
@@ -312,38 +329,47 @@ class AdminController extends Controller
     
         // Now, paginate the results
         $tableVideo = $query->paginate(15);
-
-         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
-         $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
- 
-         $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
- 
-         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
-
+    
+        // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+        $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+    
+        $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+    
+        $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+    
         return view('admin.video', compact('tableVideo','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
+    
 
     //[Admin-Artikel] Halaman Komentar Artikel
     function komentarVideo(){
-        $komenarV = komentar_video::orderBy('created_at', 'desc')->paginate(20);
-
-         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
-         $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
- 
-         $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
- 
-         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
-
-        return view('admin.komentar.komentarVideo', compact('komenarV','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        // Dapatkan ID pengguna yang sedang login
+        $userId = Auth::id();
+    
+        // Dapatkan video yang dibuat oleh pengguna itu sendiri
+        $videos = video::where('user_id', $userId)->pluck('id');
+    
+        // Ambil semua komentar yang terkait dengan video-video tersebut
+        $komentarV = komentar_video::whereIn('video_id', $videos)->orderBy('created_at', 'desc')->paginate(20);
+    
+        // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+        $dataBaruArtikel = artikels::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=', Carbon::now()->subDay())->count();
+    
+        $dataBaruVideo = video::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruKomentarVideo = komentar_video::where('created_at', '>=', Carbon::now()->subDay())->count();
+    
+        $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=', Carbon::now()->subDay())->count();
+    
+        return view('admin.komentar.komentarVideo', compact('komentarV','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
-    }    
+    }
+    
 
     //[Admin-Video] Halaman Tambah Video
     function formTambahVideo(){
@@ -366,55 +392,60 @@ class AdminController extends Controller
 
     public function storeVideo(Request $request)
     {
-       // Validate the request data
-       $request->validate([
-        'judulVideo' => 'required',
-        'uploader' => 'required',
-        'email' => 'required|email',
-        'kategoriVideo' => 'required',
-        'tagsVideo' => 'required|array', // Ensure it's an array
-        'deskripsiVideo' => 'required',
-        'linkVideo' => 'required|url', // Ensure the link is a valid URL
-    ]);
-
-    $videos = new Video;
-
-    $videos->kodeVideo = 'KKV' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
-
-    $videos->judulVideo = $request->input('judulVideo');
-    $videos->uploader = $request->input('uploader');
-    $videos->email = $request->input('email');
-    $videos->kategoriVideo = $request->input('kategoriVideo');
-
-    // Convert array of tags to a string
-    $tagsVideo = implode(',', $request->input('tagsVideo'));
-    $videos->tagsVideo = $tagsVideo;
-
-    $videos->deskripsiVideo = $request->input('deskripsiVideo');
-    $videos->linkVideo = $request->input('linkVideo');
-    $videos->statusVideo = 'Pending';
-
-    $videoId = '';
-
-    // Extract the video ID from the YouTube link
-    if (strpos($request->input('linkVideo'), 'youtube.com/watch?v=') !== false) {
-        $videoId = explode('v=', parse_url($request->input('linkVideo'), PHP_URL_QUERY))[1];
-    } elseif (strpos($request->input('linkVideo'), 'youtu.be/') !== false) {
-        $videoId = explode('/', parse_url($request->input('linkVideo'), PHP_URL_PATH))[1];
-    }
-
-    if (!empty($videoId)) {
-        $embedUrl = "https://www.youtube.com/embed/$videoId";
-        $videos->linkVideo = $embedUrl; // Update the link to the embedded video
-    } else {
-        return redirect('/videoSuperAdmin')->with('error', 'Invalid YouTube video link.');
-    }
-
-    $videos->save();
+        // Validate the request data
+        $request->validate([
+            'judulVideo' => 'required',
+            'uploader' => 'required',
+            'email' => 'required|email',
+            'kategoriVideo' => 'required',
+            'tagsVideo' => 'required|array', // Ensure it's an array
+            'deskripsiVideo' => 'required',
+            'linkVideo' => 'required|url', // Ensure the link is a valid URL
+        ]);
     
+        // Get the ID of the authenticated user
+        $userId = Auth::id();
+    
+        $videos = new Video;
+    
+        $videos->kodeVideo = 'KKV' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
+    
+        $videos->judulVideo = $request->input('judulVideo');
+        $videos->uploader = $request->input('uploader');
+        $videos->email = $request->input('email');
+        $videos->kategoriVideo = $request->input('kategoriVideo');
+    
+        // Convert array of tags to a string
+        $tagsVideo = implode(',', $request->input('tagsVideo'));
+        $videos->tagsVideo = $tagsVideo;
+    
+        $videos->deskripsiVideo = $request->input('deskripsiVideo');
+        $videos->linkVideo = $request->input('linkVideo');
+        $videos->statusVideo = 'Pending';
+    
+        $videoId = '';
+    
+        // Extract the video ID from the YouTube link
+        if (strpos($request->input('linkVideo'), 'youtube.com/watch?v=') !== false) {
+            $videoId = explode('v=', parse_url($request->input('linkVideo'), PHP_URL_QUERY))[1];
+        } elseif (strpos($request->input('linkVideo'), 'youtu.be/') !== false) {
+            $videoId = explode('/', parse_url($request->input('linkVideo'), PHP_URL_PATH))[1];
+        }
+    
+        if (!empty($videoId)) {
+            $embedUrl = "https://www.youtube.com/embed/$videoId";
+            $videos->linkVideo = $embedUrl; // Update the link to the embedded video
+        } else {
+            return redirect('/videoSuperAdmin')->with('error', 'Invalid YouTube video link.');
+        }
+    
+        // Associate the video with the authenticated user
+        $videos->user_id = $userId;
+    
+        $videos->save();
+        
         return redirect('/videoAdmin')->with('success', 'Video added successfully.');
-    }
-    
+    }    
 
       //[Admin-Video] Halaman Edit Video
       function formEditVideo($id){
