@@ -134,20 +134,20 @@
               <h1 style="color: rgba(47, 72, 88, 1);">{{ $video->judulVideo }}</h1><br>
 
               <div class="simple-profile-container" style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
-                <a href="/login" style="text-decoration: none; color: inherit;">
+                <a href="{{ route('detailProfilVideoLP', ['id' => $video->id]) }}" style="text-decoration: none; color: inherit;">
                     <div class="simple-profile-picture" style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #3498db;">
                       <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="Profil Picture" style="width: 100%; height: 100%;">
                     </div>
                 </a>
             
                 <div class="simple-profile-details" style="flex: 1;">
-                    <a href="/login" style="text-decoration: none; color: inherit;">
+                    <a href="{{ route('detailProfilVideoLP', ['id' => $video->id]) }}" style="text-decoration: none; color: inherit;">
                         <span class="simple-profile-name" style="color: #2c3e50; font-weight: bold; font-size: 1.2em; display: block; margin-bottom: 4px;">
                             {{ $video->uploader }}
                         </span>
                     </a>
             
-                    <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;">Uploader</span>
+                    <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;">Uploader | {{$totalFollowers}} Followers</span>
                 </div>
             
                   <a href="/login" style="text-decoration: none; color: inherit;">
@@ -174,9 +174,6 @@
           <span class="fh5co_tags_all">
             <a href="#" class="fh5co_tagg">{{ $video->kategoriVideo }}</a>
           </span>
-        
-          <br>
-          <br>
 
         <ul class="list-inline">
           <li class="list-inline-item">
@@ -189,7 +186,7 @@
             </form>
         </li>          
           <li class="list-inline-item">
-            <a href="/login" id="showModal" class="laporan-button">
+            <a href="/login" id="showModal" class="laporan-button" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
               <i class="fa fa-flag"></i> Laporkan
           </a>
         </li>        

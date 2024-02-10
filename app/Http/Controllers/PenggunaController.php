@@ -128,6 +128,9 @@ class PenggunaController extends Controller
         // Ambil foto profil penulis artikel
         $fotoProfil = $user->fotoProfil;
     
+        // Hitung total pengikut (followers) berdasarkan user_id
+        $totalFollowers = Follower::where('user_id', $user->id)->count();
+    
         // Check if the authenticated user is following the article author
         $isFollowing = false;
         if (auth()->check()) {
@@ -139,8 +142,51 @@ class PenggunaController extends Controller
             }
         }
     
-        return view('main.setelahLogin.detailArt', compact('kategoriLogA', 'article', 'box', 'tags', 'kategori', 'komentarArtikels', 'totalKomentarArtikels', 'komentar', 'fotoProfil', 'isFollowing', 'user'));
+        return view('main.setelahLogin.detailArt', compact('kategoriLogA', 'article', 'box', 'tags', 'kategori', 'komentarArtikels', 'totalKomentarArtikels', 'komentar', 'fotoProfil', 'isFollowing', 'user', 'totalFollowers'));
     }
+
+    public function detailProfilPenulisArtikel($id)
+    {
+        $profilPenulis = artikels::findOrFail($id);
+    
+        // Ambil data user berdasarkan id penulis artikel
+        $user = User::findOrFail($profilPenulis->user_id);
+    
+        // Ambil semua artikel yang tidak dalam status 'Pending' atau 'Rejected' milik penulis yang sama
+        $semuaArtikel = artikels::whereNotIn('status', ['Pending', 'Rejected'])
+                          ->where('user_id', $profilPenulis->user_id)
+                          ->get();
+    
+        // Ambil semua artikel yang tidak dalam status 'Pending' atau 'Rejected' milik penulis yang sama
+        $semuaVideo = video::whereNotIn('statusVideo', ['Pending', 'Rejected'])
+                        ->where('user_id', $profilPenulis->user_id)
+                        ->get();
+
+
+        // Ambil foto profil penulis artikel
+        $fotoProfil = $user->fotoProfil; // Pastikan fotoProfil tersedia di model User
+    
+        // Hitung total pengikut (followers) berdasarkan user_id
+        $totalFollowers = Follower::where('user_id', $user->id)->count();
+    
+        // Check if the authenticated user is following the article author
+        $isFollowing = false;
+        if (auth()->check()) {
+            $follower = Follower::where('follower_id', auth()->user()->id)
+                                ->where('user_id', $user->id)
+                                ->first();
+            if ($follower && $follower->status == 1) {
+                $isFollowing = true;
+            }
+        }
+    
+        $TotalArtikelId = artikels::where('user_id', $user->id)->count();
+        $TotalVideoId = video::where('user_id', $user->id)->count();
+    
+        return view('main.setelahLogin.profilePenulisArtikel', compact('profilPenulis', 'isFollowing', 'user', 'totalFollowers','fotoProfil','TotalArtikelId','TotalVideoId','semuaArtikel','semuaVideo'));
+    }
+    
+    
 
     public function follow(User $user)
     {
@@ -357,6 +403,9 @@ class PenggunaController extends Controller
                         $isFollowing = true;
                     }
                 }
+
+        // Hitung total pengikut (followers) berdasarkan user_id
+        $totalFollowers = Follower::where('user_id', $user->id)->count();
     
         return view('main.setelahLogin.detailVid', [
             'kategoriLogV' => $kategoriLogV,
@@ -368,6 +417,7 @@ class PenggunaController extends Controller
             'totalKomentarVideo' => $totalKomentarVideo,
             'fotoProfil' => $fotoProfil, // Tambahkan fotoProfil ke dalam data yang dilewatkan ke view
              'user' => $user,
+             'totalFollowers' => $totalFollowers,
         ]);
     }
 
@@ -534,6 +584,47 @@ class PenggunaController extends Controller
                 $komentar->save();
         
                 return response()->json(['message' => 'Pesan komentar berhasil diperbarui']);
+            }
+
+            public function detailProfilVideo($id)
+            {
+                $profilPenulis = video::findOrFail($id);
+            
+                // Ambil data user berdasarkan id penulis artikel
+                $user = User::findOrFail($profilPenulis->user_id);
+            
+                // Ambil semua artikel yang tidak dalam status 'Pending' atau 'Rejected' milik penulis yang sama
+                $semuaArtikel = artikels::whereNotIn('status', ['Pending', 'Rejected'])
+                                  ->where('user_id', $profilPenulis->user_id)
+                                  ->get();
+            
+                // Ambil semua artikel yang tidak dalam status 'Pending' atau 'Rejected' milik penulis yang sama
+                $semuaVideo = video::whereNotIn('statusVideo', ['Pending', 'Rejected'])
+                                ->where('user_id', $profilPenulis->user_id)
+                                ->get();
+        
+        
+                // Ambil foto profil penulis artikel
+                $fotoProfil = $user->fotoProfil; // Pastikan fotoProfil tersedia di model User
+            
+                // Hitung total pengikut (followers) berdasarkan user_id
+                $totalFollowers = Follower::where('user_id', $user->id)->count();
+            
+                // Check if the authenticated user is following the article author
+                $isFollowing = false;
+                if (auth()->check()) {
+                    $follower = Follower::where('follower_id', auth()->user()->id)
+                                        ->where('user_id', $user->id)
+                                        ->first();
+                    if ($follower && $follower->status == 1) {
+                        $isFollowing = true;
+                    }
+                }
+            
+                $TotalArtikelId = artikels::where('user_id', $user->id)->count();
+                $TotalVideoId = video::where('user_id', $user->id)->count();
+            
+                return view('main.setelahLogin.profileUploaderVideo', compact('profilPenulis', 'isFollowing', 'user', 'totalFollowers','fotoProfil','TotalArtikelId','TotalVideoId','semuaArtikel','semuaVideo'));
             }
         
         

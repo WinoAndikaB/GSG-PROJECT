@@ -99,20 +99,20 @@
                     <li>
                       <div class="dropdown">
                           <a href="#" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center dropdown-toggle" role="button" id="savedArticlesDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <div class="profile-picture" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
-                                  <?php
-                                  $fotoProfil = Auth::user()->fotoProfil;
-                                  if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
-                                  ?>
-                                  <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
-                                  <?php
-                                  } else {
-                                  ?>
-                                  <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
-                                  <?php
-                                  }
-                                  ?>
-                              </div>
+                            <div class="profile-picture" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
+                              <?php
+                              $fotoProfilAuth = Auth::user()->fotoProfil;
+                              if ($fotoProfilAuth && file_exists(public_path('fotoProfil/' . $fotoProfilAuth))) {
+                              ?>
+                              <img src="{{ asset('fotoProfil/' . $fotoProfilAuth) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                              <?php
+                              } else {
+                              ?>
+                              <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                              <?php
+                              }
+                              ?>
+                          </div>
                   
                               <span class="d-sm-inline d-none">
                                   <?php
@@ -165,20 +165,20 @@
               <h1 style="color: rgba(47, 72, 88, 1);">{{ $video->judulVideo }}</h1><br>
               
           <div class="simple-profile-container" style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
-            <a href="/profilPenulis" style="text-decoration: none; color: inherit;">
+            <a href="{{ route('detailProfilVideo', ['id' => $video->id]) }}" style="text-decoration: none; color: inherit;">
                 <div class="simple-profile-picture" style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #3498db;">
                   <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="Profil Picture" style="width: 100%; height: 100%;">
                 </div>
             </a>
         
             <div class="simple-profile-details" style="flex: 1;">
-                <a href="/profilPenulis" style="text-decoration: none; color: inherit;">
+                <a href="{{ route('detailProfilVideo', ['id' => $video->id]) }}" style="text-decoration: none; color: inherit;">
                     <span class="simple-profile-name" style="color: #2c3e50; font-weight: bold; font-size: 1.2em; display: block; margin-bottom: 4px;">
                         {{ $video->uploader }}
                     </span>
                 </a>
         
-                <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;">Uploader</span>
+                <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;">Uploader | {{$totalFollowers}} Followers</span>
               </div>
           
                     @auth

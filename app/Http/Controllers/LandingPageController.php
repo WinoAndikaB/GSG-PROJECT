@@ -11,6 +11,7 @@ use App\Models\ulasans;
 use App\Models\video;
 use App\Models\kategori;
 use App\Models\user;
+use App\Models\Follower;
 
 class LandingPageController extends Controller
 {
@@ -109,6 +110,9 @@ class LandingPageController extends Controller
         $user = User::findOrFail($article->user_id);
         // Ambil foto profil penulis artikel
         $fotoProfil = $user->fotoProfil;
+
+               // Hitung total pengikut (followers) berdasarkan user_id
+               $totalFollowers = Follower::where('user_id', $user->id)->count();
         
         // Lebih baik menggunakan array asosiatif agar lebih jelas
         return view('main.sebelumLogin.detailArtLP', [
@@ -120,7 +124,39 @@ class LandingPageController extends Controller
             'detailArtikelLP' => $detailArtikelLP,
             'totalKomentar' => $totalKomentar,
             'fotoProfil' => $fotoProfil, // Tambahkan fotoProfil ke dalam data yang dilewatkan ke view
+            'totalFollowers' => $totalFollowers,
         ]);
+    }
+
+    public function detailProfilPenulisArtikelLP($id)
+    {
+        $profilPenulis = artikels::findOrFail($id);
+    
+        // Ambil data user berdasarkan id penulis artikel
+        $user = User::findOrFail($profilPenulis->user_id);
+    
+        // Ambil semua artikel yang tidak dalam status 'Pending' atau 'Rejected' milik penulis yang sama
+        $semuaArtikel = artikels::whereNotIn('status', ['Pending', 'Rejected'])
+                          ->where('user_id', $profilPenulis->user_id)
+                          ->get();
+    
+        // Ambil semua artikel yang tidak dalam status 'Pending' atau 'Rejected' milik penulis yang sama
+        $semuaVideo = video::whereNotIn('statusVideo', ['Pending', 'Rejected'])
+                        ->where('user_id', $profilPenulis->user_id)
+                        ->get();
+
+
+        // Ambil foto profil penulis artikel
+        $fotoProfil = $user->fotoProfil; // Pastikan fotoProfil tersedia di model User
+    
+        // Hitung total pengikut (followers) berdasarkan user_id
+        $totalFollowers = Follower::where('user_id', $user->id)->count();
+    
+    
+        $TotalArtikelId = artikels::where('user_id', $user->id)->count();
+        $TotalVideoId = video::where('user_id', $user->id)->count();
+    
+        return view('main.sebelumLogin.profilePenulisArtikelLP', compact('profilPenulis', 'user', 'totalFollowers','fotoProfil','TotalArtikelId','TotalVideoId','semuaArtikel','semuaVideo'));
     }
     
 
@@ -211,6 +247,9 @@ class LandingPageController extends Controller
         $user = User::findOrFail($video->user_id);
         // Ambil foto profil penulis video
         $fotoProfil = $user->fotoProfil;
+
+               // Hitung total pengikut (followers) berdasarkan user_id
+               $totalFollowers = Follower::where('user_id', $user->id)->count();
         
         // Lebih baik menggunakan array asosiatif agar lebih jelas
         return view('main.sebelumLogin.detailVidLP', [
@@ -222,8 +261,41 @@ class LandingPageController extends Controller
             'komentarVideos' => $komentarVideos,
             'totalKomentarV' => $totalKomentarV,
             'fotoProfil' => $fotoProfil, // Tambahkan fotoProfil ke dalam data yang dilewatkan ke view
+            'totalFollowers' => $totalFollowers
         ]);
     }
+
+    public function detailProfilVideoLP($id)
+    {
+        $profilPenulis = video::findOrFail($id);
+    
+        // Ambil data user berdasarkan id penulis artikel
+        $user = User::findOrFail($profilPenulis->user_id);
+    
+        // Ambil semua artikel yang tidak dalam status 'Pending' atau 'Rejected' milik penulis yang sama
+        $semuaArtikel = artikels::whereNotIn('status', ['Pending', 'Rejected'])
+                          ->where('user_id', $profilPenulis->user_id)
+                          ->get();
+    
+        // Ambil semua artikel yang tidak dalam status 'Pending' atau 'Rejected' milik penulis yang sama
+        $semuaVideo = video::whereNotIn('statusVideo', ['Pending', 'Rejected'])
+                        ->where('user_id', $profilPenulis->user_id)
+                        ->get();
+
+
+        // Ambil foto profil penulis artikel
+        $fotoProfil = $user->fotoProfil; // Pastikan fotoProfil tersedia di model User
+    
+        // Hitung total pengikut (followers) berdasarkan user_id
+        $totalFollowers = Follower::where('user_id', $user->id)->count();
+    
+    
+        $TotalArtikelId = artikels::where('user_id', $user->id)->count();
+        $TotalVideoId = video::where('user_id', $user->id)->count();
+    
+        return view('main.sebelumLogin.profileUploaderVideoLP', compact('profilPenulis', 'user', 'totalFollowers','fotoProfil','TotalArtikelId','TotalVideoId','semuaArtikel','semuaVideo'));
+    }
+    
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

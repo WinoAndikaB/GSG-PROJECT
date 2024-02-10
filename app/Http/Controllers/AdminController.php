@@ -10,6 +10,7 @@ use App\Models\Likes;
 use App\Models\syaratdanketentuans;
 use App\Models\user;
 use App\Models\video;
+use App\Models\Follower;
 use App\Models\kategori;
 use App\Models\laporanArtikelUser;
 use App\Models\laporanKomentarArtikelUser;
@@ -37,9 +38,11 @@ class AdminController extends Controller
         // Menghitung total user_id yang sama dengan user auth
         $TotalArtikelId = artikels::where('user_id', $user->id)->count();
         $TotalVideoId = video::where('user_id', $user->id)->count();
+
+        $totalFollowers = Follower::where('user_id', $user->id)->count();
     
         return view('Admin.profileA', compact('dataBaruKomentarArtikel', 'dataBaruKomentarVideo', 
-        'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'TotalArtikelId','TotalVideoId'));
+        'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'TotalArtikelId','TotalVideoId','totalFollowers'));
     }
     
     

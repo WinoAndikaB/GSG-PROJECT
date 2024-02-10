@@ -35,6 +35,7 @@ use Illuminate\Support\Facades\Route;
                 //[Non-User] Tab Home landing Page
                 Route::get('/', [LandingPageController::class, 'landingPage'])->name('landingPage');
                 Route::get('/detailArtikelLP/{id}', [LandingPageController::class, 'showDetailLPArtikel'])->name('showDetailLPArtikel');
+                Route::get('/detailProfilPenulisArtikelLP/{id}', [LandingPageController::class, 'detailProfilPenulisArtikelLP'])->name('detailProfilPenulisArtikelLP');
 
                 //[Non-User] Pencarian Video
                 Route::get('/searchLP', [LandingPageController::class, 'searchLP'])->name('searchLP');
@@ -45,6 +46,7 @@ use Illuminate\Support\Facades\Route;
                 //[Non-User] Tab Home landing Page Video
                 Route::get('/landingPageVideo',[LandingPageController::class,'landingPageVideo'])->name('landingPageVideo');
                 Route::get('/detailVideoLP/{id}', [LandingPageController::class, 'showDetailLPVideo'])->name('showDetailLPVideo');
+                Route::get('/detailProfilVideoLP/{id}', [LandingPageController::class, 'detailProfilVideoLP'])->name('detailProfilVideoLP');
 
                 //[Non-User] Tab Kategori Landing Page
                 Route::get('/kategoriLandingPage', [LandingPageController::class, 'kategoriLandingPage'])->name('kategoriLandingPage');
@@ -95,6 +97,8 @@ use Illuminate\Support\Facades\Route;
                     Route::post('/follow/{user}', [PenggunaController::class, 'follow'])->name('follow');
                     Route::delete('/unfollow/{user}', [PenggunaController::class, 'unfollow'])->name('unfollow');
                 });
+
+                Route::get('/detailProfilPenulisArtikel/{id}', [PenggunaController::class, 'detailProfilPenulisArtikel'])->name('detailProfilPenulisArtikel');
                              
 
                 //[Pengguna] Video
@@ -124,6 +128,8 @@ use Illuminate\Support\Facades\Route;
                 Route::get('/likeUlasan/{id}', [PenggunaController::class, 'likeUlasan'])->name('likeUlasan');
                 Route::get('/dislikeUlasan/{id}', [PenggunaController::class, 'dislikeUlasan'])->name('dislikeUlasan');
                 Route::post('/simpanEditUlasan/{id}', [PenggunaController::class, 'simpanEditUlasan'])->name('simpanEditUlasan');
+
+                Route::get('/detailProfilVideo/{id}', [PenggunaController::class, 'detailProfilVideo'])->name('detailProfilVideo');
                 });
                 
                 
