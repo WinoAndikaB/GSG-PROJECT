@@ -91,6 +91,11 @@ use Illuminate\Support\Facades\Route;
                 Route::post('/simpanArtikelData/{id}', [PenggunaController::class, 'simpanArtikelData'])->name('simpan.artikelData');
                 Route::get('/deleteSimpanArt/{id}', [PenggunaController::class, 'deleteSimpanArt'])->name('simpan.deleteArtikel');
 
+                Route::middleware(['auth'])->group(function () {
+                    Route::post('/follow/{user}', [PenggunaController::class, 'follow'])->name('follow');
+                    Route::delete('/unfollow/{user}', [PenggunaController::class, 'unfollow'])->name('unfollow');
+                });
+                             
 
                 //[Pengguna] Video
                 Route::get('/Video',[PenggunaController::class,'Video'])->name('Video');

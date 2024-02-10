@@ -245,22 +245,26 @@
           <div>
             <div class="fh5co_heading fh5co_heading_border_bottom py-2 mb-4">Tags</div>
         </div>
-        <div class="clearfix"></div>
 
         @php
-          $uniqueArtikel = [];
-          @endphp
-
-          @foreach($tags as $item)
-              @if (!in_array($item->tags, $uniqueArtikel))
-                  <span class="fh5co_tags_all">
-                      <a href="#" class="fh5co_tagg">{{ $item->tags }}</a>
-                  </span>
-                  @php
-                  $uniqueArtikel[] = $item->tags;
-                  @endphp
-              @endif
-          @endforeach
+            $uniqueTags = [];
+        @endphp
+        
+        <span class="fh5co_tags_all">
+            @foreach($tags as $tag)
+                <?php
+                $words = explode(",", $tag->tags);
+                foreach ($words as $word) {
+                    $trimmedWord = trim($word);
+                    if (!in_array($trimmedWord, $uniqueTags)) {
+                        $uniqueTags[] = $trimmedWord;
+                        echo '<a href="#" class="fh5co_tagg">' . $trimmedWord . '</a>';
+                        echo ' ';
+                    }
+                }
+                ?>
+            @endforeach
+        </span>
                     
             <div class="fh5co_heading fh5co_heading_border_bottom pt-3 py-2 mb-4">Most Popular</div>
             <div class="row pb-3">

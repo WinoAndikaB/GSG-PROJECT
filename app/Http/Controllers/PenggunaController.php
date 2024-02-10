@@ -18,6 +18,7 @@ use App\Models\LaporanUlasanUser;
 use App\Models\LaporanKomentarArtikel;
 use App\Models\SimpanArtikel;
 use App\Models\SimpanVideo;
+use App\Models\Follower;
 use Illuminate\Support\Facades\Log;
 use App\Models\LaporanVideoUser;
 use Illuminate\Http\Request;
@@ -127,8 +128,34 @@ class PenggunaController extends Controller
         // Ambil foto profil penulis artikel
         $fotoProfil = $user->fotoProfil;
     
-        return view('main.setelahLogin.detailArt', compact('kategoriLogA', 'article', 'box', 'tags', 'kategori', 'komentarArtikels', 'totalKomentarArtikels', 'komentar', 'fotoProfil'));
+        // Check if the authenticated user is following the article author
+        $isFollowing = false;
+        if (auth()->check()) {
+            $follower = Follower::where('follower_id', auth()->user()->id)
+                                ->where('user_id', $user->id)
+                                ->first();
+            if ($follower && $follower->status == 1) {
+                $isFollowing = true;
+            }
+        }
+    
+        return view('main.setelahLogin.detailArt', compact('kategoriLogA', 'article', 'box', 'tags', 'kategori', 'komentarArtikels', 'totalKomentarArtikels', 'komentar', 'fotoProfil', 'isFollowing', 'user'));
     }
+
+    public function follow(User $user)
+    {
+        auth()->user()->following()->attach($user);
+
+        return response()->json(['message' => 'You are now following ' . $user->name]);
+    }
+
+    public function unfollow(User $user)
+    {
+        auth()->user()->following()->detach($user);
+
+        return response()->json(['message' => 'You have unfollowed ' . $user->name]);
+    }
+
 
         //[User-Home] Simpan Artikel
         public function simpanArtikelView()
@@ -284,7 +311,6 @@ class PenggunaController extends Controller
             return response()->json(['message' => 'Pesan komentar berhasil diperbarui']);
         }
 
-
 //----------------------------------------------------------------------------------------------------------- Video Area ---------------------------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------Video Area ---------------------------------------------------------------------------------------------------------------------------------------
 
@@ -320,6 +346,17 @@ class PenggunaController extends Controller
         $user = User::findOrFail($video->user_id);
         // Ambil foto profil pembuat video
         $fotoProfil = $user->fotoProfil;
+
+                // Check if the authenticated user is following the article author
+                $isFollowing = false;
+                if (auth()->check()) {
+                    $follower = Follower::where('follower_id', auth()->user()->id)
+                                        ->where('user_id', $user->id)
+                                        ->first();
+                    if ($follower && $follower->status == 1) {
+                        $isFollowing = true;
+                    }
+                }
     
         return view('main.setelahLogin.detailVid', [
             'kategoriLogV' => $kategoriLogV,
@@ -330,6 +367,7 @@ class PenggunaController extends Controller
             'komentarVideos' => $komentarVideos,
             'totalKomentarVideo' => $totalKomentarVideo,
             'fotoProfil' => $fotoProfil, // Tambahkan fotoProfil ke dalam data yang dilewatkan ke view
+             'user' => $user,
         ]);
     }
 

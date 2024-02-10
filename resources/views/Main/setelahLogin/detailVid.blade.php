@@ -179,16 +179,18 @@
                 </a>
         
                 <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;">Uploader</span>
-            </div>
-        
-              <a href="/profilPenulis" style="text-decoration: none; color: inherit;">
-                  <div class="simple-follow-button" style="background-color: #3498db; padding: 8px 16px; border-radius: 20px; cursor: pointer;">
-                      <span style="color: #fff; font-weight: bold; font-size: 1em; display: block;">Follow</span>
-                  </div>
-              </a>
-          </div>
-
-         <hr>
+              </div>
+          
+                    @auth
+                    @if(auth()->user()->isNot($user))
+                        <div id="followButton" style="background-color: #3498db; padding: 8px 16px; border-radius: 20px; cursor: pointer;">
+                            <span id="followText" style="color: #fff; font-weight: bold; font-size: 1em; display: block;">{{ auth()->user()->isFollowing($user) ? 'Following' : 'Follow' }}</span>
+                        </div>
+                    @endif
+                @endauth
+                </div>
+              
+                      <hr>
             
             <div class="float-right" style="margin-top: 10px;">
                 <ul>
@@ -552,6 +554,27 @@
             </div>
           </div>
 
+          <!-- Modal Unfollow -->
+<div class="modal fade" tabindex="-1" role="dialog" id="unfollowModal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Unfollow Confirmation</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              Are you sure you want to unfollow?
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-danger" id="confirmUnfollow">Unfollow</button>
+          </div>
+      </div>
+  </div>
+</div>
+
 
 <!--------------------------------------------------------------------------------------- Javascript Area  ------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------------- Javascript Area  ------------------------------------------------------------------------------->
@@ -584,6 +607,65 @@
     <script src="{{ asset('aset1/js/jquery.stellar.min.js') }}"></script>
     <!-- Main -->
     <script src="{{ asset('aset1/js/main.js') }}"></script>
+
+<!--------------------------------------------------------------------------------------- Javascript Followers ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Followers ------------------------------------------------------------------------------->
+
+<!-- Bootstrap CSS -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<!-- Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shC65g+0n3E0yfFilaFIBw5TO7wGvzD0F1Dz0" crossorigin="anonymous"></script>
+
+<script>
+    var followButton = document.getElementById('followButton');
+    if (followButton) {
+        followButton.addEventListener('click', function () {
+            var followText = document.getElementById('followText');
+            var isFollowing = followText.textContent.trim() === 'Following';
+            
+            if (isFollowing) {
+                $('#unfollowModal').modal('show');
+            } else {
+                toggleFollow({{ $user->id }});
+            }
+        });
+    }
+
+    document.getElementById('confirmUnfollow').addEventListener('click', function () {
+        $('#unfollowModal').modal('hide');
+        toggleFollow({{ $user->id }});
+    });
+
+    function toggleFollow(userId) {
+        var followText = document.getElementById('followText');
+        var isFollowing = followText.textContent.trim() === 'Following';
+
+        var method = isFollowing ? 'DELETE' : 'POST';
+        var url = isFollowing ? '/unfollow/' + userId : '/follow/' + userId;
+
+        fetch(url, {
+            method: method,
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (!data.error) {
+                if (isFollowing) {
+                    followText.textContent = 'Follow';
+                } else {
+                    followText.textContent = 'Following';
+                }
+            } else {
+                console.error('Error:', data.error);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+</script>
 
 <!--------------------------------------------------------------------------------------- Javascript Laporkan Komentar Modal ------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------------- Javascript Laporkan Komentar Modal ------------------------------------------------------------------------------->

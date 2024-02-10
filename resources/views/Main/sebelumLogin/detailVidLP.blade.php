@@ -263,18 +263,22 @@
       <div class="clearfix"></div>
 
       @php
-      $uniqueVideo = [];
+          $uniqueTags = [];
       @endphp
       
       @foreach($tagsV as $item)
-      @if (!in_array($item->tagsVideo, $uniqueVideo))
-          <span class="fh5co_tags_all">
-              <a href="#" class="fh5co_tagg">{{ $item->tagsVideo }}</a>
-          </span>
-          @php
-          $uniqueVideo[] = $item->tagsVideo;
-          @endphp
-      @endif
+          @if (!in_array($item->tagsVideo, $uniqueTags))
+              <?php
+              $words = explode(",", $item->tagsVideo);
+              foreach ($words as $word) {
+                  $trimmedWord = trim($word);
+                  if (!in_array($trimmedWord, $uniqueTags)) {
+                      $uniqueTags[] = $trimmedWord;
+                      echo '<span class="fh5co_tags_all"><a href="#" class="fh5co_tagg">' . $trimmedWord . '</a></span>';
+                  }
+              }
+              ?>
+          @endif
       @endforeach
 
               

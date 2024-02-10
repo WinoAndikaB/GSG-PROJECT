@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany; // tambahkan impor untuk BelongsToMany
 
 class User extends Authenticatable
 {
@@ -42,5 +43,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(SimpanVideo::class, 'user_id');
     }
-}
 
+    public function isFollowing($user)
+    {
+        return $this->following()->where('users.id', $user->id)->exists();
+    }
+
+    public function following(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'followers', 'follower_id', 'user_id');
+    }
+}

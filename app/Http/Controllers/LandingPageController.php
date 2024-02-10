@@ -97,7 +97,7 @@ class LandingPageController extends Controller
         $kategoriA = kategori::all();
         
         $box = artikels::inRandomOrder()->take(8)->get();
-        $tags = artikels::inRandomOrder()->take(10)->get();
+        $tags = artikels::inRandomOrder()->take(5)->get();
         $kategori = artikels::inRandomOrder()->take(10)->get();
         
         // Hitung jumlah komentar untuk artikel dengan ID tertentu
@@ -201,7 +201,7 @@ class LandingPageController extends Controller
         $kategoriV = kategori::all();
     
         $boxVideo = Video::inRandomOrder()->take(10)->get();
-        $tagsV = Video::inRandomOrder()->take(10)->get();
+        $tagsV = Video::inRandomOrder()->take(5)->get();
     
         $komentarVideos = komentar_video::where('video_id', $id)->latest()->paginate(6);
     
