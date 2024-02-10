@@ -235,7 +235,7 @@
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Artikel
-              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruArtikel + $dataBaruKomentarArtikel}}</span> 
+              <span class="text-success text-sm font-weight-bolder">+ {{ $totalUserArtikel + $dataBaruKomentarArtikel}}</span> 
             </span>
           </a>
         </li>
@@ -245,7 +245,7 @@
               <i class="ni ni-tv-2 text-warning text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Video
-              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruVideo + $dataBaruKomentarVideo}}</span> 
+              <span class="text-success text-sm font-weight-bolder">+ {{ $totalUserVideo + $dataBaruKomentarVideo}}</span> 
             </span>
           </a>
         </li>
@@ -351,8 +351,15 @@
                       <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
                           <table class="table align-items-center mb-0">
+
+                  <div style="margin-left: 25px;">
+                      <b>Total Data:</b> {{ $totalDataArtikel }}<br>
+                  </div>
+
+                                                  
                             <thead>
                               <tr>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kode Artikel</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Penulis</th>
@@ -378,6 +385,9 @@
                           @foreach ($data as $tbhartikel)
                             <tbody>
                               <tr>
+                                <td class="align-middle text-center">
+                                  <p class="text-xs font-weight-bold mb-0"></p>
+                                </td>
                                 <td class="align-middle text-center">
                                   <p class="text-xs font-weight-bold mb-0">{{$tbhartikel['id']}}</p>
                                 </td>
@@ -463,6 +473,7 @@
                             @endif
 
                             <div class="d-flex justify-content-center">
+
                               <ul class="pagination">
                                   @if ($data->onFirstPage())
                                       <li class="page-item disabled">

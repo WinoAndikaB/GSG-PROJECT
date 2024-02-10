@@ -119,7 +119,7 @@
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Artikel
-              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruArtikel + $dataBaruKomentarArtikel}}</span> 
+              <span class="text-success text-sm font-weight-bolder">+ {{ $TotalArtikelId + $dataBaruKomentarArtikel}}</span> 
             </span>
           </a>
         </li>
@@ -129,7 +129,7 @@
               <i class="ni ni-tv-2 text-warning text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Video
-              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruVideo + $dataBaruKomentarVideo}}</span> 
+              <span class="text-success text-sm font-weight-bolder">+ {{ $TotalVideoId + $dataBaruKomentarVideo}}</span> 
             </span>
           </a>
         </li>
@@ -326,8 +326,8 @@
                         </div>
                       
                         <div class="text-center">
-                            <span style="font-size: 20px; margin-right: 10px;"><b>20</b> Artikel</span>
-                            <span style="font-size: 20px; margin-right: 10px;"><b>25</b> Video</span>
+                            <span style="font-size: 20px; margin-right: 10px;"><b>{{ $TotalArtikelId }}</b> Artikel</span>
+                            <span style="font-size: 20px; margin-right: 10px;"><b>{{ $TotalVideoId }}</b> Video</span>
                             <span style="font-size: 20px; margin-right: 10px;"><b>100</b> Followers</span>
                         </div>
                       

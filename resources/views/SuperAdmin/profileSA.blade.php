@@ -363,8 +363,8 @@
                           </div>
                         
                           <div class="text-center">
-                              <span style="font-size: 20px; margin-right: 10px;"><b>20</b> Artikel</span>
-                              <span style="font-size: 20px; margin-right: 10px;"><b>25</b> Video</span>
+                              <span style="font-size: 20px; margin-right: 10px;"><b>{{$TotalArtikelId}}</b> Artikel</span>
+                              <span style="font-size: 20px; margin-right: 10px;"><b>{{$TotalVideoId}}</b> Video</span>
                               <span style="font-size: 20px; margin-right: 10px;"><b>100</b> Followers</span>
                           </div>
                         

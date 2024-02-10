@@ -167,18 +167,7 @@
           <div class="simple-profile-container" style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
             <a href="/profilPenulis" style="text-decoration: none; color: inherit;">
                 <div class="simple-profile-picture" style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #3498db;">
-                    <?php
-                    $fotoProfil = Auth::user()->fotoProfil;
-                    if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
-                    ?>
-                        <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
-                    <?php
-                    } else {
-                    ?>
-                        <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
-                    <?php
-                    }
-                    ?>
+                  <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="Profil Picture" style="width: 100%; height: 100%;">
                 </div>
             </a>
         
@@ -276,12 +265,6 @@
               {!! str_replace('<img', '<img style="max-width: 1152px; width: 100%; height: auto; display: block; margin: 0 auto;"', $video->deskripsiVideo) !!}
             </div>
           </div>
-          
-          @foreach(explode(',', $video->tagsVideo) as $tag)
-          <span class="fh5co_tags_all"> Tags :
-              <a href="#" class="fh5co_tagg">{{ $tag }}</a>
-          </span>
-      @endforeach
         </div>
 
 
@@ -310,24 +293,26 @@
         <div>
           <div class="fh5co_heading fh5co_heading_border_bottom py-2 mb-4">Tags</div>
       </div>
-      <div class="clearfix"></div>
       
       @php
-      $uniqueVideo = [];
+          $uniqueTags = [];
       @endphp
-
+      
       @foreach($tagsV as $item)
-          @if (!in_array($item->tagsVideo, $uniqueVideo))
-          <span class="fh5co_tags_all">
-              <a href="#" class="fh5co_tagg">{{ $item->tagsVideo }}</a>
-          </span>
-          @php
-          $uniqueVideo[] = $item->tagsVideo;
-          @endphp
-      @endif
+          @if (!in_array($item->tagsVideo, $uniqueTags))
+              <?php
+              $words = explode(",", $item->tagsVideo);
+              foreach ($words as $word) {
+                  $trimmedWord = trim($word);
+                  if (!in_array($trimmedWord, $uniqueTags)) {
+                      $uniqueTags[] = $trimmedWord;
+                      echo '<span class="fh5co_tags_all"><a href="#" class="fh5co_tagg">' . $trimmedWord . '</a></span>';
+                  }
+              }
+              ?>
+          @endif
       @endforeach
-
-              
+      
             <div class="fh5co_heading fh5co_heading_border_bottom pt-3 py-2 mb-4">Most Popular</div>
             <div class="row pb-3">
                 @foreach($boxVideo as $item)
@@ -342,6 +327,12 @@
             </div>            
         </div>
     </div>
+
+    <span class="fh5co_tags_all"> Tags : 
+      @foreach(explode(',', $video->tagsVideo) as $tag)
+          <a href="#" class="fh5co_tagg">{{ $tag }}</a>
+      @endforeach
+    </span>
 
     <form action="/komentarVideo" method="post">
       @csrf

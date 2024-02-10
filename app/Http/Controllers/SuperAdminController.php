@@ -28,6 +28,9 @@ class SuperAdminController extends Controller
     //[SuperAdmin-Profile] Profil User
     public function profileSA()
     {
+
+        $user = Auth::user();
+
         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
         $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
         $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
@@ -40,8 +43,12 @@ class SuperAdminController extends Controller
         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
+        // Menghitung total user_id yang sama dengan user auth
+        $TotalArtikelId = artikels::where('user_id', $user->id)->count();
+        $TotalVideoId = video::where('user_id', $user->id)->count();
+
         return view('SuperAdmin.profileSA', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 
-        'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
+        'dataBaruLaporanArtikel','dataBaruLaporanVideo','TotalArtikelId','TotalVideoId'));
     }  
   
     //[SuperAdmin-Profile] Edit Profil SuperAdmin

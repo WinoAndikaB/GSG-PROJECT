@@ -108,21 +108,26 @@ class PenggunaController extends Controller
     {
         $article = artikels::findOrFail($id);
         $kategoriLogA = kategori::all();
-
+    
         $box = artikels::inRandomOrder()->take(8)->get();
-
-        $tags = artikels::inRandomOrder()->take(10)->get();
-
+    
+        $tags = artikels::inRandomOrder()->take(5)->get();
+    
         $kategori = artikels::inRandomOrder()->take(10)->get();
-
+    
         $komentarArtikels = komentar_artikel::where('artikel_id', $id)->latest()->paginate(6);
-
+    
         $totalKomentarArtikels = komentar_artikel::where('artikel_id', $id)->count();
-
+    
         // Retrieve the latest comment (if any) associated with the article
         $komentar = komentar_artikel::where('artikel_id', $id)->latest()->first();
-
-        return view('main.setelahLogin.detailArt', compact('kategoriLogA', 'article', 'box', 'tags', 'kategori', 'komentarArtikels', 'totalKomentarArtikels', 'komentar'));
+    
+        // Ambil data user berdasarkan id penulis artikel
+        $user = User::findOrFail($article->user_id);
+        // Ambil foto profil penulis artikel
+        $fotoProfil = $user->fotoProfil;
+    
+        return view('main.setelahLogin.detailArt', compact('kategoriLogA', 'article', 'box', 'tags', 'kategori', 'komentarArtikels', 'totalKomentarArtikels', 'komentar', 'fotoProfil'));
     }
 
         //[User-Home] Simpan Artikel
@@ -304,14 +309,28 @@ class PenggunaController extends Controller
         $kategoriLogV = Kategori::all();
     
         $boxVideo = Video::inRandomOrder()->take(10)->get();
-        $tagsV = Video::inRandomOrder()->take(10)->get();
+        $tagsV = Video::inRandomOrder()->take(5)->get();
         $kategoriV = Video::inRandomOrder()->take(10)->get();
     
         $komentarVideos = komentar_video::where('video_id', $id)->latest()->paginate(6);
         
         $totalKomentarVideo = komentar_video::where('video_id', $id)->count();
-        
-        return view('main.setelahLogin.detailVid', compact('kategoriLogV', 'video', 'boxVideo', 'tagsV', 'kategoriV', 'komentarVideos', 'totalKomentarVideo'));
+    
+        // Ambil data user berdasarkan id pembuat video
+        $user = User::findOrFail($video->user_id);
+        // Ambil foto profil pembuat video
+        $fotoProfil = $user->fotoProfil;
+    
+        return view('main.setelahLogin.detailVid', [
+            'kategoriLogV' => $kategoriLogV,
+            'video' => $video,
+            'boxVideo' => $boxVideo,
+            'tagsV' => $tagsV,
+            'kategoriV' => $kategoriV,
+            'komentarVideos' => $komentarVideos,
+            'totalKomentarVideo' => $totalKomentarVideo,
+            'fotoProfil' => $fotoProfil, // Tambahkan fotoProfil ke dalam data yang dilewatkan ke view
+        ]);
     }
 
        //[User-Home] Simpan Artikel

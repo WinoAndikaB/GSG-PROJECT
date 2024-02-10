@@ -205,7 +205,7 @@
             <div class="simple-profile-container" style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
             <a href="/profilPenulis" style="text-decoration: none; color: inherit;">
                 <div class="simple-profile-picture" style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #3498db;">
-        
+                  <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="Profil Picture" style="width: 100%; height: 100%;">
                 </div>
             </a>
 
@@ -324,14 +324,31 @@
           @endforeach
 
           <div>
-              <div class="fh5co_heading fh5co_heading_border_bottom py-2 mb-4">Tags</div>
-          </div>
-
-            <span class="fh5co_tags_all">
-                @foreach($tags as $tag)
-                    <a href="#" class="fh5co_tagg">{{ $tag->tags }}</a>
-                @endforeach
-            </span>
+            <div class="fh5co_heading fh5co_heading_border_bottom py-2 mb-4">Tags</div>
+        </div>
+        
+        @php
+            $uniqueTags = [];
+        @endphp
+        
+        <span class="fh5co_tags_all">
+            @foreach($tags as $tag)
+                <?php
+                $words = explode(",", $tag->tags);
+                foreach ($words as $word) {
+                    $trimmedWord = trim($word);
+                    if (!in_array($trimmedWord, $uniqueTags)) {
+                        $uniqueTags[] = $trimmedWord;
+                        echo '<a href="#" class="fh5co_tagg">' . $trimmedWord . '</a>';
+                        echo ' ';
+                    }
+                }
+                ?>
+            @endforeach
+        </span>
+        
+        
+        
              
             <div class="fh5co_heading fh5co_heading_border_bottom pt-3 py-2 mb-4">Most Popular</div>
             <div class="row pb-3">

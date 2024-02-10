@@ -10,6 +10,7 @@ use App\Models\syaratdanketentuans;
 use App\Models\ulasans;
 use App\Models\video;
 use App\Models\kategori;
+use App\Models\user;
 
 class LandingPageController extends Controller
 {
@@ -92,19 +93,34 @@ class LandingPageController extends Controller
     public function showDetailLPArtikel($id)
     {
         $article = artikels::findOrFail($id);
-
-        $kategoriA = kategori::all();
     
+        $kategoriA = kategori::all();
+        
         $box = artikels::inRandomOrder()->take(8)->get();
         $tags = artikels::inRandomOrder()->take(10)->get();
         $kategori = artikels::inRandomOrder()->take(10)->get();
-    
+        
         // Hitung jumlah komentar untuk artikel dengan ID tertentu
         $totalKomentar = komentar_artikel::where('artikel_id', $id)->count();
+        
+        $detailArtikelLP = komentar_artikel::where('artikel_id', $id)->latest()->paginate(6);
     
-        $komentarArtikels = komentar_artikel::where('artikel_id', $id)->latest()->paginate(6);
-    
-        return view('main.sebelumLogin.detailArtLP', compact('kategoriA','article', 'box', 'tags', 'kategori', 'komentarArtikels', 'totalKomentar'));
+        // Ambil data user berdasarkan id penulis artikel
+        $user = User::findOrFail($article->user_id);
+        // Ambil foto profil penulis artikel
+        $fotoProfil = $user->fotoProfil;
+        
+        // Lebih baik menggunakan array asosiatif agar lebih jelas
+        return view('main.sebelumLogin.detailArtLP', [
+            'kategoriA' => $kategoriA,
+            'article' => $article,
+            'box' => $box,
+            'tags' => $tags,
+            'kategori' => $kategori,
+            'detailArtikelLP' => $detailArtikelLP,
+            'totalKomentar' => $totalKomentar,
+            'fotoProfil' => $fotoProfil, // Tambahkan fotoProfil ke dalam data yang dilewatkan ke view
+        ]);
     }
     
 
@@ -181,17 +197,32 @@ class LandingPageController extends Controller
     public function showDetailLPVideo($id)
     {
         $video = Video::findOrFail($id);
-
+    
         $kategoriV = kategori::all();
-
+    
         $boxVideo = Video::inRandomOrder()->take(10)->get();
         $tagsV = Video::inRandomOrder()->take(10)->get();
-
+    
         $komentarVideos = komentar_video::where('video_id', $id)->latest()->paginate(6);
-
+    
         $totalKomentarV = komentar_video::where('video_id', $id)->count();
         
-        return view('main.sebelumLogin.detailVidLP', compact('kategoriV','video', 'boxVideo', 'tagsV', 'kategoriV', 'komentarVideos','totalKomentarV' ));
+        // Ambil data user berdasarkan id penulis video
+        $user = User::findOrFail($video->user_id);
+        // Ambil foto profil penulis video
+        $fotoProfil = $user->fotoProfil;
+        
+        // Lebih baik menggunakan array asosiatif agar lebih jelas
+        return view('main.sebelumLogin.detailVidLP', [
+            'kategoriV' => $kategoriV,
+            'video' => $video,
+            'boxVideo' => $boxVideo,
+            'tagsV' => $tagsV,
+            'kategoriV' => $kategoriV,
+            'komentarVideos' => $komentarVideos,
+            'totalKomentarV' => $totalKomentarV,
+            'fotoProfil' => $fotoProfil, // Tambahkan fotoProfil ke dalam data yang dilewatkan ke view
+        ]);
     }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

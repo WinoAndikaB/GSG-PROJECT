@@ -215,7 +215,7 @@
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Artikel
-              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruArtikel + $dataBaruKomentarArtikel}}</span> 
+              <span class="text-success text-sm font-weight-bolder">+ {{ $totalUserArtikel + $dataBaruKomentarArtikel}}</span> 
             </span>
           </a>
         </li>
@@ -225,7 +225,7 @@
               <i class="ni ni-tv-2 text-warning text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Video
-              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruVideo + $dataBaruKomentarVideo}}</span> 
+              <span class="text-success text-sm font-weight-bolder">+ {{ $totalUserVideo + $dataBaruKomentarVideo}}</span> 
             </span>
           </a>
         </li>

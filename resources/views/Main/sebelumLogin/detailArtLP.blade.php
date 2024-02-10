@@ -132,11 +132,12 @@
           <section>        
               <h1 style="color: rgba(47, 72, 88, 1);">{{ $article->judulArtikel }}</h1><br>
             <div class="simple-profile-container" style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
-            <a href="/login" style="text-decoration: none; color: inherit;">
+              <a href="/login" style="text-decoration: none; color: inherit;">
                 <div class="simple-profile-picture" style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #3498db;">
-      
+                    <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="Profil Picture" style="width: 100%; height: 100%;">
                 </div>
             </a>
+            
 
             <div class="simple-profile-details" style="flex: 1;">
                 <a href="/login" style="text-decoration: none; color: inherit;">
@@ -295,11 +296,11 @@
       </div>
   
       <br>
-      @foreach ($komentarArtikels as $komentar)
+      @foreach ($detailArtikelLP as $komentar)
       <div class="card" style="max-width: 730px; margin-bottom: 10px;">
           <div class="card-body" style="display: flex;">
               <div class="profil-foto" style="margin-right: 10px;">
-                  <img src="{{ asset('fotoProfil/' . $komentar->user->fotoProfil) }}" alt="Foto Profil" style="border-radius: 50%; width: 50px; height: 50px;">
+                  <img src="{{ asset('fotoProfil/' . $user->fotoProfil) }}" alt="Foto Profil" style="border-radius: 50%; width: 50px; height: 50px;">
               </div>
               <div style="flex: 1;">
                   <h5 class="card-title">{{ $komentar->user->name }}</h5>
@@ -331,7 +332,7 @@
       <div class="d-flex justify-content-center">
         <nav aria-label="Page navigation">
             <ul class="pagination">
-                @if ($komentarArtikels->onFirstPage())
+                @if ($detailArtikelLP->onFirstPage())
                     <li class="page-item disabled">
                         <span class="page-link" aria-label="Previous">
                             <span aria-hidden="true">&lsaquo;</span>
@@ -339,7 +340,7 @@
                     </li>
                 @else
                     <li class="page-item">
-                        <a class="page-link" href="{{ $komentarArtikels->previousPageUrl() }}" rel="prev" aria-label="Previous">
+                        <a class="page-link" href="{{ $detailArtikelLP->previousPageUrl() }}" rel="prev" aria-label="Previous">
                             <span aria-hidden="true">&lsaquo;</span>
                         </a>
                     </li>
@@ -348,13 +349,13 @@
                 <!-- Display current page and total pages -->
                 <li class="page-item disabled">
                     <span class="page-link">
-                        {{ $komentarArtikels->currentPage() }} dari {{ $komentarArtikels->lastPage() }}
+                        {{ $detailArtikelLP->currentPage() }} dari {{ $detailArtikelLP->lastPage() }}
                     </span>
                 </li>
     
-                @if ($komentarArtikels->hasMorePages())
+                @if ($detailArtikelLP->hasMorePages())
                     <li class="page-item">
-                        <a class="page-link" href="{{ $komentarArtikels->nextPageUrl() }}" rel="next" aria-label="Next">
+                        <a class="page-link" href="{{ $detailArtikelLP->nextPageUrl() }}" rel="next" aria-label="Next">
                             <span aria-hidden="true">&rsaquo;</span>
                         </a>
                     </li>
