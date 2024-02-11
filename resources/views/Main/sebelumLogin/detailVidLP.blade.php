@@ -281,15 +281,38 @@
               
             <div class="fh5co_heading fh5co_heading_border_bottom pt-3 py-2 mb-4">Most Popular</div>
             <div class="row pb-3">
-                @foreach($boxVideo as $item)
-                <div class="col-4 align-self-center mb-3">
-                  <iframe width="120" height="100" src="{{$item->linkVideo}}" frameborder="0" allowfullscreen></iframe>
-                </div>
-                <div class="col-8 padding">
-                    <div class="most_fh5co_trending_font"><a href="{{ route('showDetailLPVideo', ['id' => $item->id]) }}">{{ $item->judulVideo }}</a></div>
-                    <div class="most_fh5co_trending_font_123">{{ \Carbon\Carbon::parse($item['created_at'])->format('l, d M Y H.i') }}</div>
-                </div>
-                @endforeach
+              <?php
+              // Fungsi untuk mendapatkan ID video YouTube dari URL
+              function getYoutubeVideoId($url) {
+                  $videoId = '';
+                  $parts = parse_url($url);
+                  if(isset($parts['query'])){
+                      parse_str($parts['query'], $query);
+                      if(isset($query['v'])){
+                          $videoId = $query['v'];
+                      }
+                  } elseif (preg_match('/embed\/([^\&\?\/]+)/', $url, $matches)) {
+                      $videoId = $matches[1];
+                  }
+                  return $videoId;
+              }
+              ?>
+              
+              @foreach($boxVideo as $item)
+                  <div class="col-4 align-self-center mb-3">
+                      <?php
+                      $videoId = getYoutubeVideoId($item->linkVideo);
+                      $thumbnail = "https://img.youtube.com/vi/{$videoId}/default.jpg"; // Mengambil thumbnail default
+                      ?>
+              
+                      <img src="<?php echo $thumbnail; ?>" alt="Thumbnail" width="100" height="70">
+                  </div>
+                  <div class="col-8 padding">
+                      <div class="most_fh5co_trending_font"><a href="{{ route('showDetailLPVideo', ['id' => $item->id]) }}">{{ $item->judulVideo }}</a></div>
+                      <div class="most_fh5co_trending_font_123">{{ \Carbon\Carbon::parse($item['created_at'])->format('l, d M Y H.i') }}</div>
+                  </div>
+              @endforeach
+              
             </div>            
         </div>
     </div>

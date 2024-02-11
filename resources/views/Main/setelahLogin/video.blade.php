@@ -170,42 +170,68 @@
           </div>
         </div>
         <div>
-          @foreach ($semuaVideo as $item)
-              <div class="row" style="text-align: justify">
-                  <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
-                    <iframe width="560" height="200" src="{{$item->linkVideo}}" frameborder="0" allowfullscreen></iframe>
-                  </div>
-                  <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
-                      <h4 style="text-align: left" >{{ $item->judulVideo }} </h4>
-                      <span class="d-flex"><b>{{ $item->uploader }}</b></span>
-                      <p>{!! substr(strip_tags($item->deskripsiVideo), 0, 400) . (strlen(strip_tags($item->content)) > 400 ? '...' : '') !!}</p>
-                  </div>
-                  <span style="text-align: right; color: rgba(165, 165, 165, 1);"><p>
-                    @php
-                    $ulasanCreatedAt = \Carbon\Carbon::parse($item['created_at']);
-                    $sekarang = \Carbon\Carbon::now();
-                    $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
-  
-                    if ($selisihWaktu < 60) {
-                      echo $selisihWaktu . ' Menit Lalu';
-                    } elseif ($selisihWaktu < 1440) {
-                      echo floor($selisihWaktu / 60) . ' Jam Lalu';
-                    } elseif ($selisihWaktu < 10080) {
-                      echo floor($selisihWaktu / 1440) . ' Hari Lalu';
-                    } elseif ($selisihWaktu < 43200) {
-                      echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
-                    } elseif ($selisihWaktu < 525600) {
-                      echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
-                    } else {
-                      echo floor($selisihWaktu / 525600) . ' Tahun Lalu';
-                    }
-
-                  @endphp
-                  | 
-                      <a href="{{ route('showDetailVideo', ['id' => $item->id]) }}" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a></p></span>
+          <?php
+          // Fungsi untuk mendapatkan ID video YouTube dari URL
+          function getYoutubeVideoId($url) {
+              $videoId = '';
+              $parts = parse_url($url);
+              if(isset($parts['query'])){
+                  parse_str($parts['query'], $query);
+                  if(isset($query['v'])){
+                      $videoId = $query['v'];
+                  }
+              } elseif (preg_match('/embed\/([^\&\?\/]+)/', $url, $matches)) {
+                  $videoId = $matches[1];
+              }
+              return $videoId;
+          }
+          
+          foreach ($semuaVideo as $item) {
+              $videoId = getYoutubeVideoId($item->linkVideo);
+              $thumbnail = "https://img.youtube.com/vi/{$videoId}/maxresdefault.jpg"; // Mengambil thumbnail maksimum resolusi
+          ?>
+          
+          <div class="row" style="text-align: justify">
+              <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
+                  <img src="<?php echo $thumbnail; ?>" alt="Thumbnail">
               </div>
-              <hr>
-              @endforeach
+              <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
+                  <h4 style="text-align: left">{{ $item->judulVideo }}</h4>
+                  <span class="d-flex"><b>{{ $item->uploader }}</b></span>
+                  <p>{!! substr(strip_tags($item->deskripsiVideo), 0, 400) . (strlen(strip_tags($item->content)) > 400 ? '...' : '') !!}</p>
+              </div>
+              <span style="text-align: right; color: rgba(165, 165, 165, 1);">
+                  <p>
+                      @php
+                      $ulasanCreatedAt = \Carbon\Carbon::parse($item['created_at']);
+                      $sekarang = \Carbon\Carbon::now();
+                      $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
+          
+                      if ($selisihWaktu < 60) {
+                          echo $selisihWaktu . ' Menit Lalu';
+                      } elseif ($selisihWaktu < 1440) {
+                          echo floor($selisihWaktu / 60) . ' Jam Lalu';
+                      } elseif ($selisihWaktu < 10080) {
+                          echo floor($selisihWaktu / 1440) . ' Hari Lalu';
+                      } elseif ($selisihWaktu < 43200) {
+                          echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
+                      } elseif ($selisihWaktu < 525600) {
+                          echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
+                      } else {
+                          echo floor($selisihWaktu / 525600) . ' Tahun Lalu';
+                      }
+                      @endphp
+                      | 
+                      <a href="{{ route('showDetailVideo', ['id' => $item->id]) }}" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a>
+                  </p>
+              </span>
+          </div>
+          <hr>
+          
+          <?php
+          }
+          ?>
+          
           </div>
       </div>
     </div>

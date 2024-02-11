@@ -268,7 +268,7 @@
                   <div class="numbers">
                     <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Video</p>
                     <h5 class="font-weight-bolder">
-                      {{$totalVideo}}
+                      {{$totalUserVideo}}
                     </h5>
                     <br>
                     <p class="mb-0">
@@ -319,7 +319,7 @@
                 <div class="col-8">
                     <div class="numbers">
                         <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Artikel</p>
-                        <h5 class="font-weight-bolder">{{$totalArtikel}}</h5>
+                        <h5 class="font-weight-bolder">{{$totalUserArtikel}}</h5>
                         <br>
                         <p class="mb-0">
                             <span class="text-success text-sm font-weight-bolder">+{{ $dataBaruArtikel }}</span>

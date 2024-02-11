@@ -354,10 +354,10 @@
             <div class="fh5co_heading fh5co_heading_border_bottom pt-3 py-2 mb-4">Most Popular</div>
             <div class="row pb-3">
                 @foreach($box as $item)
-                <div class="col-5 align-self-center mb-3">
-                    <img src="{{ asset('gambarArtikel/' . $item->gambarArtikel) }}" alt="img" class="fh5co_most_trading"/>
+                <div class="col-4 align-self-center mb-3">
+                    <img src="{{ asset('gambarArtikel/' . $item->gambarArtikel) }}" alt="img"  width="120" height="50">
                 </div>
-                <div class="col-7 padding">
+                <div class="col-8 padding">
                     <div class="most_fh5co_trending_font"><a href="{{ route('detail.artikel', ['id' => $item->id]) }}">{{ $item->judulArtikel }}</a></div>
                     <div class="most_fh5co_trending_font_123">{{ \Carbon\Carbon::parse($item['created_at'])->format('l, d M Y H.i') }}</div>
                 </div>

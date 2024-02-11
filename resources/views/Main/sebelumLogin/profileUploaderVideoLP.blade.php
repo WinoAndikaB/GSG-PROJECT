@@ -202,114 +202,140 @@
 <br>
 
 <div class="section">
-  <br>
-  <div class="container">
-      <div class="row">
-          <div class="col-md-4 w-100"> <!-- Tambahkan kelas w-100 di sini -->
-              <div class="card">
-                  <br>
-                  <div>
-                      <div style="width: 120px; height: 120px; overflow: hidden; border-radius: 50%; margin: 0 auto;">
-                          <img style="width: 100%; height: 100%; object-fit: cover;" src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="Foto Profil">
-                      </div>
-
-                      <div class="profile-name text-center">
-                          {{ $profilPenulis->uploader }}
-                      </div>
-
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <br>
+                    <div>
                       <div class="text-center">
-                          <span style="margin-right: 10px;"><b>{{ $TotalArtikelId }}</b> Artikel</span>
-                          <span style="margin-right: 10px;"><b>{{ $TotalVideoId }}</b> Video</span>
-                          <span style="margin-right: 10px;"><b>{{ $totalFollowers }}</b> Followers</span>
-                      </div>
-
-                      <br>
-
-                      <div class="social-media-links text-center">
-                          <a href="{{ $user->facebook }}" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
-                          <a href="{{ $user->instagram }}" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-                      </div>
-
-                      @auth
-                      @if(auth()->user()->isNot($user))
-                      <div class="social-media-links text-center">
-                          <a href="#" id="followButton" class="btn btn-info" style="color: white; font-weight: bold; background-color: #3498db; padding: 8px 16px; border-radius: 20px; cursor: pointer;">
-                              <span id="followText" style="font-size: 1em;">{{ auth()->user()->isFollowing($user) ? 'Following' : 'Follow' }}</span>
-                          </a>
-                      </div>
-                      @endif
-                      @endauth
-
-
-                      <hr>
-
-                      <div class="about-section text-center">
-                          <p>{{$user->aboutme }}</p>
-                      </div>
-
-                  </div>
-              </div>
-          </div>
-
-          <div class="col-md-4 w-100">
-            <div class="card card-user" style="border: 2px solid #00bcd4; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                <div class="card-header" style="background: linear-gradient(45deg, #0f4c75, #3282b8); color: #fff; text-align: center; border-radius: 10px 10px 0 0; padding: 15px;">
-                    <h5 style="margin-bottom: 0; font-size: 1.5em; color: #fff;"> Daftar Artikel </h5>
-                </div>
-                <div class="card-body" style="max-height: 700px; overflow-y: auto;">
-                    @foreach ($semuaArtikel as $artikel)
-                    <div class="row" style="text-align: justify">
-                        <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
-                            <div class="d-flex justify-content-center">
-                                <img src="{{ asset('gambarArtikel/'.$artikel->gambarArtikel) }}" style="max-width: 100%; height:  150%; border-radius: 14px;">
-                            </div>
-                        </div>
-                        <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
-                            <a href="{{ route('showDetailLPArtikel', ['id' => $artikel->id]) }}" style="color: #d47500;">
-                                <h4 class="header-name" style="text-align: left; font-size: 1.2em;">📖 {{ $artikel->judulArtikel }}</h4>
-                                <span class="d-flex"><b>{{ $artikel->created_at->format('l, d M Y') }}</b></span>
-                            </a>
-                            <p>{!! substr(strip_tags($artikel->deskripsi), 0, 100) . (strlen(strip_tags($artikel->deskripsi)) > 400 ? '...' : '') !!}</p>
-                        </div>
+                        <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="Foto Profil" class="rounded-circle img-fluid border border-primary" style="width: 120px; height: 120px;">
                     </div>
-                    <hr>
-                    @endforeach
+                    
+  
+                        <div class="profile-name text-center">
+                            {{ $profilPenulis->uploader }}
+                        </div>
+  
+                        <div class="text-center">
+                            <span style="margin-right: 10px;"><b>{{ $TotalArtikelId }}</b> Artikel</span>
+                            <span style="margin-right: 10px;"><b>{{ $TotalVideoId }}</b> Video</span>
+                            <span style="margin-right: 10px;"><b>{{ $totalFollowers }}</b> Followers</span>
+                        </div>
+  
+                        <br>
+  
+                        <div class="social-media-links text-center">
+                            <a href="{{ $user->facebook }}" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+                            <a href="{{ $user->instagram }}" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        </div>
+  
+                        @auth
+                        @if(auth()->user()->isNot($user))
+                        <div class="social-media-links text-center">
+                            <a href="#" id="followButton" class="btn btn-info" style="color: white; font-weight: bold; background-color: #3498db; padding: 8px 16px; border-radius: 20px; cursor: pointer;">
+                                <span id="followText" style="font-size: 1em;">{{ auth()->user()->isFollowing($user) ? 'Following' : 'Follow' }}</span>
+                            </a>
+                        </div>
+                        @endif
+                        @endauth
+  
+  
+                        <hr>
+  
+                        <div class="about-section text-center">
+                            <p>{{$user->aboutme }}</p>
+                        </div>
+  
+                    </div>
                 </div>
             </div>
-        </div>
-        
-
-          <div class="col-md-4 w-100"> <!-- Tambahkan kelas w-100 di sini -->
-              <div class="card card-user" style="border: 2px solid #00bcd4; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                  <div class="card-header" style="background: linear-gradient(45deg, #0f4c75, #3282b8); color: #fff; text-align: center; border-radius: 10px 10px 0 0; padding: 15px;">
-                      <h5 style="margin-bottom: 0; font-size: 1.5em; color: #fff;"> Daftar Video </h5>
-                  </div>
-                  <div class="card-body">
-                      @foreach ($semuaVideo as $video)
-                      <div class="row" style="text-align: justify">
-                          <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
-                              <div class="d-flex justify-content-center ml-5"> <!-- Tambahkan kelas ml-5 di sini -->
-                                  <iframe width="50" height="50" src="{{ $video->linkVideo }}" frameborder="0" allowfullscreen></iframe>
-                              </div>
-
+            <div class="col-md-8">
+              <!-- Daftar Artikel dan Video -->
+              <div class="row">
+                  <!-- Artikel -->
+                  <div class="col-md-6">
+                      <div class="card rounded-3 border-0 shadow">
+                          <div class="card-header bg-primary text-white">
+                              <h5 class="card-title mb-0">Daftar Artikel</h5>
                           </div>
-                          <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
-                              <a href="{{ route('showDetailLPVideo', ['id' => $video->id]) }}" style="color: #d47500;">
-                                  <h4 class="header-name" style="text-align: left; font-size: 1.2em;">▶️ {{ $video->judulVideo }}</h4>
-                                  <span class="d-flex"><b>{{ $video->created_at->format('l, d M Y') }}</b></span>
-                              </a>
-                              <p>{!! substr(strip_tags($artikel->deskripsi), 0, 100) . (strlen(strip_tags($video->deskripsi)) > 400 ? '...' : '') !!}</p>
+                          <div class="card-body p-0" style="max-height: 400px; overflow-y: auto;">
+                              <div class="list-group list-group-flush" id="article-list">
+                                  @foreach ($semuaArtikel as $artikel)
+                                  <a href="{{ route('showDetailLPArtikel', ['id' => $artikel->id]) }}" class="list-group-item list-group-item-action">
+                                      <div class="d-flex align-items-center">
+                                          <img src="{{ asset('gambarArtikel/'.$artikel->gambarArtikel) }}" alt="{{ $artikel->judulArtikel }}" class="rounded-start img-fluid" style="width: 80px; height: 50px; object-fit: cover;">
+                                          <div class="flex-grow-1 ms-3">
+                                            <h6 class="mb-1" title="{{ $artikel->judulArtikel }}">{{ Str::limit($artikel->judulArtikel, 20) }}</h6>
+                                              <p class="mb-0">{{ $artikel->created_at->format('l, d M Y') }}</p>
+                                          </div>
+                                      </div>
+                                  </a>
+                                  @endforeach
+                              </div>
                           </div>
                       </div>
-                      <hr>
-                      @endforeach
+                  </div>
+          
+                  <!-- Video -->
+                  <div class="col-md-6">
+                      <div class="card rounded-3 border-0 shadow">
+                          <div class="card-header bg-success text-white">
+                              <h5 class="card-title mb-0">Daftar Video</h5>
+                          </div>
+                          <div class="card-body p-0" style="max-height: 400px; overflow-y: auto;">
+                              <div class="list-group list-group-flush" id="video-list">
+                                <?php
+                                // Fungsi untuk mendapatkan ID video YouTube dari URL
+                                  if (!function_exists('getYoutubeVideoId')) {
+                                      function getYoutubeVideoId($url) {
+                                      $videoId = '';
+                                      $parts = parse_url($url);
+                                      if(isset($parts['query'])){
+                                          parse_str($parts['query'], $query);
+                                          if(isset($query['v'])){
+                                              $videoId = $query['v'];
+                                          }
+                                      } elseif (preg_match('/embed\/([^\&\?\/]+)/', $url, $matches)) {
+                                          $videoId = $matches[1];
+                                      }
+                                      return $videoId;
+                                    }
+                                  }
+                                ?>
+                                
+                                @foreach ($semuaVideo as $video)
+                                    <?php
+                                    $videoId = getYoutubeVideoId($video->linkVideo);
+                                    $thumbnail = "https://img.youtube.com/vi/{$videoId}/maxresdefault.jpg"; // Mengambil thumbnail maksimum resolusi
+                                    ?>
+                                
+                                    <a href="{{ route('showDetailLPVideo', ['id' => $video->id]) }}" class="list-group-item list-group-item-action">
+                                        <div class="d-flex align-items-center">
+                                            <div class="video-thumbnail rounded-start img-fluid" style="width: 80px; height: 80px;">
+                                                <img src="{{ $thumbnail }}" alt="Thumbnail" style="width: 100%; height: auto;">
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                              <h6 class="mb-1" title="{{ $video->judulVideo }}">{{ Str::limit($video->judulVideo, 20) }}</h6>
+                                                <p class="mb-0">{{ $video->created_at->format('l, d M Y') }}</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                @endforeach
+                                
+                              </div>
+                          </div>
+                      </div>
                   </div>
               </div>
+              <!-- End of Daftar Artikel dan Video -->
           </div>
-
-      </div>
+          
+        </div>
+    </div>
   </div>
-</div>
+  
 
 
 <!----------------------------------------------------------------------------------- Modal Area -------------------------------------------------------------------------------------------->
