@@ -301,19 +301,20 @@
       @endphp
       
       @foreach($tagsV as $item)
-          @if (!in_array($item->tagsVideo, $uniqueTags))
-              <?php
-              $words = explode(",", $item->tagsVideo);
-              foreach ($words as $word) {
-                  $trimmedWord = trim($word);
-                  if (!in_array($trimmedWord, $uniqueTags)) {
-                      $uniqueTags[] = $trimmedWord;
-                      echo '<span class="fh5co_tags_all"><a href="#" class="fh5co_tagg">' . $trimmedWord . '</a></span>';
-                  }
+      @if (!in_array($item->tagsVideo, $uniqueTags))
+          <?php
+          $words = explode(",", $item->tagsVideo);
+          foreach ($words as $word) {
+              $trimmedWord = trim($word);
+              if (!in_array($trimmedWord, $uniqueTags)) {
+                  $uniqueTags[] = $trimmedWord;
+                  echo '<span class="fh5co_tags_all"><a href="' . route("TagsVideos", $trimmedWord) . '" class="fh5co_tagg">' . $trimmedWord . '</a></span>';
               }
-              ?>
-          @endif
-      @endforeach
+          }
+          ?>
+      @endif
+  @endforeach
+  
       
             <div class="fh5co_heading fh5co_heading_border_bottom pt-3 py-2 mb-4">Most Popular</div>
             <?php
@@ -380,8 +381,19 @@
           </div>
 
           <div style="flex: 1;">
-            <h5 class="card-title">{{ $komentar->user->name }}</h5>
-            <p>{{ $komentar->created_at->format('d F Y') }} | {{ $komentar->created_at->diffForHumans() }}</p>
+            <h5 class="card-title" style="display: inline-block;">
+              {{ $komentar->user->name }}
+          </h5>
+            @if($komentar->created_at->diffInDays(now()) <= 5)
+            <div style="display: inline-block; background-color: #097BED; color: white; padding: 5px; border-radius: 10px;">
+                <strong>Komentar Baru</strong>
+            </div>
+        @endif
+            <p>{{ $komentar->created_at->format('d F Y') }} | {{ $komentar->created_at->diffForHumans() }}
+              @if($komentar->updated_at)
+                  <span style="color: gray;">(Edited)</span>
+              @endif
+            </p>
             <p class="card-text" id="pesan-{{ $komentar->id }}" style="text-align: justify;">
                 {{ $komentar->pesan }}
             </p>
@@ -813,11 +825,17 @@
               })
               .then(response => response.json())
               .then(data => {
-                  const pesanElement = document.getElementById('pesan-' + komentarId);
-                  pesanElement.innerText = editedText;
-  
-                  document.getElementById('edit-pesan-' + komentarId).style.display = 'none';
-              })
+                const pesanElement = document.getElementById('pesan-' + komentarId);
+                pesanElement.innerText = editedText;
+
+                // Tampilkan keterangan edited
+                const keteranganEdited = document.createElement('span');
+                keteranganEdited.style.color = 'gray';
+                keteranganEdited.textContent = ' (Edited)';
+                pesanElement.appendChild(keteranganEdited);
+
+                document.getElementById('edit-pesan-' + komentarId).style.display = 'none';
+            })
               .catch(error => {
                   console.error(error);
               });

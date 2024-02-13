@@ -84,10 +84,11 @@ use Illuminate\Support\Facades\Route;
                 //[Pengguna] Artikel
                 Route::post('/komentarArtikel', [PenggunaController::class, 'storeKomentarArtikel'])->name('storeKomentarArtikel');
                 Route::post('/likeKomentarArtikel/{commentId}', [PenggunaController::class, 'likeKomentarArtikel'])->name('likeKomentarArtikel');
-                Route::get('/deleteKomentarArtikel/{id}', [PenggunaController::class, 'deleteKomentarArtikel'])->name('deleteKomentarArtikel');     
+                Route::get('/deleteKomentarArtikel/{id}', [PenggunaController::class, 'deleteKomentarArtikel'])->name('deleteKomentarArtikel'); 
+                Route::post('/simpanEditKomentarArtikel/{id}/{user_id}', [PenggunaController::class, 'simpanEditKomentarArtikel'])->name('simpanEditKomentarArtikel'); 
+
                 Route::post('/submit/report', [PenggunaController::class, 'storeLaporanArtikel'])->name('storeLaporanArtikel');
                 Route::post('/submit/reportKomentar', [PenggunaController::class, 'storeLaporanKomentarArtikel'])->name('storeLaporanKomentarArtikel');
-                Route::post('/simpanEditKomentarArtikel/{id}/{user_id}', [PenggunaController::class, 'simpanEditKomentarArtikel'])->name('simpanEditKomentarArtikel');
 
                 Route::get('/simpanArtikelView', [PenggunaController::class, 'simpanArtikelView'])->name('simpan.artikelView');
                 Route::post('/simpanArtikelData/{id}', [PenggunaController::class, 'simpanArtikelData'])->name('simpan.artikelData');
@@ -99,7 +100,9 @@ use Illuminate\Support\Facades\Route;
                 });
 
                 Route::get('/detailProfilPenulisArtikel/{id}', [PenggunaController::class, 'detailProfilPenulisArtikel'])->name('detailProfilPenulisArtikel');
-                             
+
+                Route::get('/search/tags', [PenggunaController::class, 'searchTags'])->name('search.tags');
+                Route::get('/TagsArtikel/{tag}', [PenggunaController::class, 'TagsArtikel'])->name('TagsArtikel');          
 
                 //[Pengguna] Video
                 Route::get('/Video',[PenggunaController::class,'Video'])->name('Video');
@@ -130,6 +133,9 @@ use Illuminate\Support\Facades\Route;
                 Route::post('/simpanEditUlasan/{id}', [PenggunaController::class, 'simpanEditUlasan'])->name('simpanEditUlasan');
 
                 Route::get('/detailProfilVideo/{id}', [PenggunaController::class, 'detailProfilVideo'])->name('detailProfilVideo');
+
+                Route::get('/search/videos', [PenggunaController::class, 'searchVideos'])->name('search.videos');
+                Route::get('/TagsVideos/{tag}', [PenggunaController::class, 'TagsVideos'])->name('TagsVideos');                        
                 });
                 
                 

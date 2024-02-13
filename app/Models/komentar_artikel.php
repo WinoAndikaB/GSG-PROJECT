@@ -10,6 +10,8 @@ class komentar_artikel extends Model
         'pesan',
         'user_id',
         'artikel_id',
+        'created_at',
+        'updated_at',
     ];
 
     // Relasi ke pengguna

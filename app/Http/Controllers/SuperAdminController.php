@@ -11,6 +11,7 @@ use App\Models\syaratdanketentuans;
 use App\Models\ulasans;
 use App\Models\user;
 use App\Models\video;
+use App\Models\Follower;
 use App\Models\kategori;
 use App\Models\laporanArtikelUser;
 use App\Models\LaporanKomentarArtikel;
@@ -746,26 +747,34 @@ function deleteKategoriSA($id){
     function penggunaSA(Request $request){
         $role = $request->input('role');
         $searchQuery = $request->input('search');
-
-        $users = User::orderBy('created_at', 'desc');
-
+    
+        $usersQuery = User::orderBy('created_at', 'desc');
+    
         // If there's a role filter, add a where clause
         if (!empty($role)) {
-            $users->where('role', $role);
+            $usersQuery->where('role', $role);
         }
-
+    
         // If there's a search query, add a where clause to match username or email
         if (!empty($searchQuery)) {
-            $users->where(function($query) use ($searchQuery) {
+            $usersQuery->where(function($query) use ($searchQuery) {
                 $query->where('username', 'like', '%' . $searchQuery . '%')
                       ->orWhere('email', 'like', '%' . $searchQuery . '%');
                 // Add more fields as needed
             });
         }
-
-        // Fetch the users and pass them to the view
-        $users = $users->get();
-        
+    
+        // Fetch the users
+        $users = $usersQuery->get();
+    
+        // Initialize an array to store total followers for each user
+        $totalFollowers = [];
+    
+        // Iterate through each user to get their total followers
+        foreach ($users as $user) {
+            $totalFollowers[$user->id] = Follower::where('user_id', $user->id)->count();
+        }
+    
          // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
          $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
          $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
@@ -777,10 +786,11 @@ function deleteKategoriSA($id){
  
          $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
          $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         
-         return view('SuperAdmin.penggunaSA', compact('users', 'dataBaruUlasan', 'dataBaruUser', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 
-         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo'));
-    } 
+
+    
+        return view('SuperAdmin.penggunaSA', compact('users', 'totalFollowers', 'dataBaruUlasan', 'dataBaruUser', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 
+            'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo'));
+    }
     
     public function freezePengguna(Request $request)
     {

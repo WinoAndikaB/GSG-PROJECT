@@ -365,6 +365,7 @@
                           <thead>
                             <tr>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Followers</th>
                               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pengguna</th>
                               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Alamat</th>
                               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Instagram</th>
@@ -385,6 +386,9 @@
                               <td class="align-middle text-center">
                                 <p class="text-xs font-weight-bold mb-0">{{$user['id']}}</p>
                               </td>
+                              <td class="align-middle text-center">
+                                <p class="text-xs font-weight-bold mb-0"><strong>{{ isset($totalFollowers[$user->id]) ? $totalFollowers[$user->id] : 0 }}</strong></p>
+                            </td>
                               <td>
                                 <div class="d-flex px-2 py-1">
                                   <div>

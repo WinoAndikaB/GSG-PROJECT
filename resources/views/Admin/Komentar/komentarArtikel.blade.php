@@ -283,7 +283,8 @@
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User ID</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama User</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pesan</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Buat</th>
                                 <th class="text-secondary opacity-7"></th>
                               </tr>
                             </thead>
@@ -317,6 +318,15 @@
                                 <td class="align-middle text-center">
                                   <p class="text-xs font-weight-bold mb-0">{{$item['pesan']}}</p>
                                 </td>
+                                <td class="align-middle text-center">
+                                  <p class="text-xs font-weight-bold mb-0">
+                                      @if($item->updated_at)
+                                          <strong>Komentar Diedit<strong>
+                                      @else
+                                          <strong>Komentar Ditambahkan<strong>
+                                      @endif
+                                  </p>
+                              </td>                              
                                 <td class="align-middle text-center">
                                   <span class="badge badge-sm bg-gradient-success">{{ \Carbon\Carbon::parse($item['created_at'])->locale('id')->translatedFormat('l, d F Y H:i:s')  }}</span>
                                 </td>

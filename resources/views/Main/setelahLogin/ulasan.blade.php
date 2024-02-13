@@ -371,73 +371,64 @@
               @endfor
             </span>
             <span>
-              @php
-                $ulasanCreatedAt = \Carbon\Carbon::parse($item['created_at']);
-                $sekarang = \Carbon\Carbon::now();
-                $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
-                
-                if ($selisihWaktu < 60) {
-                  echo $selisihWaktu . ' Menit yang lalu';
-                } elseif ($selisihWaktu < 1440) {
-                  echo floor($selisihWaktu / 60) . ' Jam yang lalu';
-                } elseif ($selisihWaktu < 10080) {
-                  echo floor($selisihWaktu / 1440) . ' Hari yang lalu';
-                } elseif ($selisihWaktu < 43200) {
-                  echo floor($selisihWaktu / 10080) . ' Minggu yang lalu';
-                } else {
-                  $yearsAgo = floor($selisihWaktu / 525600); // 525600 menit dalam setahun
-                  echo $yearsAgo . ' Tahun yang lalu';
-                }
-              @endphp
+                  {{$item->created_at->diffForHumans()}}
+
+                  @if($item->updated_at)
+                  <span style="color: gray;">(Edited)</span>
+              @endif
             </span>
             
             <!-- ID "pesan-{{ $item->id }}" digunakan untuk menggantikan pesan di tempat -->
-            <p id="pesan-{{ $item->id }}">“{{ $item->pesan }}”</p>
+            <p id="pesan-{{ $item->id }}">{{ $item->pesan }}</p>
 
             <div style="text-align: right;">
-              @if ($item->user_id == auth()->user()->id)
-                  <a href="#" id="edit-{{ $item->id }}" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
-                      <i class="fas fa-edit" style="font-size: 20px;"></i>
+              @if(Auth::check() && Auth::user()->id == $item->user_id)    
+                  <a href="#" class="edit-button" data-id="{{ $item->id }}" data-user-id="{{ $item->user_id }}" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
+                      <i class="fas fa-edit" style="font-size: 20px;"></i> Edit
                   </a>
-              @endif
-          </div>
+              @endif 
+            </div>
           
           </div>
         
 
           <br>
-          <div id="edit-pesan-{{ $item->id }}" style="display: none; width: 138%; text-align: right;">
-              <textarea id="edit-pesan-text-{{ $item->id }}" style="width: 100%;">{{ $item->pesan }}</textarea>
-              <button id="simpan-edit-{{ $item->id }}" style="background: none; border: none; cursor: pointer;">
-                  <i class="fas fa-save"></i>
-              </button>
-              <button id="tutup-edit-{{ $item->id }}" style="background: none; border: none; cursor: pointer;">
-                  <i class="fas fa-times"></i>
-              </button>
-          </div>    
+        
+        <div id="edit-pesan-{{ $item->id }}" style="display: none; width: 100%; text-align: right;">
+            <textarea id="edit-pesan-text-{{ $item->id }}" style="width: 100%;">{{ $item->pesan }}</textarea>
+            <button class="simpan-edit-button" data-id="{{ $item->id }}" data-user-id="{{ $item->user_id }}" style="background: none; border: none; cursor: pointer;">
+                <i class="fas fa-save"></i> Simpan
+            </button>                               
+            
+            <button class="tutup-edit-button" data-id="{{ $item->id }}" style="background: none; border: none; cursor: pointer;">
+                <i class="fas fa-times"></i> Tutup
+            </button>
+        </div>
 
         <div class="" style="max-width: 730px; margin-bottom: 10px;">
         <div style="flex: 1;">
           <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px;">
               <div style="display: flex; align-items: center;">
 
-                <a id="likeButton" href="{{ route('likeUlasan', ['id' => $item->id]) }}" style="text-decoration: none; color: #333; display: inline-block; padding: 8px 15px; border: 2px solid #4CAF50; border-radius: 20px; background-color: #fff; transition: all 0.3s ease; margin-right: 10px;">
+                <button id="likeButton{{ $item->id }}" class="likeButton" data-id="{{ $item->id }}" style="text-decoration: none; color: #333; display: inline-block; padding: 8px 15px; border: 2px solid #4CAF50; border-radius: 20px; background-color: #fff; transition: all 0.3s ease; margin-right: 10px;">
                   @if (Auth::check() && $item->userHasLiked(Auth::user()))
                       <i class="fa fa-thumbs-up" style="color: #4CAF50; margin-right: 5px;"></i>
                   @else
-                      <i class="fa-regular fa-thumbs-down" style="color: #4CAF50; margin-right: 5px;"></i>
+                      <i class="fa-regular fa-thumbs-up" style="color: #4CAF50; margin-right: 5px;"></i>
                   @endif
                   <span id="likeCount" style="font-size: medium; margin-left: 5px;">{{ $item->likes->count() }} likes</span>
-              </a>
+              </button>
               
-              <a id="dislikeButton" href="{{ route('dislikeUlasan', ['id' => $item->id]) }}" style="text-decoration: none; color: #333; display: inline-block; padding: 8px 15px; border: 2px solid #FF0000; border-radius: 20px; background-color: #fff; transition: all 0.3s ease; margin-right: 10px;">
+              <button id="dislikeButton{{ $item->id }}" class="dislikeButton" data-id="{{ $item->id }}" style="text-decoration: none; color: #333; display: inline-block; padding: 8px 15px; border: 2px solid #FF0000; border-radius: 20px; background-color: #fff; transition: all 0.3s ease; margin-right: 10px;">
                   @if (Auth::check() && $item->userHasDisliked(Auth::user()))
-                      <i class="fa fa-thumbs-up" style="color: #FF0000; margin-right: 5px;"></i>
+                      <i class="fa fa-thumbs-down" style="color: #FF0000; margin-right: 5px;"></i>
                   @else
                       <i class="fa-regular fa-thumbs-down" style="color: #FF0000; margin-right: 5px;"></i>
                   @endif
                   <span id="dislikeCount" style="font-size: medium; margin-left: 5px;">{{ $item->dislikes->count() }} Dislike</span>
-              </a>
+              </button>
+              
+              
               
               
               
@@ -472,50 +463,77 @@
 <!--------------------------------------------------------------------------------------- Javascript Edit ------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------------- Javascript Edit ------------------------------------------------------------------------------->
 
-  <script>
-    @foreach ($data1 as $item)
-      document.getElementById('edit-{{ $item->id }}').addEventListener('click', function (e) {
-        e.preventDefault();
-        // Tampilkan textarea untuk mengedit pesan
-        document.getElementById('edit-pesan-{{ $item->id }}').style.display = 'block';
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      const editButtons = document.querySelectorAll('.edit-button');
+      
+      editButtons.forEach(button => {
+          button.addEventListener('click', function (e) {
+              e.preventDefault();
+              const komentarId = this.getAttribute('data-id');
+              const userId = this.getAttribute('data-user-id');
+              const editPesanDiv = document.getElementById('edit-pesan-' + komentarId);
+              editPesanDiv.style.display = 'block';
+          });
       });
-    
-      document.getElementById('simpan-edit-{{ $item->id }}').addEventListener('click', function (e) {
-        e.preventDefault();
-        const editedText = document.getElementById('edit-pesan-text-{{ $item->id }}').value;
-        
-        // Kirim data yang telah diedit ke server menggunakan AJAX
-        fetch("{{ route('simpanEditUlasan', ['id' => $item->id]) }}", {
-          method: "POST",
-          body: JSON.stringify({ pesan: editedText }),
-          headers: {
-            "X-CSRF-TOKEN": "{{ csrf_token() }}",
-            "Content-Type": "application/json"
-          }
-        })
-        .then(response => response.json())
-        .then(data => {
-          // Gantilah pesan lama dengan pesan yang telah diperbarui
-          const pesanElement = document.getElementById('pesan-{{ $item->id }}');
-          pesanElement.innerText = '“' + editedText + '”';
-  
-          // Sembunyikan textarea dan tombol Simpan setelah berhasil
-          document.getElementById('edit-pesan-{{ $item->id }}').style.display = 'none';
-        })
-        .catch(error => {
-          // Tangani kesalahan jika ada
-          console.error(error);
-        });
-      });
+      
+      // Tambahkan event listener untuk tombol simpan edit
+      const simpanEditButtons = document.querySelectorAll('.simpan-edit-button');
+      
+      simpanEditButtons.forEach(button => {
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+            const komentarId = this.getAttribute('data-id');
+            const editedText = document.getElementById('edit-pesan-text-' + komentarId).value;
 
-      // Event listener untuk tombol tutup
-      document.getElementById('tutup-edit-{{ $item->id }}').addEventListener('click', function (e) {
-        e.preventDefault();
-        // Sembunyikan textarea dan tombol Simpan
-        document.getElementById('edit-pesan-{{ $item->id }}').style.display = 'none';
+            // Menggunakan fetch untuk mengirim permintaan POST ke server
+            fetch("{{ url('/simpanEditUlasan') }}/" + komentarId, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: JSON.stringify({ pesan: editedText })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Gagal menyimpan perubahan');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const pesanElement = document.getElementById('pesan-' + komentarId);
+                pesanElement.innerText = editedText;
+
+                // Tampilkan keterangan edited
+                const keteranganEdited = document.createElement('span');
+                keteranganEdited.style.color = 'gray';
+                keteranganEdited.textContent = ' (Edited)';
+                pesanElement.appendChild(keteranganEdited);
+
+                // Sembunyikan area edit setelah disimpan
+                document.getElementById('edit-pesan-' + komentarId).style.display = 'none';
+            })
+              .catch(error => {
+                  console.error(error);
+              });
+          });
       });
-    @endforeach
-</script>
+      
+      // Tambahkan event listener untuk tombol tutup edit
+      const tutupEditButtons = document.querySelectorAll('.tutup-edit-button');
+      
+      tutupEditButtons.forEach(button => {
+          button.addEventListener('click', function (e) {
+              e.preventDefault();
+              const komentarId = this.getAttribute('data-id');
+              document.getElementById('edit-pesan-' + komentarId).style.display = 'none';
+          });
+      });
+  });
+  
+    </script>
+    
 
 <!--------------------------------------------------------------------------------------- Javascript Rating ------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------------- Javascript Rating ------------------------------------------------------------------------------->
@@ -572,6 +590,86 @@
 
 <!--------------------------------------------------------------------------------------- Javascript Like & Dislike ------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------------- Javascript Like & Dislike  ------------------------------------------------------------------------------->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+      // Handle like button click
+      $('.likeButton').click(function() {
+          var itemId = $(this).data('id');
+          var button = $(this);
+          var likeCountElement = button.closest('.ulasan').find('.likeCount');
+          var dislikeCountElement = button.closest('.ulasan').find('.dislikeCount');
+          
+          var likeCount = parseInt(likeCountElement.text().split(' ')[0]);
+          var dislikeCount = parseInt(dislikeCountElement.text().split(' ')[0]);
+
+          // Jika jumlah like awalnya 1, maka tambahkan 1 lagi
+          if (likeCount === 1) {
+              likeCount += 1;
+          } else {
+              likeCount += 1;
+              dislikeCount = 0;
+          }
+
+          likeCountElement.text(likeCount + ' Likes');
+          dislikeCountElement.text(dislikeCount + ' Dislikes');
+
+          button.find('i').removeClass('fa-regular fa-thumbs-down').addClass('fa fa-thumbs-up');
+          button.closest('.ulasan').find('.dislikeButton').find('i').removeClass('fa fa-thumbs-down').addClass('fa-regular');
+
+          $.ajax({
+              type: 'GET',
+              url: '/likeUlasan/' + itemId,
+              success: function(response) {
+                  if (response.status !== 'success') {
+                      console.error('Failed to like ulasan');
+                  }
+              },
+              error: function(xhr, status, error) {
+                  console.error('Failed to like ulasan:', error);
+              }
+          });
+      });
+
+      // Handle dislike button click
+      $('.dislikeButton').click(function() {
+          var itemId = $(this).data('id');
+          var button = $(this);
+          var likeCountElement = button.closest('.ulasan').find('.likeCount');
+          var dislikeCountElement = button.closest('.ulasan').find('.dislikeCount');
+
+          var likeCount = parseInt(likeCountElement.text().split(' ')[0]);
+          var dislikeCount = parseInt(dislikeCountElement.text().split(' ')[0]);
+
+          dislikeCount += 1;
+          likeCount = 0;
+
+          dislikeCountElement.text(dislikeCount + ' Dislikes');
+          likeCountElement.text(likeCount + ' Likes');
+
+          button.find('i').removeClass('fa-regular fa-thumbs-up').addClass('fa fa-thumbs-down');
+          button.closest('.ulasan').find('.likeButton').find('i').removeClass('fa fa-thumbs-up').addClass('fa-regular');
+
+          $.ajax({
+              type: 'GET',
+              url: '/dislikeUlasan/' + itemId,
+              success: function(response) {
+                  if (response.status !== 'success') {
+                      console.error('Failed to dislike ulasan');
+                  }
+              },
+              error: function(xhr, status, error) {
+                  console.error('Failed to dislike ulasan:', error);
+              }
+          });
+      });
+  });
+</script>
+
+
+
 
 
 

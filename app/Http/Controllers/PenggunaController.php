@@ -24,6 +24,7 @@ use App\Models\LaporanVideoUser;
 use Illuminate\Http\Request;
 use App\Models\kategori;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class PenggunaController extends Controller
 {
@@ -116,9 +117,15 @@ class PenggunaController extends Controller
     
         $kategori = artikels::inRandomOrder()->take(10)->get();
     
-        $komentarArtikels = komentar_artikel::where('artikel_id', $id)->latest()->paginate(6);
+        // Menyiapkan data komentar, menyaring yang lebih muda dari 5 hari
+        $komentarArtikels = komentar_artikel::where('artikel_id', $id)
+                            ->where('created_at', '>=', Carbon::now()->subDays(5))
+                            ->latest()
+                            ->paginate(6);
     
-        $totalKomentarArtikels = komentar_artikel::where('artikel_id', $id)->count();
+        $totalKomentarArtikels = komentar_artikel::where('artikel_id', $id)
+                                    ->where('created_at', '>=', Carbon::now()->subDays(5))
+                                    ->count();
     
         // Retrieve the latest comment (if any) associated with the article
         $komentar = komentar_artikel::where('artikel_id', $id)->latest()->first();
@@ -144,7 +151,7 @@ class PenggunaController extends Controller
     
         return view('main.setelahLogin.detailArt', compact('kategoriLogA', 'article', 'box', 'tags', 'kategori', 'komentarArtikels', 'totalKomentarArtikels', 'komentar', 'fotoProfil', 'isFollowing', 'user', 'totalFollowers'));
     }
-
+    
     public function detailProfilPenulisArtikel($id)
     {
         $profilPenulis = artikels::findOrFail($id);
@@ -257,14 +264,20 @@ class PenggunaController extends Controller
         $request->validate([
             'pesan' => 'required',
         ]);
-
-            // Simpan komentar ke dalam basis data
-            $artikel = artikels::find($request->input('artikel_id'));
-            $artikel->komentarArtikel()->create([
-                'pesan' => $request->input('pesan'),
-                'user_id' => auth()->id(),
-            ]);
-
+    
+        // Simpan komentar ke dalam basis data
+        $artikel = artikels::find($request->input('artikel_id'));
+        $komentar = new komentar_artikel([
+            'pesan' => $request->input('pesan'),
+            'user_id' => auth()->id(),
+            'created_at' => Carbon::now(), // Tambahkan waktu pembuatan
+        ]);
+        $artikel->komentarArtikel()->save($komentar);
+    
+        // Kosongkan waktu pembaruan
+        $komentar->updated_at = null;
+        $komentar->save();
+    
         // Redirect atau tampilkan pesan sukses
         return redirect()->back();
     }
@@ -292,6 +305,31 @@ class PenggunaController extends Controller
         // Save the data to the database
         $laporan->save();
     
+        // Return a success response
+        return response()->json(['success' => 'Laporan berhasil dikirim'], 200);
+    }
+
+    public function storeLaporanArtikel(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'user_id' => 'required',
+            'artikel_id' => 'required',
+            'laporan' => 'required',
+            'alasan' => 'required',
+        ]);
+        
+        // Create a new instance of LaporanArtikelUser
+        $laporan = new LaporanArtikelUser([
+            'user_id' => $request->user_id,
+            'artikel_id' => $request->artikel_id,
+            'laporan' => $request->laporan,
+            'alasan' => $request->alasan,
+        ]);
+        
+        // Save the data to the database
+        $laporan->save();
+        
         // Return a success response
         return response()->json(['success' => 'Laporan berhasil dikirim'], 200);
     }
@@ -346,16 +384,75 @@ class PenggunaController extends Controller
             if (!$komentar) {
                 return response()->json(['error' => 'Komentar tidak ditemukan'], 404);
             }
-    
+        
             if ($request->user()->id !== $komentar->user_id) {
                 return response()->json(['error' => 'Anda tidak memiliki izin untuk mengedit komentar ini'], 403);
             }
-    
+        
             $komentar->pesan = $request->input('pesan');
+            // Tambahkan keterangan "Edited" jika data telah diubah
+            $komentar->updated_at = now();
             $komentar->save();
-    
+        
             return response()->json(['message' => 'Pesan komentar berhasil diperbarui']);
         }
+
+
+        public function TagsArtikel($tagName)
+        {
+            // Cari artikel berdasarkan tag
+            $artikels = artikels::where('tags', 'like', '%' . $tagName . '%')->get();
+        
+            if ($artikels->isEmpty()) {
+                abort(404);
+            }
+        
+            // Ambil semua tag dari artikel-artikel yang ditemukan
+            $tags = [];
+            foreach ($artikels as $artikel) {
+                $artikelTags = explode(',', $artikel->tags);
+                $tags = array_merge($tags, $artikelTags);
+            }
+            $tags = array_unique($tags);
+            
+            $existingTags = artikels::select('tags')->distinct()->get();
+        
+            // Kirim data artikel, tag name, dan tags ke view
+            return view('main.setelahLogin.tagsArtikel', compact('artikels', 'tagName', 'tags' , 'existingTags'));
+        }
+        
+
+        public function searchTags(Request $request)
+        {
+            // Ambil nilai pencarian dari input pengguna
+            $search = $request->input('search');
+        
+            // Ambil daftar tag yang sudah ada dari basis data
+            $existingTags = artikels::select('tags')->distinct()->get();
+        
+            // Cari artikel berdasarkan tag
+            $artikels = artikels::where('tags', 'like', '%' . $search . '%')->get();
+        
+            if ($artikels->isEmpty()) {
+                abort(404);
+            }
+        
+            // Set variabel $tagName dengan nilai pencarian
+            $tagName = $search;
+        
+            // Ambil semua tag dari artikel-artikel yang ditemukan
+            $tags = [];
+            foreach ($artikels as $artikel) {
+                $artikelTags = explode(',', $artikel->tags);
+                $tags = array_merge($tags, $artikelTags);
+            }
+            $tags = array_unique($tags);
+        
+            // Kirim data artikel, tag name, tags yang sudah ada ke view
+            return view('main.setelahLogin.tagsArtikel', compact('artikels', 'tagName', 'tags', 'existingTags'));
+        }
+        
+        
 
 //----------------------------------------------------------------------------------------------------------- Video Area ---------------------------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------Video Area ---------------------------------------------------------------------------------------------------------------------------------------
@@ -488,14 +585,19 @@ class PenggunaController extends Controller
         $komentar = new komentar_video([
             'pesan' => $request->input('pesan'),
             'user_id' => auth()->id(),
+            'created_at' => Carbon::now(), // Tambahkan waktu pembuatan
         ]);
     
         $video->komentarVideo()->save($komentar);
     
+        // Kosongkan waktu pembaruan
+        $komentar->updated_at = null;
+        $komentar->save();
+    
         // Redirect atau tampilkan pesan sukses
         return redirect()->back();
     }
-
+    
     public function storeLaporanVideo(Request $request)
     {
         // Validasi data yang diterima dari form
@@ -505,17 +607,20 @@ class PenggunaController extends Controller
             'laporan' => 'required',
             'alasan' => 'required',
         ]);
-
+    
         // Simpan data laporan ke dalam database
         $laporan = new LaporanVideoUser([
             'user_id' => $request->user_id,
             'video_id' => $request->video_id,
             'laporan' => $request->laporan,
             'alasan' => $request->alasan,
+            'created_at' => Carbon::now(), // Tambahkan waktu pembuatan
         ]);
-
+    
+        // Kosongkan waktu pembaruan
+        $laporan->updated_at = null;
         $laporan->save();
-
+    
         return response()->json(['message' => 'Laporan telah berhasil disimpan.']);
     }
 
@@ -626,6 +731,44 @@ class PenggunaController extends Controller
             
                 return view('main.setelahLogin.profileUploaderVideo', compact('profilPenulis', 'isFollowing', 'user', 'totalFollowers','fotoProfil','TotalArtikelId','TotalVideoId','semuaArtikel','semuaVideo'));
             }
+
+            public function searchVideos(Request $request)
+            {
+                // Ambil nilai pencarian dari input pengguna
+                $search = $request->input('search');
+            
+                // Ambil daftar tag yang sudah ada dari basis data
+                $existingTags = Video::select('tagsVideo')->distinct()->get();
+            
+                // Cari video berdasarkan tag
+                $videos = Video::where('tagsVideo', 'like', '%' . $search . '%')->get();
+            
+                if ($videos->isEmpty()) {
+                    abort(404);
+                }
+            
+                // Set variabel $tagName dengan nilai pencarian
+                $tagName = $search;
+            
+                // Kirim data video, tag name, tags yang sudah ada ke view
+                return view('main.setelahLogin.tagsVideo', compact('videos', 'tagName', 'existingTags'));
+            }
+            
+            public function TagsVideos($tagName)
+            {
+                // Cari video berdasarkan tag
+                $videos = Video::where('tagsVideo', 'like', '%' . $tagName . '%')->get();
+            
+                if ($videos->isEmpty()) {
+                    abort(404);
+                }
+            
+                // Ambil daftar tag yang sudah ada dari basis data
+                $existingTags = Video::select('tagsVideo')->distinct()->get();
+            
+                // Kirim data video, tag name, tags yang sudah ada ke view
+                return view('main.setelahLogin.tagsVideo', compact('videos', 'tagName', 'existingTags'));
+            }
         
         
         
@@ -719,24 +862,25 @@ function ulasan(Request $request){
             'nama' => 'required',
             'pesan' => 'required',
         ]);
-
+    
         $ulasan = new Ulasans;
         $ulasan->rating = $request->rating;
         $ulasan->email = $request->email;
         $ulasan->nama = $request->nama;
         $ulasan->pesan = $request->pesan;
-
-         // Mengisi user_id dari pengguna yang sedang masuk
+    
+        // Mengisi user_id dari pengguna yang sedang masuk
         $ulasan->user_id = Auth::id();
-
+    
         // Sisipkan foto profil pengguna
         $user = Auth::user();
         $ulasan->fotoProfil = $user->fotoProfil;
-
+        $ulasan->updated_at = null;
         $ulasan->save();
-
-        return redirect('ulasan');
+    
+        return response()->json(['success' => true]);
     }
+    
 
     //[User-Ulasan] Edit Ulasan
     public function simpanEditUlasan(Request $request, $id) {

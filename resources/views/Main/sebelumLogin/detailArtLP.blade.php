@@ -302,12 +302,19 @@
       <br>
       @foreach ($detailArtikelLP as $komentar)
       <div class="card" style="max-width: 730px; margin-bottom: 10px;">
-          <div class="card-body" style="display: flex;">
-              <div class="profil-foto" style="margin-right: 10px;">
-                  <img src="{{ asset('fotoProfil/' . $user->fotoProfil) }}" alt="Foto Profil" style="border-radius: 50%; width: 50px; height: 50px;">
-              </div>
-              <div style="flex: 1;">
-                  <h5 class="card-title">{{ $komentar->user->name }}</h5>
+        <div class="card-body" style="display: flex;">
+            <div class="profil-foto" style="margin-right: 10px;">
+                <img src="{{ asset('fotoProfil/' . $komentar->user->fotoProfil) }}" alt="Foto Profil" style="border-radius: 50%; width: 50px; height: 50px;">
+            </div>
+            <div style="flex: 1;">
+                <h5 class="card-title" style="display: inline-block;">
+                    {{ $komentar->user->name }}
+                </h5>
+                @if($komentar->created_at->diffInDays(now()) <= 5)
+                <div style="display: inline-block; background-color: #097BED; color: white; padding: 5px; border-radius: 5px; font-size: smaller;">
+                  <strong>Komentar Baru</strong>
+              </div>                
+            @endif
                   <p>{{ $komentar->created_at->format('d F Y') }} | {{ $komentar->created_at->diffForHumans() }}</p>
                   <p class="card-text" style="text-align: justify;">
                       {{ $komentar->pesan }}

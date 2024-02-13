@@ -340,13 +340,15 @@
                     $trimmedWord = trim($word);
                     if (!in_array($trimmedWord, $uniqueTags)) {
                         $uniqueTags[] = $trimmedWord;
-                        echo '<a href="#" class="fh5co_tagg">' . $trimmedWord . '</a>';
+                        // Tautan tag ke rute 'TagsArtikel'
+                        echo '<a href="' . route("TagsArtikel", $trimmedWord) . '" class="fh5co_tagg">' . $trimmedWord . '</a>';
                         echo ' ';
                     }
                 }
                 ?>
             @endforeach
         </span>
+
         
         
         
@@ -388,20 +390,31 @@
   </form>
   
       <br>
-      @foreach ($komentarArtikels as $komentar)
+      @foreach($komentarArtikels as $komentar)
       <div class="card" style="max-width: 730px; margin-bottom: 10px;">
           <div class="card-body" style="display: flex;">
               <div class="profil-foto" style="margin-right: 10px;">
                   <img src="{{ asset('fotoProfil/' . $komentar->user->fotoProfil) }}" alt="Foto Profil" style="border-radius: 50%; width: 50px; height: 50px;">
               </div>
-
               <div style="flex: 1;">
-                <h5 class="card-title">{{ $komentar->user->name }}</h5>
-                <p>{{ $komentar->created_at->format('d F Y') }} | {{ $komentar->created_at->diffForHumans() }}</p>
-                <p class="card-text" id="pesan-{{ $komentar->id }}" style="text-align: justify;">
-                  {{ $komentar->pesan }}
-              </p>
-
+                  <h5 class="card-title" style="display: inline-block;">
+                      {{ $komentar->user->name }}
+                  </h5>
+                  @if($komentar->created_at->diffInDays(now()) <= 5)
+                  <div style="display: inline-block; background-color: #097BED; color: white; padding: 5px; border-radius: px; font-size: smaller;">
+                    <strong>Komentar Baru</strong>
+                </div>                
+              @endif
+                
+                  <p>
+                      {{ $komentar->created_at->format('d F Y') }} | {{ $komentar->created_at->diffForHumans() }}
+                      @if($komentar->updated_at)
+                          <span style="color: gray;">(Edited)</span>
+                      @endif
+                  </p>
+                  <p class="card-text" id="pesan-{{ $komentar->id }}" style="text-align: justify;">
+                      {{ $komentar->pesan }}
+                  </p>
                 <div id="edit-pesan-{{ $komentar->id }}" style="display: none; width: 100%; text-align: right;">
                   <textarea id="edit-pesan-text-{{ $komentar->id }}" style="width: 100%;">{{ $komentar->pesan }}</textarea>
                   <button class="simpan-edit-button" data-id="{{ $komentar->id }}" data-user-id="{{ $komentar->user_id }}" style="background: none; border: none; cursor: pointer;">
@@ -513,12 +526,12 @@
 <!-------------------------------------------------------------------------------------- Modal Area ------------------------------------------------------------------------------------------------------->
   
     <!-- Modal Laporan Artikel -->
-      <div id="modalLaporan" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1;">
-        <div style="background-color: #ffffff; border-radius: 10px; text-align: center; padding: 20px; width: 600px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
+    <div id="modalLaporan" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1;">
+      <div style="background-color: #ffffff; border-radius: 10px; text-align: center; padding: 20px; width: 600px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
           <span style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 20px;" id="closeLaporan">&times;</span>
           <h2 style="color: #007bff; font-size: 24px;">Laporkan Artikel</h2>
           <form id="reportForm">
-            <div style="text-align: left;">
+              <div style="text-align: left;">
               <label style="font-size: 16px;"><input type="radio" name="reason" value="Konten Seksual"> Konten Seksual</label><br>
               <label style="font-size: 16px;"><input type="radio" name="reason" value="Konten kekerasan atau menjijikkan"> Konten kekerasan atau menjijikkan</label><br>
               <label style="font-size: 16px;"><input type="radio" name="reason" value="Konten kebencian atau pelecehan"> Konten kebencian atau pelecehan</label><br>
@@ -533,12 +546,12 @@
             </div><br>
             <textarea id="reportTextLaporan" style="width: 100%; padding: 10px; font-size: 16px;" placeholder="Kenapa Anda melaporkan artikel ini?"></textarea><br>
             <button type="submit" class="submit-buttonLaporan" style="background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; padding: 10px 20px; font-size: 18px;">Kirim Laporan</button>
-          </form>
-          <div style="text-align: left; padding: 10px;">
+        </form>
+        <div style="text-align: left; padding: 10px;">
             <p style="font-size: 14px;">Artikel dan pengguna yang dilaporkan akan ditinjau oleh staf kami untuk menentukan apakah artikel dan pengguna tersebut melanggar Pedoman kami atau tidak. Akun akan dikenai sanksi jika melanggar Pedoman Komunitas, dan pelanggaran serius atau berulang dapat berakibat pada penghentian akun.</p>
-          </div>
         </div>
-      </div>
+    </div>
+</div>
 
     <!-- Modal Lapor Komentar Artikel -->
     <div id="modalLaporKomen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1;">
@@ -798,68 +811,68 @@
 <!--------------------------------------------------------------------------------------- Javascript Laporkan Modal ------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------------- Javascript Laporkan Modal ------------------------------------------------------------------------------->
 
-    <script>
-      // Get the modal and close button elements
-      var modal = document.getElementById("modalLaporan");
-      var showModalButton = document.getElementById("showModal");
-      var closeButton = document.getElementById("closeLaporan");
-  
-      // Show the modal when the laporan-button is clicked
-      showModalButton.addEventListener("click", function(event) {
-        event.preventDefault();
-        modal.style.display = "block";
-      });
-  
-      // Close the modal when the close button is clicked
-      closeButton.addEventListener("click", function() {
-        modal.style.display = "none";
-      });
-  
-      // Close the modal when the user clicks outside of it
-      window.addEventListener("click", function(event) {
-        if (event.target == modal) {
-          modal.style.display = "none";
-        }
-      });
-  
-      // Submit the form
-  document.getElementById("reportForm").addEventListener("submit", function(event) {
-    event.preventDefault();
-    
-    // Mengambil nilai yang dipilih dari radio button
-    var selectedReason = document.querySelector('input[name="reason"]:checked');
-    if (!selectedReason) {
-      alert("Pilih alasan laporan terlebih dahulu.");
-      return;
-    }
-    
-    // Mengambil alasan laporan dan artikel_id dari elemen form
-    var alasan = document.getElementById("reportTextLaporan").value;
-    var artikelId = {{ $article->id }}; // Ganti dengan nilai artikel_id yang sesuai
+<script>
+  // Get the modal and close button elements
+  var modal = document.getElementById("modalLaporan");
+  var showModalButton = document.getElementById("showModal");
+  var closeButton = document.getElementById("closeLaporan");
 
-    // Kirim data laporan ke server melalui AJAX
-    $.ajax({
-      type: "POST",
-      url: "/submit/report", // Ganti dengan URL yang sesuai
-      data: {
-        _token: "{{ csrf_token() }}",
-        user_id: {{ Auth::user()->id }}, // Ganti dengan user_id yang sesuai
-        artikel_id: artikelId,
-        laporan: selectedReason.value,
-        alasan: alasan,
-      },
-      success: function(response) {
-        // Tindakan setelah pengiriman berhasil
-        alert("Laporan telah dikirim!");
-        modal.style.display = "none"; // Tutup modal
-      },
-      error: function(error) {
-        // Tindakan jika ada kesalahan
-        alert("Terjadi kesalahan saat mengirim laporan.");
-      }
-    });
+  // Show the modal when the showModalButton is clicked
+  showModalButton.addEventListener("click", function(event) {
+      event.preventDefault();
+      modal.style.display = "block";
   });
-    </script>
+
+  // Close the modal when the close button is clicked
+  closeButton.addEventListener("click", function() {
+      modal.style.display = "none";
+  });
+
+  // Close the modal when the user clicks outside of it
+  window.addEventListener("click", function(event) {
+      if (event.target == modal) {
+          modal.style.display = "none";
+      }
+  });
+
+  // Submit the form
+  document.getElementById("reportForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      // Mengambil nilai yang dipilih dari radio button
+      var selectedReason = document.querySelector('input[name="reason"]:checked');
+      if (!selectedReason) {
+          alert("Pilih alasan laporan terlebih dahulu.");
+          return;
+      }
+
+      // Mengambil alasan laporan dari elemen form
+      var alasan = document.getElementById("reportTextLaporan").value;
+
+      // Kirim data laporan ke server melalui AJAX
+      $.ajax({
+          type: "POST",
+          url: "{{ route('storeLaporanArtikel') }}",
+          data: {
+              _token: "{{ csrf_token() }}",
+              user_id_pelapor: {{ Auth::user()->id }}, // Ganti dengan user_id yang sesuai
+              artikel_id: {{ $article->id }}, // Ganti dengan artikel_id yang sesuai
+              comment_id: 1, // Ganti dengan comment_id yang sesuai
+              laporan: selectedReason.value,
+              alasan: alasan,
+          },
+          success: function(response) {
+              // Tindakan setelah pengiriman berhasil
+              alert("Laporan telah dikirim!");
+              modal.style.display = "none"; // Tutup modal
+          },
+          error: function(error) {
+              // Tindakan jika ada kesalahan
+              alert("Terjadi kesalahan saat mengirim laporan.");
+          }
+      });
+  });
+</script>
 
 <!--------------------------------------------------------------------------------------- Javascript Logout Modal ------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------------- Javascript Logout Modal ------------------------------------------------------------------------------->
@@ -900,61 +913,69 @@
 <!--------------------------------------------------------------------------------------- Javascript Edit Komentar ------------------------------------------------------------------------------->
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-      const editButtons = document.querySelectorAll('.edit-button');
-      
-      editButtons.forEach(button => {
-          button.addEventListener('click', function (e) {
-              e.preventDefault();
-              const komentarId = this.getAttribute('data-id');
-              const userId = this.getAttribute('data-user-id');
-              const editPesanDiv = document.getElementById('edit-pesan-' + komentarId);
-              editPesanDiv.style.display = 'block';
-          });
-      });
-      
-      // Tambahkan event listener untuk tombol simpan edit
-      const simpanEditButtons = document.querySelectorAll('.simpan-edit-button');
-      
-      simpanEditButtons.forEach(button => {
-          button.addEventListener('click', function (e) {
-              e.preventDefault();
-              const komentarId = this.getAttribute('data-id');
-              const userId = this.getAttribute('data-user-id');
-              const editedText = document.getElementById('edit-pesan-text-' + komentarId).value;
-  
-              fetch("{{ url('/simpanEditKomentarArtikel') }}/" + komentarId + "/" + userId, {
-                  method: "POST",
-                  body: JSON.stringify({ pesan: editedText }),
-                  headers: {
-                      "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                      "Content-Type": "application/json"
-                  }
-              })
-              .then(response => response.json())
-              .then(data => {
-                  const pesanElement = document.getElementById('pesan-' + komentarId);
-                  pesanElement.innerText = editedText;
-  
-                  document.getElementById('edit-pesan-' + komentarId).style.display = 'none';
-              })
-              .catch(error => {
-                  console.error(error);
-              });
-          });
-      });
-      
-      // Tambahkan event listener untuk tombol tutup edit
-      const tutupEditButtons = document.querySelectorAll('.tutup-edit-button');
-      
-      tutupEditButtons.forEach(button => {
-          button.addEventListener('click', function (e) {
-              e.preventDefault();
-              const komentarId = this.getAttribute('data-id');
-              document.getElementById('edit-pesan-' + komentarId).style.display = 'none';
-          });
-      });
-  });
+document.addEventListener('DOMContentLoaded', function () {
+    const editButtons = document.querySelectorAll('.edit-button');
+    
+    editButtons.forEach(button => {
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+            const komentarId = this.getAttribute('data-id');
+            const userId = this.getAttribute('data-user-id');
+            const editPesanDiv = document.getElementById('edit-pesan-' + komentarId);
+            editPesanDiv.style.display = 'block';
+        });
+    });
+    
+    // Tambahkan event listener untuk tombol simpan edit
+    const simpanEditButtons = document.querySelectorAll('.simpan-edit-button');
+    
+    simpanEditButtons.forEach(button => {
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+            const komentarId = this.getAttribute('data-id');
+            const userId = this.getAttribute('data-user-id');
+            const editedText = document.getElementById('edit-pesan-text-' + komentarId).value;
+
+            // Perbarui pesan komentar dan tandai sebagai edited
+            fetch("{{ url('/simpanEditKomentarArtikel') }}/" + komentarId + "/" + userId, {
+                method: "POST",
+                body: JSON.stringify({ pesan: editedText }),
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const pesanElement = document.getElementById('pesan-' + komentarId);
+                pesanElement.innerText = editedText;
+
+                // Tampilkan keterangan edited
+                const keteranganEdited = document.createElement('span');
+                keteranganEdited.style.color = 'gray';
+                keteranganEdited.textContent = ' (Edited)';
+                pesanElement.appendChild(keteranganEdited);
+
+                document.getElementById('edit-pesan-' + komentarId).style.display = 'none';
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        });
+    });
+    
+    // Tambahkan event listener untuk tombol tutup edit
+    const tutupEditButtons = document.querySelectorAll('.tutup-edit-button');
+    
+    tutupEditButtons.forEach(button => {
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+            const komentarId = this.getAttribute('data-id');
+            document.getElementById('edit-pesan-' + komentarId).style.display = 'none';
+        });
+    });
+});
+
   </script>
   
   
@@ -962,38 +983,84 @@
 <!--------------------------------------------------------------------------------------- Javascript Like ------------------------------------------------------------------------------->
 
 <script>
-  function toggleLike(commentId) {
-      var button = document.getElementById('likeButton' + commentId);
-      var icon = document.getElementById('thumbIcon' + commentId);
-      var likeCount = document.getElementById('likeCount' + commentId);
+  $(document).ready(function() {
+      // Handle like button click
+      $('.likeButton').click(function() {
+          var itemId = $(this).data('id');
+          var button = $(this);
+          var likeCountElement = button.closest('.ulasan').find('.likeCount');
+          var dislikeCountElement = button.closest('.ulasan').find('.dislikeCount');
 
-      // Toggle class untuk mengubah ikon
-      icon.classList.toggle('fa');
-      icon.classList.toggle('fa-regular');
+          var isLiked = button.find('i').hasClass('fa-thumbs-up');
+          var isDisliked = button.closest('.ulasan').find('.dislikeButton i').hasClass('fa-thumbs-down');
 
-      // Mengambil nilai jumlah like dari teks
-      var likeText = likeCount.textContent.trim();
-      var currentLikes = parseInt(likeText.split(' ')[0]); // Ambil bagian angka dari teks
-      var newLikes = currentLikes + (icon.classList.contains('fa') ? 1 : -1); // Tambah atau kurangi like sesuai dengan perubahan ikon
-
-      // Mengupdate teks jumlah like
-      likeCount.textContent = newLikes + ' likes';
-
-      // Mengirim permintaan ke server untuk menambah atau menghapus like
-      fetch('/likeKomentarArtikel/' + commentId, {
-          method: 'POST', // POST atau DELETE sesuai dengan kebutuhan Anda
-          headers: {
-              'X-CSRF-TOKEN': '{{ csrf_token() }}'
+          // Toggle like button state
+          if (isLiked) {
+              button.find('i').removeClass('fa-thumbs-up').addClass('fa-regular');
+              likeCountElement.text(parseInt(likeCountElement.text()) - 1 + ' Likes');
+          } else {
+              button.find('i').addClass('fa-thumbs-up').removeClass('fa-regular');
+              likeCountElement.text(parseInt(likeCountElement.text()) + 1 + ' Likes');
+              if (isDisliked) {
+                  button.closest('.ulasan').find('.dislikeButton i').removeClass('fa-thumbs-down').addClass('fa-regular');
+                  dislikeCountElement.text(parseInt(dislikeCountElement.text()) - 1 + ' Dislikes');
+              }
           }
-      })
-      .then(response => {
-          if (!response.ok) {
-              throw new Error('Network response was not ok.');
+
+          $.ajax({
+              type: 'GET',
+              url: '/likeUlasan/' + itemId,
+              success: function(response) {
+                  if (response.status !== 'success') {
+                      console.error('Failed to like ulasan');
+                  }
+              },
+              error: function(xhr, status, error) {
+                  console.error('Failed to like ulasan:', error);
+              }
+          });
+      });
+
+      // Handle dislike button click
+      $('.dislikeButton').click(function() {
+          var itemId = $(this).data('id');
+          var button = $(this);
+          var likeCountElement = button.closest('.ulasan').find('.likeCount');
+          var dislikeCountElement = button.closest('.ulasan').find('.dislikeCount');
+
+          var isLiked = button.closest('.ulasan').find('.likeButton i').hasClass('fa-thumbs-up');
+          var isDisliked = button.find('i').hasClass('fa-thumbs-down');
+
+          // Toggle dislike button state
+          if (isDisliked) {
+              button.find('i').removeClass('fa-thumbs-down').addClass('fa-regular');
+              dislikeCountElement.text(parseInt(dislikeCountElement.text()) - 1 + ' Dislikes');
+          } else {
+              button.find('i').addClass('fa-thumbs-down').removeClass('fa-regular');
+              dislikeCountElement.text(parseInt(dislikeCountElement.text()) + 1 + ' Dislikes');
+              if (isLiked) {
+                  button.closest('.ulasan').find('.likeButton i').removeClass('fa-thumbs-up').addClass('fa-regular');
+                  likeCountElement.text(parseInt(likeCountElement.text()) - 1 + ' Likes');
+              }
           }
-      })
-      .catch(error => console.error('Error:', error));
-  }
+
+          $.ajax({
+              type: 'GET',
+              url: '/dislikeUlasan/' + itemId,
+              success: function(response) {
+                  if (response.status !== 'success') {
+                      console.error('Failed to dislike ulasan');
+                  }
+              },
+              error: function(xhr, status, error) {
+                  console.error('Failed to dislike ulasan:', error);
+              }
+          });
+      });
+  });
 </script>
+
+
     
   </body>
 </html>
