@@ -158,6 +158,60 @@ class LandingPageController extends Controller
     
         return view('main.sebelumLogin.profilePenulisArtikelLP', compact('profilPenulis', 'user', 'totalFollowers','fotoProfil','TotalArtikelId','TotalVideoId','semuaArtikel','semuaVideo'));
     }
+
+    public function TagsArtikelLP($tagName)
+    {
+        // Cari artikel berdasarkan tag
+        $artikels = artikels::where('tags', 'like', '%' . $tagName . '%')->get();
+    
+        if ($artikels->isEmpty()) {
+            abort(404);
+        }
+    
+        // Ambil semua tag dari artikel-artikel yang ditemukan
+        $tags = [];
+        foreach ($artikels as $artikel) {
+            $artikelTags = explode(',', $artikel->tags);
+            $tags = array_merge($tags, $artikelTags);
+        }
+        $tags = array_unique($tags);
+        
+        $existingTags = artikels::select('tags')->distinct()->get();
+    
+        // Kirim data artikel, tag name, dan tags ke view
+        return view('main.sebelumLogin.tagsArtikelLP', compact('artikels', 'tagName', 'tags' , 'existingTags'));
+    }
+    
+
+    public function searchTagsLP(Request $request)
+    {
+        // Ambil nilai pencarian dari input pengguna
+        $search = $request->input('search');
+    
+        // Ambil daftar tag yang sudah ada dari basis data
+        $existingTags = artikels::select('tags')->distinct()->get();
+    
+        // Cari artikel berdasarkan tag
+        $artikels = artikels::where('tags', 'like', '%' . $search . '%')->get();
+    
+        if ($artikels->isEmpty()) {
+            abort(404);
+        }
+    
+        // Set variabel $tagName dengan nilai pencarian
+        $tagName = $search;
+    
+        // Ambil semua tag dari artikel-artikel yang ditemukan
+        $tags = [];
+        foreach ($artikels as $artikel) {
+            $artikelTags = explode(',', $artikel->tags);
+            $tags = array_merge($tags, $artikelTags);
+        }
+        $tags = array_unique($tags);
+    
+        // Kirim data artikel, tag name, tags yang sudah ada ke view
+        return view('main.sebelumLogin.tagsArtikelLP', compact('artikels', 'tagName', 'tags', 'existingTags'));
+    }
     
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -295,6 +349,45 @@ class LandingPageController extends Controller
     
         return view('main.sebelumLogin.profileUploaderVideoLP', compact('profilPenulis', 'user', 'totalFollowers','fotoProfil','TotalArtikelId','TotalVideoId','semuaArtikel','semuaVideo'));
     }
+
+    public function searchTagsVideoLP(Request $request)
+    {
+        // Ambil nilai pencarian dari input pengguna
+        $search = $request->input('search');
+    
+        // Ambil daftar tag yang sudah ada dari basis data
+        $existingTags = Video::select('tagsVideo')->distinct()->get();
+    
+        // Cari video berdasarkan tag
+        $videos = Video::where('tagsVideo', 'like', '%' . $search . '%')->get();
+    
+        if ($videos->isEmpty()) {
+            abort(404);
+        }
+    
+        // Set variabel $tagName dengan nilai pencarian
+        $tagName = $search;
+    
+        // Kirim data video, tag name, tags yang sudah ada ke view
+        return view('main.sebelumLogin.tagsVideoLP', compact('videos', 'tagName', 'existingTags'));
+    }
+    
+    public function TagsVideosLP($tagName)
+    {
+        // Cari video berdasarkan tag
+        $videos = Video::where('tagsVideo', 'like', '%' . $tagName . '%')->get();
+    
+        if ($videos->isEmpty()) {
+            abort(404);
+        }
+    
+        // Ambil daftar tag yang sudah ada dari basis data
+        $existingTags = Video::select('tagsVideo')->distinct()->get();
+    
+        // Kirim data video, tag name, tags yang sudah ada ke view
+        return view('main.sebelumLogin.tagsVideoLP', compact('videos', 'tagName', 'existingTags'));
+    }
+
     
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

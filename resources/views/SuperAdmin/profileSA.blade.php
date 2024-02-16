@@ -202,24 +202,37 @@
           </div>
           <ul class="navbar-nav  justify-content-end">
             <li class="nav-item d-flex align-items-center">
-              <a href="/profileSA" class="nav-link text-white font-weight-bold px-0">
+              <div class="dropdown">
+                <a href="#" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdownMenuLink2">
                   <i>
-                      <?php
-                      $fotoProfil = Auth::user()->fotoProfil;
-                      if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
-                      ?>
-                      <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
-                      <?php
-                      } else {
-                      ?>
-                      <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
-                      <?php
-                      }
-                      ?>
-                  </i>
-                  <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span> |
-                  <a href="#" class="d-sm-inline d-none text-white text-bold" id="logout-link" onclick="openModal()"> Logout</a>
-              </a>
+                    <?php
+                    $fotoProfil = Auth::user()->fotoProfil;
+                    if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
+                    ?>
+                    <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
+                    <?php
+                    } else {
+                    ?>
+                    <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
+                    <?php
+                    }
+                    ?>
+                </i>
+                <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span> 
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                    <li>
+                        <a class="dropdown-item" href="/profileSA">
+                          <i class="ni ni-badge text-primary text-sm opacity-10"></i> Profil
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#" id="logout-link" onclick="openModal()">
+                          <i class="ni ni-button-power text-primary text-sm opacity-10"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+              </div>
           </li>
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
@@ -365,7 +378,7 @@
                           <div class="text-center">
                               <span style="font-size: 20px; margin-right: 10px;"><b>{{$TotalArtikelId}}</b> Artikel</span>
                               <span style="font-size: 20px; margin-right: 10px;"><b>{{$TotalVideoId}}</b> Video</span>
-                              <span style="font-size: 20px; margin-right: 10px;"><b>100</b> Followers</span>
+                              <span style="font-size: 20px; margin-right: 10px;"><b>{{$totalFollowers}}</b> Follower</span>
                           </div>
                         
                           <br>

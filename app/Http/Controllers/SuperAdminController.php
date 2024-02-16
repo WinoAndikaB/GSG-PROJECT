@@ -47,9 +47,11 @@ class SuperAdminController extends Controller
         // Menghitung total user_id yang sama dengan user auth
         $TotalArtikelId = artikels::where('user_id', $user->id)->count();
         $TotalVideoId = video::where('user_id', $user->id)->count();
+        // Hitung total pengikut (followers) berdasarkan user_id
+        $totalFollowers = Follower::where('user_id', $user->id)->count();
 
         return view('SuperAdmin.profileSA', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 
-        'dataBaruLaporanArtikel','dataBaruLaporanVideo','TotalArtikelId','TotalVideoId'));
+        'dataBaruLaporanArtikel','dataBaruLaporanVideo','TotalArtikelId','TotalVideoId','totalFollowers'));
     }  
   
     //[SuperAdmin-Profile] Edit Profil SuperAdmin

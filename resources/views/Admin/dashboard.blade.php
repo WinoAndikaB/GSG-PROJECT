@@ -206,33 +206,57 @@
         <div class="ms-md-auto pe-md-3 d-flex align-items-center">
         </div>
         <ul class="navbar-nav  justify-content-end">
-          <li class="nav-item d-flex align-items-center">
-            <a href="/profileAdmin" class="nav-link text-white font-weight-bold px-0">
-                <i>
-                    <?php
-                    $fotoProfil = Auth::user()->fotoProfil;
-                    if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
-                    ?>
-                    <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
-                    <?php
-                    } else {
-                    ?>
-                    <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
-                    <?php
-                    }
-                    ?>
-                </i>
-                <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span> |
-
-                <a href="#" class="d-sm-inline d-none text-white text-bold" id="logout-link" onclick="openModal()"> Logout</a>
-
+          <div class="dropdown">
+            <a href="#" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdownMenuLink2">
+              <i>
+                <?php
+                $fotoProfil = Auth::user()->fotoProfil;
+                if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
+                ?>
+                <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
+                <?php
+                } else {
+                ?>
+                <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
+                <?php
+                }
+                ?>
+            </i>
+            <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span> 
             </a>
-          </li>
-          </li>
-        </ul>
-      </div>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                <li>
+                    <a class="dropdown-item" href="/profileAdmin">
+                      <i class="ni ni-badge text-primary text-sm opacity-10"></i> Profil
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="#" id="logout-link" onclick="openModal()">
+                      <i class="ni ni-button-power text-primary text-sm opacity-10"></i> Logout
+                    </a>
+                </li>
+            </ul>
+          </div>
+      </li>
+        <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+          <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
+            <div class="sidenav-toggler-inner">
+              <i class="sidenav-toggler-line bg-white"></i>
+              <i class="sidenav-toggler-line bg-white"></i>
+              <i class="sidenav-toggler-line bg-white"></i>
+            </div>
+          </a>
+        </li>
+        <li class="nav-item px-3 d-flex align-items-center">
+          <a href="javascript:;" class="nav-link text-white p-0">
+            <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
+          </a>
+        </li>
+        </li>
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>
   <!-- End Navbar -->
 
   <div id="popup" class="popup">
@@ -505,6 +529,12 @@
    <script src="../assets2/js/plugins/perfect-scrollbar.min.js"></script>
    <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
    <script src="../assets2/js/plugins/chartjs.min.js"></script>
+   
+   <script>
+    $(document).ready(function() {
+        console.log("Document ready.");
+    });
+    </script>
    
    <script>
         document.addEventListener("DOMContentLoaded", function () {

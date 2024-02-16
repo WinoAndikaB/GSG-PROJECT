@@ -264,19 +264,19 @@
       @endphp
       
       @foreach($tagsV as $item)
-          @if (!in_array($item->tagsVideo, $uniqueTags))
-              <?php
-              $words = explode(",", $item->tagsVideo);
-              foreach ($words as $word) {
-                  $trimmedWord = trim($word);
-                  if (!in_array($trimmedWord, $uniqueTags)) {
-                      $uniqueTags[] = $trimmedWord;
-                      echo '<span class="fh5co_tags_all"><a href="#" class="fh5co_tagg">' . $trimmedWord . '</a></span>';
-                  }
+      @if (!in_array($item->tagsVideo, $uniqueTags))
+          <?php
+          $words = explode(",", $item->tagsVideo);
+          foreach ($words as $word) {
+              $trimmedWord = trim($word);
+              if (!in_array($trimmedWord, $uniqueTags)) {
+                  $uniqueTags[] = $trimmedWord;
+                  echo '<span class="fh5co_tags_all"><a href="' . route("TagsVideosLP", $trimmedWord) . '" class="fh5co_tagg">' . $trimmedWord . '</a></span>';
               }
-              ?>
-          @endif
-      @endforeach
+          }
+          ?>
+      @endif
+  @endforeach
 
               
             <div class="fh5co_heading fh5co_heading_border_bottom pt-3 py-2 mb-4">Most Popular</div>

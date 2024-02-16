@@ -37,6 +37,9 @@ use Illuminate\Support\Facades\Route;
                 Route::get('/detailArtikelLP/{id}', [LandingPageController::class, 'showDetailLPArtikel'])->name('showDetailLPArtikel');
                 Route::get('/detailProfilPenulisArtikelLP/{id}', [LandingPageController::class, 'detailProfilPenulisArtikelLP'])->name('detailProfilPenulisArtikelLP');
 
+                Route::get('/searchTagsLP', [LandingPageController::class, 'searchTagSLP'])->name('searchTagSLP');
+                Route::get('/TagsArtikelLP/{tag}', [LandingPageController::class, 'TagsArtikelLP'])->name('TagsArtikelLP');    
+
                 //[Non-User] Pencarian Video
                 Route::get('/searchLP', [LandingPageController::class, 'searchLP'])->name('searchLP');
 
@@ -47,6 +50,9 @@ use Illuminate\Support\Facades\Route;
                 Route::get('/landingPageVideo',[LandingPageController::class,'landingPageVideo'])->name('landingPageVideo');
                 Route::get('/detailVideoLP/{id}', [LandingPageController::class, 'showDetailLPVideo'])->name('showDetailLPVideo');
                 Route::get('/detailProfilVideoLP/{id}', [LandingPageController::class, 'detailProfilVideoLP'])->name('detailProfilVideoLP');
+
+                Route::get('/searchTagsVideoLP', [LandingPageController::class, 'searchTagsVideoLP'])->name('searchTagsVideoLP');
+                Route::get('/TagsVideosLP/{tag}', [LandingPageController::class, 'TagsVideosLP'])->name('TagsVideosLP');  
 
                 //[Non-User] Tab Kategori Landing Page
                 Route::get('/kategoriLandingPage', [LandingPageController::class, 'kategoriLandingPage'])->name('kategoriLandingPage');

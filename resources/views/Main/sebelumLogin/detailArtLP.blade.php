@@ -258,7 +258,8 @@
                     $trimmedWord = trim($word);
                     if (!in_array($trimmedWord, $uniqueTags)) {
                         $uniqueTags[] = $trimmedWord;
-                        echo '<a href="#" class="fh5co_tagg">' . $trimmedWord . '</a>';
+                        // Tautan tag ke rute 'TagsArtikel'
+                        echo '<a href="' . route("TagsArtikelLP", $trimmedWord) . '" class="fh5co_tagg">' . $trimmedWord . '</a>';
                         echo ' ';
                     }
                 }
