@@ -13,7 +13,7 @@
     <link rel="icon" type="image/png" href="{{ asset('assets2/img/lg1.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
-    <title>Detail Artikel - Katakey</title>
+    <title>Landing Page - Katakey</title>
     
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -33,8 +33,6 @@
     <link href="{{ asset('aset1/css/style_1.css') }}" rel="stylesheet" type="text/css"/>
     <!-- Modernizr JS -->
     <script src="{{ asset('aset1/js/modernizr-3.5.0.min.js') }}"></script>
-
-<title>Landing Page -  Katakey</title>
 
 <body>
 <div class="page-heading">
