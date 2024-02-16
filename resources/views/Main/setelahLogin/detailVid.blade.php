@@ -79,6 +79,27 @@
         margin: 25px;
         cursor: pointer;
       }
+
+                /* DROP DOWN AREA */
+  .dropdown:hover .dropdown-menu,
+  .dropdown:focus-within .dropdown-menu {
+      display: block;
+  }
+
+  .dropdown-menu {
+      display: none;
+}
+
+.dropdown-menu {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease; /* menambahkan transisi */
+}
+
+.dropdown-menu.show {
+    display: block;
+    opacity: 1;
+}
   </style>
   
   </head>
@@ -98,41 +119,41 @@
                     <li class="scroll-to-section"><a href="/about">Tentang</a></li>
                     <li>
                       <div class="dropdown">
-                          <a href="#" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center dropdown-toggle" role="button" id="savedArticlesDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a href="#" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center dropdown-toggle" role="button" id="savedArticlesDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             <div class="profile-picture" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
-                              <?php
-                              $fotoProfilAuth = Auth::user()->fotoProfil;
-                              if ($fotoProfilAuth && file_exists(public_path('fotoProfil/' . $fotoProfilAuth))) {
-                              ?>
-                              <img src="{{ asset('fotoProfil/' . $fotoProfilAuth) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
-                              <?php
-                              } else {
-                              ?>
-                              <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
-                              <?php
-                              }
-                              ?>
-                          </div>
-                  
-                              <span class="d-sm-inline d-none">
-                                  <?php
-                                  $fullName = Auth::user()->name;
-                                  $words = explode(' ', $fullName);
-                  
-                                  // Ambil dua kata pertama dan dua kata terakhir dari nama pengguna
-                                  $firstTwoWords = implode(' ', array_slice($words, 0, 1));
-                                  $lastTwoWords = implode(' ', array_slice($words, -1, 2));
-                  
-                                  echo $firstTwoWords . ' ' . $lastTwoWords;
-                                  ?>
-                              </span>
-                          </a>
-                          <div class="dropdown-menu" aria-labelledby="savedArticlesDropdown">
-                              <a class="dropdown-item" href="/profileUser">Profil Anda</a>
-                              <a class="dropdown-item" href="/simpanArtikelView">Artikel Tersimpan</a>
-                              <a class="dropdown-item" href="/simpanVideoView">Video Tersimpan</a>
-                          </div>
-                      </div>
+                                <?php
+                                $fotoProfil = Auth::user()->fotoProfil;
+                                if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
+                                ?>
+                                <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                                <?php
+                                } else {
+                                ?>
+                                <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                                <?php
+                                }
+                                ?>
+                            </div>
+                    
+                            <span class="d-sm-inline d-none">
+                                <?php
+                                $fullName = Auth::user()->name;
+                                $words = explode(' ', $fullName);
+                    
+                                // Ambil dua kata pertama dan dua kata terakhir dari nama pengguna
+                                $firstTwoWords = implode(' ', array_slice($words, 0, 1));
+                                $lastTwoWords = implode(' ', array_slice($words, -1, 2));
+                    
+                                echo $firstTwoWords . ' ' . $lastTwoWords;
+                                ?>
+                            </span>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="savedArticlesDropdown">
+                            <a class="dropdown-item" href="/profileUser"><i class="fas fa-user"></i> Profil Anda</a>
+                            <a class="dropdown-item" href="/simpanArtikelView"><i class="fas fa-bookmark"></i> Artikel Tersimpan</a>
+                            <a class="dropdown-item" href="/simpanVideoView"><i class="fas fa-video"></i> Video Tersimpan</a>
+                        </div>
+                    </div>
                   </li>           
                     <li class="scroll-to-section">
                       <a href="#" class="d-sm-inline d-none text-white text-bold" id="logout-link" onclick="openModal()"> Logout</a>
@@ -641,6 +662,26 @@
     <script src="{{ asset('aset1/js/jquery.stellar.min.js') }}"></script>
     <!-- Main -->
     <script src="{{ asset('aset1/js/main.js') }}"></script>
+
+
+<!--------------------------------------------------------------------------------------- Javascript Dropdown ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Dropdown ------------------------------------------------------------------------------->
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+      var dropdownMenu = document.querySelector('.dropdown-menu');
+
+      // Saat mouse memasuki dropdown, tambahkan kelas 'show'
+      dropdownMenu.addEventListener('mouseenter', function() {
+          dropdownMenu.classList.add('show');
+      });
+
+      // Saat mouse meninggalkan dropdown, hapus kelas 'show'
+      dropdownMenu.addEventListener('mouseleave', function() {
+          dropdownMenu.classList.remove('show');
+      });
+  });
+</script>
 
 <!--------------------------------------------------------------------------------------- Javascript Followers ------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------------- Javascript Followers ------------------------------------------------------------------------------->

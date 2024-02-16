@@ -168,7 +168,10 @@
                     </li>
                 </ul>
             </div>
-
+            
+            <p>
+              <i class="fas fa-eye"></i> {{ $formattedJumlahAkses }}
+          </p>   
           
           <span class="fh5co_tags_all">
             <a href="#" class="fh5co_tagg">{{ $article->kategori }}</a>

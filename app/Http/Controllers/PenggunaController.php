@@ -119,6 +119,8 @@ class PenggunaController extends Controller
     
         $kategori = artikels::inRandomOrder()->take(10)->get();
     
+        $article->increment('jumlah_akses');
+    
         // Menyiapkan data komentar, menyaring yang lebih muda dari 5 hari
         $komentarArtikels = komentar_artikel::where('artikel_id', $id)
                             ->where('created_at', '>=', Carbon::now()->subDays(5))
@@ -151,8 +153,28 @@ class PenggunaController extends Controller
             }
         }
     
-        return view('main.setelahLogin.detailArt', compact('kategoriLogA', 'article', 'box', 'tags', 'kategori', 'komentarArtikels', 'totalKomentarArtikels', 'komentar', 'fotoProfil', 'isFollowing', 'user', 'totalFollowers'));
+        // Format jumlah akses
+        $formattedJumlahAkses = $this->formatJumlahAkses($article->jumlah_akses);
+    
+        return view('main.setelahLogin.detailArt', compact('kategoriLogA', 'article', 'box', 'tags', 'kategori', 'komentarArtikels', 'totalKomentarArtikels', 'komentar', 'fotoProfil', 'isFollowing', 'user', 'totalFollowers', 'formattedJumlahAkses'));
     }
+
+    //[User-Home] Menampilkan Jumlah User Akses Artikel
+    public function formatJumlahAkses($jumlah)
+    {
+        if ($jumlah < 1000) {
+            return $jumlah;
+        } elseif ($jumlah < 10000) {
+            return round($jumlah / 1000, 1) . 'K';
+        } elseif ($jumlah < 1000000) {
+            return round($jumlah / 1000) . 'K';
+        } elseif ($jumlah < 1000000000) {
+            return round($jumlah / 1000000, 1) . 'JT';
+        } else {
+            return round($jumlah / 1000000000, 1) . 'M';
+        }
+    }
+    
     
     public function detailProfilPenulisArtikel($id)
     {

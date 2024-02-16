@@ -109,6 +109,10 @@ class LandingPageController extends Controller
     
         // Ambil data user berdasarkan id penulis artikel
         $user = User::findOrFail($article->user_id);
+
+        // Format jumlah akses
+        $formattedJumlahAkses = $this->formatJumlahAkses($article->jumlah_akses);
+
         // Ambil foto profil penulis artikel
         $fotoProfil = $user->fotoProfil;
 
@@ -126,8 +130,25 @@ class LandingPageController extends Controller
             'totalKomentar' => $totalKomentar,
             'fotoProfil' => $fotoProfil, // Tambahkan fotoProfil ke dalam data yang dilewatkan ke view
             'totalFollowers' => $totalFollowers,
+            'formattedJumlahAkses' => $formattedJumlahAkses
         ]);
     }
+
+        //[Landing Page-Home] Menampilkan Jumlah User Akses Artikel
+        public function formatJumlahAkses($jumlah)
+        {
+            if ($jumlah < 1000) {
+                return $jumlah;
+            } elseif ($jumlah < 10000) {
+                return round($jumlah / 1000, 1) . 'K';
+            } elseif ($jumlah < 1000000) {
+                return round($jumlah / 1000) . 'K';
+            } elseif ($jumlah < 1000000000) {
+                return round($jumlah / 1000000, 1) . 'JT';
+            } else {
+                return round($jumlah / 1000000000, 1) . 'M';
+            }
+        }
 
     public function detailProfilPenulisArtikelLP($id)
     {

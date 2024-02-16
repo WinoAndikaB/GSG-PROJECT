@@ -129,44 +129,63 @@ class SuperAdminController extends Controller
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //[SuperAdmin-Artikel] Halaman Tables Artikel
-    function artikelSA(Request $request){
-     // Get the search query from the request
-     $searchQuery = $request->input('search');
+    public function formatJumlahAkses($jumlah)
+    {
+        if ($jumlah < 1000) {
+            return $jumlah;
+        } elseif ($jumlah < 10000) {
+            return round($jumlah / 1000, 1) . 'K';
+        } elseif ($jumlah < 1000000) {
+            return round($jumlah / 1000) . 'K';
+        } elseif ($jumlah < 1000000000) {
+            return round($jumlah / 1000000, 1) . 'JT';
+        } else {
+            return round($jumlah / 1000000000, 1) . 'M';
+        }
+    }
 
-     // Start building the query without applying pagination
-     $query = artikels::orderBy('created_at', 'desc');
- 
-     // If there is a search query, add the search conditions
-     if (!empty($searchQuery)) {
-         $query->where(function($q) use ($searchQuery) {
-             $q->where('judulArtikel', 'like', '%' . $searchQuery . '%')
-                 ->orWhere('penulis', 'like', '%' . $searchQuery . '%')
-                 ->orWhere('status', 'like', '%' . $searchQuery . '%')
-                 ->orWhere('kategori', 'like', '%' . $searchQuery . '%');
-         });
-     }
- 
-     // Now, paginate the results
-     $data = $query->paginate(15);
-    
+    public function artikelSA(Request $request)
+    {
+        // Get the search query from the request
+        $searchQuery = $request->input('search');
+
+        // Start building the query without applying pagination
+        $query = artikels::orderBy('created_at', 'desc');
+
+        // If there is a search query, add the search conditions
+        if (!empty($searchQuery)) {
+            $query->where(function($q) use ($searchQuery) {
+                $q->where('judulArtikel', 'like', '%' . $searchQuery . '%')
+                    ->orWhere('penulis', 'like', '%' . $searchQuery . '%')
+                    ->orWhere('status', 'like', '%' . $searchQuery . '%')
+                    ->orWhere('kategori', 'like', '%' . $searchQuery . '%');
+            });
+        }
+
+        // Now, paginate the results
+        $data = $query->paginate(15);
+
+        // Format jumlah akses
+        foreach ($data as $article) {
+            $article->formattedJumlahAkses = $this->formatJumlahAkses($article->jumlah_akses);
+        }
 
         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
-        $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruUlasan = ulasans::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruUser = user::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruArtikel = artikels::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=', Carbon::now()->subDay())->count();
 
-        $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruVideo = video::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruKomentarVideo = komentar_video::where('created_at', '>=', Carbon::now()->subDay())->count();
 
-        $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=', Carbon::now()->subDay())->count();
 
         $pendingArticles = artikels::where('status', 'Pending')->orderBy('created_at', 'desc')->paginate(5);
         $publishedArticles = artikels::where('status', 'Published')->orderBy('created_at', 'desc')->paginate(5);
 
-        return view('SuperAdmin.artikelSA', compact('data', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
-        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'pendingArticles', 'publishedArticles'));
+        return view('SuperAdmin.artikelSA', compact('data', 'dataBaruUlasan', 'dataBaruUser', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo', 'pendingArticles', 'publishedArticles'));
     }
 
     public function approveArticle($id)

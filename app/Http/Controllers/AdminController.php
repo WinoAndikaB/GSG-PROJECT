@@ -116,7 +116,8 @@ class AdminController extends Controller
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //[Admin-Artikel] Halaman Tables Artikel
-    function artikel(Request $request){
+    public function artikel(Request $request)
+    {
         $userId = Auth::id(); // Get the authenticated user's ID
     
         // Get the search query from the request
@@ -127,7 +128,7 @@ class AdminController extends Controller
     
         // If there is a search query, add the search conditions
         if (!empty($searchQuery)) {
-            $query->where(function($q) use ($searchQuery) {
+            $query->where(function ($q) use ($searchQuery) {
                 $q->where('judulArtikel', 'like', '%' . $searchQuery . '%')
                     ->orWhere('penulis', 'like', '%' . $searchQuery . '%')
                     ->orWhere('status', 'like', '%' . $searchQuery . '%')
@@ -148,14 +149,33 @@ class AdminController extends Controller
         $dataBaruKomentarVideo = komentar_video::where('created_at', '>=', Carbon::now()->subDay())->count();
         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=', Carbon::now()->subDay())->count();
         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=', Carbon::now()->subDay())->count();
-
+    
         $totalUserArtikel = artikels::where('user_id', auth()->user()->id)->count();
         $totalUserVideo = video::where('user_id', auth()->user()->id)->count();
     
-        return view('admin.artikel', compact('data', 'totalDataArtikel', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo','totalUserArtikel','totalUserVideo'));
-    }
-    
+        // Format jumlah akses
+        foreach ($data as $article) {
+            $article->formattedJumlahAkses = $this->formatJumlahAkses($article->jumlah_akses);
+        }
 
+    
+        return view('admin.artikel', compact('data', 'totalDataArtikel', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo', 'totalUserArtikel', 'totalUserVideo'));
+    }
+
+    public function formatJumlahAkses($jumlah)
+    {
+        if ($jumlah < 1000) {
+            return $jumlah;
+        } elseif ($jumlah < 10000) {
+            return round($jumlah / 1000, 1) . 'K';
+        } elseif ($jumlah < 1000000) {
+            return round($jumlah / 1000) . 'K';
+        } elseif ($jumlah < 1000000000) {
+            return round($jumlah / 1000000, 1) . 'JT';
+        } else {
+            return round($jumlah / 1000000000, 1) . 'M';
+        }
+    }
 
     //[Admin-Artikel] Halaman Komentar Artikel
     function komentarArtikel(){

@@ -372,12 +372,12 @@
                                                   
                             <thead>
                               <tr>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kode Artikel</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Penulis</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Judul Artikel</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Judul Artikel</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Dibaca</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Upload</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Update</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
@@ -399,9 +399,6 @@
                             <tbody>
                               <tr>
                                 <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0"></p>
-                                </td>
-                                <td class="align-middle text-center">
                                   <p class="text-xs font-weight-bold mb-0">{{$tbhartikel['id']}}</p>
                                 </td>
                                 <td class="align-middle text-center">
@@ -420,6 +417,7 @@
                                     </div>
                                   </div>
                                 </td>
+                                
                                 <td class="align-middle text-center">
                                   <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
                                     <?php
@@ -446,6 +444,11 @@
                                     ?>
                                   </p>
                                 </td>
+                                <td class="align-middle text-center">
+                                  <p class="text-xs font-weight-bold mb-0">
+                                      <i class="fas fa-eye"></i> {{ $tbhartikel->formattedJumlahAkses }}
+                                  </p>
+                              </td>
                                 <td class="align-middle text-center">
                                   <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($tbhartikel['created_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
                                 </td>

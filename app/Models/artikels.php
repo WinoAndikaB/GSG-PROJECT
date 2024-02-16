@@ -9,9 +9,8 @@ class artikels extends Model
 {
     use HasFactory;
     
-    protected $fillable = [
-        'kodeArtikel', 'user_id', 'artikel_id', 'gambarArtikel', 'judulArtikel', 'penulis', 'email', 'deskripsi', 'status', 'kategori', 'tags'
-    ];
+    protected $fillable = ['kodeArtikel', 'user_id', 'artikel_id', 'gambarArtikel', 'judulArtikel', 'penulis', 'email', 'deskripsi', 'status', 'kategori', 'tags', 'jumlah_akses'];
+
 
     // Define the relationship with the User model
     public function user()
