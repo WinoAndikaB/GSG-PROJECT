@@ -57,6 +57,8 @@ class PenggunaController extends Controller
     //[User-Home] Halaman Home
     function HomeSetelahLogin(Request $request){
 
+            $kategoriLogA = kategori::all();
+
              // Get trending articles randomly
              $trending = artikels::whereNotIn('status' , ['Pending', 'Rejected'])
                 ->inRandomOrder()
@@ -102,7 +104,7 @@ class PenggunaController extends Controller
             // Mengambil tanggal hari ini
             $todayDate = date('l, d M Y');
     
-        return view('main.setelahLogin.home', compact('trending', 'latest','whatsnew','semua', 'box', 'box2', 'box3', 'boxLong', 'todayDate'));
+        return view('main.setelahLogin.home', compact('trending', 'latest','whatsnew','semua', 'box', 'box2', 'box3', 'boxLong', 'todayDate', 'kategoriLogA'));
     }
 
     //[User-Home] Menampilkan Detail Artikel Ketika Di Klik
@@ -459,6 +461,8 @@ class PenggunaController extends Controller
 
     //[User-Video] Halaman Video
     function Video(Request $request){
+
+        $kategoriLogV = Kategori::all();
                              
         $semuaVideo = video::whereNotIn('statusVideo', ['Pending', 'Rejected'])
             ->inRandomOrder()
@@ -467,7 +471,7 @@ class PenggunaController extends Controller
                     // Mengambil tanggal hari ini
                     $todayDate = date('l, d M Y');
     
-            return view('main.setelahLogin.video', compact('semuaVideo', 'todayDate'));
+            return view('main.setelahLogin.video', compact('semuaVideo', 'todayDate', 'kategoriLogV'));
         }
     
     //[User-Detail Video] Halaman Detail Video Ketika Di Klik

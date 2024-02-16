@@ -42,6 +42,7 @@ class LandingPageController extends Controller
     //[Landing Page] Halaman Home landing Page
     public function landingPage(Request $request)
     {
+        $kategoriA = kategori::all();
   
                 // Get trending articles randomly
                 $trending = artikels::whereNotIn('status' , ['Pending', 'Rejected'])
@@ -87,7 +88,7 @@ class LandingPageController extends Controller
 
                 $todayDate = date('l, d M Y');
     
-        return view('main.sebelumLogin.landingPage', compact('trending', 'latest','whatsnew','semua', 'box', 'box2', 'box3', 'boxLong', 'todayDate'));
+        return view('main.sebelumLogin.landingPage', compact('trending', 'latest','whatsnew','semua', 'box', 'box2', 'box3', 'boxLong', 'todayDate', 'kategoriA'));
     }
 
     //[Landing Page] Menampilkan Detail Artikel Ketika Di Klik
@@ -280,7 +281,9 @@ class LandingPageController extends Controller
 
         $todayDate = date('l, d M Y');
 
-        return view('main.sebelumLogin.landingPageVideo', compact('semuaVideo', 'todayDate'));
+        $kategoriV = kategori::all();
+
+        return view('main.sebelumLogin.landingPageVideo', compact('semuaVideo', 'todayDate','kategoriV'));
     }
 
     //[Landing Page] Halaman Detail Video Ketika Di Klik
@@ -304,6 +307,7 @@ class LandingPageController extends Controller
 
                // Hitung total pengikut (followers) berdasarkan user_id
                $totalFollowers = Follower::where('user_id', $user->id)->count();
+
         
         // Lebih baik menggunakan array asosiatif agar lebih jelas
         return view('main.sebelumLogin.detailVidLP', [
@@ -315,7 +319,7 @@ class LandingPageController extends Controller
             'komentarVideos' => $komentarVideos,
             'totalKomentarV' => $totalKomentarV,
             'fotoProfil' => $fotoProfil, // Tambahkan fotoProfil ke dalam data yang dilewatkan ke view
-            'totalFollowers' => $totalFollowers
+            'totalFollowers' => $totalFollowers,
         ]);
     }
 

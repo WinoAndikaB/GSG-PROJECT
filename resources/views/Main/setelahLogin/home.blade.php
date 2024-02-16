@@ -1,7 +1,40 @@
 @extends('Main.layout.homeStyle')
 
-<link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/lg1.png">
-<link rel="icon" type="image/png" href="../assets2/img/lg1.png">
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/lg1.png">
+    <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <title>Detail Artikel -  Katakey</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/templatemo-574-mexant.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/owl.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css">
+
+    <link href="{{ asset('aset1/css/media_query.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('aset1/css/bootstrap.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('aset1/css/owl.carousel.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('aset1/css/owl.theme.default.css')}}" rel="stylesheet" type="text/css"/>
+    <!-- Bootstrap CSS -->
+    <link href="{{ asset('aset1/css/style_1.css')}}" rel="stylesheet" type="text/css"/>
+    <!-- Modernizr JS -->
+    <script src="{{ asset('aset1/js/modernizr-3.5.0.min.js')}}"></script>
 
 
 <style>
@@ -184,8 +217,26 @@
     </div>
   </div>
 
-
   <div class="post-area pd-top-75 pd-bottom-50" id="trending">
+
+    
+  <div style="display: flex; justify-content: center; margin: 10px;">
+    @php
+    $uniqueCategories = [];
+    @endphp
+    
+    @foreach($kategoriLogA as $item)
+        @if (!in_array($item->kategori, $uniqueCategories))
+            <span class="fh5co_tags_all">
+                <a href="{{ route('kategoriA', ['kategori' => $item->kategori]) }}" class="fh5co_tagg">{{ $item->kategori }}</a>
+            </span>
+            @php
+            $uniqueCategories[] = $item->kategori;
+            @endphp
+        @endif
+    @endforeach
+</div>
+
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-6">
