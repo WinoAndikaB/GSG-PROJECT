@@ -384,53 +384,6 @@
             </div>
           </div>
         </div>
-
-
-     
-
-          <div class="col-lg-5">
-            <div class="card card-carousel overflow-hidden h-100 p-0">
-              <div id="carouselExampleCaptions" class="carousel slide h-100" data-bs-ride="carousel">
-                <div class="carousel-inner border-radius-lg h-100">
-                  <div class="carousel-item h-100 active" style="background-image: url('../assets2/img/carousel-1.jpg');background-size: cover;">
-                    <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
-                      <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
-                        <i class="ni ni-camera-compact text-dark opacity-10"></i>
-                      </div>
-                      <h5 class="text-white mb-1">Get started with Argon</h5>
-                      <p>There’s nothing I really wanted to do in life that I wasn’t able to get good at.</p>
-                    </div>
-                  </div>
-                  <div class="carousel-item h-100" style="background-image: url('../assets2/img/carousel-2.jpg');background-size: cover;">
-                    <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
-                      <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
-                        <i class="ni ni-bulb-61 text-dark opacity-10"></i>
-                      </div>
-                      <h5 class="text-white mb-1">Faster way to create web pages</h5>
-                      <p>That’s my skill. I’m not really specifically talented at anything except for the ability to learn.</p>
-                    </div>
-                  </div>
-                  <div class="carousel-item h-100" style="background-image: url('../assets2/img/carousel-3.jpg');background-size: cover;">
-                    <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
-                      <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
-                        <i class="ni ni-trophy text-dark opacity-10"></i>
-                      </div>
-                      <h5 class="text-white mb-1">Share with us your design tips!</h5>
-                      <p>Don’t be afraid to be wrong because you can’t learn anything from a compliment.</p>
-                    </div>
-                  </div>
-                </div>
-                <button class="carousel-control-prev w-5 me-3" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next w-5 me-3" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Next</span>
-                </button>
-              </div>
-            </div>
-          </div>
         </div>
 
         <div class="row mt-4">
@@ -498,6 +451,74 @@
               </div>
             </div>
           </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col-lg-5">
+            <div class="card">
+                <div class="card-header pb-0 p-3">
+                    <h6 class="mb-0">Tags Video</h6>
+                </div>
+                <div class="card-body p-3">
+                    <ul class="list-group">
+                        <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+                            <div class="d-flex align-items-center">
+                                <div class="d-flex flex-column">
+                                    <span class="fh5co_tags_all">
+                                        @foreach($tagsV as $tag)
+                                            <?php
+                                            $words = explode(",", $tag->tagsVideo);
+                                            foreach ($words as $word) {
+                                                $trimmedWord = trim($word);
+                                                // Tambahkan tag ke dalam array unik
+                                                $uniqueTags[$trimmedWord] = $trimmedWord;
+                                            }
+                                            ?>
+                                        @endforeach
+                                        @foreach($uniqueTags as $uniqueTag)
+                                            <a href="{{ route('TagsVideoA', $uniqueTag) }}" class="fh5co_tagg">#{{ $uniqueTag }}</a>
+                                        @endforeach
+                                    </span>
+                                </div>
+                            </div>
+                        </li>       
+                    </ul>
+                </div>
+            </div>
+        </div>
+          <div class="col-lg-5">
+            <div class="card">
+                <div class="card-header pb-0 p-3">
+                    <h6 class="mb-0">Tags Artikel</h6>
+                </div>
+                <div class="card-body p-3">
+                    <ul class="list-group">
+                        <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+                            <div class="d-flex align-items-center">
+                                <div class="d-flex flex-column">
+                                    <span class="fh5co_tags_all">
+                                        @foreach($tagsA as $tag)
+                                            <?php
+                                            $words = explode(",", $tag->tags);
+                                            foreach ($words as $word) {
+                                                $trimmedWord = trim($word);
+                                                // Tambahkan tag ke dalam array unik
+                                                $uniqueTags[$trimmedWord] = $trimmedWord;
+                                            }
+                                            ?>
+                                        @endforeach
+                                        @foreach($uniqueTags as $uniqueTag)
+                                            <a href="{{ route('TagsArtikelA', $uniqueTag) }}" class="fh5co_tagg">#{{ $uniqueTag }}</a>
+                                        @endforeach
+                                    </span>
+                                </div>
+                            </div>
+                        </li>       
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
         </div>
 
         

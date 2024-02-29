@@ -172,6 +172,10 @@ use Illuminate\Support\Facades\Route;
 
                 //[Admin] Tabel Dashboard
                 Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+                Route::get('/searchTagsV/videos', [AdminController::class, 'searchTagsV'])->name('searchTagsV');
+                Route::get('/searchTagsA/artikels', [AdminController::class, 'searchTagsA'])->name('searchTagsA');
+                Route::get('/TagsVideoA/{tag}', [AdminController::class, 'TagsVideoA'])->name('TagsVideoA'); 
+                Route::get('/TagsArtikelA/{tag}', [AdminController::class, 'TagsArtikelA'])->name('TagsArtikelA'); 
 
                 //[Admin] Tabel Profil
                 Route::get('/profileAdmin', [AdminController::class, 'profileAdmin'])->name('profileAdmin');

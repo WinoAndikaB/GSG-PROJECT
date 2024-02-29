@@ -130,18 +130,39 @@
                 <ul class="contact_info_list">
                     <li style="color: white;"><i class="fa fa-map-marker" style="color: white;"></i> Yogyakarta, Indonesia</li>
                     <li style="color: white;"><i class="fa fa-phone" style="color: white;"></i> +62 0812121240</li>
-                    <li style="color: white;"><i class="fa fa-envelope-o" style="color: white;"></i> gsg@website.com <br> gsg@mail.com</li>
+                    <li style="color: white;"><i class="fa fa-envelope-o" style="color: white;"></i> katakey@website.com <br> katakey@mail.com</li>
                 </ul>
             </div>
         </div>  
+        <?php
+        // Start session
+        session_start();
+        
+        // Set default link
+        $link = "/syaratKetentuanLP";
+        
+        // Check if user is logged in
+        if(isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === true) {
+            $link = "/syaratKetentuanA";
+        }
+        ?>
+        
         <div class="col-lg-3 col-sm-6">
-          <div class="widget">
-              <h5 class="widget-title" style="color: white;">INFORMASI</h5>
-              <ul class="contact_info_list">
-                  <a href="/syaratKetentuanLP" style="color: white;"></i>Syarat & Ketentuan</li>
-              </ul>
-          </div>
-      </div>            
+            <div class="widget">
+                <h5 class="widget-title" style="color: white;">INFORMASI</h5>
+                <ul class="contact_info_list">
+                    <!-- Debugging: Tampilkan status login -->
+                    <?php if(isset($_SESSION['loggedIn'])): ?>
+                        <li>Status Login: <?php echo $_SESSION['loggedIn'] ? 'Logged In' : 'Not Logged In'; ?></li>
+                    <?php endif; ?>
+                    <!-- Debugging: Tampilkan tautan yang dipilih -->
+                    <li>Selected Link: <?php echo $link; ?></li>
+                    <!-- Tautan ke Syarat & Ketentuan -->
+                    <a href="<?php echo $link; ?>" style="color: white;">Syarat & Ketentuan</a>
+                </ul>
+            </div>
+        </div>
+              
 
     <div class="container">
       <div class="row">

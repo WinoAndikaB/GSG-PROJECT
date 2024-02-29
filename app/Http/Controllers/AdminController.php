@@ -27,7 +27,7 @@ class AdminController extends Controller
     public function profileAdmin()
     {
         $user = Auth::user();
-    
+
         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
         $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=', Carbon::now()->subDay())->count();  
         $dataBaruKomentarVideo = komentar_video::where('created_at', '>=', Carbon::now()->subDay())->count();
@@ -85,6 +85,8 @@ class AdminController extends Controller
         $totalVideo = video::count();
         $totalLaporanArtikel = laporanArtikelUser::count();
         $totalLaporanVideo = laporanVideoUser::count();
+        $tagsA = artikels::inRandomOrder()->take(10)->get();
+        $tagsV = video::inRandomOrder()->take(10)->get();
     
         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
         $dataBaruArtikel = artikels::where('created_at', '>=', Carbon::now()->subDay())->count();
@@ -104,7 +106,7 @@ class AdminController extends Controller
         $kategoriVideo = Video::select('kategoriVideo', Video::raw('count(*) as total'))->groupBy('kategoriVideo')->get();
         
         return view('admin.dashboard', compact(
-            'totalArtikel', 'totalVideo', 'totalLaporanArtikel', 'totalLaporanVideo',
+            'totalArtikel', 'totalVideo', 'totalLaporanArtikel', 'totalLaporanVideo','tagsA','tagsV',
             'dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 
             'dataBaruLaporanArtikel', 'dataBaruLaporanVideo', 'kategoriArtikel', 'kategoriVideo',
             'totalUserArtikel', 'totalUserVideo'
@@ -351,7 +353,89 @@ class AdminController extends Controller
         $data->save();
     
         return redirect()->route('artikel')->with('success','Data Berhasil di Update');
-    }   
+    }
+
+    public function TagsArtikelA($tagName)
+        {
+            // Cari artikel berdasarkan tag
+            $artikels = artikels::where('tags', 'like', '%' . $tagName . '%')->get();
+        
+            if ($artikels->isEmpty()) {
+                abort(404);
+            }
+        
+            // Ambil semua tag dari artikel-artikel yang ditemukan
+            $tags = [];
+            foreach ($artikels as $artikel) {
+                $artikelTags = explode(',', $artikel->tags);
+                $tags = array_merge($tags, $artikelTags);
+            }
+            $tags = array_unique($tags);
+            
+            $existingTags = artikels::select('tags')->distinct()->get();
+
+            // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+            $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+            $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        
+            $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+            $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        
+            $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+            $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+            $totalUserArtikel = artikels::where('user_id', auth()->user()->id)->count();
+            $totalUserVideo = video::where('user_id', auth()->user()->id)->count();
+        
+            // Kirim data artikel, tag name, dan tags ke view
+            return view('admin.tagsArtikel', compact('artikels', 'tagName', 'tags' , 'existingTags','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+            'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo','totalUserArtikel','totalUserVideo'));
+        }
+        
+
+        public function searchTagsA(Request $request)
+        {
+            // Ambil nilai pencarian dari input pengguna
+            $search = $request->input('search');
+        
+            // Ambil daftar tag yang sudah ada dari basis data
+            $existingTags = artikels::select('tags')->distinct()->get();
+        
+            // Cari artikel berdasarkan tag
+            $artikels = artikels::where('tags', 'like', '%' . $search . '%')->get();
+        
+            if ($artikels->isEmpty()) {
+                abort(404);
+            }
+        
+            // Set variabel $tagName dengan nilai pencarian
+            $tagName = $search;
+        
+            // Ambil semua tag dari artikel-artikel yang ditemukan
+            $tags = [];
+            foreach ($artikels as $artikel) {
+                $artikelTags = explode(',', $artikel->tags);
+                $tags = array_merge($tags, $artikelTags);
+            }
+            $tags = array_unique($tags);
+
+            // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+            $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+            $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        
+            $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+            $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        
+            $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+            $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+            $totalUserArtikel = artikels::where('user_id', auth()->user()->id)->count();
+            $totalUserVideo = video::where('user_id', auth()->user()->id)->count();
+        
+            // Kirim data artikel, tag name, tags yang sudah ada ke view
+            return view('admin.tagsArtikel', compact('artikels', 'tagName', 'tags', 'existingTags','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+            'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo','totalUserArtikel','totalUserVideo'));
+        }   
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -584,6 +668,70 @@ class AdminController extends Controller
             return redirect('/komentarVideo')->with('error', 'Komentar not found');
         }
     }
+
+      //Tags Videos
+      public function searchTagsV(Request $request)
+      {
+          // Ambil nilai pencarian dari input pengguna
+          $search = $request->input('search');
+      
+          // Ambil daftar tag yang sudah ada dari basis data
+          $existingTags = Video::select('tagsVideo')->distinct()->get();
+      
+          // Cari video berdasarkan tag
+          $videos = Video::where('tagsVideo', 'like', '%' . $search . '%')->get();
+      
+          if ($videos->isEmpty()) {
+              abort(404);
+          }
+      
+          // Set variabel $tagName dengan nilai pencarian
+          $tagName = $search;
+  
+          
+                  // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+                  $dataBaruArtikel = artikels::where('created_at', '>=', Carbon::now()->subDay())->count();
+                  $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=', Carbon::now()->subDay())->count();
+                  $dataBaruVideo = video::where('created_at', '>=', Carbon::now()->subDay())->count();
+                  $dataBaruKomentarVideo = komentar_video::where('created_at', '>=', Carbon::now()->subDay())->count();
+                  $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=', Carbon::now()->subDay())->count();
+                  $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=', Carbon::now()->subDay())->count();
+              
+                  $totalUserArtikel = artikels::where('user_id', auth()->user()->id)->count();
+                  $totalUserVideo = video::where('user_id', auth()->user()->id)->count();
+      
+          // Kirim data video, tag name, tags yang sudah ada ke view
+          return view('admin.tagsVideo', compact('videos', 'tagName', 'existingTags','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+          'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo', 'totalUserArtikel', 'totalUserVideo'));
+      }
+      
+      public function TagsVideoA($tagName)
+      {
+          // Cari video berdasarkan tag
+          $videos = Video::where('tagsVideo', 'like', '%' . $tagName . '%')->get();
+      
+          if ($videos->isEmpty()) {
+              abort(404);
+          }
+      
+          // Ambil daftar tag yang sudah ada dari basis data
+          $existingTags = Video::select('tagsVideo')->distinct()->get();
+  
+                  // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+                  $dataBaruArtikel = artikels::where('created_at', '>=', Carbon::now()->subDay())->count();
+                  $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=', Carbon::now()->subDay())->count();
+                  $dataBaruVideo = video::where('created_at', '>=', Carbon::now()->subDay())->count();
+                  $dataBaruKomentarVideo = komentar_video::where('created_at', '>=', Carbon::now()->subDay())->count();
+                  $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=', Carbon::now()->subDay())->count();
+                  $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=', Carbon::now()->subDay())->count();
+              
+                  $totalUserArtikel = artikels::where('user_id', auth()->user()->id)->count();
+                  $totalUserVideo = video::where('user_id', auth()->user()->id)->count();
+      
+          // Kirim data video, tag name, tags yang sudah ada ke view
+          return view('admin.tagsVideo', compact('videos', 'tagName', 'existingTags','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+          'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo', 'totalUserArtikel', 'totalUserVideo'));
+      }
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

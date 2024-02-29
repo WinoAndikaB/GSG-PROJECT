@@ -398,7 +398,7 @@
                                       ?>
                                     </p>
                                   </td>
-                                  <td style="text-align: justify;">
+                                  <td style="text-align: center;">
                                     <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
                                       <?php
                                       $deskripsiVideo = strip_tags($item['deskripsiVideo']);
@@ -424,11 +424,15 @@
                                   </td>
                                   <td class="align-middle text-center">
                                     @if($item['tagsVideo'])
-                                      @foreach(explode(',', $item['tagsVideo']) as $tag)
-                                          <span class="badge badge-sm bg-gradient-warning">{{ $tag }}</span>
-                                      @endforeach
+                                        @foreach(explode(',', $item['tagsVideo']) as $tag)
+                                            <a href="{{ route('TagsVideoA', ['tag' => $tag]) }}">
+                                                <span class="badge badge-sm bg-gradient-warning">{{ $tag }}</span>
+                                            </a>
+                                        @endforeach
                                     @endif
-                                  </td>
+                                </td>
+                                
+                                
                                   <td class="align-middle">
                                     <a href="/formEditVideo/{{ $item->id}}" class="btn btn-warning btn btn-primary btn-round">
                                       <i class="fa fa-pencil"></i>

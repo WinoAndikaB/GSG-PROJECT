@@ -402,7 +402,10 @@
       </div>
     </div>
   </div>
-  <!--   Core JS Files   -->
+
+<!------------------------------------------------------------------------------------- Javascript Area -------------------------------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- Javascript Area -------------------------------------------------------------------------------------------------------------------->
+
   <script src="../assets2/js/core/popper.min.js"></script>
   <script src="../assets2/js/core/bootstrap.min.js"></script>
   <script src="../assets2/js/plugins/perfect-scrollbar.min.js"></script>
@@ -414,7 +417,9 @@
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
 
-  <!-- Dynamic Tags -->
+<!------------------------------------------------------------------------------------- Javascript Dynmaic Tags -------------------------------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- Javascript Dynmaic Tags -------------------------------------------------------------------------------------------------------------------->
+
   <script>
     $(document).ready(function () {
         $('#tags').select2({
@@ -426,7 +431,9 @@
 </script>
 
 
-<!--  CKEditor -->
+<!------------------------------------------------------------------------------------- Javascript CKEditor -------------------------------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- Javascript CKEditor -------------------------------------------------------------------------------------------------------------------->
+
 <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
 <script>
   CKEDITOR.replace('editor');
@@ -490,9 +497,11 @@
   }
 </script>
 
-<!-- Standar Penulisan -->
+<!------------------------------------------------------------------------------------- Javascript Standar Penulis -------------------------------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- Javascript Standar Penulis -------------------------------------------------------------------------------------------------------------------->
+
 <script>
-  function validateForm() {
+  async function validateForm() {
     const errorMessageDiv = document.getElementById('error-message');
     errorMessageDiv.innerHTML = ''; // Reset pesan kesalahan sebelum validasi
 
@@ -506,36 +515,24 @@
       }
     }
 
-// Validasi penggunaan kata tidak pantas pada deskripsi
-const deskripsiInput = document.getElementById('editor');
-const forbiddenWordsDesc = ['kata1', 'kata2', 'kata3']; // Gantilah dengan kata-kata yang dianggap tidak pantas pada deskripsi
-const deskripsiValue = deskripsiInput.value.toLowerCase();
-for (const word of forbiddenWordsDesc) {
-  if (deskripsiValue.includes(word)) {
-    errorMessageDiv.innerHTML += `<p class="text-white"><i class="fas fa-exclamation-triangle text-white"></i> Penggunaan kata <strong>"${word}"</strong> pada deskripsi tidak sesuai karena mengandung unsur negatif.</p>`;
-  }
-}
+    // Validasi deskripsi, judul, dan tags
+    const inputsToValidate = [
+      { input: document.getElementById('editor'), fieldName: 'deskripsi' },
+      { input: document.getElementById('judulArtikel'), fieldName: 'judul' },
+      { input: document.getElementById('tags'), fieldName: 'tags' }
+    ];
 
-// Validasi penggunaan kata tidak pantas pada judul
-const judulInput = document.getElementById('judulArtikel');
-const forbiddenWordsJudul = ['judul1','judul2','judul3','judul4','judul5','judul6','judul7','judul8','judul9','judul10',]; // Gantilah dengan kata-kata yang dianggap tidak pantas pada judul
-const judulValue = judulInput.value.toLowerCase();
-for (const word of forbiddenWordsJudul) {
-  if (judulValue.includes(word)) {
-    errorMessageDiv.innerHTML += `<p class="text-white"><i class="fas fa-exclamation-triangle text-white"></i> Penggunaan kata <strong>"${word}"</strong> pada judul tidak sesuai karena mengandung unsur negatif.</p>`;
-  }
-}
+    const forbiddenWords = await fetchNegativeWords(); // Mendapatkan daftar kata-kata negatif dari API
+    const forbiddenWordsArray = await forbiddenWords.json();
 
-// Validasi penggunaan kata tidak pantas pada tags
-const tagsInput = document.getElementById('tags');
-const forbiddenWordsTags = ['tags1','tags2','tags3','tags4','tags5','tags6','tags7','tags8','tags9','tags10']; // Gantilah dengan kata-kata yang dianggap tidak pantas pada tags
-const tagsValue = tagsInput.value.toLowerCase();
-for (const word of forbiddenWordsTags) {
-  if (tagsValue.includes(word)) {
-    errorMessageDiv.innerHTML += `<p class="text-white"><i class="fas fa-exclamation-triangle text-white"></i> Penggunaan kata <strong>"${word}"</strong> pada tags tidak sesuai karena mengandung unsur negatif.</p>`;
-  }
-}
-
+    inputsToValidate.forEach(({ input, fieldName }) => {
+      const value = input.value.toLowerCase();
+      forbiddenWordsArray.forEach(word => {
+        if (value.includes(word)) {
+          errorMessageDiv.innerHTML += `<p class="text-white"><i class="fas fa-exclamation-triangle text-white"></i> Penggunaan kata <strong>"${word}"</strong> pada ${fieldName} tidak sesuai karena mengandung unsur negatif.</p>`;
+        }
+      });
+    });
 
     // Jika ada pesan kesalahan, tampilkan di bawah judul "Tambah Artikel"
     if (errorMessageDiv.innerHTML !== '') {
@@ -545,9 +542,22 @@ for (const word of forbiddenWordsTags) {
       document.querySelector('form').submit();
     }
   }
+
+  async function fetchNegativeWords() {
+    try {
+      const response = await fetch('https://example.com/negative-words-api');
+      return response;
+    } catch (error) {
+      console.error('Error fetching negative words:', error);
+      // Handle error fetching negative words
+    }
+  }
 </script>
 
- <!-- MODAL LOGOUT -->
+
+<!------------------------------------------------------------------------------------- Javascript Logout -------------------------------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- Javascript Logout -------------------------------------------------------------------------------------------------------------------->
+
  <script>
   // JavaScript untuk modal logout
   function openModal() {
