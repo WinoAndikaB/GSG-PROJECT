@@ -434,6 +434,9 @@
                                 
                                 
                                   <td class="align-middle">
+                                    <a href="{{ route('showDetailVideoA', ['id' => $item->id]) }}" class="btn btn-info btn btn-primary btn-round">
+                                      <i class="fas fa-info-circle"></i>
+                                  </a>
                                     <a href="/formEditVideo/{{ $item->id}}" class="btn btn-warning btn btn-primary btn-round">
                                       <i class="fa fa-pencil"></i>
                                     </a>

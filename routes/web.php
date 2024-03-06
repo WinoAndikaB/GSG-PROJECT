@@ -184,6 +184,7 @@ use Illuminate\Support\Facades\Route;
                 //[Admin] Tabel Artikel
                 Route::get('/artikelAdmin', [AdminController::class, 'artikel'])->name('artikel');
                 Route::get('/komentarArtikel', [AdminController::class, 'komentarArtikel'])->name('komentarArtikel');
+                Route::get('/detailArtikelA/{id}', [AdminController::class, 'showDetailArtikelA'])->name('showDetailArtikelA');
 
                 //[Admin] Tambah Artikel
                 Route::get('/formTambahArtikelA',  [AdminController::class, 'formTambahArtikelA'])->name('formTambahArtikelA');
@@ -202,6 +203,7 @@ use Illuminate\Support\Facades\Route;
                 //[Admin] Tabel Video
                 Route::get('/videoAdmin', [AdminController::class, 'videoAdmin'])->name('videoAdmin');
                 Route::get('/komentarVideo', [AdminController::class, 'komentarVideo'])->name('komentarVideo');
+                Route::get('/detailVideoA/{id}', [AdminController::class, 'showDetailVideoA'])->name('showDetailVideoA');
 
                 //[Admin] Tambah Video Admin
                 Route::get('/formTambahVideo', [AdminController::class, 'formTambahVideo'])->name('formTambahVideo');

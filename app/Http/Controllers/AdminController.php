@@ -435,7 +435,66 @@ class AdminController extends Controller
             // Kirim data artikel, tag name, tags yang sudah ada ke view
             return view('admin.tagsArtikel', compact('artikels', 'tagName', 'tags', 'existingTags','dataBaruArtikel', 'dataBaruKomentarArtikel', 
             'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo','totalUserArtikel','totalUserVideo'));
-        }   
+        } 
+        
+            //[Admin-Artikel] Detail Artikel
+            function showDetailArtikelA($id){
+
+                $article = artikels::findOrFail($id);
+            
+                $kategoriA = kategori::all();
+            
+                $box = artikels::inRandomOrder()->take(8)->get();
+            
+                // Ambil artikel berdasarkan user_id
+                $tagsA = artikels::where('user_id', Auth::id())->get();
+            
+                $uniqueTags = [];
+                foreach ($tagsA as $tag) {
+                    $words = explode(",", $tag->tags);
+                    foreach ($words as $word) {
+                        $trimmedWord = trim($word);
+                        // Tambahkan tag ke dalam array unik
+                        $uniqueTags[$trimmedWord] = $trimmedWord;
+                    }
+                }
+            
+                // Hitung jumlah komentar untuk artikel dengan ID tertentu
+                $totalKomentar = komentar_artikel::where('artikel_id', $id)->count();
+            
+                $detailArtikelLP = komentar_artikel::where('artikel_id', $id)->latest()->paginate(6);
+            
+                // Ambil data user berdasarkan id penulis artikel
+                $user = User::findOrFail($article->user_id);
+            
+                // Format jumlah akses
+                $formattedJumlahAkses = $this->formatJumlahAkses($article->jumlah_akses);
+            
+                // Ambil foto profil penulis artikel
+                $fotoProfil = $user->fotoProfil;
+            
+                // Hitung total pengikut (followers) berdasarkan user_id
+                $totalFollowers = Follower::where('user_id', $user->id)->count();
+            
+                // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+                $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+                $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+            
+                $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+                $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+            
+                $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+                $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+            
+                $totalUserArtikel = artikels::where('user_id', auth()->user()->id)->count();
+                $totalUserVideo = video::where('user_id', auth()->user()->id)->count();
+            
+                return view('admin.detailArtikelA', compact('dataBaruArtikel', 'dataBaruKomentarArtikel', 
+                'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo','totalUserArtikel','totalUserVideo',  'kategoriA',
+                'article','box','tagsA','uniqueTags','detailArtikelLP','totalKomentar','fotoProfil','totalFollowers','formattedJumlahAkses'
+            ));
+            }
+            
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -672,6 +731,9 @@ class AdminController extends Controller
       //Tags Videos
       public function searchTagsV(Request $request)
       {
+
+        $userId = Auth::id();
+        
           // Ambil nilai pencarian dari input pengguna
           $search = $request->input('search');
       
@@ -732,6 +794,61 @@ class AdminController extends Controller
           return view('admin.tagsVideo', compact('videos', 'tagName', 'existingTags','dataBaruArtikel', 'dataBaruKomentarArtikel', 
           'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo', 'totalUserArtikel', 'totalUserVideo'));
       }
+
+                //[Admin-Artikel] Detail Artikel
+                function showDetailVideoA($id){
+
+                    $video = Video::findOrFail($id);
+    
+                    $kategoriLogV = Kategori::all();
+                
+                    $boxVideo = Video::inRandomOrder()->take(10)->get();
+                    $tagsV = Video::inRandomOrder()->take(5)->get();
+                    $kategoriV = Video::inRandomOrder()->take(10)->get();
+                
+                    $komentarVideos = komentar_video::where('video_id', $id)->latest()->paginate(6);
+                    
+                    $totalKomentarVideo = komentar_video::where('video_id', $id)->count();
+                
+                    // Ambil data user berdasarkan id pembuat video
+                    $user = User::findOrFail($video->user_id);
+                    // Ambil foto profil pembuat video
+                    $fotoProfil = $user->fotoProfil;
+
+                            // Check if the authenticated user is following the article author
+                            $isFollowing = false;
+                            if (auth()->check()) {
+                                $follower = Follower::where('follower_id', auth()->user()->id)
+                                                    ->where('user_id', $user->id)
+                                                    ->first();
+                                if ($follower && $follower->status == 1) {
+                                    $isFollowing = true;
+                                }
+                            }
+
+                    $existingTags = Video::select('tagsVideo')->distinct()->get();
+
+                    // Hitung total pengikut (followers) berdasarkan user_id
+                    $totalFollowers = Follower::where('user_id', $user->id)->count();
+                
+                    // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+                    $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+                    $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+                
+                    $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+                    $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+                
+                    $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+                    $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+                
+                    $totalUserArtikel = artikels::where('user_id', auth()->user()->id)->count();
+                    $totalUserVideo = video::where('user_id', auth()->user()->id)->count();
+                
+                    return view('admin.detailVideoA', compact('dataBaruArtikel', 'dataBaruKomentarArtikel', 
+                    'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo','totalUserArtikel','totalUserVideo', 'kategoriLogV',
+                    'video','boxVideo','tagsV','kategoriV','komentarVideos','totalKomentarVideo','fotoProfil','user','totalFollowers','existingTags'
+                ));
+                }
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

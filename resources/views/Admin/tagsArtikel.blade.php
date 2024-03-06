@@ -375,11 +375,11 @@
                       $tags = explode(",", $item->tags);
                       foreach ($tags as $tag) {
                           $trimmedTag = trim($tag);
-                          echo '<a href="' . route("TagsArtikelA", $trimmedTag) . '" class="fh5co_tagg">' . $trimmedTag . '</a>';
+                          echo '<a href="' . route("TagsArtikelA", $trimmedTag) . '" class="fh5co_tagg">#' . $trimmedTag . '</a>';
                           echo ' ';
                       }
                       @endphp
-                      </p>
+                  </p>                  
                       
                 </div>
                 <span style="text-align: right; color: rgba(165, 165, 165, 1);"><p>
@@ -403,7 +403,7 @@
                   }
                 @endphp
                 | 
-                    <a href="{{ route('detail.artikel', ['id' => $item->id]) }}" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a></p></span>
+                    <a href="{{ route('showDetailArtikelA', ['id' => $item->id]) }}" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a></p></span>
                     <br>
             </div>
             <hr>
