@@ -527,56 +527,10 @@
           </div>
 
           <div class="row mt-4">
-            {{-- <div class="col-lg-7 mb-lg-0 mb-4">
-              <div class="card ">
-                <div class="card-header pb-0 p-3">
-                  <div class="d-flex justify-content-between">
-                    <h6 class="mb-2">Sales by Country</h6>
-                  </div>
-                </div>
-                <div class="table-responsive">
-                  <table class="table align-items-center ">
-                    <tbody>
-                      <tr>
-                        <td class="w-30">
-                          <div class="d-flex px-2 py-1 align-items-center">
-                            <div>
-                              <img src="../assets/img/icons/flags/US.png" alt="Country flag">
-                            </div>
-                            <div class="ms-4">
-                              <p class="text-xs font-weight-bold mb-0">Country:</p>
-                              <h6 class="text-sm mb-0">United States</h6>
-                            </div>
-                          </div>
-                        </td>
-                        <td>
-                          <div class="text-center">
-                            <p class="text-xs font-weight-bold mb-0">Sales:</p>
-                            <h6 class="text-sm mb-0">2500</h6>
-                          </div>
-                        </td>
-                        <td>
-                          <div class="text-center">
-                            <p class="text-xs font-weight-bold mb-0">Value:</p>
-                            <h6 class="text-sm mb-0">$230,900</h6>
-                          </div>
-                        </td>
-                        <td class="align-middle text-sm">
-                          <div class="col text-center">
-                            <p class="text-xs font-weight-bold mb-0">Bounce:</p>
-                            <h6 class="text-sm mb-0">29.9%</h6>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div> --}}
             <div class="col-lg-5">
               <div class="card">
                   <div class="card-header pb-0 p-3">
-                      <h6 class="mb-0">Tags</h6>
+                      <h6 class="mb-0">Tags Video</h6>
                   </div>
                   <div class="card-body p-3">
                       <ul class="list-group">
@@ -584,9 +538,9 @@
                               <div class="d-flex align-items-center">
                                   <div class="d-flex flex-column">
                                       <span class="fh5co_tags_all">
-                                          @foreach($tags as $tag)
+                                          @foreach($tagsV as $tag)
                                               <?php
-                                              $words = explode(",", $tag->tags);
+                                              $words = explode(",", $tag->tagsVideo);
                                               foreach ($words as $word) {
                                                   $trimmedWord = trim($word);
                                                   // Tambahkan tag ke dalam array unik
@@ -595,7 +549,7 @@
                                               ?>
                                           @endforeach
                                           @foreach($uniqueTags as $uniqueTag)
-                                              <a href="{{ route('TagsArtikel', $uniqueTag) }}" class="fh5co_tagg">#{{ $uniqueTag }}</a>
+                                              <a href="{{ route('TagsVideoA', $uniqueTag) }}" class="fh5co_tagg">#{{ $uniqueTag }}</a>
                                           @endforeach
                                       </span>
                                   </div>
@@ -605,6 +559,39 @@
                   </div>
               </div>
           </div>
+
+          <div class="col-lg-5">
+            <div class="card">
+                <div class="card-header pb-0 p-3">
+                    <h6 class="mb-0">Tags Artikel</h6>
+                </div>
+                <div class="card-body p-3">
+                    <ul class="list-group">
+                        <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+                            <div class="d-flex align-items-center">
+                                <div class="d-flex flex-column">
+                                    <span class="fh5co_tags_all">
+                                        @foreach($tagsA as $tag)
+                                            <?php
+                                            $words = explode(",", $tag->tags);
+                                            foreach ($words as $word) {
+                                                $trimmedWord = trim($word);
+                                                // Tambahkan tag ke dalam array unik
+                                                $uniqueTags[$trimmedWord] = $trimmedWord;
+                                            }
+                                            ?>
+                                        @endforeach
+                                        @foreach($uniqueTags as $uniqueTag)
+                                            <a href="{{ route('TagsArtikelA', $uniqueTag) }}" class="fh5co_tagg">#{{ $uniqueTag }}</a>
+                                        @endforeach
+                                    </span>
+                                </div>
+                            </div>
+                        </li>       
+                    </ul>
+                </div>
+            </div>
+        </div>
           
         </div>
 

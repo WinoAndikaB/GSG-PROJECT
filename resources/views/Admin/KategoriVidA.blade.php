@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Detail Video | Katakey
+    Kategori Video | Katakey
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -272,22 +272,22 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Detail Video</li>
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Kategori Video</li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Detail Video</h6>
+          <h6 class="font-weight-bolder text-white mb-0">Kategori Video</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-            <form action="{{ route('searchTagsV') }}" method="GET" class="d-flex">
+            <form action="{{ route('searchTagsA') }}" method="GET" class="d-flex">
               @csrf
               <div class="input-group">
                   <span class="input-group-text"><i class="fas fa-search" aria-hidden="true"></i></span>
-                  <input type="text" name="search" class="form-control" placeholder="Cari Video..." value="{{ request()->input('search') }}" autocomplete="off" list="tagList">
+                  <input type="text" name="search" class="form-control" placeholder="Cari Artikel..." value="{{ request()->input('search') }}" autocomplete="off" list="tagList">
                   <datalist id="tagList">
-                      @foreach($existingTags as $tag)
-                          <option value="{{ $tag->tagsVideo }}"></option> <!-- Ensure to close option tag -->
-                      @endforeach
-                  </datalist>
+                    @foreach($existingTags as $tag)
+                        <option value="{{ $tag->tags }}">
+                    @endforeach
+                </datalist>
               </div>
               <button type="submit" class="btn btn-warning ms-2 btn-block">Cari</button>
           </form>          
@@ -352,118 +352,93 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
+              </a>
+              <h6>
+                @if($kategoriV->isNotEmpty())
+                    <h2>Kategori {{ $kategoriV->first()->kategoriVideo }}</h2>
+                    <div class="div-dec"></div>
+                @else
+                    <h2>Tidak Ada Artikel Ditemukan Pada Ketegori Ini</h2>
+                @endif
+            </h6>         
 
-              <section class="what-we-do">
-                <div class="container">
-                  <div class="row">
-                  
-                    <div class="col-md-8 animate-box" data-animate-effect="fadeInRight">
-                      <section>        
-                          <h1 style="color: rgba(47, 72, 88, 1);">{{ $video->judulVideo }}</h1><br>
-                        <div class="simple-profile-container" style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
-                          <a href="{{ route('detailProfilPenulisArtikelLP', ['id' => $video->id]) }}" style="text-decoration: none; color: inherit;">
-                            <div class="simple-profile-picture" style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #3498db;">
-                                <img src="{{ asset('fotoProfil/' . $user->fotoProfil) }}" alt="Profil Picture" style="width: 100%; height: 100%;">
-                            </div>
-                        </a>
-                        
-            
-                        <div class="simple-profile-details" style="flex: 1;">
-                            <a href="{{ route('detailProfilPenulisArtikelLP', ['id' => $video->id]) }}" style="text-decoration: none; color: inherit;">
-                                <span class="simple-profile-name" style="color: #2c3e50; font-weight: bold; font-size: 1.2em; display: block; margin-bottom: 4px;">
-                                    {{ $video->uploader }}
-                                </span>
-                            </a>
-            
-                            <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;">Penulis | {{ $totalFollowers }} Follower</span>
+            <?php
+            // Fungsi untuk mendapatkan ID video YouTube dari URL
+            function getYoutubeVideoId($url) {
+                $videoId = '';
+                $parts = parse_url($url);
+                if(isset($parts['query'])){
+                    parse_str($parts['query'], $query);
+                    if(isset($query['v'])){
+                        $videoId = $query['v'];
+                    }
+                } elseif (preg_match('/embed\/([^\&\?\/]+)/', $url, $matches)) {
+                    $videoId = $matches[1];
+                }
+                return $videoId;
+            }
+            ?>
+                         @foreach ($kategoriV as $item)
+                         <div class="row" style="text-align: justify">
+                          <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
+                            <?php
+                            $videoId = getYoutubeVideoId($item->linkVideo);
+                            $thumbnail = "https://img.youtube.com/vi/{$videoId}/maxresdefault.jpg"; // Mengambil thumbnail dengan resolusi tinggi
+                            ?>
+                          
+                             <img src="<?php echo $thumbnail; ?>" alt="Thumbnail" width="500" height="300">
+                          </div>
+                          
+                             <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
+                                 <h4 style="text-align: left">{{ $item->judulVideo }}</h4>
+                                 <span class="d-flex"><b>{{ $item->uploader }}</b></span>
+                                 <p>{!! substr(strip_tags($item->deskripsiVideo), 0, 400) . (strlen(strip_tags($item->content)) > 400 ? '...' : '') !!}</p>
+                                 <p>Tags:
+                                  @php
+                                  $tags = explode(",", $item->tagsVideo);
+                                  foreach ($tags as $tag) {
+                                      $trimmedTag = trim($tag);
+                                      echo '<a href="' . route("TagsVideoA", $trimmedTag) . '#" class="fh5co_tagg">#' . $trimmedTag . '</a>';
+                                      echo ' ';
+                                  }
+                                  @endphp
+                              </p>
+                             </div>
+                             <span style="text-align: right; color: rgba(165, 165, 165, 1);">
+                                 <p>
+                                     @php
+                                     $ulasanCreatedAt = \Carbon\Carbon::parse($item['created_at']);
+                                     $sekarang = \Carbon\Carbon::now();
+                                     $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
+                     
+                                     if ($selisihWaktu < 60) {
+                                         echo $selisihWaktu . ' Menit Lalu';
+                                     } elseif ($selisihWaktu < 1440) {
+                                         echo floor($selisihWaktu / 60) . ' Jam Lalu';
+                                     } elseif ($selisihWaktu < 10080) {
+                                         echo floor($selisihWaktu / 1440) . ' Hari Lalu';
+                                     } elseif ($selisihWaktu < 43200) {
+                                         echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
+                                     } elseif ($selisihWaktu < 525600) {
+                                         echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
+                                     } else {
+                                         echo floor($selisihWaktu / 525600) . ' Tahun Lalu';
+                                     }
+                                     @endphp
+                                     | 
+                                     <a href="{{ route('showDetailVideoA', ['id' => $item->id]) }}" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a>
+                                 </p>
+                             </span>
+                         </div>
+                         <hr>
+                     @endforeach
                         </div>
-            
-                          <a href="#" style="text-decoration: none; color: inherit;">
-                              <div class="simple-follow-button" style="background-color: #3498db; padding: 8px 16px; border-radius: 20px; cursor: pointer;">
-                                  <span style="color: #fff; font-weight: bold; font-size: 1em; display: block;">Follow</span>
-                              </div>
-                          </a>
-                      </div>
-            
-                        <hr>
-                        
-                        <div class="float-right" style="margin-top: 10px;">
-                                    Dibuat: <span style="color: rgba(165, 165, 165, 1);">{{ \Carbon\Carbon::parse($video['created_at'])->format('l, d M Y H.i') }}</span><br>
-                                    Diperbarui: <span style="color: rgba(165, 165, 165, 1);">{{ \Carbon\Carbon::parse($video['updated_at'])->format('l, d M Y H.i') }}</span>
-                        </div>
-                        
-                        <br>
-                      
-                      <span class="fh5co_tags_all">
-                        <a href="#" class="fh5co_tagg">{{ $video->kategori }}</a>
-                      </span>
-                      
-                        <ul class="list-inline">
-                          <li class="list-inline-item">
-                            <a href="#">
-                                <button type="submit" style="background-color: orange; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
-                                    <i class="fa fa-plus" style="color: white;"></i> Simpan
-                                </button>
-                              </a>
-                        </li>
-                        
-                          <li class="list-inline-item">
-                            <a href="#" id="showModal" class="laporan-button" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
-                              <i class="fa fa-flag"></i> Laporkan
-                          </a>
-                        </li>        
-                      </ul>
-                      
-                      </section>
-                      <span style="text-align: right">
-                          <p class="icon-bagikan" style="color: rgba(165, 165, 165, 1); display: flex; align-items: center; justify-content: end; gap: 0.5em;">
-                              Share &nbsp;&nbsp;&nbsp;
-                              <a href="https://www.facebook.com/sharer.php?u=https://www.example.com/post-url{{ $video->judulArtikel }}">
-                                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Facebook_logo_%28square%29.png/640px-Facebook_logo_%28square%29.png" alt="Facebook" style="width: 32px; height: 32px;">
-                              </a>
-                              <a href="https://twitter.com/intent/tweet?url=https://www.example.com/post-url&text={{ $video->judulArtikel }}">
-                                  <img src="https://seeklogo.com/images/T/twitter-x-logo-101C7D2420-seeklogo.com.png?v=638258862800000000" alt="Twitter" style="width: 32px; height: 32px;">
-                              </a>
-                              <a href="whatsapp://send?text={{ $video->judulArtikel }}%20-%20https://www.example.com/post-url">
-                                  <img src="https://cdn4.iconfinder.com/data/icons/miu-square-flat-social/60/whatsapp-square-social-media-512.png" alt="WhatsApp" style="width: 32px; height: 32px;">
-                              </a>
-                              <a href="https://telegram.me/share/url?url=https://www.example.com/post-url&text={{ $video->judulArtikel }}">
-                                  <img src="https://cdn3.iconfinder.com/data/icons/social-media-chamfered-corner/154/telegram-512.png" alt="Telegram" style="width: 32px; height: 32px;">
-                              </a>
-                          </p>
-                      </span>
-                      
-                      <br>
-          
-                      <iframe width="840" height="450" src="{{$video->linkVideo}}" frameborder="0" allowfullscreen></iframe>
-            
-                      <div style="font-size: 18px; text-align: justify; margin-top: 20px;">
-                        <div style="font-size: 18px; line-height: 2;">
-                          {!! str_replace('<img', '<img style="max-width: 1152px; width: 100%; height: auto; display: block; margin: 0 auto;"', $video->deskripsiVideo) !!}
-                        </div>
-                      </div>
-
                     </div>
-                </div>
-            
-                <p>Tags:
-                  @php
-                  $tags = explode(",", $video->tagsVideo);
-                  foreach ($tags as $tag) {
-                      $trimmedTag = trim($tag);
-                      echo '<a href="' . route("TagsVideoA", $trimmedTag) . '" class="fh5co_tagg">#' . $trimmedTag . '</a>';
-                      echo ' ';
-                  }
-                  @endphp
-              </p>
-
-                <br>
-                <br>
-                 
-                </div>
                   </div>
-                </div>
-              </section>
+                </section>  
+              </div>
+          </div>
+
 
             </div>
 

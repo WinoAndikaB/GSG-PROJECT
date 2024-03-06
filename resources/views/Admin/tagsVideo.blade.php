@@ -379,12 +379,11 @@
     <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
       <?php
       $videoId = getYoutubeVideoId($item->linkVideo);
-      $thumbnail = "https://img.youtube.com/vi/{$videoId}/default.jpg"; // Mengambil thumbnail default
+      $thumbnail = "https://img.youtube.com/vi/{$videoId}/maxresdefault.jpg"; // Mengambil thumbnail dengan resolusi tinggi
       ?>
     
        <img src="<?php echo $thumbnail; ?>" alt="Thumbnail" width="500" height="300">
-    </div>
-                     
+    </div>               
       
       <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200" style="word-wrap: break-word;">
           <h4 style="text-align: left">{{ $item->judulVideo }}</h4>

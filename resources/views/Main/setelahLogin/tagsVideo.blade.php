@@ -257,14 +257,15 @@
 
           @foreach ($videos as $item)
                 <div class="row" style="text-align: justify">
-                    <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
-                      <?php
-                      $videoId = getYoutubeVideoId($item->linkVideo);
-                      $thumbnail = "https://img.youtube.com/vi/{$videoId}/default.jpg"; // Mengambil thumbnail default
-                      ?>
-              
-                       <img src="<?php echo $thumbnail; ?>" alt="Thumbnail">
-                    </div>
+                  <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
+                    <?php
+                    $videoId = getYoutubeVideoId($item->linkVideo);
+                    $thumbnail = "https://img.youtube.com/vi/{$videoId}/maxresdefault.jpg"; // Mengambil thumbnail dengan resolusi tinggi
+                    ?>
+                  
+                     <img src="<?php echo $thumbnail; ?>" alt="Thumbnail">
+                  </div>
+                  
                     <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
                         <h4 style="text-align: left">{{ $item->judulVideo }}</h4>
                         <span class="d-flex"><b>{{ $item->uploader }}</b></span>

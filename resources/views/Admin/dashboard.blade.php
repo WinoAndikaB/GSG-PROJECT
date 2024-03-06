@@ -407,10 +407,11 @@
                             </div>
                         </div>
                         <div class="d-flex">
-                            <button class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto">
-                                <i class="ni ni-bold-right" aria-hidden="true"></i>
-                            </button>
-                        </div>
+                          <a href="{{ route('kategoriVidA', ['kategori' => $item->kategoriVideo]) }}" class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto">
+                              <i class="ni ni-bold-right" aria-hidden="true"></i>
+                          </a>
+                      </div>
+                      
                     </li>
                     @endforeach
                   </ul>
@@ -440,9 +441,9 @@
                             </div>
                         </div>
                         <div class="d-flex">
-                            <button class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto">
+                            <a href="{{ route('kategoriArtA', ['kategori' => $item->kategori]) }}" class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto">
                                 <i class="ni ni-bold-right" aria-hidden="true"></i>
-                            </button>
+                            </a>
                         </div>
                     </li>
                     @endforeach
@@ -470,7 +471,6 @@
                                             $words = explode(",", $tag->tagsVideo);
                                             foreach ($words as $word) {
                                                 $trimmedWord = trim($word);
-                                                // Tambahkan tag ke dalam array unik
                                                 $uniqueTags[$trimmedWord] = $trimmedWord;
                                             }
                                             ?>

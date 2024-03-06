@@ -91,7 +91,8 @@ class SuperAdminController extends Controller
         $totalUlasan = ulasans::count();
         $totalUlasan = ulasans::count();
         $data1 = ulasans::all();
-        $tags = artikels::inRandomOrder()->take(10)->get();
+        $tagsA = artikels::inRandomOrder()->take(10)->get();
+        $tagsV = video::inRandomOrder()->take(10)->get();
 
         $superadminCount = User::where('role', 'superadmin')->count();
         $adminCount = User::where('role', 'admin')->count();
@@ -123,7 +124,7 @@ class SuperAdminController extends Controller
 
         return view('SuperAdmin.dashboardSA', compact('superadminCount','adminCount','userCount','totalArtikel', 'totalUser', 'totalUlasan', 'averageRating', 'totalUlasan', 
         'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 
-        'dataBaruLaporanArtikel','dataBaruLaporanVideo','kategoriArtikel','kategoriVideo','tags'));
+        'dataBaruLaporanArtikel','dataBaruLaporanVideo','kategoriArtikel','kategoriVideo','tagsA','tagsV'));
     }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

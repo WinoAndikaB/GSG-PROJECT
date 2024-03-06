@@ -117,6 +117,55 @@ class AdminController extends Controller
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+    //[User] Halaman Kategori 
+    function kategoriArtA($kategori){
+
+        $KategoriA = artikels::where('kategori', $kategori)
+            ->whereNotIn('status', ['Pending', 'Rejected'])
+            ->inRandomOrder()
+            ->take(10)
+            ->get();
+
+        // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+        $dataBaruArtikel = artikels::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruVideo = video::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruKomentarVideo = komentar_video::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=', Carbon::now()->subDay())->count();
+    
+        $totalUserArtikel = artikels::where('user_id', auth()->user()->id)->count();
+        $totalUserVideo = video::where('user_id', auth()->user()->id)->count();
+    
+    
+        return view('admin.KategoriArtA', compact('KategoriA', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo', 'totalUserArtikel', 'totalUserVideo'));
+    }
+    
+    function kategoriVidA($kategori){
+
+        $kategoriV = video::where('kategoriVideo', $kategori)
+            ->whereNotIn('statusVideo', ['Pending', 'Rejected'])
+            ->inRandomOrder()
+            ->take(10)
+            ->get();
+
+            $existingTags = artikels::select('tags')->distinct()->get();
+
+        // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+        $dataBaruArtikel = artikels::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruVideo = video::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruKomentarVideo = komentar_video::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=', Carbon::now()->subDay())->count();
+            
+        $totalUserArtikel = artikels::where('user_id', auth()->user()->id)->count();
+        $totalUserVideo = video::where('user_id', auth()->user()->id)->count();
+            
+        return view('admin.KategoriVidA', compact('existingTags','kategoriV', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo', 'totalUserArtikel', 'totalUserVideo'));
+    }
+
     //[Admin-Artikel] Halaman Tables Artikel
     public function artikel(Request $request)
     {

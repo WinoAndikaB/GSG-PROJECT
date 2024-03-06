@@ -384,7 +384,7 @@
                             <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;">Penulis | {{ $totalFollowers }} Follower</span>
                         </div>
             
-                          <a href="/login" style="text-decoration: none; color: inherit;">
+                          <a href="#" style="text-decoration: none; color: inherit;">
                               <div class="simple-follow-button" style="background-color: #3498db; padding: 8px 16px; border-radius: 20px; cursor: pointer;">
                                   <span style="color: #fff; font-weight: bold; font-size: 1em; display: block;">Follow</span>
                               </div>
@@ -405,17 +405,15 @@
                       
                         <ul class="list-inline">
                           <li class="list-inline-item">
-                            <form action="/login" method="POST">
-                                @csrf
-                                <input type="hidden" name="artikel_id" value="{{ $article->id }}">
+                            <a href="#">
                                 <button type="submit" style="background-color: orange; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
                                     <i class="fa fa-plus" style="color: white;"></i> Simpan
                                 </button>
-                            </form>
+                              </a>
                         </li>
                         
                           <li class="list-inline-item">
-                            <a href="/login" id="showModal" class="laporan-button" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
+                            <a href="#" id="showModal" class="laporan-button" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
                               <i class="fa fa-flag"></i> Laporkan
                           </a>
                         </li>        
@@ -452,11 +450,16 @@
                     </div>
                 </div>
             
-                <span class="fh5co_tags_all"> Tags : 
-                  @foreach(explode(',', $article->tags) as $tag)
-                      <a href="#" class="fh5co_tagg">#{{ $tag }}</a>
-                  @endforeach
-                </span>
+                <p>Tags:
+                  @php
+                  $tags = explode(",", $article->tags);
+                  foreach ($tags as $tag) {
+                      $trimmedTag = trim($tag);
+                      echo '<a href="' . route("TagsArtikelA", $trimmedTag) . '" class="fh5co_tagg">#' . $trimmedTag . '</a>';
+                      echo ' ';
+                  }
+                  @endphp
+              </p>
 
                 <br>
                 <br>

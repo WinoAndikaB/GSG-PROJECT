@@ -263,7 +263,7 @@
                   <br>
                   <div>
                     <div class="text-center">
-                      <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="Foto Profil" class="rounded-circle img-fluid border border-primary" style="width: 120px; height: 120px;">
+                      <img src="{{ asset('fotoProfil/' . $user->fotoProfil) }}" alt="Foto Profil" class="rounded-circle img-fluid border border-primary" style="width: 120px; height: 120px;">
                   </div>
                   
 

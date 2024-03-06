@@ -420,7 +420,9 @@
                                   </span> 
                                   </td>
                                   <td class="align-middle text-center">
-                                    <span class="badge badge-sm bg-gradient-info">{{$item->kategoriVideo}}</span>
+                                    <a href="{{ route('kategoriVidA', ['kategori' => $item->kategoriVideo]) }}" class="fh5co_tagg">
+                                      <span class="badge badge-sm bg-gradient-info">{{ $item['kategoriVideo'] }}</span>
+                                  </a>  
                                   </td>
                                   <td class="align-middle text-center">
                                     @if($item['tagsVideo'])

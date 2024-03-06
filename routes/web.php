@@ -185,6 +185,7 @@ use Illuminate\Support\Facades\Route;
                 Route::get('/artikelAdmin', [AdminController::class, 'artikel'])->name('artikel');
                 Route::get('/komentarArtikel', [AdminController::class, 'komentarArtikel'])->name('komentarArtikel');
                 Route::get('/detailArtikelA/{id}', [AdminController::class, 'showDetailArtikelA'])->name('showDetailArtikelA');
+                Route::get('/kategoriArtA/{kategori}', [AdminController::class, 'kategoriArtA'])->name('kategoriArtA');
 
                 //[Admin] Tambah Artikel
                 Route::get('/formTambahArtikelA',  [AdminController::class, 'formTambahArtikelA'])->name('formTambahArtikelA');
@@ -198,12 +199,11 @@ use Illuminate\Support\Facades\Route;
                 Route::get('/formEditArtikelA/{id}',[AdminController::class,'formEditArtikelA'])->name('formEditArtikelA');     
                 Route::post('/formEditArtikelA/updateArtikelA/{id}',[AdminController::class,'updateArtikelA'])->name('updateArtikelA');
 
-
-
                 //[Admin] Tabel Video
                 Route::get('/videoAdmin', [AdminController::class, 'videoAdmin'])->name('videoAdmin');
                 Route::get('/komentarVideo', [AdminController::class, 'komentarVideo'])->name('komentarVideo');
                 Route::get('/detailVideoA/{id}', [AdminController::class, 'showDetailVideoA'])->name('showDetailVideoA');
+                Route::get('/kategoriVidA/{kategori}', [AdminController::class, 'kategoriVidA'])->name('kategoriVidA');
 
                 //[Admin] Tambah Video Admin
                 Route::get('/formTambahVideo', [AdminController::class, 'formTambahVideo'])->name('formTambahVideo');

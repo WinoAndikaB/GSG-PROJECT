@@ -465,7 +465,9 @@
                                                                                        
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="badge badge-sm bg-gradient-info">{{$tbhartikel['kategori']}}</span>
+                                  <a href="{{ route('kategoriArtA', ['kategori' => $tbhartikel->kategori]) }}" class="fh5co_tagg">
+                                    <span class="badge badge-sm bg-gradient-info">{{ $tbhartikel['kategori'] }}</span>
+                                </a>                                
                                 </td>
                                 <td class="align-middle text-center">
                                   @if($tbhartikel['tags'])
