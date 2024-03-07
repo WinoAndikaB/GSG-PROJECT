@@ -382,7 +382,7 @@
       $thumbnail = "https://img.youtube.com/vi/{$videoId}/maxresdefault.jpg"; // Mengambil thumbnail dengan resolusi tinggi
       ?>
     
-       <img src="<?php echo $thumbnail; ?>" alt="Thumbnail" width="500" height="300">
+       <img src="<?php echo $thumbnail; ?>" alt="Thumbnail" width="470" height="300">
     </div>               
       
       <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200" style="word-wrap: break-word;">

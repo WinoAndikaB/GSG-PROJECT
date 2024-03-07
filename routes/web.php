@@ -174,8 +174,6 @@ use Illuminate\Support\Facades\Route;
                 Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
                 Route::get('/searchTagsV/videos', [AdminController::class, 'searchTagsV'])->name('searchTagsV');
                 Route::get('/searchTagsA/artikels', [AdminController::class, 'searchTagsA'])->name('searchTagsA');
-                Route::get('/TagsVideoA/{tag}', [AdminController::class, 'TagsVideoA'])->name('TagsVideoA'); 
-                Route::get('/TagsArtikelA/{tag}', [AdminController::class, 'TagsArtikelA'])->name('TagsArtikelA'); 
 
                 //[Admin] Tabel Profil
                 Route::get('/profileAdmin', [AdminController::class, 'profileAdmin'])->name('profileAdmin');
@@ -186,6 +184,7 @@ use Illuminate\Support\Facades\Route;
                 Route::get('/komentarArtikel', [AdminController::class, 'komentarArtikel'])->name('komentarArtikel');
                 Route::get('/detailArtikelA/{id}', [AdminController::class, 'showDetailArtikelA'])->name('showDetailArtikelA');
                 Route::get('/kategoriArtA/{kategori}', [AdminController::class, 'kategoriArtA'])->name('kategoriArtA');
+                Route::get('/TagsArtikelA/{tag}', [AdminController::class, 'TagsArtikelA'])->name('TagsArtikelA'); 
 
                 //[Admin] Tambah Artikel
                 Route::get('/formTambahArtikelA',  [AdminController::class, 'formTambahArtikelA'])->name('formTambahArtikelA');
@@ -204,6 +203,7 @@ use Illuminate\Support\Facades\Route;
                 Route::get('/komentarVideo', [AdminController::class, 'komentarVideo'])->name('komentarVideo');
                 Route::get('/detailVideoA/{id}', [AdminController::class, 'showDetailVideoA'])->name('showDetailVideoA');
                 Route::get('/kategoriVidA/{kategori}', [AdminController::class, 'kategoriVidA'])->name('kategoriVidA');
+                Route::get('/TagsVideoA/{tag}', [AdminController::class, 'TagsVideoA'])->name('TagsVideoA'); 
 
                 //[Admin] Tambah Video Admin
                 Route::get('/formTambahVideo', [AdminController::class, 'formTambahVideo'])->name('formTambahVideo');
@@ -239,16 +239,19 @@ use Illuminate\Support\Facades\Route;
     
             //[SuperAdmin] Dashboard
             Route::get('/dashboardSA', [SuperAdminController::class, 'dashboardSA'])->name('dashboardSA');
-    
+            Route::get('/searchTagsVSA/videos', [SuperAdminController::class, 'searchTagsVSA'])->name('searchTagsVSA');
+            Route::get('/searchTagsASA/artikels', [SuperAdminController::class, 'searchTagsASA'])->name('searchTagsASA');
           
             //[SuperAdmin] Profil
             Route::get('/profileSA', [SuperAdminController::class, 'profileSA'])->name('profileSA');
             Route::put('/profileSA/updateSA/{id}',[SuperAdminController::class,'updateSA'])->name('updateSA');
-    
 
             //[SuperAdmin] Tabel Artikel
             Route::get('/artikelSuperAdmin', [SuperAdminController::class, 'artikelSA'])->name('artikelSA');
             Route::get('/komentarArtikelSA', [SuperAdminController::class, 'komentarArtikelSA'])->name('komentarArtikelSA');
+            Route::get('/detailArtikelSA/{id}', [SuperAdminController::class, 'showDetailArtikelSA'])->name('showDetailArtikelSA');
+            Route::get('/kategoriArtSA/{kategori}', [SuperAdminController::class, 'kategoriArtSA'])->name('kategoriArtSA');
+            Route::get('/TagsArtikelSA/{tag}', [SuperAdminController::class, 'TagsArtikelSA'])->name('TagsArtikelSA'); 
     
             //[SuperAdmin] Tambah Artikel
             Route::get('/artikelSA/createSA', [SuperAdminController::class, 'createSA'])->name('createSA');
@@ -271,6 +274,9 @@ use Illuminate\Support\Facades\Route;
             //[SuperAdmin] Tabel Video
             Route::get('/videoSuperAdmin', [SuperAdminController::class, 'videoSuperAdmin'])->name('videoSuperAdmin');
             Route::get('/komentarVideoSA', [SuperAdminController::class, 'komentarVideoSA'])->name('komentarVideoSA');
+            Route::get('/detailVideoSA/{id}', [SuperAdminController::class, 'showDetailVideoSA'])->name('showDetailVideoSA');
+            Route::get('/kategoriVidSA/{kategori}', [SuperAdminController::class, 'kategoriVidSA'])->name('kategoriVidSA');
+            Route::get('/TagsVideoSA/{tag}', [SuperAdminController::class, 'TagsVideoSA'])->name('TagsVideoSA'); 
 
             //[SuperAdmin] Status Video
             Route::get('/approveVideo/{id}',  [SuperAdminController::class, 'approveVideo'])->name('approveVideo');

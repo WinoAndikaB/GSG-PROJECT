@@ -449,16 +449,23 @@
                                   </span> 
                                   </td>
                                   <td class="align-middle text-center">
-                                    <span class="badge badge-sm bg-gradient-info">{{$item->kategoriVideo}}</span>
+                                    <a href="{{ route('kategoriVidSA', ['kategori' => $item->kategoriVideo]) }}" class="fh5co_tagg">
+                                      <span class="badge badge-sm bg-gradient-info">{{ $item['kategoriVideo'] }}</span>
+                                  </a>                                
                                   </td>
                                   <td class="align-middle text-center">
                                     @if($item['tagsVideo'])
-                                      @foreach(explode(',', $item['tagsVideo']) as $tag)
-                                          <span class="badge badge-sm bg-gradient-warning">{{ $tag }}</span>
-                                      @endforeach
+                                        @foreach(explode(',', $item['tagsVideo']) as $tag)
+                                            <a href="{{ route('TagsVideoSA', ['tag' => $tag]) }}">
+                                                <span class="badge badge-sm bg-gradient-warning">{{ $tag }}</span>
+                                            </a>
+                                        @endforeach
                                     @endif
-                                  </td>
+                                </td>
                                   <td class="align-middle">
+                                    <a href="{{ route('showDetailVideoSA', ['id' => $item->id]) }}" class="btn btn-info btn btn-primary btn-round">
+                                      <i class="fas fa-info-circle"></i>
+                                  </a>
                                     <a href="/formEditVideoSA/{{ $item->id}}" class="btn btn-warning btn btn-primary btn-round">
                                       <i class="fa fa-pencil"></i>
                                     </a>

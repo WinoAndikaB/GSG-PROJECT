@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Artikel | KataKey
+    Detail Artikel | Katakey
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -195,7 +195,7 @@
 
 <body class="g-sidenav-show   bg-gray-100">
   <div class="min-height-300 bg-primary position-absolute w-100"></div>
-  <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main" data-color="primary">
+  <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html " target="_blank">
@@ -205,7 +205,7 @@
           </div>
           <div class="d-flex flex-column justify-content-center">
             <h6 class="mb-0 text-sm">KataKey</h6>
-            <p class="text-xs text-secondary mb-0">Halaman Super Admin</p>
+            <p class="text-xs text-secondary mb-0">Halaman Admin</p>
           </div>
         </div>
       </a>
@@ -230,12 +230,12 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/artikelSuperAdmin">
+          <a class="nav-link " href="/artikelSuperAdmin">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Artikel
-              <span class="text-success text-sm font-weight-bolder text-white">+ {{ $dataBaruArtikel + $dataBaruKomentarArtikel}}</span>
+              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruArtikel + $dataBaruKomentarArtikel}}</span> 
             </span>
           </a>
         </li>
@@ -300,6 +300,7 @@
       </ul>
     </div>
 
+
   <div class="sidenav-footer mx-3 ">   
   </aside>
   <main class="main-content position-relative border-radius-lg ">
@@ -309,44 +310,58 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Artikel</li>
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Detail Artikel</li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Artikel</h6>
+          <h6 class="font-weight-bolder text-white mb-0">Detail Artikel</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-            <form action="{{ route('artikelSA') }}" method="GET" class="d-flex">
-                @csrf
-                <div class="input-group">
-                    <span class="input-group-text"><i class="fas fa-search" aria-hidden="true"></i></span>
-                    <input type="text" name="search" class="form-control" placeholder="Cari Artikel..." value="{{ request('search') }}">
-                </div>
-                <button type="submit" class="btn btn-warning ms-2 btn-block">Cari</button>
-            </form>
-        </div>   
+            <form action="{{ route('searchTagsASA') }}" method="GET" class="d-flex">
+              @csrf
+              <div class="input-group">
+                  <span class="input-group-text"><i class="fas fa-search" aria-hidden="true"></i></span>
+                  <input type="text" name="search" class="form-control" placeholder="Cari Artikel..." value="{{ request()->input('search') }}" autocomplete="off" list="tagList">
+                  <datalist id="tagList">
+                    @foreach($existingTags as $tag)
+                        <option value="{{ $tag->tags }}">
+                    @endforeach
+                </datalist>
+              </div>
+              <button type="submit" class="btn btn-warning ms-2 btn-block">Cari</button>
+          </form>          
+        </div> 
           <ul class="navbar-nav  justify-content-end">
             <li class="nav-item d-flex align-items-center">
               <div class="dropdown">
                 <a href="#" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdownMenuLink2">
                   <i>
                     <?php
-                    $fotoProfil = Auth::user()->fotoProfil;
-                    if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
-                    ?>
-                    <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
-                    <?php
+                    if (Auth::check()) { // Memeriksa apakah pengguna telah terautentikasi
+                        $fotoProfil = Auth::user()->fotoProfil; // Mengambil foto profil pengguna yang terautentikasi
+                        if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
+                        ?>
+                        <!-- Jika foto profil tersedia dan file gambar tersebut ada, maka tampilkan gambar profil pengguna -->
+                        <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
+                        <?php
+                        } else {
+                        ?>
+                        <!-- Jika foto profil tidak tersedia atau tidak ada, maka tampilkan gambar profil default -->
+                        <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
+                        <?php
+                        }
                     } else {
-                    ?>
-                    <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
-                    <?php
+                        // Tampilkan foto default jika pengguna belum terautentikasi
+                        ?>
+                        <img src="{{ asset('defaultFoto.png') }}" alt="Default Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
+                        <?php
                     }
                     ?>
-                </i>
+                  </i>
                 <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span> 
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
                     <li>
-                        <a class="dropdown-item" href="/profileSA">
+                        <a class="dropdown-item" href="/profileAdmin">
                           <i class="ni ni-badge text-primary text-sm opacity-10"></i> Profil
                         </a>
                     </li>
@@ -384,188 +399,120 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <a href="/artikelSA/createSA" class="btn btn-primary">Tambah Artikel</i></a>
-              <a href="/komentarArtikelSA" class="btn btn-success">Komentar Artikel</i>
-                + {{ $dataBaruKomentarArtikel }}
-              </a>
-              <h6>List Artikel Tersedia</h6>
-            </div>
-            <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">  
 
-                <div class="row">
-                  <div class="col-12">
-                    <div class="card mb-4">
-                      <div class="card-header pb-0">
-                      </div>
-                      <div class="card-body px-0 pt-0 pb-2">
-                        <div class="table-responsive p-0">
-                          <table class="table align-items-center mb-0">
-                            <thead>
-                              <tr>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kode Artikel</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Penulis</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Judul Artikel</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Dibaca</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Upload</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Update</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kategori</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tags</th>
-                                <th class="text-secondary opacity-7"></th>
-                              </tr>
-                            </thead>
-                            @foreach ($data as $tbhartikel)
-                            <tbody>
-                              <tr>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$tbhartikel['id']}}</p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$tbhartikel['kodeArtikel']}}</p>
-                                </td>
-                                <td>
-                                  <div class="d-flex px-2 py-1">
-                                    <div>
-                                      <a href="{{asset('gambarArtikel/'.$tbhartikel->gambarArtikel)}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
-                                          <img src="{{asset('gambarArtikel/'.$tbhartikel->gambarArtikel)}}" class="avatar avatar-sm me-3" alt="user1">
-                                      </a>
-                                  </div>                                  
-                                    <div class="d-flex flex-column justify-content-center">
-                                      <h6 class="mb-0 text-sm">{{$tbhartikel['penulis']}}</h6>
-                                      <p class="text-xs text-secondary mb-0">{{$tbhartikel['email']}}</p>
-                                    </div>
-                                  </div>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
-                                    <?php
-                                    $judulA = strip_tags($tbhartikel['judulArtikel']);
-                                    $words = str_word_count($judulA, 2);
-                                    $first_100_words = implode(' ', array_slice($words, 0, 5));
-                                    echo $first_100_words;
-                                    if (str_word_count($judulA) > 500) {
-                                      echo '...';
-                                    }
-                                    ?>
-                                  </p>
-                                </td>
-                                <td class="popup-trigger" data-id="<?php echo $tbhartikel['id']; ?>" style="text-align: justify;">
-                                  <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
-                                    <?php
-                                    $deskripsi = strip_tags($tbhartikel['deskripsi']);
-                                    $words = str_word_count($deskripsi, 2);
-                                    $first_100_words = implode(' ', array_slice($words, 0, 5));
-                                    echo $first_100_words;
-                                    if (str_word_count($deskripsi) > 100) {
-                                      echo '...';
-                                    }
-                                    ?>
-                                  </p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">
-                                    <i class="fas fa-eye"></i> {{ $tbhartikel->formattedJumlahAkses }}
-                                  </p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($tbhartikel['created_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($tbhartikel['updated_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <span class="badge badge-sm status-badge 
-                                  {{$tbhartikel['status'] === 'Published' ? 'bg-gradient-success' : ''}}
-                                  {{$tbhartikel['status'] === 'Pending' ? 'bg-gradient-secondary' : ''}}
-                                  {{$tbhartikel['status'] === 'Rejected' ? 'bg-gradient-danger' : ''}}">
-                                  {{$tbhartikel['status']}}
-                                </span>
-                                                                                       
-                                </td>
-                                <td class="align-middle text-center">
-                                  <a href="{{ route('kategoriArtSA', ['kategori' => $tbhartikel->kategori]) }}" class="fh5co_tagg">
-                                    <span class="badge badge-sm bg-gradient-info">{{ $tbhartikel['kategori'] }}</span>
-                                </a>                                
-                                </td>
-                                <td class="align-middle text-center">
-                                  @if($tbhartikel['tags'])
-                                      @foreach(explode(',', $tbhartikel['tags']) as $tag)
-                                          <a href="{{ route('TagsArtikelSA', ['tag' => $tag]) }}">
-                                              <span class="badge badge-sm bg-gradient-warning">{{ $tag }}</span>
-                                          </a>
-                                      @endforeach
-                                  @endif
-                              </td>                               
-                                <td class="align-middle">
-                                  <a href="{{ route('showDetailArtikelSA', ['id' => $tbhartikel->id]) }}" class="btn btn-info btn btn-primary btn-round">
-                                    <i class="fas fa-info-circle"></i>
-                                </a>
-                                  <a href="/formEditArtikelSA/{{ $tbhartikel->id }}" class="btn btn-warning btn btn-primary btn-round">
-                                      <i class="fa fa-pencil"></i>
-                                  </a>
-                                  <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteArtikelSA', ['id' => $tbhartikel['id']]) }}')">
-                                    <i class="fa fa-trash"></i>
-                                </a>
-                                  @if ($tbhartikel->status === 'Pending')
-                                      <a href="{{ route('approveArticle', $tbhartikel->id) }}" class="btn btn-success btn btn-primary btn-round">
-                                          Approve
-                                      </a>
-                                      <a href="{{ route('rejectArticle', $tbhartikel->id) }}" class="btn btn-danger btn btn-primary btn-round">
-                                          Reject
-                                      </a>
-                                  @endif
-                              </td>
-                              
-                              </tr>
-                            </tbody>
-                            @endforeach
-
-                            <div class="d-flex justify-content-center">
-                              <ul class="pagination">
-                                  @if ($data->onFirstPage())
-                                      <li class="page-item disabled">
-                                          <span class="page-link" aria-label="Previous">
-                                              <span aria-hidden="true">&lsaquo;</span>
-                                          </span>
-                                      </li>
-                                  @else
-                                      <li class="page-item">
-                                          <a class="page-link" href="{{ $data->previousPageUrl() }}" rel="prev" aria-label="Previous">
-                                              <span aria-hidden="true">&lsaquo;</span>
-                                          </a>
-                                      </li>
-                                  @endif
+              <section class="what-we-do">
+                <div class="container">
+                  <div class="row">
+                  
+                    <div class="col-md-8 animate-box" data-animate-effect="fadeInRight">
+                      <section>        
+                          <h1 style="color: rgba(47, 72, 88, 1);">{{ $article->judulArtikel }}</h1><br>
+                        <div class="simple-profile-container" style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+                          <a href="{{ route('detailProfilPenulisArtikelLP', ['id' => $article->id]) }}" style="text-decoration: none; color: inherit;">
+                            <div class="simple-profile-picture" style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #3498db;">
+                              <img src="{{ asset('fotoProfil/' . $user->fotoProfil) }}" alt="Profil Picture" style="width: 100%; height: 100%;">
+                            </div>
+                        </a>
+                        
             
-                                <!-- Menampilkan halaman berapa -->
-                                <div class="text-center">
-                                    {{ $data->currentPage() }} dari {{ $data->lastPage() }}
-                                </div>
-                          
-                                  @if ($data->hasMorePages())
-                                      <li class="page-item">
-                                          <a class="page-link" href="{{ $data->nextPageUrl() }}" rel="next" aria-label="Next">
-                                              <span aria-hidden="true">&rsaquo;</span>
-                                          </a>
-                                      </li>
-                                  @else
-                                      <li class="page-item disabled">
-                                          <span class="page-link" aria-label="Next">
-                                              <span aria-hidden="true">&rsaquo;</span>
-                                          </span>
-                                      </li>
-                                  @endif
-                              </ul>
-                          </div>
+                        <div class="simple-profile-details" style="flex: 1;">
+                            <a href="{{ route('detailProfilPenulisArtikelLP', ['id' => $article->id]) }}" style="text-decoration: none; color: inherit;">
+                                <span class="simple-profile-name" style="color: #2c3e50; font-weight: bold; font-size: 1.2em; display: block; margin-bottom: 4px;">
+                                    {{ $article->penulis }}
+                                </span>
+                            </a>
+            
+                            <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;">Penulis | {{ $totalFollowers }} Follower</span>
+                        </div>
+            
+                          <a href="#" style="text-decoration: none; color: inherit;">
+                              <div class="simple-follow-button" style="background-color: #3498db; padding: 8px 16px; border-radius: 20px; cursor: pointer;">
+                                  <span style="color: #fff; font-weight: bold; font-size: 1em; display: block;">Follow</span>
+                              </div>
+                          </a>
+                      </div>
+            
+                        <hr>
+                        
+                        <div class="float-right" style="margin-top: 10px;">
+                                    Dibuat: <span style="color: rgba(165, 165, 165, 1);">{{ \Carbon\Carbon::parse($article['created_at'])->format('l, d M Y H.i') }}</span><br>
+                                    Diperbarui: <span style="color: rgba(165, 165, 165, 1);">{{ \Carbon\Carbon::parse($article['updated_at'])->format('l, d M Y H.i') }}</span>
+                        </div>
+                        <br>
+                        <p>
+                          <i class="fas fa-eye"></i> {{ $formattedJumlahAkses }}
+                      </p>   
+                      
+                      
+                        <ul class="list-inline">
+                          <li class="list-inline-item">
+                            <a href="#">
+                                <button type="submit" style="background-color: orange; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+                                    <i class="fa fa-plus" style="color: white;"></i> Simpan
+                                </button>
+                              </a>
+                        </li>
+                        
+                          <li class="list-inline-item">
+                            <a href="#" id="showModal" class="laporan-button" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
+                              <i class="fa fa-flag"></i> Laporkan
+                          </a>
+                        </li>        
+                      </ul>
+                      
+                      </section>
+                      <span style="text-align: right">
+                          <p class="icon-bagikan" style="color: rgba(165, 165, 165, 1); display: flex; align-items: center; justify-content: end; gap: 0.5em;">
+                              Share &nbsp;&nbsp;&nbsp;
+                              <a href="https://www.facebook.com/sharer.php?u=https://www.example.com/post-url{{ $article->judulArtikel }}">
+                                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Facebook_logo_%28square%29.png/640px-Facebook_logo_%28square%29.png" alt="Facebook" style="width: 32px; height: 32px;">
+                              </a>
+                              <a href="https://twitter.com/intent/tweet?url=https://www.example.com/post-url&text={{ $article->judulArtikel }}">
+                                  <img src="https://seeklogo.com/images/T/twitter-x-logo-101C7D2420-seeklogo.com.png?v=638258862800000000" alt="Twitter" style="width: 32px; height: 32px;">
+                              </a>
+                              <a href="whatsapp://send?text={{ $article->judulArtikel }}%20-%20https://www.example.com/post-url">
+                                  <img src="https://cdn4.iconfinder.com/data/icons/miu-square-flat-social/60/whatsapp-square-social-media-512.png" alt="WhatsApp" style="width: 32px; height: 32px;">
+                              </a>
+                              <a href="https://telegram.me/share/url?url=https://www.example.com/post-url&text={{ $article->judulArtikel }}">
+                                  <img src="https://cdn3.iconfinder.com/data/icons/social-media-chamfered-corner/154/telegram-512.png" alt="Telegram" style="width: 32px; height: 32px;">
+                              </a>
+                          </p>
+                      </span>
+                      
+                      <img src="{{ asset('gambarArtikel/' . $article->gambarArtikel) }}" class="main-image" width="100%" style="margin-bottom: 20px;">
 
-                          </table>
+
+            
+                      <div style="font-size: 18px; text-align: justify; margin-top: 20px;">
+                        <div style="font-size: 18px; line-height: 2;">
+                          {!! str_replace('<img', '<img style="max-width: 1152px; width: 100%; height: auto; display: block; margin: 0 auto;"', $article->deskripsi) !!}
                         </div>
                       </div>
                     </div>
+                </div>
+            
+                <p>Tags:
+                  @php
+                  $tags = explode(",", $article->tags);
+                  foreach ($tags as $tag) {
+                      $trimmedTag = trim($tag);
+                      echo '<a href="' . route("TagsArtikelA", $trimmedTag) . '" class="fh5co_tagg">#' . $trimmedTag . '</a>';
+                      echo ' ';
+                  }
+                  @endphp
+              </p>
+
+                <br>
+                <br>
+                 
+                </div>
                   </div>
                 </div>
+              </section>
+
+            </div>
+
+        
   
 <!------------------------------------------------------------------------------------- Modal Area -------------------------------------------------------------------------------------------------------------------->
 <!------------------------------------------------------------------------------------- Modal Area -------------------------------------------------------------------------------------------------------------------->
@@ -618,7 +565,7 @@
                         Template by <a title="CSS Templates" rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>,
                         <a title="CSS Templates" rel="sponsored" href="https://themewagon.com/themes/free-bootstrap-4-html-5-blog-website-template-nextpage/" target="_blank">NextPage </a> and
                         <a title="CSS Templates" rel="sponsored" href="https://www.creative-tim.com" target="_blank">Crative Tim </a> 
-                        Edited By <a title="CSS Templates" rel="sponsored" href="#" target="_blank">Katakey Team</a></p>
+                        Edited By <a title="CSS Templates" rel="sponsored" href="#" target="_blank">KataKey Team</a></p>
                       </div>
                       </div>
                     </div>

@@ -163,7 +163,7 @@ class AdminController extends Controller
         $totalUserArtikel = artikels::where('user_id', auth()->user()->id)->count();
         $totalUserVideo = video::where('user_id', auth()->user()->id)->count();
             
-        return view('admin.KategoriVidA', compact('existingTags','kategoriV', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo', 'totalUserArtikel', 'totalUserVideo'));
+        return view('superadmin.kategori.KategoriVidA', compact('existingTags','kategoriV', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo', 'totalUserArtikel', 'totalUserVideo'));
     }
 
     //[Admin-Artikel] Halaman Tables Artikel
@@ -514,35 +514,34 @@ class AdminController extends Controller
                 $detailArtikelLP = komentar_artikel::where('artikel_id', $id)->latest()->paginate(6);
             
                 // Ambil data user berdasarkan id penulis artikel
-                $user = User::findOrFail($article->user_id);
+                $user = User::findOrFail($article->user_id); // Assign $user before accessing its properties
+                $fotoProfil = $user->fotoProfil;
             
                 // Format jumlah akses
                 $formattedJumlahAkses = $this->formatJumlahAkses($article->jumlah_akses);
-            
-                // Ambil foto profil penulis artikel
-                $fotoProfil = $user->fotoProfil;
             
                 // Hitung total pengikut (followers) berdasarkan user_id
                 $totalFollowers = Follower::where('user_id', $user->id)->count();
             
                 // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
-                $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
-                $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+                $dataBaruArtikel = artikels::where('created_at', '>=', Carbon::now()->subDay())->count();
+                $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=', Carbon::now()->subDay())->count();
             
-                $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
-                $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+                $dataBaruVideo = video::where('created_at', '>=', Carbon::now()->subDay())->count();
+                $dataBaruKomentarVideo = komentar_video::where('created_at', '>=', Carbon::now()->subDay())->count();
             
-                $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
-                $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+                $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=', Carbon::now()->subDay())->count();
+                $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=', Carbon::now()->subDay())->count();
             
                 $totalUserArtikel = artikels::where('user_id', auth()->user()->id)->count();
                 $totalUserVideo = video::where('user_id', auth()->user()->id)->count();
             
-                return view('admin.detailArtikelA', compact('dataBaruArtikel', 'dataBaruKomentarArtikel', 
-                'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo','totalUserArtikel','totalUserVideo',  'kategoriA',
-                'article','box','tagsA','uniqueTags','detailArtikelLP','totalKomentar','fotoProfil','totalFollowers','formattedJumlahAkses'
-            ));
+                return view('admin.detailArtikelA', compact('dataBaruArtikel', 'dataBaruKomentarArtikel', 'fotoProfil', 'user',
+                    'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo', 'totalUserArtikel', 'totalUserVideo', 'kategoriA',
+                    'article', 'box', 'tagsA', 'uniqueTags', 'detailArtikelLP', 'totalKomentar', 'totalFollowers', 'formattedJumlahAkses'
+                ));
             }
+            
             
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

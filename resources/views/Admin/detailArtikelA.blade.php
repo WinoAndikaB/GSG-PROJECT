@@ -369,7 +369,7 @@
                         <div class="simple-profile-container" style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
                           <a href="{{ route('detailProfilPenulisArtikelLP', ['id' => $article->id]) }}" style="text-decoration: none; color: inherit;">
                             <div class="simple-profile-picture" style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #3498db;">
-                              <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="Profil Picture" style="width: 100%; height: 100%;">
+                              <img src="{{ asset('fotoProfil/' . $user->fotoProfil) }}" alt="Profil Picture" style="width: 100%; height: 100%;">
                             </div>
                         </a>
                         

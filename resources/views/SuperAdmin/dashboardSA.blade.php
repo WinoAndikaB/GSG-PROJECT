@@ -481,9 +481,9 @@
                             </div>
                         </div>
                         <div class="d-flex">
-                            <button class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto">
+                            <a href="{{ route('kategoriVidSA', ['kategori' => $item->kategoriVideo]) }}" class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto">
                                 <i class="ni ni-bold-right" aria-hidden="true"></i>
-                            </button>
+                            </a>
                         </div>
                     </li>
                     @endforeach
@@ -514,9 +514,9 @@
                             </div>
                         </div>
                         <div class="d-flex">
-                            <button class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto">
+                            <a href="{{ route('kategoriArtSA', ['kategori' => $item->kategori]) }}" class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto">
                                 <i class="ni ni-bold-right" aria-hidden="true"></i>
-                            </button>
+                            </a>
                         </div>
                     </li>
                     @endforeach
@@ -549,7 +549,7 @@
                                               ?>
                                           @endforeach
                                           @foreach($uniqueTags as $uniqueTag)
-                                              <a href="{{ route('TagsVideoA', $uniqueTag) }}" class="fh5co_tagg">#{{ $uniqueTag }}</a>
+                                              <a href="{{ route('TagsVideoSA', $uniqueTag) }}" class="fh5co_tagg">#{{ $uniqueTag }}</a>
                                           @endforeach
                                       </span>
                                   </div>
@@ -582,7 +582,7 @@
                                             ?>
                                         @endforeach
                                         @foreach($uniqueTags as $uniqueTag)
-                                            <a href="{{ route('TagsArtikelA', $uniqueTag) }}" class="fh5co_tagg">#{{ $uniqueTag }}</a>
+                                            <a href="{{ route('TagsArtikelSA', $uniqueTag) }}" class="fh5co_tagg">#{{ $uniqueTag }}</a>
                                         @endforeach
                                     </span>
                                 </div>
