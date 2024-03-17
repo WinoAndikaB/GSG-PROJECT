@@ -123,6 +123,35 @@
     opacity: 1;
 }
   </style>
+      <style>
+        /* CSS styles */
+        .article-title {
+            color: black;
+            text-decoration: none; /* Menghilangkan garis bawah */
+            font-weight: bold; /* Bold text */
+            position: relative; /* Memberikan posisi relatif */
+        }
+        .article-title::selection {
+            color: white; /* Warna teks saat dipilih */
+            background-color: #007bff; /* Warna latar belakang saat teks dipilih */
+        }
+        .article-title:hover {
+            color: #ff6347; /* Warna teks saat kursor berada di atas judul artikel */
+            cursor: pointer; /* Kursor pointer saat di atas judul artikel */
+        }
+        .article-title:hover::after {
+            content: ""; /* Membuat elemen pseudo */
+            position: absolute; /* Memberikan posisi absolut */
+            bottom: -2px; /* Jarak dari bawah */
+            left: 0; /* Posisi dari kiri */
+            width: 100%; /* Lebar sesuai dengan judul artikel */
+            height: 2px; /* Ketebalan garis */
+            background-color: #ff6347; /* Warna garis saat kursor berada di atas judul artikel */
+        }
+        .article-title span {
+            text-decoration: none; /* Menghilangkan garis bawah */
+        }
+      </style>
 
 </head>
 
@@ -233,49 +262,62 @@
                 <h4 style="font-Helvetica : 'Your Cool Font';">Tidak Ada Artikel Yang Tersimpan</h4>
             </div>
           @else
-              @foreach($savedArtikels as $item)
-              <div class="row" style="text-align: justify">
-                  <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
-                      <div class="d-flex justify-content-center">
-                          <img src="{{ asset('gambarArtikel/'.$item->artikel->gambarArtikel) }}" style="max-width: 100%; height: auto; border-radius: 14px">
-                      </div>
-                  </div>
-                  <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
-                      <a href="{{ route('detail.artikel', ['id' => $item->artikel->id]) }}" style="color: rgba(242, 100, 25, 1)">
-                          <h4 style="text-align: left">{{$item->artikel->judulArtikel}}</h4>
-                          <span class="d-flex"><b>{{ $item->artikel->penulis }}</b></span>
-                      </a>
-                      <p>{!! substr(strip_tags($item->artikel->deskripsi), 0, 400) . (strlen(strip_tags($item->artikel->content)) > 400 ? '...' : '') !!}</p>
-                  </div>
-                  <span style="text-align: right; color: rgba(165, 165, 165, 1);">
-                      <p>
-                          @php
-                          $ulasanCreatedAt = \Carbon\Carbon::parse($item->artikel['created_at']);
-                          $sekarang = \Carbon\Carbon::now();
-                          $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
-          
-                          if ($selisihWaktu < 60) {
-                              echo $selisihWaktu . ' Menit Lalu';
-                          } elseif ($selisihWaktu < 1440) {
-                              echo floor($selisihWaktu / 60) . ' Jam Lalu';
-                          } elseif ($selisihWaktu < 10080) {
-                              echo floor($selisihWaktu / 1440) . ' Hari Lalu';
-                          } elseif ($selisihWaktu < 43200) {
-                              echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
-                          } elseif ($selisihWaktu < 525600) {
-                              echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
-                          } else {
-                              echo floor($selisihWaktu / 525600) . ' Tahun Lalu';
-                          }
-                          @endphp
-                          <a href="{{ route('simpan.deleteArtikel', ['id' => $item->id]) }}"><i class="fas fa-trash"></i></a>
-                      </p>
-                  </span>
+          @foreach($savedArtikels as $item)
+          <div class="row" style="text-align: justify">
+            <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
+                <div class="d-flex justify-content-center">
+                  <img src="{{ asset('gambarArtikel/'.$item->artikel->gambarArtikel) }}" class="media-left" style="width: 400; height: 250;">
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
+              <a href="{{ route('detail.artikel', ['id' => $item->artikel->id]) }}" style="text-decoration: none;">
+                <h4 class="article-title" onclick="selectText(this)" style="text-align: left;">{{ $item->artikel->judulArtikel}}</h4>
+              </a>                   
+              <span class="d-flex"><b>{{ $item->artikel->penulis }} • 
+                @php
+                $ulasanCreatedAt = \Carbon\Carbon::parse($item->created_at);
+                $sekarang = \Carbon\Carbon::now();
+                $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
+        
+                if ($selisihWaktu < 60) {
+                    echo $selisihWaktu . ' Menit Lalu';
+                } elseif ($selisihWaktu < 1440) {
+                    echo floor($selisihWaktu / 60) . ' Jam Lalu';
+                } elseif ($selisihWaktu < 10080) {
+                    echo floor($selisihWaktu / 1440) . ' Hari Lalu';
+                } elseif ($selisihWaktu < 43200) {
+                    echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
+                } elseif ($selisihWaktu < 525600) {
+                    echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
+                } else {
+                    echo floor($selisihWaktu / 525600) . ' Tahun Lalu';
+                }
+                @endphp
+                <br>
+              </b></span>
+              <p>{!! substr(strip_tags($item->artikel->deskripsi), 0, 400) . (strlen(strip_tags($item->artikel->deskripsi)) > 400 ? '...' : '') !!}</p>
+              </b></span>
+        
+              <p>Tags:
+                @php
+                $tags = explode(",", $item->artikel->tags);
+                foreach ($tags as $tag) {
+                    $trimmedTag = trim($tag);
+                    echo '<a href="' . route("TagsVideos", $trimmedTag) . '" class="fh5co_tagg">' . $trimmedTag . '</a>';
+                    echo ' ';
+                }
+                @endphp
+              </p>
+              <div style="float: right; color: rgba(165, 165, 165, 1);">
+                <p>
+                    <a href="{{ route('simpan.deleteArtikel', ['id' => $item->id]) }}"><i class="fas fa-trash"></i></a>
+                </p>
               </div>
-              <hr>
-          @endforeach
-                  @endif
-              </div>
+            </div>
+            <hr>
+          </div>
+        @endforeach
+@endif        
           </div>
         </div>
       </section>  

@@ -124,6 +124,35 @@
     opacity: 1;
 }
   </style>
+    <style>
+      /* CSS styles */
+      .article-title {
+          color: black;
+          text-decoration: none; /* Menghilangkan garis bawah */
+          font-weight: bold; /* Bold text */
+          position: relative; /* Memberikan posisi relatif */
+      }
+      .article-title::selection {
+          color: white; /* Warna teks saat dipilih */
+          background-color: #007bff; /* Warna latar belakang saat teks dipilih */
+      }
+      .article-title:hover {
+          color: #ff6347; /* Warna teks saat kursor berada di atas judul artikel */
+          cursor: pointer; /* Kursor pointer saat di atas judul artikel */
+      }
+      .article-title:hover::after {
+          content: ""; /* Membuat elemen pseudo */
+          position: absolute; /* Memberikan posisi absolut */
+          bottom: -2px; /* Jarak dari bawah */
+          left: 0; /* Posisi dari kiri */
+          width: 100%; /* Lebar sesuai dengan judul artikel */
+          height: 2px; /* Ketebalan garis */
+          background-color: #ff6347; /* Warna garis saat kursor berada di atas judul artikel */
+      }
+      .article-title span {
+          text-decoration: none; /* Menghilangkan garis bawah */
+      }
+    </style>
 
 </head>
 
@@ -227,6 +256,23 @@
               @endif
           
             <br>
+
+            <?php
+            // Fungsi untuk mendapatkan ID video YouTube dari URL
+            function getYoutubeVideoId($url) {
+                $videoId = '';
+                $parts = parse_url($url);
+                if(isset($parts['query'])){
+                    parse_str($parts['query'], $query);
+                    if(isset($query['v'])){
+                        $videoId = $query['v'];
+                    }
+                } elseif (preg_match('/embed\/([^\&\?\/]+)/', $url, $matches)) {
+                    $videoId = $matches[1];
+                }
+                return $videoId;
+            }
+            ?>
             
             @if($savedVideos->isEmpty())
             <div class="text-center">
@@ -242,11 +288,46 @@
                         </div>
                     </div>
                     <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
-                        <a href="{{ route('showDetailVideo', ['id' => $item->video->id]) }}" style="color: rgba(242, 100, 25, 1)">
-                            <h4 style="text-align: left">{{ $item->video->judulVideo }}</h4>
-                            <span class="d-flex"><b>{{ $item->video->uploader }}</b></span>
-                        </a>
-                        <p>{!! substr(strip_tags($item->video->deskripsiVideo), 0, 400) . (strlen(strip_tags($item->video->deskripsiVideo)) > 400 ? '...' : '') !!}</p>
+                      <a href="{{ route('showDetailVideo', ['id' => $item->video->id]) }}" style="text-decoration: none;">
+                        <h4 class="article-title" onclick="selectText(this)" style="text-align: left;">{{ $item->video->judulVideo}}</h4>
+                    </a>                   
+                    <span class="d-flex"><b>{{ $item->video->uploader }} • 
+                      @php
+                      $ulasanCreatedAt = \Carbon\Carbon::parse($item->created_at);
+                      $sekarang = \Carbon\Carbon::now();
+                      $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
+      
+                      if ($selisihWaktu < 60) {
+                          echo $selisihWaktu . ' Menit Lalu';
+                      } elseif ($selisihWaktu < 1440) {
+                          echo floor($selisihWaktu / 60) . ' Jam Lalu';
+                      } elseif ($selisihWaktu < 10080) {
+                          echo floor($selisihWaktu / 1440) . ' Hari Lalu';
+                      } elseif ($selisihWaktu < 43200) {
+                          echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
+                      } elseif ($selisihWaktu < 525600) {
+                          echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
+                      } else {
+                          echo floor($selisihWaktu / 525600) . ' Tahun Lalu';
+                      }
+                      @endphp
+                      <br>
+                  </b></span>
+                  <p>{!! substr(strip_tags($item->video->deskripsiVideo), 0, 400) . (strlen(strip_tags($item->deskripsiVideo)) > 400 ? '...' : '') !!}</p>
+                          </b></span>
+
+                          <p>Tags:
+                            @php
+                            $tags = explode(",", $item->video->tagsVideo);
+                            foreach ($tags as $tag) {
+                                $trimmedTag = trim($tag);
+                                // Menggunakan route 'TagsVideo' untuk membuat tautan ke halaman yang sesuai dengan tag
+                                echo '<a href="' . route("TagsVideos", $trimmedTag) . '" class="fh5co_tagg">' . $trimmedTag . '</a>';
+                                echo ' ';
+                            }
+                            @endphp
+                        </p>
+                        
                     </div>
                     <span style="text-align: right; color: rgba(165, 165, 165, 1);">
                         <p>

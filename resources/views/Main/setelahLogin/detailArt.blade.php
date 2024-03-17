@@ -137,6 +137,35 @@
 }
 
 </style>
+<style>
+    /* CSS styles */
+    .article-title {
+        color: black;
+        text-decoration: none; /* Menghilangkan garis bawah */
+        font-weight: bold; /* Bold text */
+        position: relative; /* Memberikan posisi relatif */
+    }
+    .article-title::selection {
+        color: white; /* Warna teks saat dipilih */
+        background-color: #007bff; /* Warna latar belakang saat teks dipilih */
+    }
+    .article-title:hover {
+        color: #ff6347; /* Warna teks saat kursor berada di atas judul artikel */
+        cursor: pointer; /* Kursor pointer saat di atas judul artikel */
+    }
+    .article-title:hover::after {
+        content: ""; /* Membuat elemen pseudo */
+        position: absolute; /* Memberikan posisi absolut */
+        bottom: -2px; /* Jarak dari bawah */
+        left: 0; /* Posisi dari kiri */
+        width: 100%; /* Lebar sesuai dengan judul artikel */
+        height: 2px; /* Ketebalan garis */
+        background-color: #ff6347; /* Warna garis saat kursor berada di atas judul artikel */
+    }
+    .article-title span {
+        text-decoration: none; /* Menghilangkan garis bawah */
+    }
+  </style>
 
   </head>
 
@@ -222,7 +251,8 @@
       
         <div class="col-md-8 animate-box" data-animate-effect="fadeInRight">
           <section>        
-              <h1 style="color: rgba(47, 72, 88, 1);">{{ $article->judulArtikel }}</h1><br>
+            <h1 style="color: rgba(47, 72, 88, 1); font-weight: bold;">{{ $article->judulArtikel }}</h1><br>
+
             <div class="simple-profile-container" style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
             <a href="{{ route('detailProfilPenulisArtikel', ['id' => $article->id]) }}" style="text-decoration: none; color: inherit;">
                 <div class="simple-profile-picture" style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #3498db;">
@@ -385,11 +415,11 @@
                     <img src="{{ asset('gambarArtikel/' . $item->gambarArtikel) }}" alt="img"  width="120" height="50">
                 </div>
                 <div class="col-8 padding">
-                    <div class="most_fh5co_trending_font"><a href="{{ route('detail.artikel', ['id' => $item->id]) }}">{{ $item->judulArtikel }}</a></div>
+                    <div class="most_fh5co_trending_font"><a class="article-title" href="{{ route('detail.artikel', ['id' => $item->id]) }}">{{ \Illuminate\Support\Str::limit($item->judulArtikel, 50) }}</a></div>
                     <div class="most_fh5co_trending_font_123">{{ \Carbon\Carbon::parse($item['created_at'])->format('l, d M Y H.i') }}</div>
                 </div>
                 @endforeach
-            </div>            
+            </div>                     
         </div>
     </div>
 

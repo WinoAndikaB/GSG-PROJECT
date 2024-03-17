@@ -131,6 +131,35 @@
     opacity: 1;
 }
   </style>
+  <style>
+    /* CSS styles */
+    .article-title {
+        color: black;
+        text-decoration: none; /* Menghilangkan garis bawah */
+        font-weight: bold; /* Bold text */
+        position: relative; /* Memberikan posisi relatif */
+    }
+    .article-title::selection {
+        color: white; /* Warna teks saat dipilih */
+        background-color: #007bff; /* Warna latar belakang saat teks dipilih */
+    }
+    .article-title:hover {
+        color: #ff6347; /* Warna teks saat kursor berada di atas judul artikel */
+        cursor: pointer; /* Kursor pointer saat di atas judul artikel */
+    }
+    .article-title:hover::after {
+        content: ""; /* Membuat elemen pseudo */
+        position: absolute; /* Memberikan posisi absolut */
+        bottom: -2px; /* Jarak dari bawah */
+        left: 0; /* Posisi dari kiri */
+        width: 100%; /* Lebar sesuai dengan judul artikel */
+        height: 2px; /* Ketebalan garis */
+        background-color: #ff6347; /* Warna garis saat kursor berada di atas judul artikel */
+    }
+    .article-title span {
+        text-decoration: none; /* Menghilangkan garis bawah */
+    }
+  </style>
 
 </head>
 <body>
@@ -267,9 +296,33 @@
                   </div>
                   
                     <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
-                        <h4 style="text-align: left">{{ $item->judulVideo }}</h4>
-                        <span class="d-flex"><b>{{ $item->uploader }}</b></span>
-                        <p>{!! substr(strip_tags($item->deskripsiVideo), 0, 400) . (strlen(strip_tags($item->content)) > 400 ? '...' : '') !!}</p>
+                      <a href="{{ route('showDetailVideo', ['id' => $item->id]) }}" style="text-decoration: none;">
+                        <h4 class="article-title" onclick="selectText(this)" style="text-align: left;">{{ $item->judulVideo}}</h4>
+                    </a>                   
+                    <span class="d-flex"><b>{{ $item->uploader }} • 
+                      @php
+                      $ulasanCreatedAt = \Carbon\Carbon::parse($item->created_at);
+                      $sekarang = \Carbon\Carbon::now();
+                      $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
+      
+                      if ($selisihWaktu < 60) {
+                          echo $selisihWaktu . ' Menit Lalu';
+                      } elseif ($selisihWaktu < 1440) {
+                          echo floor($selisihWaktu / 60) . ' Jam Lalu';
+                      } elseif ($selisihWaktu < 10080) {
+                          echo floor($selisihWaktu / 1440) . ' Hari Lalu';
+                      } elseif ($selisihWaktu < 43200) {
+                          echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
+                      } elseif ($selisihWaktu < 525600) {
+                          echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
+                      } else {
+                          echo floor($selisihWaktu / 525600) . ' Tahun Lalu';
+                      }
+                      @endphp
+                      <br>
+                  </b></span>
+                  <p>{!! substr(strip_tags($item->deskripsiVideo), 0, 400) . (strlen(strip_tags($item->deskripsiVideo)) > 400 ? '...' : '') !!}</p>
+                          </b></span>
             
                         <p>Tags:
                         @php
@@ -284,30 +337,6 @@
                     </p>
 
                     </div>
-                    <span style="text-align: right; color: rgba(165, 165, 165, 1);">
-                        <p>
-                            @php
-                            $ulasanCreatedAt = \Carbon\Carbon::parse($item['created_at']);
-                            $sekarang = \Carbon\Carbon::now();
-                            $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
-                            if ($selisihWaktu < 60) {
-                                echo $selisihWaktu . ' Menit Lalu';
-                            } elseif ($selisihWaktu < 1440) {
-                                echo floor($selisihWaktu / 60) . ' Jam Lalu';
-                            } elseif ($selisihWaktu < 10080) {
-                                echo floor($selisihWaktu / 1440) . ' Hari Lalu';
-                            } elseif ($selisihWaktu < 43200) {
-                                echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
-                            } elseif ($selisihWaktu < 525600) {
-                                echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
-                            } else {
-                                echo floor($selisihWaktu / 525600) . ' Tahun Lalu';
-                            }
-                            @endphp
-                            | 
-                            <a href="{{ route('showDetailVideo', ['id' => $item->id]) }}" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a>
-                        </p>
-                    </span>
                 </div>
                 <hr>
             @endforeach
