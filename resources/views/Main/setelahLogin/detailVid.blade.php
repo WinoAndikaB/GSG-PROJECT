@@ -123,7 +123,6 @@
       bottom: -2px; /* Jarak dari bawah */
       left: 0; /* Posisi dari kiri */
       width: 100%; /* Lebar sesuai dengan judul video */
-      height: 2px; /* Ketebalan garis */
       background-color: #ff6347; /* Warna garis saat kursor berada di atas judul video */
   }
   .video-title span {

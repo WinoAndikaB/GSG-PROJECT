@@ -155,7 +155,6 @@
       bottom: -2px; /* Jarak dari bawah */
       left: 0; /* Posisi dari kiri */
       width: 100%; /* Lebar sesuai dengan judul artikel */
-      height: 2px; /* Ketebalan garis */
       background-color: #ff6347; /* Warna garis saat kursor berada di atas judul artikel */
   }
   .article-title span {
@@ -293,7 +292,7 @@
                     <br>
                 </b>
             </span>
-            <p>{!! substr(strip_tags($item->deskripsi), 0, 400) . (strlen(strip_tags($item->content)) > 400 ? '...' : '') !!}</p>
+            <p>{!! substr(strip_tags($item->deskripsi), 0, 400) . (strlen(strip_tags($item->deskripsi)) > 400 ? '...' : '') !!}</p>
 
             <p>Tags:
                 @php

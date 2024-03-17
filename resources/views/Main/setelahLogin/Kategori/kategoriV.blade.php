@@ -146,7 +146,6 @@
       bottom: -2px; /* Jarak dari bawah */
       left: 0; /* Posisi dari kiri */
       width: 100%; /* Lebar sesuai dengan judul artikel */
-      height: 2px; /* Ketebalan garis */
       background-color: #ff6347; /* Warna garis saat kursor berada di atas judul artikel */
   }
   .article-title span {
