@@ -80,6 +80,34 @@
         cursor: pointer;
       }
   </style>
+  <style>
+    /* CSS styles */
+    .video-title {
+        color: black;
+        text-decoration: none; /* Menghilangkan garis bawah */
+        font-weight: bold; /* Bold text */
+        position: relative; /* Memberikan posisi relatif */
+    }
+    .video-title::selection {
+        color: white; /* Warna teks saat dipilih */
+        background-color: #007bff; /* Warna latar belakang saat teks dipilih */
+    }
+    .video-title:hover {
+        color: #ff6347; /* Warna teks saat kursor berada di atas judul video */
+        cursor: pointer; /* Kursor pointer saat di atas judul video */
+    }
+    .video-title:hover::after {
+        content: ""; /* Membuat elemen pseudo */
+        position: absolute; /* Memberikan posisi absolut */
+        bottom: -2px; /* Jarak dari bawah */
+        left: 0; /* Posisi dari kiri */
+        width: 100%; /* Lebar sesuai dengan judul video */
+        background-color: #ff6347; /* Warna garis saat kursor berada di atas judul video */
+    }
+    .video-title span {
+        text-decoration: none; /* Menghilangkan garis bawah */
+    }
+  </style>
   
   </head>
 <body>
@@ -131,7 +159,7 @@
       
         <div class="col-md-8 animate-box" data-animate-effect="fadeInRight">
           <section>
-              <h1 style="color: rgba(47, 72, 88, 1);">{{ $video->judulVideo }}</h1><br>
+            <h1 style="color: rgba(47, 72, 88, 1); font-weight: bold;">{{ $video->judulVideo }}</h1><br>
 
               <div class="simple-profile-container" style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
                 <a href="{{ route('detailProfilVideoLP', ['id' => $video->id]) }}" style="text-decoration: none; color: inherit;">
@@ -299,18 +327,17 @@
               ?>
               
               @foreach($boxVideo as $item)
-                  <div class="col-4 align-self-center mb-3">
-                      <?php
-                      $videoId = getYoutubeVideoId($item->linkVideo);
-                      $thumbnail = "https://img.youtube.com/vi/{$videoId}/default.jpg"; // Mengambil thumbnail default
-                      ?>
-              
-                      <img src="<?php echo $thumbnail; ?>" alt="Thumbnail" width="100" height="70">
-                  </div>
-                  <div class="col-8 padding">
-                      <div class="most_fh5co_trending_font"><a href="{{ route('showDetailLPVideo', ['id' => $item->id]) }}">{{ $item->judulVideo }}</a></div>
-                      <div class="most_fh5co_trending_font_123">{{ \Carbon\Carbon::parse($item['created_at'])->format('l, d M Y H.i') }}</div>
-                  </div>
+              <?php
+              $videoId = getYoutubeVideoId($item->linkVideo);
+              $thumbnail = "https://img.youtube.com/vi/{$videoId}/maxresdefault.jpg"; // Mengambil thumbnail maksimum resolusi
+              ?>
+              <div class="col-4 align-self-center mb-3">
+                  <img src="<?php echo $thumbnail; ?>" width="120" height="59" alt="Thumbnail">
+              </div>
+              <div class="col-8 padding">
+                  <div class="most_fh5co_trending_font"><a class="video-title" href="{{ route('showDetailLPVideo', ['id' => $item->id]) }}" >{{ \Illuminate\Support\Str::limit($item->judulVideo, 50) }}</a></div>
+                  <div class="most_fh5co_trending_font_123">{{ \Carbon\Carbon::parse($item['created_at'])->format('l, d M Y H.i') }}</div>
+              </div>
               @endforeach
               
             </div>            

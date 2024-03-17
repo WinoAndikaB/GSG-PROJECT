@@ -110,6 +110,34 @@
         cursor: pointer;
       }
   </style>
+  <style>
+    /* CSS styles */
+    .article-title {
+        color: black;
+        text-decoration: none; /* Menghilangkan garis bawah */
+        font-weight: bold; /* Bold text */
+        position: relative; /* Memberikan posisi relatif */
+    }
+    .article-title::selection {
+        color: white; /* Warna teks saat dipilih */
+        background-color: #007bff; /* Warna latar belakang saat teks dipilih */
+    }
+    .article-title:hover {
+        color: #ff6347; /* Warna teks saat kursor berada di atas judul artikel */
+        cursor: pointer; /* Kursor pointer saat di atas judul artikel */
+    }
+    .article-title:hover::after {
+        content: ""; /* Membuat elemen pseudo */
+        position: absolute; /* Memberikan posisi absolut */
+        bottom: -2px; /* Jarak dari bawah */
+        left: 0; /* Posisi dari kiri */
+        width: 100%; /* Lebar sesuai dengan judul artikel */
+        background-color: #ff6347; /* Warna garis saat kursor berada di atas judul artikel */
+    }
+    .article-title span {
+        text-decoration: none; /* Menghilangkan garis bawah */
+    }
+  </style>
 
 </head>
 <body>
@@ -196,54 +224,55 @@
               <br>
   
               @foreach ($artikels as $item)
-                  <div class="row" style="text-align: justify">
-                      <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
-                          <div class="d-flex justify-content-center">
-                              <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" style="max-width: 100%; height: auto; border-radius: 14px">
-                          </div>
-                      </div>
-                      <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
-                          <h4 style="text-align: left" >{{ $item->judulArtikel }} </h4>
-                          <span class="d-flex"><b>{{ $item->penulis }}</b></span>
-                          <p>{!! substr(strip_tags($item->deskripsi), 0, 400) . (strlen(strip_tags($item->content)) > 400 ? '...' : '') !!}</p>
-
-                          <p>Tags:
+              <div class="row" style="text-align: justify">
+                <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
+                    <div class="d-flex justify-content-center">
+                        <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" style="max-width: 100%; height: auto; border-radius: 14px">
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
+                    <a href="{{ route('showDetailLPArtikel', ['id' => $item->id]) }}" style="text-decoration: none;">
+                        <h4 class="article-title" onclick="selectText(this)" style="text-align: left;">{{ $item->judulArtikel }}</h4>
+                    </a>
+                    <span class="d-flex">
+                        <b>{{ $item->penulis }} • 
                             @php
-                            $tags = explode(",", $item->tags);
-                            foreach ($tags as $tag) {
-                                $trimmedTag = trim($tag);
-                                echo '<a href="' . route("TagsArtikelLP", $trimmedTag) . '" class="fh5co_tagg">' . $trimmedTag . '</a>';
-                                echo ' ';
+                            $ulasanCreatedAt = \Carbon\Carbon::parse($item['created_at']);
+                            $sekarang = \Carbon\Carbon::now();
+                            $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
+        
+                            if ($selisihWaktu < 60) {
+                                echo $selisihWaktu . ' Menit Lalu';
+                            } elseif ($selisihWaktu < 1440) {
+                                echo floor($selisihWaktu / 60) . ' Jam Lalu';
+                            } elseif ($selisihWaktu < 10080) {
+                                echo floor($selisihWaktu / 1440) . ' Hari Lalu';
+                            } elseif ($selisihWaktu < 43200) {
+                                echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
+                            } elseif ($selisihWaktu < 525600) {
+                                echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
+                            } else {
+                                echo floor($selisihWaktu / 525600) . ' Tahun Lalu';
                             }
                             @endphp
-                            </p>
-                            
-                      </div>
-                      <span style="text-align: right; color: rgba(165, 165, 165, 1);"><p>
+                            <br>
+                        </b>
+                    </span>
+                    <p>{!! substr(strip_tags($item->deskripsi), 0, 400) . (strlen(strip_tags($item->deskripsi)) > 400 ? '...' : '') !!}</p>
+        
+                    <p>Tags:
                         @php
-                        $ulasanCreatedAt = \Carbon\Carbon::parse($item['created_at']);
-                        $sekarang = \Carbon\Carbon::now();
-                        $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
-      
-                        if ($selisihWaktu < 60) {
-                          echo $selisihWaktu . ' Menit Lalu';
-                        } elseif ($selisihWaktu < 1440) {
-                          echo floor($selisihWaktu / 60) . ' Jam Lalu';
-                        } elseif ($selisihWaktu < 10080) {
-                          echo floor($selisihWaktu / 1440) . ' Hari Lalu';
-                        } elseif ($selisihWaktu < 43200) {
-                          echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
-                        } elseif ($selisihWaktu < 525600) {
-                          echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
-                        } else {
-                          echo floor($selisihWaktu / 525600) . ' Tahun Lalu';
+                        $tags = explode(",", $item->tags);
+                        foreach ($tags as $tag) {
+                            $trimmedTag = trim($tag);
+                            echo '<a href="' . route("TagsArtikelLP", $trimmedTag) . '" class="fh5co_tagg">' . $trimmedTag . '</a>';
+                            echo ' ';
                         }
-                      @endphp
-                      | 
-                          <a href="{{ route('showDetailLPArtikel', ['id' => $item->id]) }}" style="color: rgba(242, 100, 25, 1)">Selengkapnya >></a></p></span>
-                          <br>
-                  </div>
-                  <hr>
+                        @endphp
+                    </p> 
+                </div>
+            </div>
+            <hr>
                   @endforeach
               </div>
           </div>
