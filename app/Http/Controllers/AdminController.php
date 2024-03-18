@@ -191,7 +191,7 @@ class AdminController extends Controller
         $totalUserArtikel = artikels::where('user_id', auth()->user()->id)->count();
         $totalUserVideo = video::where('user_id', auth()->user()->id)->count();
             
-        return view('superadmin.kategori.KategoriVidA', compact('existingTags','kategoriV', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo', 'totalUserArtikel', 'totalUserVideo'));
+        return view('admin.KategoriVidA', compact('existingTags','kategoriV', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo', 'totalUserArtikel', 'totalUserVideo'));
     }
 
     //[Admin-Artikel] Halaman Tables Artikel

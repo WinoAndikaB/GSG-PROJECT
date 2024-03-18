@@ -48,22 +48,26 @@ public function login(Request $request)
     if ($user) {
         if ($this->isUserFreezed($user)) {
             $freezeMessage = $this->getFreezeMessage($user);
-
             // If the user is frozen, redirect back with a freeze message
             return back()->withErrors([
-                'email' => "Account is frozen: $freezeMessage",
+                'freezeMessage' => $freezeMessage,
             ])->onlyInput('email');
         }
 
         if (Auth::attempt($credentials)) {
             return $this->handleAuthenticatedUser($request);
+        } else {
+            return back()->withErrors([
+                'credentials' => 'Password dan username Anda salah',
+            ])->onlyInput('email');
         }
     }
 
     return back()->withErrors([
-        'email' => 'Email and Password invalid',
+        'credentials' => 'Password dan username Anda salah',
     ])->onlyInput('email');
 }
+
 
 /**
  * Handle actions for an authenticated user based on their role.
@@ -129,21 +133,44 @@ protected function getFreezeMessage($user)
     $now = now();
 
     if ($freezeUntil->isPast()) {
-        return ''; // The freezing period has expired
+        return ''; // Periode pembekuan sudah berakhir
     }
 
     $freezePeriod = $now->diff($freezeUntil);
 
-    $formattedPeriod = $freezePeriod->y . ' years, ' . $freezePeriod->m . ' months, ' . $freezePeriod->d . ' days';
+    $formattedPeriod = '';
 
-    if ($freezePeriod->y == 0 && $freezePeriod->m == 0 && $freezePeriod->d == 0) {
-        $formattedPeriod = 'less than a day';
-    } elseif ($freezePeriod->y == 0 && $freezePeriod->m == 0 && $freezePeriod->d == 1) {
-        $formattedPeriod = '1 day';
+    if ($freezePeriod->y > 0) {
+        $formattedPeriod .= $freezePeriod->y . ' tahun, ';
+    }
+    
+    if ($freezePeriod->m > 0) {
+        $formattedPeriod .= $freezePeriod->m . ' bulan, ';
+    }
+    
+    if ($freezePeriod->d > 0) {
+        $formattedPeriod .= $freezePeriod->d . ' hari';
+    }
+    
+    // Menghapus koma dan spasi di akhir jika ada
+    $formattedPeriod = rtrim($formattedPeriod, ', ');
+
+    // Penyesuaian teks tanggal
+    $dateText = '';
+    if (empty($formattedPeriod)) {
+        $dateText = 'kurang dari satu hari';
+    } elseif ($freezePeriod->d == 1) {
+        $dateText = '1 hari';
+    } else {
+        $dateText = $formattedPeriod;
     }
 
-    return "Your account is frozen for $formattedPeriod.\nReason: {$user->pesan_freeze}";
+    // Pesan yang lebih menarik dan informatif
+    $reason = $user->pesan_freeze ? "{$user->pesan_freeze}" : ""; // Menambahkan alasan jika tersedia
+    return "<div style='background-color: #f8d7da; color: #721c24; border-color: #f5c6cb; border-radius: .25rem; padding: 1rem;'><h2 style='margin-bottom: 0;'>Akun Anda Dibekukan</h2><p style='margin-top: 0; margin-bottom: 1rem;'>Mohon Maaf, akun Anda sedang dibekukan.</p><p style='margin-bottom: 1rem;'>Sementara itu, akun Anda tidak dapat diakses selama <strong>$dateText</strong> karena alasan <strong>$reason</strong>.</p><p>Jangan ragu untuk menghubungi kami untuk informasi lebih lanjut.</p></div>";
 }
+
+
 
     //[Login-Lupa Password] Halaman Lupa Password
     function lupaPassword(){

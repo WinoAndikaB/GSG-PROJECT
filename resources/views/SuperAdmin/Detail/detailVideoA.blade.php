@@ -488,7 +488,7 @@
                   $tags = explode(",", $video->tagsVideo);
                   foreach ($tags as $tag) {
                       $trimmedTag = trim($tag);
-                      echo '<a href="' . route("TagsVideoA", $trimmedTag) . '" class="fh5co_tagg">#' . $trimmedTag . '</a>';
+                      echo '<a href="' . route("TagsVideoSA", $trimmedTag) . '" class="fh5co_tagg">#' . $trimmedTag . '</a>';
                       echo ' ';
                   }
                   @endphp

@@ -42,16 +42,19 @@
                 <div class="card-body">
                   <form class="form" method="POST" action="">
                     @csrf
-                    @if ($errors->any())
-                    <div class="alert alert-danger">
-                      <ul>
-                        <b style="color: white;">Danger</b>
-                        @foreach ($errors->all() as $item)
-                          <li><span style="color: white;"> {{ $item }}</span></li>
-                        @endforeach
-                      </ul>
+                    @if ($errors->has('freezeMessage'))
+                    <div style='background-color: #f8d7da; color: #721c24; border-color: #f5c6cb; border-radius: .25rem; padding: 1rem; text-align: center;'>
+                        {!! $errors->first('freezeMessage') !!}
                     </div>
-                    @endif
+                @elseif ($errors->has('credentials'))
+                    <div style='background-color: #f8d7da; color: #721c24; border-color: #f5c6cb; border-radius: .25rem; padding: 1rem; text-align: center;'>
+                        <p>{{ $errors->first('credentials') }}</p>
+                    </div>
+                @endif
+                        
+
+                <br>
+                
                     <div class="mb-3">
                       <input type="email" name="email" value="{{ old('email') }}" class="form-control" placeholder="Email...">
                     </div>

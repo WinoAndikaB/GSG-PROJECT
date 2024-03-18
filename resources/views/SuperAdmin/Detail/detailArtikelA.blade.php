@@ -496,7 +496,7 @@
                   $tags = explode(",", $article->tags);
                   foreach ($tags as $tag) {
                       $trimmedTag = trim($tag);
-                      echo '<a href="' . route("TagsArtikelA", $trimmedTag) . '" class="fh5co_tagg">#' . $trimmedTag . '</a>';
+                      echo '<a href="' . route("TagsArtikelSA", $trimmedTag) . '" class="fh5co_tagg">#' . $trimmedTag . '</a>';
                       echo ' ';
                   }
                   @endphp

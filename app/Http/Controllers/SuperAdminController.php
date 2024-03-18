@@ -181,17 +181,20 @@ class SuperAdminController extends Controller
             function showDetailArtikelSA($id){
 
                 $article = artikels::findOrFail($id);
-
+            
+                // Fetch the user associated with the article
+                $user = $article->user;
+            
                 // Ambil daftar tag yang sudah ada dari basis data
                 $existingTags = artikels::select('tags')->distinct()->get();
-            
+                
                 $kategoriA = kategori::all();
-            
+                
                 $box = artikels::inRandomOrder()->take(8)->get();
-            
+                
                 // Ambil artikel berdasarkan user_id
                 $tagsA = artikels::where('user_id', Auth::id())->get();
-            
+                
                 $uniqueTags = [];
                 foreach ($tagsA as $tag) {
                     $words = explode(",", $tag->tags);
@@ -201,41 +204,40 @@ class SuperAdminController extends Controller
                         $uniqueTags[$trimmedWord] = $trimmedWord;
                     }
                 }
-            
+                
                 // Hitung jumlah komentar untuk artikel dengan ID tertentu
                 $totalKomentar = komentar_artikel::where('artikel_id', $id)->count();
-            
+                
                 $detailArtikelLP = komentar_artikel::where('artikel_id', $id)->latest()->paginate(6);
-            
+                
                 // Ambil data user berdasarkan id penulis artikel
                 $fotoProfil = $user->fotoProfil;
-                $user = User::findOrFail($article->user_id);
-            
+                
                 // Format jumlah akses
                 $formattedJumlahAkses = $this->formatJumlahAkses($article->jumlah_akses);
-            
+                
                 // Hitung total pengikut (followers) berdasarkan user_id
                 $totalFollowers = Follower::where('user_id', $user->id)->count();
-            
+                
                 // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
                 $dataBaruUlasan = ulasans::where('created_at', '>=', Carbon::now()->subDay())->count();
                 $dataBaruUser = user::where('created_at', '>=', Carbon::now()->subDay())->count();
                 $dataBaruArtikel = artikels::where('created_at', '>=', Carbon::now()->subDay())->count();
                 $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=', Carbon::now()->subDay())->count();
-
+            
                 $dataBaruVideo = video::where('created_at', '>=', Carbon::now()->subDay())->count();
                 $dataBaruKomentarVideo = komentar_video::where('created_at', '>=', Carbon::now()->subDay())->count();
-
+            
                 $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=', Carbon::now()->subDay())->count();
                 $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=', Carbon::now()->subDay())->count();
-
+            
                 $pendingArticles = artikels::where('status', 'Pending')->orderBy('created_at', 'desc')->paginate(5);
                 $publishedArticles = artikels::where('status', 'Published')->orderBy('created_at', 'desc')->paginate(5);
-            
+                
                 return view('superadmin.detail.detailArtikelA', compact('dataBaruArtikel', 'dataBaruKomentarArtikel','article', 'totalFollowers','formattedJumlahAkses','fotoProfil','user',
                 'dataBaruUlasan', 'dataBaruUser', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','existingTags', 
                 'dataBaruLaporanVideo', 'pendingArticles', 'publishedArticles'
-            ));
+                ));
             }
 
     //[User] Halaman Kategori 
@@ -680,9 +682,8 @@ class SuperAdminController extends Controller
                 $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
                 $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
             
-                return view('superadmin.detail.detailVideoA', compact('dataBaruArtikel', 'dataBaruKomentarArtikel','video',
-                'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
-                'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo','fotoProfil','user','totalFollowers','existingTags'
+                return view('superadmin.detail.detailVideoA', compact('video','fotoProfil','user','totalFollowers','existingTags',
+                'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo','dataBaruArtikel', 'dataBaruKomentarArtikel'
             ));
             }
 
@@ -698,20 +699,20 @@ class SuperAdminController extends Controller
                 // Ambil daftar tag yang sudah ada dari basis data
                 $existingTags = Video::select('tagsVideo')->distinct()->get();
         
-                        // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
-                        $dataBaruArtikel = artikels::where('created_at', '>=', Carbon::now()->subDay())->count();
-                        $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=', Carbon::now()->subDay())->count();
-                        $dataBaruVideo = video::where('created_at', '>=', Carbon::now()->subDay())->count();
-                        $dataBaruKomentarVideo = komentar_video::where('created_at', '>=', Carbon::now()->subDay())->count();
-                        $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=', Carbon::now()->subDay())->count();
-                        $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=', Carbon::now()->subDay())->count();
-                    
-                        $totalUserArtikel = artikels::where('user_id', auth()->user()->id)->count();
-                        $totalUserVideo = video::where('user_id', auth()->user()->id)->count();
+                $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
+                $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
+                $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+                $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        
+                $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+                $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        
+                $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+                $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
             
                 // Kirim data video, tag name, tags yang sudah ada ke view
-                return view('superadmin.tags.tagsVideo', compact('videos', 'tagName', 'existingTags','dataBaruArtikel', 'dataBaruKomentarArtikel', 
-                'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo', 'totalUserArtikel', 'totalUserVideo'));
+                return view('SuperAdmin.Tags.tagsVideo', compact('videos', 'tagName', 'existingTags',
+                'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo','dataBaruArtikel', 'dataBaruKomentarArtikel'));
             }
 
     //[SuperAdmin-Video] Halaman Tabel Video

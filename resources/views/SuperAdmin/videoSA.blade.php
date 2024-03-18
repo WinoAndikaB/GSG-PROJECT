@@ -427,7 +427,7 @@
                                       ?>
                                     </p>
                                   </td>
-                                  <td style="text-align: justify;">
+                                  <td class="align-middle text-center">
                                     <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
                                       <?php
                                       $deskripsiVideo = strip_tags($item['deskripsiVideo']);

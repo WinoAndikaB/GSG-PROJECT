@@ -479,11 +479,18 @@
                                 <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deletePenggunaSA', ['id' => $user['id']]) }}')">
                                   <i class="fa fa-trash"></i>
                               </a>
-                                @if($user->role !== 'superadmin')
-                                  <a href="#" class="btn btn-warning btn-icon btn-round freeze-button"data-toggle="modal" data-target="#freezeModal{{ $user->id }}" data-comment-id="{{ $user->id }}" data-user-id="{{ $user->id }}">
-                                    <i class="ni ni-lock-circle-open"></i>
+                              @if($user->role !== 'superadmin')
+                              @if($user->freeze_until)
+                                  <a href="#" class="btn btn-warning btn-icon btn-round unfreeze-button" data-toggle="modal" data-target="#unfreezeModal{{ $user->id }}" data-user-id="{{ $user->id }}">
+                                      <i class="fas fa-lock"></i>
                                   </a>
-                                @endif  
+                              @else
+                                  <a href="#" class="btn btn-warning btn-icon btn-round freeze-button" data-toggle="modal" data-target="#freezeModal{{ $user->id }}" data-user-id="{{ $user->id }}">
+                                      <i class="fas fa-unlock"></i>
+                                  </a>
+                              @endif
+                          @endif
+                          
                               </td>
                             </tr>
                           </tbody>
