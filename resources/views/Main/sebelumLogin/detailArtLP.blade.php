@@ -302,7 +302,7 @@
             <div class="row pb-3">
                 @foreach($box as $item)
                 <div class="col-4 align-self-center mb-3">
-                  <img src="{{ asset('gambarArtikel/' . $item->gambarArtikel) }}" alt="img"  width="120" height="50">
+                  <img src="{{ asset('gambarArtikel/' . $item->gambarArtikel) }}" alt="img" width="120" height="50" style="border-radius: 5%;">
               </div>
               <div class="col-8 padding">
                   <div class="most_fh5co_trending_font"><a class="article-title" href="{{ route('showDetailLPArtikel', ['id' => $item->id]) }}">{{ \Illuminate\Support\Str::limit($item->judulArtikel, 50) }}</a></div>
@@ -315,9 +315,9 @@
 
     <span class="fh5co_tags_all"> Tags : 
       @foreach(explode(',', $article->tags) as $tag)
-          <a href="#" class="fh5co_tagg">{{ $tag }}</a>
+          <a href="{{ route('TagsArtikelLP', ['tag' => $tag]) }}" class="fh5co_tagg">{{ $tag }}</a>
       @endforeach
-    </span>
+    </span>    
 
     <br>
     <br>
@@ -354,7 +354,7 @@
                   <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px;">
                     <div style="display: flex; align-items: center;">
                         <a href="/login" style="text-decoration: none; color: #333; display: inline-block; padding: 8px 15px; border: 2px solid #4CAF50; border-radius: 20px; background-color: #fff; transition: all 0.3s ease;" >
-                            <i class="fas fa-thumbs-up" style="color: #4CAF50; font-size: 15px;"></i>  
+                            <i class="fa-regular fa-thumbs-up" style="color: #4CAF50; font-size: 15px;"></i>  
                             <span style="font-size: 16px; margin-left: 5px;">Like</span>
                         </a>
             

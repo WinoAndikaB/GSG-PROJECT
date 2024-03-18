@@ -423,10 +423,10 @@
     </div>
 
     <span class="fh5co_tags_all"> Tags : 
-      @foreach(explode(',', $article->tags) as $tag)
-          <a href="#" class="fh5co_tagg">{{ $tag }}</a>
-      @endforeach
-    </span>
+        @foreach(explode(',', $article->tags) as $tag)
+            <a href="{{ route('TagsArtikel', ['tag' => $tag]) }}" class="fh5co_tagg">{{ $tag }}</a>
+        @endforeach
+      </span>   
 
     <br>
     <br>
@@ -1057,82 +1057,47 @@ document.addEventListener('DOMContentLoaded', function () {
 <!--------------------------------------------------------------------------------------- Javascript Like ------------------------------------------------------------------------------->
 
 <script>
-  $(document).ready(function() {
-      // Handle like button click
-      $('.likeButton').click(function() {
-          var itemId = $(this).data('id');
-          var button = $(this);
-          var likeCountElement = button.closest('.ulasan').find('.likeCount');
-          var dislikeCountElement = button.closest('.ulasan').find('.dislikeCount');
-
-          var isLiked = button.find('i').hasClass('fa-thumbs-up');
-          var isDisliked = button.closest('.ulasan').find('.dislikeButton i').hasClass('fa-thumbs-down');
-
-          // Toggle like button state
-          if (isLiked) {
-              button.find('i').removeClass('fa-thumbs-up').addClass('fa-regular');
-              likeCountElement.text(parseInt(likeCountElement.text()) - 1 + ' Likes');
-          } else {
-              button.find('i').addClass('fa-thumbs-up').removeClass('fa-regular');
-              likeCountElement.text(parseInt(likeCountElement.text()) + 1 + ' Likes');
-              if (isDisliked) {
-                  button.closest('.ulasan').find('.dislikeButton i').removeClass('fa-thumbs-down').addClass('fa-regular');
-                  dislikeCountElement.text(parseInt(dislikeCountElement.text()) - 1 + ' Dislikes');
-              }
-          }
-
-          $.ajax({
-              type: 'GET',
-              url: '/likeUlasan/' + itemId,
-              success: function(response) {
-                  if (response.status !== 'success') {
-                      console.error('Failed to like ulasan');
-                  }
-              },
-              error: function(xhr, status, error) {
-                  console.error('Failed to like ulasan:', error);
-              }
-          });
-      });
-
-      // Handle dislike button click
-      $('.dislikeButton').click(function() {
-          var itemId = $(this).data('id');
-          var button = $(this);
-          var likeCountElement = button.closest('.ulasan').find('.likeCount');
-          var dislikeCountElement = button.closest('.ulasan').find('.dislikeCount');
-
-          var isLiked = button.closest('.ulasan').find('.likeButton i').hasClass('fa-thumbs-up');
-          var isDisliked = button.find('i').hasClass('fa-thumbs-down');
-
-          // Toggle dislike button state
-          if (isDisliked) {
-              button.find('i').removeClass('fa-thumbs-down').addClass('fa-regular');
-              dislikeCountElement.text(parseInt(dislikeCountElement.text()) - 1 + ' Dislikes');
-          } else {
-              button.find('i').addClass('fa-thumbs-down').removeClass('fa-regular');
-              dislikeCountElement.text(parseInt(dislikeCountElement.text()) + 1 + ' Dislikes');
-              if (isLiked) {
-                  button.closest('.ulasan').find('.likeButton i').removeClass('fa-thumbs-up').addClass('fa-regular');
-                  likeCountElement.text(parseInt(likeCountElement.text()) - 1 + ' Likes');
-              }
-          }
-
-          $.ajax({
-              type: 'GET',
-              url: '/dislikeUlasan/' + itemId,
-              success: function(response) {
-                  if (response.status !== 'success') {
-                      console.error('Failed to dislike ulasan');
-                  }
-              },
-              error: function(xhr, status, error) {
-                  console.error('Failed to dislike ulasan:', error);
-              }
-          });
-      });
-  });
-</script>
+    function toggleLike(commentId) {
+        var button = document.getElementById('likeButton' + commentId);
+        var icon = document.getElementById('thumbIcon' + commentId);
+        var likeCount = document.getElementById('likeCount' + commentId);
+    
+        // Toggle class untuk mengubah ikon
+        if (icon.classList.contains('fa')) {
+            icon.classList.remove('fa');
+            icon.classList.remove('fas');
+            icon.classList.add('fa-regular');
+            icon.classList.add('far');
+        } else {
+            icon.classList.remove('fa-regular');
+            icon.classList.remove('far');
+            icon.classList.add('fa');
+            icon.classList.add('fas');
+        }
+    
+        // Mengambil nilai jumlah like dari teks
+        var likeText = likeCount.textContent.trim();
+        var currentLikes = parseInt(likeText.split(' ')[0]); // Ambil bagian angka dari teks
+        var newLikes = currentLikes + (icon.classList.contains('fa') ? 1 : -1); // Tambah atau kurangi like sesuai dengan perubahan ikon
+    
+        // Mengupdate teks jumlah like
+        likeCount.textContent = newLikes + ' likes';
+    
+        // Mengirim permintaan ke server untuk menambah atau menghapus like
+        fetch('/likeKomentarArtikel/' + commentId, {
+            method: 'POST', // POST atau DELETE sesuai dengan kebutuhan Anda
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok.');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+    </script>
 
 
     

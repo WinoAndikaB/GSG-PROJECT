@@ -390,7 +390,7 @@
               $thumbnail = "https://img.youtube.com/vi/{$videoId}/maxresdefault.jpg"; // Mengambil thumbnail maksimum resolusi
               ?>
               <div class="col-4 align-self-center mb-3">
-                  <img src="<?php echo $thumbnail; ?>" width="120" height="59" alt="Thumbnail">
+                <img src="<?php echo $thumbnail; ?>" width="120" height="59" alt="Thumbnail" style="border-radius: 3%;">
               </div>
               <div class="col-8 padding">
                   <div class="most_fh5co_trending_font"><a class="video-title" href="{{ route('showDetailVideo', ['id' => $item->id]) }}" >{{ \Illuminate\Support\Str::limit($item->judulVideo, 50) }}</a></div>
@@ -405,9 +405,9 @@
 
     <span class="fh5co_tags_all"> Tags : 
       @foreach(explode(',', $video->tagsVideo) as $tag)
-          <a href="#" class="fh5co_tagg">{{ $tag }}</a>
+          <a href="{{ route('TagsVideos', ['tag' => $tag]) }}" class="fh5co_tagg">{{ $tag }}</a>
       @endforeach
-    </span>
+    </span> 
 
     <form action="/komentarVideo" method="post">
       @csrf

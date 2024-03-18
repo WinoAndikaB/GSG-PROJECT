@@ -241,7 +241,7 @@
 
           <br>
           
-          <iframe width="730" height="450" src="{{$video->linkVideo}}" frameborder="0" allowfullscreen></iframe>
+          <iframe width="730" height="450" src="{{$video->linkVideo}}" frameborder="0" allowfullscreen style="border-radius: 3%;"></iframe>
 
           <div style="font-size: 18px; text-align: justify; margin-top: 20px;">
             <div style="font-size: 18px; line-height: 2;">
@@ -249,11 +249,11 @@
             </div>
           </div>
 
-          @foreach(explode(',', $video->tagsVideo) as $tag)
-          <span class="fh5co_tags_all"> Tags :
-              <a href="#" class="fh5co_tagg">{{ $tag }}</a>
-          </span>
-      @endforeach
+          <span class="fh5co_tags_all"> Tags : 
+            @foreach(explode(',', $video->tagsVideo) as $tag)
+                <a href="{{ route('TagsVideosLP', ['tag' => $tag]) }}" class="fh5co_tagg">{{ $tag }}</a>
+            @endforeach
+          </span>   
       
       <br>
       <br>
@@ -332,7 +332,7 @@
               $thumbnail = "https://img.youtube.com/vi/{$videoId}/maxresdefault.jpg"; // Mengambil thumbnail maksimum resolusi
               ?>
               <div class="col-4 align-self-center mb-3">
-                  <img src="<?php echo $thumbnail; ?>" width="120" height="59" alt="Thumbnail">
+                  <img src="<?php echo $thumbnail; ?>" width="120" height="59" alt="Thumbnail" style="border-radius: 5%;">
               </div>
               <div class="col-8 padding">
                   <div class="most_fh5co_trending_font"><a class="video-title" href="{{ route('showDetailLPVideo', ['id' => $item->id]) }}" >{{ \Illuminate\Support\Str::limit($item->judulVideo, 50) }}</a></div>
@@ -377,7 +377,7 @@
               <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px;">
                 <div style="display: flex; align-items: center;">
                     <a href="/login" style="text-decoration: none; color: #333; display: inline-block; padding: 8px 15px; border: 2px solid #4CAF50; border-radius: 20px; background-color: #fff; transition: all 0.3s ease;" >
-                        <i class="fas fa-thumbs-up" style="color: #4CAF50; font-size: 15px;"></i>  
+                        <i class="fa-regular fa-thumbs-up" style="color: #4CAF50; font-size: 15px;"></i>  
                         <span style="font-size: 16px; margin-left: 5px;">Like</span>
                     </a>
         
