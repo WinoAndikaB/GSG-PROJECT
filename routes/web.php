@@ -308,6 +308,11 @@ use Illuminate\Support\Facades\Route;
     
             //[SuperAdmin] Delete Kategori
             Route::get('/deleteKategoriSA/{id}',[SuperAdminController::class,'deleteKategoriSA'])->name('deleteKategoriSA');
+
+            //[SuperAdmin] Tabel Banner
+            Route::get('/bannerSA', [SuperAdminController::class, 'bannerSA'])->name('bannerSA');
+            Route::post('/saveBannerSA', [SuperAdminController::class, 'saveBannerSA'])->name('saveBannerSA');
+            Route::get('/deleteBannerSA/{id}',[SuperAdminController::class,'deleteBannerSA'])->name('deleteBannerSA');
             
             //[SuperAdmin] Tabel Pengguna
             Route::get('/penggunaSA', [SuperAdminController::class, 'penggunaSA'])->name('penggunaSA');

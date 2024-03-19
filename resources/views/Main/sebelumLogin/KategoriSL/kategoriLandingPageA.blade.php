@@ -176,7 +176,7 @@
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
-                    <a href="{{ route('detail.artikel', ['id' => $item->id]) }}" style="text-decoration: none;">
+                    <a href="{{ route('showDetailLPArtikel', ['id' => $item->id]) }}" style="text-decoration: none;">
                         <h4 class="article-title" onclick="selectText(this)" style="text-align: left;">{{ $item->judulArtikel }}</h4>
                     </a>
                     <span class="d-flex">

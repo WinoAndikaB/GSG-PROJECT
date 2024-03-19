@@ -15,11 +15,13 @@
   <link href="../assets2/css/nucleo-icons.css" rel="stylesheet" />
   <link href="../assets2/css/nucleo-svg.css" rel="stylesheet" />
   <!-- Font Awesome Icons -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <link href="../assets2/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets2/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+
+  <!-- Popup Foto -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
 
   <style>
     .modal {
@@ -135,6 +137,14 @@
             <span class="nav-link-text ms-1">Kategori
               <span class="text-success text-sm font-weight-bolder"></span> 
             </span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/bannerSA">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-image text-primary text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Banner</span>
           </a>
         </li>
         <li class="nav-item">

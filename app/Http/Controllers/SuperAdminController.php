@@ -18,6 +18,7 @@ use App\Models\LaporanKomentarArtikel;
 use App\Models\laporanKomentarVideo;
 use App\Models\LaporanUlasanUser;
 use App\Models\LaporanVideoUser;
+use App\Models\Banner;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -91,8 +92,8 @@ class SuperAdminController extends Controller
         $totalUlasan = ulasans::count();
         $totalUlasan = ulasans::count();
         $data1 = ulasans::all();
-        $tagsA = artikels::inRandomOrder()->take(10)->get();
         $tagsV = video::inRandomOrder()->take(10)->get();
+        $tagsA = artikels::inRandomOrder()->take(10)->get();
 
         $superadminCount = User::where('role', 'superadmin')->count();
         $adminCount = User::where('role', 'admin')->count();
@@ -1089,6 +1090,92 @@ function deleteKategoriSA($id){
         return redirect()->route('kategoriTblSA')->with('success','Data Berhasil di Update');
     }   
     
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    //[SuperAdmin-Banner]
+    function bannerSA(){
+
+        $banner0 = banner::where('jenis_banner', 0)->orderBy('created_at', 'desc')->paginate(10);
+        $banner1 = banner::where('jenis_banner', 1)->orderBy('created_at', 'desc')->paginate(10);
+        $banner2 = banner::where('jenis_banner', 2)->orderBy('created_at', 'desc')->paginate(10);
+        $banner3 = banner::where('jenis_banner', 3)->orderBy('created_at', 'desc')->paginate(10);
+        
+
+        // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+        $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+
+        return view('superAdmin.bannerSA', compact('banner0','banner1','banner2','banner3','dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
+    }
+
+
+    function saveBannerSA(Request $request) {
+        $request->validate([
+            'image_url' => 'nullable|url',
+            'file_path' => 'nullable|image',
+            'keterangan' => 'nullable|string',
+            'jenis_banner' => 'required|integer|in:0,1,2,3', // Validasi jenis_banner
+        ]);
+    
+        // Hitung jumlah banner berdasarkan jenis_banner
+        $count = Banner::where('jenis_banner', $request->jenis_banner)->count();
+    
+        // Batasi jumlah data berdasarkan jenis_banner
+        $maxCount = 5; // Default maxCount
+        if ($request->jenis_banner === 0 || $request->jenis_banner === 1) {
+            $maxCount = 5;
+        } elseif ($request->jenis_banner === 2) {
+            $maxCount = 4;
+        } elseif ($request->jenis_banner === 3) {
+            $maxCount = 1;
+        }
+    
+        // Cek apakah jumlah sudah mencapai batas maksimum
+        if ($count >= $maxCount) {
+            return redirect()->back()->with('error', 'Batas jumlah banner untuk jenis ini telah tercapai.');
+        }
+    
+        $banner = new Banner();
+    
+        if ($request->has('image_url')) {
+            $banner->image_url = $request->image_url;
+        } elseif ($request->hasFile('file_path')) {
+            $file = $request->file('file_path');
+            $path = $file->store('banners', 'public');
+            $banner->file_path = $path;
+        }
+    
+        $banner->keterangan = $request->keterangan;
+        $banner->jenis_banner = $request->jenis_banner; // Simpan jenis_banner
+        $banner->save();
+    
+        // Ambil data dengan batasan jumlah
+        $banners = Banner::where('jenis_banner', $request->jenis_banner)->take($maxCount)->get();
+    
+        return redirect()->back()->with('success', 'Banner berhasil disimpan.')->with('banners', $banners);
+    }
+    
+    
+    
+
+        //[SuperAdmin-Banner] Delete Banner
+        function deleteBannerSA($id)
+        {
+            $data=Banner::find($id);
+            $data->delete();
+            return redirect('bannerSA');
+        }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

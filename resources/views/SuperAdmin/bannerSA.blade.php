@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Ulasan | KataKey
+    Banner | Katakey
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -20,36 +20,12 @@
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets2/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 
-    <!-- Popup Foto Pengguna -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+  <!-- Popup Foto -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+
 
 <!------------------------------------------------------------------------------------- CSS Area -------------------------------------------------------------------------------------------->
 <!------------------------------------------------------------------------------------- CSS Area -------------------------------------------------------------------------------------------->
-
-<!-- Rating CSS-->
-<style>
-  .rating {
-    font-size: 20px;
-  }
-
-  .star {
-    color: gray; /* Mengatur warna bintang awalnya menjadi gray */
-    cursor: pointer;
-  }
-
-  .star.selected {
-    color: gold; /* Mengatur warna bintang yang dipilih menjadi gold */
-  }
-
-  .rating-container {
-      font-size: 20px; /* Atur ukuran teks rata-rata rating */
-      margin: 15px; /* Atur margin untuk jarak dari teks sekitarnya */
-    }
-
-    .filled-star {
-      color: gold; /* Warna bintang yang diisi */
-    }
-  </style>
 
   
 <!-- Modal CSS-->
@@ -214,7 +190,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/kategoriTblSA">
+          <a class="nav-link" href="/kategoriTblSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-world-2 text-warning text-sm opacity-10"></i>
             </div>
@@ -224,7 +200,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/bannerSA">
+          <a class="nav-link active" href="/bannerSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-image text-primary text-sm opacity-10"></i>
             </div>
@@ -242,12 +218,12 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/ulasansSA">
+          <a class="nav-link " href="/ulasansSA">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-paper-diploma text-warning text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Ulasan 
-              <span class="text-success text-sm font-weight-bolder text-white">+ {{ $dataBaruUlasan}}</span> 
+              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruUlasan}}</span> 
             </span>
           </a>
         </li>
@@ -281,9 +257,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Ulasan</li>
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Banner</li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">List Ulasan Tersedia</h6>
+          <h6 class="font-weight-bolder text-white mb-0">Banner</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -347,133 +323,380 @@
       <div class="row">
         <div class="col-12">
           <div class="card mb-4">
-            <div class="card-header pb-0">
-              <h6>List Ulasan Tersedia</h6>
-            </div>
-            <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">   
 
-                <div class="row">
-                  <div class="col-12">
-                    <div class="card mb-4">
-                      <div class="card-header pb-0">
-                      </div>
-                      <div class="card-body px-0 pt-0 pb-2">
-                        <div class="rating-container">
-                      </div> 
-                      
-                      <div class="d-flex justify-content-center">
-                        <ul class="pagination">
-                            @if ($data1->onFirstPage())
-                                <li class="page-item disabled">
-                                    <span class="page-link" aria-label="Previous">
-                                        <span aria-hidden="true">&lsaquo;</span>
-                                    </span>
-                                </li>
-                            @else
-                                <li class="page-item">
-                                    <a class="page-link" href="{{ $data1->previousPageUrl() }}" rel="prev" aria-label="Previous">
-                                        <span aria-hidden="true">&lsaquo;</span>
-                                    </a>
-                                </li>
-                            @endif
-      
-                          <!-- Menampilkan halaman berapa -->
-                          <div class="text-center">
-                              {{ $data1->currentPage() }} dari {{ $data1->lastPage() }}
+            <div class="container">
+              <div class="row">
+                  <div class="col-md-5">
+                      <div class="card mb-3">
+                          <div class="card-header pb-0">
+                              <h6>Form Pengisian Main Banner (5760x3840)</h6>
                           </div>
-                    
-                            @if ($data1->hasMorePages())
-                                <li class="page-item">
-                                    <a class="page-link" href="{{ $data1->nextPageUrl() }}" rel="next" aria-label="Next">
-                                        <span aria-hidden="true">&rsaquo;</span>
-                                    </a>
-                                </li>
-                            @else
-                                <li class="page-item disabled">
-                                    <span class="page-link" aria-label="Next">
-                                        <span aria-hidden="true">&rsaquo;</span>
-                                    </span>
-                                </li>
-                            @endif
-                        </ul>
-                    </div>
-  
-                        <div class="table-responsive p-0">
-                          <table class="table align-items-center mb-0">
-                            <thead>
-                              <tr>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User ID</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pengguna</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pesan</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Rating</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Upload</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Update</th>
-                                <th class="text-secondary opacity-7"></th>
-                              </tr>
-                            </thead>
-                            @foreach ($data1 as $ulasan)
-                            <tbody>
-                              <tr>
-                                <td class="align-middle text-center">
-                                  <p>{{$ulasan['id']}}</p>
-                                </td>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$ulasan['user_id']}}</p>
-                                </td>
-                                <td>
-                                  <div class="d-flex px-2 py-1">
-                                    <div>
-                                      <a href="{{ asset('fotoProfil/' . $ulasan['fotoProfil']) }}" data-lightbox="fotoProfil" data-title="Deskripsi Gambar Profil">
-                                          <img src="{{ asset('fotoProfil/' . $ulasan['fotoProfil']) }}" class="avatar avatar-sm me-3" alt="user1">
-                                      </a>
-                                  </div>                                  
-                                    <div class="d-flex flex-column justify-content-center">
-                                      <h6 class="mb-0 text-sm">{{$ulasan['nama']}}</h6>
-                                      <p class="text-xs text-secondary mb-0">{{$ulasan['email']}}</p>
-                                    </div>
+                          <div class="card-body">
+                              <form action="{{ route('saveBannerSA') }}" method="POST" enctype="multipart/form-data">
+                                  @csrf
+                                  <input type="hidden" name="jenis_banner" value="0"> <!-- Jenis banner 1 -->
+                                  <div class="form-group">
+                                      <label>Format Foto: .jpg, .jpeg, .png </label>
+                                      <input type="file" class="form-control" name="file_path">
                                   </div>
-                                </td>  
-                                <td>
-                                  <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
-                                    {{$ulasan['pesan']}}
-                                  </p>
-                                </td> 
-                                <td>
-                                  <p class="align-middle text-center" style="white-space: normal; max-width: 1000px;">
-                                    <span class="rating">
-                                      @for ($i = 1; $i <= 5; $i++)
-                                        @if ($i <= $ulasan->rating)
-                                          <span class="star selected">&#9733;</span>
-                                        @else
-                                          <span class="star">&#9733;</span>
-                                        @endif
-                                      @endfor
-                                    </span>
-                                  </p>
-                                </td>    
+                                  <div class="form-group">
+                                      <label>URL Banner</label>
+                                      <input type="text" class="form-control" name="image_url" placeholder="URL Gambar">
+                                  </div>
+                                  <div class="form-group">
+                                      <label>Keterangan Banner</label>
+                                      <input type="text" class="form-control" name="keterangan" placeholder="Keterangan">
+                                  </div>
+                                  <button type="submit" class="btn btn-primary mt-3">Upload Banner</button>
+                              </form>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-md-7">
+                      <div class="card mb-3">
+                          <div class="card-header pb-0">
+                              <h6>Daftar Banner Main Banner (5760x3840)</h6>
+                          </div>
+                          <div class="card-body">
+                              <table class="table">
+                                  <thead>
+                                      <tr>
+                                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image</th>
+                                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image URL</th>
+                                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">File Path</th>
+                                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Keterangan</th>
+                                          <th class="text-secondary opacity-7"></th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      @if($banner0->isEmpty())
+                                      <tr>
+                                          <td colspan="5" class="align-middle text-center">
+                                              <p class="text-xs font-weight-bold mb-0">Data Kosong / Belum Terisi</p>
+                                          </td>
+                                      </tr>
+                                      @else
+                                      @foreach($banner0 as $banner)
+                                      <tr>
+                                          <td class="align-middle text-center">
+                                              <a href="{{ asset($banner->image_url) }}" data-lightbox="gallery" data-title="Deskripsi Gambar">
+                                                  <img src="{{ asset($banner->image_url) }}" class="avatar avatar-sm me-3" alt="Gambar">
+                                              </a>
+                                          </td>
+                                          <td class="align-middle text-center">
+                                              <a href="{{$banner['image_url']}}" target="_blank" class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
+                                                {{ Str::limit($banner->image_url, 50) }} <!-- Memperpendek URL menjadi 50 karakter -->
+                                              </a>
+                                          </td>
+                                          <td class="align-middle text-center">
+                                              <span class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">{{ $banner->file_path }}</span>
+                                          </td>
+                                          <td class="align-middle text-center">
+                                              <span class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">{{ $banner->keterangan }}</span>
+                                          </td>
+                                          <td class="align-middle">
+                                              <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteBannerSA', ['id' => $banner['id']]) }}')">
+                                                  <i class="fa fa-trash"></i>
+                                              </a>                
+                                          </td>
+                                      </tr>
+                                      @endforeach
+                                      @endif
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          
+
+            <div class="container">
+              <div class="row">
+          
+                  <div class="col-md-5">
+                      <div class="card mb-3">
+          
+                          <div class="card-header pb-0">
+                              <h6>Form Pengisian Ukuran 1200x200</h6>
+                          </div>
+                          <div class="card-body">
+                              <form action="{{ route('saveBannerSA') }}" method="POST" enctype="multipart/form-data">
+                                  @csrf
+                                  <input type="hidden" name="jenis_banner" value="1"> <!-- Jenis banner 1 -->
+                                  <div class="form-group">
+                                      <label>Format Foto: .jpg, .jpeg, .png </label>
+                                      <input type="file" class="form-control" name="file_path">
+                                  </div>
+                                  <div class="form-group">
+                                      <label>URL Banner</label>
+                                      <input type="text" class="form-control" name="image_url" placeholder="URL Gambar">
+                                  </div>
+                                  <div class="form-group">
+                                      <label>Keterangan Banner</label>
+                                      <input type="text" class="form-control" name="keterangan" placeholder="Keterangan">
+                                  </div>
+                                  <button type="submit" class="btn btn-primary mt-3">Upload Banner</button>
+                              </form>
+                          </div>
+                      </div>
+                  </div>
+          
+                  <div class="col-md-7">
+                      <div class="card mb-3">
+                          <div class="card-header pb-0">
+                              <h6>Daftar Banner Ukuran 1200x200</h6>
+                          </div>
+                          <div class="card-body">
+                              <table class="table">
+                                  <thead>
+                                      <tr>
+                                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image</th>
+                                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image URL</th>
+                                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">File Path</th>
+                                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Keterangan</th>
+                                          <th class="text-secondary opacity-7"></th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                    @if($banner1->isEmpty())
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="12" class="align-middle text-center">
+                                                <p class="text-xs font-weight-bold mb-0">Data Kosong / Belum Terisi</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                @else
+                                @foreach($banner1 as $banner)
+                                    <tr>
+                                        <td class="align-middle text-center">
+                                            <a href="{{ asset($banner->image_url) }}" data-lightbox="gallery" data-title="Deskripsi Gambar">
+                                                <img src="{{ asset($banner->image_url) }}" class="avatar avatar-sm me-3" alt="Gambar">
+                                            </a>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <a href="{{$banner->image_url}}" target="_blank" class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
+                                                {{ Str::limit($banner->image_url, 50) }} <!-- Memperpendek URL menjadi 50 karakter -->
+                                            </a>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <span class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">{{ $banner->file_path }}</span>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <span class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">{{ $banner->keterangan }}</span>
+                                        </td>
+                                        <td class="align-middle">
+                                            <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteBannerSA', ['id' => $banner->id]) }}')">
+                                                <i class="fa fa-trash"></i>
+                                            </a>                
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                      @endif
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+          
+              </div>
+          </div>
+          
+          
+          
+          <div class="container">
+              <div class="row">
+                  <div class="col-md-5">
+                      <div class="card mb-3">
+          
+                          <div class="card-header pb-0">
+                              <h6>Form Pengisian Ukuran 370x170</h6>
+                          </div>
+                          <div class="card-body">
+                              <form action="{{ route('saveBannerSA') }}" method="POST" enctype="multipart/form-data">
+                                  @csrf
+                                  <input type="hidden" name="jenis_banner" value="2"> <!-- Jenis banner 2 -->
+                                  <div class="form-group">
+                                      <label>Format Foto: .jpg, .jpeg, .png </label>
+                                      <input type="file" class="form-control" name="file_path">
+                                  </div>            
+                                  <div class="form-group">
+                                      <label>URL Banner</label>
+                                      <input type="text" class="form-control" name="image_url" placeholder="URL Gambar">
+                                  </div>
+                                  <div class="form-group">
+                                      <label>Keterangan Banner</label>
+                                      <input type="text" class="form-control" name="keterangan" placeholder="Keterangan">
+                                  </div>
+                                  <button type="submit" class="btn btn-primary mt-3">Upload Banner</button>
+                              </form>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-md-7">
+                    <div class="card mb-3">
+        
+                        <div class="card-header pb-0">
+                            <h6>Daftar Banner Ukuran 370x170</h6>
+                        </div>
+        
+                        <div class="card-body">
+                          <table class="table">
+                              <thead>
+                                  <tr>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image URL</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">File Path</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Keterangan</th>
+                                    <th class="text-secondary opacity-7"></th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                @if($banner2->isEmpty())
+                                <tbody>
+                                    <tr>
+                                        <td colspan="12" class="align-middle text-center">
+                                            <p class="text-xs font-weight-bold mb-0">Data Kosong / Belum Terisi</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            @else
+                            @foreach($banner2 as $banner)
+                            <tr>
                                 <td class="align-middle text-center">
-                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($ulasan['created_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
+                                    <a href="{{ asset($banner->image_url) }}" data-lightbox="gallery" data-title="Deskripsi Gambar">
+                                        <img src="{{ asset($banner->image_url) }}" class="avatar avatar-sm me-3" alt="Gambar">
+                                    </a>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($ulasan['updated_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
+                                    <a href="{{$banner['image_url']}}" target="_blank" class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
+                                      {{ Str::limit($banner->image_url, 50) }} <!-- Memperpendek URL menjadi 50 karakter -->
+                                    </a>
+                                </td>
+                                <td class="align-middle text-center">
+                                    <span class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">{{ $banner->file_path }}</span>
+                                </td>
+                                <td class="align-middle text-center">
+                                    <span class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">{{ $banner->keterangan }}</span>
                                 </td>
                                 <td class="align-middle">
-                                  <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteUlasanSA', ['id' => $ulasan['id']]) }}')">
-                                    <i class="fa fa-trash"></i>
-                                </a>
+                                    <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteBannerSA', ['id' => $banner['id']]) }}')">
+                                        <i class="fa fa-trash"></i>
+                                    </a>                
                                 </td>
-                              </tr>
-                            </tbody>
-                              @endforeach
+                            </tr>
+                            @endforeach
+                            @endif
+                              </tbody>
                           </table>
-  
-                        </div>
                       </div>
+                      
                     </div>
-                  </div>
                 </div>
+              </div>
+          </div>
+          
+          
+      <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="card">
+
+                  <div class="card-header pb-0">
+                    <h6>Form Pengisian Ukuran 370x636</h6>
+                </div>
+                    <div class="card-body">
+                        <form action="{{ route('saveBannerSA') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <input type="hidden" name="jenis_banner" value="3"> <!-- Jenis banner 1 -->
+                            <div class="form-group">
+                                <label>Format Foto: .jpg, .jpeg, .png </label>
+                                <input type="file" class="form-control" name="file_path">
+                            </div>            
+                            <div class="form-group">
+                                <label>URL Banner</label>
+                                <input type="text" class="form-control" name="image_url" placeholder="URL Gambar">
+                            </div>
+                            <div class="form-group">
+                                <label>Keterangan Banner</label>
+                                <input type="text" class="form-control" name="keterangan" placeholder="Keterangan">
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3">Upload Banner</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+              <div class="card mb-3">
+  
+                  <div class="card-header pb-0">
+                      <h6>Daftar Banner Ukuran 370x636</h6>
+                  </div>
+  
+                  <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image URL</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">File Path</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Keterangan</th>
+                              <th class="text-secondary opacity-7"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          @if($banner3->isEmpty())
+                          <tbody>
+                              <tr>
+                                  <td colspan="12" class="align-middle text-center">
+                                      <p class="text-xs font-weight-bold mb-0">Data Kosong / Belum Terisi</p>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      @else
+                      @foreach($banner3 as $banner)
+                      <tr>
+                          <td class="align-middle text-center">
+                              <a href="{{ asset($banner->image_url) }}" data-lightbox="gallery" data-title="Deskripsi Gambar">
+                                  <img src="{{ asset($banner->image_url) }}" class="avatar avatar-sm me-3" alt="Gambar">
+                              </a>
+                          </td>
+                          <td class="align-middle text-center">
+                              <a href="{{$banner['image_url']}}" target="_blank" class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
+                                {{ Str::limit($banner->image_url, 50) }} <!-- Memperpendek URL menjadi 50 karakter -->
+                              </a>
+                          </td>
+                          <td class="align-middle text-center">
+                              <span class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">{{ $banner->file_path }}</span>
+                          </td>
+                          <td class="align-middle text-center">
+                              <span class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">{{ $banner->keterangan }}</span>
+                          </td>
+                          <td class="align-middle">
+                              <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteBannerSA', ['id' => $banner['id']]) }}')">
+                                  <i class="fa fa-trash"></i>
+                              </a>                
+                          </td>
+                      </tr>
+                      @endforeach
+                      @endif
+                        </tbody>
+                    </table>
+                </div>
+                
+              </div>
+          </div>
+        </div>
+    </div>
+          
+              
+
+            
+              
+              
+
+
 <!------------------------------------------------------------------------------------- Modal Area -------------------------------------------------------------------------------------------------------------------->
 <!------------------------------------------------------------------------------------- Modal Area -------------------------------------------------------------------------------------------------------------------->
 
@@ -629,14 +852,10 @@
  <script src="../assets2/js/plugins/smooth-scrollbar.min.js"></script>
  <script src="../assets2/js/plugins/chartjs.min.js"></script>
 
-  <!-- Popup Foto Pengguna -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+ <!-- Popup Foto Pengguna -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
 
-<script>
-  $(document).ready(function() {
-      console.log("Document ready.");
-  });
-  </script>
+
 
   <!-- Modal Delete -->
   <script>
@@ -670,118 +889,6 @@
     });
   </script>
 
-  <!-- Filter Role -->
-  <script>
-    // Menangani klik pada filter role
-    document.querySelectorAll('.role-filter').forEach(function (element) {
-        element.addEventListener('click', function () {
-            var selectedRole = element.getAttribute('data-role');
-            // Redirect ke halaman dengan filter role
-            window.location.href = '{{ route("penggunaSA") }}?role=' + selectedRole;
-        });
-    });
-  </script>
-
-  <!-- Rating -->
-<script>
-  const stars = document.querySelectorAll('.star');
-  const ratingInput = document.getElementById('rating');
-
-  stars.forEach((star) => {
-    star.addEventListener('click', () => {
-      const ratingValue = parseInt(star.getAttribute('data-rating'));
-      ratingInput.value = ratingValue;
-      stars.forEach((s) => s.classList.remove('selected')); // Hapus kelas 'selected' dari semua bintang
-      for (let i = 0; i < ratingValue; i++) {
-        stars[i].classList.add('selected'); // Tambahkan kelas 'selected' pada bintang yang dipilih
-      }
-    });
-  });
-</script>
-
-  <script>
-    var ctx1 = document.getElementById("chart-line").getContext("2d");
-
-    var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
-
-    gradientStroke1.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
-    gradientStroke1.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
-    gradientStroke1.addColorStop(0, 'rgba(94, 114, 228, 0)');
-    new Chart(ctx1, {
-      type: "line",
-      data: {
-        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        datasets: [{
-          label: "Mobile apps",
-          tension: 0.4,
-          borderWidth: 0,
-          pointRadius: 0,
-          borderColor: "#5e72e4",
-          backgroundColor: gradientStroke1,
-          borderWidth: 3,
-          fill: true,
-          data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-          maxBarThickness: 6
-
-        }],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false,
-          }
-        },
-        interaction: {
-          intersect: false,
-          mode: 'index',
-        },
-        scales: {
-          y: {
-            grid: {
-              drawBorder: false,
-              display: true,
-              drawOnChartArea: true,
-              drawTicks: false,
-              borderDash: [5, 5]
-            },
-            ticks: {
-              display: true,
-              padding: 10,
-              color: '#fbfbfb',
-              font: {
-                size: 11,
-                family: "Open Sans",
-                style: 'normal',
-                lineHeight: 2
-              },
-            }
-          },
-          x: {
-            grid: {
-              drawBorder: false,
-              display: false,
-              drawOnChartArea: false,
-              drawTicks: false,
-              borderDash: [5, 5]
-            },
-            ticks: {
-              display: true,
-              color: '#ccc',
-              padding: 20,
-              font: {
-                size: 11,
-                family: "Open Sans",
-                style: 'normal',
-                lineHeight: 2
-              },
-            }
-          },
-        },
-      },
-    });
-    </script>
 
     <script>
       var win = navigator.platform.indexOf('Win') > -1;

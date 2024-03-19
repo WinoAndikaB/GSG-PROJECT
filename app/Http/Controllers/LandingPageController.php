@@ -9,6 +9,7 @@ use App\Models\komentar_video;
 use App\Models\syaratdanketentuans;
 use App\Models\ulasans;
 use App\Models\video;
+use App\Models\Banner;
 use App\Models\kategori;
 use App\Models\user;
 use App\Models\Follower;
@@ -44,10 +45,9 @@ class LandingPageController extends Controller
     {
         $kategoriA = kategori::all();
   
-                // Get trending articles randomly
-                $trending = artikels::whereNotIn('status' , ['Pending', 'Rejected'])
-                ->inRandomOrder()
-                ->take(3)
+                $trending = artikels::whereNotIn('status', ['Pending', 'Rejected'])
+                ->orderBy('jumlah_akses', 'desc') // Order by jumlah_akses column in descending order
+                ->take(4) // Get top 5 trending articles
                 ->get();
         
     
@@ -69,10 +69,26 @@ class LandingPageController extends Controller
                 ->take(1)
                 ->get();
 
+                $banner0 = Banner::where('jenis_banner', 0)
+                ->orderBy('created_at', 'desc')
+                ->paginate(10);
+
+                $banner1 = Banner::where('jenis_banner', 1)
+                ->orderBy('created_at', 'desc')
+                ->paginate(10);
+
+                $banner2 = Banner::where('jenis_banner', 2)
+                ->orderBy('created_at', 'desc')
+                ->paginate(10);
+
+                $banner3 = Banner::where('jenis_banner', 3)
+                ->orderBy('created_at', 'desc')
+                ->paginate(10);
+
                 $box3 = artikels::whereNotIn('status', ['Pending', 'Rejected'])
-                    ->inRandomOrder()
-                    ->take(5)
-                    ->get();
+                ->orderBy('jumlah_akses', 'desc') // Order by jumlah_akses column in descending order
+                ->take(4) // Get top 5 trending articles
+                ->get();
 
                 $box2 = artikels::whereNotIn('status', ['Pending', 'Rejected'])
                     ->inRandomOrder()
@@ -88,7 +104,7 @@ class LandingPageController extends Controller
 
                 $todayDate = date('l, d M Y');
     
-        return view('main.sebelumLogin.landingPage', compact('trending', 'latest','whatsnew','semua', 'box', 'box2', 'box3', 'boxLong', 'todayDate', 'kategoriA'));
+        return view('main.sebelumLogin.landingPage', compact('trending', 'latest','whatsnew','semua', 'box', 'box2', 'box3', 'banner0', 'banner1','banner2', 'banner3','boxLong', 'todayDate', 'kategoriA'));
     }
 
     //[Landing Page] Menampilkan Detail Artikel Ketika Di Klik
