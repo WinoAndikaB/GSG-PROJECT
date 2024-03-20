@@ -345,7 +345,7 @@
                                   </div>
                                   <div class="form-group">
                                       <label>Keterangan Banner</label>
-                                      <input type="text" class="form-control" name="keterangan" placeholder="Keterangan">
+                                      <input type="text" class="form-control" name="keterangan" placeholder="Keterangan" readonly>
                                   </div>
                                   <button type="submit" class="btn btn-primary mt-3">Upload Banner</button>
                               </form>
@@ -434,7 +434,7 @@
                                   </div>
                                   <div class="form-group">
                                       <label>Keterangan Banner</label>
-                                      <input type="text" class="form-control" name="keterangan" placeholder="Keterangan">
+                                      <input type="text" class="form-control" name="keterangan" placeholder="Keterangan" readonly>
                                   </div>
                                   <button type="submit" class="btn btn-primary mt-3">Upload Banner</button>
                               </form>
@@ -527,7 +527,7 @@
                                   </div>
                                   <div class="form-group">
                                       <label>Keterangan Banner</label>
-                                      <input type="text" class="form-control" name="keterangan" placeholder="Keterangan">
+                                      <input type="text" class="form-control" name="keterangan" placeholder="Keterangan" readonly>
                                   </div>
                                   <button type="submit" class="btn btn-primary mt-3">Upload Banner</button>
                               </form>

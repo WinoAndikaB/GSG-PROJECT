@@ -19,22 +19,22 @@
 
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-
+    
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/templatemo-574-mexant.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/owl.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}">
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css">
-
-    <link href="{{ asset('aset1/css/media_query.css')}}" rel="stylesheet" type="text/css"/>
-    <link href="{{ asset('aset1/css/bootstrap.css')}}" rel="stylesheet" type="text/css"/>
-    <link href="{{ asset('aset1/css/owl.carousel.css')}}" rel="stylesheet" type="text/css"/>
-    <link href="{{ asset('aset1/css/owl.theme.default.css')}}" rel="stylesheet" type="text/css"/>
+    
+    <link href="{{ asset('aset1/css/media_query.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('aset1/css/bootstrap.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('aset1/css/owl.carousel.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('aset1/css/owl.theme.default.css') }}" rel="stylesheet" type="text/css"/>
     <!-- Bootstrap CSS -->
-    <link href="{{ asset('aset1/css/style_1.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('aset1/css/style_1.css') }}" rel="stylesheet" type="text/css"/>
     <!-- Modernizr JS -->
-    <script src="{{ asset('aset1/js/modernizr-3.5.0.min.js')}}"></script>
+    <script src="{{ asset('aset1/js/modernizr-3.5.0.min.js') }}"></script>
 
 
 <style>
@@ -132,7 +132,33 @@
   }
 </style>
 
-<title>Home - Katakey</title>
+<!---------------------------------------------------------------------  Banner Carousel Style ------------------------------------------------------------------------------>
+<!---------------------------------------------------------------------  Banner Carousel Style ------------------------------------------------------------------------------>
+
+<style>
+  /* banner */
+  .banner-container {
+    max-width: 1550px; /* Mengatur lebar maksimum */
+    width: 100%;
+    overflow: hidden;
+    margin: 0 auto; /* Membuat container terpusat */
+  }
+  
+  .banner-carousel {
+    display: flex;
+    transition: transform 0.5s ease;
+  }
+  
+  .banner-slide {
+    min-width: 100%;
+    flex: 0 0 auto;
+    border-radius: 50px; /* Add border radius here */
+  }
+</style>
+
+
+<!---------------------------------------------------------------------  Body Area ------------------------------------------------------------------------------>
+<!---------------------------------------------------------------------  Body Area ------------------------------------------------------------------------------>
 
 <body>
 <div class="page-heading">
@@ -208,32 +234,28 @@
             <div class="row">
               <div class="col-lg-6">
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                  <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                  </ol>
-                  <div class="carousel-inner">
-                    <div class="carousel-item active">
-                      <img class="d-block w-100" src="https://images.alphacoders.com/104/1045142.jpg" alt="First slide">
+                    <ol class="carousel-indicators">
+                        @foreach($banner0 as $key => $banner)
+                            <li data-target="#carouselExampleIndicators" data-slide-to="{{ $key }}" class="{{ $key == 0 ? 'active' : '' }}"></li>
+                        @endforeach
+                    </ol>
+                    <div class="carousel-inner">
+                        @foreach($banner0 as $key => $banner)
+                            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                <img class="d-block w-100" src="{{ asset($banner->image_url) }}" alt="{{ $banner->keterangan }}">
+                            </div>
+                        @endforeach
                     </div>
-                    <div class="carousel-item">
-                      <img class="d-block w-100" src="https://c1.wallpaperflare.com/preview/79/806/473/book-business-drawing-education.jpg" alt="Second slide">
-                    </div>
-                    <div class="carousel-item">
-                      <img class="d-block w-100" src="https://c4.wallpaperflare.com/wallpaper/501/177/238/women-brunette-dress-black-dress-wallpaper-preview.jpg" alt="Third slide">
-                    </div>
-                  </div>
-                  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                  </a>
-                  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                  </a>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
                 </div>
-              </div>
+            </div>
                 <div class="col-lg-6 align-self-center">
                     <div class="banner-details mt-4 mt-lg-0">
                         <div class="post-meta-single">
@@ -252,7 +274,23 @@
     </div>
   </div>
 
-  <div class="post-area pd-top-75 pd-bottom-50" id="trending">
+<!---------------------------------------------------------------------  Banner Carousel ------------------------------------------------------------------------------>
+
+<div class="post-area pd-top-75 pd-bottom-50" id="trending">
+
+  <div class="banner-container">
+    <div class="banner-carousel">
+        @foreach($banner1 as $banner)
+            <div class="banner-slide">
+                <img src="{{ asset($banner->image_url) }}" alt="{{ $banner->keterangan }}" style="border-radius: 50px;">
+            </div>
+        @endforeach
+    </div>
+  </div>
+  
+
+
+<!---------------------------------------------------------------------  Banner Carousel ------------------------------------------------------------------------------> 
 
     
   <div style="display: flex; justify-content: center; margin: 10px;">
@@ -431,9 +469,15 @@
                         <li><a class="google-plus" href="#"><i class="fa fa-google social-icon"></i><span>19,101</span><span>Subscribers</span> <i class="fa fa-plus"></i></a></li>
                     </ul>
                 </div>
-                <div class="add-area">
-                    <a href="#"><img class="w-100" src="assets/img/add/6.png" alt="img"></a>
+                @foreach($banner2 as $banner)
+                <div class="add-area" style="margin-top: 20px;">
+                    @if(!empty($banner->image_url))
+                        <a href="#"><img class="w-100" src="{{ asset($banner->image_url) }}"></a>
+                    @else
+                        <a href="#"><img class="w-100" src="{{ asset('assets/img/add/6.png') }}"></a>
+                    @endif
                 </div>
+            @endforeach
             </div>
         </div>
     </div>
@@ -442,22 +486,24 @@
 <div class="bg-sky pd-top-80 pd-bottom-50" id="latest">
   <div class="container">
       <div class="row">
-        <div class="col-lg-3 col-sm-6">
-          <div class="single-post-wrap style-overlay-bg">
-              <div class="thumb">
-                  <img src="assets/img/post/9.png" alt="img">
-              </div>
-              <div class="details">
-                  <div class="post-meta-single mb-3">
-                      <ul>
-                          <li><a class="tag-base tag-blue" href="cat-fashion.html">fashion</a></li>
-                          <li><p><i class="fa fa-clock-o"></i>08.22.2020</p></li>
-                      </ul>
+
+          @foreach($banner3 as $banner)
+              <div class="col-lg-3 col-sm-6">
+                  <div class="single-post-wrap style-overlay-bg">
+                      <div class="thumb">
+                          <img src="{{ asset($banner->image_url) }}" alt="img">
+                      </div>
+                      <div class="details">
+                          <div class="post-meta-single mb-3">
+                              <ul>
+                                  <li><p><i class="fa fa-clock-o"></i>{{ $banner->created_at }}</p></li>
+                              </ul>
+                          </div>
+                          <h6 class="title"><a href="#">{{ $banner->keterangan }}</a></h6>
+                      </div>
                   </div>
-                  <h6 class="title"><a href="#">A Comparison of the Sony FE 85mm f/1.4 GM and Sigma</a></h6>
               </div>
-          </div>
-      </div>
+          @endforeach
 
           @foreach ($box2 as $item)
           <div class="col-lg-3 col-sm-6">
@@ -485,7 +531,7 @@
           <div class="col-lg-3 col-sm-6">
               <div class="trending-post style-box">
                   <div class="section-title">
-                      <h6 class="title">Trending News</h6>
+                      <h6 class="title">Most Read</h6>
                   </div>
                   @foreach ($box3 as $item)
                   <div class="post-slider owl-carousel">
@@ -649,6 +695,27 @@
 
 <!--------------------------------------------------------------------------------------- Javascript Area ------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------------- Javascript Area ------------------------------------------------------------------------------->
+
+<!--------------------------------------------------------------------- Javascript Banner Carousel ------------------------------------------------------------------------------>
+<!--------------------------------------------------------------------- Javascript Banner Carousel ------------------------------------------------------------------------------>
+<script>
+  const carousel = document.querySelector('.banner-carousel');
+  const slides = document.querySelectorAll('.banner-slide');
+  const totalSlides = slides.length;
+  const autoPlayInterval = 3000; // milliseconds
+  let currentIndex = 0;
+
+  function nextSlide() {
+    currentIndex = (currentIndex + 1) % totalSlides;
+    updateCarousel();
+  }
+
+  function updateCarousel() {
+    carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+  }
+
+  setInterval(nextSlide, autoPlayInterval);
+</script>
 
 <!--------------------------------------------------------------------------------------- Javascript Dropdown ------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------------- Javascript Dropdown ------------------------------------------------------------------------------->

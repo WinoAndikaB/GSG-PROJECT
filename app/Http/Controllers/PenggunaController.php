@@ -18,6 +18,7 @@ use App\Models\LaporanUlasanUser;
 use App\Models\LaporanKomentarArtikel;
 use App\Models\SimpanArtikel;
 use App\Models\SimpanVideo;
+use App\Models\Banner;
 use App\Models\Follower;
 use Illuminate\Support\Facades\Log;
 use App\Models\LaporanVideoUser;
@@ -59,9 +60,25 @@ class PenggunaController extends Controller
 
             $kategoriLogA = kategori::all();
 
+            $banner0 = Banner::where('jenis_banner', 0)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+            $banner1 = Banner::where('jenis_banner', 1)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+            $banner2 = Banner::where('jenis_banner', 2)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+            $banner3 = Banner::where('jenis_banner', 3)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
              // Get trending articles randomly
              $trending = artikels::whereNotIn('status' , ['Pending', 'Rejected'])
-                ->inRandomOrder()
+                ->orderBy('jumlah_akses', 'desc') // Order by jumlah_akses column in descending order
                 ->take(3)
                 ->get();
      
@@ -85,7 +102,7 @@ class PenggunaController extends Controller
                 ->get();
 
              $box3 = artikels::whereNotIn('status', ['Pending', 'Rejected'])
-                 ->inRandomOrder()
+             ->orderBy('jumlah_akses', 'desc') // Order by jumlah_akses column in descending order
                  ->take(5)
                  ->get();
 
@@ -104,7 +121,7 @@ class PenggunaController extends Controller
             // Mengambil tanggal hari ini
             $todayDate = date('l, d M Y');
     
-        return view('main.setelahLogin.home', compact('trending', 'latest','whatsnew','semua', 'box', 'box2', 'box3', 'boxLong', 'todayDate', 'kategoriLogA'));
+        return view('main.setelahLogin.home', compact('banner0','banner1','banner2','banner3','trending', 'latest','whatsnew','semua', 'box', 'box2', 'box3', 'boxLong', 'todayDate', 'kategoriLogA'));
     }
 
     //[User-Home] Menampilkan Detail Artikel Ketika Di Klik

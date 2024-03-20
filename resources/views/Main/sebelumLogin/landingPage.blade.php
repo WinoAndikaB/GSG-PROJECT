@@ -68,25 +68,27 @@
 <!---------------------------------------------------------------------  Banner Carousel Style ------------------------------------------------------------------------------>
 <!---------------------------------------------------------------------  Banner Carousel Style ------------------------------------------------------------------------------>
 
-    <style>
-      /* banner */
-      .banner-container {
-        max-width: 1550px; /* Mengatur lebar maksimum */
-        width: 100%;
-        overflow: hidden;
-        margin: 0 auto; /* Membuat container terpusat */
-      }
-      
-      .banner-carousel {
-        display: flex;
-        transition: transform 0.5s ease;
-      }
-      
-      .banner-slide {
-        min-width: 100%;
-        flex: 0 0 auto;
-      }
-    </style>
+<style>
+  /* banner */
+  .banner-container {
+    max-width: 1550px; /* Mengatur lebar maksimum */
+    width: 100%;
+    overflow: hidden;
+    margin: 0 auto; /* Membuat container terpusat */
+  }
+  
+  .banner-carousel {
+    display: flex;
+    transition: transform 0.5s ease;
+  }
+  
+  .banner-slide {
+    min-width: 100%;
+    flex: 0 0 auto;
+    border-radius: 50px; /* Add border radius here */
+  }
+</style>
+
 
 <!---------------------------------------------------------------------  Body Area ------------------------------------------------------------------------------>
 <!---------------------------------------------------------------------  Body Area ------------------------------------------------------------------------------>
@@ -178,16 +180,17 @@
       <div class="banner-carousel">
           @foreach($banner1 as $banner)
               <div class="banner-slide">
-                  <img src="{{ asset($banner->image_url) }}" alt="{{ $banner->keterangan }}">
+                  <img src="{{ asset($banner->image_url) }}" alt="{{ $banner->keterangan }}" style="border-radius: 50px;">
               </div>
           @endforeach
       </div>
-  </div>
+    </div>
+    
   
 
 <!---------------------------------------------------------------------  Banner Carousel ------------------------------------------------------------------------------> 
 
-    <div style="display: flex; justify-content: center; margin: 10px;">
+    <div style="display: flex; justify-content: center; margin: 50px;">
       @php
       $uniqueCategories = [];
       @endphp

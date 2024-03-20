@@ -29,6 +29,15 @@
     <link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}">
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css">
     
+    <link href="{{ asset('aset1/css/media_query.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('aset1/css/bootstrap.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('aset1/css/owl.carousel.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('aset1/css/owl.theme.default.css') }}" rel="stylesheet" type="text/css"/>
+    <!-- Bootstrap CSS -->
+    <link href="{{ asset('aset1/css/style_1.css') }}" rel="stylesheet" type="text/css"/>
+    <!-- Modernizr JS -->
+    <script src="{{ asset('aset1/js/modernizr-3.5.0.min.js') }}"></script>
+    
     
     
     <style>
