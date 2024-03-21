@@ -564,6 +564,11 @@
     <div style="background-color: #ffffff; border-radius: 10px; text-align: center; padding: 20px; width: 600px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
       <span style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 20px;" id="closeLaporan">&times;</span>
       <h2 style="color: #007bff; font-size: 24px;">Laporkan Video</h2>
+
+      <strong><span id="judulVideo" style="font-size: 14px;"></span></strong></p>
+
+      <hr>
+      
       <form id="reportForm">
         <div style="text-align: left;">
           <label style="font-size: 16px;"><input type="radio" name="reason" value="Konten Seksual"> Konten Seksual</label><br>
@@ -593,8 +598,9 @@
           <span style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 20px;" id="tutupLaporanKomen">&times;</span>
           <h2 style="color: #007bff; font-size: 24px;">Laporkan Komentar</h2>
 
-          <!-- Display information about the reported user -->
-          <p style="font-size: 14px;">User Yang Dilaporkan :<br> <strong><span id="namaDilaporkan" style="font-size: 14px;"></span></strong></p>
+          <strong><span id="namaDilaporkan" style="font-size: 14px;"></span></strong></p>
+
+          <hr>
 
           <form id="reportCommentForm" action="{{ route('storeLaporanKomentarVideo') }}" method="POST">
               <br>
@@ -791,6 +797,13 @@
         function hideLaporanModal() {
           modalLaporKomen.style.display = "none";
         }
+
+              // Close the modal when the user clicks outside of it
+      window.addEventListener("click", function(event) {
+        if (event.target == modalLaporKomen) {
+          modalLaporKomen.style.display = "none"; // Fixed the variable name here
+        }
+      });
     
         function submitForm() {
           const formData = new FormData(reportCommentForm);
@@ -962,70 +975,72 @@
 <!--------------------------------------------------------------------------------------- Javascript Lapor Modal ------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------------- Javascript Lapor Modal ------------------------------------------------------------------------------->
 
-       <script>
-        // Get the modal and close button elements
-        var modal = document.getElementById("modalLaporan");
-        var showModalButton = document.getElementById("showModal");
-        var closeButton = document.getElementById("closeLaporan");
-    
-        // Show the modal when the laporan-button is clicked
-        showModalButton.addEventListener("click", function(event) {
-          event.preventDefault();
-          modal.style.display = "block";
-        });
-    
-        // Close the modal when the close button is clicked
-        closeButton.addEventListener("click", function() {
-          modal.style.display = "none";
-        });
-    
-        // Close the modal when the user clicks outside of it
-        window.addEventListener("click", function(event) {
-          if (event.target == modal) {
-            modal.style.display = "none";
-          }
-        });
-    
-        // Submit the form
-    document.getElementById("reportForm").addEventListener("submit", function(event) {
+<script>
+  // Get the modal and close button elements
+  var modal = document.getElementById("modalLaporan");
+  var showModalButton = document.getElementById("showModal");
+  var closeButton = document.getElementById("closeLaporan");
+
+  // Show the modal when the showModalButton is clicked
+  showModalButton.addEventListener("click", function(event) {
       event.preventDefault();
-      
+      modal.style.display = "block";
+
+      // Assuming $video is passed to the view from the backend
+      var judulVideo = "{{ $video->judulVideo }}";
+      document.getElementById("judulVideo").innerText = judulVideo;
+  });
+
+  // Close the modal when the close button is clicked
+  closeButton.addEventListener("click", function() {
+      modal.style.display = "none";
+  });
+
+  // Close the modal when the user clicks outside of it
+  window.addEventListener("click", function(event) {
+      if (event.target == modal) {
+          modal.style.display = "none";
+      }
+  });
+
+  // Submit the form
+  document.getElementById("reportForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
       // Mengambil nilai yang dipilih dari radio button
       var selectedReason = document.querySelector('input[name="reason"]:checked');
       if (!selectedReason) {
-        alert("Pilih alasan laporan terlebih dahulu.");
-        return;
+          alert("Pilih alasan laporan terlebih dahulu.");
+          return;
       }
-      
-      // Mengambil alasan laporan dan video dari elemen form
+
+      // Mengambil alasan laporan dari elemen form
       var alasan = document.getElementById("reportTextLaporan").value;
       var videoId = {{ $video->id }};
 
-  
       // Kirim data laporan ke server melalui AJAX
       $.ajax({
-        type: "POST",
-        url: "/submitV/reportV", // Ganti dengan URL yang sesuai
-        data: {
-          _token: "{{ csrf_token() }}",
-          user_id: {{ Auth::user()->id }}, // Ganti dengan user_id yang sesuai
-          video_id: videoId,
-          laporan: selectedReason.value,
-          alasan: alasan,
-        },
-        success: function(response) {
-          // Tindakan setelah pengiriman berhasil
-          alert("Laporan telah dikirim!");
-          modal.style.display = "none"; // Tutup modal
-        },
-        error: function(error) {
-          // Tindakan jika ada kesalahan
-          alert("Terjadi kesalahan saat mengirim laporan.");
-        }
+          type: "POST",
+          url: "/submitV/reportV", // Ganti dengan URL yang sesuai
+          data: {
+              _token: "{{ csrf_token() }}",
+              user_id: {{ Auth::user()->id }}, // Ganti dengan user_id yang sesuai
+              video_id: videoId,
+              laporan: selectedReason.value,
+              alasan: alasan,
+          },
+          success: function(response) {
+              // Tindakan setelah pengiriman berhasil
+              alert("Laporan telah dikirim!");
+              modal.style.display = "none"; // Tutup modal
+          },
+          error: function(error) {
+              // Tindakan jika ada kesalahan
+              alert("Terjadi kesalahan saat mengirim laporan.");
+          }
       });
-    });
-      </script>
-
+  });
+</script>
 
 <!--------------------------------------------------------------------------------------- Javascript Like ------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------------- Javascript Like ------------------------------------------------------------------------------->

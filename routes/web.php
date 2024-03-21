@@ -344,7 +344,7 @@ use Illuminate\Support\Facades\Route;
             //[SuperAdmin] Tabel Laporan
             Route::get('/laporanUserSA', [SuperAdminController::class, 'laporanUserSA'])->name('laporanUserSA');
             Route::get('/laporanKomentarArtikelUserSA', [SuperAdminController::class, 'laporanKomentarArtikelUserSA'])->name('laporanKomentarArtikelUserSA');
-            Route::post('/freeze-user', [SuperAdminController::class, 'freezeUser'])->name('freeze.user');
+            Route::post('/freezeUserArtikelSA', [SuperAdminController::class, 'freezeUserArtikelSA'])->name('freezeUserArtikelSA');
    
             //[SuperAdmin] Tabel Laporan 
             Route::get('/laporanVideoUserSA', [SuperAdminController::class, 'laporanVideoUserSA'])->name('laporanVideoUserSA');

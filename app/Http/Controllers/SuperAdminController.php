@@ -1468,7 +1468,7 @@ function deleteKategoriSA($id){
             'dataBaruVideo', 'dataBaruKomentarVideo', 'LaporanKomentarArtikel', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
         }
         
-        public function freezeUser(Request $request)
+        public function freezeUserArtikelSA(Request $request)
         {
             // Retrieve data from the request
             $commentId = $request->input('comment_id');
@@ -1480,7 +1480,7 @@ function deleteKategoriSA($id){
         
             // Check if the comment is not found
             if (!$komentar) {
-                return redirect('/laporanKomentarArtikelUserSA')->with('error', 'Comment not found');
+                return redirect('/freezeUserArtikelSA')->with('error', 'Comment not found');
             }
         
             // Retrieve user_id from the comment relationship
@@ -1488,7 +1488,7 @@ function deleteKategoriSA($id){
         
             // Check if the user is not found for the comment
             if (!$userId) {
-                return redirect('/laporanKomentarArtikelUserSA')->with('error', 'User not found for the comment');
+                return redirect('/freezeUserArtikelSA')->with('error', 'User not found for the comment');
             }
         
             // Get the currently authenticated user's name
@@ -1502,7 +1502,7 @@ function deleteKategoriSA($id){
             ]);
         
             // Redirect with success message
-            return redirect('/laporanKomentarArtikelUserSA')->with('success', 'User frozen successfully');
+            return redirect('/freezeUserArtikelSA')->with('success', 'User frozen successfully');
         }
         
 
@@ -1541,6 +1541,40 @@ function deleteKategoriSA($id){
                     // If the reported video record does not exist, redirect with an error message
                     return redirect('/laporanVideoUserSA')->with('error', 'Reported video not found');
                 }
+            }
+
+
+            function laporanKomentarVideoUserSA(){
+
+                $laporanKomentarVideoUserSA = LaporanKomentarVideo::orderBy('created_at', 'desc')->paginate(30);
+    
+                // Iterate through each laporanKomentarArtikel and fetch user_id
+                foreach ($laporanKomentarVideoUserSA as $laporan) {
+                    // Step 1: Retrieve comment_id from LaporanKomentarArtikel model
+                    $commentId = $laporan->comment_id;
+            
+                    // Step 2: Use comment_id to get user_id from komentar_artikel model
+                    $komentarVideo = komentar_video::find($commentId);
+            
+                    // Add user_id to the laporanKomentarArtikel object
+                    $laporan->user_id_komentar_artikel = $komentarArtikel->user_id;
+                }
+            
+                // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+                $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
+                $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
+                $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
+                $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        
+                $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+                $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        
+                $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+                $LaporanKomentarArtikel = LaporanKomentarArtikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+                $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        
+                return view('SuperAdmin.laporan.laporanKomentarVideoSA', compact('laporanKomentarVideoUserSA', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+                'dataBaruVideo', 'dataBaruKomentarVideo', 'LaporanKomentarArtikel', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
             }
     
 

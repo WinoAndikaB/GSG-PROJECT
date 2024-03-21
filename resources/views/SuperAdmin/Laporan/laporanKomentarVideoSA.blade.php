@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Laporan Video  | KataKey
+    Laporan Komentar Video | KataKey
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -22,31 +22,6 @@
 
 <!------------------------------------------------------------------------------------- CSS Area -------------------------------------------------------------------------------------------->
 <!------------------------------------------------------------------------------------- CSS Area -------------------------------------------------------------------------------------------->
-
-<!-- Rating CSS-->
-<style>
-  .rating {
-    font-size: 20px;
-  }
-
-  .star {
-    color: gray; /* Mengatur warna bintang awalnya menjadi gray */
-    cursor: pointer;
-  }
-
-  .star.selected {
-    color: gold; /* Mengatur warna bintang yang dipilih menjadi gold */
-  }
-
-  .rating-container {
-      font-size: 20px; /* Atur ukuran teks rata-rata rating */
-      margin: 15px; /* Atur margin untuk jarak dari teks sekitarnya */
-    }
-
-    .filled-star {
-      color: gold; /* Warna bintang yang diisi */
-    }
-  </style>
 
   
 <!-- Modal CSS-->
@@ -148,6 +123,72 @@
     .dropdown:hover .dropbtn {
       background-color: #5E72E4;
     }
+</style>
+<style>
+  .modal-body {
+    display: flex;
+    align-items: center;
+  }
+
+  .profile-container {
+    margin-right: 20px;
+    text-align: center;
+  }
+
+  .profile-image {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+
+  /* Menentukan lebar maksimum untuk combobox */
+  #freezeDuration {
+    width: 250%;
+    max-width: 260px; /* Atur sesuai kebutuhan Anda */
+  }
+
+  /* Menentukan lebar maksimum untuk input teks */
+  #pesan {
+    width: 250%;
+    max-width: 260px; /* Atur sesuai kebutuhan Anda */
+  }
+</style>
+
+<style>
+  .popup-modal {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 80%;
+    max-height: 80%;
+    overflow: auto;
+    padding: 20px;
+    text-align: justify;
+    border-radius: 8px;
+  }
+
+  .popup-modal p {
+    margin: 0;
+  }
+
+  .popup-trigger {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    text-align: justify;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px; /* Adjust the max-width as needed */
+  }
+
+  .popup-trigger:hover {
+    text-decoration: underline;
+  }
 </style>
 </head>
 
@@ -278,9 +319,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Laporan Video</li>
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Laporan Komentar Video</li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Laporan Video</h6>
+          <h6 class="font-weight-bolder text-white mb-0">Laporan Komentar Video </h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -344,7 +385,7 @@
       <div class="row">
         <div class="col-12">
           <div class="card mb-4">
-     
+
             <div class="card-body p-3">
               <div class="row gx-4">
                 <div class="col-auto my-auto">
@@ -352,19 +393,20 @@
                     <a href="/laporanUserSA" class="btn btn-warning">Laporan Artikel + {{ $dataBaruLaporanArtikel}}</a> <a href="/laporanVideoUserSA" class="btn btn-warning">Laporan Video + {{$dataBaruLaporanVideo}}</a><br>
                     <a href="/laporanKomentarArtikelUserSA" class="btn btn-primary">Laporan Komentar Artikel + {{ $LaporanKomentarArtikel}}</a> <a href="/laporanKomentarVideoUserSA" class="btn btn-primary">Laporan Komentar Video + {{ $LaporanKomentarArtikel}}</a>
                     <h5 class="mb-1">
-                      List Laporan User
+                      List Laporan Komentar Video
                     </h5>
                     <p class="mb-0 font-weight-bold text-sm">
-                      Laporan Video
+                      Laporan Komentar Video
                     </p>
                   </div>
                 </div>
               </div>
             </div>
-
+            
             <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">          
-              <div class="container-fluid py-4">
+              <div class="table-responsive p-0">   
+                       
+
                 <div class="row">
                   <div class="col-12">
                     <div class="card mb-4">
@@ -376,17 +418,21 @@
                             <thead>
                               <tr>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama User</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Video ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Video</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User ID Pelapor</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama User Pelapor</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User ID Dilaporkan</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama User Dilaporkan</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Artikel ID</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Artikel</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Komentar ID</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Isi Komentar</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"">Laporan</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"">Alasan</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"">Tanggal Laporan</th>
                                 <th class="text-secondary opacity-7"></th>
                               </tr>
                             </thead>
-                            @if($laporanVideoUser->isEmpty())
+                            @if($laporanKomentarVideoUserSA->isEmpty())
                             <tbody>
                                 <tr>
                                     <td colspan="12" class="align-middle text-center">
@@ -395,42 +441,69 @@
                                 </tr>
                             </tbody>
                         @else
-                            @foreach ($laporanVideoUser as $item)
+                            @foreach ($laporanKomentarVideoUserSA as $item)
                             <tbody>
-                              <tr>
-                                  <td class="align-middle text-center">
-                                      <p class="text-xs font-weight-bold mb-0">{{$item['id']}}</p>
+                                <tr>
+                                    <td class="align-middle text-center">
+                                        <p class="text-xs font-weight-bold mb-0">{{$item['id']}}</p>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <p class="text-xs font-weight-bold mb-0">{{$item['user_id_pelapor']}}</p>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <p class="text-xs font-weight-bold mb-0">{{$item['pelapor']['name']}}</p>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                      <p class="text-xs font-weight-bold mb-0">{{$item['komentarA']['user_id']}}</p>
                                   </td>
                                   <td class="align-middle text-center">
-                                      <p class="text-xs font-weight-bold mb-0">{{$item['user_id']}}</p>
+                                      <p class="text-xs font-weight-bold mb-0"> {{$item['komentarA']['user']['name']}}</p>
                                   </td>
-                                  <td class="align-middle text-center">
-                                      <p class="text-xs font-weight-bold mb-0">{{$item['user']['name']}}</p>
-                                  </td>
-                                  <td class="align-middle text-center">
-                                      <p class="text-xs font-weight-bold mb-0">{{$item['video_id']}}</p>
-                                  </td>
-                                  <td class="align-middle text-center">
-                                      <p class="text-xs font-weight-bold mb-0">{{$item['video']['judulVideo']}}</p>
-                                  </td>
-                                  <td class="align-middle text-center">
-                                      <p class="text-xs font-weight-bold mb-0">{{$item['laporan']}}</p>
-                                  </td>
-                                  <td class="align-middle text-center">
-                                      <p class="text-xs font-weight-bold mb-0">{{$item['alasan']}}</p>
-                                  </td>
-                                  <td class="align-middle text-center">
-                                    <span class="text-secondary text-xs font-weight-bold">{{$item['created_at']->locale('id')->translatedFormat('l, d F Y H:i:s')  }}</span>
-                                  </td>
-                                  <td class="align-middle">
-                                    <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteLaporanVideoSA', ['id' => $item['id']]) }}')">
-                                      <i class="fa fa-trash"></i>
-                                  </a>
-                                  </td>
-                              </tr>
-                          </tbody>
-                            @endforeach
-                            @endif
+                                    <td class="align-middle text-center">
+                                        <p class="text-xs font-weight-bold mb-0">{{$item['artikel_id']}}</p>
+                                    </td>
+                                    <td class="popup-trigger" data-id="<?php echo $item['id']; ?>" style="text-align: justify;">
+                                      <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
+                                        <?php
+                                        $judul = strip_tags($item['artikel']['judulArtikel']);
+                                        $words = str_word_count($judul, 2);
+                                        $first_100_words = implode(' ', array_slice($words, 0, 5));
+                                        echo $first_100_words;
+                                        if (str_word_count($judul) > 100) {
+                                          echo '...';
+                                        }
+                                        ?>
+                                      </p>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <p class="text-xs font-weight-bold mb-0">{{$item['comment_id']}}</p>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <p class="text-xs font-weight-bold mb-0">{{$item['komentarA']['pesan']}}</p>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <p class="text-xs font-weight-bold mb-0">{{$item['laporan']}}</p>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <p class="text-xs font-weight-bold mb-0">{{$item['alasan']}}</p>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                      <span class="text-secondary text-xs font-weight-bold">{{$item['created_at']->locale('id')->translatedFormat('l, d F Y H:i:s')  }}</span>
+                                    </td>
+                                    <td class="align-middle">
+                                      <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteLaporanArtikelSA', ['id' => $item['id']]) }}')">
+                                          <i class="fa fa-trash"></i>
+                                      </a>
+
+                                      <a href="#" class="btn btn-warning btn-icon btn-round freeze-button" data-toggle="modal" data-target="#freezeModal{{ $item->id }} "data-comment-id="{{ $item->id }}">
+                                          <i class="ni ni-lock-circle-open"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        @endforeach   
+                        @endif   
                           </table>
                         </div>
                       </div>
@@ -478,31 +551,58 @@
             </div>
           </div>
 
-              <footer class="footer pt-3  ">
-                <div class="container-fluid">
-                  <div class="row align-items-center justify-content-lg-between">
-                    <div class="col-lg-6 mb-lg-0 mb-4">
-                      <div class="copyright text-center text-sm text-muted text-lg-start">
-                        © <script>
-                          document.write(new Date().getFullYear())
-                        </script>,
-                        Template by <a title="CSS Templates" rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>,
-                        <a title="CSS Templates" rel="sponsored" href="https://themewagon.com/themes/free-bootstrap-4-html-5-blog-website-template-nextpage/" target="_blank">NextPage </a> and
-                        <a title="CSS Templates" rel="sponsored" href="https://www.creative-tim.com" target="_blank">Crative Tim </a> 
-                        Edited By <a title="CSS Templates" rel="sponsored" href="#" target="_blank">Katakey Team</a></p>
+          <!-- Modal Freeze -->
+          @foreach ($laporanKomentarVideoUserSA as $item)
+              <div class="modal fade" id="freezeModal{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="freezeModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="freezeModalLabel">Freeze Akun</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                              </button>
+                          </div>
+                          <form id="freezeForm{{ $item->id }}" action="{{ route('freeze.user') }}" method="post">
+                              @csrf
+                              <div class="modal-body">
+                                <!-- Tambahkan foto profil di sebelah kiri -->
+                                <div class="profile-container">
+                                    @if ($item->komentarA && $item->komentarA->user)
+                                        <img src="{{ asset('fotoProfil/' . $item->komentarA->user->fotoProfil) }}" alt="Profile Image" class="profile-image">
+                                        <h5>{{ $item->komentarA->user->name }}</h5>
+                                        <span>{{ $item->komentarA->pesan }}</span>
+                                    @else
+                                        <p>User not found for this comment.</p>
+                                    @endif
+                                </div>
+
+                                  <div class="form-group">
+                                    <label for="freezeDuration{{ $item->id }}">Pilih Durasi Freeze:</label>
+                                    <select class="form-control freezeDuration" name="duration" id="freezeDuration{{ $item->id }}" data-comment-id="{{ $item->id }}" required>
+                                      <option value="1">1 Hari</option>
+                                      <option value="2">2 Hari</option>
+                                      <option value="7">1 Minggu</option>
+                                      <option value="30">1 Bulan</option>
+                                      <option value="0">Permanen</option>
+                                  </select>                     
+                                  
+                                      <!-- Input untuk user_id_dilaporkan dan pesan -->
+                                      <input type="hidden" name="comment_id" value="{{ $item->id }}">
+                                      <label for="pesanFreeze{{ $item->id }}">Masukkan pesan peringatan:</label>
+                                      <input type="text" class="form-control" name="message" id="pesanFreeze{{ $item->id }}" placeholder="Masukkan pesan peringatan" required>
+                                  </div>
+                              </div>
+                              <div class="modal-footer justify-content-center">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                  <button type="submit" class="btn btn-warning">Freeze</button>
+                              </div>
+                          </form>
                       </div>
-                      </div>
-                    </div>
                   </div>
-                </footer>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</main>
+          @endforeach
+
+
 
 <!-------------------------------------------------------------------------------------Argon Feature Area -------------------------------------------------------------------------------------------------------------------->
 <!-------------------------------------------------------------------------------------Argon Feature Area -------------------------------------------------------------------------------------------------------------------->
@@ -599,6 +699,130 @@
   });
   </script>
 
+<!------------------------------------------------------------------------------------- Javascript Modal Freeze -------------------------------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- Javascript Modal Freeze -------------------------------------------------------------------------------------------------------------------->
+
+<!-- Include Moment.js library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Function to update the date range based on the selected duration
+        function updateDateRange(commentId) {
+            var duration = $('#freezeDuration' + commentId).val();
+
+            if (duration == 0) {
+                // If the duration is permanent, display only the current date
+                var currentDate = moment().format('D MMMM YYYY');
+                $('#dateRangeLabel' + commentId).text('Carbon ' + currentDate + ' - Permanen');
+            } else {
+                // If the duration is not permanent, add the duration to the current date
+                var endDate = moment().add(duration, 'days').format('D MMMM YYYY');
+                var currentDate = moment().format('D MMMM YYYY');
+
+                $('#dateRangeLabel' + commentId).text('Carbon ' + currentDate + ' - ' + endDate);
+            }
+        }
+
+        // Add event listener for changes in the duration dropdown
+        $('.freezeDuration').on('change', function () {
+            var commentId = $(this).data('comment-id');
+            updateDateRange(commentId);
+        });
+
+        // Add event listener to open the modal
+        $('.freeze-button').on('click', function () {
+            var commentId = $(this).data('comment-id');
+            updateDateRange(commentId);
+        });
+
+        // Add event listener for the "Freeze" button inside the modal
+        $('.modal').on('click', '.btn-warning', function () {
+            var commentId = $(this).closest('.modal').find('.freezeDuration').data('comment-id');
+            updateDateRange(commentId);
+
+            // Set the value of the freezeBy field with the currently authenticated user
+            var authenticatedUser = "{{ auth()->user()->name }}"; // Adjust accordingly
+            $('#freezeBy' + commentId).val(authenticatedUser);
+        });
+
+        // Ensure each modal is hidden initially
+        $('.modal').on('hidden.bs.modal', function () {
+            $(this).find('form')[0].reset(); // Reset the form when the modal is hidden
+        });
+
+        // Call the updateDateRange function to initialize the date range
+        $('.freezeDuration').each(function () {
+            var commentId = $(this).data('comment-id');
+            updateDateRange(commentId);
+        });
+    });
+</script>
+
+
+
+
+
+
+<!------------------------------------------------------------------------------------- Javascript Popup Judul Artikel  -------------------------------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- Javascript Popup Judul Artikel  -------------------------------------------------------------------------------------------------------------------->
+
+
+ <!-- Modal Pop Up Detail Deskripsi Artikel -->
+ <script>
+  document.querySelectorAll('.popup-trigger').forEach(function (element) {
+    element.addEventListener('mouseenter', function () {
+      openPopup(element.dataset.id);
+    });
+
+    element.addEventListener('mouseleave', function () {
+      closePopup(element.dataset.id);
+    });
+  });
+
+  function openPopup(id) {
+    const popup = document.getElementById('popup-' + id);
+    if (!popup) {
+      const tdElement = document.querySelector('.popup-trigger[data-id="' + id + '"]');
+      const description = tdElement.querySelector('p').innerHTML;
+
+      const popupContainer = document.createElement('div');
+      popupContainer.id = 'popup-' + id;
+      popupContainer.className = 'popup-modal';
+
+      const popupContent = document.createElement('p');
+      popupContent.innerHTML = description;
+
+      popupContainer.appendChild(popupContent);
+      document.body.appendChild(popupContainer);
+
+      positionPopup(tdElement, popupContainer);
+    }
+
+    document.getElementById('popup-' + id).style.display = 'block';
+  }
+
+  function closePopup(id) {
+    const popup = document.getElementById('popup-' + id);
+    if (popup) {
+      popup.style.display = 'none';
+    }
+  }
+
+  function positionPopup(triggerElement, popupElement) {
+    const rect = triggerElement.getBoundingClientRect();
+
+    popupElement.style.top = rect.bottom + 'px';
+    popupElement.style.left = rect.left + 'px';
+  }
+</script>
+
+
+
+
+<!------------------------------------------------------------------------------------- Javascript Modal Delete -------------------------------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- Javascript Modal Delete -------------------------------------------------------------------------------------------------------------------->
+
   <!-- Modal Delete -->
   <script>
     function showConfirmationModal(deleteUrl) {
@@ -631,134 +855,9 @@
     });
   </script>
 
-  <!-- Filter Role -->
-  <script>
-    // Menangani klik pada filter role
-    document.querySelectorAll('.role-filter').forEach(function (element) {
-        element.addEventListener('click', function () {
-            var selectedRole = element.getAttribute('data-role');
-            // Redirect ke halaman dengan filter role
-            window.location.href = '{{ route("penggunaSA") }}?role=' + selectedRole;
-        });
-    });
-  </script>
+<!------------------------------------------------------------------------------------- Javascript Logout -------------------------------------------------------------------------------------------------------------------->
+<!------------------------------------------------------------------------------------- Javascript Logout  -------------------------------------------------------------------------------------------------------------------->
 
-  <!-- Rating -->
-<script>
-  const stars = document.querySelectorAll('.star');
-  const ratingInput = document.getElementById('rating');
-
-  stars.forEach((star) => {
-    star.addEventListener('click', () => {
-      const ratingValue = parseInt(star.getAttribute('data-rating'));
-      ratingInput.value = ratingValue;
-      stars.forEach((s) => s.classList.remove('selected')); // Hapus kelas 'selected' dari semua bintang
-      for (let i = 0; i < ratingValue; i++) {
-        stars[i].classList.add('selected'); // Tambahkan kelas 'selected' pada bintang yang dipilih
-      }
-    });
-  });
-</script>
-
-  <script>
-    var ctx1 = document.getElementById("chart-line").getContext("2d");
-
-    var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
-
-    gradientStroke1.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
-    gradientStroke1.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
-    gradientStroke1.addColorStop(0, 'rgba(94, 114, 228, 0)');
-    new Chart(ctx1, {
-      type: "line",
-      data: {
-        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        datasets: [{
-          label: "Mobile apps",
-          tension: 0.4,
-          borderWidth: 0,
-          pointRadius: 0,
-          borderColor: "#5e72e4",
-          backgroundColor: gradientStroke1,
-          borderWidth: 3,
-          fill: true,
-          data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-          maxBarThickness: 6
-
-        }],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false,
-          }
-        },
-        interaction: {
-          intersect: false,
-          mode: 'index',
-        },
-        scales: {
-          y: {
-            grid: {
-              drawBorder: false,
-              display: true,
-              drawOnChartArea: true,
-              drawTicks: false,
-              borderDash: [5, 5]
-            },
-            ticks: {
-              display: true,
-              padding: 10,
-              color: '#fbfbfb',
-              font: {
-                size: 11,
-                family: "Open Sans",
-                style: 'normal',
-                lineHeight: 2
-              },
-            }
-          },
-          x: {
-            grid: {
-              drawBorder: false,
-              display: false,
-              drawOnChartArea: false,
-              drawTicks: false,
-              borderDash: [5, 5]
-            },
-            ticks: {
-              display: true,
-              color: '#ccc',
-              padding: 20,
-              font: {
-                size: 11,
-                family: "Open Sans",
-                style: 'normal',
-                lineHeight: 2
-              },
-            }
-          },
-        },
-      },
-    });
-    </script>
-
-    <script>
-      var win = navigator.platform.indexOf('Win') > -1;
-      if (win && document.querySelector('#sidenav-scrollbar')) {
-        var options = {
-          damping: '0.5'
-        }
-        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-      }
-    </script>
-    <!-- Github buttons -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
-
-    <!-- Modal Logout -->
     <script>
       // JavaScript untuk modal logout
       function openModal() {

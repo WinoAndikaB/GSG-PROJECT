@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets2/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets2/img/lg1.png">
   <title>
-    Laporan Komentar Artikel User | KataKey
+    Laporan Komentar Artikel | KataKey
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -319,9 +319,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Laporan Komentar Artikel User</li>
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Laporan Komentar Artikel</li>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">Laporan Komentar Artikel User </h6>
+          <h6 class="font-weight-bolder text-white mb-0">Laporan Komentar Artikel </h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -391,12 +391,12 @@
                 <div class="col-auto my-auto">
                   <div class="h-100">
                     <a href="/laporanUserSA" class="btn btn-warning">Laporan Artikel + {{ $dataBaruLaporanArtikel}}</a> <a href="/laporanVideoUserSA" class="btn btn-warning">Laporan Video + {{$dataBaruLaporanVideo}}</a><br>
-                    <a href="/laporanKomentarArtikelUserSA" class="btn btn-primary">Laporan Komentar Artikel + {{ $LaporanKomentarArtikel}}</a>
+                    <a href="/laporanKomentarArtikelUserSA" class="btn btn-primary">Laporan Komentar Artikel + {{ $LaporanKomentarArtikel}}</a> <a href="/laporanKomentarVideoUserSA" class="btn btn-primary">Laporan Komentar Video + {{ $LaporanKomentarArtikel}}</a>
                     <h5 class="mb-1">
-                      List Laporan Komentar Artikel User
+                      List Laporan Komentar Artikel
                     </h5>
                     <p class="mb-0 font-weight-bold text-sm">
-                      Laporan Komentar Artikel User
+                      Laporan Komentar Artikel
                     </p>
                   </div>
                 </div>
