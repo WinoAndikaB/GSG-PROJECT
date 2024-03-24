@@ -325,7 +325,7 @@
                 <div class="col-auto my-auto">
                   <div class="h-100">
                     <a href="/laporanUserSA" class="btn btn-warning">Laporan Artikel + {{ $dataBaruLaporanArtikel}}</a> <a href="/laporanVideoUserSA" class="btn btn-warning">Laporan Video + {{$dataBaruLaporanVideo}}</a><br>
-                    <a href="/laporanKomentarArtikelUserSA" class="btn btn-primary">Laporan Komentar Artikel + {{ $LaporanKomentarArtikel}}</a><a href="/laporanKomentarVideoUserSA" class="btn btn-primary">Laporan Komentar Video + {{ $LaporanKomentarArtikel}}</a>
+                    <a href="/laporanKomentarArtikelUserSA" class="btn btn-primary">Laporan Komentar Artikel + {{ $LaporanKomentarArtikel}}</a> <a href="/laporanKomentarVideoUserSA" class="btn btn-primary">Laporan Komentar Video + {{ $LaporanKomentarArtikel}}</a>
                     <h5 class="mb-1">
                       List Laporan User
                     </h5>

@@ -590,18 +590,19 @@
          <hr>
 
           <form id="reportForm">
+            @csrf
               <div style="text-align: left;">
-              <label style="font-size: 16px;"><input type="radio" name="reason" value="Konten Seksual"> Konten Seksual</label><br>
-              <label style="font-size: 16px;"><input type="radio" name="reason" value="Konten kekerasan atau menjijikkan"> Konten kekerasan atau menjijikkan</label><br>
-              <label style="font-size: 16px;"><input type="radio" name="reason" value="Konten kebencian atau pelecehan"> Konten kebencian atau pelecehan</label><br>
-              <label style="font-size: 16px;"><input type="radio" name="reason" value="Pelecehan atau penindasan"> Pelecehan atau penindasan</label><br>
-              <label style="font-size: 16px;"><input type="radio" name="reason" value="Tindakan merugikan atau berbahaya"> Tindakan merugikan atau berbahaya</label><br>
-              <label style="font-size: 16px;"><input type="radio" name="reason" value="Misinformasi"> Misinformasi</label><br>
-              <label style="font-size: 16px;"><input type="radio" name="reason" value="Pelecehan terhadap anak"> Pelecehan terhadap anak</label><br>
-              <label style="font-size: 16px;"><input type="radio" name="reason" value="Mendukung terorisme"> Mendukung terorisme</label><br>
-              <label style="font-size: 16px;"><input type="radio" name="reason" value="Spam atau menyesatkan"> Spam atau menyesatkan</label><br>
-              <label style="font-size: 16px;"><input type="radio" name="reason" value="Masalah hukum"> Masalah hukum</label><br>
-              <label style="font-size: 16px;"><input type="radio" name="reason" value="Teks bermasalah"> Teks bermasalah</label><br>
+              <label style="font-size: 16px;"><input type="radio" name="alasan" value="Konten Seksual"> Konten Seksual</label><br>
+              <label style="font-size: 16px;"><input type="radio" name="alasan" value="Konten kekerasan atau menjijikkan"> Konten kekerasan atau menjijikkan</label><br>
+              <label style="font-size: 16px;"><input type="radio" name="alasan" value="Konten kebencian atau pelecehan"> Konten kebencian atau pelecehan</label><br>
+              <label style="font-size: 16px;"><input type="radio" name="alasan" value="Pelecehan atau penindasan"> Pelecehan atau penindasan</label><br>
+              <label style="font-size: 16px;"><input type="radio" name="alasan" value="Tindakan merugikan atau berbahaya"> Tindakan merugikan atau berbahaya</label><br>
+              <label style="font-size: 16px;"><input type="radio" name="alasan" value="Misinformasi"> Misinformasi</label><br>
+              <label style="font-size: 16px;"><input type="radio" name="alasan" value="Pelecehan terhadap anak"> Pelecehan terhadap anak</label><br>
+              <label style="font-size: 16px;"><input type="radio" name="alasan" value="Mendukung terorisme"> Mendukung terorisme</label><br>
+              <label style="font-size: 16px;"><input type="radio" name="alasan" value="Spam atau menyesatkan"> Spam atau menyesatkan</label><br>
+              <label style="font-size: 16px;"><input type="radio" name="alasan" value="Masalah hukum"> Masalah hukum</label><br>
+              <label style="font-size: 16px;"><input type="radio" name="alasan" value="Teks bermasalah"> Teks bermasalah</label><br>
             </div><br>
             <textarea id="reportTextLaporan" style="width: 100%; padding: 10px; font-size: 16px;" placeholder="Kenapa Anda melaporkan artikel ini?"></textarea><br>
             <button type="submit" class="submit-buttonLaporan" style="background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; padding: 10px 20px; font-size: 18px;">Kirim Laporan</button>
@@ -630,14 +631,14 @@
               <input type="hidden" name="user_id_dilaporkan" id="user_id_dilaporkan_input" value="">
 
               <div style="text-align: left;">
-                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Konten Komersial atau Spam"> Konten Komersial atau Spam</label><br>
-                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Materi Pornografi atau Seksual Vulgar"> Materi Pornografi atau Seksual Vulgar</label><br>     
-                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Pelanggaran Hak Anak"> Pelanggaran Hak Anak</label><br>
-                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Pernyataan Kebencian dan Kekerasan"> Pernyataan Kebencian dan Kekerasan</label><br>
-                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Mendukung Terorisme"> Mendukung Terorisme</label><br>
-                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Pelecehan dan Penindasan"> Pelecehan dan Penindasan</label><br>
-                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Penggunaan Bunuh Diri atau Menyakiti Diri Sendiri"> Penggunaan Bunuh Diri atau Menyakiti Diri Sendiri</label><br>
-                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Misinformasi"> Misinformasi</label><br>
+                <label style="font-size: 16px;"><input type="radio" name="alasan" class="reason_input" value="Konten Komersial atau Spam"> Konten Komersial atau Spam</label><br>
+                <label style="font-size: 16px;"><input type="radio" name="alasan" class="reason_input" value="Materi Pornografi atau Seksual Vulgar"> Materi Pornografi atau Seksual Vulgar</label><br>     
+                <label style="font-size: 16px;"><input type="radio" name="alasan" class="reason_input" value="Pelanggaran Hak Anak"> Pelanggaran Hak Anak</label><br>
+                <label style="font-size: 16px;"><input type="radio" name="alasan" class="reason_input" value="Pernyataan Kebencian dan Kekerasan"> Pernyataan Kebencian dan Kekerasan</label><br>
+                <label style="font-size: 16px;"><input type="radio" name="alasan" class="reason_input" value="Mendukung Terorisme"> Mendukung Terorisme</label><br>
+                <label style="font-size: 16px;"><input type="radio" name="alasan" class="reason_input" value="Pelecehan dan Penindasan"> Pelecehan dan Penindasan</label><br>
+                <label style="font-size: 16px;"><input type="radio" name="alasan" class="reason_input" value="Penggunaan Bunuh Diri atau Menyakiti Diri Sendiri"> Penggunaan Bunuh Diri atau Menyakiti Diri Sendiri</label><br>
+                <label style="font-size: 16px;"><input type="radio" name="alasan" class="reason_input" value="Misinformasi"> Misinformasi</label><br>
               </div><br>
 
               <textarea id="alasan_input" style="width: 100%; padding: 10px; font-size: 16px;" placeholder="Kenapa Anda melaporkan komentar ini?" name="alasan"></textarea><br>
@@ -898,72 +899,62 @@
     
 <!--------------------------------------------------------------------------------------- Javascript Laporkan Modal ------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------------- Javascript Laporkan Modal ------------------------------------------------------------------------------->
-
 <script>
-    // Get the modal and close button elements
-    var modal = document.getElementById("modalLaporan");
-    var showModalButton = document.getElementById("showModal");
-    var closeButton = document.getElementById("closeLaporan");
-  
-    // Show the modal when the showModalButton is clicked
-    showModalButton.addEventListener("click", function(event) {
-      // Assuming you've passed the article title from the server-side as $article->judul_artikel
-      var judulArtikel = "{{ $article->judulArtikel }}";
+  var modal = document.getElementById("modalLaporan");
+  var showModalButton = document.getElementById("showModal");
+  var closeButton = document.getElementById("closeLaporan");
+
+  showModalButton.addEventListener("click", function(event) {
+      var judulArtikel = "{{ $article->judulArtikel ?? '' }}";
       document.getElementById("judulArtikel").innerText = judulArtikel;
       event.preventDefault();
       modal.style.display = "block";
-    });
-  
-    // Close the modal when the close button is clicked
-    closeButton.addEventListener("click", function() {
+  });
+
+  closeButton.addEventListener("click", function() {
       modal.style.display = "none";
-    });
-  
-    // Close the modal when the user clicks outside of it
-    window.addEventListener("click", function(event) {
+  });
+
+  window.addEventListener("click", function(event) {
       if (event.target == modal) {
-        modal.style.display = "none";
+          modal.style.display = "none";
       }
-    });
-  
-    // Submit the form
-    document.getElementById("reportForm").addEventListener("submit", function(event) {
-      event.preventDefault();
-  
-      // Mengambil nilai yang dipilih dari radio button
-      var selectedReason = document.querySelector('input[name="reason"]:checked');
-      if (!selectedReason) {
-        alert("Pilih alasan laporan terlebih dahulu.");
-        return;
-      }
-  
-      // Mengambil alasan laporan dari elemen form
-      var alasan = document.getElementById("reportTextLaporan").value;
-  
-      // Kirim data laporan ke server melalui AJAX
-      $.ajax({
-        type: "POST",
-        url: "{{ route('storeLaporanArtikel') }}",
-        data: {
-          _token: "{{ csrf_token() }}",
-          user_id_pelapor: {{ Auth::user()->id }}, // Ganti dengan user_id yang sesuai
-          artikel_id: {{ $article->id }}, // Ganti dengan artikel_id yang sesuai
-          comment_id: 1, // Ganti dengan comment_id yang sesuai
-          laporan: selectedReason.value,
-          alasan: alasan,
-        },
-        success: function(response) {
-          // Tindakan setelah pengiriman berhasil
-          alert("Laporan telah dikirim!");
-          modal.style.display = "none"; // Tutup modal
-        },
-        error: function(error) {
-          // Tindakan jika ada kesalahan
-          alert("Terjadi kesalahan saat mengirim laporan.");
+  });
+
+  document.getElementById("reportForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        var selectedReason = document.querySelector('input[name="alasan"]:checked');
+        if (!selectedReason) {
+            alert("Pilih alasan laporan terlebih dahulu.");
+            return;
         }
-      });
+
+        var alasan = document.getElementById("reportTextLaporan").value;
+
+        // Kirim data laporan ke server melalui AJAX
+        $.ajax({
+            type: "POST",
+            url: "{{ route('storeLaporanArtikel') }}",
+            data: {
+                _token: "{{ csrf_token() }}",
+                user_id: {{ Auth::id() ?? 'null' }}, // Menggunakan Auth::id() untuk mendapatkan user ID
+                artikel_id: artikelId,
+                laporan: selectedReason.value,
+                alasan: alasan,
+            },
+            success: function(response) {
+                // Tindakan setelah pengiriman berhasil
+                alert("Laporan telah dikirim!");
+                modal.style.display = "none"; // Menutup modal
+            },
+            error: function(error) {
+                // Tindakan jika ada kesalahan
+                alert("Terjadi kesalahan saat mengirim laporan.");
+            }
+        });
     });
-  </script>
+</script>
   
   
 <!--------------------------------------------------------------------------------------- Javascript Logout Modal ------------------------------------------------------------------------------->

@@ -921,7 +921,7 @@ function ulasan(Request $request){
         $ulasan->updated_at = null;
         $ulasan->save();
     
-        return response()->json(['success' => true]);
+        return redirect()->back()->with('success', 'Ulasan berhasil ditambahkan!');
     }
     
 
