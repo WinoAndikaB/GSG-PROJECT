@@ -80,6 +80,15 @@
         cursor: pointer;
       }
   </style>
+<style>
+  .rating {
+       font-size: 24px;
+     }
+.gold-star {
+   color: gold;
+   font-size: 15px; /* Adjust the size as needed */
+}
+</style>
   <style>
     /* CSS styles */
     .video-title {
@@ -108,6 +117,30 @@
         text-decoration: none; /* Menghilangkan garis bawah */
     }
   </style>
+  <style>
+    .rating-penulis {
+       font-size:55px;
+       cursor: pointer;
+     }
+
+     .star {
+       color: gray; /* Mengatur warna bintang awalnya menjadi gray */
+       cursor: pointer;
+     }
+
+     .star.selected {
+       color: gold; /* Mengatur warna bintang yang dipilih menjadi gold */
+     }
+
+     .rating-container {
+         font-size: 36px; /* Atur ukuran teks rata-rata rating */
+         margin: 20px; /* Atur margin untuk jarak dari teks sekitarnya */
+       }
+
+       .filled-star {
+         color: gold; /* Warna bintang yang diisi */
+       }
+</style>
   
   </head>
 <body>
@@ -176,6 +209,7 @@
                     </a>
             
                     <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;">Uploader | {{$totalFollowers}} Followers</span>
+                    <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;"> 0,0 <span class="gold-star" data-rating="1">&#9733;</span></span>
                 </div>
             
                   <a href="/login" style="text-decoration: none; color: inherit;">
@@ -254,9 +288,32 @@
                 <a href="{{ route('TagsVideosLP', ['tag' => $tag]) }}" class="fh5co_tagg">{{ $tag }}</a>
             @endforeach
           </span>   
+
+          <br>
+          <br>
       
-      <br>
-      <br>
+          <div class="row">
+            <div class="col-lg-6 offset-lg-0"> <!-- Tambahkan kelas offset-lg-1 untuk membuat margin kiri sebanyak 5 kolom -->
+              <div class="card" style="width: 210%;"> <!-- Ubah margin-left menjadi padding -->
+                <div class="card-body text-center">
+                  <label for="rating">Rating penulis dari artikel ini</label>
+                  <div class="rating-penulis">
+                    <span class="star" data-rating="1" title="Sangat Buruk">&#9733;</span>
+                    <span class="star" data-rating="2" title="Buruk">&#9733;</span>
+                    <span class="star" data-rating="3" title="Sedang">&#9733;</span>
+                    <span class="star" data-rating="4" title="Baik">&#9733;</span>
+                    <span class="star" data-rating="5" title="Sangat Baik">&#9733;</span>
+                  </div>
+                  <input type="hidden" name="rating" id="rating" value="0" required>
+                  <div id="keterangan"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+      
+          <br>
+          <br>
+
           
         </div>
 
@@ -305,6 +362,7 @@
           ?>
       @endif
   @endforeach
+
 
               
             <div class="fh5co_heading fh5co_heading_border_bottom pt-3 py-2 mb-4">Most Popular</div>
@@ -485,6 +543,42 @@
     <script src="{{ asset('aset1/js/jquery.stellar.min.js') }}"></script>
     <!-- Main -->
     <script src="{{ asset('aset1/js/main.js') }}"></script>
+
+      <!-- Javascript Rating -->
+  <script>
+    // Ambil elemen-elemen yang diperlukan
+    const ratingPenulis = document.querySelectorAll('.star');
+    const ratingInput = document.getElementById('rating');
+    const keterangan = document.getElementById('keterangan');
+  
+    // Tambahkan event listener ke setiap bintang
+    ratingPenulis.forEach(star => {
+      star.addEventListener('click', function() {
+        const ratingValue = parseInt(this.getAttribute('data-rating'));
+        ratingInput.value = ratingValue; // Set nilai input rating
+        // Tampilkan keterangan sesuai rating
+        switch(ratingValue) {
+          case 1:
+            keterangan.innerText = "Sangat Buruk";
+            break;
+          case 2:
+            keterangan.innerText = "Buruk";
+            break;
+          case 3:
+            keterangan.innerText = "Sedang";
+            break;
+          case 4:
+            keterangan.innerText = "Baik";
+            break;
+          case 5:
+            keterangan.innerText = "Sangat Baik";
+            break;
+          default:
+            keterangan.innerText = "";
+        }
+      });
+    });
+  </script>
 
   </body>
 </html>

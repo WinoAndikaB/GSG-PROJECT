@@ -75,6 +75,12 @@
       color: #3498db;
   }
 </style>
+<style>
+  .gold-star {
+      color: gold;
+      font-size: 15px; /* Adjust the size as needed */
+  }
+</style>
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -387,6 +393,7 @@
                               <span style="font-size: 20px; margin-right: 10px;"><b>{{$TotalArtikelId}}</b> Artikel</span>
                               <span style="font-size: 20px; margin-right: 10px;"><b>{{$TotalVideoId}}</b> Video</span>
                               <span style="font-size: 20px; margin-right: 10px;"><b>{{$totalFollowers}}</b> Follower</span>
+                              <span style="font-size: 20px; margin-right: 10px;"> 0,0 <span class="gold-star" data-rating="1">&#9733;</span></span>
                           </div>
                         
                           <br>

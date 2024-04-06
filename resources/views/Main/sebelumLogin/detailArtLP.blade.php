@@ -80,6 +80,15 @@
         cursor: pointer;
       }
   </style>
+<style>
+     .rating {
+          font-size: 24px;
+        }
+  .gold-star {
+      color: gold;
+      font-size: 15px; /* Adjust the size as needed */
+  }
+</style>
   <style>
     /* CSS styles */
     .article-title {
@@ -107,6 +116,30 @@
     .article-title span {
         text-decoration: none; /* Menghilangkan garis bawah */
     }
+  </style>
+  <style>
+       .rating-penulis {
+          font-size:55px;
+          cursor: pointer;
+        }
+
+        .star {
+            color: #ccc; /* Warna default bintang */
+            cursor: pointer;
+          }
+
+          .star.checked {
+            color: gold; /* Warna bintang saat dipilih */
+          }
+
+        .rating-container {
+            font-size: 36px; /* Atur ukuran teks rata-rata rating */
+            margin: 20px; /* Atur margin untuk jarak dari teks sekitarnya */
+          }
+
+          .filled-star {
+            color: gold; /* Warna bintang yang diisi */
+          }
   </style>
   </head>
 <body>
@@ -175,6 +208,7 @@
                 </a>
 
                 <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;">Penulis | {{ $totalFollowers }} Follower</span>
+                <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;"> 0,0 <span class="gold-star" data-rating="1">&#9733;</span></span>
             </div>
 
               <a href="/login" style="text-decoration: none; color: inherit;">
@@ -317,12 +351,39 @@
       @foreach(explode(',', $article->tags) as $tag)
           <a href="{{ route('TagsArtikelLP', ['tag' => $tag]) }}" class="fh5co_tagg">{{ $tag }}</a>
       @endforeach
-    </span>    
+    </span>  
 
     <br>
     <br>
+
+<!-- Tambahkan tombol form submit -->
+<form id="ratingForm" action="submit_action.php" method="post">
+  <div class="row">
+    <div class="col-lg-6 offset-lg-0">
+      <div class="card" style="width: 135%;">
+        <div class="card-body text-center">
+          <label for="rating">Rating penulis dari artikel ini</label>
+          <div class="rating-penulis">
+            <span class="star" data-rating="1" title="Sangat Buruk">&#9733;</span>
+            <span class="star" data-rating="2" title="Buruk">&#9733;</span>
+            <span class="star" data-rating="3" title="Sedang">&#9733;</span>
+            <span class="star" data-rating="4" title="Baik">&#9733;</span>
+            <span class="star" data-rating="5" title="Sangat Baik">&#9733;</span>
+          </div>
+          <input type="hidden" name="rating" id="rating" value="0" required>
+          <div id="keterangan"></div>
+          <!-- Tombol submit awalnya disembunyikan -->
+          <div style="text-align: center;">
+            <button type="submit" id="submitBtn" class="btn btn-primary" style="display: none;">Submit</button>
+        </div>        
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
     <br>
-    
+    <br>
       <input type="hidden" name="artikel_id" value="{{ $article->id }}"> 
       <label for="" style="font-size: 24px;"><strong>{{$totalKomentar}} Komentar</strong></label><br>
       <label for="pesan" style="font-size: 24px;">Beri Komentar:</label><br>
@@ -465,6 +526,60 @@
   <script src="{{ asset('aset1/js/jquery.stellar.min.js') }}"></script>
   <!-- Main -->
   <script src="{{ asset('aset1/js/main.js') }}"></script>
+
+<!-- Javascript Rating -->
+<script>
+  // Ambil elemen-elemen yang diperlukan
+  const ratingPenulis = document.querySelectorAll('.star');
+  const ratingInput = document.getElementById('rating');
+  const keterangan = document.getElementById('keterangan');
+  const submitBtn = document.getElementById('submitBtn'); // Tombol submit
+
+  // Tambahkan event listener ke setiap bintang
+  ratingPenulis.forEach(star => {
+    star.addEventListener('click', function() {
+      const ratingValue = parseInt(this.getAttribute('data-rating'));
+      ratingInput.value = ratingValue; // Set nilai input rating
+      
+      // Tampilkan keterangan sesuai rating
+      switch(ratingValue) {
+        case 1:
+          keterangan.innerText = "Sangat Buruk";
+          break;
+        case 2:
+          keterangan.innerText = "Buruk";
+          break;
+        case 3:
+          keterangan.innerText = "Sedang";
+          break;
+        case 4:
+          keterangan.innerText = "Baik";
+          break;
+        case 5:
+          keterangan.innerText = "Sangat Baik";
+          break;
+        default:
+          keterangan.innerText = "";
+      }
+      
+      // Tambahkan kelas checked ke bintang yang dipilih
+      ratingPenulis.forEach(s => s.classList.remove('checked'));
+      this.classList.add('checked');
+      
+      // Hapus kelas selected dari semua bintang
+      ratingPenulis.forEach(s => s.classList.remove('selected'));
+      
+      // Tambahkan kelas selected ke bintang-bintang sebelumnya
+      for (let i = 0; i < ratingValue; i++) {
+        ratingPenulis[i].classList.add('selected');
+      }
+
+      // Tampilkan tombol submit jika rating telah dipilih
+      submitBtn.style.display = 'block';
+    });
+  });
+</script>
+  
   
 
   </body>

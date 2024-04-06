@@ -83,6 +83,12 @@
     cursor: pointer;
   }
 </style>
+<style>
+  .gold-star {
+      color: gold;
+      font-size: 20px; /* Adjust the size as needed */
+  }
+</style>
 
 <style>
   body {
@@ -222,6 +228,7 @@
                             <span style="margin-right: 10px;"><b>{{ $TotalArtikelId }}</b> Artikel</span>
                             <span style="margin-right: 10px;"><b>{{ $TotalVideoId }}</b> Video</span>
                             <span style="margin-right: 10px;"><b>{{ $totalFollowers }}</b> Followers</span>
+                            0,0 <span class="star gold-star" data-rating="1">&#9733;</span>
                         </div>
   
                         <br>

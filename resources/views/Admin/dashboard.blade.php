@@ -117,6 +117,12 @@
         cursor: pointer;
     }
   </style>
+  <style>
+    .gold-star {
+        color: gold;
+        font-size: 15px; /* Adjust the size as needed */
+    }
+  </style>
 
 </head>
 
