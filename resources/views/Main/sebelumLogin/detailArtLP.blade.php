@@ -81,13 +81,13 @@
       }
   </style>
 <style>
-     .rating {
-          font-size: 24px;
-        }
-  .gold-star {
-      color: gold;
-      font-size: 15px; /* Adjust the size as needed */
-  }
+  .rating {
+       font-size: 24px;
+     }
+.gold-star {
+   color: gold;
+   font-size: 15px; /* Adjust the size as needed */
+}
 </style>
   <style>
     /* CSS styles */
@@ -118,29 +118,29 @@
     }
   </style>
   <style>
-       .rating-penulis {
-          font-size:55px;
-          cursor: pointer;
-        }
+    .rating-penulis {
+       font-size:55px;
+       cursor: pointer;
+     }
 
-        .star {
-            color: #ccc; /* Warna default bintang */
-            cursor: pointer;
-          }
+     .star {
+       color: gray; /* Mengatur warna bintang awalnya menjadi gray */
+       cursor: pointer;
+     }
 
-          .star.checked {
-            color: gold; /* Warna bintang saat dipilih */
-          }
+     .star.selected {
+       color: gold; /* Mengatur warna bintang yang dipilih menjadi gold */
+     }
 
-        .rating-container {
-            font-size: 36px; /* Atur ukuran teks rata-rata rating */
-            margin: 20px; /* Atur margin untuk jarak dari teks sekitarnya */
-          }
+     .rating-container {
+         font-size: 36px; /* Atur ukuran teks rata-rata rating */
+         margin: 20px; /* Atur margin untuk jarak dari teks sekitarnya */
+       }
 
-          .filled-star {
-            color: gold; /* Warna bintang yang diisi */
-          }
-  </style>
+       .filled-star {
+         color: gold; /* Warna bintang yang diisi */
+       }
+</style>
   </head>
 <body>
 
@@ -357,30 +357,31 @@
     <br>
 
 <!-- Tambahkan tombol form submit -->
-<form id="ratingForm" action="submit_action.php" method="post">
-  <div class="row">
-    <div class="col-lg-6 offset-lg-0">
-      <div class="card" style="width: 135%;">
-        <div class="card-body text-center">
-          <label for="rating">Rating penulis dari artikel ini</label>
-          <div class="rating-penulis">
-            <span class="star" data-rating="1" title="Sangat Buruk">&#9733;</span>
-            <span class="star" data-rating="2" title="Buruk">&#9733;</span>
-            <span class="star" data-rating="3" title="Sedang">&#9733;</span>
-            <span class="star" data-rating="4" title="Baik">&#9733;</span>
-            <span class="star" data-rating="5" title="Sangat Baik">&#9733;</span>
-          </div>
-          <input type="hidden" name="rating" id="rating" value="0" required>
-          <div id="keterangan"></div>
-          <!-- Tombol submit awalnya disembunyikan -->
-          <div style="text-align: center;">
-            <button type="submit" id="submitBtn" class="btn btn-primary" style="display: none;">Submit</button>
-        </div>        
+        <form id="ratingForm" action="/login" method="post">
+          <div class="row">
+            <div class="col-lg-6 offset-lg-0">
+              <div class="card" style="width: 135%;">
+                <div class="card-body text-center">
+                  <label for="rating">Berikan rating penulis dari artikel ini</label>
+                  <div class="rating-penulis">
+                    <span class="star" data-rating="1" title="Sangat Buruk">&#9733;</span>
+                    <span class="star" data-rating="2" title="Buruk">&#9733;</span>
+                    <span class="star" data-rating="3" title="Sedang">&#9733;</span>
+                    <span class="star" data-rating="4" title="Baik">&#9733;</span>
+                    <span class="star" data-rating="5" title="Sangat Baik">&#9733;</span>
+                  </div>
+                  <input type="hidden" name="rating" id="rating" value="0" required>
+                  <div id="keterangan"></div>
+        <!-- Tombol submit awalnya disembunyikan -->
+        <div id="buttonContainer" style="text-align: center; display: none;">
+          <button type="submit" id="submitBtn" class="btn btn-primary">Submit</button>
+        </div>
         </div>
       </div>
     </div>
   </div>
 </form>
+
 
     <br>
     <br>
@@ -574,8 +575,13 @@
         ratingPenulis[i].classList.add('selected');
       }
 
-      // Tampilkan tombol submit jika rating telah dipilih
-      submitBtn.style.display = 'block';
+// Tampilkan tombol submit jika rating telah dipilih
+submitBtn.style.display = 'block';
+
+// Tampilkan tombol submit jika rating telah dipilih
+document.getElementById('buttonContainer').style.display = 'block';
+
+
     });
   });
 </script>

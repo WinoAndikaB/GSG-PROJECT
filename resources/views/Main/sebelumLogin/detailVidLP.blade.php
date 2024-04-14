@@ -291,12 +291,12 @@
 
           <br>
           <br>
-      
+          <form id="ratingForm" action="/login" method="post">
           <div class="row">
             <div class="col-lg-6 offset-lg-0"> <!-- Tambahkan kelas offset-lg-1 untuk membuat margin kiri sebanyak 5 kolom -->
               <div class="card" style="width: 210%;"> <!-- Ubah margin-left menjadi padding -->
                 <div class="card-body text-center">
-                  <label for="rating">Rating penulis dari artikel ini</label>
+                  <label for="rating">Berikan rating penulis dari artikel ini</label>
                   <div class="rating-penulis">
                     <span class="star" data-rating="1" title="Sangat Buruk">&#9733;</span>
                     <span class="star" data-rating="2" title="Buruk">&#9733;</span>
@@ -306,10 +306,15 @@
                   </div>
                   <input type="hidden" name="rating" id="rating" value="0" required>
                   <div id="keterangan"></div>
+                  <!-- Tombol submit awalnya disembunyikan -->
+                  <div id="buttonContainer" style="text-align: center; display: none;">
+                    <button type="submit" id="submitBtn" class="btn btn-primary">Submit</button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+        </form>
       
           <br>
           <br>
@@ -544,41 +549,64 @@
     <!-- Main -->
     <script src="{{ asset('aset1/js/main.js') }}"></script>
 
-      <!-- Javascript Rating -->
-  <script>
-    // Ambil elemen-elemen yang diperlukan
-    const ratingPenulis = document.querySelectorAll('.star');
-    const ratingInput = document.getElementById('rating');
-    const keterangan = document.getElementById('keterangan');
-  
-    // Tambahkan event listener ke setiap bintang
-    ratingPenulis.forEach(star => {
-      star.addEventListener('click', function() {
-        const ratingValue = parseInt(this.getAttribute('data-rating'));
-        ratingInput.value = ratingValue; // Set nilai input rating
-        // Tampilkan keterangan sesuai rating
-        switch(ratingValue) {
-          case 1:
-            keterangan.innerText = "Sangat Buruk";
-            break;
-          case 2:
-            keterangan.innerText = "Buruk";
-            break;
-          case 3:
-            keterangan.innerText = "Sedang";
-            break;
-          case 4:
-            keterangan.innerText = "Baik";
-            break;
-          case 5:
-            keterangan.innerText = "Sangat Baik";
-            break;
-          default:
-            keterangan.innerText = "";
-        }
-      });
+<!-- Javascript Rating -->
+<script>
+  // Ambil elemen-elemen yang diperlukan
+  const ratingPenulis = document.querySelectorAll('.star');
+  const ratingInput = document.getElementById('rating');
+  const keterangan = document.getElementById('keterangan');
+  const submitBtn = document.getElementById('submitBtn'); // Tombol submit
+
+  // Tambahkan event listener ke setiap bintang
+  ratingPenulis.forEach(star => {
+    star.addEventListener('click', function() {
+      const ratingValue = parseInt(this.getAttribute('data-rating'));
+      ratingInput.value = ratingValue; // Set nilai input rating
+      
+      // Tampilkan keterangan sesuai rating
+      switch(ratingValue) {
+        case 1:
+          keterangan.innerText = "Sangat Buruk";
+          break;
+        case 2:
+          keterangan.innerText = "Buruk";
+          break;
+        case 3:
+          keterangan.innerText = "Sedang";
+          break;
+        case 4:
+          keterangan.innerText = "Baik";
+          break;
+        case 5:
+          keterangan.innerText = "Sangat Baik";
+          break;
+        default:
+          keterangan.innerText = "";
+      }
+      
+      // Tambahkan kelas checked ke bintang yang dipilih
+      ratingPenulis.forEach(s => s.classList.remove('checked'));
+      this.classList.add('checked');
+      
+      // Hapus kelas selected dari semua bintang
+      ratingPenulis.forEach(s => s.classList.remove('selected'));
+      
+      // Tambahkan kelas selected ke bintang-bintang sebelumnya
+      for (let i = 0; i < ratingValue; i++) {
+        ratingPenulis[i].classList.add('selected');
+      }
+
+// Tampilkan tombol submit jika rating telah dipilih
+submitBtn.style.display = 'block';
+
+// Tampilkan tombol submit jika rating telah dipilih
+document.getElementById('buttonContainer').style.display = 'block';
+
+
     });
-  </script>
+  });
+</script>
+  
 
   </body>
 </html>
