@@ -27,4 +27,9 @@ class artikels extends Model
     {
         return $this->hasMany(SimpanArtikel::class, 'artikel_id');
     }
+
+    public function ratings()
+{
+    return $this->hasMany(RatingPenulis::class);
+}
 }

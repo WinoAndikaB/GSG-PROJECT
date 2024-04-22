@@ -14,6 +14,7 @@ use App\Models\LikeKomentarArtikel;
 use App\Models\likeKomentarVideo;
 use App\Models\komentar_video;
 use App\Models\LaporanArtikelUser;
+use App\Models\RatingPenulis;
 use App\Models\LaporanUlasanUser;
 use App\Models\LaporanKomentarArtikel;
 use App\Models\SimpanArtikel;
@@ -137,6 +138,11 @@ class PenggunaController extends Controller
         $kategori = artikels::inRandomOrder()->take(10)->get();
     
         $article->increment('jumlah_akses');
+
+        //rating
+        $user_id_penulis = $article->user_id; // Misalnya, mendapatkan user_id_penulis dari artikel yang sedang ditampilkan
+        $averageRating = RatingPenulis::where('user_id_penulis', $user_id_penulis)->avg('rating');
+        
     
         // Menyiapkan data komentar, menyaring yang lebih muda dari 5 hari
         $komentarArtikels = komentar_artikel::where('artikel_id', $id)
@@ -173,7 +179,8 @@ class PenggunaController extends Controller
         // Format jumlah akses
         $formattedJumlahAkses = $this->formatJumlahAkses($article->jumlah_akses);
     
-        return view('main.setelahLogin.detailArt', compact('kategoriLogA', 'article', 'box', 'tags', 'kategori', 'komentarArtikels', 'totalKomentarArtikels', 'komentar', 'fotoProfil', 'isFollowing', 'user', 'totalFollowers', 'formattedJumlahAkses'));
+        return view('main.setelahLogin.detailArt', compact('kategoriLogA', 'article', 'box', 'tags', 'kategori', 'komentarArtikels', 'totalKomentarArtikels', 'komentar', 'fotoProfil', 'isFollowing', 'user', 
+        'totalFollowers', 'formattedJumlahAkses','averageRating'));
     }
 
     //[User-Home] Menampilkan Jumlah User Akses Artikel
@@ -191,6 +198,29 @@ class PenggunaController extends Controller
             return round($jumlah / 1000000000, 1) . 'M';
         }
     }
+
+    public function storeRatingPenulis(Request $request, $artikel_id)
+    {
+        // Validasi request
+        $validatedData = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'rating' => 'required|integer|min:1|max:5',
+        ]);
+    
+        // Dapatkan objek artikel berdasarkan artikel_id
+        $artikel = Artikels::findOrFail($artikel_id);
+    
+        // Simpan rating penulis ke database
+        RatingPenulis::create([
+            'user_id' => $validatedData['user_id'],
+            'user_id_penulis' => $artikel->user_id, // Ambil user_id penulis dari artikel
+            'artikel_id' => $artikel_id,
+            'rating' => $validatedData['rating'],
+        ]);
+    
+        // Redirect atau kirim respon sesuai kebutuhan aplikasi
+        return redirect()->back()->with('success', 'Rating penulis berhasil disimpan.');
+    }    
     
     
     public function detailProfilPenulisArtikel($id)
@@ -210,6 +240,10 @@ class PenggunaController extends Controller
                         ->where('user_id', $profilPenulis->user_id)
                         ->get();
 
+                        
+        //rating
+        $user_id_penulis = $profilPenulis->user_id; // Misalnya, mendapatkan user_id_penulis dari artikel yang sedang ditampilkan
+        $averageRating = RatingPenulis::where('user_id_penulis', $user_id_penulis)->avg('rating');
 
         // Ambil foto profil penulis artikel
         $fotoProfil = $user->fotoProfil; // Pastikan fotoProfil tersedia di model User
@@ -231,7 +265,7 @@ class PenggunaController extends Controller
         $TotalArtikelId = artikels::where('user_id', $user->id)->count();
         $TotalVideoId = video::where('user_id', $user->id)->count();
     
-        return view('main.setelahLogin.profilePenulisArtikel', compact('profilPenulis', 'isFollowing', 'user', 'totalFollowers','fotoProfil','TotalArtikelId','TotalVideoId','semuaArtikel','semuaVideo'));
+        return view('main.setelahLogin.profilePenulisArtikel', compact('profilPenulis', 'isFollowing', 'user', 'totalFollowers','fotoProfil','TotalArtikelId','TotalVideoId','semuaArtikel','semuaVideo','averageRating'));
     }
     
     

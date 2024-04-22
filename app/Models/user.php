@@ -53,4 +53,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(User::class, 'followers', 'follower_id', 'user_id');
     }
+
+    public function ratings()
+{
+    return $this->hasMany(RatingPenulis::class);
+}
 }

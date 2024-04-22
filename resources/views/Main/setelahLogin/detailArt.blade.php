@@ -138,6 +138,15 @@
 
 </style>
 <style>
+    .rating {
+         font-size: 24px;
+       }
+  .gold-star {
+     color: gold;
+     font-size: 15px; /* Adjust the size as needed */
+  }
+  </style>
+<style>
     /* CSS styles */
     .article-title {
         color: black;
@@ -165,6 +174,30 @@
         text-decoration: none; /* Menghilangkan garis bawah */
     }
   </style>
+    <style>
+        .rating-penulis {
+           font-size:55px;
+           cursor: pointer;
+         }
+    
+         .star {
+           color: gray; /* Mengatur warna bintang awalnya menjadi gray */
+           cursor: pointer;
+         }
+    
+         .star.selected {
+           color: gold; /* Mengatur warna bintang yang dipilih menjadi gold */
+         }
+    
+         .rating-container {
+             font-size: 36px; /* Atur ukuran teks rata-rata rating */
+             margin: 20px; /* Atur margin untuk jarak dari teks sekitarnya */
+           }
+    
+           .filled-star {
+             color: gold; /* Warna bintang yang diisi */
+           }
+    </style>
 
   </head>
 
@@ -259,15 +292,20 @@
                 </div>
             </a>
 
-    <div class="simple-profile-details" style="flex: 1;">
-        <a href="{{ route('detailProfilPenulisArtikel', ['id' => $article->id]) }}" style="text-decoration: none; color: inherit;">
-            <span class="simple-profile-name" style="color: #2c3e50; font-weight: bold; font-size: 1.2em; display: block; margin-bottom: 4px;">
-                {{ $article->penulis }}
-            </span>
-        </a>
+            <div class="simple-profile-details" style="flex: 1;">
+                <a href="{{ route('detailProfilPenulisArtikel', ['id' => $article->id]) }}" style="text-decoration: none; color: inherit;">
+                    <span class="simple-profile-name" style="color: #2c3e50; font-weight: bold; font-size: 1.2em; display: block; margin-bottom: 4px;">
+                        {{ $article->penulis }}
+                    </span>
+                </a>
 
-        <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;">Penulis | {{ $totalFollowers }} Follower</span>
-    </div>
+                <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;">Penulis | {{ $totalFollowers }} Follower</span>
+                <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;"> 
+
+                  {{ number_format($averageRating, 1) }}
+                  
+                  <span class="gold-star" data-rating="1">&#9733;</span></span>
+            </div>
 
           @auth
           @if(auth()->user()->isNot($user))
@@ -426,9 +464,43 @@
         @foreach(explode(',', $article->tags) as $tag)
             <a href="{{ route('TagsArtikel', ['tag' => $tag]) }}" class="fh5co_tagg">{{ $tag }}</a>
         @endforeach
-      </span>   
+      </span>
 
-    <br>
+      <br>
+      <br>
+      
+      <form id="ratingForm" action="{{ route('storeRatingPenulis', ['artikel_id' => $article->id]) }}" method="post">
+        @csrf <!-- Menambahkan CSRF token -->
+        <div class="row">
+          <div class="col-lg-6 offset-lg-0">
+            <div class="card" style="width: 135%;">
+              <div class="card-body text-center">
+                <label for="rating">Berikan rating penulis dari artikel ini</label>
+                <div class="rating-penulis">
+                  <span class="star" data-rating="1" title="Sangat Buruk">&#9733;</span>
+                  <span class="star" data-rating="2" title="Buruk">&#9733;</span>
+                  <span class="star" data-rating="3" title="Sedang">&#9733;</span>
+                  <span class="star" data-rating="4" title="Baik">&#9733;</span>
+                  <span class="star" data-rating="5" title="Sangat Baik">&#9733;</span>
+                </div>
+                <!-- Input hidden untuk menyimpan rating -->
+                <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+                <input type="hidden" name="user_id_penulis" value="{{ $article->user_id }}">
+                <input type="hidden" name="artikel_id" value="{{ $article->id }}">                
+                <input type="hidden" name="rating" id="rating" value="0" required>
+                <div id="keterangan"></div>
+                <!-- Tombol submit awalnya disembunyikan -->
+                <div id="buttonContainer" style="text-align: center;">
+                  <button type="submit" id="submitBtn" class="btn btn-primary">Submit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      
+
+
     <br>
     <br>
 
@@ -1107,6 +1179,68 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(error => console.error('Error:', error));
     }
     </script>
+
+<!--------------------------------------------------------------------------------------- Javascript Rating ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Rating ------------------------------------------------------------------------------->
+
+<script>
+// Ambil elemen-elemen yang diperlukan
+const ratingPenulis = document.querySelectorAll('.star');
+const ratingInput = document.getElementById('rating');
+const keterangan = document.getElementById('keterangan');
+const submitBtn = document.getElementById('submitBtn'); // Perhatikan perubahan di sini
+
+// Sembunyikan tombol submit secara default
+submitBtn.style.display = 'none';
+
+// Fungsi untuk menampilkan keterangan rating
+function tampilkanKeterangan(ratingValue) {
+  switch(ratingValue) {
+    case 1:
+      return "Sangat Buruk";
+    case 2:
+      return "Buruk";
+    case 3:
+      return "Sedang";
+    case 4:
+      return "Baik";
+    case 5:
+      return "Sangat Baik";
+    default:
+      return "";
+  }
+}
+
+// Fungsi untuk menangani klik pada bintang rating
+function handleRatingClick() {
+  const ratingValue = parseInt(this.getAttribute('data-rating'));
+  ratingInput.value = ratingValue; // Set nilai input rating
+
+  // Tampilkan keterangan sesuai rating
+  keterangan.innerText = tampilkanKeterangan(ratingValue);
+
+  // Tambahkan kelas checked ke bintang yang dipilih
+  ratingPenulis.forEach(s => s.classList.remove('checked'));
+  this.classList.add('checked');
+
+  // Hapus kelas selected dari semua bintang
+  ratingPenulis.forEach(s => s.classList.remove('selected'));
+
+  // Tambahkan kelas selected ke bintang-bintang sebelumnya
+  for (let i = 0; i < ratingValue; i++) {
+    ratingPenulis[i].classList.add('selected');
+  }
+
+  // Tampilkan tombol submit jika rating telah dipilih
+  submitBtn.style.display = 'block';
+}
+
+// Tambahkan event listener ke setiap bintang
+ratingPenulis.forEach(star => {
+  star.addEventListener('click', handleRatingClick);
+});
+
+  </script>
 
 
     

@@ -93,6 +93,8 @@ use Illuminate\Support\Facades\Route;
                 Route::get('/deleteKomentarArtikel/{id}', [PenggunaController::class, 'deleteKomentarArtikel'])->name('deleteKomentarArtikel'); 
                 Route::post('/simpanEditKomentarArtikel/{id}/{user_id}', [PenggunaController::class, 'simpanEditKomentarArtikel'])->name('simpanEditKomentarArtikel'); 
 
+                Route::post('/ratingPenulis/{artikel_id}', [PenggunaController::class, 'storeRatingPenulis'])->name('storeRatingPenulis');
+
                 Route::post('/submit/report', [PenggunaController::class, 'storeLaporanArtikel'])->name('storeLaporanArtikel');
                 Route::post('/submit/reportKomentar', [PenggunaController::class, 'storeLaporanKomentarArtikel'])->name('storeLaporanKomentarArtikel');
 

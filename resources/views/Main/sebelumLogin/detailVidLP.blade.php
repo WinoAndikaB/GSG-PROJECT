@@ -202,7 +202,7 @@
                 </a>
             
                 <div class="simple-profile-details" style="flex: 1;">
-                    <a href="{{ route('detailProfilVideoLP', ['id' => $video->id]) }}" style="text-decoration: none; color: inherit;">
+                    <a href="{{ route('detailProfilVideo', ['id' => $video->id]) }}" style="text-decoration: none; color: inherit;">
                         <span class="simple-profile-name" style="color: #2c3e50; font-weight: bold; font-size: 1.2em; display: block; margin-bottom: 4px;">
                             {{ $video->uploader }}
                         </span>
@@ -296,7 +296,7 @@
             <div class="col-lg-6 offset-lg-0"> <!-- Tambahkan kelas offset-lg-1 untuk membuat margin kiri sebanyak 5 kolom -->
               <div class="card" style="width: 210%;"> <!-- Ubah margin-left menjadi padding -->
                 <div class="card-body text-center">
-                  <label for="rating">Berikan rating penulis dari artikel ini</label>
+                  <label for="rating">Berikan rating uploader dari video ini</label>
                   <div class="rating-penulis">
                     <span class="star" data-rating="1" title="Sangat Buruk">&#9733;</span>
                     <span class="star" data-rating="2" title="Buruk">&#9733;</span>
