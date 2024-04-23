@@ -7,6 +7,7 @@ use App\Models\artikels;
 use App\Models\komentar_artikel;
 use App\Models\komentar_video;
 use App\Models\syaratdanketentuans;
+use App\Models\RatingPenulis;
 use App\Models\ulasans;
 use App\Models\video;
 use App\Models\Banner;
@@ -122,6 +123,10 @@ class LandingPageController extends Controller
         $totalKomentar = komentar_artikel::where('artikel_id', $id)->count();
         
         $detailArtikelLP = komentar_artikel::where('artikel_id', $id)->latest()->paginate(6);
+
+                //rating
+                $user_id_penulis = $article->user_id; // Misalnya, mendapatkan user_id_penulis dari artikel yang sedang ditampilkan
+                $averageRating = RatingPenulis::where('user_id_penulis', $user_id_penulis)->avg('rating');
     
         // Ambil data user berdasarkan id penulis artikel
         $user = User::findOrFail($article->user_id);
@@ -140,6 +145,7 @@ class LandingPageController extends Controller
             'kategoriA' => $kategoriA,
             'article' => $article,
             'box' => $box,
+            'averageRating' => $averageRating,
             'tags' => $tags,
             'kategori' => $kategori,
             'detailArtikelLP' => $detailArtikelLP,
@@ -183,6 +189,10 @@ class LandingPageController extends Controller
                         ->where('user_id', $profilPenulis->user_id)
                         ->get();
 
+                    //rating
+                    $user_id_penulis = $profilPenulis->user_id; // Misalnya, mendapatkan user_id_penulis dari artikel yang sedang ditampilkan
+                    $averageRating = RatingPenulis::where('user_id_penulis', $user_id_penulis)->avg('rating');
+
 
         // Ambil foto profil penulis artikel
         $fotoProfil = $user->fotoProfil; // Pastikan fotoProfil tersedia di model User
@@ -194,7 +204,7 @@ class LandingPageController extends Controller
         $TotalArtikelId = artikels::where('user_id', $user->id)->count();
         $TotalVideoId = video::where('user_id', $user->id)->count();
     
-        return view('main.sebelumLogin.profilePenulisArtikelLP', compact('profilPenulis', 'user', 'totalFollowers','fotoProfil','TotalArtikelId','TotalVideoId','semuaArtikel','semuaVideo'));
+        return view('main.sebelumLogin.profilePenulisArtikelLP', compact('profilPenulis', 'user', 'totalFollowers','fotoProfil','TotalArtikelId','TotalVideoId','semuaArtikel','semuaVideo', 'averageRating'));
     }
 
     public function TagsArtikelLP($tagName)
@@ -336,6 +346,10 @@ class LandingPageController extends Controller
         $komentarVideos = komentar_video::where('video_id', $id)->latest()->paginate(6);
     
         $totalKomentarV = komentar_video::where('video_id', $id)->count();
+
+        //rating
+         $user_id_penulis = $video->user_id; // Misalnya, mendapatkan user_id_penulis dari artikel yang sedang ditampilkan
+         $averageRating = RatingPenulis::where('user_id_penulis', $user_id_penulis)->avg('rating');
         
         // Ambil data user berdasarkan id penulis video
         $user = User::findOrFail($video->user_id);
@@ -357,6 +371,7 @@ class LandingPageController extends Controller
             'totalKomentarV' => $totalKomentarV,
             'fotoProfil' => $fotoProfil, // Tambahkan fotoProfil ke dalam data yang dilewatkan ke view
             'totalFollowers' => $totalFollowers,
+            'averageRating' => $averageRating
         ]);
     }
 
@@ -377,6 +392,10 @@ class LandingPageController extends Controller
                         ->where('user_id', $profilPenulis->user_id)
                         ->get();
 
+        //rating
+        $user_id_penulis = $profilPenulis->user_id; // Misalnya, mendapatkan user_id_penulis dari artikel yang sedang ditampilkan
+        $averageRating = RatingPenulis::where('user_id_penulis', $user_id_penulis)->avg('rating');
+
 
         // Ambil foto profil penulis artikel
         $fotoProfil = $user->fotoProfil; // Pastikan fotoProfil tersedia di model User
@@ -388,7 +407,7 @@ class LandingPageController extends Controller
         $TotalArtikelId = artikels::where('user_id', $user->id)->count();
         $TotalVideoId = video::where('user_id', $user->id)->count();
     
-        return view('main.sebelumLogin.profileUploaderVideoLP', compact('profilPenulis', 'user', 'totalFollowers','fotoProfil','TotalArtikelId','TotalVideoId','semuaArtikel','semuaVideo'));
+        return view('main.sebelumLogin.profileUploaderVideoLP', compact('profilPenulis', 'user', 'totalFollowers','fotoProfil','TotalArtikelId','TotalVideoId','semuaArtikel','semuaVideo','averageRating'));
     }
 
     public function searchTagsVideoLP(Request $request)

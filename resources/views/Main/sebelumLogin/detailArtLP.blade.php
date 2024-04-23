@@ -208,7 +208,9 @@
                 </a>
 
                 <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;">Penulis | {{ $totalFollowers }} Follower</span>
-                <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;"> 0,0 <span class="gold-star" data-rating="1">&#9733;</span></span>
+                <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;">  
+                <span style="color: gray;">{{ number_format($averageRating, 1) }}</span>
+                <span class="gold-star" data-rating="1">&#9733;</span></span>
             </div>
 
               <a href="/login" style="text-decoration: none; color: inherit;">
@@ -357,7 +359,7 @@
     <br>
 
 <!-- Tambahkan tombol form submit -->
-        <form id="ratingForm" action="/login" method="post">
+        <form id="ratingForm" action="/login" method="get">
           <div class="row">
             <div class="col-lg-6 offset-lg-0">
               <div class="card" style="width: 135%;">

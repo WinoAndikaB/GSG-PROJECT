@@ -127,61 +127,74 @@ class PenggunaController extends Controller
 
     //[User-Home] Menampilkan Detail Artikel Ketika Di Klik
     public function showDetailArtikel($id)
-    {
-        $article = artikels::findOrFail($id);
-        $kategoriLogA = kategori::all();
-    
-        $box = artikels::inRandomOrder()->take(8)->get();
-    
-        $tags = artikels::inRandomOrder()->take(5)->get();
-    
-        $kategori = artikels::inRandomOrder()->take(10)->get();
-    
-        $article->increment('jumlah_akses');
+{
+    $article = artikels::findOrFail($id);
+    $kategoriLogA = kategori::all();
 
-        //rating
-        $user_id_penulis = $article->user_id; // Misalnya, mendapatkan user_id_penulis dari artikel yang sedang ditampilkan
-        $averageRating = RatingPenulis::where('user_id_penulis', $user_id_penulis)->avg('rating');
-        
-    
-        // Menyiapkan data komentar, menyaring yang lebih muda dari 5 hari
-        $komentarArtikels = komentar_artikel::where('artikel_id', $id)
-                            ->where('created_at', '>=', Carbon::now()->subDays(5))
-                            ->latest()
-                            ->paginate(6);
-    
-        $totalKomentarArtikels = komentar_artikel::where('artikel_id', $id)
-                                    ->where('created_at', '>=', Carbon::now()->subDays(5))
-                                    ->count();
-    
-        // Retrieve the latest comment (if any) associated with the article
-        $komentar = komentar_artikel::where('artikel_id', $id)->latest()->first();
-    
-        // Ambil data user berdasarkan id penulis artikel
-        $user = User::findOrFail($article->user_id);
-        // Ambil foto profil penulis artikel
-        $fotoProfil = $user->fotoProfil;
-    
-        // Hitung total pengikut (followers) berdasarkan user_id
-        $totalFollowers = Follower::where('user_id', $user->id)->count();
-    
-        // Check if the authenticated user is following the article author
-        $isFollowing = false;
-        if (auth()->check()) {
-            $follower = Follower::where('follower_id', auth()->user()->id)
-                                ->where('user_id', $user->id)
+    $box = artikels::inRandomOrder()->take(8)->get();
+
+    $tags = artikels::inRandomOrder()->take(5)->get();
+
+    $kategori = artikels::inRandomOrder()->take(10)->get();
+
+    $article->increment('jumlah_akses');
+
+    // Ambil ID pengguna saat ini
+    $currentUserId = auth()->id();
+
+    // Ambil rating pengguna untuk penulis artikel ini (jika ada)
+    $userRating = RatingPenulis::where('user_id', $currentUserId)
+                                ->where('user_id_penulis', $article->user_id)
+                                ->where('artikel_id', $id)
                                 ->first();
-            if ($follower && $follower->status == 1) {
-                $isFollowing = true;
-            }
+
+    // Periksa apakah pengguna telah memberikan rating
+    $userHasRated = !is_null($userRating);
+
+    //rating
+    $user_id_penulis = $article->user_id; // Misalnya, mendapatkan user_id_penulis dari artikel yang sedang ditampilkan
+    $averageRating = RatingPenulis::where('user_id_penulis', $user_id_penulis)->avg('rating');
+
+
+    // Menyiapkan data komentar, menyaring yang lebih muda dari 5 hari
+    $komentarArtikels = komentar_artikel::where('artikel_id', $id)
+                        ->where('created_at', '>=', Carbon::now()->subDays(5))
+                        ->latest()
+                        ->paginate(6);
+
+    $totalKomentarArtikels = komentar_artikel::where('artikel_id', $id)
+                                ->where('created_at', '>=', Carbon::now()->subDays(5))
+                                ->count();
+
+    // Retrieve the latest comment (if any) associated with the article
+    $komentar = komentar_artikel::where('artikel_id', $id)->latest()->first();
+
+    // Ambil data user berdasarkan id penulis artikel
+    $user = User::findOrFail($article->user_id);
+    // Ambil foto profil penulis artikel
+    $fotoProfil = $user->fotoProfil;
+
+    // Hitung total pengikut (followers) berdasarkan user_id
+    $totalFollowers = Follower::where('user_id', $user->id)->count();
+
+    // Check if the authenticated user is following the article author
+    $isFollowing = false;
+    if (auth()->check()) {
+        $follower = Follower::where('follower_id', auth()->user()->id)
+                            ->where('user_id', $user->id)
+                            ->first();
+        if ($follower && $follower->status == 1) {
+            $isFollowing = true;
         }
-    
-        // Format jumlah akses
-        $formattedJumlahAkses = $this->formatJumlahAkses($article->jumlah_akses);
-    
-        return view('main.setelahLogin.detailArt', compact('kategoriLogA', 'article', 'box', 'tags', 'kategori', 'komentarArtikels', 'totalKomentarArtikels', 'komentar', 'fotoProfil', 'isFollowing', 'user', 
-        'totalFollowers', 'formattedJumlahAkses','averageRating'));
     }
+
+    // Format jumlah akses
+    $formattedJumlahAkses = $this->formatJumlahAkses($article->jumlah_akses);
+
+    return view('main.setelahLogin.detailArt', compact('kategoriLogA', 'article', 'box', 'tags', 'kategori', 'komentarArtikels', 'totalKomentarArtikels', 'komentar', 'fotoProfil', 'isFollowing', 'user', 
+    'totalFollowers', 'formattedJumlahAkses','averageRating', 'userHasRated'));
+}
+
 
     //[User-Home] Menampilkan Jumlah User Akses Artikel
     public function formatJumlahAkses($jumlah)
@@ -210,17 +223,27 @@ class PenggunaController extends Controller
         // Dapatkan objek artikel berdasarkan artikel_id
         $artikel = Artikels::findOrFail($artikel_id);
     
+        // Periksa apakah pengguna sudah memberikan rating sebelumnya untuk artikel ini
+        $existingRating = RatingPenulis::where('user_id', $validatedData['user_id'])
+                                        ->where('artikel_id', $artikel_id)
+                                        ->exists();
+    
+        // Jika pengguna sudah memberikan rating sebelumnya, berikan pesan kesalahan
+        if ($existingRating) {
+            return redirect()->back()->with('error', 'Anda sudah memberikan rating untuk artikel ini sebelumnya.');
+        }
+    
         // Simpan rating penulis ke database
         RatingPenulis::create([
             'user_id' => $validatedData['user_id'],
-            'user_id_penulis' => $artikel->user_id, // Ambil user_id penulis dari artikel
+            'user_id_penulis' => $artikel->user_id,
             'artikel_id' => $artikel_id,
             'rating' => $validatedData['rating'],
         ]);
     
         // Redirect atau kirim respon sesuai kebutuhan aplikasi
         return redirect()->back()->with('success', 'Rating penulis berhasil disimpan.');
-    }    
+    }
     
     
     public function detailProfilPenulisArtikel($id)
@@ -547,52 +570,105 @@ class PenggunaController extends Controller
             return view('main.setelahLogin.video', compact('semuaVideo', 'todayDate', 'kategoriLogV'));
         }
     
-    //[User-Detail Video] Halaman Detail Video Ketika Di Klik
-    public function showDetailVideo($id)
-    {
-        $video = Video::findOrFail($id);
-    
-        $kategoriLogV = Kategori::all();
-    
-        $boxVideo = Video::inRandomOrder()->take(10)->get();
-        $tagsV = Video::inRandomOrder()->take(5)->get();
-        $kategoriV = Video::inRandomOrder()->take(10)->get();
-    
-        $komentarVideos = komentar_video::where('video_id', $id)->latest()->paginate(6);
-        
-        $totalKomentarVideo = komentar_video::where('video_id', $id)->count();
-    
-        // Ambil data user berdasarkan id pembuat video
-        $user = User::findOrFail($video->user_id);
-        // Ambil foto profil pembuat video
-        $fotoProfil = $user->fotoProfil;
+        public function showDetailVideo($id)
+        {
+            $video = Video::findOrFail($id);
 
-                // Check if the authenticated user is following the article author
-                $isFollowing = false;
-                if (auth()->check()) {
-                    $follower = Follower::where('follower_id', auth()->user()->id)
-                                        ->where('user_id', $user->id)
+            $kategoriLogV = Kategori::all();
+
+            $boxVideo = Video::inRandomOrder()->take(10)->get();
+            $tagsV = Video::inRandomOrder()->take(5)->get();
+            $kategoriV = Video::inRandomOrder()->take(10)->get();
+
+            $komentarVideos = komentar_video::where('video_id', $id)->latest()->paginate(6);
+
+            $totalKomentarVideo = komentar_video::where('video_id', $id)->count();
+
+            // Ambil ID pengguna saat ini
+            $currentUserId = auth()->id();
+
+            // Ambil rating pengguna untuk pembuat video ini (jika ada)
+            $userRating = RatingPenulis::where('user_id', $currentUserId)
+                                        ->where('user_id_penulis', $video->user_id)
+                                        ->where('video_id', $id)
                                         ->first();
-                    if ($follower && $follower->status == 1) {
-                        $isFollowing = true;
-                    }
-                }
 
-        // Hitung total pengikut (followers) berdasarkan user_id
-        $totalFollowers = Follower::where('user_id', $user->id)->count();
+            // Periksa apakah pengguna telah memberikan rating
+            $userHasRated = !is_null($userRating);
+
+
+            //rating
+            $user_id_penulis = $video->user_id;
+            $averageRating = RatingPenulis::where('user_id_penulis', $user_id_penulis)->avg('rating');
+
+            // Ambil data user berdasarkan id pembuat video
+            $user = User::findOrFail($video->user_id);
+            // Ambil foto profil pembuat video
+            $fotoProfil = $user->fotoProfil;
+
+            // Check if the authenticated user is following the article author
+            $isFollowing = false;
+            if (auth()->check()) {
+                $follower = Follower::where('follower_id', auth()->user()->id)
+                                    ->where('user_id', $user->id)
+                                    ->first();
+                if ($follower && $follower->status == 1) {
+                    $isFollowing = true;
+                }
+            }
+
+            // Hitung total pengikut (followers) berdasarkan user_id
+            $totalFollowers = Follower::where('user_id', $user->id)->count();
+
+            return view('main.setelahLogin.detailVid', [
+                'kategoriLogV' => $kategoriLogV,
+                'video' => $video,
+                'averageRating' => $averageRating,
+                'boxVideo' => $boxVideo,
+                'tagsV' => $tagsV,
+                'kategoriV' => $kategoriV,
+                'komentarVideos' => $komentarVideos,
+                'totalKomentarVideo' => $totalKomentarVideo,
+                'fotoProfil' => $fotoProfil,
+                'user' => $user,
+                'totalFollowers' => $totalFollowers,
+                'userHasRated' => $userHasRated, // Sertakan userHasRated ke dalam data yang dilewatkan ke view
+                'isFollowing' => $isFollowing,
+            ]);
+        }
+   
     
-        return view('main.setelahLogin.detailVid', [
-            'kategoriLogV' => $kategoriLogV,
-            'video' => $video,
-            'boxVideo' => $boxVideo,
-            'tagsV' => $tagsV,
-            'kategoriV' => $kategoriV,
-            'komentarVideos' => $komentarVideos,
-            'totalKomentarVideo' => $totalKomentarVideo,
-            'fotoProfil' => $fotoProfil, // Tambahkan fotoProfil ke dalam data yang dilewatkan ke view
-             'user' => $user,
-             'totalFollowers' => $totalFollowers,
+    public function storeRatingUploader(Request $request, $video_id)
+    {
+        // Validasi request
+        $validatedData = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'rating' => 'required|integer|min:1|max:5',
         ]);
+    
+        // Dapatkan objek video berdasarkan video_id
+        $video = Video::findOrFail($video_id);
+    
+        // Periksa apakah pengguna sudah memberikan rating sebelumnya untuk video ini
+        $existingRating = RatingPenulis::where('user_id', $validatedData['user_id'])
+                                        ->where('video_id', $video_id)
+                                        ->exists();
+    
+        // Jika pengguna sudah memberikan rating sebelumnya, berikan pesan kesalahan
+        if ($existingRating) {
+            return redirect()->back()->with('error', 'Anda sudah memberikan rating untuk artikel ini sebelumnya.');
+        }
+    
+        // Simpan rating penulis ke database
+        RatingPenulis::create([
+            'user_id' => $validatedData['user_id'],
+            'user_id_penulis' => $video->user_id,
+            'video_id' => $video_id,
+            'rating' => $validatedData['rating'],
+        ]);
+    
+        // Redirect atau kirim respon sesuai kebutuhan aplikasi
+        return redirect()->back()->with('success', 'Rating penulis berhasil disimpan.');
     }
 
        //[User-Home] Simpan Artikel
@@ -774,6 +850,7 @@ class PenggunaController extends Controller
             
                 // Ambil data user berdasarkan id penulis artikel
                 $user = User::findOrFail($profilPenulis->user_id);
+
             
                 // Ambil semua artikel yang tidak dalam status 'Pending' atau 'Rejected' milik penulis yang sama
                 $semuaArtikel = artikels::whereNotIn('status', ['Pending', 'Rejected'])
@@ -784,7 +861,10 @@ class PenggunaController extends Controller
                 $semuaVideo = video::whereNotIn('statusVideo', ['Pending', 'Rejected'])
                                 ->where('user_id', $profilPenulis->user_id)
                                 ->get();
-        
+
+                //rating
+                $user_id_penulis = $profilPenulis->user_id; // Misalnya, mendapatkan user_id_penulis dari artikel yang sedang ditampilkan
+                $averageRating = RatingPenulis::where('user_id_penulis', $user_id_penulis)->avg('rating');
         
                 // Ambil foto profil penulis artikel
                 $fotoProfil = $user->fotoProfil; // Pastikan fotoProfil tersedia di model User
@@ -806,7 +886,7 @@ class PenggunaController extends Controller
                 $TotalArtikelId = artikels::where('user_id', $user->id)->count();
                 $TotalVideoId = video::where('user_id', $user->id)->count();
             
-                return view('main.setelahLogin.profileUploaderVideo', compact('profilPenulis', 'isFollowing', 'user', 'totalFollowers','fotoProfil','TotalArtikelId','TotalVideoId','semuaArtikel','semuaVideo'));
+                return view('main.setelahLogin.profileUploaderVideo', compact('profilPenulis', 'isFollowing', 'user', 'totalFollowers','fotoProfil','TotalArtikelId','TotalVideoId','semuaArtikel','semuaVideo', 'averageRating'));
             }
 
             public function searchVideos(Request $request)

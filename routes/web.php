@@ -123,6 +123,8 @@ use Illuminate\Support\Facades\Route;
                 Route::get('/deleteKomentarVideo/{id}', [PenggunaController::class, 'deleteKomentarVideo'])->name('deleteKomentarVideo');
                 Route::post('/simpanEditKomentarVideo/{id}/{user_id}', [PenggunaController::class, 'simpanEditKomentarVideo'])->name('simpanEditKomentarVideo');
 
+                Route::post('/ratingUploader/{video_id}', [PenggunaController::class, 'storeRatingUploader'])->name('storeRatingUploader');
+
                 Route::get('/simpanVideoView', [PenggunaController::class, 'simpanVideoView'])->name('simpan.videoView');
                 Route::post('/simpanVideoData/{videoId}', [PenggunaController::class, 'simpanVideoData'])->name('simpan.videoData')->middleware('auth'); 
                 Route::get('/deleteSimpanVid/{id}', [PenggunaController::class, 'deleteSimpanVid'])->name('simpan.deleteVideo');

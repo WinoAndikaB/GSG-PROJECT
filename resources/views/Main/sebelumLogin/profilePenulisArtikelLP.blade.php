@@ -228,7 +228,8 @@
                             <span style="margin-right: 10px;"><b>{{ $TotalArtikelId }}</b> Artikel</span>
                             <span style="margin-right: 10px;"><b>{{ $TotalVideoId }}</b> Video</span>
                             <span style="margin-right: 10px;"><b>{{ $totalFollowers }}</b> Followers</span>
-                            0,0 <span class="star gold-star" data-rating="1">&#9733;</span>
+                            <span style="color: gray;">{{ number_format($averageRating, 1) }}</span>
+                             <span class="star gold-star" data-rating="1">&#9733;</span>
                         </div>
   
                         <br>

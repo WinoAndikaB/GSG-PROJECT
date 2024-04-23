@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('artikel_id');
+            $table->unsignedBigInteger('video_id');
             $table->unsignedBigInteger('user_id_penulis'); // Tambahkan kolom user_id_penulis
             $table->unsignedTinyInteger('rating');
             $table->timestamps();
@@ -22,6 +23,7 @@ return new class extends Migration
             // Definisikan foreign key constraints jika diperlukan
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('artikel_id')->references('id')->on('artikels')->onDelete('cascade');
+            $table->foreign('video_id')->references('id')->on('videos')->onDelete('cascade');
         });        
     }
 

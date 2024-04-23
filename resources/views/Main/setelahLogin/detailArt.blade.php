@@ -302,7 +302,8 @@
                 <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;">Penulis | {{ $totalFollowers }} Follower</span>
                 <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;"> 
 
-                  {{ number_format($averageRating, 1) }}
+                  <span style="color: gray;">{{ number_format($averageRating, 1) }}</span>
+
                   
                   <span class="gold-star" data-rating="1">&#9733;</span></span>
             </div>
@@ -469,6 +470,11 @@
       <br>
       <br>
       
+      @if ($userHasRated)
+    <div class="alert alert-info">
+        Anda sudah memberikan rating untuk artikel ini.
+    </div>
+@else
       <form id="ratingForm" action="{{ route('storeRatingPenulis', ['artikel_id' => $article->id]) }}" method="post">
         @csrf <!-- Menambahkan CSRF token -->
         <div class="row">
@@ -498,6 +504,7 @@
           </div>
         </div>
       </form>
+      @endif
       
 
 

@@ -202,14 +202,16 @@
                 </a>
             
                 <div class="simple-profile-details" style="flex: 1;">
-                    <a href="{{ route('detailProfilVideo', ['id' => $video->id]) }}" style="text-decoration: none; color: inherit;">
+                    <a href="{{ route('detailProfilVideoLP', ['id' => $video->id]) }}" style="text-decoration: none; color: inherit;">
                         <span class="simple-profile-name" style="color: #2c3e50; font-weight: bold; font-size: 1.2em; display: block; margin-bottom: 4px;">
                             {{ $video->uploader }}
                         </span>
                     </a>
             
                     <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;">Uploader | {{$totalFollowers}} Followers</span>
-                    <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;"> 0,0 <span class="gold-star" data-rating="1">&#9733;</span></span>
+                    <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;">
+                      <span style="color: gray;">{{ number_format($averageRating, 1) }}</span>
+                      <span class="gold-star" data-rating="1">&#9733;</span></span>
                 </div>
             
                   <a href="/login" style="text-decoration: none; color: inherit;">
@@ -291,7 +293,7 @@
 
           <br>
           <br>
-          <form id="ratingForm" action="/login" method="post">
+          <form id="ratingForm" action="/login" method="get">
           <div class="row">
             <div class="col-lg-6 offset-lg-0"> <!-- Tambahkan kelas offset-lg-1 untuk membuat margin kiri sebanyak 5 kolom -->
               <div class="card" style="width: 210%;"> <!-- Ubah margin-left menjadi padding -->

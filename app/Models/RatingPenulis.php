@@ -13,6 +13,7 @@ class RatingPenulis extends Model
         'user_id',
         'user_id_penulis',
         'artikel_id',
+        'video_id',
         'rating',
     ];
 
@@ -26,5 +27,11 @@ class RatingPenulis extends Model
     public function artikel()
     {
         return $this->belongsTo(Artikels::class);
+    }
+
+     // Definisi relasi dengan model Article
+    public function video()
+    {
+        return $this->belongsTo(video::class);
     }
 }

@@ -255,14 +255,16 @@
             </a>
         
             <div class="simple-profile-details" style="flex: 1;">
-              <a href="{{ route('detailProfilVideoLP', ['id' => $video->id]) }}" style="text-decoration: none; color: inherit;">
+              <a href="{{ route('detailProfilVideo', ['id' => $video->id]) }}" style="text-decoration: none; color: inherit;">
                   <span class="simple-profile-name" style="color: #2c3e50; font-weight: bold; font-size: 1.2em; display: block; margin-bottom: 4px;">
                       {{ $video->uploader }}
                   </span>
               </a>
       
               <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;">Uploader | {{$totalFollowers}} Followers</span>
-              <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;"> 0,0 <span class="gold-star" data-rating="1">&#9733;</span></span>
+              <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;">
+                <span style="color: gray;">{{ number_format($averageRating, 1) }}</span>
+                <span class="gold-star" data-rating="1">&#9733;</span></span>
           </div>
           
                     @auth
@@ -447,8 +449,13 @@
     <br>
     <br>
     
-    <!-- Tambahkan tombol form submit -->
-    <form id="ratingForm" action="/login" method="post">
+    @if ($userHasRated)
+    <div class="alert alert-info">
+        Anda sudah memberikan rating untuk video ini.
+    </div>
+@else
+    <form id="ratingForm" action="{{ route('storeRatingUploader', ['video_id' => $video->id]) }}" method="post">
+      @csrf <!-- Menambahkan CSRF token -->
       <div class="row">
         <div class="col-lg-6 offset-lg-0">
           <div class="card" style="width: 135%;">
@@ -461,17 +468,22 @@
                 <span class="star" data-rating="4" title="Baik">&#9733;</span>
                 <span class="star" data-rating="5" title="Sangat Baik">&#9733;</span>
               </div>
+              <!-- Input hidden untuk menyimpan rating -->
+              <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+              <input type="hidden" name="user_id_penulis" value="{{ $video->user_id }}">
+              <input type="hidden" name="video_id" value="{{ $video->id }}">                
               <input type="hidden" name="rating" id="rating" value="0" required>
               <div id="keterangan"></div>
-    <!-- Tombol submit awalnya disembunyikan -->
-    <div id="buttonContainer" style="text-align: center; display: none;">
-      <button type="submit" id="submitBtn" class="btn btn-primary">Submit</button>
-    </div>
-    </div>
-  </div>
-</div>
-</div>
-</form>
+              <!-- Tombol submit awalnya disembunyikan -->
+              <div id="buttonContainer" style="text-align: center;">
+                <button type="submit" id="submitBtn" class="btn btn-primary">Submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    @endif
 
   <br>
   <br>
@@ -1163,57 +1175,60 @@
   const ratingPenulis = document.querySelectorAll('.star');
   const ratingInput = document.getElementById('rating');
   const keterangan = document.getElementById('keterangan');
-  const submitBtn = document.getElementById('submitBtn'); // Tombol submit
-
+  const submitBtn = document.getElementById('submitBtn'); // Perhatikan perubahan di sini
+  
+  // Sembunyikan tombol submit secara default
+  submitBtn.style.display = 'none';
+  
+  // Fungsi untuk menampilkan keterangan rating
+  function tampilkanKeterangan(ratingValue) {
+    switch(ratingValue) {
+      case 1:
+        return "Sangat Buruk";
+      case 2:
+        return "Buruk";
+      case 3:
+        return "Sedang";
+      case 4:
+        return "Baik";
+      case 5:
+        return "Sangat Baik";
+      default:
+        return "";
+    }
+  }
+  
+  // Fungsi untuk menangani klik pada bintang rating
+  function handleRatingClick() {
+    const ratingValue = parseInt(this.getAttribute('data-rating'));
+    ratingInput.value = ratingValue; // Set nilai input rating
+  
+    // Tampilkan keterangan sesuai rating
+    keterangan.innerText = tampilkanKeterangan(ratingValue);
+  
+    // Tambahkan kelas checked ke bintang yang dipilih
+    ratingPenulis.forEach(s => s.classList.remove('checked'));
+    this.classList.add('checked');
+  
+    // Hapus kelas selected dari semua bintang
+    ratingPenulis.forEach(s => s.classList.remove('selected'));
+  
+    // Tambahkan kelas selected ke bintang-bintang sebelumnya
+    for (let i = 0; i < ratingValue; i++) {
+      ratingPenulis[i].classList.add('selected');
+    }
+  
+    // Tampilkan tombol submit jika rating telah dipilih
+    submitBtn.style.display = 'block';
+  }
+  
   // Tambahkan event listener ke setiap bintang
   ratingPenulis.forEach(star => {
-    star.addEventListener('click', function() {
-      const ratingValue = parseInt(this.getAttribute('data-rating'));
-      ratingInput.value = ratingValue; // Set nilai input rating
-      
-      // Tampilkan keterangan sesuai rating
-      switch(ratingValue) {
-        case 1:
-          keterangan.innerText = "Sangat Buruk";
-          break;
-        case 2:
-          keterangan.innerText = "Buruk";
-          break;
-        case 3:
-          keterangan.innerText = "Sedang";
-          break;
-        case 4:
-          keterangan.innerText = "Baik";
-          break;
-        case 5:
-          keterangan.innerText = "Sangat Baik";
-          break;
-        default:
-          keterangan.innerText = "";
-      }
-      
-      // Tambahkan kelas checked ke bintang yang dipilih
-      ratingPenulis.forEach(s => s.classList.remove('checked'));
-      this.classList.add('checked');
-      
-      // Hapus kelas selected dari semua bintang
-      ratingPenulis.forEach(s => s.classList.remove('selected'));
-      
-      // Tambahkan kelas selected ke bintang-bintang sebelumnya
-      for (let i = 0; i < ratingValue; i++) {
-        ratingPenulis[i].classList.add('selected');
-      }
-
-// Tampilkan tombol submit jika rating telah dipilih
-submitBtn.style.display = 'block';
-
-// Tampilkan tombol submit jika rating telah dipilih
-document.getElementById('buttonContainer').style.display = 'block';
-
-
-    });
+    star.addEventListener('click', handleRatingClick);
   });
-</script>
+  
+    </script>
+  
 
 
 

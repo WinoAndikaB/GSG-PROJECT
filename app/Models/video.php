@@ -27,4 +27,9 @@ class Video extends Model
     {
         return $this->hasMany(SimpanVideo::class, 'video_id');
     }
+    
+    public function ratings()
+    {
+        return $this->hasMany(RatingPenulis::class);
+    }
 }
