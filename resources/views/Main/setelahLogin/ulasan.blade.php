@@ -192,7 +192,38 @@
                             <a class="dropdown-item" href="/simpanVideoView"><i class="fas fa-video"></i> Video Tersimpan</a>
                         </div>
                     </div>
-                  </li>           
+                  </li>
+                  <div class="dropdown">
+                    <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-bell" style="color: white;"></i> <span class="badge badge-pill badge-primary">{{ $jumlahData }}</span>
+                    </button>
+                    
+                    <div class="dropdown-menu dropdown-menu-wide scrollable-menu" aria-labelledby="dropdownMenuButton">
+                        <h6 class="container-title" style="margin: 10px 0; text-align: center;"><i class="fas fa-bell"></i> Notifikasi</h6>
+                        <hr>
+                        
+                        @if($isFollowingAuthor && $jumlahData > 0)
+                            @foreach($notifArtikel as $item)
+                                <a class="dropdown-item" href="{{ route('detail.artikel', ['id' => $item->id]) }}">
+                                    <div class="notification-item">
+                                        <div class="notification-info">
+                                            <div class="profile-info">
+                                                <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" class="media-left">
+                                                <div class="profile-details">
+                                                    <h6 class="notification-title" title="{{ $item->judulArtikel }}">{{ $item->penulis }} mengupload: {{ Str::limit($item->judulArtikel, 20) }}</h6>
+                                                    <p class="notification-time">{{ $item->created_at->format('d F Y') }} | {{ $item->created_at->diffForHumans() }} </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            @endforeach
+                        @else
+                            <p class="dropdown-item">Tidak ada notifikasi saat ini.</p>
+                        @endif
+                        
+                    </div>
+                </div>          
                     <li class="scroll-to-section">
                       <a href="#" class="d-sm-inline d-none text-white text-bold" id="logout-link" onclick="openModal()"> Logout</a>
                     </li>

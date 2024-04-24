@@ -37,8 +37,28 @@ class PenggunaController extends Controller
             
             $artikels = artikels::where('judulArtikel', 'like', '%' . $searchTerm . '%')
                 ->get();
+
+             // Get the currently authenticated user ID
+          $currentUserId = auth()->id();
+
+          // Retrieve user_ids that the current user is following
+          $userIds = Follower::where('follower_id', $currentUserId)
+              ->pluck('user_id')
+              ->toArray();
+  
+          // Get the latest notifications for the followed authors
+          $notifArtikel = artikels::whereIn('user_id', $userIds)
+              ->where('created_at', '>=', Carbon::now()->subDay())
+              ->latest()
+              ->get();
+  
+          // Count the number of notifications
+          $jumlahData = $notifArtikel->count();
+  
+          // Check if the authenticated user is following the article author
+          $isFollowingAuthor = true; // Langsung diatur ke true, karena kita ingin menampilkan notifikasi tanpa menunggu follow       
         
-            return view('main.setelahLogin.search', compact('artikels'));
+            return view('main.setelahLogin.search', compact('artikels','isFollowingAuthor','jumlahData','notifArtikel'));
         }
     
         //[User] Search Video
@@ -59,70 +79,97 @@ class PenggunaController extends Controller
     //[User-Home] Halaman Home
     function HomeSetelahLogin(Request $request){
 
-            $kategoriLogA = kategori::all();
-
-            $banner0 = Banner::where('jenis_banner', 0)
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
-
-            $banner1 = Banner::where('jenis_banner', 1)
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
-
-            $banner2 = Banner::where('jenis_banner', 2)
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
-
-            $banner3 = Banner::where('jenis_banner', 3)
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
-
-             // Get trending articles randomly
-             $trending = artikels::whereNotIn('status' , ['Pending', 'Rejected'])
-                ->orderBy('jumlah_akses', 'desc') // Order by jumlah_akses column in descending order
-                ->take(3)
-                ->get();
-     
- 
-             // Get the latest articles excluding "Pending" and "Rejected" articles
-             $latest = artikels::whereNotIn('status', ['Pending', 'Rejected'])
-                ->orderBy('created_at', 'desc')
-                ->take(8)
-                ->get();
-
-             // Get what's new articles randomly excluding "Pending" and "Rejected" articles
-             $whatsnew = artikels::whereNotIn('status', ['Pending', 'Rejected'])
-                ->inRandomOrder()
-                ->take(5)
-                ->get();
+        $kategoriLogA = kategori::all();
     
-                // Get a box of articles randomly excluding "Pending" and "Rejected" articles
-             $boxLong = artikels::whereNotIn('status', ['Pending', 'Rejected'])
-                ->inRandomOrder()
-                ->take(1)
-                ->get();
-
-             $box3 = artikels::whereNotIn('status', ['Pending', 'Rejected'])
-             ->orderBy('jumlah_akses', 'desc') // Order by jumlah_akses column in descending order
-                 ->take(5)
-                 ->get();
-
-             $box2 = artikels::whereNotIn('status', ['Pending', 'Rejected'])
-                 ->inRandomOrder()
-                 ->take(2)
-                 ->get();
-
-             $box = artikels::whereNotIn('status', ['Pending', 'Rejected'])
-                 ->inRandomOrder()
-                 ->take(8)
-                 ->get();
-
-             $semua = artikels::whereNotIn('status', ['Pending', 'Rejected'])->get();
-
-            // Mengambil tanggal hari ini
-            $todayDate = date('l, d M Y');
+        $banner0 = Banner::where('jenis_banner', 0)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
     
-        return view('main.setelahLogin.home', compact('banner0','banner1','banner2','banner3','trending', 'latest','whatsnew','semua', 'box', 'box2', 'box3', 'boxLong', 'todayDate', 'kategoriLogA'));
+        // Fetch banners for different types
+        $banner1 = Banner::where('jenis_banner', 1)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+    
+        $banner2 = Banner::where('jenis_banner', 2)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+    
+        $banner3 = Banner::where('jenis_banner', 3)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+    
+        // Get trending articles randomly
+        $trending = artikels::whereNotIn('status' , ['Pending', 'Rejected'])
+            ->orderBy('jumlah_akses', 'desc')
+            ->take(3)
+            ->get();
+    
+        // Get the latest articles excluding "Pending" and "Rejected" articles
+        $latest = artikels::whereNotIn('status', ['Pending', 'Rejected'])
+            ->orderBy('created_at', 'desc')
+            ->take(8)
+            ->get();
+    
+        // Get what's new articles randomly excluding "Pending" and "Rejected" articles
+        $whatsnew = artikels::whereNotIn('status', ['Pending', 'Rejected'])
+            ->inRandomOrder()
+            ->take(5)
+            ->get();
+    
+        // Get a box of articles randomly excluding "Pending" and "Rejected" articles
+        $boxLong = artikels::whereNotIn('status', ['Pending', 'Rejected'])
+            ->inRandomOrder()
+            ->take(1)
+            ->get();
+    
+        $box3 = artikels::whereNotIn('status', ['Pending', 'Rejected'])
+            ->orderBy('jumlah_akses', 'desc')
+            ->take(5)
+            ->get();
+    
+        $box2 = artikels::whereNotIn('status', ['Pending', 'Rejected'])
+            ->inRandomOrder()
+            ->take(2)
+            ->get();
+    
+        $box = artikels::whereNotIn('status', ['Pending', 'Rejected'])
+            ->inRandomOrder()
+            ->take(8)
+            ->get();
+    
+        $semua = artikels::whereNotIn('status', ['Pending', 'Rejected'])->get();
+    
+        // Get the currently authenticated user ID
+        $currentUserId = auth()->id();
+    
+        // Retrieve the article object if it's provided in the request
+        $articleId = $request->input('article_id'); // Assuming you're passing article ID through the request
+        $article = artikels::find($articleId); // Retrieve the article object based on the ID
+    
+        // Check if the authenticated user is following the article author
+        $isFollowingAuthor = false;
+    
+        // Retrieve user_ids that the current user is following
+            $userIds = Follower::where('follower_id', $currentUserId)
+            ->pluck('user_id')
+            ->toArray();
+
+        // Get the latest notifications for the followed authors
+        $notifArtikel = artikels::whereIn('user_id', $userIds)
+            ->where('created_at', '>=', Carbon::now()->subDay())
+            ->latest()
+            ->get();
+
+        // Count the number of notifications
+        $jumlahData = $notifArtikel->count();
+
+        // Get the current date
+        $todayDate = date('l, d M Y');
+
+        // Check if the authenticated user is following the article author
+        $isFollowingAuthor = true; // Langsung diatur ke true, karena kita ingin menampilkan notifikasi tanpa menunggu follow
+    
+        return view('main.setelahLogin.home', compact('banner0', 'banner1', 'banner2', 'banner3', 'trending', 'latest', 'whatsnew', 'semua', 'box', 'box2', 'box3', 'boxLong', 'todayDate', 'kategoriLogA', 'isFollowingAuthor', 'notifArtikel','jumlahData'));
     }
 
     //[User-Home] Menampilkan Detail Artikel Ketika Di Klik
@@ -172,13 +219,14 @@ class PenggunaController extends Controller
         $user = User::findOrFail($article->user_id);
         // Ambil foto profil penulis artikel
         $fotoProfil = $user->fotoProfil;
-
+    
         // Format jumlah akses
         $formattedJumlahAkses = $this->formatJumlahAkses($article->jumlah_akses);
     
         // Hitung total pengikut (followers) berdasarkan user_id
         $totalFollowers = Follower::where('user_id', $user->id)->count();
     
+        //Notifikasi Penulis
         // Check if the authenticated user is following the article author
         $isFollowingAuthor = false;
     
@@ -207,8 +255,10 @@ class PenggunaController extends Controller
         // Menghitung jumlah data notifikasi
         $jumlahData = $notifArtikel->count();
     
-        return view('main.setelahLogin.detailArt', compact('kategoriLogA', 'article', 'box', 'tags', 'kategori', 'komentarArtikels', 'totalKomentarArtikels', 'komentar', 'fotoProfil', 'isFollowingAuthor', 'user', 'totalFollowers', 'formattedJumlahAkses', 'averageRating', 'userHasRated', 'notifArtikel', 'jumlahData'));
+        return view('main.setelahLogin.detailArt', compact('kategoriLogA', 'article', 'box', 'tags', 'kategori', 'komentarArtikels', 'totalKomentarArtikels', 'komentar', 'fotoProfil', 'isFollowingAuthor', 'user', 'totalFollowers', 
+        'formattedJumlahAkses', 'averageRating', 'userHasRated', 'notifArtikel', 'jumlahData'));
     }
+    
     
 
     //[User-Home] Menampilkan Jumlah User Akses Artikel
@@ -289,7 +339,7 @@ class PenggunaController extends Controller
         // Hitung total pengikut (followers) berdasarkan user_id
         $totalFollowers = Follower::where('user_id', $user->id)->count();
     
-        // Check if the authenticated user is following the article author
+        // Check if the authenticated user is following the profilPenulis author
         $isFollowing = false;
         if (auth()->check()) {
             $follower = Follower::where('follower_id', auth()->user()->id)
@@ -302,26 +352,59 @@ class PenggunaController extends Controller
     
         $TotalArtikelId = artikels::where('user_id', $user->id)->count();
         $TotalVideoId = video::where('user_id', $user->id)->count();
+
+
+        //Notifikasi Penulis
+        
+         // Check if the authenticated user is following the profilPenulis author
+         $isFollowingAuthor = false;
     
-        return view('main.setelahLogin.profilePenulisArtikel', compact('profilPenulis', 'isFollowing', 'user', 'totalFollowers','fotoProfil','TotalArtikelId','TotalVideoId','semuaArtikel','semuaVideo','averageRating'));
+         // Ambil ID pengguna saat ini
+         $currentUserId = auth()->id();
+     
+         // Ambil user_id yang di-follow oleh pengguna saat ini
+         $userIds = [];
+         if (auth()->check()) {
+             $userIds = Follower::where('follower_id', $currentUserId)
+                                ->pluck('user_id')
+                                ->toArray();
+         }
+     
+         // Jika artikel yang sedang dilihat merupakan artikel dari user_id yang di-follow, atur $isFollowingAuthor menjadi true
+         if (in_array($profilPenulis->user_id, $userIds)) {
+             $isFollowingAuthor = true;
+         }
+     
+         // Ambil notifikasi terbaru dari pengguna yang di-follow
+         $notifArtikel = artikels::whereIn('user_id', $userIds)
+                                 ->where('created_at', '>=', Carbon::now()->subDay())
+                                 ->latest()
+                                 ->get();
+     
+         // Menghitung jumlah data notifikasi
+         $jumlahData = $notifArtikel->count();
+    
+        return view('main.setelahLogin.profilePenulisArtikel', compact('profilPenulis', 'isFollowing', 'user', 'totalFollowers','fotoProfil','TotalArtikelId','TotalVideoId','semuaArtikel','semuaVideo','averageRating','jumlahData','isFollowingAuthor','notifArtikel'));
     }
     
     
 
     public function follow(User $user)
     {
-        auth()->user()->following()->attach($user);
-
+        $currentUser = auth()->user();
+        $currentUser->following()->attach($user, ['status' => 1]);
+    
         return response()->json(['message' => 'You are now following ' . $user->name]);
     }
-
+    
     public function unfollow(User $user)
     {
-        auth()->user()->following()->detach($user);
-
+        $currentUser = auth()->user();
+        $currentUser->following()->detach($user);
+    
         return response()->json(['message' => 'You have unfollowed ' . $user->name]);
     }
-
+    
 
         //[User-Home] Simpan Artikel
         public function simpanArtikelView()
@@ -331,8 +414,28 @@ class PenggunaController extends Controller
         
             // Retrieve the saved articles for the user
             $savedArtikels = $user->simpanArtikels;
+
+             // Get the currently authenticated user ID
+             $currentUserId = auth()->id();
+
+             // Retrieve user_ids that the current user is following
+             $userIds = Follower::where('follower_id', $currentUserId)
+                 ->pluck('user_id')
+                 ->toArray();
+     
+             // Get the latest notifications for the followed authors
+             $notifArtikel = artikels::whereIn('user_id', $userIds)
+                 ->where('created_at', '>=', Carbon::now()->subDay())
+                 ->latest()
+                 ->get();
+     
+             // Count the number of notifications
+             $jumlahData = $notifArtikel->count();
+     
+             // Check if the authenticated user is following the article author
+             $isFollowingAuthor = true; // Langsung diatur ke true, karena kita ingin menampilkan notifikasi tanpa menunggu follow   
         
-            return view('main.setelahLogin.simpanArtikel', compact('savedArtikels'));
+            return view('main.setelahLogin.simpanArtikel', compact('savedArtikels','jumlahData','isFollowingAuthor','notifArtikel'));
         }
         
         public function simpanArtikelData(Request $request, $id)
@@ -529,9 +632,29 @@ class PenggunaController extends Controller
             $tags = array_unique($tags);
             
             $existingTags = artikels::select('tags')->distinct()->get();
+
+                         // Get the currently authenticated user ID
+                         $currentUserId = auth()->id();
+
+                         // Retrieve user_ids that the current user is following
+                         $userIds = Follower::where('follower_id', $currentUserId)
+                             ->pluck('user_id')
+                             ->toArray();
+                 
+                         // Get the latest notifications for the followed authors
+                         $notifArtikel = artikels::whereIn('user_id', $userIds)
+                             ->where('created_at', '>=', Carbon::now()->subDay())
+                             ->latest()
+                             ->get();
+                 
+                         // Count the number of notifications
+                         $jumlahData = $notifArtikel->count();
+                 
+                         // Check if the authenticated user is following the article author
+                         $isFollowingAuthor = true; // Langsung diatur ke true, karena kita ingin menampilkan notifikasi tanpa menunggu follow   
         
             // Kirim data artikel, tag name, dan tags ke view
-            return view('main.setelahLogin.tagsArtikel', compact('artikels', 'tagName', 'tags' , 'existingTags'));
+            return view('main.setelahLogin.tagsArtikel', compact('artikels', 'tagName', 'tags' , 'existingTags','jumlahData','isFollowingAuthor','notifArtikel'));
         }
         
 
@@ -954,7 +1077,27 @@ class PenggunaController extends Controller
 
         $kategoriLogA = kategori::all();
 
-        return view('main.setelahLogin.Kategori.kategori', compact('kategoriLogA'));
+        // Get the currently authenticated user ID
+        $currentUserId = auth()->id();
+
+        // Retrieve user_ids that the current user is following
+        $userIds = Follower::where('follower_id', $currentUserId)
+            ->pluck('user_id')
+            ->toArray();
+
+        // Get the latest notifications for the followed authors
+        $notifArtikel = artikels::whereIn('user_id', $userIds)
+            ->where('created_at', '>=', Carbon::now()->subDay())
+            ->latest()
+            ->get();
+
+        // Count the number of notifications
+        $jumlahData = $notifArtikel->count();
+
+        // Check if the authenticated user is following the article author
+        $isFollowingAuthor = true; // Langsung diatur ke true, karena kita ingin menampilkan notifikasi tanpa menunggu follow       
+
+        return view('main.setelahLogin.Kategori.kategori', compact('kategoriLogA','isFollowingAuthor','jumlahData','notifArtikel'));
     }
 
     function KategoriA($kategori){
@@ -964,8 +1107,29 @@ class PenggunaController extends Controller
             ->inRandomOrder()
             ->take(10)
             ->get();
+
+
+              // Get the currently authenticated user ID
+          $currentUserId = auth()->id();
+
+          // Retrieve user_ids that the current user is following
+          $userIds = Follower::where('follower_id', $currentUserId)
+              ->pluck('user_id')
+              ->toArray();
+  
+          // Get the latest notifications for the followed authors
+          $notifArtikel = artikels::whereIn('user_id', $userIds)
+              ->where('created_at', '>=', Carbon::now()->subDay())
+              ->latest()
+              ->get();
+  
+          // Count the number of notifications
+          $jumlahData = $notifArtikel->count();
+  
+          // Check if the authenticated user is following the article author
+          $isFollowingAuthor = true; // Langsung diatur ke true, karena kita ingin menampilkan notifikasi tanpa menunggu follow    
     
-        return view('main.setelahLogin.Kategori.KategoriA', compact('KategoriLogA'));
+        return view('main.setelahLogin.Kategori.KategoriA', compact('KategoriLogA','isFollowingAuthor','jumlahData','notifArtikel'));
     }
     
     function kategoriV($kategori){
@@ -986,7 +1150,28 @@ class PenggunaController extends Controller
 
     //[User-About] Halaman About
     function about(){
-        return view('main.setelahLogin.about');
+
+          // Get the currently authenticated user ID
+          $currentUserId = auth()->id();
+
+          // Retrieve user_ids that the current user is following
+          $userIds = Follower::where('follower_id', $currentUserId)
+              ->pluck('user_id')
+              ->toArray();
+  
+          // Get the latest notifications for the followed authors
+          $notifArtikel = artikels::whereIn('user_id', $userIds)
+              ->where('created_at', '>=', Carbon::now()->subDay())
+              ->latest()
+              ->get();
+  
+          // Count the number of notifications
+          $jumlahData = $notifArtikel->count();
+  
+          // Check if the authenticated user is following the article author
+          $isFollowingAuthor = true; // Langsung diatur ke true, karena kita ingin menampilkan notifikasi tanpa menunggu follow       
+
+        return view('main.setelahLogin.about', compact('isFollowingAuthor','jumlahData','notifArtikel'));
     }
 
 //----------------------------------------------------------------------------------------------------------------- Syarat & Ketentuan Area -------------------------------------------------------------------------------------------------------------------------------------
@@ -1019,9 +1204,29 @@ function ulasan(Request $request){
      
          //Hitung Ulasan
          $totalUlasan = ulasans::count();
+
+              // Get the currently authenticated user ID
+              $currentUserId = auth()->id();
+
+              // Retrieve user_ids that the current user is following
+              $userIds = Follower::where('follower_id', $currentUserId)
+                  ->pluck('user_id')
+                  ->toArray();
+      
+              // Get the latest notifications for the followed authors
+              $notifArtikel = artikels::whereIn('user_id', $userIds)
+                  ->where('created_at', '>=', Carbon::now()->subDay())
+                  ->latest()
+                  ->get();
+      
+              // Count the number of notifications
+              $jumlahData = $notifArtikel->count();
+      
+              // Check if the authenticated user is following the article author
+              $isFollowingAuthor = true; // Langsung diatur ke true, karena kita ingin menampilkan notifikasi tanpa menunggu follow         
          
 
-    return view('main.setelahLogin.ulasan', compact('data1', 'averageRating', 'totalUlasan'));
+    return view('main.setelahLogin.ulasan', compact('data1', 'averageRating', 'totalUlasan','isFollowingAuthor','jumlahData','notifArtikel'));
 }
 
 
@@ -1153,7 +1358,28 @@ function ulasan(Request $request){
     //[User-Profil] Halaman Profil
   public function profileUser()
     {
-        return view('main.setelahLogin.profile');
+
+         // Get the currently authenticated user ID
+         $currentUserId = auth()->id();
+
+         // Retrieve user_ids that the current user is following
+         $userIds = Follower::where('follower_id', $currentUserId)
+             ->pluck('user_id')
+             ->toArray();
+ 
+         // Get the latest notifications for the followed authors
+         $notifArtikel = artikels::whereIn('user_id', $userIds)
+             ->where('created_at', '>=', Carbon::now()->subDay())
+             ->latest()
+             ->get();
+ 
+         // Count the number of notifications
+         $jumlahData = $notifArtikel->count();
+ 
+         // Check if the authenticated user is following the article author
+         $isFollowingAuthor = true; // Langsung diatur ke true, karena kita ingin menampilkan notifikasi tanpa menunggu follow   
+        
+        return view('main.setelahLogin.profile', compact('isFollowingAuthor','jumlahData','notifArtikel'));
     }  
 
         //[User-Profil] Halaman Profil
