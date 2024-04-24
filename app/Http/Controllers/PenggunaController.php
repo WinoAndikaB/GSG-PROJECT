@@ -127,74 +127,89 @@ class PenggunaController extends Controller
 
     //[User-Home] Menampilkan Detail Artikel Ketika Di Klik
     public function showDetailArtikel($id)
-{
-    $article = artikels::findOrFail($id);
-    $kategoriLogA = kategori::all();
+    {
+        $article = artikels::findOrFail($id);
+        $kategoriLogA = kategori::all();
+    
+        $box = artikels::inRandomOrder()->take(8)->get();
+    
+        $tags = artikels::inRandomOrder()->take(5)->get();
+    
+        $kategori = artikels::inRandomOrder()->take(10)->get();
+    
+        $article->increment('jumlah_akses');
+    
+        // Ambil ID pengguna saat ini
+        $currentUserId = auth()->id();
+    
+        // Ambil rating pengguna untuk penulis artikel ini (jika ada)
+        $userRating = RatingPenulis::where('user_id', $currentUserId)
+                                    ->where('user_id_penulis', $article->user_id)
+                                    ->where('artikel_id', $id)
+                                    ->first();
+    
+        // Periksa apakah pengguna telah memberikan rating
+        $userHasRated = !is_null($userRating);
+    
+        //rating
+        $user_id_penulis = $article->user_id; // Misalnya, mendapatkan user_id_penulis dari artikel yang sedang ditampilkan
+        $averageRating = RatingPenulis::where('user_id_penulis', $user_id_penulis)->avg('rating');
+    
+        // Menyiapkan data komentar, menyaring yang lebih muda dari 5 hari
+        $komentarArtikels = komentar_artikel::where('artikel_id', $id)
+                            ->where('created_at', '>=', Carbon::now()->subDays(5))
+                            ->latest()
+                            ->paginate(6);
+    
+        $totalKomentarArtikels = komentar_artikel::where('artikel_id', $id)
+                                    ->where('created_at', '>=', Carbon::now()->subDays(5))
+                                    ->count();
+    
+        // Retrieve the latest comment (if any) associated with the article
+        $komentar = komentar_artikel::where('artikel_id', $id)->latest()->first();
+    
+        // Ambil data user berdasarkan id penulis artikel
+        $user = User::findOrFail($article->user_id);
+        // Ambil foto profil penulis artikel
+        $fotoProfil = $user->fotoProfil;
 
-    $box = artikels::inRandomOrder()->take(8)->get();
-
-    $tags = artikels::inRandomOrder()->take(5)->get();
-
-    $kategori = artikels::inRandomOrder()->take(10)->get();
-
-    $article->increment('jumlah_akses');
-
-    // Ambil ID pengguna saat ini
-    $currentUserId = auth()->id();
-
-    // Ambil rating pengguna untuk penulis artikel ini (jika ada)
-    $userRating = RatingPenulis::where('user_id', $currentUserId)
-                                ->where('user_id_penulis', $article->user_id)
-                                ->where('artikel_id', $id)
-                                ->first();
-
-    // Periksa apakah pengguna telah memberikan rating
-    $userHasRated = !is_null($userRating);
-
-    //rating
-    $user_id_penulis = $article->user_id; // Misalnya, mendapatkan user_id_penulis dari artikel yang sedang ditampilkan
-    $averageRating = RatingPenulis::where('user_id_penulis', $user_id_penulis)->avg('rating');
-
-
-    // Menyiapkan data komentar, menyaring yang lebih muda dari 5 hari
-    $komentarArtikels = komentar_artikel::where('artikel_id', $id)
-                        ->where('created_at', '>=', Carbon::now()->subDays(5))
-                        ->latest()
-                        ->paginate(6);
-
-    $totalKomentarArtikels = komentar_artikel::where('artikel_id', $id)
-                                ->where('created_at', '>=', Carbon::now()->subDays(5))
-                                ->count();
-
-    // Retrieve the latest comment (if any) associated with the article
-    $komentar = komentar_artikel::where('artikel_id', $id)->latest()->first();
-
-    // Ambil data user berdasarkan id penulis artikel
-    $user = User::findOrFail($article->user_id);
-    // Ambil foto profil penulis artikel
-    $fotoProfil = $user->fotoProfil;
-
-    // Hitung total pengikut (followers) berdasarkan user_id
-    $totalFollowers = Follower::where('user_id', $user->id)->count();
-
-    // Check if the authenticated user is following the article author
-    $isFollowing = false;
-    if (auth()->check()) {
-        $follower = Follower::where('follower_id', auth()->user()->id)
-                            ->where('user_id', $user->id)
-                            ->first();
-        if ($follower && $follower->status == 1) {
-            $isFollowing = true;
+        // Format jumlah akses
+        $formattedJumlahAkses = $this->formatJumlahAkses($article->jumlah_akses);
+    
+        // Hitung total pengikut (followers) berdasarkan user_id
+        $totalFollowers = Follower::where('user_id', $user->id)->count();
+    
+        // Check if the authenticated user is following the article author
+        $isFollowingAuthor = false;
+    
+        // Ambil ID pengguna saat ini
+        $currentUserId = auth()->id();
+    
+        // Ambil user_id yang di-follow oleh pengguna saat ini
+        $userIds = [];
+        if (auth()->check()) {
+            $userIds = Follower::where('follower_id', $currentUserId)
+                               ->pluck('user_id')
+                               ->toArray();
         }
+    
+        // Jika artikel yang sedang dilihat merupakan artikel dari user_id yang di-follow, atur $isFollowingAuthor menjadi true
+        if (in_array($article->user_id, $userIds)) {
+            $isFollowingAuthor = true;
+        }
+    
+        // Ambil notifikasi terbaru dari pengguna yang di-follow
+        $notifArtikel = artikels::whereIn('user_id', $userIds)
+                                ->where('created_at', '>=', Carbon::now()->subDay())
+                                ->latest()
+                                ->get();
+    
+        // Menghitung jumlah data notifikasi
+        $jumlahData = $notifArtikel->count();
+    
+        return view('main.setelahLogin.detailArt', compact('kategoriLogA', 'article', 'box', 'tags', 'kategori', 'komentarArtikels', 'totalKomentarArtikels', 'komentar', 'fotoProfil', 'isFollowingAuthor', 'user', 'totalFollowers', 'formattedJumlahAkses', 'averageRating', 'userHasRated', 'notifArtikel', 'jumlahData'));
     }
-
-    // Format jumlah akses
-    $formattedJumlahAkses = $this->formatJumlahAkses($article->jumlah_akses);
-
-    return view('main.setelahLogin.detailArt', compact('kategoriLogA', 'article', 'box', 'tags', 'kategori', 'komentarArtikels', 'totalKomentarArtikels', 'komentar', 'fotoProfil', 'isFollowing', 'user', 
-    'totalFollowers', 'formattedJumlahAkses','averageRating', 'userHasRated'));
-}
-
+    
 
     //[User-Home] Menampilkan Jumlah User Akses Artikel
     public function formatJumlahAkses($jumlah)
