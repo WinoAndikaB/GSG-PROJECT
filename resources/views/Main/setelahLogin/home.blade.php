@@ -154,6 +154,16 @@
     flex: 0 0 auto;
     border-radius: 50px; /* Add border radius here */
   }
+
+</style>
+
+<style>
+    /* Notificaton */
+    .scrollable-menu {
+    max-height: 600px; /* Set the max height you want */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
 </style>
 
 

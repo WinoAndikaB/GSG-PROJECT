@@ -161,6 +161,13 @@
   }
 </style>
 
+<style>
+  /* Notificaton */
+  .scrollable-menu {
+  max-height: 600px; /* Set the max height you want */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+</style>
 
 </head>
 <body>
@@ -247,7 +254,8 @@
                         @endif
                         
                     </div>
-                </div>          
+                </div>
+                          
                     <li class="scroll-to-section">
                       <a href="#" class="d-sm-inline d-none text-white text-bold" id="logout-link" onclick="openModal()"> Logout</a>
                     </li>

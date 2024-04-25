@@ -683,9 +683,29 @@ class PenggunaController extends Controller
                 $tags = array_merge($tags, $artikelTags);
             }
             $tags = array_unique($tags);
+
+             // Notification
+             $currentUserId = auth()->id();
+
+             // Retrieve user_ids that the current user is following
+             $userIds = Follower::where('follower_id', $currentUserId)
+                 ->pluck('user_id')
+                 ->toArray();
+     
+             // Get the latest notifications for the followed authors
+             $notifArtikel = artikels::whereIn('user_id', $userIds)
+                 ->where('created_at', '>=', Carbon::now()->subDay())
+                 ->latest()
+                 ->get();
+     
+             // Count the number of notifications
+             $jumlahData = $notifArtikel->count();
+     
+             // Check if the authenticated user is following the article author
+             $isFollowingAuthor = true; // Langsung diatur ke true, karena kita ingin menampilkan notifikasi tanpa menunggu follow   
         
             // Kirim data artikel, tag name, tags yang sudah ada ke view
-            return view('main.setelahLogin.tagsArtikel', compact('artikels', 'tagName', 'tags', 'existingTags'));
+            return view('main.setelahLogin.tagsArtikel', compact('artikels', 'tagName', 'tags', 'existingTags','jumlahData','isFollowingAuthor','notifArtikel'));
         }
         
         

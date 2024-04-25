@@ -201,42 +201,13 @@
 
       <!-- Drop Down Notif -->
       <style>
-   .scrollable-menu {
-    max-height: 400px; /* Set maximum height for the dropdown menu */
-    overflow-y: auto; /* Enable vertical scrolling */
-}
-
-.notification-item {
-    padding: 15px;
-    border-bottom: 1px solid #ddd; /* Add a separator between notification items */
-}
-
-.notification-info {
-    display: flex;
-    align-items: center;
-}
-
-.notification-thumbnail {
-    width: 80px;
-    height: auto;
-    margin-right: 15px; /* Add space between thumbnail and content */
-}
-
-.notification-details {
-    flex-grow: 1; /* Allow details to take up remaining space */
-}
-
-.notification-title {
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-.notification-time {
-    color: #999;
-    font-size: 0.9em;
-}
-
-      </style>
+        /* Notificaton */
+        .scrollable-menu {
+        max-height: 600px; /* Set the max height you want */
+        overflow-y: auto; /* Enable vertical scrolling */
+    }
+    
+    </style>
 
 
   </head>
@@ -327,6 +298,7 @@
                         
                     </div>
                 </div>
+                
                 
 
                     <li class="scroll-to-section">
