@@ -208,7 +208,7 @@
           <div class="col-md-8">
               <div class="card">
                   <div class="card-header">
-                      <h5 class="title">Edit Profile Pengguna</h5>
+                      <h5 class="title">Edit Profile Anda</h5>
                   </div>
                   <div class="card-body">
                     <form method="POST" action="{{ route('updateUser', ['id' => Auth::user()->id]) }}" enctype="multipart/form-data">
@@ -293,7 +293,14 @@
                               {{Auth::user()->email}}
                             </p>
                             <hr>
-                            <span>Bergabung Sejak: <br> {{ \Carbon\Carbon::parse(Auth::user()->created_at)->format('d F, Y') }}</span>
+                            <span>Bergabung Sejak: <br> 
+                              {{ \Carbon\Carbon::parse(Auth::user()->created_at)->format('d F, Y') }}
+                            </span>
+                            
+                            <hr>
+
+                              <span style="margin-right: 10px;"><b>{{ $followerCount }}</b> <a href="{{ route('profileFollowing', ['follower_id' => auth()->id()]) }}" style="text-decoration: none;"> Following</span></a>
+                          
                             <hr>
                         </div>
                         <p class="description">

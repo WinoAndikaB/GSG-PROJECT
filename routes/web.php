@@ -156,7 +156,7 @@ use Illuminate\Support\Facades\Route;
                  //[Pengguna] Profil
                 Route::get('/profileUser', [PenggunaController::class, 'profileUser'])->name('profileUser');
                 Route::put('/profileUser/updateUser/{id}',[PenggunaController::class,'updateUser'])->name('updateUser');
-                Route::get('/profilPenulis', [PenggunaController::class, 'profilPenulis'])->name('profilPenulis');
+                Route::get('/profileFollowing/{follower_id}', [PenggunaController::class, 'profileFollowing'])->name('profileFollowing');
         
 
                 //[Pengguna] Syarat & Ketentuan

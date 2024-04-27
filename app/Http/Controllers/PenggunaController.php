@@ -36,7 +36,9 @@ class PenggunaController extends Controller
             $searchTerm = $request->input('search');
             
             $artikels = artikels::where('judulArtikel', 'like', '%' . $searchTerm . '%')
-                ->get();
+            ->where('status', 'published')
+            ->get();
+        
 
              // Get the currently authenticated user ID
           $currentUserId = auth()->id();
@@ -46,11 +48,13 @@ class PenggunaController extends Controller
               ->pluck('user_id')
               ->toArray();
   
-          // Get the latest notifications for the followed authors
-          $notifArtikel = artikels::whereIn('user_id', $userIds)
-              ->where('created_at', '>=', Carbon::now()->subDay())
-              ->latest()
-              ->get();
+        // Get the latest notifications for the followed authors
+        $notifArtikel = artikels::whereIn('user_id', $userIds)
+        ->where('status', 'published') // Menambahkan kondisi status harus "published"
+        ->where('created_at', '>=', Carbon::now()->subDay())
+        ->latest()
+        ->get();
+
   
           // Count the number of notifications
           $jumlahData = $notifArtikel->count();
@@ -137,7 +141,8 @@ class PenggunaController extends Controller
             ->take(8)
             ->get();
     
-        $semua = artikels::whereNotIn('status', ['Pending', 'Rejected'])->get();
+            $semua = artikels::where('status', 'Published')->get();
+
     
         // Get the currently authenticated user ID
         $currentUserId = auth()->id();
@@ -156,9 +161,11 @@ class PenggunaController extends Controller
 
         // Get the latest notifications for the followed authors
         $notifArtikel = artikels::whereIn('user_id', $userIds)
-            ->where('created_at', '>=', Carbon::now()->subDay())
-            ->latest()
-            ->get();
+        ->where('status', 'published') // Menambahkan kondisi status harus "published"
+        ->where('created_at', '>=', Carbon::now()->subDay())
+        ->latest()
+        ->get();
+
 
         // Count the number of notifications
         $jumlahData = $notifArtikel->count();
@@ -178,7 +185,8 @@ class PenggunaController extends Controller
         $article = artikels::findOrFail($id);
         $kategoriLogA = kategori::all();
     
-        $box = artikels::inRandomOrder()->take(8)->get();
+        $box = artikels::where('status', 'published')->inRandomOrder()->take(8)->get();
+
     
         $tags = artikels::inRandomOrder()->take(5)->get();
     
@@ -246,11 +254,13 @@ class PenggunaController extends Controller
             $isFollowingAuthor = true;
         }
     
-        // Ambil notifikasi terbaru dari pengguna yang di-follow
-        $notifArtikel = artikels::whereIn('user_id', $userIds)
-                                ->where('created_at', '>=', Carbon::now()->subDay())
-                                ->latest()
-                                ->get();
+                // Get the latest notifications for the followed authors
+                $notifArtikel = artikels::whereIn('user_id', $userIds)
+                ->where('status', 'published') // Menambahkan kondisi status harus "published"
+                ->where('created_at', '>=', Carbon::now()->subDay())
+                ->latest()
+                ->get();
+        
     
         // Menghitung jumlah data notifikasi
         $jumlahData = $notifArtikel->count();
@@ -375,11 +385,13 @@ class PenggunaController extends Controller
              $isFollowingAuthor = true;
          }
      
-         // Ambil notifikasi terbaru dari pengguna yang di-follow
-         $notifArtikel = artikels::whereIn('user_id', $userIds)
-                                 ->where('created_at', '>=', Carbon::now()->subDay())
-                                 ->latest()
-                                 ->get();
+        // Get the latest notifications for the followed authors
+        $notifArtikel = artikels::whereIn('user_id', $userIds)
+        ->where('status', 'published') // Menambahkan kondisi status harus "published"
+        ->where('created_at', '>=', Carbon::now()->subDay())
+        ->latest()
+        ->get();
+
      
          // Menghitung jumlah data notifikasi
          $jumlahData = $notifArtikel->count();
@@ -423,11 +435,13 @@ class PenggunaController extends Controller
                  ->pluck('user_id')
                  ->toArray();
      
-             // Get the latest notifications for the followed authors
-             $notifArtikel = artikels::whereIn('user_id', $userIds)
-                 ->where('created_at', '>=', Carbon::now()->subDay())
-                 ->latest()
-                 ->get();
+        // Get the latest notifications for the followed authors
+        $notifArtikel = artikels::whereIn('user_id', $userIds)
+        ->where('status', 'published') // Menambahkan kondisi status harus "published"
+        ->where('created_at', '>=', Carbon::now()->subDay())
+        ->latest()
+        ->get();
+
      
              // Count the number of notifications
              $jumlahData = $notifArtikel->count();
@@ -641,11 +655,13 @@ class PenggunaController extends Controller
                              ->pluck('user_id')
                              ->toArray();
                  
-                         // Get the latest notifications for the followed authors
-                         $notifArtikel = artikels::whereIn('user_id', $userIds)
-                             ->where('created_at', '>=', Carbon::now()->subDay())
-                             ->latest()
-                             ->get();
+             // Get the latest notifications for the followed authors
+             $notifArtikel = artikels::whereIn('user_id', $userIds)
+             ->where('status', 'published') // Menambahkan kondisi status harus "published"
+             ->where('created_at', '>=', Carbon::now()->subDay())
+             ->latest()
+             ->get();
+     
                  
                          // Count the number of notifications
                          $jumlahData = $notifArtikel->count();
@@ -667,8 +683,10 @@ class PenggunaController extends Controller
             $existingTags = artikels::select('tags')->distinct()->get();
         
             // Cari artikel berdasarkan tag
-            $artikels = artikels::where('tags', 'like', '%' . $search . '%')->get();
-        
+            $artikels = artikels::where('tags', 'like', '%' . $search . '%')
+            ->where('status', 'published')
+            ->get();
+
             if ($artikels->isEmpty()) {
                 abort(404);
             }
@@ -692,11 +710,13 @@ class PenggunaController extends Controller
                  ->pluck('user_id')
                  ->toArray();
      
-             // Get the latest notifications for the followed authors
-             $notifArtikel = artikels::whereIn('user_id', $userIds)
-                 ->where('created_at', '>=', Carbon::now()->subDay())
-                 ->latest()
-                 ->get();
+        // Get the latest notifications for the followed authors
+        $notifArtikel = artikels::whereIn('user_id', $userIds)
+        ->where('status', 'published') // Menambahkan kondisi status harus "published"
+        ->where('created_at', '>=', Carbon::now()->subDay())
+        ->latest()
+        ->get();
+
      
              // Count the number of notifications
              $jumlahData = $notifArtikel->count();
@@ -718,9 +738,10 @@ class PenggunaController extends Controller
 
         $kategoriLogV = Kategori::all();
                              
-        $semuaVideo = video::whereNotIn('statusVideo', ['Pending', 'Rejected'])
+        $semuaVideo = Video::where('statusVideo', 'Published')
             ->inRandomOrder()
             ->get();
+
 
                     // Mengambil tanggal hari ini
                     $todayDate = date('l, d M Y');
@@ -1107,9 +1128,11 @@ class PenggunaController extends Controller
 
         // Get the latest notifications for the followed authors
         $notifArtikel = artikels::whereIn('user_id', $userIds)
-            ->where('created_at', '>=', Carbon::now()->subDay())
-            ->latest()
-            ->get();
+        ->where('status', 'published') // Menambahkan kondisi status harus "published"
+        ->where('created_at', '>=', Carbon::now()->subDay())
+        ->latest()
+        ->get();
+
 
         // Count the number of notifications
         $jumlahData = $notifArtikel->count();
@@ -1137,11 +1160,13 @@ class PenggunaController extends Controller
               ->pluck('user_id')
               ->toArray();
   
-          // Get the latest notifications for the followed authors
-          $notifArtikel = artikels::whereIn('user_id', $userIds)
-              ->where('created_at', '>=', Carbon::now()->subDay())
-              ->latest()
-              ->get();
+        // Get the latest notifications for the followed authors
+        $notifArtikel = artikels::whereIn('user_id', $userIds)
+        ->where('status', 'published') // Menambahkan kondisi status harus "published"
+        ->where('created_at', '>=', Carbon::now()->subDay())
+        ->latest()
+        ->get();
+
   
           // Count the number of notifications
           $jumlahData = $notifArtikel->count();
@@ -1179,11 +1204,13 @@ class PenggunaController extends Controller
               ->pluck('user_id')
               ->toArray();
   
-          // Get the latest notifications for the followed authors
-          $notifArtikel = artikels::whereIn('user_id', $userIds)
-              ->where('created_at', '>=', Carbon::now()->subDay())
-              ->latest()
-              ->get();
+        // Get the latest notifications for the followed authors
+        $notifArtikel = artikels::whereIn('user_id', $userIds)
+        ->where('status', 'published') // Menambahkan kondisi status harus "published"
+        ->where('created_at', '>=', Carbon::now()->subDay())
+        ->latest()
+        ->get();
+
   
           // Count the number of notifications
           $jumlahData = $notifArtikel->count();
@@ -1233,11 +1260,13 @@ function ulasan(Request $request){
                   ->pluck('user_id')
                   ->toArray();
       
-              // Get the latest notifications for the followed authors
-              $notifArtikel = artikels::whereIn('user_id', $userIds)
-                  ->where('created_at', '>=', Carbon::now()->subDay())
-                  ->latest()
-                  ->get();
+        // Get the latest notifications for the followed authors
+        $notifArtikel = artikels::whereIn('user_id', $userIds)
+        ->where('status', 'published') // Menambahkan kondisi status harus "published"
+        ->where('created_at', '>=', Carbon::now()->subDay())
+        ->latest()
+        ->get();
+
       
               // Count the number of notifications
               $jumlahData = $notifArtikel->count();
@@ -1376,31 +1405,35 @@ function ulasan(Request $request){
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //[User-Profil] Halaman Profil
-  public function profileUser()
+    public function profileUser()
     {
-
-         // Get the currently authenticated user ID
-         $currentUserId = auth()->id();
-
-         // Retrieve user_ids that the current user is following
-         $userIds = Follower::where('follower_id', $currentUserId)
-             ->pluck('user_id')
-             ->toArray();
- 
-         // Get the latest notifications for the followed authors
-         $notifArtikel = artikels::whereIn('user_id', $userIds)
-             ->where('created_at', '>=', Carbon::now()->subDay())
-             ->latest()
-             ->get();
- 
-         // Count the number of notifications
-         $jumlahData = $notifArtikel->count();
- 
-         // Check if the authenticated user is following the article author
-         $isFollowingAuthor = true; // Langsung diatur ke true, karena kita ingin menampilkan notifikasi tanpa menunggu follow   
-        
-        return view('main.setelahLogin.profile', compact('isFollowingAuthor','jumlahData','notifArtikel'));
-    }  
+        // Get the currently authenticated user ID
+        $currentUserId = auth()->id();
+    
+        // Count the number of followers for the authenticated user
+        $followerCount = Follower::where('follower_id', $currentUserId)->count();
+    
+        // Retrieve user_ids that the current user is following
+        $userIds = Follower::where('follower_id', $currentUserId)
+            ->pluck('user_id')
+            ->toArray();
+    
+        // Get the latest notifications for the followed authors
+        $notifArtikel = artikels::whereIn('user_id', $userIds)
+            ->where('status', 'published') // Menambahkan kondisi status harus "published"
+            ->where('created_at', '>=', Carbon::now()->subDay())
+            ->latest()
+            ->get();
+    
+        // Count the number of notifications
+        $jumlahData = $notifArtikel->count();
+    
+        // Check if the authenticated user is following the article author
+        $isFollowingAuthor = true; // Langsung diatur ke true, karena kita ingin menampilkan notifikasi tanpa menunggu follow
+    
+        return view('main.setelahLogin.profile', compact('followerCount', 'isFollowingAuthor', 'jumlahData', 'notifArtikel'));
+    }
+    
 
         //[User-Profil] Halaman Profil
   public function profilPenulis()
@@ -1438,4 +1471,36 @@ function ulasan(Request $request){
       
           return redirect('/profileUser');
       }
-    }
+
+      public function profileFollowing($follower_id)
+      {
+          // Get the currently authenticated user ID
+          $currentUserId = auth()->id();
+      
+          // Retrieve user_ids that the current user is following
+          $userIds = Follower::where('follower_id', $currentUserId)
+              ->pluck('user_id')
+              ->toArray();
+      
+          // Get the latest notifications for the followed authors
+          $notifArtikel = artikels::whereIn('user_id', $userIds)
+              ->where('status', 'published')
+              ->where('created_at', '>=', now()->subDay()) // Menggunakan helper now() untuk mendapatkan waktu saat ini
+              ->latest()
+              ->get();
+      
+          // Count the number of notifications
+          $jumlahData = $notifArtikel->count();
+      
+          // Check if the authenticated user is following the article author
+          $isFollowingAuthor = true; // Langsung diatur ke true, karena kita ingin menampilkan notifikasi tanpa menunggu follow            
+      
+          // Mengambil data pengguna yang diikuti oleh pengguna saat ini
+          $usersFollowingData = User::whereIn('id', $userIds)->get();
+      
+          // Menghitung jumlah pengikut pengguna saat ini
+          $followerCount = count($userIds);
+      
+          return view('main.setelahLogin.profileFollowing', compact('followerCount', 'isFollowingAuthor', 'jumlahData', 'notifArtikel', 'usersFollowingData'));
+      }
+    }      
