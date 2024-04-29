@@ -71,8 +71,38 @@ class PenggunaController extends Controller
             
             $videos = video::where('judulVideo', 'like', '%' . $searchTerm . '%')
                 ->get();
+
+
+              //Notifikasi Penulis
+                // Get the currently authenticated user ID
+                $currentUserId = auth()->id();
+            
+                // Retrieve the article object if it's provided in the request
+                $video_id = $request->input('video_id'); // Menggunakan objek $request untuk mengambil data dari permintaan
+                $video = Video::find($video_id); // Menggunakan huruf besar untuk memanggil model Video
+                
+                // Check if the authenticated user is following the article author
+                $isFollowingAuthor = false;
+                
+                // Retrieve user_ids that the current user is following
+                $userIds = Follower::where('follower_id', $currentUserId)
+                    ->pluck('user_id')
+                    ->toArray();
+            
+                // Get the latest notifications for the followed authors
+                $notifVideo = Video::whereIn('user_id', $userIds)
+                    ->where('statusVideo', 'published') // Menambahkan kondisi status harus "published"
+                    ->where('created_at', '>=', Carbon::now()->subDay())
+                    ->latest()
+                    ->get();
+            
+                // Count the number of notifications
+                $jumlahData = $notifVideo->count();
+            
+                // Check if the authenticated user is following the article author
+                $isFollowingAuthor = true; // Langsung diatur ke true, karena kita ingin menampilkan notifikasi tanpa menunggu follow
         
-            return view('main.setelahLogin.searchV', compact('videos'));
+            return view('main.setelahLogin.searchV', compact('videos','isFollowingAuthor','jumlahData','notifVideo'));
         }
 
 
@@ -268,7 +298,7 @@ class PenggunaController extends Controller
         return view('main.setelahLogin.detailArt', compact('kategoriLogA', 'article', 'box', 'tags', 'kategori', 'komentarArtikels', 'totalKomentarArtikels', 'komentar', 'fotoProfil', 'isFollowingAuthor', 'user', 'totalFollowers', 
         'formattedJumlahAkses', 'averageRating', 'userHasRated', 'notifArtikel', 'jumlahData'));
     }
-    
+
     
 
     //[User-Home] Menampilkan Jumlah User Akses Artikel
@@ -743,10 +773,39 @@ class PenggunaController extends Controller
             ->get();
 
 
-                    // Mengambil tanggal hari ini
-                    $todayDate = date('l, d M Y');
+        // Mengambil tanggal hari ini
+        $todayDate = date('l, d M Y');
+
+         //Notifikasi Penulis
+        // Get the currently authenticated user ID
+        $currentUserId = auth()->id();
     
-            return view('main.setelahLogin.video', compact('semuaVideo', 'todayDate', 'kategoriLogV'));
+        // Retrieve the article object if it's provided in the request
+        $video_id = $request->input('video_id'); // Menggunakan objek $request untuk mengambil data dari permintaan
+        $video = Video::find($video_id); // Menggunakan huruf besar untuk memanggil model Video
+         
+        // Check if the authenticated user is following the article author
+        $isFollowingAuthor = false;
+         
+        // Retrieve user_ids that the current user is following
+        $userIds = Follower::where('follower_id', $currentUserId)
+            ->pluck('user_id')
+            ->toArray();
+     
+        // Get the latest notifications for the followed authors
+        $notifVideo = Video::whereIn('user_id', $userIds)
+            ->where('statusVideo', 'published') // Menambahkan kondisi status harus "published"
+            ->where('created_at', '>=', Carbon::now()->subDay())
+            ->latest()
+            ->get();
+     
+        // Count the number of notifications
+        $jumlahData = $notifVideo->count();
+     
+        // Check if the authenticated user is following the article author
+        $isFollowingAuthor = true; // Langsung diatur ke true, karena kita ingin menampilkan notifikasi tanpa menunggu follow
+    
+            return view('main.setelahLogin.video', compact('semuaVideo', 'todayDate', 'kategoriLogV', 'isFollowingAuthor', 'notifVideo', 'jumlahData'));
         }
     
         public function showDetailVideo($id)
@@ -785,16 +844,36 @@ class PenggunaController extends Controller
             // Ambil foto profil pembuat video
             $fotoProfil = $user->fotoProfil;
 
-            // Check if the authenticated user is following the article author
-            $isFollowing = false;
-            if (auth()->check()) {
-                $follower = Follower::where('follower_id', auth()->user()->id)
-                                    ->where('user_id', $user->id)
-                                    ->first();
-                if ($follower && $follower->status == 1) {
-                    $isFollowing = true;
-                }
-            }
+           //Notifikasi Penulis
+        // Check if the authenticated user is following the article author
+        $isFollowingAuthor = false;
+    
+        // Ambil ID pengguna saat ini
+        $currentUserId = auth()->id();
+    
+        // Ambil user_id yang di-follow oleh pengguna saat ini
+        $userIds = [];
+        if (auth()->check()) {
+            $userIds = Follower::where('follower_id', $currentUserId)
+                               ->pluck('user_id')
+                               ->toArray();
+        }
+    
+        // Jika artikel yang sedang dilihat merupakan artikel dari user_id yang di-follow, atur $isFollowingAuthor menjadi true
+        if (in_array($video->user_id, $userIds)) {
+            $isFollowingAuthor = true;
+        }
+    
+                // Get the latest notifications for the followed authors
+                $notifVideo = video::whereIn('user_id', $userIds)
+                ->where('statusVideo', 'published') // Menambahkan kondisi status harus "published"
+                ->where('created_at', '>=', Carbon::now()->subDay())
+                ->latest()
+                ->get();
+        
+    
+        // Menghitung jumlah data notifikasi
+        $jumlahData = $notifVideo->count();
 
             // Hitung total pengikut (followers) berdasarkan user_id
             $totalFollowers = Follower::where('user_id', $user->id)->count();
@@ -812,7 +891,9 @@ class PenggunaController extends Controller
                 'user' => $user,
                 'totalFollowers' => $totalFollowers,
                 'userHasRated' => $userHasRated, // Sertakan userHasRated ke dalam data yang dilewatkan ke view
-                'isFollowing' => $isFollowing,
+                'isFollowingAuthor' => $isFollowingAuthor,
+                'notifVideo' => $notifVideo,
+                'jumlahData' => $jumlahData
             ]);
         }
    
@@ -850,14 +931,43 @@ class PenggunaController extends Controller
         return redirect()->back()->with('success', 'Rating penulis berhasil disimpan.');
     }
 
-       //[User-Home] Simpan Artikel
-       public function simpanVideoView()
-       {
-           $user = auth()->user();
-           $savedVideos = $user->simpanVideos;
-       
-           return view('main.setelahLogin.simpanVideo', compact('savedVideos'));
-       }
+    public function simpanVideoView(Request $request)
+    {
+        $user = auth()->user();
+        $savedVideos = $user->simpanVideos;
+    
+        //Notifikasi Penulis
+        // Get the currently authenticated user ID
+        $currentUserId = auth()->id();
+    
+        // Retrieve the article object if it's provided in the request
+        $video_id = $request->input('video_id'); // Menggunakan objek $request untuk mengambil data dari permintaan
+        $video = Video::find($video_id); // Menggunakan huruf besar untuk memanggil model Video
+         
+        // Check if the authenticated user is following the article author
+        $isFollowingAuthor = false;
+         
+        // Retrieve user_ids that the current user is following
+        $userIds = Follower::where('follower_id', $currentUserId)
+            ->pluck('user_id')
+            ->toArray();
+     
+        // Get the latest notifications for the followed authors
+        $notifVideo = Video::whereIn('user_id', $userIds)
+            ->where('statusVideo', 'published') // Menambahkan kondisi status harus "published"
+            ->where('created_at', '>=', Carbon::now()->subDay())
+            ->latest()
+            ->get();
+     
+        // Count the number of notifications
+        $jumlahData = $notifVideo->count();
+     
+        // Check if the authenticated user is following the article author
+        $isFollowingAuthor = true; // Langsung diatur ke true, karena kita ingin menampilkan notifikasi tanpa menunggu follow
+           
+        return view('main.setelahLogin.simpanVideo', compact('savedVideos', 'isFollowingAuthor', 'notifVideo', 'jumlahData'));
+    }
+    
        
        
        public function simpanVideoData(Request $request, $videoId)
@@ -1051,21 +1161,44 @@ class PenggunaController extends Controller
                 // Hitung total pengikut (followers) berdasarkan user_id
                 $totalFollowers = Follower::where('user_id', $user->id)->count();
             
+                 //Notifikasi Penulis
                 // Check if the authenticated user is following the article author
-                $isFollowing = false;
+                $isFollowingAuthor = false;
+            
+                // Ambil ID pengguna saat ini
+                $currentUserId = auth()->id();
+            
+                // Ambil user_id yang di-follow oleh pengguna saat ini
+                $userIds = [];
                 if (auth()->check()) {
-                    $follower = Follower::where('follower_id', auth()->user()->id)
-                                        ->where('user_id', $user->id)
-                                        ->first();
-                    if ($follower && $follower->status == 1) {
-                        $isFollowing = true;
-                    }
+                    $userIds = Follower::where('follower_id', $currentUserId)
+                                    ->pluck('user_id')
+                                    ->toArray();
                 }
+            
+                // Jika artikel yang sedang dilihat merupakan artikel dari user_id yang di-follow, atur $isFollowingAuthor menjadi true
+                if (in_array($profilPenulis->user_id, $userIds)) {
+                    $isFollowingAuthor = true;
+                }
+            
+                        // Get the latest notifications for the followed authors
+                        $notifVideo = video::whereIn('user_id', $userIds)
+                        ->where('statusVideo', 'published') // Menambahkan kondisi status harus "published"
+                        ->where('created_at', '>=', Carbon::now()->subDay())
+                        ->latest()
+                        ->get();
+                
+            
+                // Menghitung jumlah data notifikasi
+                $jumlahData = $notifVideo->count();
+
+                    // Hitung total pengikut (followers) berdasarkan user_id
+                    $totalFollowers = Follower::where('user_id', $user->id)->count();
             
                 $TotalArtikelId = artikels::where('user_id', $user->id)->count();
                 $TotalVideoId = video::where('user_id', $user->id)->count();
             
-                return view('main.setelahLogin.profileUploaderVideo', compact('profilPenulis', 'isFollowing', 'user', 'totalFollowers','fotoProfil','TotalArtikelId','TotalVideoId','semuaArtikel','semuaVideo', 'averageRating'));
+                return view('main.setelahLogin.profileUploaderVideo', compact('profilPenulis', 'user', 'totalFollowers','fotoProfil','TotalArtikelId','TotalVideoId','semuaArtikel','semuaVideo', 'averageRating', 'isFollowingAuthor', 'notifVideo', 'jumlahData'));
             }
 
             public function searchVideos(Request $request)
@@ -1085,12 +1218,42 @@ class PenggunaController extends Controller
             
                 // Set variabel $tagName dengan nilai pencarian
                 $tagName = $search;
+
+
+                //Notifikasi Penulis
+                // Get the currently authenticated user ID
+                $currentUserId = auth()->id();
+            
+                // Retrieve the article object if it's provided in the request
+                $video_id = $request->input('video_id'); // Menggunakan objek $request untuk mengambil data dari permintaan
+                $video = Video::find($video_id); // Menggunakan huruf besar untuk memanggil model Video
+                
+                // Check if the authenticated user is following the article author
+                $isFollowingAuthor = false;
+                
+                // Retrieve user_ids that the current user is following
+                $userIds = Follower::where('follower_id', $currentUserId)
+                    ->pluck('user_id')
+                    ->toArray();
+            
+                // Get the latest notifications for the followed authors
+                $notifVideo = Video::whereIn('user_id', $userIds)
+                    ->where('statusVideo', 'published') // Menambahkan kondisi status harus "published"
+                    ->where('created_at', '>=', Carbon::now()->subDay())
+                    ->latest()
+                    ->get();
+            
+                // Count the number of notifications
+                $jumlahData = $notifVideo->count();
+            
+                // Check if the authenticated user is following the article author
+                $isFollowingAuthor = true; // Langsung diatur ke true, karena kita ingin menampilkan notifikasi tanpa menunggu follow
             
                 // Kirim data video, tag name, tags yang sudah ada ke view
-                return view('main.setelahLogin.tagsVideo', compact('videos', 'tagName', 'existingTags'));
+                return view('main.setelahLogin.tagsVideo', compact('videos', 'tagName', 'existingTags','isFollowingAuthor','jumlahData','notifVideo'));
             }
             
-            public function TagsVideos($tagName)
+            public function TagsVideos(Request $request, $tagName)
             {
                 // Cari video berdasarkan tag
                 $videos = Video::where('tagsVideo', 'like', '%' . $tagName . '%')->get();
@@ -1102,8 +1265,37 @@ class PenggunaController extends Controller
                 // Ambil daftar tag yang sudah ada dari basis data
                 $existingTags = Video::select('tagsVideo')->distinct()->get();
             
+                //Notifikasi Penulis
+                // Get the currently authenticated user ID
+                $currentUserId = auth()->id();
+            
+                // Retrieve the article object if it's provided in the request
+                $video_id = $request->input('video_id'); // Menggunakan objek $request untuk mengambil data dari permintaan
+                $video = Video::find($video_id); // Menggunakan huruf besar untuk memanggil model Video
+                
+                // Check if the authenticated user is following the article author
+                $isFollowingAuthor = false;
+                
+                // Retrieve user_ids that the current user is following
+                $userIds = Follower::where('follower_id', $currentUserId)
+                    ->pluck('user_id')
+                    ->toArray();
+            
+                // Get the latest notifications for the followed authors
+                $notifVideo = Video::whereIn('user_id', $userIds)
+                    ->where('statusVideo', 'published') // Menambahkan kondisi status harus "published"
+                    ->where('created_at', '>=', Carbon::now()->subDay())
+                    ->latest()
+                    ->get();
+            
+                // Count the number of notifications
+                $jumlahData = $notifVideo->count();
+            
+                // Check if the authenticated user is following the article author
+                $isFollowingAuthor = true; // Langsung diatur ke true, karena kita ingin menampilkan notifikasi tanpa menunggu follow
+
                 // Kirim data video, tag name, tags yang sudah ada ke view
-                return view('main.setelahLogin.tagsVideo', compact('videos', 'tagName', 'existingTags'));
+                return view('main.setelahLogin.tagsVideo', compact('videos', 'tagName', 'existingTags','isFollowingAuthor','jumlahData','notifVideo'));
             }
         
         
@@ -1177,15 +1369,45 @@ class PenggunaController extends Controller
         return view('main.setelahLogin.Kategori.KategoriA', compact('KategoriLogA','isFollowingAuthor','jumlahData','notifArtikel'));
     }
     
-    function kategoriV($kategori){
+    function kategoriV(Request $request,$kategori){
 
         $kategoriLogV = video::where('kategoriVideo', $kategori)
             ->whereNotIn('statusVideo', ['Pending', 'Rejected'])
             ->inRandomOrder()
             ->take(10)
             ->get();
+
+               //Notifikasi Penulis
+                // Get the currently authenticated user ID
+                $currentUserId = auth()->id();
+            
+                // Retrieve the article object if it's provided in the request
+                $video_id = $request->input('video_id'); // Menggunakan objek $request untuk mengambil data dari permintaan
+                $video = Video::find($video_id); // Menggunakan huruf besar untuk memanggil model Video
+                
+                // Check if the authenticated user is following the article author
+                $isFollowingAuthor = false;
+                
+                // Retrieve user_ids that the current user is following
+                $userIds = Follower::where('follower_id', $currentUserId)
+                    ->pluck('user_id')
+                    ->toArray();
+            
+                // Get the latest notifications for the followed authors
+                $notifVideo = Video::whereIn('user_id', $userIds)
+                    ->where('statusVideo', 'published') // Menambahkan kondisi status harus "published"
+                    ->where('created_at', '>=', Carbon::now()->subDay())
+                    ->latest()
+                    ->get();
+            
+                // Count the number of notifications
+                $jumlahData = $notifVideo->count();
+            
+                // Check if the authenticated user is following the article author
+                $isFollowingAuthor = true; // Langsung diatur ke true, karena kita ingin menampilkan notifikasi tanpa menunggu follow
+
     
-        return view('main.setelahLogin.Kategori.KategoriV', compact('kategoriLogV'));
+        return view('main.setelahLogin.Kategori.KategoriV', compact('kategoriLogV','isFollowingAuthor','jumlahData','notifVideo'));
     }
 
 

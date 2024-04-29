@@ -163,6 +163,15 @@
      }
 </style>
 
+<style>
+  /* Notificaton */
+  .scrollable-menu {
+  max-height: 600px; /* Set the max height you want */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+</style>
+
   
   </head>
 <body>
@@ -216,7 +225,48 @@
                             <a class="dropdown-item" href="/simpanVideoView"><i class="fas fa-video"></i> Video Tersimpan</a>
                         </div>
                     </div>
-                  </li>           
+                  </li>
+                  
+                  <div class="dropdown">
+                    <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-bell" style="color: white;"></i> <span class="badge badge-pill badge-primary">{{ $jumlahData }}</span>
+                    </button>
+                    
+                    <div class="dropdown-menu dropdown-menu-wide scrollable-menu" aria-labelledby="dropdownMenuButton">
+                        <h6 class="container-title" style="margin: 10px 0; text-align: center;"><i class="fas fa-bell"></i> Notifikasi</h6>
+                        <hr>
+
+                        
+                        @if($isFollowingAuthor && $jumlahData > 0)
+                        @foreach($notifVideo as $item)
+                        <a class="dropdown-item" href="{{ route('showDetailVideo', ['id' => $item->id]) }}">
+                            <div class="notification-item">
+                                <div class="notification-info">
+                                    <div class="profile-info">
+                                        <?php
+                                        $videoId = getYoutubeVideoId($item->linkVideo);
+                                        $thumbnail = "https://img.youtube.com/vi/{$videoId}/maxresdefault.jpg"; // Mengambil thumbnail maksimum resolusi
+                                        ?>
+                                        <div class="col-4 align-self-center mb-3">
+                                            <img src="<?php echo $thumbnail; ?>" width="800%" alt="Thumbnail" style="border-radius: 3%;">
+                                        </div>
+                                        <div class="profile-details">
+                                            <h6 class="notification-title" title="{{ $item->judulVideo }}">{{ $item->uploader }} mengupload: {{ Str::limit($item->judulVideo, 20) }}</h6>
+                                            <p class="notification-time">{{ $item->created_at->format('d F Y') }} | {{ $item->created_at->diffForHumans() }} </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    @endforeach
+                    
+                        @else
+                            <p class="dropdown-item">Tidak ada notifikasi saat ini.</p>
+                        @endif
+                        
+                    </div>
+                </div>
+
                     <li class="scroll-to-section">
                       <a href="#" class="d-sm-inline d-none text-white text-bold" id="logout-link" onclick="openModal()"> Logout</a>
                     </li>
