@@ -362,8 +362,8 @@
 <div class="section">
   <br>
   <div class="container" style="display: flex; justify-content: center; flex-wrap: wrap;">
-    <div style="text-align: center; margin-top: 50px;">
-        @if ($usersFollowingData->isEmpty())
+    @if ($usersFollowingData->isEmpty())
+        <div style="text-align: center; margin-top: 50px;">
             <img src="https://pic.onlinewebfonts.com/thumbnails/icons_357734.svg" alt="No Following" style="width: 150px; margin-bottom: 20px;">
             <p style="font-size: 1.2rem; color: #666; margin-bottom: 20px;">Anda belum mengikuti penulis apapun.</p>
             <a href="/home" style="background-color: #4CAF50; /* Green */
@@ -375,24 +375,25 @@
                            display: inline-block;
                            font-size: 1rem;
                            border-radius: 5px;">Temukan Penulis</a>
-        @else
-            @foreach ($usersFollowingData as $followingUser)
-                <div class="card" style="width: 300px; margin: 10px;">
-                    <div style="background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); overflow: hidden;">
-                        <img src="{{ asset('fotoProfil/' . $followingUser->fotoProfil) }}" alt="Profil Foto" style="width: 100px; height: 100px; border-radius: 50%; margin: 10px auto; display: block;">
-                        <div style="text-align: center; padding: 10px;">
-                            <p style="font-size: 1.2rem; font-weight: bold; color: #333; margin-bottom: 5px;">
-                                <!-- Tautkan ke halaman detail profil penulis -->
-                                <a href="#" class="article-title">{{ $followingUser->name }}</a>
-                            </p>
-                            <p style="font-size: 0.9rem; color: #666; margin: 0;">{{ $followingUser->username }}</p>
-                        </div>
+        </div>
+    @else
+        @foreach ($usersFollowingData as $followingUser)
+            <div class="card" style="width: 300px; margin: 10px;">
+                <div style="background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); overflow: hidden; display: flex; flex-direction: column; align-items: center;">
+                    <img src="{{ asset('fotoProfil/' . $followingUser->fotoProfil) }}" alt="Profil Foto" style="width: 100px; height: 100px; border-radius: 50%; margin: 10px auto; display: block;">
+                    <div style="text-align: center; padding: 10px;">
+                        <p style="font-size: 1.2rem; font-weight: bold; color: #333; margin-bottom: 5px;">
+                            <!-- Tautkan ke halaman detail profil penulis -->
+                            <a href="#" class="article-title">{{ $followingUser->name }}</a>
+                        </p>
+                        <p style="font-size: 0.9rem; color: #666; margin: 0;">{{ $followingUser->username }}</p>
                     </div>
                 </div>
-            @endforeach
-        @endif
-    </div>
+            </div>
+        @endforeach
+    @endif
 </div>
+
 
 
 

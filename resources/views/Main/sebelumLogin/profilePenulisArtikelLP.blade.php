@@ -239,16 +239,11 @@
                             <a href="{{ $user->instagram }}" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
                         </div>
   
-                        @auth
-                        @if(auth()->user()->isNot($user))
                         <div class="social-media-links text-center">
-                            <a href="#" id="followButton" class="btn btn-info" style="color: white; font-weight: bold; background-color: #3498db; padding: 8px 16px; border-radius: 20px; cursor: pointer;">
-                                <span id="followText" style="font-size: 1em;">{{ auth()->user()->isFollowing($user) ? 'Following' : 'Follow' }}</span>
+                            <a href="/login" id="followButton" class="btn btn-info" style="color: white; font-weight: bold; background-color: #3498db; padding: 8px 16px; border-radius: 20px; cursor: pointer;">
+                                <span id="followText" style="font-size: 1em;">Follow</span>
                             </a>
                         </div>
-                        @endif
-                        @endauth
-  
   
                         <hr>
   

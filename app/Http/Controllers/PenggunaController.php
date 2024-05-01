@@ -114,6 +114,9 @@ class PenggunaController extends Controller
     function HomeSetelahLogin(Request $request){
 
         $kategoriLogA = kategori::all();
+
+        $ratingPenulis = RatingPenulis::all();
+
     
         $banner0 = Banner::where('jenis_banner', 0)
             ->orderBy('created_at', 'desc')
@@ -206,7 +209,8 @@ class PenggunaController extends Controller
         // Check if the authenticated user is following the article author
         $isFollowingAuthor = true; // Langsung diatur ke true, karena kita ingin menampilkan notifikasi tanpa menunggu follow
     
-        return view('main.setelahLogin.home', compact('banner0', 'banner1', 'banner2', 'banner3', 'trending', 'latest', 'whatsnew', 'semua', 'box', 'box2', 'box3', 'boxLong', 'todayDate', 'kategoriLogA', 'isFollowingAuthor', 'notifArtikel','jumlahData'));
+        return view('main.setelahLogin.home', compact('ratingPenulis','banner0', 'banner1', 'banner2', 'banner3', 'trending', 'latest', 'whatsnew', 'semua', 'box', 'box2', 'box3', 'boxLong', 'todayDate', 'kategoriLogA', 'isFollowingAuthor', 
+        'notifArtikel','jumlahData'));
     }
 
     //[User-Home] Menampilkan Detail Artikel Ketika Di Klik

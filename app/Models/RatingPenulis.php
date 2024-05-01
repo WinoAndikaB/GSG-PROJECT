@@ -20,8 +20,9 @@ class RatingPenulis extends Model
     // Definisi relasi dengan model User
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id_penulis');
     }
+    
 
     // Definisi relasi dengan model Article
     public function artikel()

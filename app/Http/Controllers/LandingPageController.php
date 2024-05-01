@@ -45,6 +45,8 @@ class LandingPageController extends Controller
     public function landingPage(Request $request)
     {
         $kategoriA = kategori::all();
+
+        $ratingPenulis = RatingPenulis::all();
   
                 $trending = artikels::whereNotIn('status', ['Pending', 'Rejected'])
                 ->orderBy('jumlah_akses', 'desc') // Order by jumlah_akses column in descending order
@@ -105,7 +107,7 @@ class LandingPageController extends Controller
 
                 $todayDate = date('l, d M Y');
     
-        return view('main.sebelumLogin.landingPage', compact('trending', 'latest','whatsnew','semua', 'box', 'box2', 'box3', 'banner0', 'banner1','banner2', 'banner3','boxLong', 'todayDate', 'kategoriA'));
+        return view('main.sebelumLogin.landingPage', compact('trending', 'latest','whatsnew','semua', 'box', 'box2', 'box3', 'banner0', 'banner1','banner2', 'banner3','boxLong', 'todayDate', 'kategoriA','ratingPenulis'));
     }
 
     //[Landing Page] Menampilkan Detail Artikel Ketika Di Klik
