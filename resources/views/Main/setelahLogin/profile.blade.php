@@ -98,18 +98,28 @@
                     <div class="dropdown">
                       <a href="#" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center dropdown-toggle" role="button" id="savedArticlesDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                           <div class="profile-picture" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
-                              <?php
-                              $fotoProfil = Auth::user()->fotoProfil;
-                              if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
-                              ?>
-                              <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
-                              <?php
-                              } else {
-                              ?>
-                              <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
-                              <?php
-                              }
-                              ?>
+                            <?php
+                            $fotoProfil = Auth::user()->fotoProfil;
+                            if ($fotoProfil) {
+                                if (filter_var($fotoProfil, FILTER_VALIDATE_URL)) {
+                                    // Jika fotoProfil adalah URL, gunakan langsung URL tersebut
+                                    echo '<img src="' . $fotoProfil . '" alt="User\'s Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">';
+                                } else {
+                                    // Jika fotoProfil adalah nama file, cek apakah file tersebut ada
+                                    $pathToFile = public_path('fotoProfil/' . $fotoProfil);
+                                    if (file_exists($pathToFile)) {
+                                        echo '<img src="' . asset('fotoProfil/' . $fotoProfil) . '" alt="User\'s Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">';
+                                    } else {
+                                        // Jika file tidak ada, tampilkan foto default
+                                        echo '<img src="' . asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') . '" alt="User\'s Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">';
+                                    }
+                                }
+                            } else {
+                                // Jika fotoProfil kosong, tampilkan foto default
+                                echo '<img src="' . asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') . '" alt="User\'s Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">';
+                            }
+                        ?>
+                        
                           </div>
                   
                           <span class="d-sm-inline d-none">
@@ -201,126 +211,146 @@
 
 <body class="landing-page sidebar-collapse">
   <div class="wrapper">
-    <div class="section">
-      <br>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-8">
-              <div class="card">
+    <div class="container">
+      <div class="row justify-content-center">
+          <div class="col-lg-7">
+              <div class="card shadow-lg border-0 rounded-lg mt-5">
                   <div class="card-header">
-                      <h5 class="title">Edit Profile Anda</h5>
+                      <h3 class="text-center font-weight-light my-4">Edit Profile Anda</h3>
                   </div>
                   <div class="card-body">
                     <form method="POST" action="{{ route('updateUser', ['id' => Auth::user()->id]) }}" enctype="multipart/form-data">
                       @csrf
                       @method('PUT')
 
-                            <div class="form-group">
-                                <label>Role</label>
-                                <input type="text" class="form-control" disabled="" name="role" value="{{ Auth::user()->role }}">
-                            </div>
-        
-                            <div class="form-group">
-                                <label>Username</label>
-                                <input type="text" class="form-control" disabled="" name="username" value="{{ Auth::user()->username }}">
-                            </div>
-        
-                            <div class="form-group">
-                                <label>Email</label>
-                                <input type="text" class="form-control" disabled="" name="email" value="{{ Auth::user()->email }}">
-                            </div>
+                      <div class="form-group">
+                          <label class="small mb-1" for="inputRole">Role</label>
+                          <input class="form-control py-4" id="inputRole" type="text" placeholder="Role" disabled value="{{ Auth::user()->role }}">
+                      </div>
 
-                            <div class="form-group">
-                              <label>Foto Profil</label>
-                              <input type="file" class="form-control" name="fotoProfil">
-                          </div>
-        
-                            <div class="form-group">
-                                <label>Nama</label>
-                                <input type="text" class="form-control" name="name" value="{{ Auth::user()->name }}">
-                            </div>
-        
-                            <div class="form-group">
-                                <label>Alamat</label>
-                                <input type="text" class="form-control" name="alamat" value="{{ Auth::user()->alamat }}">
-                            </div>
-        
-                            <div class="form-group">
-                              <label>Instagram</label><br>
-                              <label>Format Penulisan : https://www.instagram.com/goodgamestoreid/</label>
-                              <input type="text" class="form-control" name="instagram" value="{{ Auth::user()->instagram }}" pattern="https?://(www\.)?instagram\.com/.+">
-                          </div>
-                          
-                          <div class="form-group">
-                              <label>Facebook</label><br>
-                              <label>Format Penulisan : https://www.facebook.com/goodgamestoreid/</label>
-                              <input type="text" class="form-control" name="facebook" value="{{ Auth::user()->facebook }}" pattern="https?://(www\.)?facebook\.com/.+">
-                          </div>                  
-        
-                            <div class="form-group">
-                                <label>About Me</label>
-                                <textarea rows="4" class="form-control" name="aboutme">{{ Auth::user()->aboutme}}</textarea>
-                            </div>
-        
-                              <button type="submit" class="btn btn-primary">Simpan</button>
-                              <a href="/home" class="btn btn-info">Kembali</a>
-                              </form>
-                          </div>
+                      <div class="form-group">
+                          <label class="small mb-1" for="inputUsername">Username</label>
+                          <input class="form-control py-4" id="inputUsername" type="text" placeholder="Username" disabled value="{{ Auth::user()->username }}">
                       </div>
-                  </div>
-        
-                  <div class="col-md-4">
-                    <div class="card card-user">
-                      <div class="card-body text-center">
-                        <div class="author">
-                          <a href="/profileUser">
-                            <img src="
-                            <?php
-                                $fotoProfil = Auth::user()->fotoProfil;
-                                if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
-                                    echo asset('fotoProfil/' . $fotoProfil);
-                                } else {
-                                    echo asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999');
-                                }
-                            ?>" alt="User's Profile Picture">
-                            </a>
-                            <br>
-                            <br>
-                            <br>
-                            <h5 class="title">{{Auth::user()->name}}</h5>
-                            <span>{{Auth::user()->username}}</span>
-                            <p class="description">
-                              {{Auth::user()->email}}
-                            </p>
-                            <hr>
-                            <span>Bergabung Sejak: <br> 
-                              {{ \Carbon\Carbon::parse(Auth::user()->created_at)->format('d F, Y') }}
-                            </span>
-                            
-                            <hr>
 
-                              <span style="margin-right: 10px;"><b>{{ $followerCount }}</b> <a href="{{ route('profileFollowing', ['follower_id' => auth()->id()]) }}" style="text-decoration: none;"> Following</span></a>
-                          
-                            <hr>
-                        </div>
-                        <p class="description">
-                          {{Auth::user()->aboutme}}
-                        </p>
+                      <div class="form-group">
+                          <label class="small mb-1" for="inputEmail">Email</label>
+                          <input class="form-control py-4" id="inputEmail" type="email" placeholder="Email" disabled value="{{ Auth::user()->email }}">
                       </div>
-                      <hr>
-                      <div class="button-container text-center">
-                        <a href="{{Auth::user()->facebook}}" class="btn btn-neutral btn-icon btn-round btn-lg">
-                          <i class="fab fa-facebook-f"></i> Facebook
-                        </a>
-                        <a href="{{Auth::user()->instagram}}" class="btn btn-neutral btn-icon btn-round btn-lg">
-                          <i class="fab fa-instagram"></i> Instagram
-                        </a>
-                      </div>
+
+                      <div class="form-group">
+                        <label class="small mb-1" for="inputFoto">Upload Foto (File)</label>
+                        <input class="form-control-file py-4" id="inputFoto" type="file" name="fotoProfil" onchange="toggleInput('file')">
                     </div>
+                    
+                    <div class="form-group">
+                        <label class="small mb-1" for="inputFoto">Upload Foto (URL)</label>
+                        <input class="form-control" id="inputFoto" type="text" name="fotoProfil" onchange="toggleInput('url')">
+                    </div>
+
+                      <div class="form-group">
+                          <label class="small mb-1" for="inputName">Nama</label>
+                          <input class="form-control py-4" id="inputName" type="text" placeholder="Nama" name="name" value="{{ Auth::user()->name }}">
+                      </div>
+
+                      <div class="form-group">
+                          <label class="small mb-1" for="inputAlamat">Alamat</label>
+                          <input class="form-control py-4" id="inputAlamat" type="text" placeholder="Alamat" name="alamat" value="{{ Auth::user()->alamat }}">
+                      </div>
+
+                      <div class="form-group">
+                          <label class="small mb-1" for="inputInstagram">Instagram</label>
+                          <input class="form-control py-4" id="inputInstagram" type="text" placeholder="Instagram" name="instagram" value="{{ Auth::user()->instagram }}" pattern="https?://(www\.)?instagram\.com/.+">
+                          <small>Format Penulisan: https://www.instagram.com/goodgamestoreid/</small>
+                      </div>
+
+                      <div class="form-group">
+                          <label class="small mb-1" for="inputFacebook">Facebook</label>
+                          <input class="form-control py-4" id="inputFacebook" type="text" placeholder="Facebook" name="facebook" value="{{ Auth::user()->facebook }}" pattern="https?://(www\.)?facebook\.com/.+">
+                          <small>Format Penulisan: https://www.facebook.com/goodgamestoreid/</small>
+                      </div>
+
+                      <div class="form-group">
+                          <label class="small mb-1" for="inputAboutMe">About Me</label>
+                          <textarea class="form-control py-4" id="inputAboutMe" rows="4" placeholder="Tentang Saya" name="aboutme">{{ Auth::user()->aboutme}}</textarea>
+                      </div>
+
+                      <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
+                          <button type="submit" class="btn btn-primary">Simpan</button>
+                          <a class="btn btn-secondary" href="/home">Kembali</a>
+                      </div>
+                  </form>
                   </div>
-                </div>
               </div>
-            </div>
+          </div>
+  
+          <div class="col-lg-5">
+              <div class="card shadow-lg border-0 rounded-lg mt-5">
+                  <div class="card-header">
+                      <h3 class="text-center font-weight-light my-4">Profil Anda</h3>
+                  </div>
+                  <div class="card-body">
+                      <div class="text-center">
+                        <img src="<?php
+                              $fotoProfil = Auth::user()->fotoProfil;
+                              if ($fotoProfil) {
+                                  if (filter_var($fotoProfil, FILTER_VALIDATE_URL)) {
+                                      // Jika fotoProfil adalah URL, gunakan langsung URL tersebut
+                                      echo $fotoProfil;
+                                  } else {
+                                      // Jika fotoProfil adalah nama file, cek apakah file tersebut ada
+                                      $pathToFile = public_path('fotoProfil/' . $fotoProfil);
+                                      if (file_exists($pathToFile)) {
+                                          echo asset('fotoProfil/' . $fotoProfil);
+                                      } else {
+                                          // Jika file tidak ada, tampilkan foto default
+                                          echo asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999');
+                                      }
+                                  }
+                              } else {
+                                  // Jika fotoProfil kosong, tampilkan foto default
+                                  echo asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999');
+                              }
+                          ?>" alt="User's Profile Picture" class="rounded-circle" style="width: 150px; height: 150px;">
+
+                    
+                          <h5 class="mt-3">{{Auth::user()->name}}</h5>
+                          <span class="text-muted">{{Auth::user()->username}}</span>
+                          <p class="text-muted">{{Auth::user()->email}}</p>
+                          <hr>
+                          <p>
+                            <i class="fas fa-calendar"></i> Bergabung pada {{ \Carbon\Carbon::parse(Auth::user()->created_at)->format('d F, Y') }}
+                        </p>
+                        <p>
+                            <a href="{{ route('profileFollowing', ['follower_id' => auth()->id()]) }}">
+                                <i class="fas fa-user-friends"></i> <b>{{ $followerCount }}</b> Following
+                            </a>
+                        </p>
+
+                          <hr>
+                      </div>
+
+               
+  
+                      <p class="text-muted" title="{{ Auth::user()->aboutme }}">
+                        {{ \Illuminate\Support\Str::limit(Auth::user()->aboutme, 600) }}
+                    </p>
+                    
+  
+                      <div class="button-container text-center">
+                          <a href="{{Auth::user()->facebook}}" class="btn btn-info btn-lg btn-block" target="_blank">
+                              <i class="fab fa-facebook-f"></i> Facebook
+                          </a>
+                          <a href="{{Auth::user()->instagram}}" class="btn btn-danger btn-lg btn-block" target="_blank">
+                              <i class="fab fa-instagram"></i> Instagram
+                          </a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  
 
 <!--------------------------------------------------------------------------------------- Javascript Dropdown ------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------------- Javascript Dropdown ------------------------------------------------------------------------------->
@@ -339,6 +369,36 @@
           dropdownMenu.classList.remove('show');
       });
   });
+</script>
+
+<!--------------------------------------------------------------------------------------- Javascript Upload Foto ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Upload Foto ------------------------------------------------------------------------------->
+
+
+<script>
+  function toggleInput(type) {
+      var inputs = document.querySelectorAll('#inputFoto');
+      
+      if (type === 'file') {
+          inputs.forEach(function(input) {
+              if (input.type === 'file') {
+                  input.disabled = false;
+              } else {
+                  input.disabled = true;
+                  input.value = ''; // Clear the URL input
+              }
+          });
+      } else if (type === 'url') {
+          inputs.forEach(function(input) {
+              if (input.type === 'file') {
+                  input.disabled = true;
+                  input.value = ''; // Clear the file input
+              } else {
+                  input.disabled = false;
+              }
+          });
+      }
+  }
 </script>
 
 <!--------------------------------------------------------------------------------------- Javascript Modal Logout ------------------------------------------------------------------------------->

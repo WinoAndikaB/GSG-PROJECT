@@ -191,18 +191,27 @@
                       <div class="dropdown">
                         <a href="#" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center dropdown-toggle" role="button" id="savedArticlesDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             <div class="profile-picture" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
-                                <?php
-                                $fotoProfil = Auth::user()->fotoProfil;
-                                if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
-                                ?>
-                                <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
-                                <?php
-                                } else {
-                                ?>
-                                <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
-                                <?php
-                                }
-                                ?>
+                              <?php
+                              $fotoProfil = Auth::user()->fotoProfil;
+                              if ($fotoProfil) {
+                                  if (filter_var($fotoProfil, FILTER_VALIDATE_URL)) {
+                                      // Jika fotoProfil adalah URL, gunakan langsung URL tersebut
+                                      echo '<img src="' . $fotoProfil . '" alt="User\'s Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">';
+                                  } else {
+                                      // Jika fotoProfil adalah nama file, cek apakah file tersebut ada
+                                      $pathToFile = public_path('fotoProfil/' . $fotoProfil);
+                                      if (file_exists($pathToFile)) {
+                                          echo '<img src="' . asset('fotoProfil/' . $fotoProfil) . '" alt="User\'s Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">';
+                                      } else {
+                                          // Jika file tidak ada, tampilkan foto default
+                                          echo '<img src="' . asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') . '" alt="User\'s Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">';
+                                      }
+                                  }
+                              } else {
+                                  // Jika fotoProfil kosong, tampilkan foto default
+                                  echo '<img src="' . asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') . '" alt="User\'s Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">';
+                              }
+                          ?>
                             </div>
                     
                             <span class="d-sm-inline d-none">
@@ -303,68 +312,68 @@
           
             <br>
             
-              @if($savedArtikels->isEmpty())
-              <div class="text-center">
-                <h6 style="color: orange; font-Helvetica : Helvetica ;">No Articles Saved</h6>
-                <h4 style="font-Helvetica : 'Your Cool Font';">Tidak Ada Artikel Yang Tersimpan</h4>
+            @if($savedArtikels->isEmpty())
+            <div class="text-center">
+                <img src="https://pic.onlinewebfonts.com/thumbnails/icons_195265.svg" alt="No Following" style="width: 150px; margin-bottom: 20px;">
+                <p style="font-size: 1.2rem; color: #666; margin-bottom: 20px;">Anda belum menyimpan artikel apapun.</p>
+                <a href="/home" style="background-color: #4CAF50; border: none; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 1rem; border-radius: 5px;">Temukan Artikel</a>
             </div>
-          @else
-          @foreach($savedArtikels as $item)
-          <div class="row" style="text-align: justify">
-            <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
-                <div class="d-flex justify-content-center">
-                  <img src="{{ asset('gambarArtikel/'.$item->artikel->gambarArtikel) }}" class="media-left" style="width: 400; height: 250;">
+            @else
+            @foreach($savedArtikels as $item)
+                <div class="row" style="text-align: justify">
+                    <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
+                        <div class="d-flex justify-content-center">
+                            <img src="{{ asset('gambarArtikel/'.$item->artikel->gambarArtikel) }}" class="media-left" style="width: 400px; height: 250px;">
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
+                        <a href="{{ route('detail.artikel', ['id' => $item->artikel->id]) }}" style="text-decoration: none;">
+                            <h4 class="article-title" onclick="selectText(this)" style="text-align: left;">{{ $item->artikel->judulArtikel }}</h4>
+                        </a>
+                        <span class="d-flex">
+                            <b>{{ $item->artikel->penulis }} • 
+                            @php
+                                $ulasanCreatedAt = \Carbon\Carbon::parse($item->created_at);
+                                $sekarang = \Carbon\Carbon::now();
+                                $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
+                                if ($selisihWaktu < 60) {
+                                    echo $selisihWaktu . ' Menit Lalu';
+                                } elseif ($selisihWaktu < 1440) {
+                                    echo floor($selisihWaktu / 60) . ' Jam Lalu';
+                                } elseif ($selisihWaktu < 10080) {
+                                    echo floor($selisihWaktu / 1440) . ' Hari Lalu';
+                                } elseif ($selisihWaktu < 43200) {
+                                    echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
+                                } elseif ($selisihWaktu < 525600) {
+                                    echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
+                                } else {
+                                    echo floor($selisihWaktu / 525600) . ' Tahun Lalu';
+                                }
+                            @endphp
+                            <br></b>
+                        </span>
+                        <p>{!! substr(strip_tags($item->artikel->deskripsi), 0, 400) . (strlen(strip_tags($item->artikel->deskripsi)) > 400 ? '...' : '') !!}</p>
+                        <p>Tags:
+                            @php
+                                $tags = explode(",", $item->artikel->tags);
+                                foreach ($tags as $tag) {
+                                    $trimmedTag = trim($tag);
+                                    echo '<a href="' . route("TagsVideos", $trimmedTag) . '" class="fh5co_tagg">' . $trimmedTag . '</a>';
+                                    echo ' ';
+                                }
+                            @endphp
+                        </p>
+                        <div style="float: right; color: rgba(165, 165, 165, 1);">
+                            <p>
+                                <a href="{{ route('simpan.deleteArtikel', ['id' => $item->id]) }}"><i class="fas fa-trash"></i></a>
+                            </p>
+                        </div>
+                    </div>
+                    <hr>
                 </div>
-            </div>
-            <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
-              <a href="{{ route('detail.artikel', ['id' => $item->artikel->id]) }}" style="text-decoration: none;">
-                <h4 class="article-title" onclick="selectText(this)" style="text-align: left;">{{ $item->artikel->judulArtikel}}</h4>
-              </a>                   
-              <span class="d-flex"><b>{{ $item->artikel->penulis }} • 
-                @php
-                $ulasanCreatedAt = \Carbon\Carbon::parse($item->created_at);
-                $sekarang = \Carbon\Carbon::now();
-                $selisihWaktu = $sekarang->diffInMinutes($ulasanCreatedAt);
-        
-                if ($selisihWaktu < 60) {
-                    echo $selisihWaktu . ' Menit Lalu';
-                } elseif ($selisihWaktu < 1440) {
-                    echo floor($selisihWaktu / 60) . ' Jam Lalu';
-                } elseif ($selisihWaktu < 10080) {
-                    echo floor($selisihWaktu / 1440) . ' Hari Lalu';
-                } elseif ($selisihWaktu < 43200) {
-                    echo floor($selisihWaktu / 10080) . ' Minggu Lalu';
-                } elseif ($selisihWaktu < 525600) {
-                    echo floor($selisihWaktu / 43200) . ' Bulan Lalu';
-                } else {
-                    echo floor($selisihWaktu / 525600) . ' Tahun Lalu';
-                }
-                @endphp
-                <br>
-              </b></span>
-              <p>{!! substr(strip_tags($item->artikel->deskripsi), 0, 400) . (strlen(strip_tags($item->artikel->deskripsi)) > 400 ? '...' : '') !!}</p>
-              </b></span>
-        
-              <p>Tags:
-                @php
-                $tags = explode(",", $item->artikel->tags);
-                foreach ($tags as $tag) {
-                    $trimmedTag = trim($tag);
-                    echo '<a href="' . route("TagsVideos", $trimmedTag) . '" class="fh5co_tagg">' . $trimmedTag . '</a>';
-                    echo ' ';
-                }
-                @endphp
-              </p>
-              <div style="float: right; color: rgba(165, 165, 165, 1);">
-                <p>
-                    <a href="{{ route('simpan.deleteArtikel', ['id' => $item->id]) }}"><i class="fas fa-trash"></i></a>
-                </p>
-              </div>
-            </div>
-            <hr>
-          </div>
-        @endforeach
-@endif        
+            @endforeach
+        @endif
+
           </div>
         </div>
       </section>  

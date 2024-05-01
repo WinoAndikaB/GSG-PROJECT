@@ -193,18 +193,27 @@
                       <div class="dropdown">
                         <a href="#" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center dropdown-toggle" role="button" id="savedArticlesDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             <div class="profile-picture" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
-                                <?php
-                                $fotoProfil = Auth::user()->fotoProfil;
-                                if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
-                                ?>
-                                <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
-                                <?php
-                                } else {
-                                ?>
-                                <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
-                                <?php
-                                }
-                                ?>
+                              <?php
+                              $fotoProfil = Auth::user()->fotoProfil;
+                              if ($fotoProfil) {
+                                  if (filter_var($fotoProfil, FILTER_VALIDATE_URL)) {
+                                      // Jika fotoProfil adalah URL, gunakan langsung URL tersebut
+                                      echo '<img src="' . $fotoProfil . '" alt="User\'s Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">';
+                                  } else {
+                                      // Jika fotoProfil adalah nama file, cek apakah file tersebut ada
+                                      $pathToFile = public_path('fotoProfil/' . $fotoProfil);
+                                      if (file_exists($pathToFile)) {
+                                          echo '<img src="' . asset('fotoProfil/' . $fotoProfil) . '" alt="User\'s Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">';
+                                      } else {
+                                          // Jika file tidak ada, tampilkan foto default
+                                          echo '<img src="' . asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') . '" alt="User\'s Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">';
+                                      }
+                                  }
+                              } else {
+                                  // Jika fotoProfil kosong, tampilkan foto default
+                                  echo '<img src="' . asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') . '" alt="User\'s Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">';
+                              }
+                          ?>
                             </div>
                     
                             <span class="d-sm-inline d-none">
@@ -333,9 +342,10 @@
             
             @if($savedVideos->isEmpty())
             <div class="text-center">
-                <h6 style="color: orange; font-Helvetica: Helvetica;">No Videos Saved</h6>
-                <h4 style="font-Helvetica: 'Your Cool Font';">Tidak Ada Video Yang Tersimpan</h4>
-            </div>
+              <img src="https://pic.onlinewebfonts.com/thumbnails/icons_568806.svg" alt="No Following" style="width: 150px; margin-bottom: 20px;">
+              <p style="font-size: 1.2rem; color: #666; margin-bottom: 20px;">Anda belum menyimpan video apapun.</p>
+              <a href="/Video" style="background-color: #4CAF50; border: none; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 1rem; border-radius: 5px;">Temukan Video</a>
+          </div>
         @else
             @foreach($savedVideos as $item)
                 <div class="row" style="text-align: justify">

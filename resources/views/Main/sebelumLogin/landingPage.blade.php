@@ -247,7 +247,7 @@
                                           @endphp
                                         </p>
                                       </div>
-                                      <h6 class="title"><a href="{{ route('showDetailLPArtikel', ['id' => $item->id]) }}">{{$item->judulArtikel}}</a></h6>
+                                      <h6 class="title"><a href="{{ route('showDetailLPArtikel', ['id' => $item->id]) }}">{{ \Illuminate\Support\Str::limit($item->judulArtikel, 70) }}</a></h6>
                                   </div>
                               </div>
                           </div>
@@ -294,7 +294,7 @@
                                               </li>
                                           </ul>
                                       </div>
-                                      <h6 class="title"><a href="{{ route('showDetailLPArtikel', ['id' => $item->id]) }}">{{$item->judulArtikel}}</a></h6>
+                                      <h6 class="title"><a href="{{ route('showDetailLPArtikel', ['id' => $item->id]) }}">{{ \Illuminate\Support\Str::limit($item->judulArtikel, 70) }}</a></h6>
                                   </div>
                               </div>
                           </div>
@@ -343,7 +343,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <h6 class="title"><a href="{{ route('showDetailLPArtikel', ['id' => $item->id]) }}">{{$item->judulArtikel}}</a></h6>
+                                <h6 class="title"><a href="{{ route('showDetailLPArtikel', ['id' => $item->id]) }}">{{ \Illuminate\Support\Str::limit($item->judulArtikel, 70) }}</a></h6>
                                 <p>{{ \Illuminate\Support\Str::limit($item->deskripsi, 350) }}</p>
                             </div>
                         </div>
@@ -400,7 +400,7 @@
                       <p class="btn-date"><i class="fa fa-clock-o"></i>{{$item->created_at}}</p>
                   </div>
                   <div class="details">
-                      <h6 class="title"><a href="{{ route('showDetailLPArtikel', ['id' => $item->id]) }}">{{$item->judulArtikel}}</a></h6>
+                      <h6 class="title"><a href="{{ route('showDetailLPArtikel', ['id' => $item->id]) }}">{{ \Illuminate\Support\Str::limit($item->judulArtikel, 70) }}</a></h6>
                   </div>
               </div>
               <div class="single-post-wrap">
@@ -409,7 +409,7 @@
                       <p class="btn-date"><i class="fa fa-clock-o"></i>{{$item->created_at}}</p>
                   </div>
                   <div class="details">
-                      <h6 class="title"><a href="{{ route('showDetailLPArtikel', ['id' => $item->id]) }}">{{$item->judulArtikel}}</a></h6>
+                      <h6 class="title"><a href="{{ route('showDetailLPArtikel', ['id' => $item->id]) }}">{{ \Illuminate\Support\Str::limit($item->judulArtikel, 70) }}</a></h6>
                   </div>
               </div>
           </div>
@@ -469,7 +469,7 @@
             </div>
             <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
               <a href="{{ route('showDetailLPArtikel', ['id' => $item->id]) }}" style="text-decoration: none;">
-                  <h4 class="article-title" onclick="selectText(this)" style="text-align: left;">{{ $item->judulArtikel }}</h4>
+                  <h4 class="article-title" onclick="selectText(this)" style="text-align: left;">{{ \Illuminate\Support\Str::limit($item->judulArtikel, 80) }}</h4>
               </a>
               <span class="d-flex">
                   <b>{{ $item->penulis }} • 
@@ -530,7 +530,7 @@
                 <div class="single-post-wrap style-overlay">
                     <div class="thumb">
                         <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" alt="img" width="500" height="250">
-                        <a class="tag-base tag-purple" href="#">{{ $item->penulis }}</a>
+                        <a class="tag-base tag-purple" href="#">{{ $item->kategori }}</a>
                     </div>
                     <div class="details">
                         <div class="post-meta-single">
@@ -557,7 +557,7 @@
                               @endphp
                             </p>
                         </div>
-                        <h6 class="title"><a href="{{ route('showDetailLPArtikel', ['id' => $item->id]) }}">{{ $item->judulArtikel }}</a></h6>
+                        <h6 class="title"><a href="{{ route('showDetailLPArtikel', ['id' => $item->id]) }}">{{ \Illuminate\Support\Str::limit($item->judulArtikel, 50) }}</a></h6>
                     </div>
                 </div>
             </div>

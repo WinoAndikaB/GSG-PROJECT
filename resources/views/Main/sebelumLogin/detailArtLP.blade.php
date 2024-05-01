@@ -334,7 +334,7 @@
             @endforeach
         </span>
                     
-            <div class="fh5co_heading fh5co_heading_border_bottom pt-3 py-2 mb-4">Most Popular</div>
+            <div class="fh5co_heading fh5co_heading_border_bottom pt-3 py-2 mb-4">See More</div>
             <div class="row pb-3">
                 @foreach($box as $item)
                 <div class="col-4 align-self-center mb-3">

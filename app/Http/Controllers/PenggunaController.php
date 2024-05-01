@@ -1677,22 +1677,33 @@ function ulasan(Request $request){
           ]);
       
           // Handle Upload Foto
-          if ($request->hasFile('fotoProfil')) {
-              $image = $request->file('fotoProfil');
+          if ($request->has('fotoProfil')) {
+              $fotoProfil = $request->input('fotoProfil');
       
-              // Membuat Nama File Foto
-              $filename = 'fotoProfil.' . $user->name . ' ' . $user->username . '.' . $image->getClientOriginalExtension();
+              // Cek apakah input adalah URL atau file
+              if (filter_var($fotoProfil, FILTER_VALIDATE_URL)) {
+                  // Jika input adalah URL, simpan URL langsung ke database
+                  $user->fotoProfil = $fotoProfil;
+                  $user->save();
+              } else {
+                  // Jika input adalah file, proses upload dan simpan file
+                  $image = $request->file('fotoProfil');
       
-              // Menyimpan Foto Sesuai Direktori
-              $image->move(public_path('fotoProfil'), $filename);
+                  // Membuat Nama File Foto
+                  $filename = 'fotoProfil_' . $user->name . '_' . $user->username . '.' . $image->getClientOriginalExtension();
       
-              // Update Nama File Foto
-              $user->fotoProfil = $filename;
-              $user->save();
+                  // Menyimpan Foto Sesuai Direktori
+                  $image->move(public_path('fotoProfil'), $filename);
+      
+                  // Update Nama File Foto
+                  $user->fotoProfil = $filename;
+                  $user->save();
+              }
           }
       
           return redirect('/profileUser');
       }
+      
 
       public function profileFollowing($follower_id)
       {
