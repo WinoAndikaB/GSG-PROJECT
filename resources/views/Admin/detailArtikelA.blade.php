@@ -295,26 +295,28 @@
                 <a href="#" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdownMenuLink2">
                   <i>
                     <?php
-                    if (Auth::check()) { // Memeriksa apakah pengguna telah terautentikasi
-                        $fotoProfil = Auth::user()->fotoProfil; // Mengambil foto profil pengguna yang terautentikasi
-                        if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
-                        ?>
-                        <!-- Jika foto profil tersedia dan file gambar tersebut ada, maka tampilkan gambar profil pengguna -->
-                        <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
-                        <?php
-                        } else {
-                        ?>
-                        <!-- Jika foto profil tidak tersedia atau tidak ada, maka tampilkan gambar profil default -->
-                        <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
-                        <?php
-                        }
-                    } else {
-                        // Tampilkan foto default jika pengguna belum terautentikasi
-                        ?>
-                        <img src="{{ asset('defaultFoto.png') }}" alt="Default Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
-                        <?php
+                    $fotoProfil = Auth::user()->fotoProfil;
+                    $gambarPath = null;
+                    
+                    if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
+                        // Jika file fotoProfil ada di direktori fotoProfil
+                        $gambarPath = asset('fotoProfil/' . $fotoProfil);
+                    } elseif (filter_var($fotoProfil, FILTER_VALIDATE_URL)) {
+                        // Jika fotoProfil adalah URL yang valid
+                        $gambarPath = $fotoProfil;
                     }
-                    ?>
+                
+                    if ($gambarPath) {
+                ?>
+                    <img src="{{ $gambarPath }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; object-fit: cover;">
+                <?php
+                    } else {
+                ?>
+                    <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; object-fit: cover;">
+                <?php
+                    }
+                ?>
+                
                   </i>
                 <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span> 
                 </a>
@@ -369,8 +371,31 @@
                         <div class="simple-profile-container" style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
                           <a href="{{ route('detailProfilPenulisArtikelLP', ['id' => $article->id]) }}" style="text-decoration: none; color: inherit;">
                             <div class="simple-profile-picture" style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #3498db;">
-                              <img src="{{ asset('fotoProfil/' . $user->fotoProfil) }}" alt="Profil Picture" style="width: 100%; height: 100%;">
-                            </div>
+                              @if ($user->fotoProfil)
+                                  <?php
+                                      $fotoProfil = $user->fotoProfil;
+                                      $gambarPath = null;
+                                      
+                                      if (file_exists(public_path('fotoProfil/' . $fotoProfil))) {
+                                          // Jika file fotoProfil ada di direktori fotoProfil
+                                          $gambarPath = asset('fotoProfil/' . $fotoProfil);
+                                      } elseif (filter_var($fotoProfil, FILTER_VALIDATE_URL)) {
+                                          // Jika fotoProfil adalah URL yang valid
+                                          $gambarPath = $fotoProfil;
+                                      }
+                                  ?>
+                                  @if ($gambarPath)
+                                      <img src="{{ $gambarPath }}" alt="Profil Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                                  @else
+                                      <!-- Tampilkan placeholder jika gambar tidak ditemukan -->
+                                      <div style="width: 100%; height: 100%; background-color: lightgrey;"></div>
+                                  @endif
+                              @else
+                                  <!-- Tampilkan placeholder jika tidak ada gambar profil -->
+                                  <div style="width: 100%; height: 100%; background-color: lightgrey;"></div>
+                              @endif
+                          </div>
+                          
                         </a>
                         
             
@@ -438,7 +463,17 @@
                           </p>
                       </span>
                       
-                      <img src="{{ asset('gambarArtikel/' . $article->gambarArtikel) }}" class="main-image" width="100%" style="margin-bottom: 20px;">
+                      @if($article->gambarArtikel)
+                      @if(filter_var($article->gambarArtikel, FILTER_VALIDATE_URL))
+                          <a href="{{$article->gambarArtikel}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                              <img src="{{$article->gambarArtikel}}" class="main-image" width="100%" style="margin-bottom: 20px;">
+                          </a>
+                      @else
+                          <a href="{{asset('gambarArtikel/'.$article->gambarArtikel)}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                              <img src="{{asset('gambarArtikel/'.$article->gambarArtikel)}}" class="main-image" width="100%" style="margin-bottom: 20px;">
+                          </a>
+                      @endif
+                  @endif   
 
 
             

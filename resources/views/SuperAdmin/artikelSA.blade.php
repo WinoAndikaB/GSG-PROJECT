@@ -339,16 +339,26 @@
                   <i>
                     <?php
                     $fotoProfil = Auth::user()->fotoProfil;
+                    $gambarPath = null;
+                    
                     if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
-                    ?>
-                    <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
-                    <?php
-                    } else {
-                    ?>
-                    <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
-                    <?php
+                        // Jika file fotoProfil ada di direktori fotoProfil
+                        $gambarPath = asset('fotoProfil/' . $fotoProfil);
+                    } elseif (filter_var($fotoProfil, FILTER_VALIDATE_URL)) {
+                        // Jika fotoProfil adalah URL yang valid
+                        $gambarPath = $fotoProfil;
                     }
-                    ?>
+                
+                    if ($gambarPath) {
+                ?>
+                    <img src="{{ $gambarPath }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; object-fit: cover;">
+                <?php
+                    } else {
+                ?>
+                    <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; object-fit: cover;">
+                <?php
+                    }
+                ?>
                 </i>
                 <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span> 
                 </a>
@@ -437,9 +447,18 @@
                                 <td>
                                   <div class="d-flex px-2 py-1">
                                     <div>
-                                      <a href="{{asset('gambarArtikel/'.$tbhartikel->gambarArtikel)}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
-                                          <img src="{{asset('gambarArtikel/'.$tbhartikel->gambarArtikel)}}" class="avatar avatar-sm me-3" alt="user1">
-                                      </a>
+                                      @if($tbhartikel->gambarArtikel)
+                                      @if(filter_var($tbhartikel->gambarArtikel, FILTER_VALIDATE_URL))
+                                          <a href="{{$tbhartikel->gambarArtikel}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                                              <img src="{{$tbhartikel->gambarArtikel}}" class="avatar avatar-sm me-3" alt="user1">
+                                          </a>
+                                      @else
+                                          <a href="{{asset('gambarArtikel/'.$tbhartikel->gambarArtikel)}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                                              <img src="{{asset('gambarArtikel/'.$tbhartikel->gambarArtikel)}}" class="avatar avatar-sm me-3" alt="user1">
+                                          </a>
+                                      @endif
+                                  @endif
+                                  
                                   </div>                                  
                                     <div class="d-flex flex-column justify-content-center">
                                       <h6 class="mb-0 text-sm">{{$tbhartikel['penulis']}}</h6>

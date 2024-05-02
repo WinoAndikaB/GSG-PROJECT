@@ -191,16 +191,27 @@
                   <i>
                     <?php
                     $fotoProfil = Auth::user()->fotoProfil;
+                    $gambarPath = null;
+                    
                     if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
-                    ?>
-                    <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
-                    <?php
-                    } else {
-                    ?>
-                    <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
-                    <?php
+                        // Jika file fotoProfil ada di direktori fotoProfil
+                        $gambarPath = asset('fotoProfil/' . $fotoProfil);
+                    } elseif (filter_var($fotoProfil, FILTER_VALIDATE_URL)) {
+                        // Jika fotoProfil adalah URL yang valid
+                        $gambarPath = $fotoProfil;
                     }
-                    ?>
+                
+                    if ($gambarPath) {
+                ?>
+                    <img src="{{ $gambarPath }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; object-fit: cover;">
+                <?php
+                    } else {
+                ?>
+                    <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; object-fit: cover;">
+                <?php
+                    }
+                ?>
+                
                 </i>
                 <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span> 
                 </a>
@@ -262,23 +273,41 @@
 
               <form action="{{ route('storeArtikelA') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <div class="form-group">
-                    <label for="gambarArtikel">Gambar</label>
-                    <span for="gambarArtikel">Format Foto : .jpg, .jpeg, .png </span>
-                    <input type="file" class="form-control" id="gambarArtikel" name="gambarArtikel">
-                </div>
+                <div class="row">
+                  <div class="col">
+                      <div class="form-group">
+                          <label for="gambarArtikelFile">Upload Foto (File)</label>
+                          <span for="gambarArtikelFile">Format Foto: .jpg, .jpeg, .png</span>
+                          <input type="file" class="form-control" id="gambarArtikel" name="gambarArtikel" onchange="toggleInput('file')">
+                      </div>
+                  </div>
+                  <div class="col">
+                      <div class="form-group">
+                          <label for="gambarArtikelURL">Upload Foto (URL)</label>
+                          <input type="text" class="form-control" id="gambarArtikel" name="gambarArtikel" onchange="toggleInput('url')" required>
+                      </div>
+                  </div>
+              </div>
+              
                 <div class="form-group">
                     <label for="judulArtikel">Judul Artikel</label>
                     <input type="text" class="form-control" id="judulArtikel" name="judulArtikel" required>
                 </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="penulis">Penulis</label>
-                    <input type="text" class="form-control" id="penulis" name="penulis" value="{{ Auth::user()->name }}" readonly>
-                </div>
+                <div class="row">
+                  <div class="col">
+                      <div class="form-group">
+                          <label for="email">Email</label>
+                          <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}" readonly>
+                      </div>
+                  </div>
+                  <div class="col">
+                      <div class="form-group">
+                          <label for="penulis">Penulis</label>
+                          <input type="text" class="form-control" id="penulis" name="penulis" value="{{ Auth::user()->name }}" readonly>
+                      </div>
+                  </div>
+              </div>
+              
                 <div class="form-group">
                     <label for="kategori">Kategori</label>
                     <select class="form-control" id="kategori" name="kategori" required>
@@ -294,9 +323,9 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="" class="form-control-label">Deskripsi</label>
-                    <textarea class="form-control" type="text" name="deskripsi" id="editor"></textarea>
-                </div>
+                  <label for="" class="form-control-label">Deskripsi</label>
+                  <textarea class="form-control" type="text" name="deskripsi" id="editor"></textarea>
+              </div>
                 <button type="submit" class="btn btn-primary mt-3">Tambah</button>
                 <a href="/artikelAdmin" class="btn btn-info mt-3">Kembali</i></a>
             </form>
@@ -418,6 +447,37 @@
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
 
+
+<!--------------------------------------------------------------------------------------- Javascript Upload Foto ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Upload Foto ------------------------------------------------------------------------------->
+
+
+<script>
+  function toggleInput(type) {
+      var inputs = document.querySelectorAll('#gambarArtikel');
+      
+      if (type === 'file') {
+          inputs.forEach(function(input) {
+              if (input.type === 'file') {
+                  input.disabled = false;
+              } else {
+                  input.disabled = true;
+                  input.value = ''; // Clear the URL input
+              }
+          });
+      } else if (type === 'url') {
+          inputs.forEach(function(input) {
+              if (input.type === 'file') {
+                  input.disabled = true;
+                  input.value = ''; // Clear the file input
+              } else {
+                  input.disabled = false;
+              }
+          });
+      }
+  }
+</script>
+
 <!------------------------------------------------------------------------------------- Javascript Dynmaic Tags -------------------------------------------------------------------------------------------------------------------->
 <!------------------------------------------------------------------------------------- Javascript Dynmaic Tags -------------------------------------------------------------------------------------------------------------------->
 
@@ -437,67 +497,41 @@
 
 <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
 <script>
-  CKEDITOR.replace('editor');
+    CKEDITOR.replace('editor');
 
-  async function fetchBadWords(input) {
-    const apiKey = "O3A8ZvNyKn89WPtIBt4Kf0XccNCytF0T";
-    const apiUrl = "https://api.apilayer.com/bad_words?censor_character=";
+    // ... Bagian JavaScript lainnya ...
 
-    const myHeaders = new Headers();
-    myHeaders.append("apikey", apiKey);
+    async function validateForm() {
+        const errorMessageDiv = document.getElementById('error-message');
+        errorMessageDiv.innerHTML = ''; // Reset pesan kesalahan sebelum validasi
 
-    const requestOptions = {
-      method: 'POST',
-      redirect: 'follow',
-      headers: myHeaders,
-      body: input
-    };
+        // Validasi penggunaan kata tidak pantas pada deskripsi
+        const deskripsiInput = CKEDITOR.instances.editor.getData();
+        const deskripsiValue = deskripsiInput.toLowerCase();
 
-    try {
-      const response = await fetch(apiUrl + input, requestOptions);
-      if (!response.ok) {
-        throw new Error('Failed to fetch bad words');
-      }
+        try {
+            console.log('Deskripsi sebelum validasi:', deskripsiValue);
 
-      const result = await response.text();
-      return result;
-    } catch (error) {
-      console.error('Error fetching bad words:', error);
-      return null;
+            const result = await fetchBadWords(deskripsiValue);
+            console.log('Respon dari API:', result);
+
+            if (result) {
+                errorMessageDiv.innerHTML += `<p class="text-white">${result}</p>`;
+                errorMessageDiv.style.display = 'block'; // Menampilkan pesan kesalahan
+            }
+        } catch (error) {
+            console.error('Error validating description:', error);
+        }
+
+        // Jika ada pesan kesalahan, tampilkan di bawah judul "Tambah Artikel"
+        if (errorMessageDiv.innerHTML !== '') {
+            errorMessageDiv.style.display = 'block';
+        } else {
+            // Jika semua validasi berhasil, formulir akan dikirimkan
+            document.querySelector('form').submit();
+        }
     }
-  }
-
-  async function validateForm() {
-    const errorMessageDiv = document.getElementById('error-message');
-    errorMessageDiv.innerHTML = ''; // Reset pesan kesalahan sebelum validasi
-
-    // Validasi penggunaan kata tidak pantas pada deskripsi
-    const deskripsiInput = CKEDITOR.instances.editor.getData();
-    const deskripsiValue = deskripsiInput.toLowerCase();
-
-    try {
-      console.log('Deskripsi sebelum validasi:', deskripsiValue);
-
-      const result = await fetchBadWords(deskripsiValue);
-      console.log('Respon dari API:', result);
-
-      if (result) {
-        errorMessageDiv.innerHTML += `<p class="text-white">${result}</p>`;
-      }
-    } catch (error) {
-      console.error('Error validating description:', error);
-    }
-
-    // Jika ada pesan kesalahan, tampilkan di bawah judul "Tambah Artikel"
-    if (errorMessageDiv.innerHTML !== '') {
-      errorMessageDiv.style.display = 'block';
-    } else {
-      // Jika semua validasi berhasil, formulir akan dikirimkan
-      document.querySelector('form').submit();
-    }
-  }
 </script>
-
 <!------------------------------------------------------------------------------------- Javascript Standar Penulis -------------------------------------------------------------------------------------------------------------------->
 <!------------------------------------------------------------------------------------- Javascript Standar Penulis -------------------------------------------------------------------------------------------------------------------->
 

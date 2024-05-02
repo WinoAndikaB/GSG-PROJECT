@@ -238,15 +238,21 @@
                           <input class="form-control py-4" id="inputEmail" type="email" placeholder="Email" disabled value="{{ Auth::user()->email }}">
                       </div>
 
-                      <div class="form-group">
-                        <label class="small mb-1" for="inputFoto">Upload Foto (File)</label>
-                        <input class="form-control-file py-4" id="inputFoto" type="file" name="fotoProfil" onchange="toggleInput('file')">
+                      <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputFotoFile">Upload Foto (File)</label>
+                                <input class="form-control-file py-4" id="inputFoto" type="file" name="fotoProfil" onchange="toggleInput('file')">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputFotoURL">Upload Foto (URL)</label>
+                                <input class="form-control" id="inputFoto" type="text" name="fotoProfil" onchange="toggleInput('url')">
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label class="small mb-1" for="inputFoto">Upload Foto (URL)</label>
-                        <input class="form-control" id="inputFoto" type="text" name="fotoProfil" onchange="toggleInput('url')">
-                    </div>
 
                       <div class="form-group">
                           <label class="small mb-1" for="inputName">Nama</label>

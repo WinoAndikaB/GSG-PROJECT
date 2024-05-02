@@ -188,16 +188,26 @@
                   <i>
                     <?php
                     $fotoProfil = Auth::user()->fotoProfil;
+                    $gambarPath = null;
+                    
                     if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
-                    ?>
-                    <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
-                    <?php
-                    } else {
-                    ?>
-                    <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
-                    <?php
+                        // Jika file fotoProfil ada di direktori fotoProfil
+                        $gambarPath = asset('fotoProfil/' . $fotoProfil);
+                    } elseif (filter_var($fotoProfil, FILTER_VALIDATE_URL)) {
+                        // Jika fotoProfil adalah URL yang valid
+                        $gambarPath = $fotoProfil;
                     }
-                    ?>
+                
+                    if ($gambarPath) {
+                ?>
+                    <img src="{{ $gambarPath }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; object-fit: cover;">
+                <?php
+                    } else {
+                ?>
+                    <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; object-fit: cover;">
+                <?php
+                    }
+                ?>
                 </i>
                 <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span> 
                 </a>
@@ -273,14 +283,21 @@
                     <label for="judulArtikel">Judul Artikel</label>
                     <input type="text" class="form-control" id="judulArtikel" name="judulArtikel" value="{{ $data->judulArtikel }}" required>
                 </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="penulis">Penulis</label>
-                    <input type="text" class="form-control" id="penulis" name="penulis" value="{{ Auth::user()->name }}" readonly>
-                </div>
+                <div class="row">
+                  <div class="col">
+                      <div class="form-group">
+                          <label for="email">Email</label>
+                          <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}" readonly>
+                      </div>
+                  </div>
+                  <div class="col">
+                      <div class="form-group">
+                          <label for="penulis">Penulis</label>
+                          <input type="text" class="form-control" id="penulis" name="penulis" value="{{ Auth::user()->name }}" readonly>
+                      </div>
+                  </div>
+              </div>
+              
                 <div class="form-group">
                     <label for="kategori">Kategori</label>
                     <select class="form-control" id="kategori" name="kategori" required>

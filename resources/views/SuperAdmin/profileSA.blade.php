@@ -221,16 +221,26 @@
                   <i>
                     <?php
                     $fotoProfil = Auth::user()->fotoProfil;
+                    $gambarPath = null;
+                    
                     if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
-                    ?>
-                    <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
-                    <?php
-                    } else {
-                    ?>
-                    <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
-                    <?php
+                        // Jika file fotoProfil ada di direktori fotoProfil
+                        $gambarPath = asset('fotoProfil/' . $fotoProfil);
+                    } elseif (filter_var($fotoProfil, FILTER_VALIDATE_URL)) {
+                        // Jika fotoProfil adalah URL yang valid
+                        $gambarPath = $fotoProfil;
                     }
-                    ?>
+                
+                    if ($gambarPath) {
+                ?>
+                    <img src="{{ $gambarPath }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; object-fit: cover;">
+                <?php
+                    } else {
+                ?>
+                    <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; object-fit: cover;">
+                <?php
+                    }
+                ?>
                 </i>
                 <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span> 
                 </a>
@@ -318,12 +328,20 @@
                     <hr class="horizontal dark">
                     <p class="text-uppercase text-sm">Contact Information</p>
                     <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group">
-                           <label for="fotoProfil" class="form-control-label">Foto Profil</label>
-                           <input class="form-control" type="file" name="fotoProfil">
+                      <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                              <label for="fotoProfil" class="form-control-label">Upload Foto (File)</label>
+                              <input class="form-control" type="file" name="fotoProfil" onchange="toggleInput('file')">
+                            </div>
                         </div>
-                     </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="fotoProfil">Upload Foto (URL)</label>
+                                <input type="text" class="form-control" name="fotoProfil" onchange="toggleInput('url')">
+                            </div>
+                        </div>
+                    </div>
                       <div class="col-md-12">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Nama</label>
@@ -372,14 +390,24 @@
                         <div class="col-2 col-lg-4 order-lg-2">
                             <a href="javascript:;">
                                 <div style="width: 230px; height: 220px; border: 2px solid white; border-radius: 50%; overflow: hidden;">
-                                    <img src="<?php
-                                        $fotoProfil = Auth::user()->fotoProfil;
-                                        if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
-                                            echo asset('fotoProfil/' . $fotoProfil);
-                                        } else {
-                                            echo asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999');
-                                        }
-                                    ?>" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+                                  <img src="<?php
+                                  $fotoProfil = Auth::user()->fotoProfil;
+                                  $gambarPath = null;
+                                  
+                                  if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
+                                      // Jika file fotoProfil ada di direktori fotoProfil
+                                      $gambarPath = asset('fotoProfil/' . $fotoProfil);
+                                  } elseif (filter_var($fotoProfil, FILTER_VALIDATE_URL)) {
+                                      // Jika fotoProfil adalah URL yang valid
+                                      $gambarPath = $fotoProfil;
+                                  }
+    
+                                  if ($gambarPath) {
+                                      echo $gambarPath;
+                                  } else {
+                                      echo asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999');
+                                  }
+                              ?>" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
                                 </div>
                             </a>
                         </div>
@@ -393,7 +421,7 @@
                               <span style="font-size: 20px; margin-right: 10px;"><b>{{$TotalArtikelId}}</b> Artikel</span>
                               <span style="font-size: 20px; margin-right: 10px;"><b>{{$TotalVideoId}}</b> Video</span>
                               <span style="font-size: 20px; margin-right: 10px;"><b>{{$totalFollowers}}</b> Follower</span>
-                              <span style="font-size: 20px; margin-right: 10px;"> 0,0 <span class="gold-star" data-rating="1">&#9733;</span></span>
+                              <span style="font-size: 20px; margin-right: 10px;"> {{ number_format($averageRating, 1) }} <span class="gold-star" data-rating="1">&#9733;</span></span>
                           </div>
                         
                           <br>
@@ -526,7 +554,40 @@
 
   <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
 
-   <!-- MODAL LOGOUT -->
+<!--------------------------------------------------------------------------------------- Javascript Upload Foto ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Upload Foto ------------------------------------------------------------------------------->
+
+
+<script>
+  function toggleInput(type) {
+      var inputs = document.querySelectorAll('[name="fotoProfil"]');
+      
+      if (type === 'file') {
+          inputs.forEach(function(input) {
+              if (input.type === 'file') {
+                  input.disabled = false;
+              } else {
+                  input.disabled = true;
+                  input.value = ''; // Clear the URL input
+              }
+          });
+      } else if (type === 'url') {
+          inputs.forEach(function(input) {
+              if (input.type === 'file') {
+                  input.disabled = true;
+                  input.value = ''; // Clear the file input
+              } else {
+                  input.disabled = false;
+              }
+          });
+      }
+  }
+</script>
+
+<!--------------------------------------------------------------------------------------- Javascript Modal Logout ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Modal Logout ------------------------------------------------------------------------------->
+
+
    <script>
     // JavaScript untuk modal logout
     function openModal() {

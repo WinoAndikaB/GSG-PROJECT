@@ -17,6 +17,7 @@ use App\Models\laporanArtikelUser;
 use App\Models\LaporanKomentarArtikel;
 use App\Models\laporanKomentarVideo;
 use App\Models\LaporanUlasanUser;
+use App\Models\RatingPenulis;
 use App\Models\LaporanVideoUser;
 use App\Models\Banner;
 use Carbon\Carbon;
@@ -51,8 +52,11 @@ class SuperAdminController extends Controller
         // Hitung total pengikut (followers) berdasarkan user_id
         $totalFollowers = Follower::where('user_id', $user->id)->count();
 
+        // Menghitung rata-rata rating penulis
+        $averageRating = RatingPenulis::where('user_id_penulis', $user->id)->avg('rating');
+
         return view('SuperAdmin.profileSA', compact('dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 
-        'dataBaruLaporanArtikel','dataBaruLaporanVideo','TotalArtikelId','TotalVideoId','totalFollowers'));
+        'dataBaruLaporanArtikel','dataBaruLaporanVideo','TotalArtikelId','TotalVideoId','totalFollowers','averageRating'));
     }  
   
     //[SuperAdmin-Profile] Edit Profil SuperAdmin
@@ -70,14 +74,18 @@ class SuperAdminController extends Controller
         // Handle Upload Foto
         if ($request->hasFile('fotoProfil')) {
             $image = $request->file('fotoProfil');
-    
+
             $filename = 'fotoProfil.' . $user->name . ' ' . $user->username . '.' . $image->getClientOriginalExtension();
 
             $image->move(public_path('fotoProfil'), $filename);
-    
+
             $user->fotoProfil = $filename;
-            $user->save();
+        } elseif ($request->filled('fotoProfil')) {
+            // Jika tidak ada file yang diunggah, tetapi ada URL yang diberikan
+            $user->fotoProfil = $request->input('fotoProfil');
         }
+
+        $user->save();
 
         return redirect('/profileSA');
     }
@@ -495,55 +503,59 @@ class SuperAdminController extends Controller
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
- public function storeSA(Request $request)
-{
-    // Validate the request data
-    $request->validate([
-        'judulArtikel' => 'required',
-        'penulis' => 'required',
-        'email' => 'required|email',
-        'kategori' => 'required',
-        'tags' => 'required',
-        'deskripsi' => 'required',
-        'gambarArtikel' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', 
-    ]);
-
-    // Assuming 'user_id' is coming from an authenticated user
-    $user_id = auth()->id(); // Adjust this according to your authentication mechanism
-
-    $article = new artikels;
-
-    $article->kodeArtikel = 'KKA' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
-
-    $article->judulArtikel = $request->input('judulArtikel');
-    $article->penulis = $request->input('penulis');
-    $article->email = $request->input('email');
-    $article->kategori = $request->input('kategori');
+    public function storeSA(Request $request)
+    {
+        // Validate the request data
+        $request->validate([
+            'judulArtikel' => 'required',
+            'penulis' => 'required',
+            'email' => 'required|email',
+            'kategori' => 'required',
+            'tags' => 'required',
+            'deskripsi' => 'required',
+            'gambarArtikel' => 'required', // Remove image validation
+        ]);
     
-    // Convert array of tags to a string
-    $tags = $request->input('tags');
-    $tagsString = implode(',', $tags);
-    $article->tags = $tagsString;
-
-    $article->deskripsi = $request->input('deskripsi');
-    $article->status = 'Pending';
-    $article->user_id = $user_id; // Set the user_id
-
-    // Handle file upload
-    if ($request->hasFile('gambarArtikel')) {
-        $image = $request->file('gambarArtikel');
-
-        $filename = $image->getClientOriginalName();
-        $image->move(public_path('gambarArtikel'), $filename);
-
-        // Set the image file name in the database
-        $article->gambarArtikel = $filename;
-    }        
-
-    $article->save();
-
-    return redirect('/artikelSuperAdmin')->with('success', 'Article added successfully.');
-}
+        // Assuming 'user_id' is coming from an authenticated user
+        $user_id = auth()->id(); // Adjust this according to your authentication mechanism
+    
+        $article = new artikels;
+    
+        $article->kodeArtikel = 'KKA' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
+    
+        $article->judulArtikel = $request->input('judulArtikel');
+        $article->penulis = $request->input('penulis');
+        $article->email = $request->input('email');
+        $article->kategori = $request->input('kategori');
+        
+        // Convert array of tags to a string
+        $tags = $request->input('tags');
+        $tagsString = implode(',', $tags);
+        $article->tags = $tagsString;
+    
+        $article->deskripsi = $request->input('deskripsi');
+        $article->status = 'Pending';
+        $article->user_id = $user_id; // Set the user_id
+    
+        // Handle file upload or URL input
+        if ($request->hasFile('gambarArtikel')) {
+            $image = $request->file('gambarArtikel');
+    
+            $filename = $image->getClientOriginalName();
+            $image->move(public_path('gambarArtikel'), $filename);
+    
+            // Set the image file name in the database
+            $article->gambarArtikel = $filename;
+        } else {
+            // If no file is uploaded, assume URL input
+            $article->gambarArtikel = $request->input('gambarArtikel');
+        }        
+    
+        $article->save();
+    
+        return redirect('/artikelSuperAdmin')->with('success', 'Article added successfully.');
+    }
+    
     
     //[SuperAdmin-Artikel] Edit Data Artikel
     function formEditArtikelSA($id){
@@ -1018,32 +1030,36 @@ function deleteKategoriSA($id){
     public function storeKategorioSA(Request $request)
     {
         $request->validate([
-            'fotoKategori' => 'required',
+            'fotoKategori' => 'required', // Menghapus validasi image agar bisa menerima URL
             'pembuat' => 'required',
             'email' => 'required',
             'kategori' => 'required',
             'deskripsiKategori' => 'required',
-            'fotoKategori' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            // 'fotoKategori' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Menghapus validasi image agar bisa menerima URL
         ]);
-
+    
         $ktgr = new kategori;
-
+    
         $ktgr->pembuat = $request->input('pembuat');
         $ktgr->email = $request->input('email');
         $ktgr->kategori = $request->input('kategori');
         $ktgr->deskripsiKategori = $request->input('deskripsiKategori');
-
+    
         if ($request->hasFile('fotoKategori')) {
             $image = $request->file('fotoKategori');
             $filename = $image->getClientOriginalName();
             $image->move(public_path('fotoKategori'), $filename);
             $ktgr->fotoKategori = $filename;
+        } elseif ($request->filled('fotoKategori')) {
+            // Jika tidak ada file yang diunggah, tetapi ada URL yang diberikan
+            $ktgr->fotoKategori = $request->input('fotoKategori');
         }
-
+    
         $ktgr->save();
-
+    
         return redirect('/kategoriTblSA')->with('success', 'Article added successfully.');
     }
+    
     
 
     //[SuperAdmin-Kategori] Edit Data Kategori
@@ -1123,7 +1139,7 @@ function deleteKategoriSA($id){
     function saveBannerSA(Request $request) {
         $request->validate([
             'image_url' => 'nullable|url',
-            'file_path' => 'nullable|image',
+            'file_path' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Menambahkan validasi untuk file image
             'keterangan' => 'nullable|string',
             'jenis_banner' => 'required|integer|in:0,1,2,3', // Validasi jenis_banner
         ]);

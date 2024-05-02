@@ -16,6 +16,7 @@ use App\Models\laporanArtikelUser;
 use App\Models\laporanKomentarArtikelUser;
 use App\Models\laporanKomentarVideoUser;
 use App\Models\LaporanVideoUser;
+use App\Models\RatingPenulis;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,8 +28,8 @@ class AdminController extends Controller
     public function profileAdmin()
     {
         $user = Auth::user();
-
-        // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+    
+        // Menghitung jumlah data yang ditambahkan dalam 24 jam terakhir
         $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=', Carbon::now()->subDay())->count();  
         $dataBaruKomentarVideo = komentar_video::where('created_at', '>=', Carbon::now()->subDay())->count();
     
@@ -38,13 +39,15 @@ class AdminController extends Controller
         // Menghitung total user_id yang sama dengan user auth
         $TotalArtikelId = artikels::where('user_id', $user->id)->count();
         $TotalVideoId = video::where('user_id', $user->id)->count();
-
+    
         $totalFollowers = Follower::where('user_id', $user->id)->count();
     
-        return view('Admin.profileA', compact('dataBaruKomentarArtikel', 'dataBaruKomentarVideo', 
-        'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'TotalArtikelId','TotalVideoId','totalFollowers'));
-    }
+        // Menghitung rata-rata rating penulis
+        $averageRating = RatingPenulis::where('user_id_penulis', $user->id)->avg('rating');
     
+        return view('Admin.profileA', compact('dataBaruKomentarArtikel', 'dataBaruKomentarVideo', 'averageRating', 
+        'dataBaruLaporanArtikel', 'dataBaruLaporanVideo', 'TotalArtikelId', 'TotalVideoId', 'totalFollowers'));
+    }    
     
   
     //[Admin-Profile] Edit Profil Admin
@@ -64,15 +67,20 @@ class AdminController extends Controller
             $image = $request->file('fotoProfil');
     
             $filename = 'fotoProfil.' . $user->name . ' ' . $user->username . '.' . $image->getClientOriginalExtension();
-
+    
             $image->move(public_path('fotoProfil'), $filename);
     
             $user->fotoProfil = $filename;
-            $user->save();
+        } elseif ($request->filled('fotoProfil')) {
+            // Jika tidak ada file yang diunggah, tetapi ada URL yang diberikan
+            $user->fotoProfil = $request->input('fotoProfil');
         }
-
+    
+        $user->save();
+    
         return redirect('/profileAdmin');
     }
+    
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -343,7 +351,7 @@ class AdminController extends Controller
             'kategori' => 'required',
             'tags' => 'required',
             'deskripsi' => 'required',
-            'gambarArtikel' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', 
+            'gambarArtikel' => 'required', // Remove image validation
         ]);
     
         // Get the currently authenticated user
@@ -368,7 +376,7 @@ class AdminController extends Controller
         $article->deskripsi = $request->input('deskripsi');
         $article->status = 'Pending';
     
-        // Handle file upload
+        // Handle file upload or URL input
         if ($request->hasFile('gambarArtikel')) {
             $image = $request->file('gambarArtikel');
     
@@ -377,12 +385,16 @@ class AdminController extends Controller
     
             // Set the image file name in the database
             $article->gambarArtikel = $filename;
+        } else {
+            // If no file is uploaded, assume URL input
+            $article->gambarArtikel = $request->input('gambarArtikel');
         }        
     
         $article->save();
     
         return redirect('/artikelAdmin')->with('success', 'Article added successfully.');
     }
+    
     
 
     //[Admin-Artikel] Edit Data Artikel

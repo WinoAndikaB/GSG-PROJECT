@@ -344,16 +344,26 @@
                   <i>
                     <?php
                     $fotoProfil = Auth::user()->fotoProfil;
+                    $gambarPath = null;
+                    
                     if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
-                    ?>
-                    <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
-                    <?php
-                    } else {
-                    ?>
-                    <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
-                    <?php
+                        // Jika file fotoProfil ada di direktori fotoProfil
+                        $gambarPath = asset('fotoProfil/' . $fotoProfil);
+                    } elseif (filter_var($fotoProfil, FILTER_VALIDATE_URL)) {
+                        // Jika fotoProfil adalah URL yang valid
+                        $gambarPath = $fotoProfil;
                     }
-                    ?>
+                
+                    if ($gambarPath) {
+                ?>
+                    <img src="{{ $gambarPath }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; object-fit: cover;">
+                <?php
+                    } else {
+                ?>
+                    <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; object-fit: cover;">
+                <?php
+                    }
+                ?>
                 </i>
                 <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span> 
                 </a>
@@ -408,6 +418,17 @@
                 <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
                     <div class="d-flex justify-content-center">
                         <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" style="max-width: 100%; height: auto; border-radius: 14px">
+                        @if($item->gambarArtikel)
+                        @if(filter_var($item->gambarArtikel, FILTER_VALIDATE_URL))
+                            <a href="{{$item->gambarArtikel}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                                <img src="{{$item->gambarArtikel}}" style="max-width: 100%; height: auto; border-radius: 14px">
+                            </a>
+                        @else
+                            <a href="{{asset('gambarArtikel/'.$item->gambarArtikel)}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                                <img src="{{asset('gambarArtikel/'.$item->gambarArtikel)}}"  style="max-width: 100%; height: auto; border-radius: 14px">
+                            </a>
+                        @endif
+                    @endif
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200" style="float: right;">

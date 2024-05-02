@@ -237,16 +237,26 @@
                   <i>
                     <?php
                     $fotoProfil = Auth::user()->fotoProfil;
+                    $gambarPath = null;
+                    
                     if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
-                    ?>
-                    <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
-                    <?php
-                    } else {
-                    ?>
-                    <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
-                    <?php
+                        // Jika file fotoProfil ada di direktori fotoProfil
+                        $gambarPath = asset('fotoProfil/' . $fotoProfil);
+                    } elseif (filter_var($fotoProfil, FILTER_VALIDATE_URL)) {
+                        // Jika fotoProfil adalah URL yang valid
+                        $gambarPath = $fotoProfil;
                     }
-                    ?>
+                
+                    if ($gambarPath) {
+                ?>
+                    <img src="{{ $gambarPath }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; object-fit: cover;">
+                <?php
+                    } else {
+                ?>
+                    <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; object-fit: cover;">
+                <?php
+                    }
+                ?>
                 </i>
                 <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span> 
                 </a>
@@ -308,23 +318,40 @@
 
               <form action="{{ route('storeSA') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <div class="form-group">
-                  <label for="gambarArtikel">Gambar</label>
-                  <span for="gambarArtikel">Format Foto : .jpg, .jpeg, .png </span>
-                  <input type="file" class="form-control" id="gambarArtikel" name="gambarArtikel">
-                </div>              
+                <div class="row">
+                  <div class="col">
+                      <div class="form-group">
+                          <label for="gambarArtikelFile">Upload Foto (File)</label>
+                          <span for="gambarArtikelFile">Format Foto: .jpg, .jpeg, .png</span>
+                          <input type="file" class="form-control" id="gambarArtikel" name="gambarArtikel" onchange="toggleInput('file')">
+                      </div>
+                  </div>
+                  <div class="col">
+                      <div class="form-group">
+                          <label for="gambarArtikelURL">Upload Foto (URL)</label>
+                          <input type="text" class="form-control" id="gambarArtikel" name="gambarArtikel" onchange="toggleInput('url')" required>
+                      </div>
+                  </div>
+              </div>              
                 <div class="form-group">
                     <label for="judulArtikel">Judul Artikel</label>
                     <input type="text" class="form-control" id="judulArtikel" name="judulArtikel" required>
                 </div>
-                <div class="form-group">
-                  <label for="email">Email</label>
-                  <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}" readonly>
+                <div class="row">
+                  <div class="col">
+                      <div class="form-group">
+                          <label for="email">Email</label>
+                          <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}" readonly>
+                      </div>
+                  </div>
+                  <div class="col">
+                      <div class="form-group">
+                          <label for="penulis">Penulis</label>
+                          <input type="text" class="form-control" id="penulis" name="penulis" value="{{ Auth::user()->name }}" readonly>
+                      </div>
+                  </div>
               </div>
-                <div class="form-group">
-                    <label for="penulis">Penulis</label>
-                    <input type="text" class="form-control" id="penulis" name="penulis" value="{{ Auth::user()->name }}" readonly>
-                </div>
+              
               <div class="form-group">
                 <label for="kategori">Kategori</label>
                 <select class="form-control" id="kategori" name="kategori" required>
@@ -460,7 +487,40 @@
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
 
-  <!-- Dynamic Tags -->
+<!--------------------------------------------------------------------------------------- Javascript Upload Foto ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Upload Foto ------------------------------------------------------------------------------->
+
+
+<script>
+  function toggleInput(type) {
+      var inputs = document.querySelectorAll('#gambarArtikel');
+      
+      if (type === 'file') {
+          inputs.forEach(function(input) {
+              if (input.type === 'file') {
+                  input.disabled = false;
+              } else {
+                  input.disabled = true;
+                  input.value = ''; // Clear the URL input
+              }
+          });
+      } else if (type === 'url') {
+          inputs.forEach(function(input) {
+              if (input.type === 'file') {
+                  input.disabled = true;
+                  input.value = ''; // Clear the file input
+              } else {
+                  input.disabled = false;
+              }
+          });
+      }
+  }
+</script>
+
+
+<!--------------------------------------------------------------------------------------- Javascript Dynamic Tags ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Dynamic Tags ------------------------------------------------------------------------------->
+
   <script>
     $(document).ready(function () {
         $('#tags').select2({
@@ -472,7 +532,9 @@
 </script>
 
 
-<!--  CKEditor -->
+<!--------------------------------------------------------------------------------------- Javascript CKEditor ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript CKEditor ------------------------------------------------------------------------------->
+
 <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
 <script>
   CKEDITOR.replace('editor');
@@ -536,7 +598,9 @@
   }
 </script>
 
-<!-- Standar Penulisan -->
+<!--------------------------------------------------------------------------------------- Javascript Standar Penulisan ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Standar Penulisan ------------------------------------------------------------------------------->
+
 <script>
   function validateForm() {
     const errorMessageDiv = document.getElementById('error-message');
@@ -593,7 +657,9 @@ for (const word of forbiddenWordsTags) {
   }
 </script>
 
- <!-- MODAL LOGOUT -->
+<!--------------------------------------------------------------------------------------- Javascript Modal Logout ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Modal Logout  ------------------------------------------------------------------------------->
+
  <script>
   // JavaScript untuk modal logout
   function openModal() {

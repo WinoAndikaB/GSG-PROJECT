@@ -271,16 +271,26 @@
                   <i>
                     <?php
                     $fotoProfil = Auth::user()->fotoProfil;
+                    $gambarPath = null;
+                    
                     if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
-                    ?>
-                    <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
-                    <?php
-                    } else {
-                    ?>
-                    <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
-                    <?php
+                        // Jika file fotoProfil ada di direktori fotoProfil
+                        $gambarPath = asset('fotoProfil/' . $fotoProfil);
+                    } elseif (filter_var($fotoProfil, FILTER_VALIDATE_URL)) {
+                        // Jika fotoProfil adalah URL yang valid
+                        $gambarPath = $fotoProfil;
                     }
-                    ?>
+                
+                    if ($gambarPath) {
+                ?>
+                    <img src="{{ $gambarPath }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; object-fit: cover;">
+                <?php
+                    } else {
+                ?>
+                    <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; object-fit: cover;">
+                <?php
+                    }
+                ?>
                 </i>
                 <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span> 
                 </a>
@@ -336,17 +346,13 @@
                                   @csrf
                                   <input type="hidden" name="jenis_banner" value="0"> <!-- Jenis banner 1 -->
                                   <div class="form-group">
-                                      <label>Format Foto: .jpg, .jpeg, .png </label>
-                                      <input type="file" class="form-control" name="file_path">
-                                  </div>
-                                  <div class="form-group">
-                                      <label>URL Banner</label>
-                                      <input type="text" class="form-control" name="image_url" placeholder="URL Gambar">
-                                  </div>
-                                  <div class="form-group">
-                                      <label>Keterangan Banner</label>
-                                      <input type="text" class="form-control" name="keterangan" placeholder="Keterangan" readonly>
-                                  </div>
+                                    <label>Format Foto: .jpg, .jpeg, .png </label>
+                                    <input type="file" class="form-control" name="file_path" onchange="toggleInput('file')">
+                                </div>
+                                <div class="form-group">
+                                    <label>URL Banner</label>
+                                    <input type="text" class="form-control" name="image_url" placeholder="URL Gambar" onchange="toggleInput('url')">
+                                </div>
                                   <button type="submit" class="btn btn-primary mt-3">Upload Banner</button>
                               </form>
                           </div>
@@ -364,7 +370,6 @@
                                           <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image</th>
                                           <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image URL</th>
                                           <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">File Path</th>
-                                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Keterangan</th>
                                           <th class="text-secondary opacity-7"></th>
                                       </tr>
                                   </thead>
@@ -378,21 +383,28 @@
                                       @else
                                       @foreach($banner0 as $banner)
                                       <tr>
-                                          <td class="align-middle text-center">
-                                              <a href="{{ asset($banner->image_url) }}" data-lightbox="gallery" data-title="Deskripsi Gambar">
-                                                  <img src="{{ asset($banner->image_url) }}" class="avatar avatar-sm me-3" alt="Gambar">
+                                        <td class="align-middle text-center">
+                                          @if(!empty($banner->image_url) && filter_var($banner->image_url, FILTER_VALIDATE_URL))
+                                              <a href="{{$banner->image_url}}" data-lightbox="gallery" data-title="Deskripsi Gambar">
+                                                  <img src="{{$banner->image_url}}" class="avatar avatar-sm me-3" alt="Gambar">
                                               </a>
-                                          </td>
+                                          @endif
+                                          
+                                          @if(!empty($banner->file_path))
+                                              <a href="{{asset('banners/'.$banner->file_path)}}" data-lightbox="gallery" data-title="Deskripsi Gambar">
+                                                  <img src="{{asset('banners/'.$banner->file_path)}}" class="avatar avatar-sm me-3" alt="Gambar">
+                                              </a>
+                                          @endif
+                                      </td>
+                                      
+                                      
                                           <td class="align-middle text-center">
                                               <a href="{{$banner['image_url']}}" target="_blank" class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
                                                 {{ Str::limit($banner->image_url, 50) }} <!-- Memperpendek URL menjadi 50 karakter -->
                                               </a>
                                           </td>
                                           <td class="align-middle text-center">
-                                              <span class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">{{ $banner->file_path }}</span>
-                                          </td>
-                                          <td class="align-middle text-center">
-                                              <span class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">{{ $banner->keterangan }}</span>
+                                            <span class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;" title="{{ $banner->file_path }}">{{ Str::limit($banner->file_path, 30) }}</span>
                                           </td>
                                           <td class="align-middle">
                                               <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteBannerSA', ['id' => $banner['id']]) }}')">
@@ -432,10 +444,6 @@
                                       <label>URL Banner</label>
                                       <input type="text" class="form-control" name="image_url" placeholder="URL Gambar">
                                   </div>
-                                  <div class="form-group">
-                                      <label>Keterangan Banner</label>
-                                      <input type="text" class="form-control" name="keterangan" placeholder="Keterangan" readonly>
-                                  </div>
                                   <button type="submit" class="btn btn-primary mt-3">Upload Banner</button>
                               </form>
                           </div>
@@ -454,7 +462,6 @@
                                           <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image</th>
                                           <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image URL</th>
                                           <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">File Path</th>
-                                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Keterangan</th>
                                           <th class="text-secondary opacity-7"></th>
                                       </tr>
                                   </thead>
@@ -470,11 +477,18 @@
                                 @else
                                 @foreach($banner1 as $banner)
                                     <tr>
-                                        <td class="align-middle text-center">
+                                      <td class="align-middle text-center">
+                                        @if(filter_var($banner->image_url, FILTER_VALIDATE_URL))
+                                            <a href="{{$banner->image_url}}" data-lightbox="gallery" data-title="Deskripsi Gambar">
+                                                <img src="{{$banner->image_url}}" class="avatar avatar-sm me-3" alt="Gambar">
+                                            </a>
+                                        @else
                                             <a href="{{ asset($banner->image_url) }}" data-lightbox="gallery" data-title="Deskripsi Gambar">
                                                 <img src="{{ asset($banner->image_url) }}" class="avatar avatar-sm me-3" alt="Gambar">
                                             </a>
-                                        </td>
+                                        @endif
+                                    </td>
+                                    
                                         <td class="align-middle text-center">
                                             <a href="{{$banner->image_url}}" target="_blank" class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
                                                 {{ Str::limit($banner->image_url, 50) }} <!-- Memperpendek URL menjadi 50 karakter -->
@@ -482,9 +496,6 @@
                                         </td>
                                         <td class="align-middle text-center">
                                             <span class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">{{ $banner->file_path }}</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">{{ $banner->keterangan }}</span>
                                         </td>
                                         <td class="align-middle">
                                             <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteBannerSA', ['id' => $banner->id]) }}')">
@@ -525,10 +536,6 @@
                                       <label>URL Banner</label>
                                       <input type="text" class="form-control" name="image_url" placeholder="URL Gambar">
                                   </div>
-                                  <div class="form-group">
-                                      <label>Keterangan Banner</label>
-                                      <input type="text" class="form-control" name="keterangan" placeholder="Keterangan" readonly>
-                                  </div>
                                   <button type="submit" class="btn btn-primary mt-3">Upload Banner</button>
                               </form>
                           </div>
@@ -548,7 +555,6 @@
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image URL</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">File Path</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Keterangan</th>
                                     <th class="text-secondary opacity-7"></th>
                                   </tr>
                               </thead>
@@ -564,11 +570,18 @@
                             @else
                             @foreach($banner2 as $banner)
                             <tr>
-                                <td class="align-middle text-center">
+                              <td class="align-middle text-center">
+                                @if(filter_var($banner->image_url, FILTER_VALIDATE_URL))
+                                    <a href="{{$banner->image_url}}" data-lightbox="gallery" data-title="Deskripsi Gambar">
+                                        <img src="{{$banner->image_url}}" class="avatar avatar-sm me-3" alt="Gambar">
+                                    </a>
+                                @else
                                     <a href="{{ asset($banner->image_url) }}" data-lightbox="gallery" data-title="Deskripsi Gambar">
                                         <img src="{{ asset($banner->image_url) }}" class="avatar avatar-sm me-3" alt="Gambar">
                                     </a>
-                                </td>
+                                @endif
+                            </td>
+                            
                                 <td class="align-middle text-center">
                                     <a href="{{$banner['image_url']}}" target="_blank" class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
                                       {{ Str::limit($banner->image_url, 50) }} <!-- Memperpendek URL menjadi 50 karakter -->
@@ -576,9 +589,6 @@
                                 </td>
                                 <td class="align-middle text-center">
                                     <span class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">{{ $banner->file_path }}</span>
-                                </td>
-                                <td class="align-middle text-center">
-                                    <span class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">{{ $banner->keterangan }}</span>
                                 </td>
                                 <td class="align-middle">
                                     <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteBannerSA', ['id' => $banner['id']]) }}')">
@@ -657,11 +667,18 @@
                       @else
                       @foreach($banner3 as $banner)
                       <tr>
-                          <td class="align-middle text-center">
+                        <td class="align-middle text-center">
+                          @if(filter_var($banner->image_url, FILTER_VALIDATE_URL))
+                              <a href="{{$banner->image_url}}" data-lightbox="gallery" data-title="Deskripsi Gambar">
+                                  <img src="{{$banner->image_url}}" class="avatar avatar-sm me-3" alt="Gambar">
+                              </a>
+                          @else
                               <a href="{{ asset($banner->image_url) }}" data-lightbox="gallery" data-title="Deskripsi Gambar">
                                   <img src="{{ asset($banner->image_url) }}" class="avatar avatar-sm me-3" alt="Gambar">
                               </a>
-                          </td>
+                          @endif
+                      </td>
+                      
                           <td class="align-middle text-center">
                               <a href="{{$banner['image_url']}}" target="_blank" class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
                                 {{ Str::limit($banner->image_url, 50) }} <!-- Memperpendek URL menjadi 50 karakter -->
@@ -856,8 +873,44 @@
  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
 
 
+<!--------------------------------------------------------------------------------------- Javascript Upload Foto Main Banner (5760x3840) ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Upload Foto Main Banner (5760x3840) ------------------------------------------------------------------------------->
 
-  <!-- Modal Delete -->
+
+<script>
+  function toggleInput(type) {
+      var fileInput = document.querySelector('input[name="file_path"]');
+      var urlInput = document.querySelector('input[name="image_url"]');
+
+      if (type === 'file') {
+          fileInput.disabled = false;
+          urlInput.disabled = true;
+          urlInput.value = ''; // Kosongkan nilai input URL
+      } else if (type === 'url') {
+          fileInput.disabled = true;
+          urlInput.disabled = false;
+      }
+  }
+</script>
+
+<!--------------------------------------------------------------------------------------- Javascript Upload Foto (1200x200) ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Upload Foto (1200x200) ------------------------------------------------------------------------------->
+
+
+
+<!--------------------------------------------------------------------------------------- Javascript Upload Foto 370x170) ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Upload Foto (370x170) ------------------------------------------------------------------------------->
+
+
+
+<!--------------------------------------------------------------------------------------- Javascript Upload Foto (370x636) ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Upload Foto (370x636) ------------------------------------------------------------------------------->
+
+
+
+<!--------------------------------------------------------------------------------------- Javascript Modal Delete ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Modal Delete  ------------------------------------------------------------------------------->
+
   <script>
     function showConfirmationModal(deleteUrl) {
       $('#delete-link').attr('href', deleteUrl);
@@ -904,7 +957,9 @@
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="../assets2/js/argon-dashboard.min.js?v=2.0.4"></script>
 
-    <!-- Modal Logout -->
+<!--------------------------------------------------------------------------------------- Javascript Modal Logout ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Modal Logout  ------------------------------------------------------------------------------->
+
     <script>
       // JavaScript untuk modal logout
       function openModal() {

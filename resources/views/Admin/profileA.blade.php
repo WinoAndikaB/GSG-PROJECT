@@ -178,16 +178,28 @@
                   <i>
                     <?php
                     $fotoProfil = Auth::user()->fotoProfil;
+                    $gambarPath = null;
+                    
                     if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
-                    ?>
-                    <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
-                    <?php
-                    } else {
-                    ?>
-                    <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; overflow: hidden;">
-                    <?php
+                        // Jika file fotoProfil ada di direktori fotoProfil
+                        $gambarPath = asset('fotoProfil/' . $fotoProfil);
+                    } elseif (filter_var($fotoProfil, FILTER_VALIDATE_URL)) {
+                        // Jika fotoProfil adalah URL yang valid
+                        $gambarPath = $fotoProfil;
                     }
-                    ?>
+                
+                    if ($gambarPath) {
+                ?>
+                    <img src="{{ $gambarPath }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; object-fit: cover;">
+                <?php
+                    } else {
+                ?>
+                    <img src="{{ asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') }}" alt="User's Profile Picture" width="50" height="50" style="border-radius: 50%; object-fit: cover;">
+                <?php
+                    }
+                ?>
+                
+                
                 </i>
                 <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span> 
                 </a>
@@ -275,12 +287,20 @@
                     <hr class="horizontal dark">
                     <p class="text-uppercase text-sm">Contact Information</p>
                     <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group">
-                           <label for="fotoProfil" class="form-control-label">Foto Profil</label>
-                           <input class="form-control" type="file" name="fotoProfil">
-                        </div>
-                     </div>
+                     <div class="row">
+                      <div class="col">
+                          <div class="form-group">
+                            <label for="fotoProfil" class="form-control-label">Upload Foto (File)</label>
+                            <input class="form-control" type="file" name="fotoProfil" onchange="toggleInput('file')">
+                          </div>
+                      </div>
+                      <div class="col">
+                          <div class="form-group">
+                              <label for="fotoProfil">Upload Foto (URL)</label>
+                              <input type="text" class="form-control" name="fotoProfil" onchange="toggleInput('url')">
+                          </div>
+                      </div>
+                  </div>
                       <div class="col-md-12">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Nama</label>
@@ -323,76 +343,68 @@
                 </div>
               </div>
               <div class="col-md-4">
-                <div class="card">
-                <br>
-                  <div>
-                    <div class="row justify-content-center">
-                      <div class="col-2 col-lg-4 order-lg-2">
-                          <a href="javascript:;">
-                              <div style="width: 230px; height: 220px; border: 2px solid white; border-radius: 50%; overflow: hidden;">
-                                  <img src="<?php
-                                      $fotoProfil = Auth::user()->fotoProfil;
-                                      if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
-                                          echo asset('fotoProfil/' . $fotoProfil);
-                                      } else {
-                                          echo asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999');
-                                      }
-                                  ?>" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
-                              </div>
-                          </a>
-                      </div>
-                    </div>
+                <div class="card shadow">
+                    <div class="text-center mt-4">
+                        <div style="width: 150px; height: 150px; border-radius: 50%; overflow: hidden; margin: 0 auto;">
+                          <img src="<?php
+                              $fotoProfil = Auth::user()->fotoProfil;
+                              $gambarPath = null;
+                              
+                              if ($fotoProfil && file_exists(public_path('fotoProfil/' . $fotoProfil))) {
+                                  // Jika file fotoProfil ada di direktori fotoProfil
+                                  $gambarPath = asset('fotoProfil/' . $fotoProfil);
+                              } elseif (filter_var($fotoProfil, FILTER_VALIDATE_URL)) {
+                                  // Jika fotoProfil adalah URL yang valid
+                                  $gambarPath = $fotoProfil;
+                              }
 
-                        <div class="profile-name text-center">
-                            {{ Auth::user()->name }}
+                              if ($gambarPath) {
+                                  echo $gambarPath;
+                              } else {
+                                  echo asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999');
+                              }
+                          ?>" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
+
                         </div>
-                      
-                        <div class="text-center">
-                            <span style="font-size: 20px; margin-right: 10px;"><b>{{ $TotalArtikelId }}</b> Artikel</span>
-                            <span style="font-size: 20px; margin-right: 10px;"><b>{{ $TotalVideoId }}</b> Video</span>
-                            <span style="font-size: 20px; margin-right: 10px;"><b>{{ $totalFollowers }}</b> Followers</span>
-                            <span style="font-size: 20px; margin-right: 10px;"> 0,0 <span class="gold-star" data-rating="1">&#9733;</span></span>
+                        <h4 class="mt-3">{{ Auth::user()->name }}</h4>
+                        <div>
+                            <span class="mr-3">{{ $TotalArtikelId }} Artikel</span>
+                            <span class="mr-3">{{ $TotalVideoId }} Video</span>
+                            <span class="mr-3">{{ $totalFollowers }} Followers</span>
+                            <span>{{ number_format($averageRating, 1) }} <span class="gold-star" data-rating="1">&#9733;</span></span>
                         </div>
-                      
-                        <br>
-                      
-                        <div class="text-center">
-                          <a href="{{ Auth::user()->facebook }}" target="_blank" title="Facebook" style="font-size: 40px; margin-right: 10px;"><i class="fab fa-facebook"></i></a>
-                          <a href="{{ Auth::user()->instagram }}" target="_blank" title="Instagram" style="font-size: 40px; margin-right: 10px;"><i class="fab fa-instagram"></i></a>
-                      </div>
-                      
-                      <div class="text-center">
-                      <span>Bergabung Sejak: <br> {{ \Carbon\Carbon::parse(Auth::user()->created_at)->format('d F, Y') }}</span>
-                      <div><br>
-      
-                      <div class="about-section text-center" style="margin-left: 20px; margin-right: 20px;">
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="{{ Auth::user()->facebook }}" target="_blank" title="Facebook" class="social-link mr-3"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="{{ Auth::user()->instagram }}" target="_blank" title="Instagram" class="social-link"><i class="fab fa-instagram fa-lg"></i></a>
+                    </div>
+                    <div class="text-center mt-3">
+                        <span>Bergabung Sejak: <br> {{ \Carbon\Carbon::parse(Auth::user()->created_at)->format('d F, Y') }}</span>
+                    </div>
+                    <div class="about-section text-center mt-3 mx-3">
                         <p>{{ Auth::user()->aboutme }}</p>
                     </div>
-                    
-                    
-                    
-                      </div>
-                   </div>
                 </div>
             </div>
-            <footer class="footer pt-3  ">
-              <div class="container-fluid">
-                <div class="row align-items-center justify-content-lg-between">
-                  <div class="col-lg-6 mb-lg-0 mb-4">
-                    <div class="copyright text-center text-sm text-muted text-lg-start">
-                      © <script>
-                        document.write(new Date().getFullYear())
-                      </script>,
-                      Template by <a title="CSS Templates" rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>,
-                      <a title="CSS Templates" rel="sponsored" href="https://themewagon.com/themes/free-bootstrap-4-html-5-blog-website-template-nextpage/" target="_blank">NextPage </a> and
-                      <a title="CSS Templates" rel="sponsored" href="https://www.creative-tim.com" target="_blank">Crative Tim </a> 
-                      Edited By <a title="CSS Templates" rel="sponsored" href="#" target="_blank">KataKey Team</a></p>
-                    </div>
+            
+
+          <footer class="footer pt-3  ">
+            <div class="container-fluid">
+              <div class="row align-items-center justify-content-lg-between">
+                <div class="col-lg-6 mb-lg-0 mb-4">
+                  <div class="copyright text-center text-sm text-muted text-lg-start">
+                    © <script>
+                      document.write(new Date().getFullYear())
+                    </script>,
+                    Template by <a title="CSS Templates" rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>,
+                    <a title="CSS Templates" rel="sponsored" href="https://themewagon.com/themes/free-bootstrap-4-html-5-blog-website-template-nextpage/" target="_blank">NextPage </a> and
+                    <a title="CSS Templates" rel="sponsored" href="https://www.creative-tim.com" target="_blank">Crative Tim </a> 
+                    Edited By <a title="CSS Templates" rel="sponsored" href="#" target="_blank">KataKey Team</a></p>
                   </div>
                 </div>
               </div>
-            </footer>
-          </div>
+            </div>
+          </footer>
 
     </div>
   </main>
@@ -482,7 +494,40 @@
 
   <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
 
-   <!-- MODAL LOGOUT -->
+
+<!--------------------------------------------------------------------------------------- Javascript Upload Foto ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Upload Foto ------------------------------------------------------------------------------->
+
+
+<script>
+  function toggleInput(type) {
+      var inputs = document.querySelectorAll('[name="fotoProfil"]');
+      
+      if (type === 'file') {
+          inputs.forEach(function(input) {
+              if (input.type === 'file') {
+                  input.disabled = false;
+              } else {
+                  input.disabled = true;
+                  input.value = ''; // Clear the URL input
+              }
+          });
+      } else if (type === 'url') {
+          inputs.forEach(function(input) {
+              if (input.type === 'file') {
+                  input.disabled = true;
+                  input.value = ''; // Clear the file input
+              } else {
+                  input.disabled = false;
+              }
+          });
+      }
+  }
+</script>
+
+<!--------------------------------------------------------------------------------------- Javascript Modal Logout ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Modal Logout ------------------------------------------------------------------------------->
+
    <script>
     // JavaScript untuk modal logout
     function openModal() {
