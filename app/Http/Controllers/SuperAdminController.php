@@ -1136,10 +1136,11 @@ function deleteKategoriSA($id){
     }
 
 
+
     function saveBannerSA(Request $request) {
         $request->validate([
             'image_url' => 'nullable|url',
-            'file_path' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Menambahkan validasi untuk file image
+            'file_path' => 'nullable|image',
             'keterangan' => 'nullable|string',
             'jenis_banner' => 'required|integer|in:0,1,2,3', // Validasi jenis_banner
         ]);
@@ -1164,12 +1165,21 @@ function deleteKategoriSA($id){
     
         $banner = new Banner();
     
-        if ($request->has('image_url')) {
-            $banner->image_url = $request->image_url;
-        } elseif ($request->hasFile('file_path')) {
+        // Handle file upload or URL input
+        if ($request->hasFile('file_path')) {
             $file = $request->file('file_path');
-            $path = $file->store('banners', 'public');
-            $banner->file_path = $path;
+    
+            // Generate unique file name
+            $fileName = time() . '_' . $file->getClientOriginalName();
+    
+            // Move uploaded file to the 'public/banners' directory
+            $file->move(public_path('banners'), $fileName);
+    
+            // Set the file path in the database
+            $banner->file_path = $fileName;
+        } else {
+            // If no file is uploaded, assume URL input
+            $banner->image_url = $request->input('image_url');
         }
     
         $banner->keterangan = $request->keterangan;
@@ -1180,9 +1190,7 @@ function deleteKategoriSA($id){
         $banners = Banner::where('jenis_banner', $request->jenis_banner)->take($maxCount)->get();
     
         return redirect()->back()->with('success', 'Banner berhasil disimpan.')->with('banners', $banners);
-    }
-    
-    
+    } 
     
 
         //[SuperAdmin-Banner] Delete Banner

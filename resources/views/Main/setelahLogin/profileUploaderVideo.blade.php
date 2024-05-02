@@ -347,7 +347,13 @@
                   <br>
                   <div>
                     <div class="text-center">
-                      <img src="{{ asset('fotoProfil/' . $user->fotoProfil) }}" alt="Foto Profil" class="rounded-circle img-fluid border border-primary" style="width: 120px; height: 120px;">
+                        
+                        @if(!empty($user->fotoProfil) && filter_var($user->fotoProfil, FILTER_VALIDATE_URL))
+                            <img src="{{$user->fotoProfil}}" alt="Foto Profil" class="rounded-circle img-fluid border border-primary" style="width: 120px; height: 120px;">
+                        @elseif(!empty($user->fotoProfil))
+                            <img src="{{asset('fotoProfil/' . $user->fotoProfil)}}" alt="Foto Profil" class="rounded-circle img-fluid border border-primary" style="width: 120px; height: 120px;">
+                        @endif
+                    
                   </div>
                   
 
@@ -405,12 +411,17 @@
                                 @foreach ($semuaArtikel as $artikel)
                                 <a href="{{ route('detail.artikel', ['id' => $artikel->id]) }}" class="list-group-item list-group-item-action">
                                     <div class="d-flex align-items-center">
-                                        <img src="{{ asset('gambarArtikel/'.$artikel->gambarArtikel) }}" alt="{{ $artikel->judulArtikel }}" class="rounded-start img-fluid" style="width: 80px; height: 50px; object-fit: cover;">
+                                        @if(!empty($artikel->gambarArtikel) && filter_var($artikel->gambarArtikel, FILTER_VALIDATE_URL))
+                                            <img src="{{$artikel->gambarArtikel}}" alt="{{$artikel->judulArtikel}}" class="rounded-start img-fluid" style="width: 80px; height: 50px; object-fit: cover;">
+                                        @else
+                                            <img src="{{ asset('gambarArtikel/'.$artikel->gambarArtikel) }}" alt="{{ $artikel->judulArtikel }}" class="rounded-start img-fluid" style="width: 80px; height: 50px; object-fit: cover;">
+                                        @endif
                                         <div class="flex-grow-1 ms-3">
-                                          <h6 class="mb-1" title="{{ $artikel->judulArtikel }}">{{ Str::limit($artikel->judulArtikel, 20) }}</h6>
+                                            <h6 class="mb-1" title="{{ $artikel->judulArtikel }}">{{ Str::limit($artikel->judulArtikel, 20) }}</h6>
                                             <p class="mb-0">{{ $artikel->created_at->format('l, d M Y') }}</p>
                                         </div>
                                     </div>
+                                    
                                 </a>
                                 @endforeach
                             </div>

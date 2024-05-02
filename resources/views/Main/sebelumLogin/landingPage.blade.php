@@ -137,9 +137,22 @@
                         @endforeach
                     </ol>
                     <div class="carousel-inner">
+
                         @foreach($banner0 as $key => $banner)
-                            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                                <img class="d-block w-100" src="{{ asset($banner->image_url) }}" alt="{{ $banner->keterangan }}">
+                            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">                    
+
+                              @if(!empty($banner->image_url) && filter_var($banner->image_url, FILTER_VALIDATE_URL))
+                                    <a href="{{$banner->image_url}}" data-lightbox="gallery" data-title="Deskripsi Gambar">
+                                        <img src="{{$banner->image_url}}" class="avatar avatar-sm me-3" alt="Gambar" style="max-width: 100%; height: auto; border-radius: 14px">
+                                    </a>
+                                @endif
+                                
+                                @if(!empty($banner->file_path))
+                                    <a href="{{asset('banners/'. $banner->file_path)}}" data-lightbox="gallery" data-title="Deskripsi Gambar">
+                                        <img src="{{asset('banners/'. $banner->file_path)}}" class="avatar avatar-sm me-3" alt="Gambar" style="max-width: 100%; height: auto; border-radius: 14px">
+                                    </a>
+                                @endif
+                          
                             </div>
                         @endforeach
                     </div>
@@ -180,7 +193,19 @@
       <div class="banner-carousel">
           @foreach($banner1 as $banner)
               <div class="banner-slide">
-                  <img src="{{ asset($banner->image_url) }}" alt="{{ $banner->keterangan }}" style="border-radius: 50px;">
+               
+                  @if(!empty($banner->image_url) && filter_var($banner->image_url, FILTER_VALIDATE_URL))
+                        <a href="{{$banner->image_url}}" data-lightbox="gallery" data-title="Deskripsi Gambar">
+                            <img src="{{$banner->image_url}}" class="avatar avatar-sm me-3" alt="Gambar" style="max-width: 100%; height: auto; border-radius: 14px">
+                        </a>
+                    @endif
+                    
+                    @if(!empty($banner->file_path))
+                        <a href="{{asset('banners/'. $banner->file_path)}}" data-lightbox="gallery" data-title="Deskripsi Gambar">
+                            <img src="{{asset('banners/'. $banner->file_path)}}" class="avatar avatar-sm me-3" alt="Gambar" style="max-width: 100%; height: auto; border-radius: 14px">
+                        </a>
+                    @endif
+
               </div>
           @endforeach
       </div>
@@ -220,7 +245,19 @@
                           <div class="trending-post">
                               <div class="single-post-wrap style-overlay">
                                   <div class="thumb">
-                                      <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" alt="img">
+
+                                    @if($item->gambarArtikel)
+                                        @if(filter_var($item->gambarArtikel, FILTER_VALIDATE_URL))
+                                            <a href="{{$item->gambarArtikel}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                                                <img src="{{$item->gambarArtikel}}">
+                                            </a>
+                                        @else
+                                            <a href="{{asset('gambarArtikel/'.$item->gambarArtikel)}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                                                <img src="{{asset('gambarArtikel/'.$item->gambarArtikel)}}">
+                                            </a>
+                                        @endif
+                                    @endif
+                                    
                                   </div>
                                   <div class="details">
                                       <div class="post-meta-single">
@@ -265,7 +302,17 @@
                       <div class="item">
                           <div class="single-post-list-wrap">
                             <div class="media">
-                              <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" class="media-left" style="width: 70px; height: 50px;">
+                              @if($item->gambarArtikel)
+                              @if(filter_var($item->gambarArtikel, FILTER_VALIDATE_URL))
+                                  <a href="{{$item->gambarArtikel}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                                      <img src="{{$item->gambarArtikel}}" class="media-left" style="width: 70px; height: 50px;">
+                                  </a>
+                              @else
+                                  <a href="{{asset('gambarArtikel/'.$item->gambarArtikel)}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                                      <img src="{{asset('gambarArtikel/'.$item->gambarArtikel)}}" class="media-left" style="width: 70px; height: 50px;">
+                                  </a>
+                              @endif
+                          @endif
                               <div class="media-body">
                                   <div class="details">
                                       <div class="post-meta-single">
@@ -313,7 +360,17 @@
                     <div class="item">
                         <div class="single-post-wrap">
                             <div class="thumb">
-                                <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" alt="img">
+                              @if($item->gambarArtikel)
+                              @if(filter_var($item->gambarArtikel, FILTER_VALIDATE_URL))
+                                  <a href="{{$item->gambarArtikel}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                                      <img src="{{$item->gambarArtikel}}">
+                                  </a>
+                              @else
+                                  <a href="{{asset('gambarArtikel/'.$item->gambarArtikel)}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                                      <img src="{{asset('gambarArtikel/'.$item->gambarArtikel)}}">
+                                  </a>
+                              @endif
+                          @endif
                             </div>
                             <div class="details">
                                 <div class="post-meta-single mb-4 pt-1">
@@ -408,10 +465,12 @@
               @endforeach                                           
             </div>
                
-                @foreach($banner2 as $banner)
+            @foreach($banner2 as $banner)
                 <div class="add-area" style="margin-top: 20px;">
-                    @if(!empty($banner->image_url))
-                        <a href="#"><img class="w-100" src="{{ asset($banner->image_url) }}"></a>
+                    @if(!empty($banner->image_url) && filter_var($banner->image_url, FILTER_VALIDATE_URL))
+                        <a href="#"><img class="w-100" src="{{ $banner->image_url }}"></a>
+                    @elseif(!empty($banner->file_path))
+                        <a href="#"><img class="w-100" src="{{ asset('banners/'. $banner->file_path) }}"></a>
                     @else
                         <a href="#"><img class="w-100" src="{{ asset('assets/img/add/6.png') }}"></a>
                     @endif
@@ -427,30 +486,47 @@
   <div class="container">
       <div class="row">
 
-@foreach($banner3 as $banner)
-    <div class="col-lg-3 col-sm-6">
-        <div class="single-post-wrap style-overlay-bg">
-            <div class="thumb">
-                <img src="{{ asset($banner->image_url) }}" alt="img">
-            </div>
-            <div class="details">
-                <div class="post-meta-single mb-3">
-                    <ul>
-                        <li><p><i class="fa fa-clock-o"></i>{{ $banner->created_at }}</p></li>
-                    </ul>
+        @foreach($banner3 as $banner)
+        <div class="col-lg-3 col-sm-6">
+            <div class="single-post-wrap style-overlay-bg">
+                <div class="thumb">
+                    @if(!empty($banner->image_url) && filter_var($banner->image_url, FILTER_VALIDATE_URL))
+                        <img src="{{ $banner->image_url }}" alt="img">
+                    @elseif(!empty($banner->file_path))
+                        <img src="{{ asset('banners/' . $banner->file_path) }}" alt="img">
+                    @endif
                 </div>
-                <h6 class="title"><a href="#">{{ $banner->keterangan }}</a></h6>
+                <div class="details">
+                    <div class="post-meta-single mb-3">
+                        <ul>
+                            <li><p><i class="fa fa-clock-o"></i>{{ $banner->created_at }}</p></li>
+                        </ul>
+                    </div>
+                    <h6 class="title"><a href="#">{{ $banner->keterangan }}</a></h6>
+                </div>
             </div>
         </div>
-    </div>
-@endforeach
+    @endforeach
+    
 
 
           @foreach ($box2 as $item)
           <div class="col-lg-3 col-sm-6">
               <div class="single-post-wrap">
                   <div class="thumb">
-                    <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" class="media-left" style="width: 400; height: 250;">
+
+                    @if($item->gambarArtikel)
+                        @if(filter_var($item->gambarArtikel, FILTER_VALIDATE_URL))
+                            <a href="{{$item->gambarArtikel}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                                <img src="{{$item->gambarArtikel}}"  class="media-left" style="width: 400; height: 250;">
+                            </a>
+                        @else
+                            <a href="{{asset('gambarArtikel/'.$item->gambarArtikel)}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                                <img src="{{asset('gambarArtikel/'.$item->gambarArtikel)}}"  class="media-left" style="width: 400; height: 250;">
+                            </a>
+                        @endif
+                    @endif
+
                       <p class="btn-date"><i class="fa fa-clock-o"></i>{{$item->created_at}}</p>
                   </div>
                   <div class="details">
@@ -480,7 +556,19 @@
                           <div class="single-post-list-wrap">
                               <div class="media">
                                   <div class="media-left">
-                                    <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" class="media-left" style="width: 100px; height: 60px;">
+
+                                    @if($item->gambarArtikel)
+                                      @if(filter_var($item->gambarArtikel, FILTER_VALIDATE_URL))
+                                          <a href="{{$item->gambarArtikel}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                                              <img src="{{$item->gambarArtikel}}"  class="media-left" style="width: 100px; height: 60px;">
+                                          </a>
+                                      @else
+                                          <a href="{{asset('gambarArtikel/'.$item->gambarArtikel)}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                                              <img src="{{asset('gambarArtikel/'.$item->gambarArtikel)}}"  class="media-left" style="width: 100px; height: 60px;">
+                                          </a>
+                                      @endif
+                                  @endif
+
                                   </div>
                                   <div class="media-body">
                                       <div class="details">
@@ -518,7 +606,19 @@
           <div class="row" style="text-align: justify">
             <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
                 <div class="d-flex justify-content-center">
-                    <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" style="max-width: 100%; height: auto; border-radius: 14px">
+
+                  @if($item->gambarArtikel)
+                      @if(filter_var($item->gambarArtikel, FILTER_VALIDATE_URL))
+                          <a href="{{$item->gambarArtikel}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                              <img src="{{$item->gambarArtikel}}"  style="max-width: 100%; height: auto; border-radius: 14px">
+                          </a>
+                      @else
+                          <a href="{{asset('gambarArtikel/'.$item->gambarArtikel)}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                              <img src="{{asset('gambarArtikel/'.$item->gambarArtikel)}}"  style="max-width: 100%; height: auto; border-radius: 14px">
+                          </a>
+                      @endif
+                  @endif
+                  
                 </div>
             </div>
             <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">
@@ -583,7 +683,19 @@
             <div class="col-lg-3 col-sm-6">
                 <div class="single-post-wrap style-overlay">
                     <div class="thumb">
-                        <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" alt="img" width="500" height="250">
+
+                        @if($item->gambarArtikel)
+                        @if(filter_var($item->gambarArtikel, FILTER_VALIDATE_URL))
+                            <a href="{{$item->gambarArtikel}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                                <img src="{{$item->gambarArtikel}}"  alt="img" width="500" height="250">
+                            </a>
+                        @else
+                            <a href="{{asset('gambarArtikel/'.$item->gambarArtikel)}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                                <img src="{{asset('gambarArtikel/'.$item->gambarArtikel)}}" alt="img" width="500" height="250">
+                            </a>
+                        @endif
+                    @endif
+
                         <a class="tag-base tag-purple" href="#">{{ $item->kategori }}</a>
                     </div>
                     <div class="details">

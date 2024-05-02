@@ -307,31 +307,57 @@
                         <i class="fas fa-bell" style="color: white;"></i> <span class="badge badge-pill badge-primary">{{ $jumlahData }}</span>
                     </button>
                     
-                    <div class="dropdown-menu dropdown-menu-wide scrollable-menu" aria-labelledby="dropdownMenuButton">
-                        <h6 class="container-title" style="margin: 10px 0; text-align: center;"><i class="fas fa-bell"></i> Notifikasi</h6>
-                        <hr>
-                        
-                        @if($isFollowingAuthor && $jumlahData > 0)
-                            @foreach($notifArtikel as $item)
-                                <a class="dropdown-item" href="{{ route('detail.artikel', ['id' => $item->id]) }}">
-                                    <div class="notification-item">
-                                        <div class="notification-info">
-                                            <div class="profile-info">
-                                                <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" class="media-left">
-                                                <div class="profile-details">
-                                                    <h6 class="notification-title" title="{{ $item->judulArtikel }}">{{ $item->penulis }} mengupload: {{ Str::limit($item->judulArtikel, 20) }}</h6>
-                                                    <p class="notification-time">{{ $item->created_at->format('d F Y') }} | {{ $item->created_at->diffForHumans() }} </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            @endforeach
-                        @else
-                            <p class="dropdown-item">Tidak ada notifikasi saat ini.</p>
-                        @endif
-                        
-                    </div>
+                    <div class="dropdown-menu dropdown-menu-wide scrollable-menu" aria-labelledby="dropdownMenuButton" style="min-width: 550px;">
+                      <h6 class="container-title" style="margin: 10px 0; text-align: center;"><i class="fas fa-bell"></i> Notifikasi</h6>
+                      <hr>
+                      
+                      <div class="row" style="display: flex; flex-direction: column; align-items: stretch;">
+                          @if($isFollowingAuthor && $jumlahData > 0)
+                              @foreach($notifArtikel as $item)
+                                  <div class="col-md-12 mb-3" style="display: flex;">
+                                      <a class="dropdown-item d-flex" href="{{ route('detail.artikel', ['id' => $item->id]) }}" style="display: flex;">
+                                          <img src="{{ !empty($item->gambarArtikel) && filter_var($item->gambarArtikel, FILTER_VALIDATE_URL) ? $item->gambarArtikel : asset('gambarArtikel/'.$item->gambarArtikel) }}" class="media-left" style="max-width: 100px; height: auto;">
+                                          <div class="media-body ml-3" style="align-self: center;">
+                                              <h6 class="notification-title mb-1" title="{{ $item->judulArtikel }}"> {{ $item->penulis }} mengupload: <br>
+                                                  <?php
+                                                  $judul = $item->judulArtikel;
+                                                  $length = 35; // Panjang maksimum sebelum perlu di-break
+                                              
+                                                  // Jika judul lebih panjang dari panjang maksimum
+                                                  if (strlen($judul) > $length) {
+                                                      $chunks = explode(" ", $judul);
+                                                      $output = '';
+                                                      $lineLength = 0;
+                                              
+                                                      foreach ($chunks as $chunk) {
+                                                          // Jika panjang baris lebih besar dari panjang maksimum, tambahkan line break
+                                                          if ($lineLength + strlen($chunk) > $length) {
+                                                              $output .= "<br>";
+                                                              $lineLength = 0;
+                                                          }
+                                                          $output .= $chunk . " ";
+                                                          $lineLength += strlen($chunk) + 1; // Ditambah satu untuk spasi
+                                                      }
+                                              
+                                                      echo rtrim($output); // Menghilangkan spasi ekstra di akhir
+                                                  } else {
+                                                      echo $judul;
+                                                  }
+                                                  ?>
+                                              </h6>
+                                              
+                                              <p class="notification-time mb-0">{{ $item->created_at->format('d F Y') }} | {{ $item->created_at->diffForHumans() }}</p>
+                                          </div>
+                                      </a>
+                                  </div>
+                              @endforeach
+                          @else
+                              <div class="col-md-12" style="align-self: center;">
+                                  <p class="dropdown-item">Tidak ada notifikasi saat ini.</p>
+                              </div>
+                          @endif
+                      </div>
+                  </div> 
                 </div>
                 
               
@@ -380,7 +406,13 @@
         @foreach ($usersFollowingData as $followingUser)
             <div class="card" style="width: 300px; margin: 10px;">
                 <div style="background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); overflow: hidden; display: flex; flex-direction: column; align-items: center;">
-                    <img src="{{ asset('fotoProfil/' . $followingUser->fotoProfil) }}" alt="Profil Foto" style="width: 100px; height: 100px; border-radius: 50%; margin: 10px auto; display: block;">
+
+                  @if(!empty($followingUser->fotoProfil) && filter_var($followingUser->fotoProfil, FILTER_VALIDATE_URL))
+                      <img src="{{$followingUser->fotoProfil}}" alt="Profil Foto" style="width: 100px; height: 100px; border-radius: 50%; margin: 10px auto; display: block;">
+                  @elseif(!empty($followingUser->fotoProfil))
+                      <img src="{{asset('fotoProfil/' . $followingUser->fotoProfil)}}" alt="Profil Foto" style="width: 100px; height: 100px; border-radius: 50%; margin: 10px auto; display: block;">
+                  @endif
+
                     <div style="text-align: center; padding: 10px;">
                         <p style="font-size: 1.2rem; font-weight: bold; color: #333; margin-bottom: 5px;">
                             <!-- Tautkan ke halaman detail profil penulis -->

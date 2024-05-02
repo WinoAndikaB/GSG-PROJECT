@@ -197,7 +197,20 @@
               <div class="simple-profile-container" style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
                 <a href="{{ route('detailProfilVideoLP', ['id' => $video->id]) }}" style="text-decoration: none; color: inherit;">
                     <div class="simple-profile-picture" style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #3498db;">
-                      <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="Profil Picture" style="width: 100%; height: 100%;">
+
+
+                      @if($fotoProfil)
+                          @if(filter_var($fotoProfil, FILTER_VALIDATE_URL))
+                              <a href="{{$fotoProfil}}" data-lightbox="gambarProfil" data-title="Deskripsi Gambar">
+                                  <img src="{{$fotoProfil}}" alt="Profil Picture" style="width: 100%; height: 100%;">
+                              </a>
+                          @else
+                              <a href="{{asset('fotoProfil/'.$fotoProfil)}}" data-lightbox="gambarProfil" data-title="Deskripsi Gambar">
+                                  <img src="{{asset('fotoProfil/'.$fotoProfil)}}" alt="Profil Picture" style="width: 100%; height: 100%;">
+                              </a>
+                          @endif
+                      @endif
+
                     </div>
                 </a>
             
@@ -425,6 +438,19 @@
       <div class="card-body" style="display: flex;">
           <div class="profil-foto" style="margin-right: 10px;">
               <img src="{{ asset('fotoProfil/' . $komentar->user->fotoProfil) }}" alt="Foto Profil" style="border-radius: 50%; width: 50px; height: 50px;">
+
+              @if($komentar->fotoProfil)
+                @if(filter_var($komentar->user->fotoProfil, FILTER_VALIDATE_URL))
+                    <a href="{{$komentar->user->fotoProfil}}" data-lightbox="fotoProfil" data-title="Deskripsi Gambar">
+                        <img src="{{$komentar->user->fotoProfil}}"  style="max-width: 100%; height: auto; border-radius: 14px">
+                    </a>
+                @else
+                    <a href="{{asset('fotoProfil/'.$komentar->user->fotoProfil)}}" data-lightbox="fotoProfil" data-title="Deskripsi Gambar">
+                        <img src="{{asset('fotoProfil/'.$komentar->user->fotoProfil)}}"  style="max-width: 100%; height: auto; border-radius: 14px">
+                    </a>
+                @endif
+            @endif
+
           </div>
           <div style="flex: 1;">
             <h5 class="card-title" style="display: inline-block;">

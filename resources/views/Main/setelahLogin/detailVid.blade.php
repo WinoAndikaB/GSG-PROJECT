@@ -309,7 +309,13 @@
           <div class="simple-profile-container" style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
             <a href="{{ route('detailProfilVideo', ['id' => $video->id]) }}" style="text-decoration: none; color: inherit;">
                 <div class="simple-profile-picture" style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #3498db;">
-                  <img src="{{ asset('fotoProfil/' . $user->fotoProfil) }}" alt="Profil Picture" style="width: 100%; height: 100%;">
+
+                  @if(!empty($user->fotoProfil) && filter_var($user->fotoProfil, FILTER_VALIDATE_URL))
+                      <img src="{{ $user->fotoProfil }}" alt="Profil Picture" style="width: 100%; height: 100%;">
+                  @elseif(!empty($user->fotoProfil))
+                      <img src="{{ asset('fotoProfil/' . $user->fotoProfil) }}" alt="Profil Picture" style="width: 100%; height: 100%;">
+                  @endif
+              
                 </div>
             </a>
         
@@ -565,7 +571,15 @@
   <div class="card" style="max-width: 730px; margin-bottom: 10px;"> 
       <div class="card-body" style="display: flex;">
           <div class="profil-foto" style="margin-right: 10px;">
-              <img src="{{ asset('fotoProfil/' . $komentar->user->fotoProfil) }}" alt="Foto Profil" style="border-radius: 50%; width: 50px; height: 50px;">
+
+              @if(!empty($komentar->user->fotoProfil))
+                  @if(filter_var($komentar->user->fotoProfil, FILTER_VALIDATE_URL))
+                      <img src="{{ $komentar->user->fotoProfil }}" alt="Foto Profil" style="border-radius: 50%; width: 50px; height: 50px;">
+                  @else
+                      <img src="{{ asset('fotoProfil/' . $komentar->user->fotoProfil) }}" alt="Foto Profil" style="border-radius: 50%; width: 50px; height: 50px;">
+                  @endif
+              @endif
+              
           </div>
 
           <div style="flex: 1;">

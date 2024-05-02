@@ -166,7 +166,19 @@
           <div class="col-lg-5">
             <!-- Kolom 1: Gambar Profil -->
             <div class="profile-picture">
-              <img src="{{ asset('fotoProfil/' . $item->fotoProfil) }}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+
+              @if($item->fotoProfil)
+                  @if(filter_var($item->fotoProfil, FILTER_VALIDATE_URL))
+                      <a href="{{$item->fotoProfil}}" data-lightbox="fotoProfil" data-title="Deskripsi Gambar">
+                          <img src="{{$item->fotoProfil}}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                      </a>
+                  @else
+                      <a href="{{asset('fotoProfil/'.$item->fotoProfil)}}" data-lightbox="fotoProfil" data-title="Deskripsi Gambar">
+                          <img src="{{asset('fotoProfil/'.$item->fotoProfil)}}" alt="User's Profile Picture" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                      </a>
+                  @endif
+              @endif
+
             </div>
           </div>
           <div class="col-lg-9 col-md-6">

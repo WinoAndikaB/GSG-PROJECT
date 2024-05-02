@@ -195,7 +195,19 @@
             <div class="simple-profile-container" style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
               <a href="{{ route('detailProfilPenulisArtikelLP', ['id' => $article->id]) }}" style="text-decoration: none; color: inherit;">
                 <div class="simple-profile-picture" style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #3498db;">
-                    <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="Profil Picture" style="width: 100%; height: 100%;">
+
+                    @if($fotoProfil)
+                    @if(filter_var($fotoProfil, FILTER_VALIDATE_URL))
+                        <a href="{{$fotoProfil}}" data-lightbox="gambarProfil" data-title="Deskripsi Gambar">
+                            <img src="{{$fotoProfil}}" alt="Profil Picture" style="width: 100%; height: 100%;">
+                        </a>
+                    @else
+                        <a href="{{asset('fotoProfil/'.$fotoProfil)}}" data-lightbox="gambarProfil" data-title="Deskripsi Gambar">
+                            <img src="{{asset('fotoProfil/'.$fotoProfil)}}" alt="Profil Picture" style="width: 100%; height: 100%;">
+                        </a>
+                    @endif
+                @endif
+
                 </div>
             </a>
             
@@ -278,7 +290,17 @@
               </p>
           </span>
           
-          <img src="{{ asset('gambarArtikel/' . $article->gambarArtikel) }}" class="main-image" style="max-width: 100%; height: auto; margin-bottom: 20px;">
+          @if($article->gambarArtikel)
+            @if(filter_var($article->gambarArtikel, FILTER_VALIDATE_URL))
+                <a href="{{$article->gambarArtikel}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                    <img src="{{$article->gambarArtikel}}"  style="max-width: 100%; height: auto; border-radius: 14px">
+                </a>
+            @else
+                <a href="{{asset('gambarArtikel/'.$article->gambarArtikel)}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                    <img src="{{asset('gambarArtikel/'.$article->gambarArtikel)}}"  style="max-width: 100%; height: auto; border-radius: 14px">
+                </a>
+            @endif
+        @endif
 
           <div style="font-size: 18px; text-align: justify; margin-top: 20px;">
             <div style="font-size: 18px; line-height: 2;">
@@ -338,7 +360,19 @@
             <div class="row pb-3">
                 @foreach($box as $item)
                 <div class="col-4 align-self-center mb-3">
-                  <img src="{{ asset('gambarArtikel/' . $item->gambarArtikel) }}" alt="img" width="120" height="50" style="border-radius: 5%;">
+
+                  @if(!empty($item->gambarArtikel) && filter_var($item->gambarArtikel, FILTER_VALIDATE_URL))
+                      <a href="{{$item->gambarArtikel}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                          <img src="{{$item->gambarArtikel}}" alt="img" width="120" height="50" style="max-width: 100%; height: auto; border-radius: 5%;">
+                      </a>
+                  @elseif(!empty($item->gambarArtikel))
+                      <a href="{{asset('gambarArtikel/'.$item->gambarArtikel)}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                          <img src="{{asset('gambarArtikel/'.$item->gambarArtikel)}}" alt="img" width="120" height="50" style="max-width: 100%; height: auto; border-radius: 5%;">
+                      </a>
+                  @endif
+              
+
+                  
               </div>
               <div class="col-8 padding">
                   <div class="most_fh5co_trending_font"><a class="article-title" href="{{ route('showDetailLPArtikel', ['id' => $item->id]) }}">{{ \Illuminate\Support\Str::limit($item->judulArtikel, 50) }}</a></div>
@@ -400,7 +434,16 @@
       <div class="card" style="max-width: 730px; margin-bottom: 10px;">
         <div class="card-body" style="display: flex;">
             <div class="profil-foto" style="margin-right: 10px;">
-                <img src="{{ asset('fotoProfil/' . $komentar->user->fotoProfil) }}" alt="Foto Profil" style="border-radius: 50%; width: 50px; height: 50px;">
+
+              @if(!empty($komentar->user->fotoProfil))
+                  @if(filter_var($komentar->user->fotoProfil, FILTER_VALIDATE_URL))
+                      <img src="{{ $komentar->user->fotoProfil }}" alt="Foto Profil" style="border-radius: 50%; width: 50px; height: 50px;">
+                  @else
+                      <img src="{{ asset('fotoProfil/' . $komentar->user->fotoProfil) }}" alt="Foto Profil" style="border-radius: 50%; width: 50px; height: 50px;">
+                  @endif
+              @endif
+              
+                
             </div>
             <div style="flex: 1;">
                 <h5 class="card-title" style="display: inline-block;">

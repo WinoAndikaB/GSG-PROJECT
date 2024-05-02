@@ -97,7 +97,19 @@ https://templatemo.com/tm-574-mexant
               <div class="trending-post">
                 <div class="single-post-wrap style-overlay">
                   <div class="thumb">
-                    <img src="{{ asset('fotoKategori/'.$item->fotoKategori) }}" alt="img" width="100%" height="200">
+
+                    @if($item->fotoKategori)
+                        @if(filter_var($item->fotoKategori, FILTER_VALIDATE_URL))
+                            <a href="{{$item->fotoKategori}}" data-lightbox="fotoKategori" data-title="Deskripsi Gambar">
+                                <img src="{{$item->fotoKategori}}"  alt="img" width="100%" height="200">
+                            </a>
+                        @else
+                            <a href="{{asset('fotoKategori/'.$item->fotoKategori)}}" data-lightbox="fotoKategori" data-title="Deskripsi Gambar">
+                                <img src="{{asset('fotoKategori/'.$item->fotoKategori)}}" alt="img" width="100%" height="200">
+                            </a>
+                        @endif
+                    @endif
+                    
                   </div>
                   
                   <div class="details">

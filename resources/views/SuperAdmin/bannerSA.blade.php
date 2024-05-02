@@ -346,11 +346,12 @@
                                   @csrf
                                   <input type="hidden" name="jenis_banner" value="0"> <!-- Jenis banner 1 -->
                                   <div class="form-group">
-                                    <label>Format Foto: .jpg, .jpeg, .png </label>
+                                    <label>Upload Gambar (File)</label>
+                                    <span>Format Gambar: .jpg, .jpeg, .png</span>
                                     <input type="file" class="form-control" name="file_path" onchange="toggleInput('file')">
                                 </div>
                                 <div class="form-group">
-                                    <label>URL Banner</label>
+                                    <label>Upload Gambar (URL)</label>
                                     <input type="text" class="form-control" name="image_url" placeholder="URL Gambar" onchange="toggleInput('url')">
                                 </div>
                                   <button type="submit" class="btn btn-primary mt-3">Upload Banner</button>
@@ -368,8 +369,8 @@
                                   <thead>
                                       <tr>
                                           <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image</th>
-                                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image URL</th>
-                                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">File Path</th>
+                                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Gambar (URL)</th>
+                                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Gambar (File)</th>
                                           <th class="text-secondary opacity-7"></th>
                                       </tr>
                                   </thead>
@@ -386,21 +387,21 @@
                                         <td class="align-middle text-center">
                                           @if(!empty($banner->image_url) && filter_var($banner->image_url, FILTER_VALIDATE_URL))
                                               <a href="{{$banner->image_url}}" data-lightbox="gallery" data-title="Deskripsi Gambar">
-                                                  <img src="{{$banner->image_url}}" class="avatar avatar-sm me-3" alt="Gambar">
+                                                  <img src="{{$banner->image_url}}" class="avatar avatar-sm me-3" alt="Gambar" style="max-width: 100%; height: auto; border-radius: 14px">
                                               </a>
                                           @endif
                                           
                                           @if(!empty($banner->file_path))
-                                              <a href="{{asset('banners/'.$banner->file_path)}}" data-lightbox="gallery" data-title="Deskripsi Gambar">
-                                                  <img src="{{asset('banners/'.$banner->file_path)}}" class="avatar avatar-sm me-3" alt="Gambar">
+                                              <a href="{{asset('banners/'. $banner->file_path)}}" data-lightbox="gallery" data-title="Deskripsi Gambar">
+                                                  <img src="{{asset('banners/'. $banner->file_path)}}" class="avatar avatar-sm me-3" alt="Gambar" style="max-width: 100%; height: auto; border-radius: 14px">
                                               </a>
-                                          @endif
+                                          @endif 
                                       </td>
                                       
                                       
                                           <td class="align-middle text-center">
                                               <a href="{{$banner['image_url']}}" target="_blank" class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
-                                                {{ Str::limit($banner->image_url, 50) }} <!-- Memperpendek URL menjadi 50 karakter -->
+                                                {{ Str::limit($banner->image_url, 50) }} 
                                               </a>
                                           </td>
                                           <td class="align-middle text-center">
@@ -437,11 +438,12 @@
                                   @csrf
                                   <input type="hidden" name="jenis_banner" value="1"> <!-- Jenis banner 1 -->
                                   <div class="form-group">
-                                      <label>Format Foto: .jpg, .jpeg, .png </label>
+                                    <label>Upload Gambar (File)</label>
+                                    <span>Format Gambar: .jpg, .jpeg, .png</span>
                                       <input type="file" class="form-control" name="file_path">
                                   </div>
                                   <div class="form-group">
-                                      <label>URL Banner</label>
+                                      <label>Upload Gambar (URL)</label>
                                       <input type="text" class="form-control" name="image_url" placeholder="URL Gambar">
                                   </div>
                                   <button type="submit" class="btn btn-primary mt-3">Upload Banner</button>
@@ -460,8 +462,8 @@
                                   <thead>
                                       <tr>
                                           <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image</th>
-                                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image URL</th>
-                                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">File Path</th>
+                                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Gambar (URL)</th>
+                                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Gambar (File)</th>
                                           <th class="text-secondary opacity-7"></th>
                                       </tr>
                                   </thead>
@@ -478,15 +480,17 @@
                                 @foreach($banner1 as $banner)
                                     <tr>
                                       <td class="align-middle text-center">
-                                        @if(filter_var($banner->image_url, FILTER_VALIDATE_URL))
+                                        @if(!empty($banner->image_url) && filter_var($banner->image_url, FILTER_VALIDATE_URL))
                                             <a href="{{$banner->image_url}}" data-lightbox="gallery" data-title="Deskripsi Gambar">
-                                                <img src="{{$banner->image_url}}" class="avatar avatar-sm me-3" alt="Gambar">
-                                            </a>
-                                        @else
-                                            <a href="{{ asset($banner->image_url) }}" data-lightbox="gallery" data-title="Deskripsi Gambar">
-                                                <img src="{{ asset($banner->image_url) }}" class="avatar avatar-sm me-3" alt="Gambar">
+                                                <img src="{{$banner->image_url}}" class="avatar avatar-sm me-3" alt="Gambar" style="max-width: 100%; height: auto; border-radius: 14px">
                                             </a>
                                         @endif
+                                        
+                                        @if(!empty($banner->file_path))
+                                            <a href="{{asset('banners/'. $banner->file_path)}}" data-lightbox="gallery" data-title="Deskripsi Gambar">
+                                                <img src="{{asset('banners/'. $banner->file_path)}}" class="avatar avatar-sm me-3" alt="Gambar" style="max-width: 100%; height: auto; border-radius: 14px">
+                                            </a>
+                                        @endif 
                                     </td>
                                     
                                         <td class="align-middle text-center">
@@ -529,11 +533,12 @@
                                   @csrf
                                   <input type="hidden" name="jenis_banner" value="2"> <!-- Jenis banner 2 -->
                                   <div class="form-group">
-                                      <label>Format Foto: .jpg, .jpeg, .png </label>
+                                    <label>Upload Gambar (File)</label>
+                                    <span>Format Gambar: .jpg, .jpeg, .png</span>
                                       <input type="file" class="form-control" name="file_path">
                                   </div>            
                                   <div class="form-group">
-                                      <label>URL Banner</label>
+                                      <label>Upload Gambar (URL)</label>
                                       <input type="text" class="form-control" name="image_url" placeholder="URL Gambar">
                                   </div>
                                   <button type="submit" class="btn btn-primary mt-3">Upload Banner</button>
@@ -553,8 +558,8 @@
                               <thead>
                                   <tr>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image URL</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">File Path</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Gambar (URL)</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Gambar (File)</th>
                                     <th class="text-secondary opacity-7"></th>
                                   </tr>
                               </thead>
@@ -571,15 +576,17 @@
                             @foreach($banner2 as $banner)
                             <tr>
                               <td class="align-middle text-center">
-                                @if(filter_var($banner->image_url, FILTER_VALIDATE_URL))
+                                @if(!empty($banner->image_url) && filter_var($banner->image_url, FILTER_VALIDATE_URL))
                                     <a href="{{$banner->image_url}}" data-lightbox="gallery" data-title="Deskripsi Gambar">
-                                        <img src="{{$banner->image_url}}" class="avatar avatar-sm me-3" alt="Gambar">
-                                    </a>
-                                @else
-                                    <a href="{{ asset($banner->image_url) }}" data-lightbox="gallery" data-title="Deskripsi Gambar">
-                                        <img src="{{ asset($banner->image_url) }}" class="avatar avatar-sm me-3" alt="Gambar">
+                                        <img src="{{$banner->image_url}}" class="avatar avatar-sm me-3" alt="Gambar" style="max-width: 100%; height: auto; border-radius: 14px">
                                     </a>
                                 @endif
+                                
+                                @if(!empty($banner->file_path))
+                                    <a href="{{asset('banners/'. $banner->file_path)}}" data-lightbox="gallery" data-title="Deskripsi Gambar">
+                                        <img src="{{asset('banners/'. $banner->file_path)}}" class="avatar avatar-sm me-3" alt="Gambar" style="max-width: 100%; height: auto; border-radius: 14px">
+                                    </a>
+                                @endif 
                             </td>
                             
                                 <td class="align-middle text-center">
@@ -621,11 +628,12 @@
                             @csrf
                             <input type="hidden" name="jenis_banner" value="3"> <!-- Jenis banner 1 -->
                             <div class="form-group">
-                                <label>Format Foto: .jpg, .jpeg, .png </label>
+                              <label>Upload Gambar (File)</label>
+                              <span>Format Gambar: .jpg, .jpeg, .png</span>
                                 <input type="file" class="form-control" name="file_path">
                             </div>            
                             <div class="form-group">
-                                <label>URL Banner</label>
+                                <label>Upload Gambar (URL)</label>
                                 <input type="text" class="form-control" name="image_url" placeholder="URL Gambar">
                             </div>
                             <div class="form-group">
@@ -649,8 +657,8 @@
                         <thead>
                             <tr>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image</th>
-                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image URL</th>
-                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">File Path</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Gambar (URL)</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Gambar (File)</th>
                               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Keterangan</th>
                               <th class="text-secondary opacity-7"></th>
                             </tr>
@@ -668,15 +676,17 @@
                       @foreach($banner3 as $banner)
                       <tr>
                         <td class="align-middle text-center">
-                          @if(filter_var($banner->image_url, FILTER_VALIDATE_URL))
+                          @if(!empty($banner->image_url) && filter_var($banner->image_url, FILTER_VALIDATE_URL))
                               <a href="{{$banner->image_url}}" data-lightbox="gallery" data-title="Deskripsi Gambar">
-                                  <img src="{{$banner->image_url}}" class="avatar avatar-sm me-3" alt="Gambar">
-                              </a>
-                          @else
-                              <a href="{{ asset($banner->image_url) }}" data-lightbox="gallery" data-title="Deskripsi Gambar">
-                                  <img src="{{ asset($banner->image_url) }}" class="avatar avatar-sm me-3" alt="Gambar">
+                                  <img src="{{$banner->image_url}}" class="avatar avatar-sm me-3" alt="Gambar" style="max-width: 100%; height: auto; border-radius: 14px">
                               </a>
                           @endif
+                          
+                          @if(!empty($banner->file_path))
+                              <a href="{{asset('banners/'. $banner->file_path)}}" data-lightbox="gallery" data-title="Deskripsi Gambar">
+                                  <img src="{{asset('banners/'. $banner->file_path)}}" class="avatar avatar-sm me-3" alt="Gambar" style="max-width: 100%; height: auto; border-radius: 14px">
+                              </a>
+                          @endif 
                       </td>
                       
                           <td class="align-middle text-center">

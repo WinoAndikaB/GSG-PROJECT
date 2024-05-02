@@ -281,31 +281,57 @@
                         <i class="fas fa-bell" style="color: white;"></i> <span class="badge badge-pill badge-primary">{{ $jumlahData }}</span>
                     </button>
                     
-                    <div class="dropdown-menu dropdown-menu-wide scrollable-menu" aria-labelledby="dropdownMenuButton">
-                        <h6 class="container-title" style="margin: 10px 0; text-align: center;"><i class="fas fa-bell"></i> Notifikasi</h6>
-                        <hr>
-                        
-                        @if($isFollowingAuthor && $jumlahData > 0)
-                            @foreach($notifArtikel as $item)
-                                <a class="dropdown-item" href="{{ route('detail.artikel', ['id' => $item->id]) }}">
-                                    <div class="notification-item">
-                                        <div class="notification-info">
-                                            <div class="profile-info">
-                                                <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" class="media-left">
-                                                <div class="profile-details">
-                                                    <h6 class="notification-title" title="{{ $item->judulArtikel }}">{{ $item->penulis }} mengupload: {{ Str::limit($item->judulArtikel, 20) }}</h6>
-                                                    <p class="notification-time">{{ $item->created_at->format('d F Y') }} | {{ $item->created_at->diffForHumans() }} </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            @endforeach
-                        @else
-                            <p class="dropdown-item">Tidak ada notifikasi saat ini.</p>
-                        @endif
-                        
-                    </div>
+                    <div class="dropdown-menu dropdown-menu-wide scrollable-menu" aria-labelledby="dropdownMenuButton" style="min-width: 550px;">
+                      <h6 class="container-title" style="margin: 10px 0; text-align: center;"><i class="fas fa-bell"></i> Notifikasi</h6>
+                      <hr>
+                      
+                      <div class="row" style="display: flex; flex-direction: column; align-items: stretch;">
+                          @if($isFollowingAuthor && $jumlahData > 0)
+                              @foreach($notifArtikel as $item)
+                                  <div class="col-md-12 mb-3" style="display: flex;">
+                                      <a class="dropdown-item d-flex" href="{{ route('detail.artikel', ['id' => $item->id]) }}" style="display: flex;">
+                                          <img src="{{ !empty($item->gambarArtikel) && filter_var($item->gambarArtikel, FILTER_VALIDATE_URL) ? $item->gambarArtikel : asset('gambarArtikel/'.$item->gambarArtikel) }}" class="media-left" style="max-width: 100px; height: auto;">
+                                          <div class="media-body ml-3" style="align-self: center;">
+                                              <h6 class="notification-title mb-1" title="{{ $item->judulArtikel }}"> {{ $item->penulis }} mengupload: <br>
+                                                  <?php
+                                                  $judul = $item->judulArtikel;
+                                                  $length = 35; // Panjang maksimum sebelum perlu di-break
+                                              
+                                                  // Jika judul lebih panjang dari panjang maksimum
+                                                  if (strlen($judul) > $length) {
+                                                      $chunks = explode(" ", $judul);
+                                                      $output = '';
+                                                      $lineLength = 0;
+                                              
+                                                      foreach ($chunks as $chunk) {
+                                                          // Jika panjang baris lebih besar dari panjang maksimum, tambahkan line break
+                                                          if ($lineLength + strlen($chunk) > $length) {
+                                                              $output .= "<br>";
+                                                              $lineLength = 0;
+                                                          }
+                                                          $output .= $chunk . " ";
+                                                          $lineLength += strlen($chunk) + 1; // Ditambah satu untuk spasi
+                                                      }
+                                              
+                                                      echo rtrim($output); // Menghilangkan spasi ekstra di akhir
+                                                  } else {
+                                                      echo $judul;
+                                                  }
+                                                  ?>
+                                              </h6>
+                                              
+                                              <p class="notification-time mb-0">{{ $item->created_at->format('d F Y') }} | {{ $item->created_at->diffForHumans() }}</p>
+                                          </div>
+                                      </a>
+                                  </div>
+                              @endforeach
+                          @else
+                              <div class="col-md-12" style="align-self: center;">
+                                  <p class="dropdown-item">Tidak ada notifikasi saat ini.</p>
+                              </div>
+                          @endif
+                      </div>
+                  </div> 
                 </div>
                 
                 
@@ -343,7 +369,13 @@
             <div class="simple-profile-container" style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
             <a href="{{ route('detailProfilPenulisArtikel', ['id' => $article->id]) }}" style="text-decoration: none; color: inherit;">
                 <div class="simple-profile-picture" style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #3498db;">
-                  <img src="{{ asset('fotoProfil/' . $user->fotoProfil) }}" alt="Profil Picture" style="width: 100%; height: 100%;">
+                 
+                  @if(!empty($user->fotoProfil) && filter_var($user->fotoProfil, FILTER_VALIDATE_URL))
+                      <img src="{{ $user->fotoProfil }}" alt="Profil Picture" style="width: 100%; height: 100%;">
+                  @elseif(!empty($user->fotoProfil))
+                      <img src="{{ asset('fotoProfil/' . $user->fotoProfil) }}" alt="Profil Picture" style="width: 100%; height: 100%;">
+                  @endif
+                  
                 </div>
             </a>
 
@@ -440,8 +472,18 @@
                   </a>
               </p>
           </span>
-          
-          <img src="{{ asset('gambarArtikel/' . $article->gambarArtikel) }}" class="main-image" style="max-width: 100%; height: auto; margin-bottom: 20px;">
+
+            @if($article->gambarArtikel)
+                @if(filter_var($article->gambarArtikel, FILTER_VALIDATE_URL))
+                    <a href="{{$article->gambarArtikel}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                        <img src="{{$article->gambarArtikel}}"  style="max-width: 100%; height: auto; border-radius: 14px">
+                    </a>
+                @else
+                    <a href="{{asset('gambarArtikel/'.$article->gambarArtikel)}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                        <img src="{{asset('gambarArtikel/'.$article->gambarArtikel)}}"  style="max-width: 100%; height: auto; border-radius: 14px">
+                    </a>
+                @endif
+            @endif
 
           <div style="font-size: 18px; text-align: justify; margin-top: 20px;">
             <div style="font-size: 18px; line-height: 2; color: black;">
@@ -505,7 +547,19 @@
             <div class="row pb-3">
                 @foreach($box as $item)
                 <div class="col-4 align-self-center mb-3">
-                    <img src="{{ asset('gambarArtikel/' . $item->gambarArtikel) }}" alt="img"  width="120" height="50">
+
+                    @if($item->gambarArtikel)
+                      @if(filter_var($item->gambarArtikel, FILTER_VALIDATE_URL))
+                          <a href="{{$item->gambarArtikel}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                              <img src="{{$item->gambarArtikel}}"  alt="img"  width="120" height="50">
+                          </a>
+                      @else
+                          <a href="{{asset('gambarArtikel/'.$item->gambarArtikel)}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                              <img src="{{asset('gambarArtikel/'.$item->gambarArtikel)}}"  alt="img"  width="120" height="50">
+                          </a>
+                      @endif
+                  @endif
+
                 </div>
                 <div class="col-8 padding">
                     <div class="most_fh5co_trending_font"><a class="article-title" href="{{ route('detail.artikel', ['id' => $item->id]) }}">{{ \Illuminate\Support\Str::limit($item->judulArtikel, 50) }}</a></div>
@@ -582,7 +636,15 @@
       <div class="card" style="max-width: 730px; margin-bottom: 10px;">
           <div class="card-body" style="display: flex;">
               <div class="profil-foto" style="margin-right: 10px;">
-                  <img src="{{ asset('fotoProfil/' . $komentar->user->fotoProfil) }}" alt="Foto Profil" style="border-radius: 50%; width: 50px; height: 50px;">
+
+                  @if(!empty($komentar->user->fotoProfil))
+                      @if(filter_var($komentar->user->fotoProfil, FILTER_VALIDATE_URL))
+                          <img src="{{ $komentar->user->fotoProfil }}" alt="Foto Profil" style="border-radius: 50%; width: 50px; height: 50px;">
+                      @else
+                          <img src="{{ asset('fotoProfil/' . $komentar->user->fotoProfil) }}" alt="Foto Profil" style="border-radius: 50%; width: 50px; height: 50px;">
+                      @endif
+                  @endif
+
               </div>
               <div style="flex: 1;">
                   <h5 class="card-title" style="display: inline-block;">

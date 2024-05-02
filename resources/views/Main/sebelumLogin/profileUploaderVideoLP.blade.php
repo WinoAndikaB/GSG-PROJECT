@@ -215,7 +215,19 @@
                     <br>
                     <div>
                       <div class="text-center">
-                        <img src="{{ asset('fotoProfil/' . $fotoProfil) }}" alt="Foto Profil" class="rounded-circle img-fluid border border-primary" style="width: 120px; height: 120px;">
+
+                        @if($fotoProfil)
+                          @if(filter_var($fotoProfil, FILTER_VALIDATE_URL))
+                              <a href="{{$fotoProfil}}" data-lightbox="gambarProfil" data-title="Deskripsi Gambar">
+                                  <img src="{{$fotoProfil}}" alt="Foto Profil" class="rounded-circle img-fluid border border-primary" style="width: 120px; height: 120px;">
+                              </a>
+                          @else
+                              <a href="{{asset('fotoProfil/'.$fotoProfil)}}" data-lightbox="gambarProfil" data-title="Deskripsi Gambar">
+                                  <img src="{{asset('fotoProfil/'.$fotoProfil)}}" alt="Foto Profil" class="rounded-circle img-fluid border border-primary" style="width: 120px; height: 120px;">
+                              </a>
+                          @endif
+                      @endif
+
                     </div>
                     
   
@@ -267,13 +279,18 @@
                               <div class="list-group list-group-flush" id="article-list">
                                   @foreach ($semuaArtikel as $artikel)
                                   <a href="{{ route('showDetailLPArtikel', ['id' => $artikel->id]) }}" class="list-group-item list-group-item-action">
-                                      <div class="d-flex align-items-center">
+                                    <div class="d-flex align-items-center">
+                                      @if(!empty($artikel->gambarArtikel) && filter_var($artikel->gambarArtikel, FILTER_VALIDATE_URL))
+                                          <img src="{{$artikel->gambarArtikel}}" alt="{{$artikel->judulArtikel}}" class="rounded-start img-fluid" style="width: 80px; height: 50px; object-fit: cover;">
+                                      @else
                                           <img src="{{ asset('gambarArtikel/'.$artikel->gambarArtikel) }}" alt="{{ $artikel->judulArtikel }}" class="rounded-start img-fluid" style="width: 80px; height: 50px; object-fit: cover;">
-                                          <div class="flex-grow-1 ms-3">
-                                            <h6 class="mb-1" title="{{ $artikel->judulArtikel }}">{{ Str::limit($artikel->judulArtikel, 20) }}</h6>
-                                              <p class="mb-0">{{ $artikel->created_at->format('l, d M Y') }}</p>
-                                          </div>
+                                      @endif
+                                      <div class="flex-grow-1 ms-3">
+                                          <h6 class="mb-1" title="{{ $artikel->judulArtikel }}">{{ Str::limit($artikel->judulArtikel, 20) }}</h6>
+                                          <p class="mb-0">{{ $artikel->created_at->format('l, d M Y') }}</p>
                                       </div>
+                                  </div>
+                                  
                                   </a>
                                   @endforeach
                               </div>
