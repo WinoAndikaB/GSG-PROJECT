@@ -475,11 +475,7 @@
                             </li>
                             @endforeach
                         </ul>
-                    </div>
-                    
-                    
-                      
-                        
+                    </div>                  
 
                           <table class="table align-items-center mb-0">
                             <thead>

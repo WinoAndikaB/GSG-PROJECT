@@ -235,7 +235,7 @@
               <i class="ni ni-collection text-warning text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Artikel
-              <span class="text-success text-sm font-weight-bolder">+ {{ $totalUserArtikel + $dataBaruKomentarArtikel}}</span> 
+              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruArtikel + $dataBaruKomentarArtikel}}</span> 
             </span>
           </a>
         </li>
@@ -245,7 +245,7 @@
               <i class="ni ni-tv-2 text-warning text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Video
-              <span class="text-success text-sm font-weight-bolder">+ {{ $totalUserVideo + $dataBaruKomentarVideo}}</span> 
+              <span class="text-success text-sm font-weight-bolder">+ {{ $dataBaruVideo + $dataBaruKomentarVideo}}</span> 
             </span>
           </a>
         </li>
@@ -374,6 +374,69 @@
                       </div>
                       <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
+
+                          <!-- Filter Data -->
+                          <div class="dropdown">
+                            <a href="#" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdownMenuLink2">
+                                <span class="d-sm-inline d-none">Filter Data</span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('artikel', ['sort' => 'oldest']) }}">
+                                        Terlama
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('artikel', ['sort' => 'newest']) }}">
+                                        Terbaru
+                                    </a>
+                                </li>
+                            </ul>
+                          </div>
+
+                          <!-- Filter Kategori -->
+                          <div class="dropdown">
+                            <a href="#" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdownMenuLink2">
+                                <span class="d-sm-inline d-none">Filter Kategori</span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('artikel') }}">
+                                        All ({{ $totalDataArtikel }})
+                                    </a>
+                                </li>
+                                @foreach($categoryCounts as $category => $count)
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('artikel', ['kategori' => $category]) }}">
+                                            {{ $category }} ({{ $count }})
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                          </div>
+
+                          <!-- Filter Status -->
+                          <div class="dropdown">
+                            <a href="#" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdownMenuLink2">
+                                <span class="d-sm-inline d-none">Filter Status</span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('artikel') }}">
+                                        All ({{ $totalDataArtikel }})
+                                    </a>
+                                </li>
+                                @foreach($statusCounts as $status => $count)
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('artikel', ['status' => $status]) }}">
+                                            {{ $status }} ({{ $count }})
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                          </div>
+
+
                           <table class="table align-items-center mb-0">
 
                   <div style="margin-left: 25px;">
