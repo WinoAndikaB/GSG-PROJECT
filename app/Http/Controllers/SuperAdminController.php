@@ -622,9 +622,11 @@ class SuperAdminController extends Controller
         $data->email = $request->input('email');
         $data->kategori = $request->input('kategori');
     
-        // Convert array of tags to a string
+        // Ambil tags dari input
         $tags = $request->input('tags');
+        // Gabungkan tags menjadi string dipisahkan oleh koma
         $tagsString = implode(',', $tags);
+        // Simpan string tags ke dalam kolom tags
         $data->tags = $tagsString;
     
         $data->deskripsi = $request->input('deskripsi');
@@ -636,10 +638,12 @@ class SuperAdminController extends Controller
             $data->gambarArtikel = $filename;
         }
     
+        // Simpan data yang diperbarui
         $data->save();
     
         return redirect()->route('artikelSA')->with('success', 'Data Berhasil di Update');
     }
+    
     
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

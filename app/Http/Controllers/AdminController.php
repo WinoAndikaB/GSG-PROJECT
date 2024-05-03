@@ -697,31 +697,41 @@ class AdminController extends Controller
         return view('admin.FormAdmin.formEditArtikel', compact('kategoris','data','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
-
+    
     function updateArtikelA(Request $request, $id){
         $data = artikels::find($id);
-    
+        
         $data->judulArtikel = $request->input('judulArtikel');
         $data->email = $request->input('email');
         $data->penulis = $request->input('penulis');
         $data->kategori = $request->input('kategori');
-        $data->tags = $request->input('tags');
+    
+        // Ambil tags dari input
+        $tags = $request->input('tags');
+        // Gabungkan tags menjadi string dipisahkan oleh koma
+        $tagsString = implode(',', $tags);
+        // Simpan string tags ke dalam kolom tags
+        $data->tags = $tagsString;
+    
         $data->deskripsi = $request->input('deskripsi');
-
+    
         if ($request->hasFile('gambarArtikel')) {
             $image = $request->file('gambarArtikel');
-    
             $filename = $image->getClientOriginalName();
-        
             $image->move(public_path('gambarArtikel'), $filename);
-        
             $data->gambarArtikel = $filename;
+        } elseif ($request->filled('gambarArtikelURL')) {
+            // If no file is uploaded but URL is provided
+            $data->gambarArtikel = $request->input('gambarArtikelURL');
         }
     
+        // Simpan data yang diperbarui
         $data->save();
     
         return redirect()->route('artikel')->with('success','Data Berhasil di Update');
     }
+    
+    
 
 public function TagsArtikelA($tagName)
 {

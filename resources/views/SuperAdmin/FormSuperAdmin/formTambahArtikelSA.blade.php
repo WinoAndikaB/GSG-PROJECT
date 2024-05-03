@@ -323,16 +323,18 @@
                       <div class="form-group">
                           <label for="gambarArtikelFile">Upload Foto (File)</label>
                           <span for="gambarArtikelFile">Format Foto: .jpg, .jpeg, .png</span>
-                          <input type="file" class="form-control" id="gambarArtikel" name="gambarArtikel" onchange="toggleInput('file')">
+                          <input type="file" class="form-control" id="gambarArtikel" name="gambarArtikel" onchange="toggleInput('file'); previewFile()">
+                          <img id="previewImage" src="#" alt="Preview" style="display:none; max-width:1000px; max-height:300px; margin: 20px;">
                       </div>
                   </div>
                   <div class="col">
                       <div class="form-group">
                           <label for="gambarArtikelURL">Upload Foto (URL)</label>
-                          <input type="text" class="form-control" id="gambarArtikel" name="gambarArtikel" onchange="toggleInput('url')" required>
+                          <input type="text" class="form-control" id="gambarArtikel" name="gambarArtikel" onchange="toggleInput('url'); previewURL(this.value)" required>
+                          <img id="previewImageURL" src="#" alt="Preview" style="display:none; max-width:1000px; max-height:300px; margin: 20px;">
                       </div>
                   </div>
-              </div>              
+              </div>                                   
                 <div class="form-group">
                     <label for="judulArtikel">Judul Artikel</label>
                     <input type="text" class="form-control" id="judulArtikel" name="judulArtikel" required>
@@ -514,6 +516,33 @@
               }
           });
       }
+  }
+</script>
+
+<!--------------------------------------------------------------------------------------- Javascript Preview Foto ------------------------------------------------------------------------------->
+
+<script>
+  function previewFile() {
+      var preview = document.getElementById('previewImage');
+      var file = document.querySelector('input[type=file]').files[0];
+      var reader = new FileReader();
+
+      reader.onloadend = function () {
+          preview.src = reader.result;
+          preview.style.display = "block";
+      }
+
+      if (file) {
+          reader.readAsDataURL(file);
+      } else {
+          preview.src = "";
+      }
+  }
+
+  function previewURL(url) {
+      var preview = document.getElementById('previewImageURL');
+      preview.src = url;
+      preview.style.display = "block";
   }
 </script>
 
