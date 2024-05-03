@@ -398,6 +398,67 @@
                         </div>
                         <div class="card-body px-0 pt-0 pb-2 overflow: auto;"">
                           <div class="table-responsive p-0">
+
+                            <div class="dropdown">
+                              <a href="#" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdownMenuLink2">
+                                  <span class="d-sm-inline d-none">Filter Data</span> 
+                              </a>
+                              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                                  <li>
+                                      <a class="dropdown-item" href="{{ route('videoSuperAdmin', ['sort' => 'newest']) }}">
+                                          Terbaru
+                                      </a>
+                                  </li>
+                                  <li>
+                                      <a class="dropdown-item" href="{{ route('videoSuperAdmin', ['sort' => 'oldest']) }}">
+                                          Terlama
+                                      </a>
+                                  </li>
+                              </ul>
+                          </div>
+                          
+
+                            <div class="dropdown">
+                              <a href="#" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdownMenuLink2">
+                                  <span class="d-sm-inline d-none">Filter Kategori</span> 
+                              </a>
+                              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                                  <li>
+                                      <a class="dropdown-item" href="{{ route('videoSuperAdmin') }}">
+                                          All ({{ $AllTotalVideo }})
+                                      </a>
+                                  </li>
+                                  @foreach($categoryCountsVideo as $categoryVideo => $countVideo)
+                                  <li>
+                                      <a class="dropdown-item" href="{{ route('videoSuperAdmin', ['kategoriVideo' => $categoryVideo]) }}">
+                                          {{ $categoryVideo }} ({{ $countVideo }})
+                                      </a>
+                                  </li>
+                                  @endforeach
+                              </ul>
+                          </div>
+                          
+                          <div class="dropdown">
+                              <a href="#" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdownMenuLink2">
+                                  <span class="d-sm-inline d-none">Filter Status</span> 
+                              </a>
+                              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                                  <li>
+                                      <a class="dropdown-item" href="{{ route('videoSuperAdmin') }}">
+                                          All ({{ $AllTotalVideo }})
+                                      </a>
+                                  </li>
+                                  @foreach($statusCountsVideo as $statusVideo => $countVideo)
+                                  <li>
+                                      <a class="dropdown-item" href="{{ route('videoSuperAdmin', ['statusVideo' => $statusVideo]) }}">
+                                          {{ $statusVideo }} ({{ $countVideo }})
+                                      </a>
+                                  </li>
+                                  @endforeach
+                              </ul>
+                          </div>
+                          
+                            
                             <table class="table align-items-center mb-0">
                               <thead>
                                 <tr>
@@ -407,6 +468,8 @@
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Link Video</th>
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Judul Video</th>
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi Video</th>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Buat</th>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Update</th>
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kategori</th>
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tags</th>
@@ -457,6 +520,12 @@
                                       }
                                       ?>
                                     </p>
+                                  </td>
+                                  <td class="align-middle">
+                                    <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item['created_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
+                                  </td>
+                                  <td class="align-middle">
+                                    <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item['updated_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
                                   </td>
                                   <td class="align-middle text-center">
                                     <span class="badge badge-sm status-badge 

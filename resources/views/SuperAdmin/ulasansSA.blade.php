@@ -384,35 +384,53 @@
                             </li>
                             <li>
                                 <a class="dropdown-item" href="{{ route('ulasansSA', ['sort' => 'newest']) }}">
-                                    Terbaru
+                                   Terbaru
                                 </a>
                             </li>
                         </ul>
                     </div>
-                    
+
                     <div class="dropdown">
-                        <a href="#" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdownMenuLink2">
-                            <span class="d-sm-inline d-none">Filter Rating</span> 
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
-                            <li>
-                                <a class="dropdown-item" href="{{ route('ulasansSA') }}">
-                                    All
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{{ route('ulasansSA', ['sort' => 'highest']) }}">
-                                    Highest
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{{ route('ulasansSA', ['sort' => 'lowest']) }}">
-                                    Lowest
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    
+                      <a href="#" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdownMenuLink2">
+                          <span class="d-sm-inline d-none">Filter Rating</span> 
+                      </a>
+                      <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                          <li>
+                              <a class="dropdown-item" href="{{ route('ulasansSA') }}">
+                                  All ({{ $totalUlasan }})
+                              </a>
+                          </li>
+                          <li>
+                              <a class="dropdown-item" href="{{ route('ulasansSA', ['sort' => 'highest']) }}">
+                                  Tertinggi ({{ $ratings->max() }})
+                              </a>
+                          </li>
+                          <li>
+                              <a class="dropdown-item" href="{{ route('ulasansSA', ['sort' => 'lowest']) }}">
+                                  Terendah ({{ $ratings->min() }})
+                              </a>
+                          </li>
+                          @for ($i = 5; $i >= 1; $i--)
+                              @php
+                                  $filteredRatings = $ratings->filter(function ($rating) use ($i) {
+                                      return $rating === $i;
+                                  });
+                              @endphp
+                              @if ($filteredRatings->isNotEmpty())
+                                  <li>
+                                      <a class="dropdown-item" href="{{ route('ulasansSA', ['sort' => $i]) }}">
+                                          @for ($j = 0; $j < $i; $j++)
+                                              <i class="fa fa-star" style="color: gold;"></i>
+                                          @endfor
+                                          ({{ $filteredRatings->count() }})
+                                      </a>
+                                  </li>
+                              @endif
+                          @endfor
+                      </ul>
+                  </div>
+                  
+                  
                       
                       <div class="d-flex justify-content-center">
                         <ul class="pagination">

@@ -366,12 +366,14 @@ class SuperAdminController extends Controller
 
     public function artikelSA(Request $request)
     {
-        // Get the search query from the request
+        // Get the search query, selected category, and selected status from the request
         $searchQuery = $request->input('search');
-
+        $selectedCategory = $request->input('kategori');
+        $selectedStatus = $request->input('status');
+    
         // Start building the query without applying pagination
         $query = artikels::orderBy('created_at', 'desc');
-
+    
         // If there is a search query, add the search conditions
         if (!empty($searchQuery)) {
             $query->where(function($q) use ($searchQuery) {
@@ -381,32 +383,65 @@ class SuperAdminController extends Controller
                     ->orWhere('kategori', 'like', '%' . $searchQuery . '%');
             });
         }
-
+    
+        // If a category is selected, add a where clause to filter by category
+        if (!empty($selectedCategory)) {
+            $query->where('kategori', $selectedCategory);
+        }
+    
+        // If a status is selected, add a where clause to filter by status
+        if (!empty($selectedStatus)) {
+            $query->where('status', $selectedStatus);
+        }
+    
         // Now, paginate the results
         $data = $query->paginate(15);
-
+    
+        // Get unique categories
+        $categories = artikels::select('kategori')->distinct()->pluck('kategori');
+    
+        // Count articles in each category
+        $categoryCounts = [];
+        foreach ($categories as $category) {
+            $categoryCounts[$category] = artikels::where('kategori', $category)->count();
+        }
+    
+        // Get unique statuses
+        $statuses = artikels::select('status')->distinct()->pluck('status');
+    
+        // Count articles in each status
+        $statusCounts = [];
+        foreach ($statuses as $status) {
+            $statusCounts[$status] = artikels::where('status', $status)->count();
+        }
+    
         // Format jumlah akses
         foreach ($data as $article) {
             $article->formattedJumlahAkses = $this->formatJumlahAkses($article->jumlah_akses);
         }
 
+        $AllTotalArtikel = artikels::count();
+    
         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
         $dataBaruUlasan = ulasans::where('created_at', '>=', Carbon::now()->subDay())->count();
         $dataBaruUser = user::where('created_at', '>=', Carbon::now()->subDay())->count();
         $dataBaruArtikel = artikels::where('created_at', '>=', Carbon::now()->subDay())->count();
         $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=', Carbon::now()->subDay())->count();
-
+    
         $dataBaruVideo = video::where('created_at', '>=', Carbon::now()->subDay())->count();
         $dataBaruKomentarVideo = komentar_video::where('created_at', '>=', Carbon::now()->subDay())->count();
-
+    
         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=', Carbon::now()->subDay())->count();
         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=', Carbon::now()->subDay())->count();
-
+    
         $pendingArticles = artikels::where('status', 'Pending')->orderBy('created_at', 'desc')->paginate(5);
         $publishedArticles = artikels::where('status', 'Published')->orderBy('created_at', 'desc')->paginate(5);
-
-        return view('SuperAdmin.artikelSA', compact('data', 'dataBaruUlasan', 'dataBaruUser', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo', 'pendingArticles', 'publishedArticles'));
+    
+        return view('SuperAdmin.artikelSA', compact('data', 'dataBaruUlasan', 'dataBaruUser', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo', 'pendingArticles', 'publishedArticles', 
+        'categories', 'categoryCounts', 'statuses', 'statusCounts','AllTotalArtikel'));
     }
+    
+    
 
     public function approveArticle($id)
     {
@@ -729,13 +764,16 @@ class SuperAdminController extends Controller
             }
 
     //[SuperAdmin-Video] Halaman Tabel Video
-    function videoSuperAdmin(Request $request){
-
-        // Get the search query from the request
+    public function videoSuperAdmin(Request $request)
+    {
+        // Get the search query, selected category, selected status, and selected sort from the request
         $searchQuery = $request->input('search');
-
+        $selectedCategory = $request->input('kategoriVideo');
+        $selectedStatus = $request->input('statusVideo');
+        $selectedSort = $request->input('sort');
+    
         // Start building the query without applying pagination
-        $query = video::orderBy('created_at', 'desc');
+        $query = video::orderBy('created_at', $selectedSort === 'newest' ? 'desc' : 'asc');
     
         // If there is a search query, add the search conditions
         if (!empty($searchQuery)) {
@@ -747,24 +785,56 @@ class SuperAdminController extends Controller
             });
         }
     
+        // If a category is selected, add a where clause to filter by category
+        if (!empty($selectedCategory)) {
+            $query->where('kategoriVideo', $selectedCategory);
+        }
+    
+        // If a status is selected, add a where clause to filter by status
+        if (!empty($selectedStatus)) {
+            $query->where('statusVideo', $selectedStatus);
+        }
+    
         // Now, paginate the results
         $tableVideo = $query->paginate(15);
+    
+        // Get unique categories
+        $categoriesVideo = video::select('kategoriVideo')->distinct()->pluck('kategoriVideo');
+    
+        // Count videos in each category
+        $categoryCountsVideo = [];
+        foreach ($categoriesVideo as $categoryVideo) {
+            $categoryCountsVideo[$categoryVideo] = video::where('kategoriVideo', $categoryVideo)->count();
+        }
+    
+        // Get unique statuses
+        $statusesVideo = video::select('statusVideo')->distinct()->pluck('statusVideo');
+    
+        // Count videos in each status
+        $statusCountsVideo = [];
+        foreach ($statusesVideo as $statusVideo) {
+            $statusCountsVideo[$statusVideo] = video::where('statusVideo', $statusVideo)->count();
+        }
 
-         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
-         $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
- 
-         $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
- 
-         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
-         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
-
-        return view('SuperAdmin.videoSA', compact('tableVideo', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
-        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
+         $AllTotalVideo = video::count();
+    
+        // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
+        $dataBaruUlasan = ulasans::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruUser = user::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruArtikel = artikels::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=', Carbon::now()->subDay())->count();
+    
+        $dataBaruVideo = video::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruKomentarVideo = komentar_video::where('created_at', '>=', Carbon::now()->subDay())->count();
+    
+        $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=', Carbon::now()->subDay())->count();
+    
+        return view('SuperAdmin.videoSA', compact('tableVideo', 'dataBaruUlasan', 'dataBaruUser', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo', 'categoriesVideo', 'categoryCountsVideo', 
+        'statusesVideo', 'statusCountsVideo','AllTotalVideo'));
     }
+    
+    
 
     public function approveVideo($id)
     {
@@ -1205,7 +1275,8 @@ function deleteKategoriSA($id){
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //[SuperAdmin-Pengguna] Halaman Tabel Pengguna
-    function penggunaSA(Request $request){
+    public function penggunaSA(Request $request)
+    {
         $role = $request->input('role');
         $searchQuery = $request->input('search');
         $sort = $request->input('sort');
@@ -1235,6 +1306,17 @@ function deleteKategoriSA($id){
         // Fetch the users
         $users = $usersQuery->get();
         
+        // Get unique roles
+        $roles = User::select('role')->distinct()->pluck('role');
+        
+        // Initialize an array to store user counts for each role
+        $userCounts = [];
+        
+        // Iterate through each role to get the user count
+        foreach ($roles as $role) {
+            $userCounts[$role] = User::where('role', $role)->count();
+        }
+        
         // Initialize an array to store total followers for each user
         $totalFollowers = [];
         
@@ -1242,6 +1324,9 @@ function deleteKategoriSA($id){
         foreach ($users as $user) {
             $totalFollowers[$user->id] = Follower::where('user_id', $user->id)->count();
         }
+
+        // Hitung Ulasan
+         $AllTotalUser = User::count();
         
         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
         $dataBaruUlasan = ulasans::where('created_at', '>=', Carbon::now()->subDay())->count();
@@ -1257,8 +1342,9 @@ function deleteKategoriSA($id){
         
         
         return view('SuperAdmin.penggunaSA', compact('users', 'totalFollowers', 'dataBaruUlasan', 'dataBaruUser', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 
-            'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo'));
+            'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo', 'roles', 'userCounts','AllTotalUser'));
     }
+    
     
     
     public function freezePengguna(Request $request)
@@ -1393,23 +1479,17 @@ function deleteKategoriSA($id){
         $sort = $request->input('sort'); // Ambil parameter 'sort' dari request
         
         // Ambil data ulasan berdasarkan parameter sort
-        $data1 = ulasans::orderBy('created_at', $sort === 'newest' ? 'desc' : 'asc')->paginate(10);
-
-         // Ambil data ulasan berdasarkan parameter sort
-    if($sort === 'highest') {
-        $data1 = ulasans::orderBy('rating', 'desc')->paginate(10);
-    } else if($sort === 'lowest') {
-        $data1 = ulasans::orderBy('rating', 'asc')->paginate(10);
-    } else {
-        $data1 = ulasans::orderBy('created_at', $sort === 'newest' ? 'desc' : 'asc')->paginate(10);
-    }
-
-    //Rating
-    $ratings = $data1->pluck('rating')->map(function ($rating) {
-        return (int) $rating; 
-    });
+        if ($sort === 'highest') {
+            $data1 = ulasans::orderBy('rating', 'desc')->paginate(10);
+        } else if ($sort === 'lowest') {
+            $data1 = ulasans::orderBy('rating', 'asc')->paginate(10);
+        } else if (is_numeric($sort)) { // Filter berdasarkan rating
+            $data1 = ulasans::where('rating', $sort)->paginate(10);
+        } else {
+            $data1 = ulasans::orderBy('created_at', $sort === 'newest' ? 'desc' : 'asc')->paginate(10);
+        }
     
-        //Rating
+        // Rating
         $ratings = $data1->pluck('rating')->map(function ($rating) {
             return (int) $rating; 
         });
@@ -1417,24 +1497,25 @@ function deleteKategoriSA($id){
         $totalRatings = $ratings->sum();
         $averageRating = $ratings->count() > 0 ? $totalRatings / $ratings->count() : 0;
     
-        //Hitung Ulasan
+        // Hitung Ulasan
         $totalUlasan = ulasans::count();
     
         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
-        $dataBaruUlasan = ulasans::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruUser = user::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruArtikel = artikels::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruUlasan = ulasans::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruUser = user::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruArtikel = artikels::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruKomentarArtikel = komentar_artikel::where('created_at', '>=', Carbon::now()->subDay())->count();
     
-        $dataBaruVideo = video::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruKomentarVideo = komentar_video::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruVideo = video::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruKomentarVideo = komentar_video::where('created_at', '>=', Carbon::now()->subDay())->count();
     
-        $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
-        $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
+        $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=', Carbon::now()->subDay())->count();
+        $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=', Carbon::now()->subDay())->count();
     
-        return view('SuperAdmin.ulasansSA', compact('data1', 'averageRating', 'totalUlasan', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
-        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
+        return view('SuperAdmin.ulasansSA', compact('data1', 'ratings', 'averageRating', 'totalUlasan', 'dataBaruUlasan', 'dataBaruUser', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo'));
     }
+    
     
 
     //[SuperAdmin-Ulasan] Delete Ulasan

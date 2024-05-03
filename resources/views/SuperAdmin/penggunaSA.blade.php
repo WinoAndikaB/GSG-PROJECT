@@ -388,44 +388,38 @@
                               <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
                                   <li>
                                       <a class="dropdown-item" href="{{ route('penggunaSA', ['sort' => 'oldest']) }}">
-                                          Oldest
+                                          Terlama
                                       </a>
                                   </li>
                                   <li>
                                       <a class="dropdown-item" href="{{ route('penggunaSA', ['sort' => 'newest']) }}">
-                                          Newest
+                                          Terbaru
                                       </a>
                                   </li>
                               </ul>
                           </div>
 
                           <div class="dropdown">
-                            <a href="#" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdownMenuLink2">
-                                <span class="d-sm-inline d-none">Filter Role</span> 
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('penggunaSA') }}">
-                                        All
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('penggunaSA', ['role' => 'superadmin']) }}">
-                                        Superadmin
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('penggunaSA', ['role' => 'admin']) }}">
-                                        Admin
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('penggunaSA', ['role' => 'user']) }}">
-                                        User
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                            <div class="dropdown">
+                              <a href="#" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdownMenuLink2">
+                                  <span class="d-sm-inline d-none">Filter Role</span> 
+                              </a>
+                              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                                  <li>
+                                      <a class="dropdown-item" href="{{ route('penggunaSA') }}">
+                                          All ({{ $AllTotalUser }})
+                                      </a>
+                                  </li>
+                                  @foreach($roles as $role)
+                                  <li>
+                                      <a class="dropdown-item" href="{{ route('penggunaSA', ['role' => $role]) }}">
+                                          {{ $role }} ({{ $userCounts[$role] }})
+                                      </a>
+                                  </li>
+                                  @endforeach
+                              </ul>
+                          </div>
+                          
 
                         <div class="dropdown">
                           <a href="#" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdownMenuLink2">
@@ -434,8 +428,8 @@
                           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
                               <li>
                                   <a class="dropdown-item" href="{{ route('penggunaSA') }}">
-                                      All
-                                  </a>
+                                      All ({{ $AllTotalUser }})
+                                    </a>
                               </li>
                               <li>
                                   <a class="dropdown-item" href="{{ route('penggunaSA', ['freeze' => 'freeze']) }}">
