@@ -371,6 +371,48 @@
                       <div class="card-body px-0 pt-0 pb-2">
                         <div class="rating-container">
                       </div> 
+
+                      <div class="dropdown">
+                        <a href="#" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdownMenuLink2">
+                            <span class="d-sm-inline d-none">Filter Data</span> 
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                            <li>
+                                <a class="dropdown-item" href="{{ route('ulasansSA', ['sort' => 'oldest']) }}">
+                                    Terlama
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('ulasansSA', ['sort' => 'newest']) }}">
+                                    Terbaru
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="dropdown">
+                        <a href="#" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdownMenuLink2">
+                            <span class="d-sm-inline d-none">Filter Rating</span> 
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                            <li>
+                                <a class="dropdown-item" href="{{ route('ulasansSA') }}">
+                                    All
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('ulasansSA', ['sort' => 'highest']) }}">
+                                    Highest
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('ulasansSA', ['sort' => 'lowest']) }}">
+                                    Lowest
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    
                       
                       <div class="d-flex justify-content-center">
                         <ul class="pagination">

@@ -378,16 +378,79 @@
                     <div class="card-body px-0 pt-0 pb-2">
                       <div class="table-responsive p-0">
                         
-                        <div style="text-align: center;">
-                          <div class="dropdown" style="display: inline-block;">
-                              <button class="dropbtn" id="filterRoleBtn">Filter Role</button>
-                              <div class="dropdown-content">
-                                  <a href="#" class="role-filter" data-role="User">User</a>
-                                  <a href="#" class="role-filter" data-role="Admin">Admin</a>
-                                  <a href="#" class="role-filter" data-role="SuperAdmin">SuperAdmin</a>
-                              </div>
+                        <div class="row">
+                          <div class="col">
+
+                            <div class="dropdown">
+                              <a href="#" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdownMenuLink2">
+                                  <span class="d-sm-inline d-none">Filter Data</span> 
+                              </a>
+                              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                                  <li>
+                                      <a class="dropdown-item" href="{{ route('penggunaSA', ['sort' => 'oldest']) }}">
+                                          Oldest
+                                      </a>
+                                  </li>
+                                  <li>
+                                      <a class="dropdown-item" href="{{ route('penggunaSA', ['sort' => 'newest']) }}">
+                                          Newest
+                                      </a>
+                                  </li>
+                              </ul>
+                          </div>
+
+                          <div class="dropdown">
+                            <a href="#" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdownMenuLink2">
+                                <span class="d-sm-inline d-none">Filter Role</span> 
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('penggunaSA') }}">
+                                        All
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('penggunaSA', ['role' => 'superadmin']) }}">
+                                        Superadmin
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('penggunaSA', ['role' => 'admin']) }}">
+                                        Admin
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('penggunaSA', ['role' => 'user']) }}">
+                                        User
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="dropdown">
+                          <a href="#" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdownMenuLink2">
+                              <span class="d-sm-inline d-none">Filter User Freeze</span> 
+                          </a>
+                          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                              <li>
+                                  <a class="dropdown-item" href="{{ route('penggunaSA') }}">
+                                      All
+                                  </a>
+                              </li>
+                              <li>
+                                  <a class="dropdown-item" href="{{ route('penggunaSA', ['freeze' => 'freeze']) }}">
+                                      Freeze
+                                  </a>
+                              </li>
+                          </ul>
+                      </div>
+                                           
+                        
+                          
                           </div>
                       </div>
+                      
+                      
 
                       <br>
                       
