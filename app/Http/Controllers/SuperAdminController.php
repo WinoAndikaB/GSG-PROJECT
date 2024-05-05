@@ -1190,7 +1190,6 @@ function deleteKategoriSA($id){
         $banner0 = banner::where('jenis_banner', 0)->orderBy('created_at', 'desc')->paginate(10);
         $banner1 = banner::where('jenis_banner', 1)->orderBy('created_at', 'desc')->paginate(10);
         $banner2 = banner::where('jenis_banner', 2)->orderBy('created_at', 'desc')->paginate(10);
-        $banner3 = banner::where('jenis_banner', 3)->orderBy('created_at', 'desc')->paginate(10);
         
 
         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
@@ -1205,7 +1204,7 @@ function deleteKategoriSA($id){
         $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
 
-        return view('superAdmin.bannerSA', compact('banner0','banner1','banner2','banner3','dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
+        return view('superAdmin.bannerSA', compact('banner0','banner1','banner2','dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
         'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 

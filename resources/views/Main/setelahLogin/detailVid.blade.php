@@ -335,8 +335,8 @@
       
               <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;">Uploader | {{$totalFollowers}} Followers</span>
               <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;">
-                <span style="color: gray;">{{ number_format($averageRating, 1) }}</span>
-                <span class="gold-star" data-rating="1">&#9733;</span></span>
+                <span class="gold-star" data-rating="1">&#9733;</span><span style="color: gray;">{{ number_format($averageRating, 1) }}</span>
+
           </div>
           
                     @auth
@@ -353,7 +353,7 @@
             <div class="float-right" style="margin-top: 10px;">
                 <ul>
                     <li>
-                        Dibuat: <span style="color: rgba(165, 165, 165, 1);">{{ \Carbon\Carbon::parse($video['created_at'])->format('l, d M Y H.i') }}</span><br>
+                        Diterbitkan: <span style="color: rgba(165, 165, 165, 1);">{{ \Carbon\Carbon::parse($video['created_at'])->format('l, d M Y H.i') }}</span><br>
                     </li>
                     <li>
                         Diperbarui: <span style="color: rgba(165, 165, 165, 1);">{{ \Carbon\Carbon::parse($video['updated_at'])->format('l, d M Y H.i') }}</span>
@@ -382,19 +382,10 @@
               <a href="#" id="showModal" class="laporan-button" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
                 <i class="fa fa-flag"></i> Laporkan
             </a>
-          </li>        
-        </ul>
+          </li>   
+          
+          <span class="gold-star" data-rating="1">&#9733;</span><span style="color: gray;">{{ number_format($AvgVid, 1) }} ({{$totalRatingVid}} Rating)</span>
 
-        @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-      @elseif(session('info'))
-        <div class="alert alert-info">
-            {{ session('info') }}
-        </div>
-      @endif
-  
     <br>
 
           </section>
@@ -415,6 +406,18 @@
                   </a>
               </p>
           </span>
+        </ul>
+
+        @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+      @elseif(session('info'))
+        <div class="alert alert-info">
+            {{ session('info') }}
+        </div>
+      @endif
+  
 
           <br>
           

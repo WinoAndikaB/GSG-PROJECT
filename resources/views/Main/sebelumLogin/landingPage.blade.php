@@ -237,7 +237,7 @@
         <div class="row">
             <div class="col-lg-3 col-md-6">
                 <div class="section-title">
-                    <h6 class="title">Trending</h6>
+                    <h6 class="title">Most Read</h6>
                 </div>
                 @foreach ($trending->take(5) as $item)
                 <div class="post-slider owl-carousel">
@@ -353,7 +353,7 @@
           
           <div class="col-lg-3 col-md-6">
             <div class="section-title">
-                <h6 class="title">What’s new</h6>
+                <h6 class="title">See More</h6>
             </div>
             <div class="post-slider owl-carousel">
                 @foreach ($whatsnew as $item)
@@ -413,7 +413,7 @@
 
               <div style="width: 365px; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">  
                 <div style="text-align: center;">
-                  <h6 class="title">Penulis Terbaik</h6>
+                  <h6 class="title">Best Rate Author</h6>
                 </div>
                 @foreach ($ratingPenulis->groupBy('user_id_penulis')->sortByDesc(function ($userRatings) {
                   return $userRatings->avg('rating');
@@ -464,18 +464,8 @@
                   </a>
               @endforeach                                           
             </div>
-               
-            @foreach($banner2 as $banner)
-                <div class="add-area" style="margin-top: 20px;">
-                    @if(!empty($banner->image_url) && filter_var($banner->image_url, FILTER_VALIDATE_URL))
-                        <a href="#"><img class="w-100" src="{{ $banner->image_url }}"></a>
-                    @elseif(!empty($banner->file_path))
-                        <a href="#"><img class="w-100" src="{{ asset('banners/'. $banner->file_path) }}"></a>
-                    @else
-                        <a href="#"><img class="w-100" src="{{ asset('assets/img/add/6.png') }}"></a>
-                    @endif
-                </div>
-            @endforeach
+
+            
      
             </div>
         </div>
@@ -486,60 +476,53 @@
   <div class="container">
       <div class="row">
 
-        @foreach($banner3 as $banner)
-        <div class="col-lg-3 col-sm-6">
-            <div class="single-post-wrap style-overlay-bg">
-                <div class="thumb">
-                    @if(!empty($banner->image_url) && filter_var($banner->image_url, FILTER_VALIDATE_URL))
-                        <img src="{{ $banner->image_url }}" alt="img">
-                    @elseif(!empty($banner->file_path))
-                        <img src="{{ asset('banners/' . $banner->file_path) }}" alt="img">
-                    @endif
-                </div>
-                <div class="details">
-                    <div class="post-meta-single mb-3">
-                        <ul>
-                            <li><p><i class="fa fa-clock-o"></i>{{ $banner->created_at }}</p></li>
-                        </ul>
-                    </div>
-                    <h6 class="title"><a href="#">{{ $banner->keterangan }}</a></h6>
-                </div>
-            </div>
+
+    <div class="col-lg-3 col-sm-6">
+        @foreach($banner2 as $banner)
+        <div class="add-area" style="margin-top: 20px;">
+            @if(!empty($banner->image_url) && filter_var($banner->image_url, FILTER_VALIDATE_URL))
+                <a href="#"><img class="w-100" src="{{ $banner->image_url }}"></a>
+            @elseif(!empty($banner->file_path))
+                <a href="#"><img class="w-100" src="{{ asset('banners/'. $banner->file_path) }}"></a>
+            @else
+                <a href="#"><img class="w-100" src="{{ asset('assets/img/add/6.png') }}"></a>
+            @endif
         </div>
     @endforeach
-    
-
+    </div> 
 
           @foreach ($box2 as $item)
           <div class="col-lg-3 col-sm-6">
               <div class="single-post-wrap">
                   <div class="thumb">
 
+                    <br>
+
                     @if($item->gambarArtikel)
                         @if(filter_var($item->gambarArtikel, FILTER_VALIDATE_URL))
                             <a href="{{$item->gambarArtikel}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
-                                <img src="{{$item->gambarArtikel}}"  class="media-left" style="width: 400; height: 250;">
+                                <img src="{{$item->gambarArtikel}}"  style="max-width: 100%; height: auto; border-radius: 14px">
                             </a>
                         @else
                             <a href="{{asset('gambarArtikel/'.$item->gambarArtikel)}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
-                                <img src="{{asset('gambarArtikel/'.$item->gambarArtikel)}}"  class="media-left" style="width: 400; height: 250;">
+                                <img src="{{asset('gambarArtikel/'.$item->gambarArtikel)}}"  style="max-width: 100%; height: auto; border-radius: 14px">
                             </a>
                         @endif
                     @endif
 
-                      <p class="btn-date"><i class="fa fa-clock-o"></i>{{$item->created_at}}</p>
+                      <p class="btn-date"><i class="fa fa-clock-o"></i>{{$item->created_at->format('d F Y H:i:s')}}</p>
                   </div>
                   <div class="details">
-                      <h6 class="title"><a href="{{ route('showDetailLPArtikel', ['id' => $item->id]) }}">{{ \Illuminate\Support\Str::limit($item->judulArtikel, 70) }}</a></h6>
+                      <h6 class="title" title="{{ $item->judulArtikel }}"><a href="{{ route('showDetailLPArtikel', ['id' => $item->id]) }}">{{ \Illuminate\Support\Str::limit($item->judulArtikel, 40) }}</a></h6>
                   </div>
               </div>
               <div class="single-post-wrap">
                   <div class="thumb">
-                    <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" class="media-left" style="width: 400; height: 250;">
-                      <p class="btn-date"><i class="fa fa-clock-o"></i>{{$item->created_at}}</p>
+                    <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" style="max-width: 100%; height: auto; border-radius: 14px">
+                      <p class="btn-date"><i class="fa fa-clock-o"></i>{{$item->created_at->format('d F Y H:i:s')}}</p>
                   </div>
                   <div class="details">
-                      <h6 class="title"><a href="{{ route('showDetailLPArtikel', ['id' => $item->id]) }}">{{ \Illuminate\Support\Str::limit($item->judulArtikel, 70) }}</a></h6>
+                      <h6 class="title" title="{{ $item->judulArtikel }}"><a href="{{ route('showDetailLPArtikel', ['id' => $item->id]) }}">{{ \Illuminate\Support\Str::limit($item->judulArtikel, 40) }}</a></h6>
                   </div>
               </div>
           </div>
@@ -596,12 +579,9 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-6 offset-lg-3">
-          <div class="section-heading">
-            <h6>Artikel</h6>
-            <h4>Daftar Artikel</h4>
-          </div>
         </div>
         <div>
+
           @foreach ($semua as $item)
           <div class="row" style="text-align: justify">
             <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
@@ -732,6 +712,7 @@
     </div>
 </div>
 </body>
+
 
 <!--------------------------------------------------------------------- Javascript Banner Carousel ------------------------------------------------------------------------------>
 <!--------------------------------------------------------------------- Javascript Banner Carousel ------------------------------------------------------------------------------>

@@ -396,10 +396,9 @@
                 <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;">Penulis | {{ $totalFollowers }} Follower</span>
                 <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;"> 
 
-                  <span style="color: gray;">{{ number_format($averageRating, 1) }}</span>
-
-                  
-                  <span class="gold-star" data-rating="1">&#9733;</span></span>
+                <span class="gold-star" data-rating="1">&#9733;</span><span style="color: gray;">{{ number_format($averageRating, 1) }}</span>
+              
+                <span> 
             </div>
 
           @auth
@@ -416,7 +415,7 @@
             <div class="float-right" style="margin-top: 10px;">
                 <ul>
                     <li>
-                        Dibuat: <span style="color: rgba(165, 165, 165, 1);">{{ \Carbon\Carbon::parse($article['created_at'])->format('l, d M Y H.i') }}</span><br>
+                        Diterbitkan: <span style="color: rgba(165, 165, 165, 1);">{{ \Carbon\Carbon::parse($article['created_at'])->format('l, d M Y H.i') }}</span><br>
                     </li>
                     <li>
                         Diperbarui: <span style="color: rgba(165, 165, 165, 1);">{{ \Carbon\Carbon::parse($article['updated_at'])->format('l, d M Y H.i') }}</span>
@@ -447,22 +446,11 @@
                 <a href="#" id="showModal" class="laporan-button" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
                   <i class="fa fa-flag"></i> Laporkan
               </a>
-            </li>  
-      
-          </ul>
+            </li>
+            
+            <span class="gold-star" data-rating="1">&#9733;</span><span style="color: gray;">{{ number_format($AvgArt, 1) }} ({{$totalRatingArt}} Rating)</span>
 
-          @if(session('success'))
-          <div class="alert alert-success">
-              {{ session('success') }}
-          </div>
-          @elseif(session('info'))
-            <div class="alert alert-info">
-                {{ session('info') }}
-            </div>
-          @endif
-          
-          </section>
-          <span style="text-align: right">
+            <span style="text-align: right">
               <p class="icon-bagikan" style="color: rgba(165, 165, 165, 1); display: flex; align-items: center; justify-content: end; gap: 0.5em;">
                   Share &nbsp;&nbsp;&nbsp;
                   <a href="https://www.facebook.com/sharer.php?u=https://www.example.com/post-url{{ $article->judulArtikel }}">
@@ -479,6 +467,21 @@
                   </a>
               </p>
           </span>
+      
+          </ul>
+
+          @if(session('success'))
+          <div class="alert alert-success">
+              {{ session('success') }}
+          </div>
+          @elseif(session('info'))
+            <div class="alert alert-info">
+                {{ session('info') }}
+            </div>
+          @endif
+          
+          </section>
+
 
             @if($article->gambarArtikel)
                 @if(filter_var($article->gambarArtikel, FILTER_VALIDATE_URL))

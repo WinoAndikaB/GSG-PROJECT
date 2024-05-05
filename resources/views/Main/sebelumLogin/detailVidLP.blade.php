@@ -267,7 +267,8 @@
               <i class="fa fa-flag"></i> Laporkan
           </a>
         </li>        
-      </ul>
+
+        <span class="gold-star" data-rating="1">&#9733;</span><span style="color: gray;">{{ number_format($AvgVid, 1) }} ({{$totalRatingVid}} Rating)</span>
 
           </section>
           <span style="text-align: right">
@@ -287,6 +288,7 @@
                   </a>
               </p>
           </span>
+        </ul>
 
           <br>
           

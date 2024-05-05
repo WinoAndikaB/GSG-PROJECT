@@ -174,7 +174,11 @@ class PenggunaController extends Controller
             ->take(8)
             ->get();
     
-            $semua = artikels::where('status', 'Published')->get();
+            $semua = artikels::where('status', 'Published')
+            ->inRandomOrder()
+            ->limit(5) // Use limit instead of take for the initial set of data
+            ->get();
+        
 
     
         // Get the currently authenticated user ID
@@ -220,13 +224,10 @@ class PenggunaController extends Controller
         $kategoriLogA = kategori::all();
     
         $box = artikels::where('status', 'published')->inRandomOrder()->take(8)->get();
-
     
         $tags = artikels::inRandomOrder()->take(5)->get();
     
         $kategori = artikels::inRandomOrder()->take(10)->get();
-    
-        $article->increment('jumlah_akses');
     
         // Ambil ID pengguna saat ini
         $currentUserId = auth()->id();
@@ -240,15 +241,24 @@ class PenggunaController extends Controller
         // Periksa apakah pengguna telah memberikan rating
         $userHasRated = !is_null($userRating);
     
-        //rating
+        // Rating
         $user_id_penulis = $article->user_id; // Misalnya, mendapatkan user_id_penulis dari artikel yang sedang ditampilkan
         $averageRating = RatingPenulis::where('user_id_penulis', $user_id_penulis)->avg('rating');
+        
+        // Total rating berdasarkan user_id dan artikel_id
+        $AvgArt = RatingPenulis::where('user_id_penulis', $user_id_penulis)
+                                     ->where('artikel_id', $id)
+                                     ->avg('rating');
+
+        // Total rating berdasarkan artikel_id
+        $totalRatingArt = RatingPenulis::where('artikel_id', $id)->count();
+        $totalRatingPen = RatingPenulis::where('user_id', $id)->count();
     
         // Menyiapkan data komentar, menyaring yang lebih muda dari 5 hari
         $komentarArtikels = komentar_artikel::where('artikel_id', $id)
-                            ->where('created_at', '>=', Carbon::now()->subDays(5))
-                            ->latest()
-                            ->paginate(6);
+                                ->where('created_at', '>=', Carbon::now()->subDays(5))
+                                ->latest()
+                                ->paginate(6);
     
         $totalKomentarArtikels = komentar_artikel::where('artikel_id', $id)
                                     ->where('created_at', '>=', Carbon::now()->subDays(5))
@@ -261,6 +271,13 @@ class PenggunaController extends Controller
         $user = User::findOrFail($article->user_id);
         // Ambil foto profil penulis artikel
         $fotoProfil = $user->fotoProfil;
+    
+        // Periksa waktu terakhir akses
+        if ($article->last_accessed_at == null || $article->last_accessed_at->diffInDays(now()) >= 1) {
+            // Jika lebih dari sehari yang lalu, tambahkan jumlah akses dan perbarui waktu terakhir akses
+            $article->increment('jumlah_akses');
+            $article->update(['last_accessed_at' => now()]);
+        }
     
         // Format jumlah akses
         $formattedJumlahAkses = $this->formatJumlahAkses($article->jumlah_akses);
@@ -288,20 +305,20 @@ class PenggunaController extends Controller
             $isFollowingAuthor = true;
         }
     
-                // Get the latest notifications for the followed authors
-                $notifArtikel = artikels::whereIn('user_id', $userIds)
-                ->where('status', 'published') // Menambahkan kondisi status harus "published"
-                ->where('created_at', '>=', Carbon::now()->subDay())
-                ->latest()
-                ->get();
-        
+        // Get the latest notifications for the followed authors
+        $notifArtikel = artikels::whereIn('user_id', $userIds)
+                                ->where('status', 'published') // Menambahkan kondisi status harus "published"
+                                ->where('created_at', '>=', Carbon::now()->subDay())
+                                ->latest()
+                                ->get();
     
         // Menghitung jumlah data notifikasi
         $jumlahData = $notifArtikel->count();
     
         return view('main.setelahLogin.detailArt', compact('kategoriLogA', 'article', 'box', 'tags', 'kategori', 'komentarArtikels', 'totalKomentarArtikels', 'komentar', 'fotoProfil', 'isFollowingAuthor', 'user', 'totalFollowers', 
-        'formattedJumlahAkses', 'averageRating', 'userHasRated', 'notifArtikel', 'jumlahData'));
+        'formattedJumlahAkses', 'averageRating', 'userHasRated', 'notifArtikel', 'jumlahData', 'AvgArt','totalRatingArt','totalRatingPen'));
     }
+    
 
     
 
@@ -839,9 +856,18 @@ class PenggunaController extends Controller
             $userHasRated = !is_null($userRating);
 
 
-            //rating
-            $user_id_penulis = $video->user_id;
+            // Rating
+            $user_id_penulis = $video->user_id; // Misalnya, mendapatkan user_id_penulis dari artikel yang sedang ditampilkan
             $averageRating = RatingPenulis::where('user_id_penulis', $user_id_penulis)->avg('rating');
+            
+            // Total rating berdasarkan user_id dan artikel_id
+            $AvgVid = RatingPenulis::where('user_id_penulis', $user_id_penulis)
+                                        ->where('video_id', $id)
+                                        ->avg('rating');
+
+            // Total rating berdasarkan artikel_id
+            $totalRatingVid = RatingPenulis::where('video_id', $id)->count();
+            $totalRatingUp = RatingPenulis::where('user_id', $id)->count();
 
             // Ambil data user berdasarkan id pembuat video
             $user = User::findOrFail($video->user_id);
@@ -897,7 +923,10 @@ class PenggunaController extends Controller
                 'userHasRated' => $userHasRated, // Sertakan userHasRated ke dalam data yang dilewatkan ke view
                 'isFollowingAuthor' => $isFollowingAuthor,
                 'notifVideo' => $notifVideo,
-                'jumlahData' => $jumlahData
+                'jumlahData' => $jumlahData,
+                'totalRatingVid' => $totalRatingVid,
+                'totalRatingUp' => $totalRatingUp,
+                'AvgVid' => $AvgVid
             ]);
         }
    

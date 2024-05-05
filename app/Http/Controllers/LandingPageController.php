@@ -84,10 +84,6 @@ class LandingPageController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->paginate(10);
 
-                $banner3 = Banner::where('jenis_banner', 3)
-                ->orderBy('created_at', 'desc')
-                ->paginate(10);
-
                 $box3 = artikels::whereNotIn('status', ['Pending', 'Rejected'])
                 ->orderBy('jumlah_akses', 'desc') // Order by jumlah_akses column in descending order
                 ->take(4) // Get top 5 trending articles
@@ -103,11 +99,16 @@ class LandingPageController extends Controller
                     ->take(8)
                     ->get();
 
-                $semua = artikels::whereNotIn('status', ['Pending', 'Rejected'])->get();
+                    $semua = artikels::where('status', 'Published')
+                    ->inRandomOrder()
+                    ->limit(5)
+                    ->get();
+                
+                $showLoadMoreButton = $semua->count() > 5;
 
                 $todayDate = date('l, d M Y');
     
-        return view('main.sebelumLogin.landingPage', compact('trending', 'latest','whatsnew','semua', 'box', 'box2', 'box3', 'banner0', 'banner1','banner2', 'banner3','boxLong', 'todayDate', 'kategoriA','ratingPenulis'));
+        return view('main.sebelumLogin.landingPage', compact('trending', 'latest','whatsnew','semua', 'showLoadMoreButton', 'box', 'box2', 'box3', 'banner0', 'banner1','banner2','boxLong', 'todayDate', 'kategoriA','ratingPenulis'));
     }
 
     //[Landing Page] Menampilkan Detail Artikel Ketika Di Klik
@@ -126,9 +127,18 @@ class LandingPageController extends Controller
         
         $detailArtikelLP = komentar_artikel::where('artikel_id', $id)->latest()->paginate(6);
 
-                //rating
-                $user_id_penulis = $article->user_id; // Misalnya, mendapatkan user_id_penulis dari artikel yang sedang ditampilkan
-                $averageRating = RatingPenulis::where('user_id_penulis', $user_id_penulis)->avg('rating');
+           // Rating
+        $user_id_penulis = $article->user_id; // Misalnya, mendapatkan user_id_penulis dari artikel yang sedang ditampilkan
+        $averageRating = RatingPenulis::where('user_id_penulis', $user_id_penulis)->avg('rating');
+        
+        // Total rating berdasarkan user_id dan artikel_id
+        $AvgArt = RatingPenulis::where('user_id_penulis', $user_id_penulis)
+                                     ->where('artikel_id', $id)
+                                     ->avg('rating');
+
+        // Total rating berdasarkan artikel_id
+        $totalRatingArt = RatingPenulis::where('artikel_id', $id)->count();
+        $totalRatingPen = RatingPenulis::where('user_id', $id)->count();
     
         // Ambil data user berdasarkan id penulis artikel
         $user = User::findOrFail($article->user_id);
@@ -154,7 +164,10 @@ class LandingPageController extends Controller
             'totalKomentar' => $totalKomentar,
             'fotoProfil' => $fotoProfil, // Tambahkan fotoProfil ke dalam data yang dilewatkan ke view
             'totalFollowers' => $totalFollowers,
-            'formattedJumlahAkses' => $formattedJumlahAkses
+            'formattedJumlahAkses' => $formattedJumlahAkses,
+            'AvgArt' => $AvgArt ,
+            'totalRatingArt' => $totalRatingArt,
+            'totalRatingPen' => $totalRatingPen
         ]);
     }
 
@@ -349,9 +362,19 @@ class LandingPageController extends Controller
     
         $totalKomentarV = komentar_video::where('video_id', $id)->count();
 
-        //rating
+        // Rating
          $user_id_penulis = $video->user_id; // Misalnya, mendapatkan user_id_penulis dari artikel yang sedang ditampilkan
          $averageRating = RatingPenulis::where('user_id_penulis', $user_id_penulis)->avg('rating');
+                   
+         // Total rating berdasarkan user_id dan artikel_id
+         $AvgVid = RatingPenulis::where('user_id_penulis', $user_id_penulis)
+                                               ->where('video_id', $id)
+                                               ->avg('rating');
+       
+          // Total rating berdasarkan artikel_id
+         $totalRatingVid = RatingPenulis::where('video_id', $id)->count();
+         $totalRatingUp = RatingPenulis::where('user_id', $id)->count();
+       
         
         // Ambil data user berdasarkan id penulis video
         $user = User::findOrFail($video->user_id);
@@ -373,7 +396,10 @@ class LandingPageController extends Controller
             'totalKomentarV' => $totalKomentarV,
             'fotoProfil' => $fotoProfil, // Tambahkan fotoProfil ke dalam data yang dilewatkan ke view
             'totalFollowers' => $totalFollowers,
-            'averageRating' => $averageRating
+            'averageRating' => $averageRating,
+            'totalRatingVid' => $totalRatingVid,
+            'totalRatingUp' => $totalRatingUp,
+            'AvgVid' => $AvgVid
         ]);
     }
 

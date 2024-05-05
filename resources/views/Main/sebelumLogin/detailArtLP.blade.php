@@ -268,8 +268,9 @@
                 <a href="/login" id="showModal" class="laporan-button" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
                   <i class="fa fa-flag"></i> Laporkan
               </a>
-            </li>        
-          </ul>
+            </li>   
+            
+            <span class="gold-star" data-rating="1">&#9733;</span><span style="color: gray;">{{ number_format($AvgArt, 1) }} ({{$totalRatingArt}} Rating)</span>
           
           </section>
           <span style="text-align: right">
@@ -289,6 +290,7 @@
                   </a>
               </p>
           </span>
+        </ul>
           
           @if($article->gambarArtikel)
             @if(filter_var($article->gambarArtikel, FILTER_VALIDATE_URL))

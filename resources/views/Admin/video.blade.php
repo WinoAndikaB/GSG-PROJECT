@@ -421,8 +421,8 @@
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Link Video</th>
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Judul Video</th>
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi Video</th>
-                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Buat</th>
-                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Update</th>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Diterbitkan</th>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Diperbarui</th>
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kategori</th>
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tags</th>
@@ -483,10 +483,10 @@
                                       ?>
                                     </p>
                                   </td>
-                                  <td class="align-middle">
+                                  <td class="align-middle text-center">
                                     <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item['created_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
                                   </td>
-                                  <td class="align-middle">
+                                  <td class="align-middle text-center">
                                     <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item['updated_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
                                   </td>
                                   <td class="align-middle text-center">
