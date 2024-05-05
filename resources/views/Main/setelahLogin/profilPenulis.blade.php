@@ -162,32 +162,134 @@
   }
 </style>
 
+<title>Profil Penulis - Katakey</title>
+
 <header class="header-area header-sticky">
   <div class="container">
-      <div class="row">
-          <div class="col-12">
-              <nav class="main-nav">
-                  <a href="/" class="logo">
-                      <img src="" alt="">
-                  </a>
-                  <span>Katakey</span>
-                  <ul class="nav">
-                    <li class="scroll-to-section"><a href="/" >Home</a></li>
-                    <li class="scroll-to-section"><a href="/" class="active">Artikel</a></li>
-                    <li class="scroll-to-section"><a href="/landingPageVideo">Video</a></li>
-                    <li class="scroll-to-section"><a href="/kategoriLandingPage">Kategori</a></li>
-                    <li class="scroll-to-section"><a href="/ulasanLandingPage">Ulasan</a></li>
-                    <li class="scroll-to-section"><a href="/abouts" class="">Tentang</a></li>
-                    <li class="scroll-to-section"><a href="/login">Login</a></li>
-                  </ul>       
-                  <a class='menu-trigger'>
-                      <span>Menu</span>
-                  </a>
-                  <!-- ***** Menu End ***** -->
-              </nav>
-          </div>
-      </div>
-  </div>
+    <div class="row align-items-center">
+        <div class="col-12">
+          <nav class="main-nav">
+            <ul class="nav">
+                <li class="scroll-to-section"><a href="/home">Home</a></li>
+                <li class="scroll-to-section"><a href="/home">Artikel</a></li>
+                <li class="scroll-to-section"><a href="/Video">Video</a></li>
+                <li class="scroll-to-section"><a href="/kategori">Kategori</a></li>
+                <li class="scroll-to-section"><a href="/ulasan">Ulasan</a></li>
+                <li class="scroll-to-section"><a href="/about">Tentang</a></li>
+                <li>
+                  <div class="dropdown">
+                    <a href="#" class="nav-link text-white font-weight-bold px-0 d-flex align-items-center dropdown-toggle" role="button" id="savedArticlesDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <div class="profile-picture" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 10px;">
+                          <?php
+                          $fotoProfil = Auth::user()->fotoProfil;
+                          if ($fotoProfil) {
+                              if (filter_var($fotoProfil, FILTER_VALIDATE_URL)) {
+                                  // Jika fotoProfil adalah URL, gunakan langsung URL tersebut
+                                  echo '<img src="' . $fotoProfil . '" alt="User\'s Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">';
+                              } else {
+                                  // Jika fotoProfil adalah nama file, cek apakah file tersebut ada
+                                  $pathToFile = public_path('fotoProfil/' . $fotoProfil);
+                                  if (file_exists($pathToFile)) {
+                                      echo '<img src="' . asset('fotoProfil/' . $fotoProfil) . '" alt="User\'s Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">';
+                                  } else {
+                                      // Jika file tidak ada, tampilkan foto default
+                                      echo '<img src="' . asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') . '" alt="User\'s Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">';
+                                  }
+                              }
+                          } else {
+                              // Jika fotoProfil kosong, tampilkan foto default
+                              echo '<img src="' . asset('https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999') . '" alt="User\'s Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">';
+                          }
+                      ?>
+                        </div>
+                
+                        <span class="d-sm-inline d-none">
+                            <?php
+                            $fullName = Auth::user()->name;
+                            $words = explode(' ', $fullName);
+                
+                            // Ambil dua kata pertama dan dua kata terakhir dari nama pengguna
+                            $firstTwoWords = implode(' ', array_slice($words, 0, 1));
+                            $lastTwoWords = implode(' ', array_slice($words, -1, 2));
+                
+                            echo $firstTwoWords . ' ' . $lastTwoWords;
+                            ?>
+                        </span>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="savedArticlesDropdown">
+                        <a class="dropdown-item" href="/profileUser"><i class="fas fa-user"></i> Profil Anda</a>
+                        <a class="dropdown-item" href="/simpanArtikelView"><i class="fas fa-bookmark"></i> Artikel Tersimpan</a>
+                        <a class="dropdown-item" href="/simpanVideoView"><i class="fas fa-video"></i> Video Tersimpan</a>
+                    </div>
+                </div>
+              </li>  
+              
+              <div class="dropdown">
+                  <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-bell" style="color: white;"></i> <span class="badge badge-pill badge-primary">{{ $jumlahData }}</span>
+                  </button>
+                  
+                  <div class="dropdown-menu dropdown-menu-wide scrollable-menu" aria-labelledby="dropdownMenuButton" style="min-width: 550px;">
+                    <h6 class="container-title" style="margin: 10px 0; text-align: center;"><i class="fas fa-bell"></i> Notifikasi</h6>
+                    <hr>
+                    
+                    <div class="row" style="display: flex; flex-direction: column; align-items: stretch;">
+                        @if($isFollowingAuthor && $jumlahData > 0)
+                            @foreach($notifArtikel as $item)
+                                <div class="col-md-12 mb-3" style="display: flex;">
+                                    <a class="dropdown-item d-flex" href="{{ route('detail.artikel', ['id' => $item->id]) }}" style="display: flex;">
+                                        <img src="{{ !empty($item->gambarArtikel) && filter_var($item->gambarArtikel, FILTER_VALIDATE_URL) ? $item->gambarArtikel : asset('gambarArtikel/'.$item->gambarArtikel) }}" class="media-left" style="max-width: 120px; height: 80px;">
+                                        <div class="media-body ml-3" style="align-self: center;">
+                                            <h6 class="notification-title mb-1" title="{{ $item->judulArtikel }}"> {{ $item->penulis }} mengupload: <br>
+                                                <?php
+                                                $judul = $item->judulArtikel;
+                                                $length = 35; // Panjang maksimum sebelum perlu di-break
+                                            
+                                                // Jika judul lebih panjang dari panjang maksimum
+                                                if (strlen($judul) > $length) {
+                                                    $chunks = explode(" ", $judul);
+                                                    $output = '';
+                                                    $lineLength = 0;
+                                            
+                                                    foreach ($chunks as $chunk) {
+                                                        // Jika panjang baris lebih besar dari panjang maksimum, tambahkan line break
+                                                        if ($lineLength + strlen($chunk) > $length) {
+                                                            $output .= "<br>";
+                                                            $lineLength = 0;
+                                                        }
+                                                        $output .= $chunk . " ";
+                                                        $lineLength += strlen($chunk) + 1; // Ditambah satu untuk spasi
+                                                    }
+                                            
+                                                    echo rtrim($output); // Menghilangkan spasi ekstra di akhir
+                                                } else {
+                                                    echo $judul;
+                                                }
+                                                ?>
+                                            </h6>
+                                            
+                                            <p class="notification-time mb-0">{{ $item->created_at->format('d F Y') }} | {{ $item->created_at->diffForHumans() }}</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="col-md-12" style="align-self: center;">
+                                <p class="dropdown-item">Tidak ada notifikasi saat ini.</p>
+                            </div>
+                        @endif
+                    </div>
+                </div> 
+              </div>
+              
+            
+                <li class="scroll-to-section">
+                  <a href="#" class="d-sm-inline d-none text-white text-bold" id="logout-link" onclick="openModal()"> Logout</a>
+                </li>
+        </nav>
+        </div>
+    </div>
+</div>
 </header>
 
 <div class="page-heading">
@@ -215,28 +317,22 @@
                       <div>
                           <div class="text-center">
 
-                            @if($fotoProfil)
-                              @if(filter_var($fotoProfil, FILTER_VALIDATE_URL))
-                                  <a href="{{$fotoProfil}}" data-lightbox="gambarProfil" data-title="Deskripsi Gambar">
-                                      <img src="{{$fotoProfil}}" alt="Foto Profil" class="rounded-circle img-fluid border border-primary" style="width: 120px; height: 120px;">
-                                  </a>
-                              @else
-                                  <a href="{{asset('fotoProfil/'.$fotoProfil)}}" data-lightbox="gambarProfil" data-title="Deskripsi Gambar">
-                                      <img src="{{asset('fotoProfil/'.$fotoProfil)}}" alt="Foto Profil" class="rounded-circle img-fluid border border-primary" style="width: 120px; height: 120px;">
-                                  </a>
-                              @endif
-                          @endif
+                            @if(!empty($penulis->fotoProfil) && filter_var($penulis->fotoProfil, FILTER_VALIDATE_URL))
+                            <img src="{{$penulis->fotoProfil}}" alt="Foto Profil" class="rounded-circle img-fluid border border-primary" style="width: 120px; height: 120px;">
+                        @elseif(!empty($penulis->fotoProfil))
+                            <img src="{{asset('fotoProfil/' . $penulis->fotoProfil)}}" alt="Foto Profil" class="rounded-circle img-fluid border border-primary" style="width: 120px; height: 120px;">
+                        @endif
 
                         </div>   
   
                         <div class="profile-name text-center">
-                            {{ $profilPenulis->penulis }}
+                            {{ $penulis->name }}
                         </div>
   
                         <div class="text-center">
-                            <span style="margin-right: 10px;"><b>{{ $TotalArtikelId }}</b> Artikel</span>
-                            <span style="margin-right: 10px;"><b>{{ $TotalVideoId }}</b> Video</span>
-                            <span style="margin-right: 10px;"><b>{{ $totalFollowers }}</b> Followers</span>
+                            <span style="margin-right: 10px;"><b>{{$totalArtikelId}}</b> Artikel</span>
+                            <span style="margin-right: 10px;"><b>{{$totalVideoId}}</b> Video</span>
+                            <span style="margin-right: 10px;"><b>{{$totalFollowers}}</b> Followers</span>
                             <span style="color: gray;">{{ number_format($averageRating, 1) }}</span>
                              <span class="star gold-star" data-rating="1">&#9733;</span>
                         </div>
@@ -244,20 +340,24 @@
                         <br>
   
                         <div class="social-media-links text-center">
-                            <a href="{{ $user->facebook }}" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
-                            <a href="{{ $user->instagram }}" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="{{ $penulis->facebook }}" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+                            <a href="{{ $penulis->instagram }}" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
                         </div>
   
+                        @auth
+                        @if(auth()->user()->isNot($penulis))
                         <div class="social-media-links text-center">
-                            <a href="/login" id="followButton" class="btn btn-info" style="color: white; font-weight: bold; background-color: #3498db; padding: 8px 16px; border-radius: 20px; cursor: pointer;">
-                                <span id="followText" style="font-size: 1em;">Follow</span>
+                            <a href="#" id="followButton" class="btn btn-info" style="color: white; font-weight: bold; background-color: #3498db; padding: 8px 16px; border-radius: 20px; cursor: pointer;">
+                                <span id="followText" style="font-size: 1em;">{{ auth()->user()->isFollowing($penulis) ? 'Following' : 'Follow' }}</span>
                             </a>
                         </div>
+                        @endif
+                        @endauth
   
                         <hr>
   
                         <div class="about-section text-center">
-                            <p>{{$user->aboutme }}</p>
+                            <p>{{ $penulis->aboutme }}</p>
                         </div>
   
                     </div>
@@ -274,21 +374,21 @@
                           </div>
                           <div class="card-body p-0" style="max-height: 400px; overflow-y: auto;">
                               <div class="list-group list-group-flush" id="article-list">
-                                  @foreach ($semuaArtikel as $artikel)
-                                  <a href="{{ route('showDetailLPArtikel', ['id' => $artikel->id]) }}" class="list-group-item list-group-item-action">
-                                    <div class="d-flex align-items-center">
-                                      @if(!empty($artikel->gambarArtikel) && filter_var($artikel->gambarArtikel, FILTER_VALIDATE_URL))
-                                          <img src="{{$artikel->gambarArtikel}}" alt="{{$artikel->judulArtikel}}" class="rounded-start img-fluid" style="width: 80px; height: 50px; object-fit: cover;">
-                                      @else
-                                          <img src="{{ asset('gambarArtikel/'.$artikel->gambarArtikel) }}" alt="{{ $artikel->judulArtikel }}" class="rounded-start img-fluid" style="width: 80px; height: 50px; object-fit: cover;">
-                                      @endif
-                                      <div class="flex-grow-1 ms-3">
-                                          <h6 class="mb-1" title="{{ $artikel->judulArtikel }}">{{ Str::limit($artikel->judulArtikel, 20) }}</h6>
-                                          <p class="mb-0">{{ $artikel->created_at->format('l, d M Y') }}</p>
-                                      </div>
-                                  </div>                                  
-                                  </a>
-                                  @endforeach
+                                @foreach ($semuaArtikelPenulis as $artikel)
+                                <a href="{{ route('detail.artikel', ['id' => $artikel->id]) }}" class="list-group-item list-group-item-action">
+                                  <div class="d-flex align-items-center">
+                                    @if(!empty($artikel->gambarArtikel) && filter_var($artikel->gambarArtikel, FILTER_VALIDATE_URL))
+                                        <img src="{{$artikel->gambarArtikel}}" alt="{{$artikel->judulArtikel}}" class="rounded-start img-fluid" style="width: 80px; height: 50px; object-fit: cover;">
+                                    @else
+                                        <img src="{{ asset('gambarArtikel/'.$artikel->gambarArtikel) }}" alt="{{ $artikel->judulArtikel }}" class="rounded-start img-fluid" style="width: 80px; height: 50px; object-fit: cover;">
+                                    @endif
+                                    <div class="flex-grow-1 ms-3">
+                                        <h6 class="mb-1" title="{{ $artikel->judulArtikel }}">{{ Str::limit($artikel->judulArtikel, 20) }}</h6>
+                                        <p class="mb-0">{{ $artikel->created_at->format('l, d M Y') }}</p>
+                                    </div>
+                                </div>                                  
+                                </a>
+                                @endforeach
                               </div>
                           </div>
                       </div>
@@ -302,6 +402,7 @@
                           </div>
                           <div class="card-body p-0" style="max-height: 400px; overflow-y: auto;">
                               <div class="list-group list-group-flush" id="video-list">
+                              
                                 <?php
                                 // Fungsi untuk mendapatkan ID video YouTube dari URL
                                   if (!function_exists('getYoutubeVideoId')) {
@@ -321,13 +422,13 @@
                                   }
                                 ?>
                                 
-                                @foreach ($semuaVideo as $video)
+                                @foreach ($semuaVideoUploader as $video)
                                     <?php
                                     $videoId = getYoutubeVideoId($video->linkVideo);
                                     $thumbnail = "https://img.youtube.com/vi/{$videoId}/maxresdefault.jpg"; // Mengambil thumbnail maksimum resolusi
                                     ?>
                                 
-                                    <a href="{{ route('showDetailLPVideo', ['id' => $video->id]) }}" class="list-group-item list-group-item-action">
+                                    <a href="{{ route('showDetailVideo', ['id' => $video->id]) }}" class="list-group-item list-group-item-action">
                                         <div class="d-flex align-items-center">
                                             <div class="video-thumbnail rounded-start img-fluid" style="width: 80px; height: 80px;">
                                                 <img src="{{ $thumbnail }}" alt="Thumbnail" style="width: 100%; height: auto;">
@@ -339,6 +440,7 @@
                                         </div>
                                     </a>
                                 @endforeach
+                             
                                 
                               </div>
                           </div>
@@ -429,14 +531,14 @@
             if (isFollowing) {
                 $('#unfollowModal').modal('show');
             } else {
-                toggleFollow({{ $user->id }});
+                toggleFollow({{ $penulis->id }});
             }
         });
     }
 
     document.getElementById('confirmUnfollow').addEventListener('click', function () {
         $('#unfollowModal').modal('hide');
-        toggleFollow({{ $user->id }});
+        toggleFollow({{ $penulis->id }});
     });
 
     function toggleFollow(userId) {
@@ -468,6 +570,8 @@
         .catch(error => console.error('Error:', error));
     }
 </script>
+
+
 
 
 <!--------------------------------------------------------------------------------------- Javascript Modal Logout ------------------------------------------------------------------------------->

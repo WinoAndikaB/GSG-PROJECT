@@ -611,7 +611,7 @@
                       $averageRating = min(round($sortedUserRatings->avg('rating'), 1), 5.0); // Memastikan rating tidak melebihi 5.0
                       $totalRating = $userRatings->count(); // Total rating berdasarkan user
                   @endphp
-                  <a href="#">
+                  <a href="{{ route('profilPenulisUser', ['id' => $firstRating->user->id]) }}">
                       <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
                         @if ($firstRating->user->fotoProfil)
                             <?php

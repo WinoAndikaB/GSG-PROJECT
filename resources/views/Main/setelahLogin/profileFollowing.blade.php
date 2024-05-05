@@ -240,7 +240,6 @@
     }
   </style>
 
-<title>Anda Follow - Katakey</title>
 
 <header class="header-area header-sticky" style="text-align: center;">
   <div class="container">
@@ -403,26 +402,35 @@
                            border-radius: 5px;">Temukan Penulis</a>
         </div>
     @else
-        @foreach ($usersFollowingData as $followingUser)
-            <div class="card" style="width: 300px; margin: 10px;">
-                <div style="background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); overflow: hidden; display: flex; flex-direction: column; align-items: center;">
+    @foreach ($usersFollowingData as $followingUser)
+    <div class="card" style="width: 300px; margin: 10px;">
+        <div style="background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); overflow: hidden; display: flex; flex-direction: column; align-items: center;">
 
-                  @if(!empty($followingUser->fotoProfil) && filter_var($followingUser->fotoProfil, FILTER_VALIDATE_URL))
-                      <img src="{{$followingUser->fotoProfil}}" alt="Profil Foto" style="width: 100px; height: 100px; border-radius: 50%; margin: 10px auto; display: block;">
-                  @elseif(!empty($followingUser->fotoProfil))
-                      <img src="{{asset('fotoProfil/' . $followingUser->fotoProfil)}}" alt="Profil Foto" style="width: 100px; height: 100px; border-radius: 50%; margin: 10px auto; display: block;">
-                  @endif
+          @if(!empty($followingUser->fotoProfil) && filter_var($followingUser->fotoProfil, FILTER_VALIDATE_URL))
+              <img src="{{$followingUser->fotoProfil}}" alt="Profil Foto" style="width: 100px; height: 100px; border-radius: 50%; margin: 10px auto; display: block;">
+          @elseif(!empty($followingUser->fotoProfil))
+              <img src="{{asset('fotoProfil/' . $followingUser->fotoProfil)}}" alt="Profil Foto" style="width: 100px; height: 100px; border-radius: 50%; margin: 10px auto; display: block;">
+          @endif
 
-                    <div style="text-align: center; padding: 10px;">
-                        <p style="font-size: 1.2rem; font-weight: bold; color: #333; margin-bottom: 5px;">
-                            <!-- Tautkan ke halaman detail profil penulis -->
-                            <a href="#" class="article-title">{{ $followingUser->name }}</a>
-                        </p>
-                        <p style="font-size: 0.9rem; color: #666; margin: 0;">{{ $followingUser->username }}</p>
-                    </div>
-                </div>
+            <div style="text-align: center; padding: 10px;">
+                <p style="font-size: 1.2rem; font-weight: bold; color: #333; margin-bottom: 5px;">
+                    <!-- Moved the link outside the conditional check -->
+                    <a href="{{ route('profilPenulisUser', ['id' => $followingUser->id]) }}" class="article-title">{{ $followingUser->name }}</a>
+                </p>
+                <p style="font-size: 0.9rem; color: #666; margin: 0;">{{ $followingUser->username }}</p>
+
+                <br>
+
+                <div class="social-media-links text-center">
+                  <a href="#" id="followButton{{ $followingUser->id }}" class="btn btn-info" style="color: white; font-weight: bold; background-color: #3498db; padding: 8px 16px; border-radius: 20px; cursor: pointer;">
+                      <span id="followText{{ $followingUser->id }}" style="font-size: 1em;">{{ auth()->user()->isFollowing($followingUser) ? 'Following' : 'Follow' }}</span>
+                  </a>
+              </div>
             </div>
-        @endforeach
+        </div>
+    </div>
+@endforeach
+
     @endif
 </div>
 
@@ -447,25 +455,25 @@
       </div>
 
       <!-- Modal Unfollow -->
-<div class="modal fade" tabindex="-1" role="dialog" id="unfollowModal">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title">Unfollow Confirmation</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-          </div>
-          <div class="modal-body">
-              Are you sure you want to unfollow?
-          </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-              <button type="button" class="btn btn-danger" id="confirmUnfollow">Unfollow</button>
-          </div>
+      <div class="modal fade" tabindex="-1" role="dialog" id="unfollowModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Unfollow Confirmation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to unfollow?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmUnfollow">Unfollow</button>
+                </div>
+            </div>
+        </div>
       </div>
-  </div>
-</div>
 
 
 <!----------------------------------------------------------------------------------- Javascript Area -------------------------------------------------------------------------------------------->
@@ -485,6 +493,68 @@
       }
     }
   </script>
+
+  <!--------------------------------------------------------------------------------------- Javascript Followers ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Followers ------------------------------------------------------------------------------->
+
+<!-- Bootstrap CSS -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<!-- Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shC65g+0n3E0yfFilaFIBw5TO7wGvzD0F1Dz0" crossorigin="anonymous"></script>
+
+<script>
+@foreach ($usersFollowingData as $followingUser)
+    document.getElementById('followButton{{ $followingUser->id }}').addEventListener('click', function () {
+        var followText = document.getElementById('followText{{ $followingUser->id }}');
+        var isFollowing = followText.textContent.trim() === 'Following';
+
+        if (isFollowing) {
+            $('#unfollowModal').modal('show');
+            // Set userIdToToggle to the current user ID
+            userIdToToggle = {{ $followingUser->id }};
+        } else {
+            toggleFollow({{ $followingUser->id }});
+        }
+    });
+@endforeach
+
+document.getElementById('confirmUnfollow').addEventListener('click', function () {
+    $('#unfollowModal').modal('hide');
+    toggleFollow(userIdToToggle);
+});
+
+function toggleFollow(userId) {
+    var followText = document.getElementById('followText' + userId);
+    var isFollowing = followText.textContent.trim() === 'Following';
+
+    var method = isFollowing ? 'DELETE' : 'POST';
+    var url = isFollowing ? '/unfollow/' + userId : '/follow/' + userId;
+
+    fetch(url, {
+        method: method,
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (!data.error) {
+            if (isFollowing) {
+                followText.textContent = 'Follow';
+                // Reload the page after successful unfollow
+                window.location.reload();
+            } else {
+                followText.textContent = 'Following';
+            }
+        } else {
+            console.error('Error:', data.error);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+</script>
 
 <!--------------------------------------------------------------------------------------- Javascript Dropdown ------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------------- Javascript Dropdown ------------------------------------------------------------------------------->

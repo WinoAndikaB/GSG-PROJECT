@@ -162,6 +162,8 @@
   }
 </style>
 
+<title>Profil Penulis - Katakey</title>
+
 <header class="header-area header-sticky">
   <div class="container">
       <div class="row">
@@ -230,13 +232,13 @@
                         </div>   
   
                         <div class="profile-name text-center">
-                            {{ $profilPenulis->penulis }}
+                            {{ $penulis->name }}
                         </div>
   
                         <div class="text-center">
-                            <span style="margin-right: 10px;"><b>{{ $TotalArtikelId }}</b> Artikel</span>
-                            <span style="margin-right: 10px;"><b>{{ $TotalVideoId }}</b> Video</span>
-                            <span style="margin-right: 10px;"><b>{{ $totalFollowers }}</b> Followers</span>
+                            <span style="margin-right: 10px;"><b>{{$totalArtikelId}}</b> Artikel</span>
+                            <span style="margin-right: 10px;"><b>{{$totalVideoId}}</b> Video</span>
+                            <span style="margin-right: 10px;"><b>{{$totalFollowers}}</b> Followers</span>
                             <span style="color: gray;">{{ number_format($averageRating, 1) }}</span>
                              <span class="star gold-star" data-rating="1">&#9733;</span>
                         </div>
@@ -244,8 +246,8 @@
                         <br>
   
                         <div class="social-media-links text-center">
-                            <a href="{{ $user->facebook }}" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
-                            <a href="{{ $user->instagram }}" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="{{ $penulis->facebook }}" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+                            <a href="{{ $penulis->instagram }}" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
                         </div>
   
                         <div class="social-media-links text-center">
@@ -257,7 +259,7 @@
                         <hr>
   
                         <div class="about-section text-center">
-                            <p>{{$user->aboutme }}</p>
+                            <p>{{ $penulis->aboutme }}</p>
                         </div>
   
                     </div>
@@ -274,21 +276,21 @@
                           </div>
                           <div class="card-body p-0" style="max-height: 400px; overflow-y: auto;">
                               <div class="list-group list-group-flush" id="article-list">
-                                  @foreach ($semuaArtikel as $artikel)
-                                  <a href="{{ route('showDetailLPArtikel', ['id' => $artikel->id]) }}" class="list-group-item list-group-item-action">
-                                    <div class="d-flex align-items-center">
-                                      @if(!empty($artikel->gambarArtikel) && filter_var($artikel->gambarArtikel, FILTER_VALIDATE_URL))
-                                          <img src="{{$artikel->gambarArtikel}}" alt="{{$artikel->judulArtikel}}" class="rounded-start img-fluid" style="width: 80px; height: 50px; object-fit: cover;">
-                                      @else
-                                          <img src="{{ asset('gambarArtikel/'.$artikel->gambarArtikel) }}" alt="{{ $artikel->judulArtikel }}" class="rounded-start img-fluid" style="width: 80px; height: 50px; object-fit: cover;">
-                                      @endif
-                                      <div class="flex-grow-1 ms-3">
-                                          <h6 class="mb-1" title="{{ $artikel->judulArtikel }}">{{ Str::limit($artikel->judulArtikel, 20) }}</h6>
-                                          <p class="mb-0">{{ $artikel->created_at->format('l, d M Y') }}</p>
-                                      </div>
-                                  </div>                                  
-                                  </a>
-                                  @endforeach
+                                @foreach ($semuaArtikelPenulis as $artikel)
+                                <a href="{{ route('showDetailLPArtikel', ['id' => $artikel->id]) }}" class="list-group-item list-group-item-action">
+                                  <div class="d-flex align-items-center">
+                                    @if(!empty($artikel->gambarArtikel) && filter_var($artikel->gambarArtikel, FILTER_VALIDATE_URL))
+                                        <img src="{{$artikel->gambarArtikel}}" alt="{{$artikel->judulArtikel}}" class="rounded-start img-fluid" style="width: 80px; height: 50px; object-fit: cover;">
+                                    @else
+                                        <img src="{{ asset('gambarArtikel/'.$artikel->gambarArtikel) }}" alt="{{ $artikel->judulArtikel }}" class="rounded-start img-fluid" style="width: 80px; height: 50px; object-fit: cover;">
+                                    @endif
+                                    <div class="flex-grow-1 ms-3">
+                                        <h6 class="mb-1" title="{{ $artikel->judulArtikel }}">{{ Str::limit($artikel->judulArtikel, 20) }}</h6>
+                                        <p class="mb-0">{{ $artikel->created_at->format('l, d M Y') }}</p>
+                                    </div>
+                                </div>                                  
+                                </a>
+                                @endforeach
                               </div>
                           </div>
                       </div>
@@ -302,6 +304,7 @@
                           </div>
                           <div class="card-body p-0" style="max-height: 400px; overflow-y: auto;">
                               <div class="list-group list-group-flush" id="video-list">
+                              
                                 <?php
                                 // Fungsi untuk mendapatkan ID video YouTube dari URL
                                   if (!function_exists('getYoutubeVideoId')) {
@@ -321,7 +324,7 @@
                                   }
                                 ?>
                                 
-                                @foreach ($semuaVideo as $video)
+                                @foreach ($semuaVideoUploader as $video)
                                     <?php
                                     $videoId = getYoutubeVideoId($video->linkVideo);
                                     $thumbnail = "https://img.youtube.com/vi/{$videoId}/maxresdefault.jpg"; // Mengambil thumbnail maksimum resolusi
@@ -339,6 +342,7 @@
                                         </div>
                                     </a>
                                 @endforeach
+                             
                                 
                               </div>
                           </div>
@@ -419,55 +423,7 @@
 <!-- Bootstrap JavaScript -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shC65g+0n3E0yfFilaFIBw5TO7wGvzD0F1Dz0" crossorigin="anonymous"></script>
 
-<script>
-    var followButton = document.getElementById('followButton');
-    if (followButton) {
-        followButton.addEventListener('click', function () {
-            var followText = document.getElementById('followText');
-            var isFollowing = followText.textContent.trim() === 'Following';
-            
-            if (isFollowing) {
-                $('#unfollowModal').modal('show');
-            } else {
-                toggleFollow({{ $user->id }});
-            }
-        });
-    }
 
-    document.getElementById('confirmUnfollow').addEventListener('click', function () {
-        $('#unfollowModal').modal('hide');
-        toggleFollow({{ $user->id }});
-    });
-
-    function toggleFollow(userId) {
-        var followText = document.getElementById('followText');
-        var isFollowing = followText.textContent.trim() === 'Following';
-
-        var method = isFollowing ? 'DELETE' : 'POST';
-        var url = isFollowing ? '/unfollow/' + userId : '/follow/' + userId;
-
-        fetch(url, {
-            method: method,
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (!data.error) {
-                if (isFollowing) {
-                    followText.textContent = 'Follow';
-                } else {
-                    followText.textContent = 'Following';
-                }
-            } else {
-                console.error('Error:', data.error);
-            }
-        })
-        .catch(error => console.error('Error:', error));
-    }
-</script>
 
 
 <!--------------------------------------------------------------------------------------- Javascript Modal Logout ------------------------------------------------------------------------------->

@@ -1739,34 +1739,87 @@ function ulasan(Request $request){
       
 
       public function profileFollowing($follower_id)
-      {
-          // Get the currently authenticated user ID
-          $currentUserId = auth()->id();
-      
-          // Retrieve user_ids that the current user is following
+{
+    // Find the user being followed
+    $followingPenulis = User::findOrFail($follower_id);
+    
+    // Get the current authenticated user's ID
+    $currentUserId = Auth::id();
+
+    // Retrieve user IDs that the current user is following
+    $userIds = Follower::where('follower_id', $currentUserId)
+        ->pluck('user_id')
+        ->toArray();
+
+    // Get the users that the current user is following
+    $usersFollowingData = User::whereIn('id', $userIds)->get();
+
+    // Count the number of users the current user is following
+    $followerCount = count($userIds);
+
+    // Check if the authenticated user is following the article author
+    $isFollowingAuthor = true;
+
+    // Get the latest notifications for the followed authors
+    $notifArtikel = artikels::whereIn('user_id', $userIds)
+        ->where('status', 'published')
+        ->where('created_at', '>=', now()->subDay()) 
+        ->latest()
+        ->get();
+
+    $jumlahData = $notifArtikel->count();
+
+    // Return the view with the necessary data
+    return view('main.setelahLogin.profileFollowing', compact('jumlahData','notifArtikel','followingPenulis', 'isFollowingAuthor','followerCount', 'usersFollowingData'));
+}
+
+
+        function profilPenulisUser($id){
+
+            $penulis = User::findOrFail($id); // Mengambil pengguna berdasarkan ID
+            $currentUserId = auth()->id();
+        
+            // Ambil semua artikel yang tidak dalam status 'Pending' atau 'Rejected' milik penulis yang sama
+            $semuaArtikelPenulis = artikels::whereNotIn('status', ['Pending', 'Rejected'])
+                    ->where('user_id', $penulis->id)
+                    ->get();
+        
+            // Ambil semua video yang tidak dalam status 'Pending' atau 'Rejected' milik penulis yang sama
+            $semuaVideoUploader = Video::whereNotIn('statusVideo', ['Pending', 'Rejected'])
+                    ->where('user_id', $penulis->id)
+                    ->get();
+                    
+                            // Retrieve user_ids that the current user is following
           $userIds = Follower::where('follower_id', $currentUserId)
-              ->pluck('user_id')
-              ->toArray();
-      
-          // Get the latest notifications for the followed authors
-          $notifArtikel = artikels::whereIn('user_id', $userIds)
-              ->where('status', 'published')
-              ->where('created_at', '>=', now()->subDay()) // Menggunakan helper now() untuk mendapatkan waktu saat ini
-              ->latest()
-              ->get();
-      
-          // Count the number of notifications
-          $jumlahData = $notifArtikel->count();
-      
-          // Check if the authenticated user is following the article author
-          $isFollowingAuthor = true; // Langsung diatur ke true, karena kita ingin menampilkan notifikasi tanpa menunggu follow            
-      
-          // Mengambil data pengguna yang diikuti oleh pengguna saat ini
-          $usersFollowingData = User::whereIn('id', $userIds)->get();
-      
-          // Menghitung jumlah pengikut pengguna saat ini
-          $followerCount = count($userIds);
-      
-          return view('main.setelahLogin.profileFollowing', compact('followerCount', 'isFollowingAuthor', 'jumlahData', 'notifArtikel', 'usersFollowingData'));
-      }
+          ->pluck('user_id')
+          ->toArray();
+
+            // Get the latest notifications for the followed authors
+                $notifArtikel = artikels::whereIn('user_id', $userIds)
+                ->where('status', 'published')
+                ->where('created_at', '>=', now()->subDay()) // Menggunakan helper now() untuk mendapatkan waktu saat ini
+                ->latest()
+                ->get();
+        
+            // Count the number of notifications
+            $jumlahData = $notifArtikel->count();
+        
+            // Check if the authenticated user is following the article author
+            $isFollowingAuthor = true; // Langsung diatur ke true, karena kita ingin menampilkan notifikasi tanpa menunggu follow            
+        
+            // Mengambil data pengguna yang diikuti oleh pengguna saat ini
+            $usersFollowingData = User::whereIn('id', $userIds)->get();
+        
+            // Menghitung jumlah pengikut pengguna saat ini
+            $followerCount = count($userIds);
+        
+            $fotoProfil = $penulis->fotoProfil;
+            $averageRating = RatingPenulis::where('user_id_penulis', $penulis->id)->avg('rating');
+            $totalFollowers = Follower::where('user_id', $penulis->id)->count();
+            $totalArtikelId = artikels::where('user_id', $penulis->id)->count();
+            $totalVideoId = Video::where('user_id', $penulis->id)->count();
+        
+            // Mengembalikan tampilan blade dengan variabel-variabel yang telah didefinisikan
+            return view('main.setelahLogin.profilPenulis', compact('penulis', 'fotoProfil', 'totalFollowers', 'totalArtikelId', 'totalVideoId', 'semuaArtikelPenulis', 'semuaVideoUploader', 'averageRating', 'isFollowingAuthor', 'jumlahData', 'notifArtikel'));
+        }
     }      

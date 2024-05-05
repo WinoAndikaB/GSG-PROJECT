@@ -59,6 +59,9 @@ use Illuminate\Support\Facades\Route;
                 Route::get('/kategoriLandingPageA/{kategori}', [LandingPageController::class, 'kategoriLandingPageA'])->name('kategoriLandingPageA');
                 Route::get('/kategoriLandingPageV/{kategori}', [LandingPageController::class, 'kategoriLandingPageV'])->name('kategoriLandingPageV');
 
+                //[Non-User] Tab Profil Penulis Landing Page
+                Route::get('/profilPenulisLP/{id}', [LandingPageController::class, 'profilPenulisLP'])->name('profilPenulisLP');
+
                 //[Non-User] Tab About Landing Page
                 Route::get('/abouts', [LandingPageController::class, 'aboutLandingPage'])->name('aboutLandingPage');
              
@@ -157,6 +160,7 @@ use Illuminate\Support\Facades\Route;
                 Route::get('/profileUser', [PenggunaController::class, 'profileUser'])->name('profileUser');
                 Route::put('/profileUser/updateUser/{id}',[PenggunaController::class,'updateUser'])->name('updateUser');
                 Route::get('/profileFollowing/{follower_id}', [PenggunaController::class, 'profileFollowing'])->name('profileFollowing');
+                Route::get('/profilPenulis/{id}', [PenggunaController::class, 'profilPenulisUser'])->name('profilPenulisUser');
         
 
                 //[Pengguna] Syarat & Ketentuan

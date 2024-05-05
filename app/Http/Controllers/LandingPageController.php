@@ -214,8 +214,6 @@ class LandingPageController extends Controller
     
         // Hitung total pengikut (followers) berdasarkan user_id
         $totalFollowers = Follower::where('user_id', $user->id)->count();
-    
-    
         $TotalArtikelId = artikels::where('user_id', $user->id)->count();
         $TotalVideoId = video::where('user_id', $user->id)->count();
     
@@ -504,4 +502,33 @@ class LandingPageController extends Controller
 
         return view('main.sebelumLogin.ulasanLP', compact('data1', 'averageRating', 'totalUlasan'));
     }
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    //[Landing Page] Prfoil Penulis landing Page
+    function profilPenulisLP($id){
+
+        $penulis = User::findOrFail($id); // Mengambil pengguna berdasarkan ID
+    
+        // Ambil semua artikel yang tidak dalam status 'Pending' atau 'Rejected' milik penulis yang sama
+        $semuaArtikelPenulis = artikels::whereNotIn('status', ['Pending', 'Rejected'])
+                ->where('user_id', $penulis->id)
+                ->get();
+    
+        // Ambil semua video yang tidak dalam status 'Pending' atau 'Rejected' milik penulis yang sama
+        $semuaVideoUploader = Video::whereNotIn('statusVideo', ['Pending', 'Rejected'])
+                ->where('user_id', $penulis->id)
+                ->get();
+    
+        $fotoProfil = $penulis->fotoProfil;
+        $averageRating = RatingPenulis::where('user_id_penulis', $penulis->id)->avg('rating');
+        $totalFollowers = Follower::where('user_id', $penulis->id)->count();
+        $totalArtikelId = artikels::where('user_id', $penulis->id)->count();
+        $totalVideoId = Video::where('user_id', $penulis->id)->count();
+    
+        // Mengembalikan tampilan blade dengan variabel-variabel yang telah didefinisikan
+        return view('main.sebelumLogin.profilPenulis', compact('penulis', 'fotoProfil', 'totalFollowers', 'totalArtikelId', 'totalVideoId', 'semuaArtikelPenulis', 'semuaVideoUploader', 'averageRating'));
+    }
+    
 }
