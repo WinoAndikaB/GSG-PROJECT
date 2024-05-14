@@ -424,6 +424,27 @@
                       </div>
                       <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
+
+                          <div class="dropdown">
+                            <a href="#" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdownMenuLink2">
+                                <span class="d-sm-inline d-none">Filter Laporan</span> 
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('laporanKomentarArtikelUserSA') }}">
+                                        All ({{ $AllTotalLaporan }})
+                                    </a>
+                                </li>
+                                @foreach($FilterLA as $Filter)
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('laporanKomentarArtikelUserSA', ['laporan' => $Filter]) }}">
+                                        {{ $Filter }} ({{ \App\Models\LaporanKomentarArtikel::where('laporan', $Filter)->count() }})
+                                    </a>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </div>
+
                           <table class="table align-items-center mb-0">
                             <thead>
                               <tr>

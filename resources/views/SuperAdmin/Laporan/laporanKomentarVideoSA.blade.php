@@ -424,6 +424,27 @@
                       </div>
                       <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
+
+                          <div class="dropdown">
+                            <a href="#" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdownMenuLink2">
+                                <span class="d-sm-inline d-none">Filter Laporan</span> 
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('laporanKomentarVideoUserSA') }}">
+                                        All ({{ $AllTotalLaporan }})
+                                    </a>
+                                </li>
+                                @foreach($FilterLA as $filter)
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('laporanKomentarVideoUserSA', ['filter' => $filter]) }}">
+                                        {{ $filter }}
+                                    </a>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        
                           <table class="table align-items-center mb-0">
                             <thead>
                               <tr>

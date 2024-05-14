@@ -1006,7 +1006,7 @@ class PenggunaController extends Controller
             // tambahkan kolom lain sesuai kebutuhan
         ]);
     
-        return redirect()->back()->with('success', 'Laporan berhasil disimpan.');
+        return redirect()->back()->with('success', 'Laporan Komentar berhasil disimpan.');
     }
     
        
