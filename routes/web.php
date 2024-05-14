@@ -98,8 +98,8 @@ use Illuminate\Support\Facades\Route;
 
                 Route::post('/ratingPenulis/{artikel_id}', [PenggunaController::class, 'storeRatingPenulis'])->name('storeRatingPenulis');
 
-                Route::post('/submit/report', [PenggunaController::class, 'storeLaporanArtikel'])->name('storeLaporanArtikel');
-                Route::post('/submit/reportKomentar', [PenggunaController::class, 'storeLaporanKomentarArtikel'])->name('storeLaporanKomentarArtikel');
+                Route::post('/submitLaporanArtikel/report', [PenggunaController::class, 'storeLaporanArtikel'])->name('laporan.store');
+                Route::post('/submitLaporanKomentarA/reportKomentar', [PenggunaController::class, 'storeLaporanKomentarArtikel'])->name('laporan.storeLaporanKomentarArtikel');
 
                 Route::get('/simpanArtikelView', [PenggunaController::class, 'simpanArtikelView'])->name('simpan.artikelView');
                 Route::post('/simpanArtikelData/{id}', [PenggunaController::class, 'simpanArtikelData'])->name('simpan.artikelData');
@@ -121,8 +121,8 @@ use Illuminate\Support\Facades\Route;
 
                 Route::post('/komentarVideo', [PenggunaController::class, 'storeKomentarVideo'])->name('storeKomentarVideo');
                 Route::post('/likeKomentarVideo/{commentId}', [PenggunaController::class, 'likeKomentarVideo'])->name('likeKomentarVideo');
-                Route::post('/submitV/reportV', [PenggunaController::class, 'storeLaporanVideo'])->name('storeLaporanVideo');
-                Route::post('/submit/reportKomentarV', [PenggunaController::class, 'storeLaporanKomentarVideo'])->name('storeLaporanKomentarVideo');
+                Route::post('/submitLaporanVideo/reportV', [PenggunaController::class, 'storeLaporanVideo'])->name('laporan.storeLaporanVideolaporan');
+                Route::post('/submitLaporanKomentarVideo/reportKomentarV', [PenggunaController::class, 'storeLaporanKomentarVideo'])->name('storeLaporanKomentarVideo');
                 Route::get('/deleteKomentarVideo/{id}', [PenggunaController::class, 'deleteKomentarVideo'])->name('deleteKomentarVideo');
                 Route::post('/simpanEditKomentarVideo/{id}/{user_id}', [PenggunaController::class, 'simpanEditKomentarVideo'])->name('simpanEditKomentarVideo');
 
@@ -360,6 +360,8 @@ use Illuminate\Support\Facades\Route;
     
             //[SuperAdmin] Hapus Laporan
             Route::get('/deleteLaporanArtikelSA/{id}',[SuperAdminController::class,'deleteLaporanArtikelSA'])->name('deleteLaporanArtikelSA');
+            Route::get('/deleteLaporanKomentarArtikelSA/{id}',[SuperAdminController::class,'deleteLaporanKomentarArtikelSA'])->name('deleteLaporanKomentarArtikelSA');
+            Route::get('/deleteLaporanVideoSA/{id}',[SuperAdminController::class,'deleteLaporanVideoSA'])->name('deleteLaporanVideoSA');
             Route::get('/deleteLaporanVideoSA/{id}',[SuperAdminController::class,'deleteLaporanVideoSA'])->name('deleteLaporanVideoSA');
 
 

@@ -25,7 +25,7 @@ class LaporanKomentarArtikel extends Model
     // Define relationships
     public function pelapor()
     {
-        return $this->belongsTo(user::class, 'user_id_pelapor');
+        return $this->belongsTo(User::class, 'user_id_pelapor');
     }
 
     public function artikel()
@@ -33,7 +33,7 @@ class LaporanKomentarArtikel extends Model
         return $this->belongsTo(artikels::class, 'artikel_id');
     }
 
-    public function komentarA()
+    public function komentar()
     {
         return $this->belongsTo(komentar_artikel::class, 'comment_id');
     }

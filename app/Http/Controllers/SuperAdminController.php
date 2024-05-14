@@ -1553,7 +1553,7 @@ function deleteKategoriSA($id){
         'dataBaruVideo', 'dataBaruKomentarVideo', 'LaporanKomentarArtikel', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
 
-        //[SuperAdmin-Laporan User] Delete Artikel User
+        //[SuperAdmin-Laporan User] Delete Laporan Artikel User
         function deleteLaporanArtikelSA($id){
             // Find the reported article record with the given ID
             $data = laporanArtikelUser::find($id);
@@ -1601,6 +1601,22 @@ function deleteKategoriSA($id){
             return view('SuperAdmin.laporan.laporanKomentarUserSA', compact('laporanKomentarArtikelU', 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 
             'dataBaruVideo', 'dataBaruKomentarVideo', 'LaporanKomentarArtikel', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
         }
+
+                //[SuperAdmin-Laporan User] Delete Laporan Artikel User
+                function deleteLaporanKomentarArtikelSA($id){
+                    // Find the reported article record with the given ID
+                    $data = LaporanKomentarArtikel::find($id);
+        
+                    // Check if the reported article record exists
+                    if ($data) {
+                        // If the reported article record exists, delete it
+                        $data->delete();
+                        return redirect('/laporanKomentarArtikelUserSA')->with('success', 'Reported comment article deleted successfully');
+                    } else {
+                        // If the reported article record does not exist, redirect with an error message
+                        return redirect('/laporanKomentarArtikelUserSA')->with('error', 'Reported comment article not found');
+                    }
+                }
         
         public function freezeUserArtikelSA(Request $request)
         {
@@ -1691,7 +1707,7 @@ function deleteKategoriSA($id){
                     $komentarVideo = komentar_video::find($commentId);
             
                     // Add user_id to the laporanKomentarArtikel object
-                    $laporan->user_id_komentar_artikel = $komentarArtikel->user_id;
+                    $laporan->user_id_komentar_video = $komentarVideo->user_id;
                 }
             
                 // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir

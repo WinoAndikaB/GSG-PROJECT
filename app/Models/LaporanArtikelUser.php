@@ -17,6 +17,6 @@ class LaporanArtikelUser extends Model
 
     public function artikel()
     {
-        return $this->belongsTo(Artikel::class, 'artikel_id', 'id');
+        return $this->belongsTo(artikels::class, 'artikel_id', 'id');
     }
 }

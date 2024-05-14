@@ -378,11 +378,11 @@
                   </button>
               </form>
           </li>          
-            <li class="list-inline-item">
-              <a href="#" id="showModal" class="laporan-button" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
+          <li class="list-inline-item">
+            <a href="#" id="showModalVideo" class="laporan-button" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
                 <i class="fa fa-flag"></i> Laporkan
             </a>
-          </li>   
+        </li>  
           
           <span class="gold-star" data-rating="1">&#9733;</span><span style="color: gray;">{{ number_format($AvgVid, 1) }} ({{$totalRatingVid}} Rating)</span>
 
@@ -639,10 +639,11 @@
                   <div>
 
                     @if(Auth::check() && Auth::user()->id != $komentar->user_id)
-                        <a href="#" class="showLaporanKomen" data-comment-id="{{ $komentar->id }}" data-nama-dilaporkan="{{ $komentar->user->name }}" data-user-id-dilaporkan="{{ $komentar->user->id }}" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
-                            <i class="fas fa-flag" style="font-size: 15px;"></i> Laporkan
-                        </a>
-                    @endif
+                    <a href="#" class="showLaporanKomen" data-comment-id="{{ $komentar->id }}" data-video-id="{{ $komentar->video_id }}" data-pelapor-name="{{ $komentar->user->name }}" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
+                        <i class="fas fa-flag" style="font-size: 15px;"></i> Laporkan
+                    </a>
+                @endif
+                
                 </div>
             </div>
         </div>
@@ -721,41 +722,47 @@
 <!-------------------------------------------------------------------------------------- Modal Area ------------------------------------------------------------------------------------------------------->
 <!-------------------------------------------------------------------------------------- Modal Area ------------------------------------------------------------------------------------------------------->
   
-    <!-- Modal Laporan Video -->
-  <div id="modalLaporan" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1;">
-    <div style="background-color: #ffffff; border-radius: 10px; text-align: center; padding: 20px; width: 600px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
-      <span style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 20px;" id="closeLaporan">&times;</span>
-      <h2 style="color: #007bff; font-size: 24px;">Laporkan Video</h2>
 
+<div id="laporanModalVideo" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.4);">
+  <div style="background-color: #fff; margin: 10% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 500px; border-radius: 15px;">
+    <span id="closeModalVideo" style="color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
+    <div class="text-center">
+      <h2 style="color: #4CAF50; font-size: 24px; font-weight: bold;">Laporkan Video</h2>
       <strong><span id="judulVideo" style="font-size: 14px;"></span></strong></p>
-
       <hr>
-      
-      <form id="reportForm">
-        <div style="text-align: left;">
-          <label style="font-size: 16px;"><input type="radio" name="reason" value="Konten Seksual"> Konten Seksual</label><br>
-          <label style="font-size: 16px;"><input type="radio" name="reason" value="Konten kekerasan atau menjijikkan"> Konten kekerasan atau menjijikkan</label><br>
-          <label style="font-size: 16px;"><input type="radio" name="reason" value="Konten kebencian atau pelecehan"> Konten kebencian atau pelecehan</label><br>
-          <label style="font-size: 16px;"><input type="radio" name="reason" value="Pelecehan atau penindasan"> Pelecehan atau penindasan</label><br>
-          <label style="font-size: 16px;"><input type="radio" name="reason" value="Tindakan merugikan atau berbahaya"> Tindakan merugikan atau berbahaya</label><br>
-          <label style="font-size: 16px;"><input type="radio" name="reason" value="Misinformasi"> Misinformasi</label><br>
-          <label style="font-size: 16px;"><input type="radio" name="reason" value="Pelecehan terhadap anak"> Pelecehan terhadap anak</label><br>
-          <label style="font-size: 16px;"><input type="radio" name="reason" value="Mendukung terorisme"> Mendukung terorisme</label><br>
-          <label style="font-size: 16px;"><input type="radio" name="reason" value="Spam atau menyesatkan"> Spam atau menyesatkan</label><br>
-          <label style="font-size: 16px;"><input type="radio" name="reason" value="Masalah hukum"> Masalah hukum</label><br>
-          <label style="font-size: 16px;"><input type="radio" name="reason" value="Teks bermasalah"> Teks bermasalah</label><br>
-        </div><br>
-        <textarea id="reportTextLaporan" style="width: 100%; padding: 10px; font-size: 16px;" placeholder="Kenapa Anda melaporkan Video ini?"></textarea><br>
-        <button type="submit" class="submit-buttonLaporan" style="background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; padding: 10px 20px; font-size: 18px;">Kirim Laporan</button>
-      </form>
-      <div style="text-align: left; padding: 10px;">
-        <p style="font-size: 14px;">Video dan pengguna yang dilaporkan akan ditinjau oleh staf kami untuk menentukan apakah video dan pengguna tersebut melanggar Pedoman kami atau tidak. Akun akan dikenai sanksi jika melanggar Pedoman Komunitas, dan pelanggaran serius atau berulang dapat berakibat pada penghentian akun.</p>
+    </div>
+    <form id="laporanFormVideo">
+      <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+      <input type="hidden" name="video_id" value="{{ $video->id }}">
+      <div>
+        <label style="font-size: 16px;"><input type="radio" name="laporan" value="Konten Seksual"> Konten Seksual</label><br>
+        <label style="font-size: 16px;"><input type="radio" name="laporan" value="Konten kekerasan atau menjijikkan"> Konten kekerasan atau menjijikkan</label><br>
+        <label style="font-size: 16px;"><input type="radio" name="laporan" value="Konten kebencian atau pelecehan"> Konten kebencian atau pelecehan</label><br>
+        <label style="font-size: 16px;"><input type="radio" name="laporan" value="Pelecehan atau penindasan"> Pelecehan atau penindasan</label><br>
+        <label style="font-size: 16px;"><input type="radio" name="laporan" value="Tindakan merugikan atau berbahaya"> Tindakan merugikan atau berbahaya</label><br>
+        <label style="font-size: 16px;"><input type="radio" name="laporan" value="Misinformasi"> Misinformasi</label><br>
+        <label style="font-size: 16px;"><input type="radio" name="laporan" value="Pelecehan terhadap anak"> Pelecehan terhadap anak</label><br>
+        <label style="font-size: 16px;"><input type="radio" name="laporan" value="Mendukung terorisme"> Mendukung terorisme</label><br>
+        <label style="font-size: 16px;"><input type="radio" name="laporan" value="Spam atau menyesatkan"> Spam atau menyesatkan</label><br>
+        <label style="font-size: 16px;"><input type="radio" name="laporan" value="Masalah hukum"> Masalah hukum</label><br>
+        <label style="font-size: 16px;"><input type="radio" name="laporan" value="Teks bermasalah"> Teks bermasalah</label><br>
       </div>
+      <div>
+        <textarea name="alasan" id="alasan" placeholder="Kenapa Anda melaporkan Video ini?" required style="width: 100%; border-radius: 15px;"></textarea>
+      </div>
+      <div class="text-center">
+        <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Kirim</button>
+      </div>
+    </form>
+    <div style="text-align: left; padding: 10px;">
+      <p style="font-size: 14px;">Video dan pengguna yang dilaporkan akan ditinjau oleh staf kami untuk menentukan apakah video dan pengguna tersebut melanggar Pedoman kami atau tidak. Akun akan dikenai sanksi jika melanggar Pedoman Komunitas, dan pelanggaran serius atau berulang dapat berakibat pada penghentian akun.</p>
     </div>
   </div>
+</div>
+
 
      <!-- Modal Laporan Komentar Video -->
-     <div id="modalLaporKomen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1;">
+     {{-- <div id="modalLaporKomen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1;">
       <div style="background-color: #ffffff; border-radius: 10px; text-align: center; padding: 20px; width: 600px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
           <span style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 20px;" id="tutupLaporanKomen">&times;</span>
           <h2 style="color: #007bff; font-size: 24px;">Laporkan Komentar</h2>
@@ -791,7 +798,43 @@
               <p style="font-size: 14px;">Laporan Komentar Video dan pengguna yang dilaporkan akan ditinjau oleh staf kami untuk menentukan apakah video dan pengguna tersebut melanggar Pedoman kami atau tidak. Akun akan dikenai sanksi jika melanggar Pedoman Komunitas, dan pelanggaran serius atau berulang dapat berakibat pada penghentian akun.</p>
           </div>
       </div>
-    </div>
+    </div> --}}
+
+    <div id="laporanKomentarModal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.4);">
+      <div style="background-color: #fff; margin: 10% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 500px; border-radius: 15px;">
+          <span id="closeModalLK" style="color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
+          <div class="text-center">
+              <h2 style="color: #4CAF50; font-size: 24px; font-weight: bold;">Laporkan Komentar Video</h2>
+              <strong><span id="pelaporName" style="font-size: 14px;"></span></strong>
+              <hr>
+          </div>
+          <form id="laporanForm" method="POST" action="{{ route('storeLaporanKomentarVideo') }}">
+              @csrf
+              <div class="modal-body">
+                  <input type="hidden" name="comment_id" id="comment_id">
+                  <input type="hidden" name="video_id" id="video_id">
+                  <input type="hidden" name="user_id_pelapor" value="{{ Auth::id() }}">
+                  <div style="text-align: left;">
+                      <label style="font-size: 16px;"><input type="radio" name="laporan" value="Konten Komersial atau Spam"> Konten Komersial atau Spam</label><br>
+                      <label style="font-size: 16px;"><input type="radio" name="laporan" value="Materi Pornografi atau Seksual Vulgar"> Materi Pornografi atau Seksual Vulgar</label><br>     
+                      <label style="font-size: 16px;"><input type="radio" name="laporan" value="Pelanggaran Hak Anak"> Pelanggaran Hak Anak</label><br>
+                      <label style="font-size: 16px;"><input type="radio" name="laporan" value="Pernyataan Kebencian dan Kekerasan"> Pernyataan Kebencian dan Kekerasan</label><br>
+                      <label style="font-size: 16px;"><input type="radio" name="laporan" value="Mendukung Terorisme"> Mendukung Terorisme</label><br>
+                      <label style="font-size: 16px;"><input type="radio" name="laporan" value="Pelecehan dan Penindasan"> Pelecehan dan Penindasan</label><br>
+                      <label style="font-size: 16px;"><input type="radio" name="laporan" value="Penggunaan Bunuh Diri atau Menyakiti Diri Sendiri"> Penggunaan Bunuh Diri atau Menyakiti Diri Sendiri</label><br>
+                      <label style="font-size: 16px;"><input type="radio" name="laporan" value="Misinformasi"> Misinformasi</label><br>
+                  </div><br>
+                  <div>
+                      <textarea name="alasan" id="alasan" placeholder="Kenapa Anda melaporkan video ini?" required style="width: 100%; border-radius: 15px;"></textarea>
+                  </div>
+                  <div class="text-center">
+                      <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Kirim</button>
+                  </div>
+              </div>
+          </form>
+      </div>
+  </div>
+  
 
           <!-- Modal Logout -->
           <div id="logout-modal" class="modal">
@@ -942,96 +985,32 @@
 <!--------------------------------------------------------------------------------------- Javascript Laporkan Komentar Modal ------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------------- Javascript Laporkan Komentar Modal ------------------------------------------------------------------------------->
 
-    <!-- Modal Lapor Komentar Artikel -->
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const modalLaporKomen = document.getElementById("modalLaporKomen");
-        const tutupLaporanKomen = document.getElementById("tutupLaporanKomen");
-        const reportCommentForm = document.getElementById("reportCommentForm");
-    
-        function showLaporanModal(commentId, namaDilaporkan, userIdDilaporkan) {
-          document.getElementById("comment_id_input").value = commentId;
-          document.getElementById("namaDilaporkan").innerText = namaDilaporkan;
-          document.getElementById("user_id_dilaporkan_input").value = userIdDilaporkan;
-          modalLaporKomen.style.display = "block";
-        }
-    
-        function hideLaporanModal() {
-          modalLaporKomen.style.display = "none";
-        }
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('.showLaporanKomen').on('click', function() {
+      var commentId = $(this).data('comment-id');
+      var videoId = $(this).data('video-id');
+      var pelaporName = $(this).data('pelapor-name'); // Mengambil nama pelapor dari atribut data
+      $('#comment_id').val(commentId);
+      $('#video_id').val(videoId);
+      $('#pelaporName').text(pelaporName); // Menampilkan nama pelapor di dalam modal
+      $('#laporanKomentarModal').show(); // Menampilkan modal
+    });
 
-              // Close the modal when the user clicks outside of it
-      window.addEventListener("click", function(event) {
-        if (event.target == modalLaporKomen) {
-          modalLaporKomen.style.display = "none"; // Fixed the variable name here
-        }
-      });
-    
-        function submitForm() {
-          const formData = new FormData(reportCommentForm);
-    
-          // Mengambil nilai yang dipilih dari radio button
-          var selectedReason = document.querySelector('input[name="reasonKomen"]:checked');
-          if (!selectedReason) {
-            alert("Pilih alasan laporan terlebih dahulu.");
-            return;
-          }
-    
-          // Mengambil alasan laporan dan artikel_id dari elemen form
-          var alasan = document.getElementById("alasan_input").value; // Fix the ID here
-          var artikelId = {{ $video->id }}; // Ganti dengan nilai artikel_id yang sesuai
-    
-          // Kirim data laporan ke server melalui AJAX
-          $.ajax({
-            type: "POST",
-            url: "{{ route('storeLaporanKomentarVideo') }}", // Use the named route
-            data: {
-              _token: "{{ csrf_token() }}",
-              user_id_pelapor: {{ Auth::user()->id }},
-              artikel_id: artikelId,
-              comment_id: formData.get('comment_id'), // Get comment_id from form data
-              laporan: selectedReason.value,
-              alasan: alasan,
-            },
-            success: function(response) {
-              // Tindakan setelah pengiriman berhasil
-              alert("Laporan telah dikirim!");
-              hideLaporanModal(); // Use the correct modal variable
-            },
-            error: function(xhr, status, error) {
-              var errorMessage = xhr.status + ': ' + xhr.statusText;
-              if (xhr.responseJSON && xhr.responseJSON.message) {
-                errorMessage = xhr.responseJSON.message;
-              }
-              alert("Terjadi kesalahan saat mengirim laporan: " + errorMessage);
-            }
-          });
-        }
-    
-        // Show modal when the link is clicked
-        document.querySelectorAll(".showLaporanKomen").forEach(function (link) {
-          link.addEventListener("click", function (e) {
-            e.preventDefault();
-            const commentId = link.getAttribute("data-comment-id");
-            const namaDilaporkan = link.getAttribute("data-nama-dilaporkan");
-            const userIdDilaporkan = link.getAttribute("data-user-id-dilaporkan");
-            showLaporanModal(commentId, namaDilaporkan, userIdDilaporkan);
-          });
-        });
-    
-        // Hide modal when the close button is clicked
-        tutupLaporanKomen.addEventListener("click", function () {
-          hideLaporanModal();
-        });
-    
-        // Add an event listener for form submission
-        reportCommentForm.addEventListener("submit", function (e) {
-          e.preventDefault(); // Prevent default form submission
-          // You can add some additional validation logic here if needed
-          submitForm();
-        });
-      });
-    </script>
+    $('#closeModalLK').on('click', function() {
+      $('#laporanKomentarModal').hide(); // Menutup modal
+    });
+
+    // Menutup modal jika pengguna mengklik di luar modal
+    window.addEventListener('click', function(event) {
+      if (event.target == document.getElementById('laporanKomentarModal')) {
+        document.getElementById('laporanKomentarModal').style.display = 'none';
+      }
+    });
+  });
+</script>
+
 
 <!--------------------------------------------------------------------------------------- Javascript EdiT Komentar  ------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------------- Javascript EdiT Komentar  ------------------------------------------------------------------------------->
@@ -1138,71 +1117,48 @@
 <!--------------------------------------------------------------------------------------- Javascript Lapor Modal ------------------------------------------------------------------------------->
 
 <script>
-  // Get the modal and close button elements
-  var modal = document.getElementById("modalLaporan");
-  var showModalButton = document.getElementById("showModal");
-  var closeButton = document.getElementById("closeLaporan");
-
-  // Show the modal when the showModalButton is clicked
-  showModalButton.addEventListener("click", function(event) {
+  document.getElementById('showModalVideo').addEventListener('click', function(event) {
       event.preventDefault();
-      modal.style.display = "block";
+      document.getElementById('laporanModalVideo').style.display = 'block';
 
-      // Assuming $video is passed to the view from the backend
       var judulVideo = "{{ $video->judulVideo }}";
       document.getElementById("judulVideo").innerText = judulVideo;
   });
-
-  // Close the modal when the close button is clicked
-  closeButton.addEventListener("click", function() {
-      modal.style.display = "none";
+  
+  document.getElementById('closeModalVideo').addEventListener('click', function() {
+      document.getElementById('laporanModalVideo').style.display = 'none';
   });
-
-  // Close the modal when the user clicks outside of it
-  window.addEventListener("click", function(event) {
-      if (event.target == modal) {
-          modal.style.display = "none";
+  
+  window.addEventListener('click', function(event) {
+      if (event.target == document.getElementById('laporanModalVideo')) {
+          document.getElementById('laporanModalVideo').style.display = 'none';
       }
   });
-
-  // Submit the form
-  document.getElementById("reportForm").addEventListener("submit", function(event) {
-      event.preventDefault();
-
-      // Mengambil nilai yang dipilih dari radio button
-      var selectedReason = document.querySelector('input[name="reason"]:checked');
-      if (!selectedReason) {
-          alert("Pilih alasan laporan terlebih dahulu.");
-          return;
-      }
-
-      // Mengambil alasan laporan dari elemen form
-      var alasan = document.getElementById("reportTextLaporan").value;
-      var videoId = {{ $video->id }};
-
-      // Kirim data laporan ke server melalui AJAX
-      $.ajax({
-          type: "POST",
-          url: "/submitV/reportV", // Ganti dengan URL yang sesuai
-          data: {
-              _token: "{{ csrf_token() }}",
-              user_id: {{ Auth::user()->id }}, // Ganti dengan user_id yang sesuai
-              video_id: videoId,
-              laporan: selectedReason.value,
-              alasan: alasan,
+  
+  document.getElementById('laporanFormVideo').addEventListener('submit', function(e) {
+      e.preventDefault();
+  
+      fetch("{{ route('laporan.storeLaporanVideolaporan') }}", {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-TOKEN': '{{ csrf_token() }}'
           },
-          success: function(response) {
-              // Tindakan setelah pengiriman berhasil
-              alert("Laporan telah dikirim!");
-              modal.style.display = "none"; // Tutup modal
-          },
-          error: function(error) {
-              // Tindakan jika ada kesalahan
-              alert("Terjadi kesalahan saat mengirim laporan.");
-          }
-      });
+          body: JSON.stringify({
+              user_id: document.querySelector('input[name="user_id"]').value,
+              video_id: document.querySelector('input[name="video_id"]').value,
+              laporan: document.querySelector('input[name="laporan"]:checked').value,
+              alasan: document.querySelector('textarea[name="alasan"]').value
+          })
+      })
+      .then(response => response.json())
+      .then(data => {
+          alert(data.message);
+          document.getElementById('laporanModalVideo').style.display = 'none';
+      })
+      .catch(error => console.error('Error:', error));
   });
-</script>
+  </script>
 
 <!--------------------------------------------------------------------------------------- Javascript Like ------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------------- Javascript Like ------------------------------------------------------------------------------->

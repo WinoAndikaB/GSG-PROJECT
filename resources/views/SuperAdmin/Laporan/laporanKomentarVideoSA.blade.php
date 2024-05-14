@@ -432,12 +432,12 @@
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama User Pelapor</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User ID Dilaporkan</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama User Dilaporkan</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Artikel ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Artikel</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Video ID</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Judul Video</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Komentar ID</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Isi Komentar</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"">Laporan</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"">Alasan</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"">Isi Laporan</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"">Alasan Dilaporkan</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"">Tanggal Laporan</th>
                                 <th class="text-secondary opacity-7"></th>
                               </tr>
@@ -460,39 +460,69 @@
                                     <td class="align-middle text-center">
                                         <p class="text-xs font-weight-bold mb-0">{{$item['user_id_pelapor']}}</p>
                                     </td>
-                                    <td class="align-middle text-center">
-                                        <p class="text-xs font-weight-bold mb-0">{{$item['pelapor']['name']}}</p>
+                                    <td>
+                                      <div class="d-flex px-2 py-1">
+                                        <div>
+                                          @if($item->pelapor->fotoProfil)
+                                          @if(filter_var($item->pelapor->fotoProfil, FILTER_VALIDATE_URL))
+                                              <a href="{{$item->pelapor->fotoProfil}}" data-lightbox="fotoProfil" data-title="Deskripsi Gambar">
+                                                  <img src="{{$item->pelapor->fotoProfil}}" class="avatar avatar-sm me-3" alt="user1">
+                                              </a>
+                                          @else
+                                              <a href="{{asset('fotoProfil/'.$item->pelapor->fotoProfil)}}" data-lightbox="fotoProfil" data-title="Deskripsi Gambar">
+                                                  <img src="{{asset('fotoProfil/'.$item->pelapor->fotoProfil)}}" class="avatar avatar-sm me-3" alt="user1">
+                                              </a>
+                                          @endif
+                                      @endif
+                                      
+                                      </div>                                  
+                                        <div class="d-flex flex-column justify-content-center">
+                                          <h6 class="mb-0 text-sm">{{$item['pelapor']['name']}}</h6>
+                                          <p class="text-xs text-secondary mb-0">{{$item['pelapor']['email']}}</p>
+                                        </div>
+                                      </div>
                                     </td>
                                     <td class="align-middle text-center">
-                                      <p class="text-xs font-weight-bold mb-0">{{$item['komentarA']['user_id']}}</p>
+                                      <p class="text-xs font-weight-bold mb-0">{{$item['komentarV']['user_id']}}</p>
                                   </td>
-                                  <td class="align-middle text-center">
-                                      <p class="text-xs font-weight-bold mb-0"> {{$item['komentarA']['user']['name']}}</p>
+                                  <td>
+                                    <div class="d-flex px-2 py-1">
+                                      <div>
+                                        @if($item->pelapor->fotoProfil)
+                                          @if(filter_var($item->komentarV->user->fotoProfil, FILTER_VALIDATE_URL))
+                                              <a href="{{$item->komentarV->user->fotoProfil}}" data-lightbox="fotoProfil" data-title="Deskripsi Gambar">
+                                                  <img src="{{$item->komentarV->user->fotoProfil}}" class="avatar avatar-sm me-3" alt="user1">
+                                              </a>
+                                          @else
+                                              <a href="{{asset('fotoProfil/'.$item->komentarV->user->fotoProfil)}}" data-lightbox="fotoProfil" data-title="Deskripsi Gambar">
+                                                  <img src="{{asset('fotoProfil/'.$item->komentarV->user->fotoProfil)}}" class="avatar avatar-sm me-3" alt="user1">
+                                              </a>
+                                          @endif
+                                      @endif
+                                    
+                                    </div>                                  
+                                      <div class="d-flex flex-column justify-content-center">
+                                        <h6 class="mb-0 text-sm">{{$item['komentarV']['user']['name']}}</h6>
+                                        <p class="text-xs text-secondary mb-0">{{$item['komentarV']['user']['email']}}</p>
+                                      </div>
+                                    </div>
                                   </td>
                                     <td class="align-middle text-center">
-                                        <p class="text-xs font-weight-bold mb-0">{{$item['artikel_id']}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{$item['video_id']}}</p>
                                     </td>
-                                    <td class="popup-trigger" data-id="<?php echo $item['id']; ?>" style="text-align: justify;">
-                                      <p class="text-xs font-weight-bold mb-0" style="white-space: normal; max-width: 1000px;">
-                                        <?php
-                                        $judul = strip_tags($item['artikel']['judulArtikel']);
-                                        $words = str_word_count($judul, 2);
-                                        $first_100_words = implode(' ', array_slice($words, 0, 5));
-                                        echo $first_100_words;
-                                        if (str_word_count($judul) > 100) {
-                                          echo '...';
-                                        }
-                                        ?>
-                                      </p>
-                                    </td>
+                                    <td class="align-middle text-center">
+                                      <p class="text-xs font-weight-bold mb-0">{{$item['video']['judulVideo']}}</p>
+                                  </td>
                                     <td class="align-middle text-center">
                                         <p class="text-xs font-weight-bold mb-0">{{$item['comment_id']}}</p>
                                     </td>
                                     <td class="align-middle text-center">
-                                        <p class="text-xs font-weight-bold mb-0">{{$item['komentarA']['pesan']}}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{$item['komentarV']['pesan']}}</p>
                                     </td>
                                     <td class="align-middle text-center">
+                                      <span class="badge badge-sm bg-gradient-secondary">
                                         <p class="text-xs font-weight-bold mb-0">{{$item['laporan']}}</p>
+                                      </span>
                                     </td>
                                     <td class="align-middle text-center">
                                         <p class="text-xs font-weight-bold mb-0">{{$item['alasan']}}</p>
@@ -572,7 +602,7 @@
                                   <span aria-hidden="true">&times;</span>
                               </button>
                           </div>
-                          <form id="freezeForm{{ $item->id }}" action="{{ route('freeze.user') }}" method="post">
+                          <form id="freezeForm{{ $item->id }}" action="{{ route('freeze.pengguna') }}" method="post">
                               @csrf
                               <div class="modal-body">
                                 <!-- Tambahkan foto profil di sebelah kiri -->

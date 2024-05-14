@@ -17,6 +17,7 @@ use App\Models\LaporanArtikelUser;
 use App\Models\RatingPenulis;
 use App\Models\LaporanUlasanUser;
 use App\Models\LaporanKomentarArtikel;
+use App\Models\LaporanKomentarVideo;
 use App\Models\SimpanArtikel;
 use App\Models\SimpanVideo;
 use App\Models\Banner;
@@ -565,54 +566,37 @@ class PenggunaController extends Controller
 
     public function storeLaporanKomentarArtikel(Request $request)
     {
-        // Validate the request
         $request->validate([
-            'user_id_pelapor' => 'required',
-            'artikel_id' => 'required',
             'comment_id' => 'required',
+            'article_id' => 'required',
             'laporan' => 'required',
             'alasan' => 'required',
         ]);
     
-        // Create a new instance of LaporanKomentarArtikel
-        $laporan = new LaporanKomentarArtikel([
+        LaporanKomentarArtikel::create([
             'user_id_pelapor' => $request->user_id_pelapor,
-            'artikel_id' => $request->artikel_id,
+            'artikel_id' => $request->article_id,
             'comment_id' => $request->comment_id,
             'laporan' => $request->laporan,
             'alasan' => $request->alasan,
+            // tambahkan kolom lain sesuai kebutuhan
         ]);
     
-        // Save the data to the database
-        $laporan->save();
-    
-        // Return a success response
-        return response()->json(['success' => 'Laporan berhasil dikirim'], 200);
+        return redirect()->back()->with('success', 'Laporan berhasil disimpan.');
     }
 
     public function storeLaporanArtikel(Request $request)
     {
-        // Validate the request
         $request->validate([
-            'user_id' => 'required',
-            'artikel_id' => 'required',
-            'laporan' => 'required',
-            'alasan' => 'required',
+            'user_id' => 'required|exists:users,id',
+            'artikel_id' => 'required|exists:artikels,id',
+            'laporan' => 'required|string',
+            'alasan' => 'required|string|max:255',
         ]);
-    
-        // Create a new instance of LaporanArtikelUser
-        $laporan = new LaporanArtikelUser([
-            'user_id' => $request->user_id,
-            'artikel_id' => $request->artikel_id,
-            'laporan' => $request->laporan,
-            'alasan' => $request->alasan,
-        ]);
-    
-        // Save the data to the database
-        $laporan->save();
-    
-        // Return a success response
-        return response()->json(['success' => 'Laporan berhasil dikirim'], 200);
+
+        LaporanArtikelUser::create($request->all());
+
+        return response()->json(['message' => 'Laporan berhasil dikirim'], 200);
     }
     
     
@@ -1002,6 +986,27 @@ class PenggunaController extends Controller
         $isFollowingAuthor = true; // Langsung diatur ke true, karena kita ingin menampilkan notifikasi tanpa menunggu follow
            
         return view('main.setelahLogin.simpanVideo', compact('savedVideos', 'isFollowingAuthor', 'notifVideo', 'jumlahData'));
+    }
+
+    public function storeLaporanKomentarVideo(Request $request)
+    {
+        $request->validate([
+            'comment_id' => 'required',
+            'video_id' => 'required',
+            'laporan' => 'required',
+            'alasan' => 'required',
+        ]);
+    
+        LaporanKomentarVideo::create([
+            'user_id_pelapor' => $request->user_id_pelapor,
+            'video_id' => $request->video_id,
+            'comment_id' => $request->comment_id,
+            'laporan' => $request->laporan,
+            'alasan' => $request->alasan,
+            // tambahkan kolom lain sesuai kebutuhan
+        ]);
+    
+        return redirect()->back()->with('success', 'Laporan berhasil disimpan.');
     }
     
        
