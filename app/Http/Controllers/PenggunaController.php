@@ -256,9 +256,9 @@ class PenggunaController extends Controller
     
         // Menyiapkan data komentar, menyaring yang lebih muda dari 5 hari
         $komentarArtikels = komentar_artikel::where('artikel_id', $id)
-                                ->where('created_at', '>=', Carbon::now()->subDays(5))
-                                ->latest()
-                                ->paginate(6);
+        ->latest()
+        ->paginate(6);
+
     
         $totalKomentarArtikels = komentar_artikel::where('artikel_id', $id)
                                     ->where('created_at', '>=', Carbon::now()->subDays(5))
@@ -599,7 +599,7 @@ class PenggunaController extends Controller
             'laporan' => 'required',
             'alasan' => 'required',
         ]);
-        
+    
         // Create a new instance of LaporanArtikelUser
         $laporan = new LaporanArtikelUser([
             'user_id' => $request->user_id,
@@ -607,13 +607,16 @@ class PenggunaController extends Controller
             'laporan' => $request->laporan,
             'alasan' => $request->alasan,
         ]);
-        
+    
         // Save the data to the database
         $laporan->save();
-        
+    
         // Return a success response
         return response()->json(['success' => 'Laporan berhasil dikirim'], 200);
     }
+    
+    
+    
 
     public function likeKomentarArtikel($komentar_id)
     {

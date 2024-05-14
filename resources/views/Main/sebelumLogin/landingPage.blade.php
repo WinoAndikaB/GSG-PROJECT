@@ -518,7 +518,17 @@
               </div>
               <div class="single-post-wrap">
                   <div class="thumb">
-                    <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" style="max-width: 100%; height: auto; border-radius: 14px">
+                    @if($item->gambarArtikel)
+                    @if(filter_var($item->gambarArtikel, FILTER_VALIDATE_URL))
+                        <a href="{{$item->gambarArtikel}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                            <img src="{{$item->gambarArtikel}}"  style="max-width: 100%; height: auto; border-radius: 14px">
+                        </a>
+                    @else
+                        <a href="{{asset('gambarArtikel/'.$item->gambarArtikel)}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                            <img src="{{asset('gambarArtikel/'.$item->gambarArtikel)}}"  style="max-width: 100%; height: auto; border-radius: 14px">
+                        </a>
+                    @endif
+                @endif
                       <p class="btn-date"><i class="fa fa-clock-o"></i>{{$item->created_at->format('d F Y H:i:s')}}</p>
                   </div>
                   <div class="details">

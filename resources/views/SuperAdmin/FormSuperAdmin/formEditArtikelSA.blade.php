@@ -319,8 +319,8 @@
                   <div class="row">
                     <div class="col">
                       <div class="form-group">
-                        <label for="gambarArtikelFile">Upload Foto (File)</label>
-                        <span for="gambarArtikelFile">Format Foto: .jpg, .jpeg, .png</span>
+                        <label for="gambarArtikelFile">Upload Gambar (File)</label>
+                        <span for="gambarArtikelFile">Format Gambar: .jpg, .jpeg, .png</span>
                         <input type="file" class="form-control" id="gambarArtikel" name="gambarArtikel" onchange="toggleInput('file'); previewFile()">
                         <img id="previewImageFile" src="#" alt="Preview" style="display:none; max-width:50%; height:auto; margin: 20px;">
                     </div>
@@ -328,7 +328,7 @@
                     </div>
                     <div class="col">
                         <div class="form-group">
-                            <label for="gambarArtikelURL">Upload Foto (URL)</label>
+                            <label for="gambarArtikelURL">Upload Gambar (URL)</label>
                             <input type="text" class="form-control" id="gambarArtikel" name="gambarArtikel" onchange="toggleInput('url'); previewURL(this.value)" value="{{ $data->gambarArtikel }}" required>
                             <img id="previewImageURL" src="#" alt="Preview" style="display:none; max-width:50%; height:auto; margin: 20px;">
                         </div>
