@@ -228,7 +228,9 @@ use Illuminate\Support\Facades\Route;
                 //[Admin] Tabel Laporan
                 Route::get('/laporanUser', [AdminController::class, 'laporanUser'])->name('laporanUser');
                 Route::get('/laporanVideoUser', [AdminController::class, 'laporanVideoUser'])->name('laporanVideoUser');
-                Route::get('/laporanUlasanUser', [AdminController::class, 'laporanUlasanUser'])->name('laporanUlasanUser');
+
+                Route::post('/update-tindakanA', [AdminController::class, 'updateTindakanArtikel'])->name('update.tindakanA');
+                Route::post('/update-tindakanV', [AdminController::class, 'updateTindakanVideo'])->name('update.tindakanV');
 
                 Route::get('/deleteLaporanUA/{id}',[AdminController::class,'deleteLaporanUA'])->name('deleteLaporanUA');
                 Route::get('/deleteLaporanVA/{id}',[AdminController::class,'deleteLaporanVA'])->name('deleteLaporanVA');
@@ -364,7 +366,8 @@ use Illuminate\Support\Facades\Route;
             Route::get('/deleteLaporanVideoSA/{id}',[SuperAdminController::class,'deleteLaporanVideoSA'])->name('deleteLaporanVideoSA');
             Route::get('/deleteLaporanVideoSA/{id}',[SuperAdminController::class,'deleteLaporanVideoSA'])->name('deleteLaporanVideoSA');
 
-
+            Route::post('/update-tindakanASA', [SuperAdminController::class, 'updateTindakanArtikelSA'])->name('update.tindakanASA');
+            Route::post('/update-tindakanVSA', [SuperAdminController::class, 'updateTindakanVideoSA'])->name('update.tindakanVSA');            
 
             //[SuperAdmin] Tabel Syarat & Ketentuan
             Route::get('/syaratdanketentuanSA',[SuperAdminController::class,'syaratdanketentuanSA'])->name('syaratdanketentuanSA');

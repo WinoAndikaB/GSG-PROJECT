@@ -330,6 +330,7 @@
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"">Isi Laporan</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"">Alasan Laporan</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"">Tanggal Laporan</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"">Tindakan Laporan</th>
                                 <th class="text-secondary opacity-7"></th>
                               </tr>
                             </thead>
@@ -390,7 +391,39 @@
                                   <td class="align-middle text-center">
                                     <span class="text-secondary text-xs font-weight-bold">{{$item['created_at']->locale('id')->translatedFormat('l, d F Y H:i:s')  }}</span>
                                   </td>
-                                  <td class="align-middle">
+                                  <td class="align-middle text-center">
+                                    <span class="badge badge-sm status-badge 
+                                    {{$item['tindakan'] === 'Tindakan Selesai' ? 'bg-gradient-success' : ''}}
+                                    {{$item['tindakan'] === 'Sementara Diproses' ? 'bg-gradient-secondary' : ''}}
+                                    {{$item['tindakan'] === 'Tidak Bisa Ditindak' ? 'bg-gradient-danger' : ''}}">
+                                    {{$item['tindakan']}}
+                                  </span>
+                                </td>
+                                <td class="align-middle">
+
+                                  <div class="dropdown">
+                                    <a href="#" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdownMenuLink2">
+                                        <span class="d-sm-inline d-none fa fa-warning"></span> 
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                                      <li>
+                                        <a class="dropdown-item" href="#" data-laporan-id="{{ $item->id }}">
+                                            Tindakan Selesai
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#" data-laporan-id="{{ $item->id }}">
+                                            Sementara Diproses
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#" data-laporan-id="{{ $item->id }}">
+                                            Tidak Bisa Ditindak
+                                        </a>
+                                    </li>
+                                    
+                                    </ul>
+                                </div>
 
                                     <a href="{{ route('showDetailVideoA', ['id' => $item->video->id]) }}" class="btn btn-info btn btn-primary btn-round">
                                       <i class="fas fa-info-circle"></i>
@@ -571,6 +604,39 @@
       console.log("Document ready.");
   });
   </script>
+
+    <!------------------ tINDAKAN LAPORAN ------------------------------>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.dropdown-item').click(function(e) {
+                e.preventDefault(); // Mencegah tindakan default dari link
+                
+                var laporanId = $(this).data('laporan-id');
+                var tindakan = $(this).text().trim();
+                
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route("update.tindakanV") }}',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        laporan_id: laporanId,
+                        tindakan: tindakan
+                    },
+                    success: function(response) {
+                        // Lakukan sesuatu setelah berhasil memperbarui
+                        console.log('Tindakan berhasil diperbarui');
+                        // Arahkan kembali ke halaman laporanUser
+                        window.location.href = '{{ route("laporanVideoUser") }}';
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            });
+        });
+    </script>
+    
 
   <!-- Modal Delete -->
   <script>

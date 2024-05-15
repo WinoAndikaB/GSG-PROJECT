@@ -381,7 +381,17 @@
                             <div class="row" style="text-align: justify">
                                 <div class="col-lg-3 col-md-4 col-sm-12" data-aos="fade-right" data-aos-delay="200">
                                     <div class="d-flex justify-content-center">
-                                        <img src="{{ asset('gambarArtikel/'.$item->gambarArtikel) }}" style="max-width: 100%; height: auto; border-radius: 14px">
+                                      @if($item->gambarArtikel)
+                                      @if(filter_var($item->gambarArtikel, FILTER_VALIDATE_URL))
+                                          <a href="{{$item->gambarArtikel}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                                              <img src="{{$item->gambarArtikel}}" style="max-width: 100%; height: auto; border-radius: 14px">
+                                          </a>
+                                      @else
+                                          <a href="{{asset('gambarArtikel/'.$item->gambarArtikel)}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                                              <img src="{{asset('gambarArtikel/'.$item->gambarArtikel)}}" style="max-width: 100%; height: auto; border-radius: 14px">
+                                          </a>
+                                      @endif
+                                  @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-9 col-md-8 col-sm-12" data-aos="fade-left" data-aos-delay="200">

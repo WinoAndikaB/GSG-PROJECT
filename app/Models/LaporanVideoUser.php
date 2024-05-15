@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class LaporanVideoUser extends Model
 {
     protected $table = 'laporan_video_users';
-    protected $fillable = ['user_id', 'video_id', 'laporan', 'alasan','user_id_uploader'];
+    protected $fillable = ['user_id', 'video_id', 'laporan', 'alasan','tindakan','user_id_uploader'];
 
     public function user()
     {
