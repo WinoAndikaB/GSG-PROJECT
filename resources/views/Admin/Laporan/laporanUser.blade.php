@@ -299,6 +299,27 @@
                       <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
                           <table class="table align-items-center mb-0">
+
+                            <div class="dropdown">
+                              <a href="#" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdownMenuLink2">
+                                  <span class="d-sm-inline d-none">Filter Laporan</span> 
+                              </a>
+                              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                                  <li>
+                                      <a class="dropdown-item" href="{{ route('laporanUser') }}">
+                                          All ({{ $allTotalLaporan }})
+                                      </a>
+                                  </li>
+                                  @foreach($filterLA as $filter)
+                                      <li>
+                                          <a class="dropdown-item" href="{{ route('laporanUser', ['laporan' => $filter['laporan']]) }}">
+                                              {{ $filter['laporan'] }} ({{ $filter['count'] }})
+                                          </a>
+                                      </li>
+                                  @endforeach
+                              </ul>
+                          </div>
+                          
                             <thead>
                               <tr>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>

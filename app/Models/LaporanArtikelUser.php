@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class LaporanArtikelUser extends Model
 {
     protected $table = 'laporan_artikel_users';
-    protected $fillable = ['user_id', 'artikel_id', 'laporan', 'alasan'];
+    protected $fillable = ['user_id', 'artikel_id', 'laporan', 'alasan', 'user_id_penulis'];
 
     public function user()
     {
@@ -18,5 +18,10 @@ class LaporanArtikelUser extends Model
     public function artikel()
     {
         return $this->belongsTo(artikels::class, 'artikel_id', 'id');
+    }
+
+    public function penulis()
+    {
+        return $this->belongsTo(User::class, 'user_id_penulis', 'id');
     }
 }

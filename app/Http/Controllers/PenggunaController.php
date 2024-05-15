@@ -588,14 +588,15 @@ class PenggunaController extends Controller
     public function storeLaporanArtikel(Request $request)
     {
         $request->validate([
+            'user_id_penulis' => 'required|exists:users,id',
             'user_id' => 'required|exists:users,id',
             'artikel_id' => 'required|exists:artikels,id',
             'laporan' => 'required|string',
             'alasan' => 'required|string|max:255',
         ]);
-
+    
         LaporanArtikelUser::create($request->all());
-
+    
         return response()->json(['message' => 'Laporan berhasil dikirim'], 200);
     }
     
@@ -1085,6 +1086,7 @@ class PenggunaController extends Controller
     {
         // Validasi data yang diterima dari form
         $request->validate([
+            'user_id_uploader' => 'required',
             'user_id' => 'required',
             'video_id' => 'required',
             'laporan' => 'required',
@@ -1093,11 +1095,12 @@ class PenggunaController extends Controller
     
         // Simpan data laporan ke dalam database
         $laporan = new LaporanVideoUser([
+            'user_id_uploader' => $request->user_id_uploader,
             'user_id' => $request->user_id,
             'video_id' => $request->video_id,
             'laporan' => $request->laporan,
             'alasan' => $request->alasan,
-            'created_at' => Carbon::now(), // Tambahkan waktu pembuatan
+            'created_at' => now(), // Use 'now()' instead of 'Carbon::now()'
         ]);
     
         // Kosongkan waktu pembaruan
@@ -1106,6 +1109,7 @@ class PenggunaController extends Controller
     
         return response()->json(['message' => 'Laporan telah berhasil disimpan.']);
     }
+    
 
         //[User-Video] Delete Komentar Video
         public function deleteKomentarVideo($id)

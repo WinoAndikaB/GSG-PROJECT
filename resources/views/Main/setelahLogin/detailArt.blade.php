@@ -841,6 +841,7 @@
           <hr>
         </div>
         <form id="laporanForm">
+          <input type="hidden" name="user_id_penulis" value="{{ $article->user_id }}">
           <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
           <input type="hidden" name="artikel_id" value="{{ $article->id }}">
           <div>
@@ -897,13 +898,16 @@
                 <label style="font-size: 16px;"><input type="radio" name="laporan" value="Misinformasi"> Misinformasi</label><br>
               </div><br>
               <div>
-                <textarea name="alasan" id="alasan" placeholder="Kenapa Anda melaporkan artikel ini?" required style="width: 100%; border-radius: 15px;"></textarea>
+                <textarea name="alasan" id="alasan" placeholder="Kenapa Anda melaporkan komentar ini?" required style="width: 100%; border-radius: 15px;"></textarea>
               </div>
               <div class="text-center">
                 <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Kirim</button>
               </div>
             </div>
           </form>
+          <div style="text-align: left; padding: 10px;">
+            <p style="font-size: 14px;">Laporan Komentar yang dilaporkan akan ditinjau oleh staf kami untuk menentukan apakah komentar pengguna tersebut melanggar Pedoman kami atau tidak. Akun akan dikenai sanksi jika melanggar Pedoman Komunitas, dan pelanggaran serius atau berulang dapat berakibat pada penghentian akun.</p>
+        </div>
         </div>
       </div>
       
@@ -1091,6 +1095,7 @@
               'X-CSRF-TOKEN': '{{ csrf_token() }}'
           },
           body: JSON.stringify({
+              user_id_penulis: document.querySelector('input[name="user_id_penulis"]').value,
               user_id: document.querySelector('input[name="user_id"]').value,
               artikel_id: document.querySelector('input[name="artikel_id"]').value,
               laporan: document.querySelector('input[name="laporan"]:checked').value,
@@ -1107,7 +1112,7 @@
   </script>
   
 
-  <!--------------------------------------------------------------------------------------- Javascript Laporkan Komentar Modal ------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------------- Javascript Laporkan Komentar Modal ------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------------- Javascript Laporkan Komentar Modal ------------------------------------------------------------------------------->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

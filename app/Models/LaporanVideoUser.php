@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class LaporanVideoUser extends Model
 {
     protected $table = 'laporan_video_users';
-    protected $fillable = ['user_id', 'video_id', 'laporan', 'alasan'];
+    protected $fillable = ['user_id', 'video_id', 'laporan', 'alasan','user_id_uploader'];
 
     public function user()
     {
@@ -19,4 +19,9 @@ class LaporanVideoUser extends Model
     {
         return $this->belongsTo(Video::class, 'video_id');
     }
- }
+
+    public function uploader()
+    {
+        return $this->belongsTo(User::class, 'user_id_uploader', 'id');
+    }
+}

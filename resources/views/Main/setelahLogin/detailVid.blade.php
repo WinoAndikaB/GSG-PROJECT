@@ -732,6 +732,7 @@
       <hr>
     </div>
     <form id="laporanFormVideo">
+      <input type="hidden" name="user_id_uploader" value="{{ $video->user_id }}">
       <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
       <input type="hidden" name="video_id" value="{{ $video->id }}">
       <div>
@@ -762,43 +763,6 @@
 
 
      <!-- Modal Laporan Komentar Video -->
-     {{-- <div id="modalLaporKomen" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1;">
-      <div style="background-color: #ffffff; border-radius: 10px; text-align: center; padding: 20px; width: 600px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
-          <span style="position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 20px;" id="tutupLaporanKomen">&times;</span>
-          <h2 style="color: #007bff; font-size: 24px;">Laporkan Komentar</h2>
-
-          <strong><span id="namaDilaporkan" style="font-size: 14px;"></span></strong></p>
-
-          <hr>
-
-          <form id="reportCommentForm" action="{{ route('storeLaporanKomentarVideo') }}" method="POST">
-              <br>
-              <input type="hidden" name="user_id_pelapor" id="user_id_pelapor_input" value="{{ Auth::user()->id }}">
-              <input type="hidden" name="video_id" id="video_id_input" value="">
-              <input type="hidden" name="comment_id" id="comment_id_input" value="">
-              <input type="hidden" name="user_id_dilaporkan" id="user_id_dilaporkan_input" value="">
-
-              <div style="text-align: left;">
-                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Konten Komersial atau Spam"> Konten Komersial atau Spam</label><br>
-                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Materi Pornografi atau Seksual Vulgar"> Materi Pornografi atau Seksual Vulgar</label><br>     
-                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Pelanggaran Hak Anak"> Pelanggaran Hak Anak</label><br>
-                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Pernyataan Kebencian dan Kekerasan"> Pernyataan Kebencian dan Kekerasan</label><br>
-                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Mendukung Terorisme"> Mendukung Terorisme</label><br>
-                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Pelecehan dan Penindasan"> Pelecehan dan Penindasan</label><br>
-                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Penggunaan Bunuh Diri atau Menyakiti Diri Sendiri"> Penggunaan Bunuh Diri atau Menyakiti Diri Sendiri</label><br>
-                <label style="font-size: 16px;"><input type="radio" name="reasonKomen" class="reason_input" value="Misinformasi"> Misinformasi</label><br>
-              </div><br>
-
-              <textarea id="alasan_input" style="width: 100%; padding: 10px; font-size: 16px;" placeholder="Kenapa Anda melaporkan komentar ini?" name="alasan"></textarea><br>
-
-              <button type="submit" class="submit-buttonLaporKomentar" style="background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; padding: 10px 20px; font-size: 18px;">Kirim Laporan</button>
-          </form>
-
-          <div style="text-align: left; padding: 10px;">
-              <p style="font-size: 14px;">Laporan Komentar Video dan pengguna yang dilaporkan akan ditinjau oleh staf kami untuk menentukan apakah video dan pengguna tersebut melanggar Pedoman kami atau tidak. Akun akan dikenai sanksi jika melanggar Pedoman Komunitas, dan pelanggaran serius atau berulang dapat berakibat pada penghentian akun.</p>
-          </div>
-      </div>
-    </div> --}}
 
     <div id="laporanKomentarModal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.4);">
       <div style="background-color: #fff; margin: 10% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 500px; border-radius: 15px;">
@@ -825,13 +789,16 @@
                       <label style="font-size: 16px;"><input type="radio" name="laporan" value="Misinformasi"> Misinformasi</label><br>
                   </div><br>
                   <div>
-                      <textarea name="alasan" id="alasan" placeholder="Kenapa Anda melaporkan video ini?" required style="width: 100%; border-radius: 15px;"></textarea>
+                      <textarea name="alasan" id="alasan" placeholder="Kenapa Anda melaporkan komentar ini?" required style="width: 100%; border-radius: 15px;"></textarea>
                   </div>
                   <div class="text-center">
                       <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Kirim</button>
                   </div>
               </div>
           </form>
+          <div style="text-align: left; padding: 10px;">
+            <p style="font-size: 14px;">Laporan Komentar yang dilaporkan akan ditinjau oleh staf kami untuk menentukan apakah komentar pengguna tersebut melanggar Pedoman kami atau tidak. Akun akan dikenai sanksi jika melanggar Pedoman Komunitas, dan pelanggaran serius atau berulang dapat berakibat pada penghentian akun.</p>
+        </div>
       </div>
   </div>
   
@@ -1145,6 +1112,7 @@
               'X-CSRF-TOKEN': '{{ csrf_token() }}'
           },
           body: JSON.stringify({
+              user_id_uploader: document.querySelector('input[name="user_id_uploader"]').value,
               user_id: document.querySelector('input[name="user_id"]').value,
               video_id: document.querySelector('input[name="video_id"]').value,
               laporan: document.querySelector('input[name="laporan"]:checked').value,

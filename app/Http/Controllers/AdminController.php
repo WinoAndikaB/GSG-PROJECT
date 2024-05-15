@@ -1567,53 +1567,81 @@ public function searchTagsA(Request $request)
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //[Admin-Laporan User] 
-    function laporanUser(){
+    function laporanUser(Request $request){
 
         $userId = Auth::id();
         
-
-        $laporanArtikelU = laporanArtikelUser::orderBy('created_at', 'desc')->paginate(10);
-
+        // Ambil nilai filter dari request
+        $filter = $request->input('laporan');
+        
+        // Query dasar
+        $query = LaporanArtikelUser::where('user_id_penulis', $userId)->orderBy('created_at', 'desc');
+        
+        // Tambahkan kondisi filter jika ada
+        if ($filter) {
+            $query->where('laporan', $filter);
+        }
+        
+    
+        $laporanArtikelU = $query->paginate(10);
+    
         // Waktu 24 jam yang lalu
         $waktu24JamLalu = Carbon::now()->subDay();
-
+    
         // Hitung jumlah data artikel baru dalam 24 jam terakhir yang sesuai dengan user_id
         $dataBaruArtikel = artikels::where('user_id', $userId)
             ->where('created_at', '>=', $waktu24JamLalu)
             ->count();
-
+    
         // Hitung jumlah data komentar artikel baru dalam 24 jam terakhir yang sesuai dengan user_id
         $dataBaruKomentarArtikel = komentar_artikel::whereHas('artikel', function($query) use ($userId) {
                 $query->where('user_id', $userId);
             })
             ->where('created_at', '>=', $waktu24JamLalu)
             ->count();
-
+    
         // Hitung jumlah data video baru dalam 24 jam terakhir yang sesuai dengan user_id
-        $dataBaruVideo = video::where('user_id', $userId)
+        $dataBaruVideo = Video::where('user_id', $userId)
             ->where('created_at', '>=', $waktu24JamLalu)
             ->count();
-
+    
         // Hitung jumlah data komentar video baru dalam 24 jam terakhir yang sesuai dengan user_id
         $dataBaruKomentarVideo = komentar_video::whereHas('video', function($query) use ($userId) {
                 $query->where('user_id', $userId);
             })
             ->where('created_at', '>=', $waktu24JamLalu)
             ->count();
-
+    
         // Hitung jumlah data laporan artikel baru dalam 24 jam terakhir yang sesuai dengan user_id
-        $dataBaruLaporanArtikel = laporanArtikelUser::where('user_id', $userId)
+        $dataBaruLaporanArtikel = LaporanArtikelUser::where('user_id_penulis', $userId)
             ->where('created_at', '>=', $waktu24JamLalu)
             ->count();
-
+    
         // Hitung jumlah data laporan video baru dalam 24 jam terakhir yang sesuai dengan user_id
-        $dataBaruLaporanVideo = laporanVideoUser::where('user_id', $userId)
+        $dataBaruLaporanVideo = LaporanVideoUser::where('user_id_uploader', $userId)
             ->where('created_at', '>=', $waktu24JamLalu)
             ->count();
-
-        return view('admin.laporan.laporanUser', compact('laporanArtikelU','dataBaruArtikel', 'dataBaruKomentarArtikel', 
-        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo','dataBaruVideo','dataBaruArtikel'));
+    
+    
+        $filterLA = LaporanArtikelUser::select('laporan')
+            ->where('user_id_penulis', $userId)
+            ->distinct()
+            ->get()
+            ->map(function ($item) use ($userId) {
+                return [
+                    'laporan' => $item->laporan,
+                    'count' => LaporanArtikelUser::where('laporan', $item->laporan)
+                        ->where('user_id_penulis', $userId)
+                        ->count()
+                ];
+            });
+    
+        $allTotalLaporan = LaporanArtikelUser::where('user_id_penulis', $userId)->count();
+    
+        return view('admin.laporan.laporanUser', compact('laporanArtikelU','dataBaruArtikel', 'dataBaruKomentarArtikel', 'filterLA', 'allTotalLaporan',
+        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo'));
     }
+    
 
         
     //[Admin-Laporan User] Delete Artikel User
@@ -1630,52 +1658,78 @@ public function searchTagsA(Request $request)
             return redirect('/laporanVideoUser');
         }
 
-    function laporanVideoUser(){
+        function laporanVideoUser(Request $request){
 
-        $userId = Auth::id();
+            $userId = Auth::id();
         
-
-        $laporanVideoUser = LaporanVideoUser::orderBy('created_at', 'desc')->paginate(10);
-
-        // Waktu 24 jam yang lalu
-        $waktu24JamLalu = Carbon::now()->subDay();
-
-        // Hitung jumlah data artikel baru dalam 24 jam terakhir yang sesuai dengan user_id
-        $dataBaruArtikel = artikels::where('user_id', $userId)
+            // Ambil nilai filter dari request
+            $filter = $request->input('laporan');
+            
+            // Query dasar
+            $query = LaporanVideoUser::where('user_id_uploader', $userId)->orderBy('created_at', 'desc');
+            
+            // Tambahkan kondisi filter jika ada
+            if ($filter) {
+                $query->where('laporan', $filter);
+            }
+        
+            $laporanVideoUser = $query->paginate(10);
+        
+            // Waktu 24 jam yang lalu
+            $waktu24JamLalu = Carbon::now()->subDay();
+        
+            // Hitung jumlah data artikel baru dalam 24 jam terakhir yang sesuai dengan user_id
+            $dataBaruArtikel = artikels::where('user_id', $userId)
             ->where('created_at', '>=', $waktu24JamLalu)
             ->count();
 
-        // Hitung jumlah data komentar artikel baru dalam 24 jam terakhir yang sesuai dengan user_id
-        $dataBaruKomentarArtikel = komentar_artikel::whereHas('artikel', function($query) use ($userId) {
+            // Hitung jumlah data komentar artikel baru dalam 24 jam terakhir yang sesuai dengan user_id
+            $dataBaruKomentarArtikel = komentar_artikel::whereHas('artikel', function($query) use ($userId) {
                 $query->where('user_id', $userId);
             })
             ->where('created_at', '>=', $waktu24JamLalu)
             ->count();
 
-        // Hitung jumlah data video baru dalam 24 jam terakhir yang sesuai dengan user_id
-        $dataBaruVideo = video::where('user_id', $userId)
+            // Hitung jumlah data video baru dalam 24 jam terakhir yang sesuai dengan user_id
+            $dataBaruVideo = video::where('user_id', $userId)
             ->where('created_at', '>=', $waktu24JamLalu)
             ->count();
 
-        // Hitung jumlah data komentar video baru dalam 24 jam terakhir yang sesuai dengan user_id
-        $dataBaruKomentarVideo = komentar_video::whereHas('video', function($query) use ($userId) {
+            // Hitung jumlah data komentar video baru dalam 24 jam terakhir yang sesuai dengan user_id
+            $dataBaruKomentarVideo = komentar_video::whereHas('video', function($query) use ($userId) {
                 $query->where('user_id', $userId);
             })
             ->where('created_at', '>=', $waktu24JamLalu)
             ->count();
 
-        // Hitung jumlah data laporan artikel baru dalam 24 jam terakhir yang sesuai dengan user_id
-        $dataBaruLaporanArtikel = laporanArtikelUser::where('user_id', $userId)
+            // Hitung jumlah data laporan artikel baru dalam 24 jam terakhir yang sesuai dengan user_id
+            $dataBaruLaporanArtikel = laporanArtikelUser::where('user_id', $userId)
             ->where('created_at', '>=', $waktu24JamLalu)
             ->count();
 
-        // Hitung jumlah data laporan video baru dalam 24 jam terakhir yang sesuai dengan user_id
-        $dataBaruLaporanVideo = laporanVideoUser::where('user_id', $userId)
+            // Hitung jumlah data laporan video baru dalam 24 jam terakhir yang sesuai dengan user_id
+            $dataBaruLaporanVideo = laporanVideoUser::where('user_id', $userId)
             ->where('created_at', '>=', $waktu24JamLalu)
             ->count();
-
-        return view('admin.laporan.laporanVideoUser', compact('laporanVideoUser', 'dataBaruKomentarArtikel', 
-        'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo','dataBaruVideo','dataBaruArtikel'));
-    }
+        
+            // Filter untuk dropdown
+            $filterLV = LaporanVideoUser::select('laporan')
+                ->where('user_id_uploader', $userId)
+                ->distinct()
+                ->get()
+                ->map(function ($item) use ($userId) {
+                    return [
+                        'laporan' => $item->laporan,
+                        'count' => LaporanVideoUser::where('laporan', $item->laporan)
+                            ->where('user_id_uploader', $userId)
+                            ->count()
+                    ];
+                });
+        
+            $AllTotalLaporan = LaporanVideoUser::where('user_id_uploader', $userId)->count();
+        
+            return view('admin.laporan.laporanVideoUser', compact('dataBaruArtikel', 'dataBaruKomentarArtikel','dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo','dataBaruVideo','dataBaruArtikel','laporanVideoUser','filterLV', 'AllTotalLaporan'));
+        }
+        
 
 }
