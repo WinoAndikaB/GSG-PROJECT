@@ -187,6 +187,10 @@
   .popup-trigger:hover {
     text-decoration: underline;
   }
+  .gold-star {
+     color: gold;
+     font-size: 15px; /* Adjust the size as needed */
+  }
 </style>
 </head>
 
@@ -558,9 +562,19 @@
                                   </p>
                                 </td>
                                 <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">
-                          
-                                  </p>
+                                  <span class="text-xs font-weight-bold mb-0">
+                                    <p style="margin: 0;">
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            @if ($i <= $averageRating)
+                                                <span style="color: gold;">★</span>
+                                            @else
+                                                <span style="color: lightgrey;">★</span>
+                                            @endif
+                                        @endfor
+                                    </p>
+                                </span>
+                                
+                                  
                                 </td>
                                 <td class="align-middle text-center">
                                   <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($tbhartikel['created_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>

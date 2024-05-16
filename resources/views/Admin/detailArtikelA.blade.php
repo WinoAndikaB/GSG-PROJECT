@@ -152,6 +152,11 @@
     .dropdown:hover .dropbtn {
       background-color: #5E72E4;
     }
+
+    .gold-star {
+     color: gold;
+     font-size: 15px; /* Adjust the size as needed */
+  }
 </style>
 <style>
   .popup-modal {
@@ -407,6 +412,10 @@
                             </a>
             
                             <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;">Penulis | {{ $totalFollowers }} Follower</span>
+                            <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;"> 
+                            <span class="gold-star" data-rating="1">&#9733;</span><span style="color: gray;">{{ number_format($averageRating, 1) }}</span>
+                          
+                            <span> 
                         </div>
             
                           <a href="#" style="text-decoration: none; color: inherit;">
@@ -441,7 +450,8 @@
                             <a href="#" id="showModal" class="laporan-button" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
                               <i class="fa fa-flag"></i> Laporkan
                           </a>
-                        </li>        
+                        </li> 
+                           <span class="gold-star" data-rating="1">&#9733;</span><span style="color: gray;">{{ number_format($AvgArt, 1) }} ({{$totalRatingArt}} Rating)</span>       
                       </ul>
                       
                       </section>
@@ -557,12 +567,11 @@
 
                               </div>
                               <div>
-
                                 <a href="#" class="showLaporanKomen" data-comment-id="{{ $komentar->id }}" data-video-id="{{ $komentar->video_id }}" data-pelapor-name="{{ $komentar->user->name }}" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
                                     <i class="fas fa-flag" style="font-size: 15px;"></i> Laporkan
-                                </a>
-                            
+                                </a>         
                             </div>
+                          
                         </div>
                     </div>
                   </div>

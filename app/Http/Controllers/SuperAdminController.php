@@ -229,6 +229,18 @@ class SuperAdminController extends Controller
                 $komentarArtikels = komentar_artikel::where('artikel_id', $id)
                 ->latest()
                 ->paginate(6);
+
+                // Rating
+                $user_id_penulis = $article->user_id; // Misalnya, mendapatkan user_id_penulis dari artikel yang sedang ditampilkan
+                $averageRating = RatingPenulis::where('user_id_penulis', $user_id_penulis)->avg('rating');
+
+                 // Total rating berdasarkan user_id dan artikel_id
+                 $AvgArt = RatingPenulis::where('user_id_penulis', $user_id_penulis)
+                                ->where('artikel_id', $id)
+                                ->avg('rating');
+
+                // Total rating berdasarkan artikel_id
+                $totalRatingArt = RatingPenulis::where('artikel_id', $id)->count();
                 
                 // Hitung total pengikut (followers) berdasarkan user_id
                 $totalFollowers = Follower::where('user_id', $user->id)->count();
@@ -248,9 +260,9 @@ class SuperAdminController extends Controller
                 $pendingArticles = artikels::where('status', 'Pending')->orderBy('created_at', 'desc')->paginate(5);
                 $publishedArticles = artikels::where('status', 'Published')->orderBy('created_at', 'desc')->paginate(5);
                 
-                return view('superadmin.detail.detailArtikelA', compact('dataBaruArtikel', 'dataBaruKomentarArtikel','article', 'totalFollowers','formattedJumlahAkses','fotoProfil','user',
+                return view('superadmin.detail.detailArtikelA', compact('dataBaruArtikel', 'dataBaruKomentarArtikel','article', 'totalFollowers','formattedJumlahAkses','fotoProfil','user','AvgArt','totalRatingArt',
                 'dataBaruUlasan', 'dataBaruUser', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','existingTags', 
-                'dataBaruLaporanVideo', 'pendingArticles', 'publishedArticles','komentarArtikels'
+                'dataBaruLaporanVideo', 'pendingArticles', 'publishedArticles','komentarArtikels','averageRating'
                 ));
             }
 
@@ -426,7 +438,16 @@ class SuperAdminController extends Controller
         }
 
         $AllTotalArtikel = artikels::count();
-    
+
+        // Retrieve ratings for the specified user
+        $user_id_penulis = 123; // Replace with the actual user ID
+        $ratings = RatingPenulis::where('user_id_penulis', $user_id_penulis)->get();
+
+        // Calculate average rating
+        $totalRatings = $ratings->count();
+        $sumRatings = $ratings->sum('rating');
+        $averageRating = $totalRatings > 0 ? $sumRatings / $totalRatings : 0;
+        
         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
         $dataBaruUlasan = ulasans::where('created_at', '>=', Carbon::now()->subDay())->count();
         $dataBaruUser = user::where('created_at', '>=', Carbon::now()->subDay())->count();
@@ -443,7 +464,7 @@ class SuperAdminController extends Controller
         $publishedArticles = artikels::where('status', 'Published')->orderBy('created_at', 'desc')->paginate(5);
     
         return view('SuperAdmin.artikelSA', compact('data', 'dataBaruUlasan', 'dataBaruUser', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo', 'pendingArticles', 'publishedArticles', 
-        'categories', 'categoryCounts', 'statuses', 'statusCounts','AllTotalArtikel'));
+        'categories', 'categoryCounts', 'statuses', 'statusCounts','AllTotalArtikel','averageRating','ratings'));
     }
     
     
@@ -726,6 +747,18 @@ class SuperAdminController extends Controller
 
                 $komentarVideos = komentar_video::where('video_id', $id)->latest()->paginate(6);
 
+                // Rating
+                $user_id_penulis = $video->user_id; // Misalnya, mendapatkan user_id_penulis dari artikel yang sedang ditampilkan
+                $averageRating = RatingPenulis::where('user_id_penulis', $user_id_penulis)->avg('rating');
+
+                // Total rating berdasarkan user_id dan artikel_id
+                         $AvgVid = RatingPenulis::where('user_id_penulis', $user_id_penulis)
+                         ->where('video_id', $id)
+                         ->avg('rating');
+
+                                   // Total rating berdasarkan artikel_id
+                    $totalRatingVid = RatingPenulis::where('video_id', $id)->count();
+
                 // Hitung total pengikut (followers) berdasarkan user_id
                 $totalFollowers = Follower::where('user_id', $user->id)->count();
             
@@ -741,8 +774,8 @@ class SuperAdminController extends Controller
                 $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
                 $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
             
-                return view('superadmin.detail.detailVideoA', compact('video','fotoProfil','user','totalFollowers','existingTags','komentarVideos',
-                'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo','dataBaruArtikel', 'dataBaruKomentarArtikel'
+                return view('superadmin.detail.detailVideoA', compact('video','fotoProfil','user','totalFollowers','existingTags','komentarVideos','AvgVid','totalRatingVid',
+                'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo','dataBaruArtikel', 'dataBaruKomentarArtikel','averageRating'
             ));
             }
 
@@ -828,6 +861,9 @@ class SuperAdminController extends Controller
         }
 
          $AllTotalVideo = video::count();
+
+        // Rating
+        $averageRating = RatingPenulis::where('user_id_penulis')->avg('rating');
     
         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
         $dataBaruUlasan = ulasans::where('created_at', '>=', Carbon::now()->subDay())->count();
@@ -842,7 +878,7 @@ class SuperAdminController extends Controller
         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=', Carbon::now()->subDay())->count();
     
         return view('SuperAdmin.videoSA', compact('tableVideo', 'dataBaruUlasan', 'dataBaruUser', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo', 'categoriesVideo', 'categoryCountsVideo', 
-        'statusesVideo', 'statusCountsVideo','AllTotalVideo'));
+        'statusesVideo', 'statusCountsVideo','AllTotalVideo','averageRating'));
     }
     
     

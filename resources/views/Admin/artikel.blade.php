@@ -152,6 +152,11 @@
     .dropdown:hover .dropbtn {
       background-color: #5E72E4;
     }
+
+      .gold-star {
+     color: gold;
+     font-size: 15px; /* Adjust the size as needed */
+  }
 </style>
 <style>
   .popup-modal {
@@ -534,8 +539,14 @@
                                   </p>
                               </td>
                               <td class="align-middle text-center">
-                                <p class="text-xs font-weight-bold mb-0">
-         
+                                <p style="margin: 0;">{{ number_format($averageRating, 1) }}
+                                  @for ($i = 1; $i <= 5; $i++)
+                                      @if ($i <= $averageRating)
+                                          <span style="color: gold;">★</span>
+                                      @else
+                                          <span style="color: lightgrey;">★</span>
+                                      @endif
+                                  @endfor
                                 </p>
                               </td>
                                 <td class="align-middle text-center">

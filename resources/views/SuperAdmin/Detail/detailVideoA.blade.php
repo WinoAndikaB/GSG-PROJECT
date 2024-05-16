@@ -187,6 +187,10 @@
   .popup-trigger:hover {
     text-decoration: underline;
   }
+  .gold-star {
+     color: gold;
+     font-size: 15px; /* Adjust the size as needed */
+  }
 </style>
 </head>
 
@@ -453,6 +457,8 @@
                             </a>
             
                             <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;">Penulis | {{ $totalFollowers }} Follower</span>
+                            <span style="color: #7f8c8d; font-weight: normal; font-size: 1em; display: block;">
+                              <span class="gold-star" data-rating="1">&#9733;</span><span style="color: gray;">{{ number_format($averageRating, 1) }}</span>
                         </div>
             
                           <a href="#" style="text-decoration: none; color: inherit;">
@@ -488,7 +494,10 @@
                             <a href="#" id="showModal" class="laporan-button" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
                               <i class="fa fa-flag"></i> Laporkan
                           </a>
-                        </li>        
+                        </li> 
+                               
+                        <span class="gold-star" data-rating="1">&#9733;</span><span style="color: gray;">{{ number_format($AvgVid, 1) }} ({{$totalRatingVid}} Rating)</span>
+                        
                       </ul>
                       
                       </section>

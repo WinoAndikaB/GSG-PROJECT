@@ -163,6 +163,10 @@
     color: #333; /* Sesuaikan warna sesuai kebutuhan */
     border-radius: 50%; /* Membuat tombol close berbentuk lingkaran */
   }
+  .gold-star {
+     color: gold;
+     font-size: 15px; /* Adjust the size as needed */
+  }
 </style>
 
 
@@ -468,6 +472,7 @@
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Link Video</th>
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Judul Video</th>
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi Video</th>
+                                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Rating</th>
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Diterbitkan</th>
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Diperbarui</th>
                                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
@@ -520,6 +525,19 @@
                                       }
                                       ?>
                                     </p>
+                                  </td>
+                                  <td class="align-middle text-center">
+                                    <span class="text-xs font-weight-bold mb-0">
+                                      <p style="margin: 0;">{{ number_format($averageRating, 1) }}
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            @if ($i <= $averageRating)
+                                                <span style="color: gold;">★</span>
+                                            @else
+                                                <span style="color: lightgrey;">★</span>
+                                            @endif
+                                        @endfor
+                                      </p>
+                                    </span>
                                   </td>
                                   <td class="align-middle text-center">
                                     <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item['created_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
