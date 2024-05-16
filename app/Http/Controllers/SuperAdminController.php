@@ -24,6 +24,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class SuperAdminController extends Controller
 {
@@ -381,6 +382,7 @@ class SuperAdminController extends Controller
         }
     }
 
+
     public function artikelSA(Request $request)
     {
         // Get the search query, selected category, and selected status from the request
@@ -436,18 +438,27 @@ class SuperAdminController extends Controller
         foreach ($data as $article) {
             $article->formattedJumlahAkses = $this->formatJumlahAkses($article->jumlah_akses);
         }
-
+    
         $AllTotalArtikel = artikels::count();
+    
+        // Query untuk menghitung rata-rata rating untuk setiap artikel
+        $averageRatings = RatingPenulis::select('artikel_id', DB::raw('AVG(rating) as average_rating'))
+            ->groupBy('artikel_id')
+            ->get();
 
-        // Retrieve ratings for the specified user
-        $user_id_penulis = 123; // Replace with the actual user ID
-        $ratings = RatingPenulis::where('user_id_penulis', $user_id_penulis)->get();
+        // Mengubah data rata-rata rating menjadi array yang dapat diakses menggunakan id artikel
+        $ratingsByArticleId = $averageRatings->pluck('average_rating', 'artikel_id')->toArray();
 
-        // Calculate average rating
-        $totalRatings = $ratings->count();
-        $sumRatings = $ratings->sum('rating');
-        $averageRating = $totalRatings > 0 ? $sumRatings / $totalRatings : 0;
-        
+        // Array untuk menyimpan total rating untuk setiap artikel
+        $totalRatingsByArticleId = [];
+
+        // Mendapatkan total rating untuk setiap artikel
+        foreach ($data as $artikel) {
+            $totalRatingArt = RatingPenulis::where('artikel_id', $artikel->id)->count();
+            $totalRatingsByArticleId[$artikel->id] = $totalRatingArt;
+        }
+
+    
         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
         $dataBaruUlasan = ulasans::where('created_at', '>=', Carbon::now()->subDay())->count();
         $dataBaruUser = user::where('created_at', '>=', Carbon::now()->subDay())->count();
@@ -464,7 +475,7 @@ class SuperAdminController extends Controller
         $publishedArticles = artikels::where('status', 'Published')->orderBy('created_at', 'desc')->paginate(5);
     
         return view('SuperAdmin.artikelSA', compact('data', 'dataBaruUlasan', 'dataBaruUser', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo', 'pendingArticles', 'publishedArticles', 
-        'categories', 'categoryCounts', 'statuses', 'statusCounts','AllTotalArtikel','averageRating','ratings'));
+        'categories', 'categoryCounts', 'statuses', 'statusCounts','AllTotalArtikel','averageRatings','totalRatingArt','totalRatingsByArticleId'));
     }
     
     
@@ -863,7 +874,21 @@ class SuperAdminController extends Controller
          $AllTotalVideo = video::count();
 
         // Rating
-        $averageRating = RatingPenulis::where('user_id_penulis')->avg('rating');
+        $averageRatings = RatingPenulis::select('video_id', DB::raw('AVG(rating) as average_rating'))
+            ->groupBy('video_id')
+            ->get();
+
+        // Mengubah data rata-rata rating menjadi array yang dapat diakses menggunakan id video
+        $ratingsByArticleId = $averageRatings->pluck('average_rating', 'video_id')->toArray();
+
+        // Array untuk menyimpan total rating untuk setiap video
+        $totalRatingsByArticleId = [];
+
+        // Mendapatkan total rating untuk setiap video
+        foreach ($tableVideo as $video) {
+            $totalRatingArt = RatingPenulis::where('video_id', $video->id)->count();
+            $totalRatingsByArticleId[$video->id] = $totalRatingArt;
+        }
     
         // Hitung jumlah data yang ditambahkan dalam 24 jam terakhir
         $dataBaruUlasan = ulasans::where('created_at', '>=', Carbon::now()->subDay())->count();
@@ -878,7 +903,7 @@ class SuperAdminController extends Controller
         $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=', Carbon::now()->subDay())->count();
     
         return view('SuperAdmin.videoSA', compact('tableVideo', 'dataBaruUlasan', 'dataBaruUser', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo', 'categoriesVideo', 'categoryCountsVideo', 
-        'statusesVideo', 'statusCountsVideo','AllTotalVideo','averageRating'));
+        'statusesVideo', 'statusCountsVideo','AllTotalVideo','averageRatings','totalRatingsByArticleId'));
     }
     
     

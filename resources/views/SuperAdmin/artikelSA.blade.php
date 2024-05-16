@@ -563,19 +563,23 @@
                                 </td>
                                 <td class="align-middle text-center">
                                   <span class="text-xs font-weight-bold mb-0">
-                                    <p style="margin: 0;">
-                                        @for ($i = 1; $i <= 5; $i++)
-                                            @if ($i <= $averageRating)
-                                                <span style="color: gold;">★</span>
-                                            @else
-                                                <span style="color: lightgrey;">★</span>
-                                            @endif
-                                        @endfor
-                                    </p>
-                                </span>
-                                
-                                  
-                                </td>
+                         
+                                          @php
+                                              $averageRating = $tbhartikel->ratings->avg('rating');
+                                          @endphp
+                              
+                                          @for ($i = 1; $i <= 5; $i++)
+                                              @if ($i <= $averageRating)
+                                                  <span style="color: gold;">★</span>
+                                              @else
+                                                  <span style="color: lightgrey;">★</span>
+                                              @endif
+                                          @endfor
+
+                                          ({{ $totalRatingsByArticleId[$tbhartikel->id] }} Rating)
+                                  </span>
+                              </td>
+                              
                                 <td class="align-middle text-center">
                                   <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($tbhartikel['created_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
                                 </td>

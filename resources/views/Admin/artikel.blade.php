@@ -539,7 +539,12 @@
                                   </p>
                               </td>
                               <td class="align-middle text-center">
-                                <p style="margin: 0;">{{ number_format($averageRating, 1) }}
+                                <span class="text-xs font-weight-bold mb-0">
+                         
+                                  @php
+                                      $averageRating = $tbhartikel->ratings->avg('rating');
+                                  @endphp
+                      
                                   @for ($i = 1; $i <= 5; $i++)
                                       @if ($i <= $averageRating)
                                           <span style="color: gold;">★</span>
@@ -547,7 +552,9 @@
                                           <span style="color: lightgrey;">★</span>
                                       @endif
                                   @endfor
-                                </p>
+
+                                  ({{ $totalRatingsByArticleId[$tbhartikel->id] }} Rating)
+                          </span>
                               </td>
                                 <td class="align-middle text-center">
                                   <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($tbhartikel['created_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>

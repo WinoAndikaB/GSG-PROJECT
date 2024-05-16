@@ -528,17 +528,22 @@
                                   </td>
                                   <td class="align-middle text-center">
                                     <span class="text-xs font-weight-bold mb-0">
-                                      <p style="margin: 0;">{{ number_format($averageRating, 1) }}
-                                        @for ($i = 1; $i <= 5; $i++)
-                                            @if ($i <= $averageRating)
-                                                <span style="color: gold;">★</span>
-                                            @else
-                                                <span style="color: lightgrey;">★</span>
-                                            @endif
-                                        @endfor
-                                      </p>
-                                    </span>
-                                  </td>
+                            
+                                          @php
+                                              $averageRating = $item->ratings->avg('rating');
+                                          @endphp
+                              
+                                          @for ($i = 1; $i <= 5; $i++)
+                                              @if ($i <= $averageRating)
+                                                  <span style="color: gold;">★</span>
+                                              @else
+                                                  <span style="color: lightgrey;">★</span>
+                                              @endif
+                                          @endfor
+
+                                          ({{ $totalRatingsByArticleId[$item->id] }} Rating)
+                                  </span>
+                                </td>
                                   <td class="align-middle text-center">
                                     <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($item['created_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
                                   </td>

@@ -29,7 +29,8 @@ class artikels extends Model
     }
 
     public function ratings()
-{
-    return $this->hasMany(RatingPenulis::class);
-}
+    {
+        return $this->hasMany(RatingPenulis::class, 'artikel_id');
+    }
+
 }

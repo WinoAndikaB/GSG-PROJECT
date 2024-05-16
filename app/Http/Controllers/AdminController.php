@@ -20,6 +20,7 @@ use App\Models\RatingPenulis;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -371,8 +372,24 @@ class AdminController extends Controller
         // Ambil artikel pertama dari $data (jika ada)
         $article = $data->first();
     
-        // Hitung rata-rata rating dari user
-        $averageRating = RatingPenulis::where('user_id_penulis', $userId)->avg('rating');
+        // Rating
+        // Query untuk menghitung rata-rata rating untuk setiap artikel
+        $averageRatings = RatingPenulis::select('artikel_id', DB::raw('AVG(rating) as average_rating'))
+            ->groupBy('artikel_id')
+            ->get();
+
+        // Mengubah data rata-rata rating menjadi array yang dapat diakses menggunakan id artikel
+        $ratingsByArticleId = $averageRatings->pluck('average_rating', 'artikel_id')->toArray();
+
+        // Array untuk menyimpan total rating untuk setiap artikel
+        $totalRatingsByArticleId = [];
+
+        // Mendapatkan total rating untuk setiap artikel
+        foreach ($data as $artikel) {
+            $totalRatingArt = RatingPenulis::where('artikel_id', $artikel->id)->count();
+            $totalRatingsByArticleId[$artikel->id] = $totalRatingArt;
+        }
+
     
         // Waktu 24 jam yang lalu
         $waktu24JamLalu = Carbon::now()->subDay();
@@ -445,7 +462,8 @@ class AdminController extends Controller
             'categoryCounts',
             'statuses',
             'statusCounts',
-            'averageRating', // Mengirimkan rata-rata rating ke tampilan
+            'averageRatings',
+            'totalRatingsByArticleId'
         ));
     }
     
@@ -1056,7 +1074,21 @@ public function searchTagsA(Request $request)
         $AllTotalVideo = video::where('user_id', $userId)->count();
 
         // Rating
-        $averageRating = RatingPenulis::where('user_id_penulis', $userId)->avg('rating');
+            $averageRatings = RatingPenulis::select('video_id', DB::raw('AVG(rating) as average_rating'))
+            ->groupBy('video_id')
+            ->get();
+
+        // Mengubah data rata-rata rating menjadi array yang dapat diakses menggunakan id video
+        $ratingsByArticleId = $averageRatings->pluck('average_rating', 'video_id')->toArray();
+
+        // Array untuk menyimpan total rating untuk setiap video
+        $totalRatingsByArticleId = [];
+
+        // Mendapatkan total rating untuk setiap video
+        foreach ($tableVideo as $video) {
+            $totalRatingArt = RatingPenulis::where('video_id', $video->id)->count();
+            $totalRatingsByArticleId[$video->id] = $totalRatingArt;
+        }
 
     
         // Waktu 24 jam yang lalu
@@ -1113,7 +1145,8 @@ public function searchTagsA(Request $request)
             'totalUserVideo', 
             'categoryCountsVideo', 
             'AllTotalVideo',
-            'averageRating'
+            'averageRatings',
+            'totalRatingsByArticleId'
         ));
     }
     
