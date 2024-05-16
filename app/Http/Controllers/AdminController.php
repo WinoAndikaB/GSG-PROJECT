@@ -321,22 +321,22 @@ class AdminController extends Controller
     {
         // Get the ID of the authenticated user
         $userId = Auth::id();
-    
+
         // Get the search query from the request
         $searchQuery = $request->input('search');
-    
+
         // Get the sort parameter from the request
         $sort = $request->input('sort');
-    
+
         // Get the category filter parameter from the request
         $kategori = $request->input('kategori');
-    
+
         // Get the status filter parameter from the request
         $status = $request->input('status');
-    
+
         // Start building the query without applying pagination
         $query = artikels::where('user_id', $userId)->orderBy('created_at', $sort === 'oldest' ? 'asc' : 'desc');
-    
+
         // If there is a search query, add the search conditions
         if (!empty($searchQuery)) {
             $query->where(function ($q) use ($searchQuery) {
@@ -346,23 +346,28 @@ class AdminController extends Controller
                     ->orWhere('kategori', 'like', '%' . $searchQuery . '%');
             });
         }
-    
+
         // If there is a category filter, add the category condition
         if (!empty($kategori)) {
             $query->where('kategori', $kategori);
         }
-    
+
         // If there is a status filter, add the status condition
         if (!empty($status)) {
             $query->where('status', $status);
         }
-    
+
         // Count the total number of articles
         $totalDataArtikel = $query->count();
-    
+
         // Now, paginate the results
         $data = $query->paginate(15);
-    
+
+        // Format jumlah akses for each artikel
+        foreach ($data as $artikel) {
+            $artikel->formattedJumlahAkses = $this->formatJumlahAkses($artikel->jumlah_akses);
+        }
+
         // Waktu 24 jam yang lalu
         $waktu24JamLalu = Carbon::now()->subDay();
 
@@ -390,34 +395,34 @@ class AdminController extends Controller
             ->where('created_at', '>=', $waktu24JamLalu)
             ->count();
 
-                        // Hitung jumlah data laporan artikel baru dalam 24 jam terakhir yang sesuai dengan user_id
-                        $dataBaruLaporanArtikel = LaporanArtikelUser::where('user_id_penulis', $userId)
-                        ->where('created_at', '>=', $waktu24JamLalu)
-                        ->count();
-                
-                    // Hitung jumlah data laporan video baru dalam 24 jam terakhir yang sesuai dengan user_id
-                    $dataBaruLaporanVideo = LaporanVideoUser::where('user_id_uploader', $userId)
-                        ->where('created_at', '>=', $waktu24JamLalu)
-                        ->count();
-    
+        // Hitung jumlah data laporan artikel baru dalam 24 jam terakhir yang sesuai dengan user_id
+        $dataBaruLaporanArtikel = LaporanArtikelUser::where('user_id_penulis', $userId)
+                ->where('created_at', '>=', $waktu24JamLalu)
+                ->count();
+
+        // Hitung jumlah data laporan video baru dalam 24 jam terakhir yang sesuai dengan user_id
+        $dataBaruLaporanVideo = LaporanVideoUser::where('user_id_uploader', $userId)
+            ->where('created_at', '>=', $waktu24JamLalu)
+            ->count();
+
         // Total User Artikel dan Video
         $totalUserArtikel = artikels::where('user_id', $userId)->count();
         $totalUserVideo = video::where('user_id', $userId)->count();
-    
+
         // Fetch unique categories and their counts
         $categories = artikels::where('user_id', $userId)->distinct('kategori')->pluck('kategori');
         $categoryCounts = [];
         foreach ($categories as $category) {
             $categoryCounts[$category] = artikels::where('user_id', $userId)->where('kategori', $category)->count();
         }
-    
+
         // Fetch unique status and their counts
         $statuses = artikels::where('user_id', $userId)->distinct('status')->pluck('status');
         $statusCounts = [];
         foreach ($statuses as $status) {
             $statusCounts[$status] = artikels::where('user_id', $userId)->where('status', $status)->count();
         }
-    
+
         // Pass all the necessary data to the view
         return view('admin.artikel', compact(
             'data',
@@ -900,6 +905,12 @@ public function searchTagsA(Request $request)
                 $totalKomentar = komentar_artikel::where('artikel_id', $id)->count();
             
                 $detailArtikelLP = komentar_artikel::where('artikel_id', $id)->latest()->paginate(6);
+
+                // Menyiapkan data komentar, menyaring yang lebih muda dari 5 hari
+                 $komentarArtikels = komentar_artikel::where('artikel_id', $id)
+                                ->latest()
+                                ->paginate(6);
+                                
             
                 // Ambil data user berdasarkan id penulis artikel
                 $user = User::findOrFail($article->user_id); // Assign $user before accessing its properties
@@ -948,7 +959,7 @@ public function searchTagsA(Request $request)
                         ->where('created_at', '>=', $waktu24JamLalu)
                         ->count();
 
-                return view('admin.detailArtikelA', compact('dataBaruArtikel', 'dataBaruKomentarArtikel', 'fotoProfil', 'user',
+                return view('admin.detailArtikelA', compact('dataBaruArtikel', 'dataBaruKomentarArtikel', 'fotoProfil', 'user','komentarArtikels',
                     'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel', 'dataBaruLaporanVideo', 'kategoriA',
                     'article', 'box', 'tagsA', 'uniqueTags', 'detailArtikelLP', 'totalKomentar', 'totalFollowers', 'formattedJumlahAkses'
                 ));
@@ -1520,6 +1531,8 @@ public function searchTagsA(Request $request)
                     // Waktu 24 jam yang lalu
                     $waktu24JamLalu = Carbon::now()->subDay();
 
+                    $komentarVideos = komentar_video::where('video_id', $id)->latest()->paginate(6);
+
                     // Hitung jumlah data artikel baru dalam 24 jam terakhir yang sesuai dengan user_id
                     $dataBaruArtikel = artikels::where('user_id', $userId)
                         ->where('created_at', '>=', $waktu24JamLalu)
@@ -1554,7 +1567,7 @@ public function searchTagsA(Request $request)
                     ->where('created_at', '>=', $waktu24JamLalu)
                     ->count();
                 
-                    return view('admin.detailVideoA', compact('dataBaruArtikel', 'dataBaruKomentarArtikel', 
+                    return view('admin.detailVideoA', compact('dataBaruArtikel', 'dataBaruKomentarArtikel', 'komentarVideos',
                     'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo', 'kategoriLogV',
                     'video','boxVideo','tagsV','kategoriV','komentarVideos','totalKomentarVideo','fotoProfil','user','totalFollowers','existingTags'
                 ));

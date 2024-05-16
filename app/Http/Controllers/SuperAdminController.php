@@ -224,6 +224,11 @@ class SuperAdminController extends Controller
                 
                 // Format jumlah akses
                 $formattedJumlahAkses = $this->formatJumlahAkses($article->jumlah_akses);
+
+                // Menyiapkan data komentar, menyaring yang lebih muda dari 5 hari
+                $komentarArtikels = komentar_artikel::where('artikel_id', $id)
+                ->latest()
+                ->paginate(6);
                 
                 // Hitung total pengikut (followers) berdasarkan user_id
                 $totalFollowers = Follower::where('user_id', $user->id)->count();
@@ -245,7 +250,7 @@ class SuperAdminController extends Controller
                 
                 return view('superadmin.detail.detailArtikelA', compact('dataBaruArtikel', 'dataBaruKomentarArtikel','article', 'totalFollowers','formattedJumlahAkses','fotoProfil','user',
                 'dataBaruUlasan', 'dataBaruUser', 'dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','existingTags', 
-                'dataBaruLaporanVideo', 'pendingArticles', 'publishedArticles'
+                'dataBaruLaporanVideo', 'pendingArticles', 'publishedArticles','komentarArtikels'
                 ));
             }
 
@@ -719,6 +724,8 @@ class SuperAdminController extends Controller
 
                 $existingTags = Video::select('tagsVideo')->distinct()->get();
 
+                $komentarVideos = komentar_video::where('video_id', $id)->latest()->paginate(6);
+
                 // Hitung total pengikut (followers) berdasarkan user_id
                 $totalFollowers = Follower::where('user_id', $user->id)->count();
             
@@ -734,7 +741,7 @@ class SuperAdminController extends Controller
                 $dataBaruLaporanArtikel = laporanArtikelUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
                 $dataBaruLaporanVideo = laporanVideoUser::where('created_at', '>=',    Carbon::now()->subDay())->count();
             
-                return view('superadmin.detail.detailVideoA', compact('video','fotoProfil','user','totalFollowers','existingTags',
+                return view('superadmin.detail.detailVideoA', compact('video','fotoProfil','user','totalFollowers','existingTags','komentarVideos',
                 'dataBaruUlasan','dataBaruUser','dataBaruArtikel', 'dataBaruKomentarArtikel', 'dataBaruVideo', 'dataBaruKomentarVideo', 'dataBaruLaporanArtikel','dataBaruLaporanVideo','dataBaruArtikel', 'dataBaruKomentarArtikel'
             ));
             }

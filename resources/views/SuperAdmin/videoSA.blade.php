@@ -559,14 +559,15 @@
                                     <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteVideoSA', ['id' => $item['id']]) }}')">
                                       <i class="fa fa-trash"></i>
                                   </a>
-                                    @if ($item->statusVideo === 'Pending')
-                                    <a href="{{ route('approveVideo', $item->id) }}" class="btn btn-success btn btn-primary btn-round">
-                                        Approve
-                                    </a>
-                                    <a href="{{ route('rejectVideo', $item->id) }}" class="btn btn-danger btn btn-primary btn-round">
-                                        Reject
-                                    </a>
-                                   @endif
+
+                                   @if ($item->statusVideo === 'Pending')
+                                      <a href="{{ route('approveVideo', $item->id) }}" class="btn btn-success btn btn-primary btn-round">
+                                          <i class="fas fa-check"></i>
+                                      </a>
+                                      <a href="{{ route('rejectVideo', $item->id) }}" class="btn btn-danger btn btn-primary btn-round">
+                                          <i class="fas fa-times"></i>
+                                      </a>
+                                  @endif
                                   </td>
                                 </tr>
                               </tbody>

@@ -486,6 +486,7 @@
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Judul Artikel</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deskripsi</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Dibaca</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Rating</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Diterbitkan</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Diperbarui</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
@@ -557,6 +558,11 @@
                                   </p>
                                 </td>
                                 <td class="align-middle text-center">
+                                  <p class="text-xs font-weight-bold mb-0">
+                          
+                                  </p>
+                                </td>
+                                <td class="align-middle text-center">
                                   <span class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($tbhartikel['created_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
                                 </td>
                                 <td class="align-middle text-center">
@@ -595,14 +601,15 @@
                                   <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteArtikelSA', ['id' => $tbhartikel['id']]) }}')">
                                     <i class="fa fa-trash"></i>
                                 </a>
-                                  @if ($tbhartikel->status === 'Pending')
-                                      <a href="{{ route('approveArticle', $tbhartikel->id) }}" class="btn btn-success btn btn-primary btn-round">
-                                          Approve
-                                      </a>
-                                      <a href="{{ route('rejectArticle', $tbhartikel->id) }}" class="btn btn-danger btn btn-primary btn-round">
-                                          Reject
-                                      </a>
-                                  @endif
+                                @if ($tbhartikel->status === 'Pending')
+                                <a href="{{ route('approveArticle', $tbhartikel->id) }}" class="btn btn-success btn btn-primary btn-round">
+                                    <i class="fas fa-check"></i>
+                                </a>
+                                <a href="{{ route('rejectArticle', $tbhartikel->id) }}" class="btn btn-danger btn btn-primary btn-round">
+                                    <i class="fas fa-times"></i>
+                                </a>
+                            @endif
+                            
                               </td>
                               
                               </tr>

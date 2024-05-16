@@ -348,9 +348,9 @@
                               <tr>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Artikel ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Artikel</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Artikel</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User ID</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama User</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama User</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pesan</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal</th>
                                 <th class="text-secondary opacity-7"></th>
@@ -365,14 +365,51 @@
                                 <td class="align-middle text-center">
                                   <p class="text-xs font-weight-bold mb-0">{{$item['artikel_id']}}</p>
                                 </td>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['artikel']['judulArtikel']}}</p>
+                                <td>
+                                  <div class="d-flex px-2 py-1">
+                                    <div>
+                                      @if($item->artikel->gambarArtikel)
+                                      @if(filter_var($item->artikel->gambarArtikel, FILTER_VALIDATE_URL))
+                                          <a href="{{$item->artikel->gambarArtikel}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                                              <img src="{{$item->artikel->gambarArtikel}}" class="avatar avatar-sm me-3" alt="user1">
+                                          </a>
+                                      @else
+                                          <a href="{{asset('gambarArtikel/'.$item->artikel->gambarArtikel)}}" data-lightbox="gambarArtikel" data-title="Deskripsi Gambar">
+                                              <img src="{{asset('gambarArtikel/'.$item->artikel->gambarArtikel)}}" class="avatar avatar-sm me-3" alt="user1">
+                                          </a>
+                                      @endif
+                                  @endif
+                                  
+                                  </div>                                  
+                                    <div class="d-flex flex-column justify-content-center">
+                                      <h6 class="mb-0 text-sm">{{$item['artikel']['judulArtikel']}}</h6>
+                                    </div>
+                                  </div>
                                 </td>
                                 <td class="align-middle text-center">
                                   <p class="text-xs font-weight-bold mb-0">{{$item['user_id']}}</p>
                                 </td>
-                                <td class="align-middle text-center">
-                                  <p class="text-xs font-weight-bold mb-0">{{$item['user']['name']}}</p>
+                                <td>
+                                  <div class="d-flex px-2 py-1">
+                                    <div>
+                                      @if($item->user->fotoProfil)
+                                      @if(filter_var($item->user->fotoProfil, FILTER_VALIDATE_URL))
+                                          <a href="{{$item->user->fotoProfil}}" data-lightbox="fotoProfil" data-title="Deskripsi Gambar">
+                                              <img src="{{$item->user->fotoProfil}}" class="avatar avatar-sm me-3" alt="user1">
+                                          </a>
+                                      @else
+                                          <a href="{{asset('fotoProfil/'.$item->user->fotoProfil)}}" data-lightbox="fotoProfil" data-title="Deskripsi Gambar">
+                                              <img src="{{asset('fotoProfil/'.$item->user->fotoProfil)}}" class="avatar avatar-sm me-3" alt="user1">
+                                          </a>
+                                      @endif
+                                  @endif
+                                  
+                                  </div>                                  
+                                    <div class="d-flex flex-column justify-content-center">
+                                      <h6 class="mb-0 text-sm">{{$item['user']['name']}}</h6>
+                                      <p class="text-xs text-secondary mb-0">{{$item['user']['email']}}</p>
+                                    </div>
+                                  </div>
                                 </td>
                                 <td class="align-middle text-center">
                                   <p class="text-xs font-weight-bold mb-0">{{$item['pesan']}}</p>
@@ -381,6 +418,11 @@
                                   <span class="badge badge-sm bg-gradient-success">{{ \Carbon\Carbon::parse($item['created_at'])->locale('id')->translatedFormat('l, j F Y') }}</span>
                                 </td>
                                 <td class="align-middle">
+
+                                  <a href="{{ route('showDetailArtikelSA', ['id' => $item->artikel->id]) }}" class="btn btn-info btn btn-primary btn-round">
+                                    <i class="fas fa-info-circle"></i>
+                                </a>
+                                
                                   <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteKomentarSA', ['id' => $item['id']]) }}')">
                                     <i class="fa fa-trash"></i>
                                 </a>

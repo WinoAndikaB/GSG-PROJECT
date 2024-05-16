@@ -536,6 +536,117 @@
 
                 <br>
                 <br>
+
+                @foreach ($komentarVideos as $komentar)
+                  <div class="card" style="max-width: 835px; margin-bottom: 10px;"> 
+                      <div class="card-body" style="display: flex;">
+                          <div class="profil-foto" style="margin-right: 10px;">
+
+                              @if(!empty($komentar->user->fotoProfil))
+                                  @if(filter_var($komentar->user->fotoProfil, FILTER_VALIDATE_URL))
+                                      <img src="{{ $komentar->user->fotoProfil }}" alt="Foto Profil" style="border-radius: 50%; width: 50px; height: 50px;">
+                                  @else
+                                      <img src="{{ asset('fotoProfil/' . $komentar->user->fotoProfil) }}" alt="Foto Profil" style="border-radius: 50%; width: 50px; height: 50px;">
+                                  @endif
+                              @endif
+                              
+                          </div>
+
+                          <div style="flex: 1;">
+                            <h5 class="card-title" style="display: inline-block;">
+                              {{ $komentar->user->name }}
+                          </h5>
+                            @if($komentar->created_at->diffInDays(now()) <= 5)
+                            <div style="display: inline-block; background-color: #097BED; color: white; padding: 5px; border-radius: 10px;">
+                                <strong>Komentar Baru</strong>
+                            </div>
+                        @endif
+                            <p>{{ $komentar->created_at->format('d F Y') }} | {{ $komentar->created_at->diffForHumans() }}
+                              @if($komentar->updated_at)
+                                  <span style="color: gray;">(Edited)</span>
+                              @endif
+                            </p>
+                            <p class="card-text" id="pesan-{{ $komentar->id }}" style="text-align: justify;">
+                                {{ $komentar->pesan }}
+                            </p>
+
+                            <div id="edit-pesan-{{ $komentar->id }}" style="display: none; width: 100%; text-align: right;">
+                              <textarea id="edit-pesan-text-{{ $komentar->id }}" style="width: 100%;">{{ $komentar->pesan }}</textarea>
+                              <button class="simpan-edit-button" data-id="{{ $komentar->id }}" data-user-id="{{ $komentar->user_id }}" style="background: none; border: none; cursor: pointer;">
+                                  <i class="fas fa-save"></i> Simpan
+                              </button>                               
+                              
+                              <button class="tutup-edit-button" data-id="{{ $komentar->id }}" style="background: none; border: none; cursor: pointer;">
+                                  <i class="fas fa-times"></i> Tutup
+                              </button>
+                          </div>
+
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px;">
+                                <div style="display: flex; align-items: center;">
+
+                                  <a href="#" id="likeButton{{ $komentar->id }}" style="text-decoration: none; color: #333; display: inline-block; padding: 8px 15px; border: 2px solid #4CAF50; border-radius: 20px; background-color: #fff; transition: all 0.3s ease;" onclick="toggleLike('{{ $komentar->id }}')">
+                                    <i id="thumbIcon{{ $komentar->id }}" class="{{ $komentar->likes->contains('user_id', Auth::id()) ? 'fa' : 'fa-regular' }} fa-thumbs-up {{ $komentar->likes->contains('user_id', Auth::id()) ? 'fas' : 'far' }}" style="color: #4CAF50; margin-right: 5px;"></i>  
+                                    <span id="likeCount{{ $komentar->id }}" style="font-size: medium; margin-left: 5px;">{{ $komentar->likes->count() }} likes</span>
+                                </a>
+                                
+                                        <a href="#" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
+                                            <i class="fas fa-trash" style="font-size: 15px;"></i> Hapus
+                                        </a>
+
+                                  </div>
+                                  <div>
+
+                                    <a href="#" class="showLaporanKomen" data-comment-id="{{ $komentar->id }}" data-video-id="{{ $komentar->video_id }}" data-pelapor-name="{{ $komentar->user->name }}" style="margin-left: 10px; color: #f44336; text-decoration: none; transition: color 0.3s;">
+                                        <i class="fas fa-flag" style="font-size: 15px;"></i> Laporkan
+                                    </a>
+                                
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                  </div>
+                  @endforeach
+
+                  <div class="d-flex justify-content-center">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            @if ($komentarVideos->onFirstPage())
+                                <li class="page-item disabled">
+                                    <span class="page-link" aria-label="Previous">
+                                        <span aria-hidden="true">&lsaquo;</span>
+                                    </span>
+                                </li>
+                            @else
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ $komentarVideos->previousPageUrl() }}" rel="prev" aria-label="Previous">
+                                        <span aria-hidden="true">&lsaquo;</span>
+                                    </a>
+                                </li>
+                            @endif
+
+                            <!-- Display current page and total pages -->
+                            <li class="page-item disabled">
+                                <span class="page-link">
+                                    {{ $komentarVideos->currentPage() }} dari {{ $komentarVideos->lastPage() }}
+                                </span>
+                            </li>
+
+                            @if ($komentarVideos->hasMorePages())
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ $komentarVideos->nextPageUrl() }}" rel="next" aria-label="Next">
+                                        <span aria-hidden="true">&rsaquo;</span>
+                                    </a>
+                                </li>
+                            @else
+                                <li class="page-item disabled">
+                                    <span class="page-link" aria-label="Next">
+                                        <span aria-hidden="true">&rsaquo;</span>
+                                    </span>
+                                </li>
+                            @endif
+                        </ul>
+                    </nav>
+                </div>
                  
                 </div>
                   </div>
