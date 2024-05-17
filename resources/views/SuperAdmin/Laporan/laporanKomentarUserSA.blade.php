@@ -449,6 +449,7 @@
                             <thead>
                               <tr>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User ID Pelapor</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama User Pelapor</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User ID Dilaporkan</th>
@@ -478,6 +479,14 @@
                                     <td class="align-middle text-center">
                                         <p class="text-xs font-weight-bold mb-0">{{$item['id']}}</p>
                                     </td>
+                                    <td class="align-middle text-center">
+                                      <p class="text-xs font-weight-bold mb-0">
+                                          @if($item->created_at->isToday())
+                                              <span class="badge bg-gradient-primary">Laporan Baru</span>
+                                          @endif
+                                          <br>
+                                      </p>
+                                  </td>
                                     <td class="align-middle text-center">
                                         <p class="text-xs font-weight-bold mb-0">{{$item['user_id_pelapor']}}</p>
                                     </td>

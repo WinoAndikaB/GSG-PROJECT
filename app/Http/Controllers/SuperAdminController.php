@@ -851,7 +851,12 @@ class SuperAdminController extends Controller
         }
     
         // Now, paginate the results
-        $tableVideo = $query->paginate(15);
+    // Misalkan $query adalah instance query builder yang sudah difilter sebelumnya
+    $query = Video::query(); // Contoh: menggunakan model Video
+
+    // Mengurutkan data berdasarkan kolom 'created_at' secara menurun dan paginasi dengan 15 item per halaman
+    $tableVideo = $query->orderBy('created_at', 'desc')->paginate(15);
+
     
         // Get unique categories
         $categoriesVideo = video::select('kategoriVideo')->distinct()->pluck('kategoriVideo');

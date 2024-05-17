@@ -370,7 +370,8 @@ class AdminController extends Controller
         }
     
         // Ambil artikel pertama dari $data (jika ada)
-        $article = $data->first();
+        $data = $query->orderBy('created_at', 'desc')->paginate(15);
+
     
         // Rating
         // Query untuk menghitung rata-rata rating untuk setiap artikel

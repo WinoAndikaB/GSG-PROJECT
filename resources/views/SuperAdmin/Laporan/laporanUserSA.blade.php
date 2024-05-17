@@ -384,6 +384,7 @@
                                 <tr>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User ID</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama User Pelapor</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Artikel ID</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Artikel Dilaporkan</th>
@@ -412,19 +413,27 @@
                                     <td class="align-middle text-center">
                                         <p class="text-xs font-weight-bold mb-0">{{$item['user_id']}}</p>
                                     </td>
+                                    <td class="align-middle text-center">
+                                      <p class="text-xs font-weight-bold mb-0">
+                                          @if($item->created_at->isToday())
+                                              <span class="badge bg-gradient-primary">Laporan Baru</span>
+                                          @endif
+                                          <br>
+                                      </p>
+                                  </td>
                                     <td>
                                         <div class="d-flex px-2 py-1">
                                             <div>
                                                 @if($item->user->fotoProfil)
-                                                @if(filter_var($item->user->fotoProfil, FILTER_VALIDATE_URL))
-                                                <a href="{{$item->user->fotoProfil}}" data-lightbox="fotoProfil" data-title="Deskripsi Gambar">
-                                                    <img src="{{$item->user->fotoProfil}}" class="avatar avatar-sm me-3" alt="user1">
-                                                </a>
-                                                @else
-                                                <a href="{{asset('fotoProfil/'.$item->user->fotoProfil)}}" data-lightbox="fotoProfil" data-title="Deskripsi Gambar">
-                                                    <img src="{{asset('fotoProfil/'.$item->user->fotoProfil)}}" class="avatar avatar-sm me-3" alt="user1">
-                                                </a>
-                                                @endif
+                                                    @if(filter_var($item->user->fotoProfil, FILTER_VALIDATE_URL))
+                                                        <a href="{{$item->user->fotoProfil}}" data-lightbox="fotoProfil" data-title="Deskripsi Gambar">
+                                                            <img src="{{$item->user->fotoProfil}}" class="avatar avatar-sm me-3" alt="user1">
+                                                        </a>
+                                                    @else
+                                                        <a href="{{asset('fotoProfil/'.$item->user->fotoProfil)}}" data-lightbox="fotoProfil" data-title="Deskripsi Gambar">
+                                                            <img src="{{asset('fotoProfil/'.$item->user->fotoProfil)}}" class="avatar avatar-sm me-3" alt="user1">
+                                                        </a>
+                                                    @endif
                                                 @endif
                                             </div>
                                             <div class="d-flex flex-column justify-content-center">
@@ -448,42 +457,41 @@
                                         <p class="text-xs font-weight-bold mb-0">{{$item['alasan']}}</p>
                                     </td>
                                     <td class="align-middle text-center">
+                
                                         <span class="text-secondary text-xs font-weight-bold">{{$item['created_at']->locale('id')->translatedFormat('l, d F Y H:i:s')}}</span>
+              
                                     </td>
                                     <td class="align-middle text-center">
-                                      <span class="badge badge-sm status-badge 
-                                      {{$item['tindakan'] === 'Tindakan Selesai' ? 'bg-gradient-success' : ''}}
-                                      {{$item['tindakan'] === 'Sementara Diproses' ? 'bg-gradient-info' : ''}}
-                                      {{$item['tindakan'] === 'Tidak Bisa Ditindak' ? 'bg-gradient-danger' : ''}}">
-                                      {{$item['tindakan']}}
-                                    </span>
-                                  </td>
-                                  <td class="align-middle">
-
-                                    <div class="dropdown">
-                                      <a href="#" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdownMenuLink2">
-                                          <span class="d-sm-inline d-none fa fa-warning"></span> 
-                                      </a>
-                                      <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
-                                          <li>
-                                              <a class="dropdown-item artikel" href="#" data-laporan-id="{{ $item->id }}">
-                                                  Tindakan Selesai
-                                              </a>
-                                          </li>
-                                          <li>
-                                              <a class="dropdown-item artikel" href="#" data-laporan-id="{{ $item->id }}">
-                                                  Sementara Diproses
-                                              </a>
-                                          </li>
-                                          <li>
-                                              <a class="dropdown-item artikel" href="#" data-laporan-id="{{ $item->id }}">
-                                                  Tidak Bisa Ditindak
-                                              </a>
-                                          </li>
-                                      </ul>
-                                  </div>
-                                  
-
+                                        <span class="badge badge-sm status-badge 
+                                        {{$item['tindakan'] === 'Tindakan Selesai' ? 'bg-gradient-success' : ''}}
+                                        {{$item['tindakan'] === 'Sementara Diproses' ? 'bg-gradient-info' : ''}}
+                                        {{$item['tindakan'] === 'Tidak Bisa Ditindak' ? 'bg-gradient-danger' : ''}}">
+                                        {{$item['tindakan']}}
+                                        </span>
+                                    </td>
+                                    <td class="align-middle">
+                                        <div class="dropdown">
+                                            <a href="#" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdownMenuLink2">
+                                                <span class="d-sm-inline d-none fa fa-warning"></span> 
+                                            </a>
+                                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                                                <li>
+                                                    <a class="dropdown-item artikel" href="#" data-laporan-id="{{ $item->id }}">
+                                                        Tindakan Selesai
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item artikel" href="#" data-laporan-id="{{ $item->id }}">
+                                                        Sementara Diproses
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item artikel" href="#" data-laporan-id="{{ $item->id }}">
+                                                        Tidak Bisa Ditindak
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                         <a href="{{ route('showDetailArtikelSA', ['id' => $item->artikel->id]) }}" class="btn btn-info btn btn-primary btn-round">
                                             <i class="fas fa-info-circle"></i>
                                         </a>
@@ -493,7 +501,7 @@
                                     </td>
                                 </tr>
                             </tbody>
-                            @endforeach
+                        @endforeach                        
                             @endif
                         </table>
                         

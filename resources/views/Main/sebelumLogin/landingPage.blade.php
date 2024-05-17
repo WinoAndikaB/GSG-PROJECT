@@ -411,59 +411,70 @@
         
             <div class="col-lg-3 col-md-6">
 
-              <div style="width: 365px; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">  
-                <div style="text-align: center;">
-                  <h6 class="title">Best Rate Author</h6>
-                </div>
-                @foreach ($ratingPenulis->groupBy('user_id_penulis')->sortByDesc(function ($userRatings) {
-                  return $userRatings->avg('rating');
-              }) as $userRatings)
-                  @php 
-                      $sortedUserRatings = $userRatings->sortByDesc('rating'); // Mengurutkan rating dari yang tertinggi
-                      $firstRating = $sortedUserRatings->first();
-                      $averageRating = min(round($sortedUserRatings->avg('rating'), 1), 5.0); // Memastikan rating tidak melebihi 5.0
-                      $totalRating = $userRatings->count(); // Total rating berdasarkan user
-                  @endphp
-                  <a href="{{ route('profilPenulisLP', ['id' => $firstRating->user->id]) }}">
-                      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
-                        @if ($firstRating->user->fotoProfil)
-                        <?php
-                            $fotoProfil = $firstRating->user->fotoProfil;
-                            $gambarPath = null;
-                            
-                            if (file_exists(public_path('fotoProfil/' . $fotoProfil))) {
-                                // Jika file fotoProfil ada di direktori fotoProfil
-                                $gambarPath = asset('fotoProfil/' . $fotoProfil);
-                            } elseif (filter_var($fotoProfil, FILTER_VALIDATE_URL)) {
-                                // Jika fotoProfil adalah URL yang valid
-                                $gambarPath = $fotoProfil;
+                <div style="width: 365px; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">  
+                    <div style="text-align: center;">
+                        <h6 class="title">Best Rate Author</h6>
+                    </div>
+                    @foreach ($ratingPenulis->groupBy('user_id_penulis')->sortByDesc(function ($userRatings) {
+                        $filteredRatings = $userRatings->filter(function ($rating) {
+                            return $rating->created_at->gt(now()->subMonth());
+                        });
+                        return $filteredRatings->avg('rating');
+                    }) as $userRatings)
+                        @php 
+                            $filteredUserRatings = $userRatings->filter(function ($rating) {
+                                return $rating->created_at->gt(now()->subMonth());
+                            });
+                
+                            if ($filteredUserRatings->isEmpty()) {
+                                continue; // Skip if no ratings in the last month
                             }
-                        ?>
-                        @if ($gambarPath)
-                            <img src="{{ $gambarPath }}" alt="Profil Foto" style="width: 65px; height: 65px; border-radius: 50%; flex-shrink: 0; object-fit: cover;">
-                        @else
-                            <div style="width: 50px; height: 50px; border-radius: 50%; flex-shrink: 0; background-color: lightgrey;"></div>
-                        @endif
-                    @else
-                        <div style="width: 50px; height: 50px; border-radius: 50%; flex-shrink: 0; background-color: lightgrey;"></div>
-                    @endif
-                    
-                                                              
-                          <div style="flex-grow: 1; margin-left: 10px;">
-                              <p style="margin: 0; font-weight: bold;">{{ $firstRating->user->name }}</p>
-                              <p style="margin: 0;">{{ number_format($averageRating, 1) }} / 5.0 ({{ $totalRating }} rating)</p>
-                              @for ($i = 1; $i <= 5; $i++)
-                                  @if ($i <= $averageRating)
-                                      <span style="color: gold;">★</span>
-                                  @else
-                                      <span style="color: lightgrey;">★</span>
-                                  @endif
-                              @endfor
-                          </div>
-                      </div>
-                  </a>
-              @endforeach                                           
-            </div>
+                
+                            $sortedUserRatings = $filteredUserRatings->sortByDesc('rating'); // Mengurutkan rating dari yang tertinggi
+                            $firstRating = $sortedUserRatings->first();
+                            $averageRating = min(round($sortedUserRatings->avg('rating'), 1), 5.0); // Memastikan rating tidak melebihi 5.0
+                            $totalRating = $filteredUserRatings->count(); // Total rating berdasarkan user
+                        @endphp
+                        <a href="{{ route('profilPenulisUser', ['id' => $firstRating->user->id]) }}">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+                                @if ($firstRating->user->fotoProfil)
+                                    <?php
+                                        $fotoProfil = $firstRating->user->fotoProfil;
+                                        $gambarPath = null;
+                                        
+                                        if (file_exists(public_path('fotoProfil/' . $fotoProfil))) {
+                                            // Jika file fotoProfil ada di direktori fotoProfil
+                                            $gambarPath = asset('fotoProfil/' . $fotoProfil);
+                                        } elseif (filter_var($fotoProfil, FILTER_VALIDATE_URL)) {
+                                            // Jika fotoProfil adalah URL yang valid
+                                            $gambarPath = $fotoProfil;
+                                        }
+                                    ?>
+                                    @if ($gambarPath)
+                                        <img src="{{ $gambarPath }}" alt="Profil Foto" style="width: 65px; height: 65px; border-radius: 50%; flex-shrink: 0; object-fit: cover;">
+                                    @else
+                                        <div style="width: 50px; height: 50px; border-radius: 50%; flex-shrink: 0; background-color: lightgrey;"></div>
+                                    @endif
+                                @else
+                                    <div style="width: 50px; height: 50px; border-radius: 50%; flex-shrink: 0; background-color: lightgrey;"></div>
+                                @endif
+                                
+                                <div style="flex-grow: 1; margin-left: 10px;">
+                                    <p style="margin: 0; font-weight: bold;">{{ $firstRating->user->name }}</p>
+                                    <p style="margin: 0;">{{ number_format($averageRating, 1) }} / 5.0 ({{ $totalRating }} rating)</p>
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        @if ($i <= $averageRating)
+                                            <span style="color: gold;">★</span>
+                                        @else
+                                            <span style="color: lightgrey;">★</span>
+                                        @endif
+                                    @endfor
+                                </div>
+                            </div>
+                        </a>
+                    @endforeach                                           
+                </div>
+                
 
             
      

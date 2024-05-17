@@ -325,6 +325,7 @@
                               <tr>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User ID</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama User Pelapor</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Artikel ID</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Artikel Dilaporkan</th>
@@ -353,6 +354,14 @@
                                     <td class="align-middle text-center">
                                         <p class="text-xs font-weight-bold mb-0">{{$item['user_id']}}</p>
                                     </td>
+                                    <td class="align-middle text-center">
+                                      <p class="text-xs font-weight-bold mb-0">
+                                          @if($item->created_at->isToday())
+                                              <span class="badge bg-gradient-primary">Laporan Baru</span>
+                                          @endif
+                                          <br>
+                                      </p>
+                                  </td>
                                     <td>
                                       <div class="d-flex px-2 py-1">
                                         <div>
