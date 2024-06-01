@@ -367,8 +367,10 @@ use Illuminate\Support\Facades\Route;
             Route::get('/deleteLaporanVideoSA/{id}',[SuperAdminController::class,'deleteLaporanVideoSA'])->name('deleteLaporanVideoSA');
 
             Route::post('/update-tindakanASA', [SuperAdminController::class, 'updateTindakanArtikelSA'])->name('update.tindakanASA');
-            Route::post('/update-tindakanVSA', [SuperAdminController::class, 'updateTindakanVideoSA'])->name('update.tindakanVSA');            
-
+            Route::post('/update-tindakanVSA', [SuperAdminController::class, 'updateTindakanVideoSA'])->name('update.tindakanVSA');     
+            Route::post('/update-tindakanKASA', [SuperAdminController::class, 'updateTindakanKomentarArtikelSA'])->name('update.tindakanKASA');
+            Route::post('/update-tindakanKVSA', [SuperAdminController::class, 'updateTindakanKomentarVideoSA'])->name('update.tindakanKVSA');              
+                   
             //[SuperAdmin] Tabel Syarat & Ketentuan
             Route::get('/syaratdanketentuanSA',[SuperAdminController::class,'syaratdanketentuanSA'])->name('syaratdanketentuanSA');
 

@@ -1838,6 +1838,31 @@ function deleteKategoriSA($id){
             return response()->json(['success' => true]);
         }
 
+    
+        public function updateTindakanKomentarArtikelSA(Request $request)
+        {
+            $laporanId = $request->input('laporan_id');
+            $tindakan = $request->input('tindakan');
+            
+            $laporan = LaporanKomentarArtikel::findOrFail($laporanId);
+            $laporan->tindakan = $tindakan;
+            $laporan->save();
+            
+            return response()->json(['success' => true]);
+        }    
+    
+        public function updateTindakanKomentarVideoSA(Request $request)
+        {
+            $laporanId = $request->input('laporan_id');
+            $tindakan = $request->input('tindakan');
+            
+            $laporan = LaporanKomentarVideo::findOrFail($laporanId);
+            $laporan->tindakan = $tindakan;
+            $laporan->save();
+            
+            return response()->json(['success' => true]);
+        }
+
             //[SuperAdmin-Laporan User] Delete Artikel User
             function deleteLaporanVideoSA($id){
                 // Find the reported video record with the given ID
