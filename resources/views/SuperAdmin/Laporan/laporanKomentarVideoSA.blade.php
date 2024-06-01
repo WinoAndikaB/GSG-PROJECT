@@ -594,6 +594,17 @@
                                         </ul>
                                     </div>
 
+                                    
+                                    @if($item->freeze_until)
+                                        <a href="#" class="btn btn-warning btn-icon btn-round unfreeze-button" data-toggle="modal" data-target="#unfreezeModal{{ $item->id }}" data-user-id="{{ $item->id }}">
+                                            <i class="fas fa-lock"></i>
+                                        </a>
+                                    @else
+                                        <a href="#" class="btn btn-warning btn-icon btn-round freeze-button" data-toggle="modal" data-target="#freezeModal{{ $item->id }}" data-user-id="{{ $item->id }}">
+                                            <i class="fas fa-unlock"></i>
+                                        </a>
+                                    @endif
+
                                       <a href="#" class="btn btn-danger btn-icon btn-round" onclick="showConfirmationModal('{{ route('deleteLaporanArtikelSA', ['id' => $item['id']]) }}')">
                                           <i class="fa fa-trash"></i>
                                       </a>
@@ -654,57 +665,68 @@
             </div>
           </div>
 
-          <!-- Modal Freeze -->
-          @foreach ($laporanKomentarVideoUserSA as $item)
-              <div class="modal fade" id="freezeModal{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="freezeModalLabel" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <h5 class="modal-title" id="freezeModalLabel">Freeze Akun</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                              </button>
-                          </div>
-                          <form id="freezeForm{{ $item->id }}" action="{{ route('freeze.pengguna') }}" method="post">
-                              @csrf
-                              <div class="modal-body">
-                                <!-- Tambahkan foto profil di sebelah kiri -->
-                                <div class="profile-container">
-                                    @if ($item->komentarA && $item->komentarA->user)
-                                        <img src="{{ asset('fotoProfil/' . $item->komentarA->user->fotoProfil) }}" alt="Profile Image" class="profile-image">
-                                        <h5>{{ $item->komentarA->user->name }}</h5>
-                                        <span>{{ $item->komentarA->pesan }}</span>
-                                    @else
-                                        <p>User not found for this comment.</p>
-                                    @endif
-                                </div>
 
-                                  <div class="form-group">
-                                    <label for="freezeDuration{{ $item->id }}">Pilih Durasi Freeze:</label>
-                                    <select class="form-control freezeDuration" name="duration" id="freezeDuration{{ $item->id }}" data-comment-id="{{ $item->id }}" required>
-                                      <option value="1">1 Hari</option>
-                                      <option value="2">2 Hari</option>
-                                      <option value="7">1 Minggu</option>
-                                      <option value="30">1 Bulan</option>
-                                      <option value="0">Permanen</option>
-                                  </select>                     
-                                  
-                                      <!-- Input untuk user_id_dilaporkan dan pesan -->
-                                      <input type="hidden" name="comment_id" value="{{ $item->id }}">
-                                      <label for="pesanFreeze{{ $item->id }}">Masukkan pesan peringatan:</label>
-                                      <input type="text" class="form-control" name="message" id="pesanFreeze{{ $item->id }}" placeholder="Masukkan pesan peringatan" required>
-                                  </div>
-                              </div>
-                              <div class="modal-footer justify-content-center">
-                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                                  <button type="submit" class="btn btn-warning">Freeze</button>
-                              </div>
-                          </form>
-                      </div>
-                  </div>
-              </div>
-          @endforeach
+    <!-- Freeze-Unfreeze Modal -->
+    @foreach ($laporanKomentarVideoUserSA as $user)
+    <div class="modal fade" id="freezeModal{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="freezeModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="freezeModalLabel">Freeze Akun</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>                            
+                </div>
+                <form id="freezeForm{{ $user->pelapor->id }}" action="{{ route('freeze.pengguna') }}" method="post">
+                    @csrf
+                    <input type="hidden" name="user_id" value="{{ $user->pelapor->id }}">
 
+                    <div class="modal-body">
+                        <div class="profile-container">
+                            <img src="{{ asset('fotoProfil/' . $user->pelapor->fotoProfil) }}" alt="Profile Image" class="profile-image">
+                            <h5>{{ $user->pelapor->name }}</h5>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="freezeDuration{{ $user->pelapor->id }}">Pilih Durasi Freeze:</label>
+                            <select class="form-control freezeDuration" name="duration" id="freezeDuration{{ $user->pelapor->id }}" required>
+                              <option value="1">1 Hari</option>
+                              <option value="2">2 Hari</option>
+                              <option value="7">1 Minggu</option>
+                              <option value="30">1 Bulan</option>
+                              <option value="90">3 Bulan</option>
+                              <option value="240">8 Bulan</option>
+                              <option value="365">1 Tahun</option>
+                              <option value="1825">5 Tahun</option>
+                              <option value="3650">10 Tahun</option>
+                          </select>
+                          
+                            <label for="pesanFreeze{{ $user->pelapor->id }}">Masukkan pesan peringatan:</label>
+                            <input type="text" class="form-control" name="message" id="pesanFreeze{{ $user->pelapor->id }}" placeholder="Masukkan pesan peringatan" required>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-warning freeze-submit-button" data-user-id="{{ $user->pelapor->id }}">Freeze</button>
+                    </div>
+                </form>
+
+                <!-- Unfreeze form -->
+                <form id="unfreezeForm{{ $user->pelapor->id }}" action="{{ route('unfreeze.pengguna') }}" method="post">
+                    @csrf
+                    <input type="hidden" name="user_id" value="{{ $user->pelapor->id }}">
+                    <div class="modal-body">
+                        <!-- Add any additional fields or information for unfreezing as needed -->
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-success unfreeze-button" data-user-id="{{ $user->pelapor->id }}">Unfreeze</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @endforeach
 
 
 <!-------------------------------------------------------------------------------------Argon Feature Area -------------------------------------------------------------------------------------------------------------------->

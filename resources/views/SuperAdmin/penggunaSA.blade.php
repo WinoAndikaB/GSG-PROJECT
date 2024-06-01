@@ -565,16 +565,16 @@
                                   <i class="fa fa-trash"></i>
                               </a>
                               @if($user->role !== 'superadmin')
-                              @if($user->freeze_until)
-                                  <a href="#" class="btn btn-warning btn-icon btn-round unfreeze-button" data-toggle="modal" data-target="#unfreezeModal{{ $user->id }}" data-user-id="{{ $user->id }}">
-                                      <i class="fas fa-lock"></i>
-                                  </a>
-                              @else
-                                  <a href="#" class="btn btn-warning btn-icon btn-round freeze-button" data-toggle="modal" data-target="#freezeModal{{ $user->id }}" data-user-id="{{ $user->id }}">
-                                      <i class="fas fa-unlock"></i>
-                                  </a>
+                                  @if($user->freeze_until)
+                                      <a href="#" class="btn btn-warning btn-icon btn-round unfreeze-button" data-toggle="modal" data-target="#unfreezeModal{{ $user->id }}" data-user-id="{{ $user->id }}">
+                                          <i class="fas fa-lock"></i>
+                                      </a>
+                                  @else
+                                      <a href="#" class="btn btn-warning btn-icon btn-round freeze-button" data-toggle="modal" data-target="#freezeModal{{ $user->id }}" data-user-id="{{ $user->id }}">
+                                          <i class="fas fa-unlock"></i>
+                                      </a>
+                                  @endif
                               @endif
-                          @endif
                           
                               </td>
                             </tr>
