@@ -579,7 +579,6 @@ class PenggunaController extends Controller
             'comment_id' => $request->comment_id,
             'laporan' => $request->laporan,
             'alasan' => $request->alasan,
-            // tambahkan kolom lain sesuai kebutuhan
         ]);
     
         return redirect()->back()->with('success', 'Laporan berhasil disimpan.');

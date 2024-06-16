@@ -667,8 +667,8 @@
 
 
     <!-- Freeze-Unfreeze Modal -->
-    @foreach ($laporanKomentarVideoUserSA as $user)
-    <div class="modal fade" id="freezeModal{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="freezeModalLabel" aria-hidden="true">
+    @foreach ($laporanKomentarVideoUserSA as $item)
+    <div class="modal fade" id="freezeModal{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="freezeModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -677,19 +677,29 @@
                       <span aria-hidden="true">&times;</span>
                   </button>                            
                 </div>
-                <form id="freezeForm{{ $user->pelapor->id }}" action="{{ route('freeze.pengguna') }}" method="post">
+                <form id="freezeForm{{ $item->komentarV->user->id }}" action="{{ route('freeze.pengguna') }}" method="post">
                     @csrf
-                    <input type="hidden" name="user_id" value="{{ $user->pelapor->id }}">
+                    <input type="hidden" name="user_id" value="{{ $item->komentarV->user->id }}">
 
                     <div class="modal-body">
                         <div class="profile-container">
-                            <img src="{{ asset('fotoProfil/' . $user->pelapor->fotoProfil) }}" alt="Profile Image" class="profile-image">
-                            <h5>{{ $user->pelapor->name }}</h5>
+                            @if($item->komentarV->user->fotoProfil)
+                            @if(filter_var($item->komentarV->user->fotoProfil, FILTER_VALIDATE_URL))
+                                <a href="{{$item->komentarV->user->fotoProfil}}">
+                                    <img src="{{$item->komentarV->user->fotoProfil}}" alt="Profile Image" class="profile-image">
+                                </a>
+                            @else
+                                <a href="{{asset('fotoProfil/'.$item->komentarV->user->fotoProfil)}}">
+                                    <img src="{{asset('fotoProfil/'.$item->komentarV->user->fotoProfil)}}" alt="Profile Image" class="profile-image">
+                                </a>
+                            @endif
+                        @endif
+                            <h5>{{ $item->komentarV->user->name }}</h5>
                         </div>
                         
                         <div class="form-group">
-                            <label for="freezeDuration{{ $user->pelapor->id }}">Pilih Durasi Freeze:</label>
-                            <select class="form-control freezeDuration" name="duration" id="freezeDuration{{ $user->pelapor->id }}" required>
+                            <label for="freezeDuration{{ $item->komentarV->id }}">Pilih Durasi Freeze:</label>
+                            <select class="form-control freezeDuration" name="duration" id="freezeDuration{{ $item->komentarV->user->id }}" required>
                               <option value="1">1 Hari</option>
                               <option value="2">2 Hari</option>
                               <option value="7">1 Minggu</option>
@@ -701,26 +711,26 @@
                               <option value="3650">10 Tahun</option>
                           </select>
                           
-                            <label for="pesanFreeze{{ $user->pelapor->id }}">Masukkan pesan peringatan:</label>
-                            <input type="text" class="form-control" name="message" id="pesanFreeze{{ $user->pelapor->id }}" placeholder="Masukkan pesan peringatan" required>
+                            <label for="pesanFreeze{{ $item->komentarV->user->id }}">Masukkan pesan peringatan:</label>
+                            <input type="text" class="form-control" name="message" id="pesanFreeze{{ $item->komentarV->user->id }}" placeholder="Masukkan pesan peringatan" required>
                         </div>
                     </div>
 
                     <div class="modal-footer justify-content-center">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-warning freeze-submit-button" data-user-id="{{ $user->pelapor->id }}">Freeze</button>
+                        <button type="submit" class="btn btn-warning freeze-submit-button" data-user-id="{{ $item->komentarV->user->id }}">Freeze</button>
                     </div>
                 </form>
 
                 <!-- Unfreeze form -->
-                <form id="unfreezeForm{{ $user->pelapor->id }}" action="{{ route('unfreeze.pengguna') }}" method="post">
+                <form id="unfreezeForm{{ $item->komentarV->user->id }}" action="{{ route('unfreeze.pengguna') }}" method="post">
                     @csrf
-                    <input type="hidden" name="user_id" value="{{ $user->pelapor->id }}">
+                    <input type="hidden" name="user_id" value="{{ $item->komentarV->user->id }}">
                     <div class="modal-body">
                         <!-- Add any additional fields or information for unfreezing as needed -->
                     </div>
                     <div class="modal-footer justify-content-center">
-                        <button type="button" class="btn btn-success unfreeze-button" data-user-id="{{ $user->pelapor->id }}">Unfreeze</button>
+                        <button type="button" class="btn btn-success unfreeze-button" data-user-id="{{ $item->komentarV->user->id }}">Unfreeze</button>
                     </div>
                 </form>
             </div>
