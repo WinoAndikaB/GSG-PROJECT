@@ -9,7 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets2/img/lg1.png') }}">
     <link rel="icon" type="image/png" href="{{ asset('assets2/img/lg1.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
@@ -95,34 +94,38 @@
 
 <body>
 <div class="page-heading">
-  <header class="header-area">
-      <div class="container">
+    <header class="header-area">
+        <div class="container">
           <div class="row">
-              <div class="col-12">
-                  <nav class="main-nav">
-                      <ul class="nav">              
-                          <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
-                          <li class="scroll-to-section"><a href="#about">Artikel</a></li>
-                          <li class="scroll-to-section"><a href="/landingPageVideo" class="text-center">Video</a></li>
-                          <li class="scroll-to-section"><a href="/kategoriLandingPage">Kategori</a></li>
-                          <li class="scroll-to-section"><a href="/ulasanLandingPage" class="text-center">Ulasan</a></li>
-                          <li class="scroll-to-section"><a href="/abouts">Tentang</a></li>
-                          <li>
-                            <form action="{{ route('searchLP') }}" method="GET" class="input-group">
-                              <input type="text" name="search" class="form-control" placeholder="Cari Artikel..." aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ request('search') }}">
-                              <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
-                          </form>
-                          </li>
-                          <li><a href="/login">Login</a></li> 
-                      </ul>        
-                      <a class='menu-trigger'>
-                          <span>Menu</span>
-                      </a>
-                  </nav>
-              </div>
+            <div class="col-12">
+              <nav class="main-nav" style="display: flex; justify-content: space-between; align-items: center;">
+                <ul class="nav" style="display: flex; align-items: center; justify-content: center; width: 100%; list-style: none; padding: 0; margin: 0;">
+                    <li style="margin-right: auto;">
+                        <img src="{{ asset('assets2/img/katakey1.png') }}" alt="logo" style="width: 50px; height: auto;">
+                      </li>
+                      <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
+                      <li class="scroll-to-section"><a href="#about">Artikel</a></li>
+                      <li class="scroll-to-section"><a href="/landingPageVideo" class="text-center">Video</a></li>
+                      <li class="scroll-to-section"><a href="/kategoriLandingPage">Kategori</a></li>
+                      <li class="scroll-to-section"><a href="/ulasanLandingPage" class="text-center">Ulasan</a></li>
+                      <li class="scroll-to-section"><a href="/abouts">Tentang</a></li>
+                      <li>
+                        <form action="{{ route('searchLP') }}" method="GET" class="input-group">
+                          <input type="text" name="search" class="form-control" placeholder="Cari Artikel..." aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ request('search') }}">
+                          <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
+                        </form>
+                      </li>
+                      <li><a href="/login">Login</a></li> 
+                </ul>
+                <a class='menu-trigger' style="display: none;">
+                  <span>Menu</span>
+                </a>
+              </nav>
+            </div>
           </div>
-      </div>
-  </header>
+        </div>
+      </header>
+      
 </div>
 
   <div class="banner-area banner-inner-1 bg-black" id="banner">

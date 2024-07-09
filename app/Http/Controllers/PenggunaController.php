@@ -1418,7 +1418,7 @@ class PenggunaController extends Controller
         $kategoriLogV = video::where('kategoriVideo', $kategori)
             ->whereNotIn('statusVideo', ['Pending', 'Rejected'])
             ->inRandomOrder()
-            ->take(10)
+            ->take(5)
             ->get();
 
                //Notifikasi Penulis

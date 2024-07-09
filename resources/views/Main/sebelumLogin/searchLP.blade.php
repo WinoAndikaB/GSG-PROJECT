@@ -112,38 +112,37 @@
 
 
   <!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky">
+  <header class="header-area">
     <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav class="main-nav">
-                    <a href="/" class="logo">
-                        <img src="" alt="">
-                    </a>
-                    <span>Katakey</span>
-                    <ul class="nav">
-                      <li class="scroll-to-section"><a href="/">Home</a></li>
-                      <li class="scroll-to-section"><a href="/" class="active">Artikel</a></li>
-                      <li class="scroll-to-section"><a href="/landingPageVideo">Video</a></li>
-                      <li class="scroll-to-section"><a href="/kategoriLandingPage">Kategori</a></li>
-                      <li class="scroll-to-section"><a href="/ulasanLandingPage">Ulasan</a></li>
-                      <li class="scroll-to-section"><a href="/abouts">Tentang</a></li>
-                      <li>
-                        <form action="{{ route('search') }}" method="GET" class="input-group">
-                          <input type="text" name="search" class="form-control" placeholder="Cari Artikel..." aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ request('search') }}">
-                          <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
-                      </form>
-                      </li>
-                      <li class="scroll-to-section"><a href="/login">Login</a></li>
-                    </ul>       
-                    <a class='menu-trigger'>
-                        <span>Menu</span>
-                    </a>
-                </nav>
-            </div>
+      <div class="row">
+        <div class="col-12">
+          <nav class="main-nav" style="display: flex; justify-content: space-between; align-items: center;">
+            <ul class="nav" style="display: flex; align-items: center; justify-content: center; width: 100%; list-style: none; padding: 0; margin: 0;">
+                <li style="margin-right: auto;">
+                    <img src="{{ asset('assets2/img/katakey1.png') }}" alt="logo" style="width: 50px; height: auto;">
+                  </li>
+                  <li class="scroll-to-section"><a href="#top">Home</a></li>
+                  <li class="scroll-to-section"><a href="/home" class="active">Artikel</a></li>
+                  <li class="scroll-to-section"><a href="/landingPageVideo" class="text-center">Video</a></li>
+                  <li class="scroll-to-section"><a href="/kategoriLandingPage">Kategori</a></li>
+                  <li class="scroll-to-section"><a href="/ulasanLandingPage" class="text-center">Ulasan</a></li>
+                  <li class="scroll-to-section"><a href="/abouts">Tentang</a></li>
+                  <li>
+                    <form action="{{ route('searchLP') }}" method="GET" class="input-group">
+                      <input type="text" name="search" class="form-control" placeholder="Cari Artikel..." aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ request('search') }}">
+                      <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
+                    </form>
+                  </li>
+                  <li><a href="/login">Login</a></li> 
+            </ul>
+            <a class='menu-trigger' style="display: none;">
+              <span>Menu</span>
+            </a>
+          </nav>
         </div>
+      </div>
     </div>
-</header>
+  </header>
   <!-- ***** Header Area End ***** -->
 
   <div class="page-heading">

@@ -65,34 +65,38 @@
 
 <body>
 <div class="page-heading">
-  <header class="header-area header-sticky">
-      <div class="container">
-          <div class="row">
-              <div class="col-12">
-                  <nav class="main-nav">
-                      <ul class="nav">
-                          <li class="scroll-to-section"><a href="/">Home</a></li>
-                          <li class="scroll-to-section"><a href="#about">Artikel</a></li>
-                          <li class="scroll-to-section"><a href="/landingPageVideo" class="active">Video</a></li>
-                          <li class="scroll-to-section"><a href="/kategoriLandingPage">Kategori</a></li>
-                          <li class="scroll-to-section"><a href="/ulasanLandingPage" class="text-center">Ulasan</a></li>
-                          <li class="scroll-to-section"><a href="/abouts">Tentang</a></li>
-                          <li>
-                            <form action="{{ route('searchLPV') }}" method="GET" class="input-group">
-                              <input type="text" name="searchLPV" class="form-control" placeholder="Cari Video..." aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ request('searchLPV') }}">
-                              <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
-                          </form>
-                          </li>
-                          <li><a href="/login">Login</a></li> 
-                      </ul>        
-                      <a class='menu-trigger'>
-                          <span>Menu</span>
-                      </a>
-                  </nav>
-              </div>
-          </div>
-      </div>
-  </header>
+    <header class="header-area header-sticky">
+        <div class="container">
+            <div class="row">
+                <div class="col-12" style="display: flex; justify-content: space-between; align-items: center;">
+                    <nav class="main-nav" style="flex-grow: 1; display: flex; align-items: center;">
+                        <ul class="nav" style="display: flex; justify-content: center; align-items: center; list-style: none; padding: 0; margin: 0; width: 100%;">
+                            <li style="margin-right: auto;">
+                                <img src="{{ asset('assets2/img/katakey1.png') }}" alt="logo" style="width: 50px; height: auto;">
+                              </li>
+                              <li class="scroll-to-section"><a href="/">Home</a></li>
+                              <li class="scroll-to-section"><a href="#about">Artikel</a></li>
+                              <li class="scroll-to-section"><a href="/landingPageVideo" class="active">Video</a></li>
+                              <li class="scroll-to-section"><a href="/kategoriLandingPage">Kategori</a></li>
+                              <li class="scroll-to-section"><a href="/ulasanLandingPage" class="text-center">Ulasan</a></li>
+                              <li class="scroll-to-section"><a href="/abouts">Tentang</a></li>
+                              <li>
+                                <form action="{{ route('searchLPV') }}" method="GET" class="input-group">
+                                  <input type="text" name="searchLPV" class="form-control" placeholder="Cari Video..." aria-label="Recipient's username" aria-describedby="button-addon2" value="{{ request('searchLPV') }}">
+                                  <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
+                              </form>
+                              </li>
+                              <li><a href="/login">Login</a></li> 
+                        </ul>
+                        <a class='menu-trigger' style="display: none;">
+                            <span>Menu</span>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    
 </div>
   <div class="banner-area banner-inner-1 bg-black" id="banner">
     <div class="banner-inner pt-5">

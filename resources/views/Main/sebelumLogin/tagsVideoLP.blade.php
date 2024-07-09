@@ -147,13 +147,12 @@
   <header class="header-area header-sticky">
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <nav class="main-nav">
-                    <a href="/" class="logo">
-                        <img src="" alt="">
-                    </a>
-                    <span>Katakey</span>
-                    <ul class="nav">
+            <div class="col-12" style="display: flex; justify-content: space-between; align-items: center;">
+                <nav class="main-nav" style="flex-grow: 1; display: flex; align-items: center;">
+                    <ul class="nav" style="display: flex; justify-content: center; align-items: center; list-style: none; padding: 0; margin: 0; width: 100%;">
+                      <li style="margin-right: auto;">
+                        <img src="{{ asset('assets2/img/katakey1.png') }}" alt="logo" style="width: 50px; height: auto;">
+                      </li>
                       <li class="scroll-to-section"><a href="/" >Home</a></li>
                       <li class="scroll-to-section"><a href="/">Artikel</a></li>
                       <li class="scroll-to-section"><a href="/landingPageVideo" class="active">Video</a></li>
@@ -161,11 +160,10 @@
                       <li class="scroll-to-section"><a href="/ulasanLandingPage">Ulasan</a></li>
                       <li class="scroll-to-section"><a href="/abouts">Tentang</a></li>
                       <li class="scroll-to-section"><a href="/login">Login</a></li>
-                    </ul>       
-                    <a class='menu-trigger'>
+                    </ul>
+                    <a class='menu-trigger' style="display: none;">
                         <span>Menu</span>
                     </a>
-                    <!-- ***** Menu End ***** -->
                 </nav>
             </div>
         </div>
