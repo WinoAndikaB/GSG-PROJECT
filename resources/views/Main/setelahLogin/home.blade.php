@@ -178,6 +178,9 @@
             <div class="col-12">
               <nav class="main-nav">
                 <ul class="nav">
+                    <li style="margin-right: auto;">
+                        <img src="{{ asset('assets2/img/katakey1.png') }}" alt="logo" style="width: 50px; height: auto;">
+                      </li>
                     <li class="scroll-to-section"><a href="/home" class="active">Home</a></li>
                     <li class="scroll-to-section"><a href="/home">Artikel</a></li>
                     <li class="scroll-to-section"><a href="/Video" class="">Video</a></li>
@@ -300,6 +303,7 @@
                     <li class="scroll-to-section">
                       <a href="#" class="d-sm-inline d-none text-white text-bold" id="logout-link" onclick="openModal()"> Logout</a>
                     </li>
+                </ul>
             </nav>
             </div>
         </div>

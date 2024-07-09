@@ -209,8 +209,10 @@
             <div class="col-12">
               <nav class="main-nav">
                 <ul class="nav">
+                  <li style="margin-right: auto;">
+                    <img src="{{ asset('assets2/img/katakey1.png') }}" alt="logo" style="width: 50px; height: auto;">
+                  </li>
                     <li class="scroll-to-section"><a href="/home">Home</a></li>
-                    <li class="scroll-to-section"><a href="/home">Trending</a></li>
                     <li class="scroll-to-section"><a href="/home">Artikel</a></li>
                     <li class="scroll-to-section"><a href="/Video" class="active">Video</a></li>
                     <li class="scroll-to-section"><a href="/kategori">Kategori</a></li>
