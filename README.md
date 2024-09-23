@@ -1,5 +1,17 @@
 
 ## KataKey Project
+Sebelum memulai langkah-langkahnya, siapkan kebutuhan software yaitu:
+- XAMPP Control Panel : https://www.apachefriends.org/download.html
+- Visual Studio Code : https://code.visualstudio.com/download
+- Git : https://git-scm.com/downloads
+- Composer : https://getcomposer.org/download/
+
+Setelah menginstall semua, ikutin langkah berikut
+- Buka XAMPP
+- Pada bagian *"Apache"* terdapat tombol *"Config"*, pilih *Config* lalu pilih _"PHP(php.ini)"_
+- Setelah di klik, akan muncul *"Notepad"*, kemudian cari *zip* dengan tulisan *;extension=zip*
+- Jika sudah cari, hilangkan tanda ; sehingga hanya *"extension=zip"*
+- Save notepad dan silakan masuk tahap menjalankan aplikasinya.
 
 Langkah-Langkah Menjalankan Aplikasinya:
 
